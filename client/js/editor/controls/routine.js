@@ -928,7 +928,10 @@ const routineOperationMetadata = {
       // the first two faces are what a game turns cards to; the ones after them
       // are numbered, and a number needs the word that says what it is
       { id: 'face', label: 'to a face', add: { face: 0 },
-        template: v=>isNamedFace(v('face')) ? ' and turn them face {face}' : ' and turn them to face {face}' }
+        template: v=>isNamedFace(v('face')) ? ' and turn them face {face}' : ' and turn them to face {face}' },
+      // where in the holder they end up: the pile a holder stacks its widgets
+      // into, or the spread groups a multiple spread holder arranges
+      { id: 'position', label: 'at a place in the holder', template: ' and place them {position}', add: { position: 'pileTop' } }
     ],
     // the shape 88% of the library writes: so many widgets out of one holder
     newOperation: { func: 'MOVE', from: null, count: 1 },
@@ -941,7 +944,9 @@ const routineOperationMetadata = {
       from: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       to: { type: 'widgets', default: null, widgetType: 'holder' },
-      face: { type: 'number', default: null, display: faceWords }
+      face: { type: 'number', default: null, display: faceWords },
+      position: { type: 'enum', values: [ 'pileBottom', 'pileTop', 'groupStart', 'groupEnd' ], default: null,
+        display: { pileBottom: 'at the bottom of the pile', pileTop: 'on top of the pile', groupStart: 'in a new spread group before the others', groupEnd: 'in a new spread group after the others' } }
     },
     ignored: (v, isSet)=>{
       const ignored = collectionReplacedBy('from')(v);
@@ -1222,6 +1227,9 @@ const routineOperationMetadata = {
     ],
     clauses: [
       { id: 'key', label: 'by a property', template: ' by {key}' },
+      // only a multiple spread holder has the groups this builds, so the option
+      // says so rather than reading as something every sort can do
+      { id: 'groupBy', label: 'into spread groups', template: ' and group them by {groupBy}' },
       { id: 'reverse', label: 'biggest first', template: ', {reverse}', add: { reverse: true } },
       { id: 'rearrange', label: 'without moving them', template: ', {rearrange}', add: { rearrange: false } },
       { id: 'locales', label: 'for a language', template: ', for the language {locales}', add: { locales: 'en' } },
@@ -1231,6 +1239,8 @@ const routineOperationMetadata = {
       holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
       key: { type: 'json', default: 'value', display: listWords },
+      // one spread group per value this property has, in a multipleSpread holder
+      groupBy: { type: 'property', default: null },
       reverse: { type: 'enum', values: [ true, false ], default: false, display: yesNo('biggest first', 'smallest first') },
       rearrange: { type: 'enum', values: [ true, false ], default: true, display: yesNo('moving them into the new order', 'without moving them') },
       locales: { type: 'json', default: null },
@@ -1241,6 +1251,10 @@ const routineOperationMetadata = {
       // sorting a holder always rearranges its children
       if(v('holder') != null)
         ignored.rearrange = 'ignored because sorting a holder always rearranges it';
+      // the groups are the ones a multiple spread holder arranges, so there are
+      // none to build when the sort works on picked widgets instead of a holder
+      else if(v('groupBy'))
+        ignored.groupBy = 'ignored because only the widgets in a holder can be sorted into spread groups';
       return ignored;
     }
   },

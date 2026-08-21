@@ -1,6 +1,6 @@
 import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
 
-export const VERSION = 22;
+export const VERSION = 23;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -135,6 +135,7 @@ function updateProperties(properties, v, globalProperties) {
   v<17 && v17MaterialSymbols(properties);
   v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
   v<22 && v22DragLimitNullSides(properties);
+  v<23 && v23HolderAlignChildrenToLayout(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -616,4 +617,17 @@ function v22DragLimitNullSides(properties) {
   for(const key of [ 'minX', 'maxX', 'minY', 'maxY' ])
     if(limit[key] === null)
       limit[key] = 0;
+}
+
+// Holders now describe their arrangement with the high-level `layout` property.
+// Replace an explicit alignChildren on holders with the equivalent layout:
+// alignChildren:false becomes layout:'freeform' (which the engine treats exactly
+// the same); alignChildren:true is the default and is simply dropped. Only
+// holders are migrated - piles keep their alignChildren property.
+function v23HolderAlignChildrenToLayout(properties) {
+  if(properties.type == 'holder' && properties.alignChildren !== undefined) {
+    if(properties.alignChildren === false && properties.layout === undefined)
+      properties.layout = 'freeform';
+    delete properties.alignChildren;
+  }
 }

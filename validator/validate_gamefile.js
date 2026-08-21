@@ -207,7 +207,7 @@ const WIDGET_PROPERTIES = {
     },
     Holder: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset'
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset', layout: v=>v===null||['pile','singleSpread','multipleSpread','grid','freeform'].includes(v)||'layout must be null, pile, singleSpread, multipleSpread, grid or freeform', spreadOffset: v=>v===null||typeof v==='number'||'spreadOffset must be null or a number'
     },
     Label: {
         ...COMMON_PROPERTIES,
@@ -849,7 +849,8 @@ const operationProps = {
         'to': getWidgetTypeValidator(['holder', 'seat'], true),
         'count': 'countOrAll',
         'fillTo': 'number',
-        'face': 'positiveNumber'
+        'face': 'positiveNumber',
+        'position': v=>v===null||['pileBottom','pileTop','groupStart','groupEnd'].includes(v)||'position must be null, pileBottom, pileTop, groupStart or groupEnd'
     },
     'MOVEXY': {
         'from': 'idArray',
@@ -916,7 +917,8 @@ const operationProps = {
         'reverse': 'boolean',
         'locales': 'any',
         'options': 'any',
-        'rearrange': 'boolean'
+        'rearrange': 'boolean',
+        'groupBy': v=>v===null||typeof v==='string'||'groupBy must be null or a property name'
     },
     'SWAPHANDS': {
         'interval': v=>typeof v === 'number' && Number.isInteger(v),

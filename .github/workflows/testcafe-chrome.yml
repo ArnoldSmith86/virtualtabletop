@@ -20,6 +20,7 @@ jobs:
         testfile:
           - card.js
           - editor.js
+          - holder-layout.js
           - toolbar.js
           - boardsize.js
           - draglimit.js

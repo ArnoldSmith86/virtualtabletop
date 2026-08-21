@@ -411,6 +411,57 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
     .expect(dropTarget()).eql('{"type":"dice"}');
 });
 
+test('A holder layout is picked in Behavior and takes over what it decides', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const layoutOf = ClientFunction(() => JSON.stringify(widgets.get('holder').state.layout || null));
+  const layout = Selector('#editorModules .selectInput').withText('Layout');
+  const align = Selector('#editorModules .checkboxInput').withText('Align dropped widgets');
+  const preventPiles = Selector('#editorModules .checkboxInput').withText('Prevent piles');
+  const dropShadow = Selector('#editorModules .checkboxInput').withText('Drop shadow');
+  const spreadOffset = Selector('#editorModules .numberInput').withText('Spread offset');
+
+  // without a layout the holder is described by the lower-level switches
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_holder')
+    .expect(layout.visible).ok()
+    .expect(align.visible).ok()
+    .expect(spreadOffset.visible).notOk();
+
+  // a multiple spread decides all three for the holder, and brings the gap
+  // between its groups with it
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"multipleSpread"'))
+    .expect(layoutOf()).eql('"multipleSpread"')
+    .expect(align.visible).notOk()
+    .expect(preventPiles.visible).notOk()
+    .expect(dropShadow.visible).notOk()
+    .expect(spreadOffset.visible).ok()
+    .typeText(spreadOffset.find('input'), '40', { replace: true })
+    .expect(ClientFunction(() => widgets.get('holder').get('spreadOffset'))()).eql(40);
+
+  // a single spread leaves the piles to the holder, and back to no layout every
+  // switch is offered again
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"singleSpread"'))
+    .expect(preventPiles.visible).ok()
+    .expect(align.visible).notOk()
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', 'null'))
+    .expect(layoutOf()).eql('null')
+    .expect(align.visible).ok();
+});
+
 test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
