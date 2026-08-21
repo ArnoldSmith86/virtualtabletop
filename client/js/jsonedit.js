@@ -2318,7 +2318,11 @@ function jeMultiValueIsPerWidget(value, widgetIDs) {
   return typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!widgetIDs.includes(k)).length;
 }
 
+// gathering the ids of the selection means running its search terms, so a
+// parent that is one value for all of them is answered without doing that
 function jeMultiParentValues(state) {
+  if(typeof state.parent != 'object' || state.parent === null)
+    return [ state.parent ];
   const widgetIDs = jeMultiSelectedWidgets().map(w=>w.get('id'));
   return jeMultiValueIsPerWidget(state.parent, widgetIDs) ? Object.values(state.parent) : [ state.parent ];
 }
