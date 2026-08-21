@@ -242,6 +242,10 @@ export class Timer extends Widget {
   // tick that writes nothing - for the moment two clients write, the other one got there first -
   // must not leave that cause behind for whatever the player does next.
   async writeTick(milliseconds) {
+    // a widget of this id that is not this one is a copy the editor renders - a drag preview builds
+    // itself as a widget of its own - and nothing it derives may be written to the room
+    if(widgets.get(this.id) !== this)
+      return;
     this.tickMilliseconds = milliseconds;
     if(milliseconds === this.get('milliseconds'))
       return;

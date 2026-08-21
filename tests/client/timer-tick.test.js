@@ -108,6 +108,22 @@ describe('Timer ticking', () => {
     expect(preview.interval).toBe(undefined);
   });
 
+  test('a preview the editor dropped writes nothing even if it kept ticking', async () => {
+    isPrimary = false;
+    // the drag image builds its widgets the way the sidebar does and drops them again without
+    // taking them through applyRemove
+    const preview = new Timer('drag-preview-1');
+    widgets.set('drag-preview-1', preview);
+    preview.applyInitialDelta({ type: 'timer', paused: false });
+    const written = jest.spyOn(preview, 'set');
+    widgets.delete('drag-preview-1');
+
+    await jest.advanceTimersByTimeAsync(20000);
+    expect(written).not.toHaveBeenCalled();
+    written.mockRestore();
+    preview.stopTimer();
+  });
+
   test('updates that arrive late do not push the value behind the clock', async () => {
     const timer = createTimer({ id: 'late' });
     const started = Date.now();
