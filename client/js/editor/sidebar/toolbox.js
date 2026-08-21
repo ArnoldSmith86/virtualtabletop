@@ -47,19 +47,19 @@ class ToolboxModule extends SidebarModule {
     const widgetBuffer = [];
     for(const widget of selectedWidgets)
       addRecursively(widget);
-    localStorage.setItem('widgetBuffer', JSON.stringify(widgetBuffer));
-    localStorage.setItem('widgetBufferLegacyModes', JSON.stringify(currentLegacyModes()));
+    localStorage.setItem('widgetBuffer', JSON.stringify({ legacyModes: currentLegacyModes(), widgets: widgetBuffer }));
     this.renderWidgetBuffer();
   }
 
   async button_loadWidgetsFromBuffer() {
-    const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    if (!await confirmLegacyModeDifferences(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer)))
+    const { widgets: widgetBuffer, legacyModes } = this.bufferContents();
+    if (!await confirmLegacyModeDifferences(legacyModeDifferences(legacyModes, widgetBuffer)))
       return;
     const duplicates = widgetBuffer.filter(state=>widgets.has(state.id)).map(state=>state.id);
     if (duplicates.length) {
-      const duplicatesList = duplicates.join(', ');
-      const overwriteAll = await confirmOverlay('Widget IDs already exist', `These widget IDs are already in this game:\n\n  ${duplicatesList}\n\nAdding the buffer replaces those widgets.`, 'Overwrite', 'Cancel', 'content_paste', 'close');
+      // the dialog takes plain text, where a leading indent is dropped but a bullet survives
+      const duplicatesList = duplicates.map(id=>`• ${id}`).join('\n');
+      const overwriteAll = await confirmInEditor('Widget IDs already exist', `These widget IDs are already in this game:\n\n${duplicatesList}\n\nAdding the buffer replaces those widgets.`, 'Overwrite', 'Cancel', 'content_paste', 'close');
       if (!overwriteAll) return;
     }
     batchStart();
@@ -117,14 +117,19 @@ class ToolboxModule extends SidebarModule {
     batchEnd();
   }
 
-  // The legacy modes of the game the buffer was filled in, or null for a buffer that was saved
-  // before they were recorded.
-  bufferLegacyModes() {
+  // The buffer keeps the widget states and the legacy modes of the game they were taken from in
+  // one stored value, so the two can never end up describing different games. A buffer written
+  // before the modes were recorded is a bare array and simply has no snapshot.
+  bufferContents() {
+    let stored = null;
     try {
-      return JSON.parse(localStorage.getItem('widgetBufferLegacyModes'));
-    } catch(e) {
-      return null;
-    }
+      stored = JSON.parse(localStorage.getItem('widgetBuffer'));
+    } catch(e) {}
+    if(Array.isArray(stored))
+      return { widgets: stored, legacyModes: null };
+    if(stored && Array.isArray(stored.widgets))
+      return { widgets: stored.widgets, legacyModes: stored.legacyModes || null };
+    return { widgets: [], legacyModes: null };
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -143,7 +148,7 @@ class ToolboxModule extends SidebarModule {
   }
 
   renderWidgetBuffer() {
-    const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
+    const { widgets: widgetBuffer, legacyModes } = this.bufferContents();
     let contents = '';
     if(widgetBuffer.length) {
       let list = '';
@@ -151,7 +156,7 @@ class ToolboxModule extends SidebarModule {
         list += `<li>${html(state.id)}</li>`;
       contents = `<p class=widgetBufferLabel>In the buffer (${widgetBuffer.length} widget${widgetBuffer.length == 1 ? '' : 's'}):</p><ul>${list}</ul>`;
     }
-    contents += legacyModeWarningHTML(legacyModeDifferences(this.bufferLegacyModes(), widgetBuffer));
+    contents += legacyModeWarningHTML(legacyModeDifferences(legacyModes, widgetBuffer));
     // every state the room receives re-renders the module, so an unchanged buffer keeps the DOM
     // it has instead of losing the reader's text selection in it
     if(contents == this.renderedWidgetBuffer)

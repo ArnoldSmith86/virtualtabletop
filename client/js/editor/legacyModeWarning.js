@@ -71,5 +71,5 @@ const legacyModeWarningBadgeSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewB
 async function confirmLegacyModeDifferences(differences) {
   if(!differences.length)
     return true;
-  return !!await confirmOverlay('Different legacy modes', legacyModeWarningText(differences), 'Add anyway', 'Cancel', 'warning', 'close');
+  return !!await confirmInEditor('Different legacy modes', legacyModeWarningText(differences), 'Add anyway', 'Cancel', 'warning', 'close');
 }

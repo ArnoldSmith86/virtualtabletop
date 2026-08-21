@@ -13,7 +13,7 @@ let currentModes = {};
 let confirmAnswer = true;
 let confirmDialog = null;
 
-const warning = new Function('LEGACY_MODES', 'legacyMode', 'html', 'confirmOverlay', `${source}
+const warning = new Function('LEGACY_MODES', 'legacyMode', 'html', 'confirmInEditor', `${source}
   return { currentLegacyModes, legacyModeDifferences, legacyModeWarningHTML, confirmLegacyModeDifferences };
 `)(
   LEGACY_MODES,
