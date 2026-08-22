@@ -2121,32 +2121,41 @@ class PropertiesModule extends SidebarModule {
   // Circle align is the one arranging tool with settings of its own. The button
   // arranges the selection right away with the settings it has, and opens them
   // below the bar: every change re-arranges the selection from where the button
-  // found it, and Cancel puts it back there.
+  // found it, Done keeps it and Undo circle puts it back there.
   renderCircleAlign(bar, options) {
     const groupWrap = div(bar, 'arrangeGroupWrap');
     div(groupWrap, 'arrangeGroupLabel', 'Circle');
     const groupDOM = div(groupWrap, 'arrangeGroup');
 
     const button = document.createElement('button');
-    button.setAttribute('icon', 'circle');
+    // like every other glyph in the bar, several things being positioned - a
+    // filled disc reads as a color swatch rather than as an arrangement
+    button.setAttribute('icon', 'scatter_plot');
     button.disabled = selectedWidgets.length < 3;
-    button.title = 'Arrange the selected widgets evenly on a circle around the center of the selection.' + (button.disabled ? ' (needs 3+ widgets)' : '');
-    button.onclick = _=>this.startCircleAlign(options);
+    button.title = this.circleAlignButtonTitle(button.disabled);
+    button.onclick = _=>this.startCircleAlign(button, options);
     groupDOM.appendChild(button);
 
     // an arrangement that is still being adjusted survives a re-render of the
     // panel; one of a selection that is gone is nobody's to take back
     if(this.circleAlignOriginals && this.circleAlignOriginals.map(original=>original.id).join(' ') == selectedWidgets.map(widget=>widget.id).join(' '))
-      this.renderCircleAlignOptions(options);
+      this.renderCircleAlignOptions(button, options);
     else
       this.circleAlignOriginals = null;
   }
 
-  startCircleAlign(options) {
+  // The radius is kept for the whole editing session, so a press half an hour
+  // later applies it to a fresh selection before a single control is on screen -
+  // naming it in the tooltip is what takes the surprise out of that.
+  circleAlignButtonTitle(disabled) {
+    return `Arrange the selected widgets evenly on a circle of radius ${this.circleAlignRadius} around the center of the selection.` + (disabled ? ' (needs 3+ widgets)' : '');
+  }
+
+  startCircleAlign(button, options) {
     if(selectedWidgets.length < 3)
       return;
     // where the widgets were before the tool touched them: every change of the
-    // settings arranges them from here again, and Cancel puts them back
+    // settings arranges them from here again, and Undo circle puts them back
     if(!this.circleAlignOriginals)
       this.circleAlignOriginals = selectedWidgets.map(widget=>({
         id: widget.id,
@@ -2154,12 +2163,16 @@ class PropertiesModule extends SidebarModule {
         y: widget.get('y'),
         rotation: widget.get('rotation')
       }));
-    this.renderCircleAlignOptions(options);
+    this.renderCircleAlignOptions(button, options);
     this.applyCircleAlign();
   }
 
-  renderCircleAlignOptions(options) {
+  renderCircleAlignOptions(button, options) {
     options.textContent = '';
+    // the box holds the settings of one of ten look-alike glyphs in the bar -
+    // the caption names it, the pressed look on the button itself points at it
+    button.classList.add('open');
+    div(options, 'arrangeGroupLabel', 'Circle');
 
     // listenTo is empty for both inputs (neither edits a widget property), so
     // nothing fires the initial update a property listener would give them
@@ -2167,11 +2180,17 @@ class PropertiesModule extends SidebarModule {
       listenTo: [],
       min: 1,
       max: Math.round(Math.max(viewportConfig.targetWidth, viewportConfig.targetHeight) / 2),
+      // the slider is a live preview, so its travel ends where the circle stops
+      // fitting on the board: a range whose upper half only ever pushes the
+      // selection out of sight is a range that cannot be dragged through. The
+      // field still takes anything up to max.
+      sliderMax: Math.max(this.circleAlignRadius, this.circleAlignFittingRadius()),
       step: 1,
       slider: true,
       getValue: _=>this.circleAlignRadius,
       setValue: value=>{
         this.circleAlignRadius = value;
+        button.title = this.circleAlignButtonTitle(false);
         this.applyCircleAlign();
       },
       hint: 'Distance between the center of the circle and the center of each widget, in pixels. The circle is centered on the selection.'
@@ -2196,27 +2215,66 @@ class PropertiesModule extends SidebarModule {
     rotate.render(options);
     rotate.update(rotate.getValue());
 
+    // the arrangement is already on the board, so the box needs a way out that
+    // keeps it: without one the only labelled exit would be the one that
+    // throws it away, and keeping it would mean guessing (click away, Escape)
+    const done = document.createElement('button');
+    done.setAttribute('icon', 'check');
+    done.className = 'green';
+    done.textContent = 'Done';
+    done.title = 'Keep the arrangement and close these settings.';
+    done.onclick = _=>this.closeCircleAlign(button, options);
+
     const cancel = document.createElement('button');
     cancel.setAttribute('icon', 'undo');
-    cancel.textContent = 'Cancel';
+    cancel.textContent = 'Undo circle';
     cancel.title = 'Put the widgets back where they were before the circle was applied.';
-    cancel.onclick = _=>this.cancelCircleAlign(options);
-    div(options, 'buttonBar').appendChild(cancel);
+    cancel.onclick = _=>this.cancelCircleAlign(button, options);
+
+    const buttons = div(options, 'buttonBar');
+    buttons.appendChild(done);
+    buttons.appendChild(cancel);
+  }
+
+  // The widgets of the arrangement being adjusted, each with where it was before
+  // the tool ran: that is what every rearrangement starts from, so the widgets
+  // already on the circle are not moved again by the next change of a setting.
+  circleAlignWidgets() {
+    return (this.circleAlignOriginals || []).map(original=>({ original, widget: widgets.get(original.id) })).filter(entry=>entry.widget);
+  }
+
+  // Middle of the bounding box of the selection as the tool found it - the same
+  // reference the align and distribute buttons use, and the one that keeps the
+  // arrangement where the widgets already are.
+  circleAlignCenter(arranged) {
+    return {
+      x: (Math.min(...arranged.map(e=>e.original.x)) + Math.max(...arranged.map(e=>e.original.x + e.widget.get('width')))) / 2,
+      y: (Math.min(...arranged.map(e=>e.original.y)) + Math.max(...arranged.map(e=>e.original.y + e.widget.get('height')))) / 2
+    };
+  }
+
+  // Largest radius that still keeps every widget of the circle on the board.
+  // It depends on where the selection sits: a circle drawn around a point in
+  // the corner of the board is necessarily a small one.
+  circleAlignFittingRadius() {
+    const arranged = this.circleAlignWidgets();
+    if(!arranged.length)
+      return Math.round(Math.min(viewportConfig.targetWidth, viewportConfig.targetHeight) / 2);
+    const center = this.circleAlignCenter(arranged);
+    const reach = Math.max(...arranged.map(e=>Math.max(e.widget.get('width'), e.widget.get('height')))) / 2;
+    return Math.max(1, Math.round(Math.min(center.x, viewportConfig.targetWidth - center.x, center.y, viewportConfig.targetHeight - center.y) - reach));
   }
 
   // Spreads the selection evenly over a circle centered on the middle of the
-  // selection - the same reference the align and distribute buttons use, and
-  // the one that keeps the arrangement where the widgets already are. Both that
-  // center and the rotation of a widget come from where it was before the tool
-  // ran, so changing a setting arranges the same selection again instead of
-  // moving the widgets that are already on the circle.
+  // selection. Both that center and the rotation of a widget come from where it
+  // was before the tool ran, so changing a setting arranges the same selection
+  // again instead of moving the widgets that are already on the circle.
   applyCircleAlign() {
-    const arranged = (this.circleAlignOriginals || []).map(original=>({ original, widget: widgets.get(original.id) })).filter(entry=>entry.widget);
+    const arranged = this.circleAlignWidgets();
     if(arranged.length < 3)
       return;
 
-    const centerX = (Math.min(...arranged.map(e=>e.original.x)) + Math.max(...arranged.map(e=>e.original.x + e.widget.get('width')))) / 2;
-    const centerY = (Math.min(...arranged.map(e=>e.original.y)) + Math.max(...arranged.map(e=>e.original.y + e.widget.get('height')))) / 2;
+    const { x: centerX, y: centerY } = this.circleAlignCenter(arranged);
     const angleStep = 2 * Math.PI / arranged.length;
     const radius = +this.circleAlignRadius || 0;
 
@@ -2233,12 +2291,19 @@ class PropertiesModule extends SidebarModule {
     batchEnd();
   }
 
-  // Takes the whole arrangement back, down to the rotation each widget had, and
-  // closes the settings: the tool is done with this selection either way.
-  cancelCircleAlign(options) {
-    const originals = this.circleAlignOriginals || [];
+  // Leaves the arrangement as it is. Both exits end the tool for this selection,
+  // so a second press starts over from wherever the widgets are then.
+  closeCircleAlign(button, options) {
     this.circleAlignOriginals = null;
     options.textContent = '';
+    button.classList.remove('open');
+  }
+
+  // Takes the whole arrangement back, down to the rotation each widget had, and
+  // closes the settings: the tool is done with this selection either way.
+  cancelCircleAlign(button, options) {
+    const originals = this.circleAlignOriginals || [];
+    this.closeCircleAlign(button, options);
 
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} took back the circle arrangement of the selected widgets in editor`);
