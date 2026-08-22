@@ -1001,7 +1001,9 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     // and a circle of radius 0, which would stack the selection on one point,
     // is not one of the values the field takes
     .typeText(radius, '0', { replace: true })
-    .expect(radius.value).eql('1');
+    .expect(radius.value).eql('1')
+    // which is the radius the board ends up on as well
+    .expect(placement()).eql('c1: 277,265 @0 | c2: 275,266 @45 | c3: 275,265 @-30');
 
   // undoing puts the whole selection back, rotations included, and closes the
   // settings again
