@@ -56,7 +56,7 @@ beforeAll(() => {
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
-    'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine'
+    'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine', 'aiChangedOperations', 'aiHighlightResult'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -3963,6 +3963,34 @@ describe('AI routine assistant', () => {
     expect(written).toContainEqual([ 'clickRoutine', routine ]);
     expect(editor.expandedEvents.clickRoutine).toBe(true);
     popup.hide();
+  });
+
+  test('only the operations that really changed count as changed', () => {
+    const op = f => ({ func: f });
+    // an operation inserted in the middle does not make everything after it new
+    expect([ ...aiChangedOperations([ op('A'), op('B') ], [ op('A'), op('C'), op('B') ]) ]).toEqual([ 1 ]);
+    // a changed parameter is a change, an untouched neighbour is not
+    expect([ ...aiChangedOperations([ { func: 'MOVE', count: 1 } ], [ { func: 'MOVE', count: 2 } ]) ]).toEqual([ 0 ]);
+    // writing a routine from scratch marks all of it
+    expect([ ...aiChangedOperations(undefined, [ op('A'), op('B') ]) ]).toEqual([ 0, 1 ]);
+    // an unchanged routine marks nothing
+    expect([ ...aiChangedOperations([ op('A'), op('B') ], [ op('A'), op('B') ]) ]).toEqual([]);
+  });
+
+  test('applying marks the changed operations in the editor and says what happened', () => {
+    const before = [ { func: 'FLIP' } ];
+    const after = [ { func: 'FLIP' }, { func: 'SHUFFLE', holder: 'deck' } ];
+    // the widget already holds what the assistant wrote; the highlight says which parts are new
+    const { editor } = makeEditor({ type: 'button', clickRoutine: after });
+    editor.expandedEvents.clickRoutine = true;
+    editor.render();
+    const routineEditor = editor.routineEditors.clickRoutine;
+    aiHighlightResult(routineEditor, before, after, { explanation: 'It shuffles the deck too.' });
+    const marked = routineEditor.directChildCards().map(c => c.classList.contains('routine-editor-operation-ai-changed'));
+    expect(marked).toEqual([ false, true ]); // the operation that was already there is left alone
+    const note = editor.domElement.querySelector('.ai-routine-note');
+    expect(note.textContent).toContain('Undo');
+    expect(note.textContent).toContain('It shuffles the deck too.');
   });
 
   test('validation reports only what the routine adds, not what the room already had', () => {

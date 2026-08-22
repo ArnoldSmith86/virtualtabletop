@@ -1,7 +1,8 @@
-/* The "write this routine for me" button on a routine card, and the popup it
-   opens. The button sits with the other card controls and is dimmed like them
-   until the card is hovered; the popup is an ordinary inline popup, only wider,
-   because what it shows is sentences and a routine rather than one value. */
+/* The "write this routine for me" button on a routine card, the popup it opens,
+   and what the result looks like once it has been written: the operations that
+   changed are marked in the routine itself, with a one-line note above it. The
+   button sits with the other card controls and is dimmed like them until the
+   card is hovered. */
 
 .events-editor-ai {
   font-size: 16px;
@@ -33,10 +34,36 @@ textarea.ai-routine-prompt {
   font-size: 13px;
 }
 
+.ai-routine-quality {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ai-routine-quality-end {
+  font-size: 11px;
+  color: var(--textDimColor1);
+  white-space: nowrap;
+}
+
+input.ai-routine-quality-slider {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--VTTblue);
+}
+
+.ai-routine-quality-label {
+  font-size: 11px;
+  color: var(--textDimColor1);
+  margin-top: 2px;
+  text-align: center;
+}
+
 .ai-routine-buttons {
   display: flex;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 .ai-routine-status {
@@ -55,25 +82,55 @@ textarea.ai-routine-prompt {
   color: var(--textHighlightColor2, orange);
 }
 
-.ai-routine-explanation {
-  margin-top: 8px;
-  font-size: 13px;
-}
-
-pre.ai-routine-json {
-  margin: 8px 0 0 0;
-  padding: 8px;
-  max-height: 260px;
-  overflow: auto;
-  border-radius: 4px;
+/* What was just written, above the routine it was written into. */
+.ai-routine-note {
+  position: relative;
+  margin: 0 0 6px 0;
+  padding: 6px 26px 6px 8px;
+  border-left: 3px solid var(--VTTblue);
+  border-radius: 0 4px 4px 0;
   background: var(--backgroundHighlightColor1);
-  font-size: 11px;
-  white-space: pre-wrap;
-  word-break: break-word;
+  font-size: 12px;
 }
 
-.ai-routine-problems ul {
-  margin: 4px 0 0 0;
-  padding-left: 18px;
-  font-size: 12px;
+.ai-routine-note-head {
+  font-weight: bold;
+}
+
+.ai-routine-note-text {
+  margin-top: 2px;
+  color: var(--textDimColor1);
+}
+
+.ai-routine-note-warning {
+  margin-top: 2px;
+  color: var(--textHighlightColor2, orange);
+}
+
+.ai-routine-note-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: var(--routineChromeOpacity);
+}
+
+.ai-routine-note-close:hover {
+  opacity: 1;
+}
+
+/* The operations the assistant added or changed: a flash to catch the eye, then
+   a lasting marker, so it still reads as "this is what it touched" a minute
+   later. Cleared by the note's dismiss button and by any edit that re-renders
+   the routine. */
+.routine-editor-operation.routine-editor-operation-ai-changed {
+  border-left: 3px solid var(--VTTblue);
+  animation: aiRoutineChanged 2.5s ease-out;
+}
+
+@keyframes aiRoutineChanged {
+  0% { background-color: rgba(0, 150, 255, .45); }
+  60% { background-color: rgba(0, 150, 255, .25); }
+  100% { background-color: transparent; }
 }

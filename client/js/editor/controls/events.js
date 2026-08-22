@@ -448,11 +448,15 @@ class EventsEditor {
       });
       headerDOM.append(jsonButton);
 
-      aiRoutineButton(headerDOM, this.widget, property, _=>this.routineSource(target)[property], routine=>{
+      aiRoutineButton(headerDOM, this.widget, property, _=>this.routineSource(target)[property], (routine, result)=>{
+        const before = this.routineSource(target)[property];
         delete this.routineEditors[key]; // it keeps its own copy of the old one
         this.expandedEvents[key] = true; // land on the result rather than a closed card
         this.setRoutine(entry, routine);
         this.render();
+        // render() is synchronous and rebuilds the operation cards, so the ones
+        // the assistant changed can only be marked once it has run
+        aiHighlightResult(this.routineEditors[key], before, routine, result);
       });
 
       const removeButton = document.createElement('span');
