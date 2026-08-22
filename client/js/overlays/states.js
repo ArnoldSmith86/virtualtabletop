@@ -160,6 +160,14 @@ function addStateFile(f) {
   uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
 }
 
+function parseJSONorNull(bytes) {
+  try {
+    return JSON.parse(fflate.strFromU8(bytes));
+  } catch(e) {
+    return null;
+  }
+}
+
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
   await waitForZipLibrary();
 
@@ -175,36 +183,44 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     return;
   }
 
-  let json = null;
+  const fileName = sourceFile.name.replace(/\.[^.]+$/, '');
+  let containsJSON = false;
+  let info = null;
+  const variants = [];
   const assets = {};
   for(const [ filename, entry ] of Object.entries(entries)) {
     if(jsonFiles[filename]) {
-      const content = JSON.parse(fflate.strFromU8(jsonFiles[filename]));
-      if(!json) {
-        json = content;
-        if(json._meta)
-          json._meta.info.variants = [];
+      containsJSON = true;
+      // the server reads a variant from every JSON file in the top level of the zip, so the
+      // JSON of a PCIO or TTS file and anything an asset happens to contain is not one - and
+      // a game file written by hand or by another tool can be missing its metadata entirely
+      if(filename.match(/^[^\/]+\.json$/)) {
+        const content = parseJSONorNull(jsonFiles[filename]);
+        if(content && content._meta) {
+          variants.push(content._meta.info || {});
+          if(!info)
+            info = content._meta.info || null;
+        }
       }
-      if(json._meta)
-        json._meta.info.variants.push(content._meta.info);
     }
     if(filename.match(/^\/?(user)?assets/) && entry.size)
       assets[entry.crc + '_' + entry.size] = filename;
   }
 
-  if(json === null) {
+  if(!containsJSON) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
-  } else if(Array.isArray(json)) {
-    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
+  } else if(!info) {
+    // without metadata the file name is all the tile can show until the server has read the file
+    metaCallback(fileName, '', null, [{}], null, null);
   } else {
     let imageURL = null;
 
-    if(json._meta.info.image) {
-      if(json._meta.info.image.match(/^http/)) {
-        imageURL = json._meta.info.image;
-      } else if(entries[json._meta.info.image.substr(1)]) {
-        const imageFile = json._meta.info.image.substr(1);
+    if(info.image) {
+      if(info.image.match(/^http/)) {
+        imageURL = info.image;
+      } else if(entries[info.image.substr(1)]) {
+        const imageFile = info.image.substr(1);
         const image = toBase64((await unzipBuffer(buffer, name=>name == imageFile))[imageFile]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
@@ -212,7 +228,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       }
     }
 
-    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL, json._meta.info.variants, json._meta.info.savePlayers, json._meta.info.saveDate);
+    metaCallback(info.name || fileName, info.similarName, imageURL, variants, info.savePlayers, info.saveDate);
   }
 
   const result = await fetch('assetcheck', {
