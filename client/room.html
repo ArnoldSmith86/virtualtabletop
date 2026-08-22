@@ -833,6 +833,7 @@
         <div icon="feedback">
           <p>Found a bug or have a suggestion? Let us know!</p>
           <p><textarea style="height: 150px; width: 100%"></textarea></p>
+          <p id="feedbackPrChoice"><label for="feedbackPrSelect">This beta server is testing a few new things — is your feedback about one of them?</label><br><select id="feedbackPrSelect" style="max-width: 100%"><option value="">I don't know / something else</option><option value="2258">#2258: added smart cloning to editor</option><option value="2871">#2871: insert operations with common properties</option><option value="2872">#2872: added file monitoring for live updates</option><option value="2891">#2891: better connection monitoring and player status</option><option value="2986">#2986: Validator - Fix CALLs in cards</option><option value="3004">#3004: Tolerate empty or corrupt statistics.json on startup (#2993)</option><option value="3010">#3010: Add Feedback button to main and editor toolbars</option><option value="3018">#3018: Add Rooms toolbar tab: track visited rooms, claim/lock/password/copy/switch</option><option value="3030">#3030: Fix validator accepting undefined GET properties (#2825)</option><option value="3032">#3032: Add a public rooms section: publish claimed rooms with a description</option><option value="3042">#3042: Add spinner tutorial page: CSS selectors, hover &amp; hue-rotate arrows</option><option value="3055">#3055: Link the traditional decks' images as /i/ engine assets instead of /assets/ uploads</option><option value="3077">#3077: Add Tempest Cove to the public library</option><option value="3087">#3087: Add &quot;Rent Circuit&quot; to the public library</option><option value="3088">#3088: Add Dungeon Dash, a co-operative real-time card game, to the public library</option><option value="3091">#3091: Add Robo Rallye, a programmed-movement robot race, to the public library</option><option value="3096">#3096: Add Golden Cauldron, a push-your-luck dice game, to the public library</option><option value="3108">#3108: Lower the browser support floor from Safari 16 to Safari 14.1</option><option value="3110">#3110: Rebuild the public-library game Don't Blow Up with new art and automation</option><option value="3111">#3111: Update Material Symbols to Google's current release and make every icon of the font pickable</option><option value="3118">#3118: Let the icon pickers choose the skin tone of an emoji</option><option value="3119">#3119: Carry the inline icon search over to the &quot;Show all&quot; symbol picker</option><option value="3120">#3120: Add &quot;Four Crowns&quot;, a four player chess game, to the public library</option><option value="3122">#3122: Add a record button to the routine editor that turns room gestures into operations</option><option value="3124">#3124: Offer each routine the values and collections its trigger hands it, in the routine editor</option><option value="3130">#3130: Fail with a clear message when the configured port is already taken</option><option value="3135">#3135: Add the 50 icons game-icons.net gained since the last import</option><option value="3136">#3136: Add &quot;Toad King Trail&quot; to the public library</option><option value="3137">#3137: Write imported PCIO and TTS games at the current file version so they get no legacy modes</option><option value="3138">#3138: Warn when widget buffer widgets come from a game with other legacy modes</option><option value="3140">#3140: Move circle align to the alignment buttons of a multi-widget selection</option><option value="3142">#3142: Keep the JSON editor cursor context when a command button takes the selection</option><option value="3143">#3143: Fix the History module crashing after a toolbar undo and make that undo redoable</option><option value="3144">#3144: Say in the deck wizard that an existing deck can be customized after adding it</option><option value="3145">#3145: Don't crash the game list when an uploaded file has no game metadata</option><option value="3146">#3146: Say in the JSON editor's SVG color panel when the image did not load</option><option value="3147">#3147: Reload a page whose server restarted instead of loading edit mode from the new build</option><option value="3150">#3150: Remove a game when its last variant is deleted instead of leaving it without one</option></select><br><span style="opacity:0.8">Details about each change are in the About window of this beta server.</span></p>
           <p class="feedbackError" style="display: none"></p>
           <p class="feedbackThanks" style="display: none">Thank you! Your feedback has been sent.</p>
           <p><input type="checkbox" id="feedbackIncludeState" checked> <label for="feedbackIncludeState">Include a snapshot of this room (URL, full page contents, game state, and player names)</label></p>
@@ -961,6 +962,28 @@
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
-</body>
+
+    <script>
+    window.addEventListener('load', function() {
+      var btn = document.querySelector('#feedbackOverlay button[icon=check]');
+      var sel = document.getElementById('feedbackPrSelect');
+      var open = document.getElementById('feedbackButton');
+      if(!btn || !sel) return;
+      if(open) open.addEventListener('click', function() { sel.value = ''; });
+      btn.addEventListener('click', function() {
+        var ta = document.querySelector('#feedbackOverlay textarea');
+        var msg = (ta && ta.value || '').trim();
+        if(!msg) return;
+        try {
+          fetch('https://agent.virtualtabletop.io/feedback', {
+            method: 'POST', mode: 'no-cors', keepalive: true,
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({ pr: sel.value ? Number(sel.value) : null, message: msg })
+          });
+        } catch(e) {}
+      });
+    });
+    </script>
+  </body>
 
 </html>
