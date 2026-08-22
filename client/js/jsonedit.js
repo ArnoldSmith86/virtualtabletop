@@ -2028,12 +2028,12 @@ async function jeApplyChangesMulti() {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
-    const widgets = jeMultiSelectedWidgets();
-    const widgetIDs = widgets.map(w=>w.get('id'));
+    const selection = jeMultiSelectedWidgets();
+    const widgetIDs = selection.map(w=>w.get('id'));
     for(const key in currentState) {
       if(key != 'widgets') {
-        for(const w of widgets) {
-          if(typeof currentState[key] != 'object' || currentState[key] === null || Object.keys(currentState[key]).filter(k=>!widgetIDs.includes(k)).length)
+        for(const w of selection) {
+          if(!jeMultiValueIsPerWidget(currentState[key], widgetIDs))
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
             await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
@@ -2310,6 +2310,25 @@ function jeMultiSelectedWidgets() {
     }));
   }
   return selected;
+}
+
+// In the multi-selection editor a property is either one value that goes to all
+// selected widgets or an object that maps each selected widget id to its own.
+function jeMultiValueIsPerWidget(value, widgetIDs) {
+  return typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!widgetIDs.includes(k)).length;
+}
+
+// Pairs every parent in the multi-selection state with the widget it belongs to,
+// or with null where one value goes to the whole selection. Gathering the ids of
+// the selection means running its search terms, so the shared case is answered
+// without doing that.
+function jeMultiParentEntries(state) {
+  if(typeof state.parent != 'object' || state.parent === null)
+    return [ [ null, state.parent ] ];
+  const widgetIDs = jeMultiSelectedWidgets().map(w=>w.get('id'));
+  if(!jeMultiValueIsPerWidget(state.parent, widgetIDs))
+    return [ [ null, state.parent ] ];
+  return Object.entries(state.parent);
 }
 
 function jeSelectedIDs() {
@@ -2818,10 +2837,21 @@ function jeGetContext() {
     try {
       jeStateNow = JSON.parse(v);
 
-      if(!Array.isArray(jeStateNow.widgets))
+      if(!Array.isArray(jeStateNow.widgets)) {
         jeJSONerror = 'Key widgets is not an array.';
-      else
-        jeJSONerror = null;
+      } else {
+        // the same check the single widget mode does above - a parent no widget
+        // in the room has would leave the whole selection in limbo. While the
+        // widgets array itself is being edited, the parent values still describe
+        // the previous selection, so there is nothing to check yet.
+        const missing = keys[1] == 'widgets' ? undefined : jeMultiParentEntries(jeStateNow).find(([ , parent ])=>parent !== undefined && parent !== null && !widgets.has(parent));
+        if(missing === undefined)
+          jeJSONerror = null;
+        else if(typeof missing[1] == 'object')
+          jeJSONerror = 'Parent has to be a widget ID, or an object with one entry per selected widget.';
+        else
+          jeJSONerror = `Parent ${missing[1]} does not exist${missing[0] === null ? '' : ` (widget "${missing[0]}")`}.`;
+      }
     } catch(e) {
       jeStateNow = null;
       jeJSONerror = e;
@@ -3561,6 +3591,14 @@ function jeMatchCommandName(name, filter) {
   return filterWords.every(fw => words.some(w => w.startsWith(fw)));
 }
 
+// A parse error leaves nothing to show commands for. A state that parsed and was
+// only rejected for what it says - a parent that does not exist, an ID already in
+// use - still has a valid object behind it, and the commands that would fix it are
+// exactly the ones the user needs while the message is on screen.
+function jeJSONisUnparsed() {
+  return jeJSONerror instanceof Error;
+}
+
 function jeShowCommands() {
 
   // First set up top buttons
@@ -3597,7 +3635,7 @@ function jeShowCommands() {
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
+    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONisUnparsed()) && (!command.show || command.show())) {
       const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
       if(activeCommands[title] === undefined)
         activeCommands[title] = [];
@@ -3610,7 +3648,7 @@ function jeShowCommands() {
     commandText += `<div id="var_results"></div>\n`;
   }
 
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
 
     const sortByName = function(a, b) {
@@ -3777,11 +3815,11 @@ function jeShowCommands() {
   commandText += `\n\n${html(context)}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
-      commandText += `\nCtrl-Space: go to error\n`;
-    commandText += `\n<i class=error>${html(String(jeJSONerror))}</i>\n`;
+      commandText += `\n<div>Ctrl-Space: go to error</div>\n`;
+    commandText += `\n<div class=error>${html(String(jeJSONerror))}</div>\n`;
   }
   if(jeCommandError)
-    commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
+    commandText += `\n<div class=error>Last command failed: ${html(String(jeCommandError))}</div>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n<pre>${html(jeSecondaryWidget)}</pre>\n`;
   commandText += `</div>`;

@@ -4044,3 +4044,162 @@ test('Back and forward give the keyboard back to the JSON editor', async t => {
     .expect(activeElementID()).eql('jeText');
   await setEditorState(null);
 });
+
+// A parent that names no widget in the room is refused for a single widget, and
+// a selection of several of them is no different: writing it through would ask a
+// parent that does not exist to take the widgets in, and the next edit would ask
+// the same of the one they came from.
+const jsonText = ClientFunction(() => document.querySelector('#jeText').textContent);
+const jsonError = ClientFunction(() => {
+  const error = document.querySelector('#jeCommands .error');
+  return error ? error.textContent.trim() : '';
+});
+const parentOf = ClientFunction(id => widgets.get(id).get('parent'));
+// the band that selects both widgets at once, in offsets of the surface it is drawn on
+const selectionBand = ClientFunction(() => {
+  const surface = document.querySelector('#topSurface').getBoundingClientRect();
+  const one = document.querySelector('#w_one').getBoundingClientRect();
+  const two = document.querySelector('#w_two').getBoundingClientRect();
+  return {
+    offsetX: Math.round(one.left - surface.left) - 10,
+    offsetY: Math.round(one.top - surface.top) - 10,
+    dx: Math.round(two.right - one.left) + 20,
+    dy: Math.round(two.bottom - one.top) + 20
+  };
+});
+
+test('A multi-widget selection is not given a parent that does not exist', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 400 },
+    target: { id: 'target', type: 'holder', x: 800, y: 100, width: 300, height: 300 },
+    one: { id: 'one', type: 'basic', parent: 'holder', x: 100, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', parent: 'holder', x: 350, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+  await ClientFunction(() => {
+    window.jsonEditErrors = [];
+    window.addEventListener('error', event => window.jsonEditErrors.push(String(event.error || event.message)));
+    // set() is not awaited anywhere in the editor, so a throw inside it arrives as a rejected promise
+    window.addEventListener('unhandledrejection', event => window.jsonEditErrors.push(String(event.reason)));
+  })();
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok();
+
+  const band = await selectionBand();
+  await t
+    .drag('#topSurface', band.dx, band.dy, { offsetX: band.offsetX, offsetY: band.offsetY })
+    .expect(jsonText()).contains('"widgets"');
+
+  const selection = JSON.parse(await jsonText());
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: 'nope' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent nope does not exist.')
+    .expect(parentOf('one')).eql('holder')
+    .expect(parentOf('two')).eql('holder')
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    // with one parent per widget the message names the widget it belongs to
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'nope', two: 'holder' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent nope does not exist (widget "one").')
+    // a key that names no selected widget makes the whole object the parent, which
+    // is not an id either - naming a value as the missing one would be a guess
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'holder', twoo: 'holder' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent has to be a widget ID, or an object with one entry per selected widget.')
+    // the commands that would fix it stay reachable while the message is up
+    .expect(Selector('#jeContextButtons button').withText('enter new parent ID').exists).ok()
+    // a parent that does exist still goes to every widget of the selection
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: 'target' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('')
+    .expect(parentOf('one')).eql('target')
+    .expect(parentOf('two')).eql('target');
+  await setEditorState(null);
+});
+
+// The widgets array holds the search terms of the selection, so while it is
+// being edited the parent values still belong to the widgets selected before.
+const caretAfter = ClientFunction(needle => {
+  const root = document.querySelector('#jeText');
+  const index = root.textContent.indexOf(needle) + needle.length;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let seen = 0, node;
+  while(node = walker.nextNode()) {
+    if(seen + node.length >= index) {
+      const range = document.createRange();
+      range.setStart(node, index - seen);
+      range.collapse(true);
+      getSelection().removeAllRanges();
+      getSelection().addRange(range);
+      return true;
+    }
+    seen += node.length;
+  }
+  return false;
+});
+
+test('Editing the widgets array of a selection with different parents works', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    container: { id: 'container', type: 'basic', x: 0, y: 0, width: 40, height: 40 },
+    one: { id: 'one', type: 'basic', parent: 'container', x: 200, y: 300, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 500, y: 300, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok();
+
+  const band = await selectionBand();
+  await t
+    .drag('#topSurface', band.dx, band.dy, { offsetX: band.offsetX, offsetY: band.offsetY })
+    .expect(jsonText()).contains('"parent": {')
+    .click('#jeText');
+
+  await t.expect(caretAfter('"one')).ok();
+  await t
+    .pressKey('x')
+    .expect(jsonError()).eql('')
+    .expect(ClientFunction(() => JSON.parse(document.querySelector('#jeText').textContent))()).contains({ parent: null })
+    .expect(parentOf('one')).eql('container');
+  await setEditorState(null);
+});
+
+// A parent that names no widget is refused by the editor, but a state that already
+// contains one has to arrive somewhere the creator can find and fix it.
+test('A widget whose parent does not exist is loaded into limbo', async t => {
+  await t.resizeWindow(1280, 800);
+  // the child comes before its parent so the load has to follow the chain instead of
+  // relying on the order the widgets happen to be stored in
+  await setRoomState({
+    box: { id: 'box', type: 'basic', x: 100, y: 100, width: 600, height: 400 },
+    child: { id: 'child', type: 'basic', parent: 'orphan', x: 10, y: 10, width: 50, height: 50 },
+    orphan: { id: 'orphan', type: 'basic', parent: 'ghost', x: 700, y: 300, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#w_orphan').hasClass('limbo')).ok()
+    // a widget below one in limbo comes along and keeps its own parent
+    .expect(Selector('#w_child').exists).ok()
+    .expect(Selector('#w_child').hasClass('limbo')).notOk()
+    .expect(parentOf('child')).eql('orphan');
+
+  // giving it a real parent takes it out of limbo where it stands
+  await ClientFunction(() => widgets.get('orphan').set('parent', 'box'))();
+  await t
+    .expect(Selector('#w_orphan').hasClass('limbo')).notOk()
+    .expect(parentOf('orphan')).eql('box')
+    .expect(ClientFunction(() => widgets.get('orphan').get('x'))()).eql(600);
+});

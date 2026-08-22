@@ -915,13 +915,23 @@ body.hitTest .widget:not(.line) {
 }
 
 .widget.limbo {
-  opacity: 0.5;
-  border: 5px dashed darkred;
+  opacity: 0.7;
+  border: 2px dashed darkred;
 }
+/* the marker sits above the widget instead of in its content flow: it has to stay
+   readable on a 24px token and must not run into whatever the widget draws itself */
 .widget.limbo::before {
   content: 'Invalid Parent';
-  font-size: 16px;
-  color: darkred;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  padding: 0 4px;
+  border-radius: 2px;
+  background: darkred;
+  color: white;
+  font: bold 11px/1.4 sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 body:not(.edit) .widget.limbo {
