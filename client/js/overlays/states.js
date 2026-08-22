@@ -209,9 +209,12 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(filename.match(/^[^\/]+\.json$/)) {
         const content = parseJSONorNull(jsonFiles[filename]);
         if(content && content._meta) {
-          variants.push(content._meta.info || {});
+          // the info of a hand-written file can hold anything, while everything that reads a
+          // variant treats it as an object it can read properties from and write them to
+          const variantInfo = typeof content._meta.info == 'object' ? content._meta.info : null;
+          variants.push(variantInfo || {});
           if(!info)
-            info = content._meta.info || null;
+            info = variantInfo;
         }
       }
     }
