@@ -2650,7 +2650,7 @@ function jeTreeGetWidgetHTML(widget) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))
-      result += `${colored(String(widget.get('text')).replaceAll('\n', '\\n'),'extern')} - `;
+      result += `${colored(String(widget.get('text')).split('\n').join('\\n'),'extern')} - `;
     if(type == null && widget.get('classes'))
       result += `${colored(widget.get('classes'),'extern')} - `;
   }

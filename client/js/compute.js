@@ -549,7 +549,8 @@ const compute_ops = [
     name: 'replaceAll',
     desc: 'returns a string with all occurences of string y replaced by string z',
     sample: 'var a = ${x} replaceAll ${y} ${z}',
-    call: function(v, x, y, z) { return v = x.replaceAll(y, z) },
+    // y is a literal string, escaped into the global regex that replaces every occurrence
+    call: function(v, x, y, z) { return v = x.replace(new RegExp(String(y).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), z) },
     hash: '907134df3b97bb1e910897ea1eadf3e1'
   },
   {

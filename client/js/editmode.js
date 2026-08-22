@@ -1724,7 +1724,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
         if(property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
           currentWidget.index = 1;
         if(currentWidget[property] !== undefined && (property != 'inheritFrom' || !inheritFrom)) // Don't change inheritFrom if it was just added to new widget
-          currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).replaceAll(sourceNumber, targetNumber));
+          currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).split(sourceNumber).join(targetNumber));
       }
     } else {
       delete currentWidget.id;
