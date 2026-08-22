@@ -137,9 +137,10 @@ test('A module is closed again through its sidebar button', async t => {
 });
 
 // The toolbar's undo button cuts the undo protocol short behind the History module's back, so the
-// rows the module has rendered describe entries that are no longer in the protocol. It has to drop
-// them instead of writing to a row that has no entry behind it - the next change of any kind, and
-// a second undo in a row, both land on exactly that row.
+// rows the module has rendered describe entries that are no longer in the protocol. They stay in
+// the list as the states the undo stepped over, which is what makes a toolbar undo redoable, and
+// the module must not write to a row that has no entry behind it - the next change of any kind,
+// and a second undo in a row, both land on exactly that row.
 test('Undoing from the toolbar keeps the History module in sync', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -152,6 +153,7 @@ test('Undoing from the toolbar keeps the History module in sync', async t => {
   const historyRows = Selector('.undoEntry');
   const undoButton = Selector('#editorToolbar [icon=undo]');
   const widgetCount = ClientFunction(() => widgets.size);
+  const protocolLength = ClientFunction(() => getUndoProtocol().length);
   await t
     .click('#editButton')
     .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
@@ -165,27 +167,41 @@ test('Undoing from the toolbar keeps the History module in sync', async t => {
     .click('#add-holder')
     .expect(historyRows.count).eql(rowsBefore+2)
     .expect(widgetCount()).eql(5) // the widget of the room state, the line with its two stops, the holder
-    // each undo drops the row of the entry it removes instead of adding one for itself
-    .click('#editorToolbar [icon=undo]')
-    .expect(historyRows.count).eql(rowsBefore+1)
+    // an undo steps back through the list instead of dropping what it undid: the row stays and the
+    // one below it becomes the active one
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
     .expect(widgetCount()).eql(4)
-    // the sequence the crash reports arrived from: one undo, and then a change of any kind
+    // so clicking the row again takes the undo back
+    .click(historyRows.nth(0))
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(widgetCount()).eql(5)
+    // the sequence the crash reports arrived from: one undo, and then a change of any kind - which
+    // is what makes the state the undo stepped over unreachable, so its row is replaced
+    .click(undoButton)
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-holder')
     .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
     .expect(widgetCount()).eql(5)
-    .click('#editorToolbar [icon=undo]')
-    .expect(historyRows.count).eql(rowsBefore+1)
-    .expect(widgetCount()).eql(4)
-    .click('#editorToolbar [icon=undo]')
-    .expect(historyRows.count).eql(rowsBefore)
+    // and the other one: two undos in a row
+    .click(undoButton)
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(2).hasClass('active')).ok()
     .expect(widgetCount()).eql(1);
 
   // the first entry is the room as it was loaded, so the button turns off once it is the
   // only one left and clicking it would do nothing
-  for(let rows = await historyRows.count; rows > 1; --rows)
+  for(let entries = await protocolLength(); entries > 1; --entries)
     await t.expect(undoButton.hasAttribute('disabled')).notOk().click(undoButton);
-  await t.expect(undoButton.hasAttribute('disabled')).ok();
+  await t
+    .expect(undoButton.hasAttribute('disabled')).ok()
+    // everything the button undid is still listed, so the newest row brings all of it back
+    .click(historyRows.nth(0))
+    .expect(widgetCount()).eql(5)
+    .expect(undoButton.hasAttribute('disabled')).notOk();
   await setEditorState(null);
 });
 
@@ -234,7 +250,8 @@ test('Clicking a History row returns to that state and keeps the newer rows unti
     .expect(widgetCount()).eql(5)
     .expect(historyRows.nth(0).hasClass('active')).ok()
     .click('#editorToolbar [icon=undo]')
-    .expect(historyRows.count).eql(rowsBefore+1)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
     .expect(widgetCount()).eql(4);
   await setEditorState(null);
 });
