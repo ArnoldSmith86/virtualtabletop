@@ -1154,14 +1154,20 @@ function fillStateDetails(states, state, dom) {
     // saving a game without a single variant left removes the game itself, so it asks the same
     // question the delete button asks instead of doing that silently. in-progress games never get
     // here: their details have no edit button (see the editable check in fillStateDetails)
-    const removesGame = !$('#variantsList .variant');
-    if(removesGame) {
+    if(!$('#variantsList .variant')) {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
-      if(!await confirmOverlay('Save without variants', 'You deleted the last variant of this game. Saving now removes the whole game from your game shelf. Are you sure?', 'Delete game', 'Back to editing', 'delete', 'undo', 'red')) {
+      // a public library game is only editable on a server that allows editing it, and there
+      // removing it deletes the game itself instead of just this room's shelf entry
+      const target = state.publicLibrary ? 'the public library of this server' : 'your game shelf';
+      if(!await confirmOverlay('Save without variants', `You deleted the last variant of this game. Saving now removes the whole game from ${target}. Are you sure?`, 'Delete game', 'Back to editing', 'delete', 'undo', 'red')) {
         showStatesOverlay(detailsOverlay);
         return;
       }
     }
+
+    // the variant list can have changed while the confirmation was open, so what the save does to
+    // the game is decided from the state it is actually saving
+    const removesGame = !$('#variantsList .variant');
 
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
     const main = $('#showName').checked, similar = $('#showNameSimilar').checked;
@@ -1187,9 +1193,15 @@ function fillStateDetails(states, state, dom) {
     });
 
     // the removed game leaves no details to go back to, so this ends on the game shelf just like
-    // the details' delete button does
-    if(removesGame)
+    // the details' delete button does - including taking the tile of the removed game with it
+    // instead of leaving it clickable until the server's meta update arrives
+    if(removesGame) {
+      removeFromDOM(dom);
+      updateEmptyLibraryHint();
+      if(!$('#statesList > div:nth-of-type(1) .roomState'))
+        $('#statesList > div:nth-of-type(1)').classList.add('empty');
       showStatesOverlay('statesOverlay');
+    }
   };
 }
 

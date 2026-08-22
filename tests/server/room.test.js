@@ -3,6 +3,7 @@ import os from 'os';
 import path from 'path';
 
 import Room from '../../server/room.mjs';
+import { VERSION } from '../../server/fileupdater.mjs';
 
 let directory = null;
 let source = null;
@@ -17,6 +18,17 @@ function roomWithStates(states) {
   room.state = { _meta: { states } };
   room.variantFilename = (stateID, variantID)=>path.join(directory, `${stateID}-${variantID}.json`);
   room.sendMetaUpdate = ()=>{};
+  return room;
+}
+
+// a room that loads the given games from a file in the temporary directory, like a real room load
+function roomLoadingStates(states) {
+  const room = roomWithStates({});
+  room.id = 'room';
+  room.roomFilename = ()=>path.join(directory, 'room.json');
+  room.getPublicLibraryGames = ()=>({});
+  room.broadcast = ()=>{};
+  fs.writeFileSync(room.roomFilename(), JSON.stringify({ _meta: { version: VERSION, metaVersion: 2, players: {}, starred: {}, states } }));
   return room;
 }
 
@@ -77,7 +89,7 @@ describe('server/room.mjs', function() {
     };
     const room = roomWithStates(states);
 
-    room.removeInvalidPublicLibraryLinks(player);
+    room.removeInvalidPublicLibraryLinks();
 
     expect(states.linksOnly).toBeUndefined();
     expect(states.mixed.variants.length).toEqual(1);
@@ -92,10 +104,28 @@ describe('server/room.mjs', function() {
     const room = roomWithStates(states);
     writeVariantFiles('several', 3);
 
-    room.removeInvalidPublicLibraryLinks(player);
+    room.removeInvalidPublicLibraryLinks();
 
     expect(states.several.variants).toEqual([ {} ]);
     expect(fs.readFileSync(path.join(directory, 'several-0.json'), 'utf8')).toEqual('{"variant":2}');
+  });
+
+  test('load repairs games with dead public library links and games without variants', async function() {
+    const room = roomLoadingStates({
+      mixed:     { name: 'Mixed', variants: [ { plStateID: 'PL:games/Gone', plVariantID: 0 }, { plStateID: 'PL:games/AlsoGone', plVariantID: 0 }, {} ] },
+      linksOnly: { name: 'Links', variants: [ { plStateID: 'PL:games/Gone', plVariantID: 0 } ] },
+      empty:     { name: 'Empty', variants: [] },
+      filled:    { name: 'Filled', variants: [ {} ] }
+    });
+    writeVariantFiles('mixed', 3);
+
+    await room.load();
+
+    expect(room.state._meta.states.mixed.variants).toEqual([ {} ]);
+    expect(fs.readFileSync(path.join(directory, 'mixed-0.json'), 'utf8')).toEqual('{"variant":2}');
+    expect(room.state._meta.states.linksOnly).toBeUndefined();
+    expect(room.state._meta.states.empty).toBeUndefined();
+    expect(room.state._meta.states.filled).toBeDefined();
   });
 
   test('removeStatesWithoutVariants removes games that have no variant left', function() {
@@ -106,7 +136,7 @@ describe('server/room.mjs', function() {
     };
     const room = roomWithStates(states);
 
-    room.removeStatesWithoutVariants(player);
+    room.removeStatesWithoutVariants();
 
     expect(states.empty).toBeUndefined();
     expect(states.filled).toBeDefined();

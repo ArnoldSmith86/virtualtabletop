@@ -355,8 +355,12 @@ export default class Room {
   editState(player, id, meta, variantInput, variantOperationQueue) {
     const variants = this.state._meta.states[id].variants;
 
+    // reordering parks a save file under a name of its own while the variants it swaps with move.
+    // variants are addressed by their numeric index, so a non-numeric name cannot collide with one
+    const tempVariantID = '--TEMP--';
+
     const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
-      if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
+      if(oldVariantID == tempVariantID && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != tempVariantID && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
         this.moveFile(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
     };
 
@@ -379,16 +383,16 @@ export default class Room {
 
       if(o.operation == 'up') {
         if(o.variantID) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID-1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID-1);
+          renameVariantFile(id, tempVariantID, o.variantID-1);
 
           variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=1; i<variants.length; ++i)
             renameVariantFile(id, i, i-1);
-          renameVariantFile(id, player.name, variants.length-1);
+          renameVariantFile(id, tempVariantID, variants.length-1);
 
           variants.push(variants.shift());
         }
@@ -396,16 +400,16 @@ export default class Room {
 
       if(o.operation == 'down') {
         if(o.variantID < variants.length-1) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID+1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID+1);
+          renameVariantFile(id, tempVariantID, o.variantID+1);
 
           variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=variants.length-2; i>=0; --i)
             renameVariantFile(id, i, i+1);
-          renameVariantFile(id, player.name, 0);
+          renameVariantFile(id, tempVariantID, 0);
 
           variants.unshift(variants.pop());
         }
