@@ -609,6 +609,9 @@ MinifyHTML().then(function(result) {
 
   router.get('/edit.js', function(req, res, next) {
     res.setHeader('Content-Type', 'text/javascript');
+    // the editor bundle only fits the client bundle of the same build, so a page checks this
+    // header (with a HEAD request) before importing it - see checkForServerRestart in the client
+    res.setHeader('X-Server-Start', serverStart);
     sendMinified(req, res, result.editorJSmin, result.editorJSgzipped);
   });
 

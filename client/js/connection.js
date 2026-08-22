@@ -21,6 +21,7 @@ export function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
+    lastTimeout = 1000;  // the backoff is about how long the server stays away, not about the tab's age
     showOverlay(null, true);
     showOverlay(lastOverlay);
     if(!urlProperties.askID) {
@@ -83,6 +84,23 @@ export function startWebSocket() {
 // the client bundle it is running included - can be from a build the server no longer has.
 export function clientIsOutdated() {
   return outdated;
+}
+
+// The socket only learns about a restart once it manages to reconnect, while the new server starts
+// answering over HTTP the moment it binds the port - so in between, a bundle that is fetched on
+// demand already comes from the new build while this page still believes it is up to date. Ask the
+// server that serves that bundle who it is rather than going by the last thing the socket heard.
+// Throws when it cannot be reached, which is just as good a reason not to fetch anything from it.
+export async function checkForServerRestart() {
+  const response = await fetch('edit.js', { method: 'HEAD', cache: 'no-store' });
+  if(!response.ok)
+    throw new Error(`Server answered ${response.status} when asked which build it is running`);
+
+  // a page that has never been connected has nothing to compare against: its bundle came from
+  // whichever server answered the request for the page itself, which nothing here has seen
+  const currentStart = response.headers.get('X-Server-Start');
+  if(serverStart != null && currentStart != null && currentStart != serverStart)
+    outdated = true;
 }
 
 export function onMessage(func, callback) {
