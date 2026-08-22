@@ -4156,3 +4156,34 @@ test('A command ignores a selection that reaches out of the editor', async t => 
     .expect(widgetProperty('two', 'x')).eql(250);
   await setEditorState(null);
 });
+
+// Applying a command rewrites the line the cursor sits on, so the editor has nothing to match that
+// line by afterwards and used to drop the cursor - which sent the next command to the top of the
+// JSON although the panel still offered the commands of the property the cursor came from.
+test('A second command in a row still runs on the same line as the first', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  for(const expected of [ 250, 300 ])
+    await t
+      .click('#je_multiShift')
+      .typeText('#je_multiShift_Offset', '50', { replace: true })
+      .click(Selector('#jeCommandOptions button').withExactText('Go'))
+      .expect(widgetProperty('one', 'x')).eql(expected)
+      .expect(widgetProperty('two', 'x')).eql(expected);
+  await setEditorState(null);
+});

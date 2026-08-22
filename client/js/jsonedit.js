@@ -2207,6 +2207,7 @@ function jeCursorStateGet() {
   return {
     scroll: $('#jeText').scrollTop,
     currentLine,
+    lineNumber: linesUntilCursor.length,
     defaultValueToAdd,
     sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
     start: s-linesUntilCursor.join('\n').length,
@@ -2219,13 +2220,25 @@ function jeCursorStateSet(state) {
   const lines = v.split('\n');
   let offset = 0;
   let linesFound = 0;
+  let lineRestored = false;
   for(const line of lines) {
     if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
       jeSelect(offset + state.start - 1, offset + state.end - 1);
+      lineRestored = true;
       break;
     } else {
       offset += line.length + 1;
     }
+  }
+  // a command that rewrites the very line the cursor sits on - shift on "x" for example - leaves
+  // no line to match it by, so the cursor falls back to the same line number. Without that it ends
+  // up nowhere and the next command runs on the top of the JSON instead of on the property the
+  // panel still offers commands for.
+  if(!lineRestored && lines[state.lineNumber] !== undefined) {
+    const lineStart = lines.slice(0, state.lineNumber).reduce((total, line)=>total + line.length + 1, 0);
+    const lineEnd = lineStart + lines[state.lineNumber].length;
+    const inLine = offsetInLine=>Math.max(lineStart, Math.min(lineEnd, lineStart + offsetInLine - 1));
+    jeSelect(inLine(state.start), inLine(state.end));
   }
   $('#jeText').scrollTop = state.scroll;
 }
