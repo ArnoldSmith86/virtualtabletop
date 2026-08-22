@@ -55,8 +55,8 @@ function generateUniqueWidgetID(type, derivedIDs) {
   return id;
 }
 
-export function addWidget(widget, instance) {
-  if(widget.parent && !widgets.has(widget.parent)) {
+export function addWidget(widget, instance, allowMissingParent) {
+  if(widget.parent && !widgets.has(widget.parent) && !allowMissingParent) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
     deferredChildren[widget.parent].push(widget);
@@ -129,8 +129,11 @@ export function addWidget(widget, instance) {
       addWidget(c);
   delete deferredCards[widget.id];
 
+  // a parent chain that closes into a cycle is entered through one of its
+  // widgets, which is already here again when the chain leads back to it
   for(const c of deferredChildren[widget.id] || [])
-    addWidget(c);
+    if(!widgets.has(c.id))
+      addWidget(c);
   delete deferredChildren[widget.id];
 }
 
@@ -516,17 +519,23 @@ function receiveStateFromServer(args) {
     }
   }
 
+  // Whatever still waits for a parent here waits for a widget the state does not
+  // contain. Those widgets go onto the surface in limbo instead of being dropped:
+  // edit mode outlines them as "Invalid Parent", so they can be found and given a
+  // real parent rather than silently disappearing from the room.
+  for(const parentID of Object.keys(deferredChildren)) {
+    for(const widget of deferredChildren[parentID] || []) {
+      console.error(`Widget "${widget.id}" is in limbo because its parent "${parentID}" does not exist!`);
+      addWidget(widget, undefined, true);
+    }
+  }
+  deferredChildren = {};
+
   if(Object.keys(deferredCards).length) {
     for(const [ deckID, widgets ] of Object.entries(deferredCards))
       for(const widget of widgets)
         console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
     deferredCards = {};
-  }
-  if(Object.keys(deferredChildren).length) {
-    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
-      for(const widget of widgets)
-        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
-    deferredChildren = {};
   }
 
   // before resetZoomAndPan, which clamps the pan against the board size and the scale

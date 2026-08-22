@@ -5414,3 +5414,31 @@ test('Editing the widgets array of a selection with different parents works', as
     .expect(parentOf('one')).eql('container');
   await setEditorState(null);
 });
+
+// A parent that names no widget is refused by the editor, but a state that already
+// contains one has to arrive somewhere the creator can find and fix it.
+test('A widget whose parent does not exist is loaded into limbo', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    box: { id: 'box', type: 'basic', x: 100, y: 100, width: 600, height: 400 },
+    orphan: { id: 'orphan', type: 'basic', parent: 'ghost', x: 700, y: 300, width: 100, height: 100 },
+    child: { id: 'child', type: 'basic', parent: 'orphan', x: 10, y: 10, width: 50, height: 50 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#w_orphan').hasClass('limbo')).ok()
+    // a widget below one in limbo comes along and keeps its own parent
+    .expect(Selector('#w_child').exists).ok()
+    .expect(Selector('#w_child').hasClass('limbo')).notOk()
+    .expect(parentOf('child')).eql('orphan');
+
+  // giving it a real parent takes it out of limbo where it stands
+  await ClientFunction(() => widgets.get('orphan').set('parent', 'box'))();
+  await t
+    .expect(Selector('#w_orphan').hasClass('limbo')).notOk()
+    .expect(parentOf('orphan')).eql('box')
+    .expect(ClientFunction(() => widgets.get('orphan').get('x'))()).eql(600);
+});
