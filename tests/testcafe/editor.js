@@ -4187,3 +4187,39 @@ test('A second command in a row still runs on the same line as the first', async
       .expect(widgetProperty('two', 'x')).eql(expected);
   await setEditorState(null);
 });
+
+// The options of a command open below the button that was clicked, so that the list of commands
+// does not move away from under the pointer, and the line they will act on is marked - it is the
+// remembered one, which shows no caret while the dialog holds the selection.
+test('A command shows which button and which line it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const shiftButton = Selector('#je_multiShift');
+  const buttonTop = ClientFunction(() => document.querySelector('#je_multiShift').getBoundingClientRect().top);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  const positionBeforeClick = await buttonTop();
+  await t
+    .click(shiftButton)
+    // the list of commands has to stay where it is, or the click that opens the options moves the
+    // next command under the pointer
+    .expect(buttonTop()).eql(positionBeforeClick)
+    .expect(shiftButton.nextSibling(0).id).eql('jeCommandOptions')
+    .expect(shiftButton.hasClass('jeHighlight')).ok()
+    .expect(Selector('#jeCommandOptions b').textContent).eql('shift options:')
+    .expect(Selector('#jeTextHighlight .jeCommandLine').textContent).contains('"x": 200');
+  await setEditorState(null);
+});
