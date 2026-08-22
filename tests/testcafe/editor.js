@@ -5528,6 +5528,7 @@ test('The context commands still insert while a semantic error is shown', async 
 
   await t
     .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
     .click('#w_one')
     .expect(jsonText()).contains('"id": "one"');
 
