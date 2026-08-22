@@ -3,6 +3,7 @@ let lastOverlay = null;
 let connection;
 let serverStart = null;
 let userNavigatedAway = false;
+let outdated = false;
 let messageCallbacks = {};
 let onConnectionCloseCallbacks = [];
 export function onConnectionClose(cb) { onConnectionCloseCallbacks.push(cb); }
@@ -60,7 +61,13 @@ export function startWebSocket() {
     if(func == 'serverStart') {
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
-        setTimeout(() => location.reload(), rand()*10000);
+        outdated = true;
+        // the arrow keeps reload() on its Location: a timer calls what it is handed on the window,
+        // which throws instead of reloading
+        setTimeout(_=>location.reload(), rand()*10000);
+        // preventReconnect() below makes onclose skip these, so the connection monitor would keep
+        // showing a live connection for the seconds until the reload
+        for(const cb of onConnectionCloseCallbacks) cb();
         preventReconnect();
         connection.close();
       }
@@ -70,6 +77,12 @@ export function startWebSocket() {
     for(const callback of (messageCallbacks[func] || []))
       callback(args);
   };
+}
+
+// True once this page has seen the server it is talking to restart: everything it was served -
+// the client bundle it is running included - can be from a build the server no longer has.
+export function clientIsOutdated() {
+  return outdated;
 }
 
 export function onMessage(func, callback) {
