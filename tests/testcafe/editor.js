@@ -4103,6 +4103,17 @@ test('A multi-widget selection is not given a parent that does not exist', async
     .expect(parentOf('one')).eql('holder')
     .expect(parentOf('two')).eql('holder')
     .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    // with one parent per widget the message names the widget it belongs to
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'nope', two: 'holder' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent nope does not exist (widget "one").')
+    // a key that names no selected widget makes the whole object the parent, which
+    // is not an id either - naming a value as the missing one would be a guess
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'holder', twoo: 'holder' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent has to be a widget ID, or an object with one entry per selected widget.')
+    // the commands that would fix it stay reachable while the message is up
+    .expect(Selector('#jeContextButtons button').withText('enter new parent ID').exists).ok()
     // a parent that does exist still goes to every widget of the selection
     .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: 'target' }), null, '  '), { replace: true, paste: true })
     .pressKey('end')
