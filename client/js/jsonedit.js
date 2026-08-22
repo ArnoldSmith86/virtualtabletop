@@ -2267,7 +2267,7 @@ function jeCommandOptions() {
   // from the pointer that just clicked into it.
   const button = $(`#jeContextButtons > [id="${jeCommandWithOptions.id}"]`);
   if(button) {
-    button.classList.add('jeHighlight');
+    button.classList.add('jeCommandOwner');
     button.parentElement.insertBefore(div, button.nextSibling);
   } else {
     $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
@@ -2280,6 +2280,10 @@ function jeCommandOptions() {
     if(firstInput)
       firstInput.focus();
   }
+
+  // the command list scrolls, so options opening near its bottom edge would have their buttons cut
+  // off. 'nearest' scrolls only in that case, which keeps the list still in the common one
+  div.scrollIntoView({ block: 'nearest' });
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
     const options = {};
@@ -2353,12 +2357,23 @@ function jeCursorStateGet() {
 function jeCursorStateSet(state) {
   const v = jeGetEditorContent();
   const lines = v.split('\n');
+  // moving the selection focuses the editor, which must not happen while a command's options are
+  // being typed into: a change arriving from another player would else pull the caret out of the
+  // option field and the next keystroke would land in the JSON. The position is only remembered
+  // then, which is where the commands read it from anyway.
+  const restore = function(start, end) {
+    const options = $('#jeCommandOptions');
+    if(options && options.contains(document.activeElement))
+      jeLastCursorOffsets = [ start, end ];
+    else
+      jeSelect(start, end);
+  };
   let offset = 0;
   let linesFound = 0;
   let lineRestored = false;
   for(const line of lines) {
     if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
-      jeSelect(offset + state.start - 1, offset + state.end - 1);
+      restore(offset + state.start - 1, offset + state.end - 1);
       lineRestored = true;
       break;
     } else {
@@ -2373,9 +2388,10 @@ function jeCursorStateSet(state) {
     const lineStart = lines.slice(0, state.lineNumber).reduce((total, line)=>total + line.length + 1, 0);
     const lineEnd = lineStart + lines[state.lineNumber].length;
     const inLine = offsetInLine=>Math.max(lineStart, Math.min(lineEnd, lineStart + offsetInLine - 1));
-    jeSelect(inLine(state.start), inLine(state.end));
+    restore(inLine(state.start), inLine(state.end));
   }
   $('#jeText').scrollTop = state.scroll;
+  jeMarkCommandLine();
 }
 
 const jeCursorStateStorage = {};
@@ -2718,6 +2734,7 @@ function jeColorize() {
   }
   $('#jeTextHighlight').innerHTML = out.join('');
   $('#editor').style.setProperty('--linenumbers-digits', Math.floor(Math.log10(nr)+1));
+  jeMarkCommandLine();
 }
 
 /* Displaying and controlling tree subpane of edit area */
