@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { $, $a } from '../../client/js/domhelpers.js';
+import { $, $a, escapeID } from '../../client/js/domhelpers.js';
 import { contrastAnyColor } from '../../client/js/color.js';
 
 // jsonedit.js is a plain script that gets concatenated into the editor bundle, so evaluate just the
@@ -13,17 +13,28 @@ const jsoneditSource = source.match(/^function jeSVGColors[\s\S]*?^}/m)[0];
 // the same for the button's show(), which decides whether the panel is offered at all
 const checkIfSVGSource = source.match(/^async function checkIfSVG[\s\S]*?^}/m)[0];
 const showSource = source.match(/id: 'je_SVGColors'[\s\S]*?show: (function[\s\S]*?\n    })/)[1];
+const jeSVGRetryDelay = +source.match(/const jeSVGRetryDelay = (\d+);/)[1];
 
-function panelFor(widgetState, fetchSVG, jeSetAndSelect = _=>{}) {
-  return new Function('fetchSVG', 'jeStateNow', 'jeSetAndSelect', '$', '$a', 'contrastAnyColor', `${jsoneditSource};
+function panelFor(widgetState, fetchSVG, jeWidget = null, jeSetAndSelect = _=>{}) {
+  return new Function('fetchSVG', 'jeStateNow', 'jeWidget', 'jeSetAndSelect', '$', '$a', 'contrastAnyColor', `${jsoneditSource};
     return jeSVGColors;
-  `)(fetchSVG, widgetState, jeSetAndSelect, $, $a, contrastAnyColor);
+  `)(fetchSVG, widgetState, jeWidget, jeSetAndSelect, $, $a, contrastAnyColor);
+}
+
+// the widget object the editor holds for the selection - the panel asks it for its DOM element
+// rather than looking the element up by the id, because the DOM id is the escaped one
+function widgetOnSurface(id) {
+  const domElement = document.createElement('div');
+  domElement.id = 'w_' + escapeID(id);
+  domElement.className = 'selectedInEdit';
+  document.body.appendChild(domElement);
+  return { domElement };
 }
 
 function buttonShowFor(widgetState, fetchSVG, jeIsSVG, jeShowCommands = _=>{}) {
-  return new Function('fetchSVG', 'jeStateNow', 'jeIsSVG', 'jeShowCommands', `${checkIfSVGSource};
+  return new Function('fetchSVG', 'jeStateNow', 'jeIsSVG', 'jeShowCommands', 'jeSVGRetryDelay', `${checkIfSVGSource};
     return ${showSource};
-  `)(fetchSVG, widgetState, jeIsSVG, jeShowCommands);
+  `)(fetchSVG, widgetState, jeIsSVG, jeShowCommands, jeSVGRetryDelay);
 }
 
 const tick = _=>new Promise(resolve => setTimeout(resolve, 0));
@@ -96,11 +107,12 @@ test('the panel says it is loading while the image is on its way', async () => {
 });
 
 test('deselecting the widget closes the panel for good', async () => {
-  document.body.insertAdjacentHTML('beforeend', '<div id="w_w1" class="selectedInEdit"></div>');
-  panelFor({ id: 'w1', image: '/assets/4_4' }, _=>Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#abcdef"/></svg>'))();
+  // an everyday id: the element is 'w_card__1', so '#w_card_1' would find nothing at all
+  const widget = widgetOnSurface('card_1');
+  panelFor({ id: 'card_1', image: '/assets/4_4' }, _=>Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#abcdef"/></svg>'), widget)();
   await tick();
 
-  $('#w_w1').classList.remove('selectedInEdit');
+  widget.domElement.classList.remove('selectedInEdit');
   await tick();
   expect($('#jeSVGColors')).toBe(null);
 
@@ -110,7 +122,55 @@ test('deselecting the widget closes the panel for good', async () => {
   await tick();
   expect($('#jeSVGColors')).toBe(null);
 
-  $('#w_w1').remove();
+  widget.domElement.remove();
+});
+
+test('a widget id that is no valid selector does not break the panel', async () => {
+  // '#w_Deck (red)' is a syntax error querySelector throws over, and that throw would reach the
+  // caller as the unhandled rejection this panel exists to keep out of the session
+  const widget = widgetOnSurface('Deck (red)');
+  panelFor({ id: 'Deck (red)', image: '/assets/9_9' }, _=>Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#abcdef"/></svg>'), widget)();
+  await tick();
+
+  expect(colorButtons()).toEqual([ '#abcdef' ]);
+
+  widget.domElement.classList.remove('selectedInEdit');
+  await tick();
+  expect($('#jeSVGColors')).toBe(null);
+
+  widget.domElement.remove();
+});
+
+test('the panel closes when the widget is given another image', async () => {
+  // it lists the colors of one file, names that file in its messages and retries that file
+  const widget = { id: 'w1', image: '/assets/4_4' };
+  panelFor(widget, _=>Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#abcdef"/></svg>'))();
+  await tick();
+  expect(colorButtons()).toEqual([ '#abcdef' ]);
+
+  widget.image = '/assets/5_5';
+  $('#jeCommands').appendChild(document.createElement('div'));
+  await tick();
+  expect($('#jeSVGColors')).toBe(null);
+});
+
+test('a swatch never writes into a widget showing another image', async () => {
+  const widget = { id: 'w1', image: '/assets/4_4' };
+  panelFor(widget, _=>Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#abcdef"/></svg>'))();
+  await tick();
+
+  widget.image = '/assets/5_5';
+  $('#jeSVGColors .jeSVGColorList button').dispatchEvent(new Event('click'));
+  expect(widget.svgReplaces).toBe(undefined);
+});
+
+test('hex colors with an alpha channel are offered as well', async () => {
+  // getSVG() replaces the string it is handed, so #abcd and #33aabbcc are as replaceable as any
+  // other color - saying the file uses none would be plain wrong for an SVG painted in them
+  panelFor({ id: 'w1', image: '/assets/a_a' }, _=>Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#abcd"/><rect fill="#33aabbcc"/><rect fill="#abcdef"/></svg>'))();
+  await tick();
+
+  expect(colorButtons()).toEqual([ '#abcd', '#33aabbcc', '#abcdef' ]);
 });
 
 test('an image that could not be read does not hide the button for the session', async () => {
@@ -123,9 +183,10 @@ test('an image that could not be read does not hide the button for the session',
 
   expect(buttonShowFor(widget, fetchSVG, jeIsSVG)()).toBe(false);
   await tick();
-  expect(jeIsSVG).toEqual({});
+  expect(typeof jeIsSVG['/assets/5_5'].failedAt).toBe('number');
 
   fileArrives = true;
+  jeIsSVG['/assets/5_5'].failedAt -= 60000;
   expect(buttonShowFor(widget, fetchSVG, jeIsSVG)()).toBe(false);
   await tick();
   expect(jeIsSVG).toEqual({ '/assets/5_5': true });
@@ -133,9 +194,10 @@ test('an image that could not be read does not hide the button for the session',
 });
 
 test('an image that could not be read is not requested over and over', async () => {
-  // nothing is cached for a file that could not be read, so every redraw of the buttons asks for it
-  // again - which means the failure itself must not redraw them, or the pane rebuilds and refetches
-  // without ever stopping and the property list below cannot even be scrolled
+  // the buttons are redrawn by every keystroke in the JSON pane, so a file that could not be read
+  // has to be remembered as unreadable until the retry delay is over - and the failure itself must
+  // not redraw them either, or the pane rebuilds and refetches without ever stopping and the
+  // property list below cannot even be scrolled
   const jeIsSVG = {};
   let fetches = 0;
   const fetchSVG = _=>{
@@ -152,7 +214,14 @@ test('an image that could not be read is not requested over and over', async () 
     await tick();
   expect(fetches).toBe(1);
 
-  // the next redraw does try the file again, in step with the retry fetchSVG() does for it anyway
+  // every keystroke redraws the buttons, and none of those redraws asks for the file again
+  for(let i=0; i<10; i++)
+    show();
+  await tick();
+  expect(fetches).toBe(1);
+
+  // once the retry delay is over it is tried again, in step with the retry the engine does for it
+  jeIsSVG['/assets/6_6'].failedAt -= 60000;
   show();
   await tick();
   expect(fetches).toBe(2);

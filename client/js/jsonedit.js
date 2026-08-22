@@ -10,6 +10,9 @@ let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeIsSVG = {};
+// how long an image that could not be read stays remembered as unreadable, in step with the retry
+// the engine does for the same file (UNREADABLE_RETRY_MS in main.js)
+const jeSVGRetryDelay = 30000;
 let jeWidgetHighlighting = true;
 let jeDebugViewing = null;
 let jeInMacroExecution = false;
@@ -220,18 +223,20 @@ const jeCommands = [
       if (typeof jeIsSVG[url] === 'boolean') return jeIsSVG[url];
       if (url.match(/\.svg$/i))
         return true;
-      // Only a definite answer is remembered - a file that could not be read says nothing about
-      // what it is, and fetchSVG() retries it. Until the request is done the url is marked as being
-      // asked about: without that, an unreadable image would be requested again by every redraw of
-      // the buttons, and a failure that redraws them would ask for the file without ever stopping.
-      if (jeIsSVG[url] === undefined) {
+      // Only a definite answer is remembered as a verdict - a file that could not be read says
+      // nothing about what it is, and fetchSVG() retries it. What is remembered for such a file is
+      // *when* it failed, because the buttons are redrawn by plenty of things - every keystroke in
+      // the JSON pane among them - and a dead URL would otherwise cost one failing request each.
+      // While the request is in flight the url is marked as being asked about, so a failure that
+      // redraws the buttons cannot ask for the file again without ever stopping.
+      if (jeIsSVG[url] === undefined || jeIsSVG[url].failedAt < Date.now() - jeSVGRetryDelay) {
         jeIsSVG[url] = 'pending';
         checkIfSVG(url).then(result => {
           if (typeof result === 'boolean') {
             jeIsSVG[url] = result;
             jeShowCommands();
           } else {
-            delete jeIsSVG[url];
+            jeIsSVG[url] = { failedAt: Date.now() };
           }
         });
       }
@@ -2381,6 +2386,7 @@ function jeSVGColors() {
     if (!document.querySelector('#jeSVGColors')) {
       $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
     }
+    closeIfImageChanged();
   });
   const jeCommands = document.querySelector('#jeCommands');
   if (jeCommands) {
@@ -2410,10 +2416,18 @@ function jeSVGColors() {
     }
   }
 
+  // the text of a swatch has to stay readable on the color itself, and contrastAnyColor() reads a
+  // six digit hex: a short form or an alpha channel would go through a canvas it cannot answer for
+  // and come back as black on every swatch
+  function opaqueHex(color) {
+    const short = color.match(/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])[0-9a-fA-F]?$/);
+    return short ? `#${short[1]}${short[1]}${short[2]}${short[2]}${short[3]}${short[3]}` : color.slice(0, 7);
+  }
+
   function showColors(colors) {
     body.innerHTML = `<div class="jeSVGColorList">` + colors.map(color => {
       const backgroundColor = color === 'currentColor' ? 'black' : color;
-      const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
+      const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(opaqueHex(color), 1);
       const title = color === 'currentColor' ? ` title="Inherits the widget's text color"` : '';
       return `<button style="background-color: ${backgroundColor}; color: ${textColor};" data-color="${color}"${title}>${color}</button>`;
     }).join('') + `</div>`;
@@ -2426,6 +2440,9 @@ function jeSVGColors() {
     markMapped();
     buttons.forEach(button => {
       button.addEventListener('click', function() {
+        // a color of one file has no business in another widget's svgReplaces
+        if (!jeStateNow || jeStateNow.image !== image)
+          return;
         if (!jeStateNow.svgReplaces) {
           jeStateNow.svgReplaces = {};
         }
@@ -2451,7 +2468,8 @@ function jeSVGColors() {
     fetchSVG(image).then(svg => {
       if (svg === null)
         return sayInPanel('The file behind this URL is not an SVG - the server answered with something else - so it has no colors that could be replaced.');
-      const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
+      // longest first, so #33aabbcc is one color and not #33aabb followed by nothing
+      const hexColorRegex = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})\b|currentColor/g;
       const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
       const colors = [...new Set(uniqueColors)];
       if (!colors.length)
@@ -2461,20 +2479,31 @@ function jeSVGColors() {
   }
   loadColors();
 
+  // The panel answers for one file, so it goes away as soon as the widget is showing another one -
+  // otherwise it keeps listing the colors of the file it was opened with, names that file in its
+  // messages and retries that file. Reloading it instead would request one URL per keystroke while
+  // the image property is being typed, each prefix of it a URL of its own.
+  function closeIfImageChanged() {
+    if (jeStateNow && jeStateNow.image !== image)
+      closePanel();
+  }
+
+  let classObserver;
   const closePanel = function() {
     div.remove();
     observer.disconnect();
+    if (classObserver)
+      classObserver.disconnect();
   };
   div.querySelector('.jeSVGColorsClose').addEventListener('click', closePanel);
 
-  // Close the color viewer if the widget is deselected
-  const widgetDiv = document.querySelector(`#w_${jeStateNow.id}`);
+  // Close the color viewer if the widget is deselected. The widget's DOM id is escaped, so it is
+  // asked for its element rather than looked up by the id as it is written in the JSON.
+  const widgetDiv = jeWidget && jeWidget.domElement;
   if (widgetDiv) {
-    const classObserver = new MutationObserver(() => {
-      if (!widgetDiv.classList.contains('selectedInEdit')) {
+    classObserver = new MutationObserver(() => {
+      if (!widgetDiv.classList.contains('selectedInEdit'))
         closePanel();
-        classObserver.disconnect();
-      }
     });
     classObserver.observe(widgetDiv, { attributes: true, attributeFilter: ['class'] });
   }
