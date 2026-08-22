@@ -711,7 +711,9 @@ class NumberInput extends PropertyInput {
       this.slider = document.createElement('input');
       this.slider.type = 'range';
       this.slider.min = this.options.min !== undefined ? this.options.min : 0;
-      this.slider.max = this.options.max !== undefined ? this.options.max : 100;
+      // sliderMax ends the drag before max where the top of the range is only
+      // reasonable to type, not to drag through
+      this.slider.max = this.options.sliderMax !== undefined ? this.options.sliderMax : (this.options.max !== undefined ? this.options.max : 100);
       this.slider.step = this.options.step !== undefined ? this.options.step : 1;
       this.slider.oninput = _=>this.applyInput(this.slider.value);
       target.appendChild(this.slider);

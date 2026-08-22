@@ -1088,7 +1088,7 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     slider.dispatchEvent(new Event('input', { bubbles: true }));
   });
   const start = 'c1: 100,100 @0 | c2: 400,100 @45 | c3: 400,400 @-30';
-  const circleButton = Selector('.arrangeButtons button[icon=circle]');
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
   const options = Selector('.arrangeCircleOptions');
   const radius = options.find('input[type=number]');
 
@@ -1110,9 +1110,14 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
   await t
     .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
     .expect(circleButton.hasAttribute('disabled')).notOk()
+    // the radius a press would apply is named on the button, so a selection is
+    // not thrown across the board by a setting left behind an hour ago
+    .expect(circleButton.getAttribute('title')).contains('radius 200')
     .expect(options.find('input').exists).notOk()
     .expect(placement()).eql(start)
     .click(circleButton)
+    // the box below the bar belongs to this button, which stays pressed for it
+    .expect(circleButton.hasClass('open')).ok()
     .expect(radius.value).eql('200')
     .expect(placement()).eql('c1: 450,250 @0 | c2: 150,423 @45 | c3: 149,76 @-30')
     // a radius that is typed in arranges the selection again, from where it was
@@ -1145,11 +1150,23 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     // is not one of the values the field takes
     .typeText(radius, '0', { replace: true })
     .expect(radius.value).eql('1')
-    // cancel puts the whole selection back, rotations included, and closes the
+    // undoing puts the whole selection back, rotations included, and closes the
     // settings again
     .click(options.find('button[icon=undo]'))
     .expect(placement()).eql(start)
-    .expect(options.find('input').exists).notOk();
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
+
+  // done is the other way out: it closes the settings and leaves the widgets on
+  // the circle rather than putting them back
+  await t
+    .click(circleButton)
+    .typeText(radius, '100', { replace: true })
+    .expect(placement()).eql('c1: 350,250 @0 | c2: 200,336 @45 | c3: 199,163 @-30')
+    .click(options.find('button[icon=check]'))
+    .expect(placement()).eql('c1: 350,250 @0 | c2: 200,336 @45 | c3: 199,163 @-30')
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
 });
 
 test('Create game using edit mode', async t => {
