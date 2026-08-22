@@ -2897,6 +2897,36 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
 
+// A "var" operation is the one kind of operation whose log entry is cut out of the string the
+// operation came from, so logging it is the only place in the routine engine that reads that
+// string again after the operation ran. This file is one of the two the production environment
+// workflow drives against a minified client, which is where that reference is at risk: a minified
+// name that shadows the operation string crashes the client instead of logging the wrong text.
+test('the Debug module logs a var operation with its result', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: {
+      id: 'button',
+      type: 'button',
+      clickRoutine: [ 'var roll = randInt 5 5' ]  // a range of one, so the result is a fixed number
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft' } });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+  await ClientFunction(() => {
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {});
+  })();
+
+  // the summary of a var operation is the operation with its leading "var " cut off, followed by
+  // the value the variable ended up with
+  await t.expect(Selector('#jeLog').innerText).contains('roll = randInt 5 5 => 5');
+  await setEditorState(null);
+});
+
 // drags a selection rectangle around the given widgets - the events go to the
 // window, where the editor listens for them, so they need no element to start
 // from. A rectangle around a single widget is treated like a click on it, which
