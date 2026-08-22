@@ -4188,6 +4188,88 @@ test('A second command in a row still runs on the same line as the first', async
   await setEditorState(null);
 });
 
+// A widget one of the option-bearing commands is aimed at can change while its dialog is open -
+// another player moving it, a routine, a timer. The editor rebuilds its content for that, and
+// restoring the cursor afterwards must not take the keyboard away from the dialog: the next
+// keystroke would go into the JSON instead of into the field it was meant for.
+const changeSelectedWidgetElsewhere = ClientFunction(() => widgets.get('one').set('y', 250));
+const markedCommandLine = Selector('#jeTextHighlight .jeCommandLine');
+
+test('A change to a selected widget leaves the keyboard in the command options', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '5', { replace: true });
+
+  await changeSelectedWidgetElsewhere();
+  await t
+    .expect(activeElementID()).eql('je_multiShift_Offset')
+    // the marked line survives the recolorizing the change causes, so the dialog still shows what
+    // it is about to act on
+    .expect(markedCommandLine.textContent).contains('"x": 200')
+    // the keystroke completes the offset instead of being typed into the JSON
+    .pressKey('0')
+    .expect(jsonEditorText()).contains('"x": 200')
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
+
+// The list of commands scrolls, so options opening below a button near its bottom edge would have
+// their Go and Cancel buttons cut off with nothing scrolling them into view.
+const scrollCommandToBottom = ClientFunction(() => {
+  const list = document.querySelector('#jeContextButtons');
+  const button = document.querySelector('#je_multiShift');
+  list.scrollTop = button.offsetTop + button.offsetHeight - list.clientHeight;
+});
+const optionsFitInList = ClientFunction(() => {
+  const list = document.querySelector('#jeContextButtons').getBoundingClientRect();
+  const options = document.querySelector('#jeCommandOptions').getBoundingClientRect();
+  return options.top >= list.top - 1 && options.bottom <= list.bottom + 1;
+});
+
+test('The options of a command are visible even at the bottom of the command list', async t => {
+  await t.resizeWindow(1280, 500);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await scrollCommandToBottom();
+  await t
+    .click('#je_multiShift')
+    .expect(optionsFitInList()).ok();
+  await setEditorState(null);
+});
+
 // The options of a command open below the button that was clicked, so that the list of commands
 // does not move away from under the pointer, and the line they will act on is marked - it is the
 // remembered one, which shows no caret while the dialog holds the selection.
@@ -4218,7 +4300,7 @@ test('A command shows which button and which line it belongs to', async t => {
     // next command under the pointer
     .expect(buttonTop()).eql(positionBeforeClick)
     .expect(shiftButton.nextSibling(0).id).eql('jeCommandOptions')
-    .expect(shiftButton.hasClass('jeHighlight')).ok()
+    .expect(shiftButton.hasClass('jeCommandOwner')).ok()
     .expect(Selector('#jeCommandOptions b').textContent).eql('shift options:')
     .expect(Selector('#jeTextHighlight .jeCommandLine').textContent).contains('"x": 200');
   await setEditorState(null);

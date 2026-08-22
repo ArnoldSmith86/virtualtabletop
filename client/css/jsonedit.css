@@ -504,7 +504,7 @@ body.jsonEdit #toolbar {
   font-family: monospace;
   white-space: pre-wrap;
 }
-#jeContextButtons > button.jeHighlight, #jeContextButtons .jeEditorLineDesc mark {
+#jeContextButtons > button.jeHighlight, #jeContextButtons > button.jeCommandOwner, #jeContextButtons .jeEditorLineDesc mark {
   background-color: gold;
   color: black;
   font-weight: bold;
