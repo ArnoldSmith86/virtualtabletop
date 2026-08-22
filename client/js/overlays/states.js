@@ -368,6 +368,12 @@ async function saveState(e) {
   };
 }
 
+// the variants panel is otherwise an unlabelled empty card once the last variant is deleted, which
+// gives no hint that the game is not playable any more
+function updateEmptyVariantsHint() {
+  $('#emptyVariants').style.display = $('#variantsList .variant') ? 'none' : 'block';
+}
+
 function updateEmptyLibraryHint() {
   const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
   const hasPublicLibrary = Object.keys(config.libraries || {}).length > 0;
@@ -978,15 +984,18 @@ function fillStateDetails(states, state, dom) {
         variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry)
       });
       removeFromDOM(vEntry);
+      updateEmptyVariantsHint();
     };
 
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
+    updateEmptyVariantsHint();
     return vEntry;
   }
 
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants)
     addVariant(variantID, state.variants[variantID]);
+  updateEmptyVariantsHint();
 
 
 
@@ -1185,12 +1194,12 @@ function fillStateDetails(states, state, dom) {
   };
   $('#stateDetailsOverlay .buttons [icon=save]').onclick = async function() {
     // saving a game without a single variant left removes the game itself, so it asks the same
-    // question the delete button asks instead of doing that silently
-    if(!$('#variantsList .variant')) {
-      const type     = state.savePlayers ? 'saved game'        : 'game';
-      const category = state.savePlayers ? 'in-progress games' : 'game shelf';
+    // question the delete button asks instead of doing that silently. in-progress games never get
+    // here: their details have no edit button (see the editable check in fillStateDetails)
+    const removesGame = !$('#variantsList .variant');
+    if(removesGame) {
       $('#statesButton').dataset.overlay = 'confirmOverlay';
-      if(!await confirmOverlay(`Delete ${type}`, `You deleted the last variant of this ${type}. Saving now removes the whole ${type} from your ${category}. Are you sure?`, 'Delete', 'Keep', 'delete', 'undo', 'red')) {
+      if(!await confirmOverlay('Save without variants', 'You deleted the last variant of this game. Saving now removes the whole game from your game shelf. Are you sure?', 'Delete game', 'Back to editing', 'delete', 'undo', 'red')) {
         showStatesOverlay(detailsOverlay);
         return;
       }
@@ -1218,6 +1227,11 @@ function fillStateDetails(states, state, dom) {
       variantInput,
       variantOperationQueue
     });
+
+    // the removed game leaves no details to go back to, so this ends on the game shelf just like
+    // the details' delete button does
+    if(removesGame)
+      showStatesOverlay('statesOverlay');
   };
 }
 
