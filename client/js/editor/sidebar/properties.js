@@ -1337,7 +1337,8 @@ const editorPropertyHints = {
   firstColWidth: 'Fixed width of the first scoreboard column when autosizing is off.',
   player: 'The player currently seated here. Setting it also stores their color.',
   index: 'Seat order used by turn and scoreboard logic.',
-  display: 'The seat property whose value is displayed as the seat text.',
+  display: 'Text shown on the seat while a player sits here. The words playerName and seatIndex are replaced with the seated player\'s name and this seat\'s index; everything else is shown exactly as typed.',
+  displayEmpty: 'Text shown on the seat while it is empty. The word seatIndex is replaced with this seat\'s index; everything else is shown exactly as typed.',
   hand: 'ID of the holder used as this seat\'s private hand.',
   turn: 'Marks this seat as currently taking its turn.',
   skipTurn: 'Skip this seat when routines advance turns.',
@@ -9002,6 +9003,9 @@ class PropertiesModule extends SidebarModule {
     const wrap = div(this.moduleDOM, 'propertyInput compactStyledText');
     const label = document.createElement('label');
     label.textContent = title;
+    const hint = options.hint || editorPropertyHints[textProperty];
+    if(hint)
+      propertyInfoButton(label, html(hint));
     wrap.appendChild(label);
 
     const input = document.createElement('input');
