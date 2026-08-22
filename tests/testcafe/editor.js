@@ -902,6 +902,14 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     slider.value = value === null ? slider.max : value;
     slider.dispatchEvent(new Event('input', { bubbles: true }));
   });
+  // Done in the same breath as the last move of the slider, which is what
+  // letting go of it looks like: the arrangement it started is still on its way
+  const setRadiusAndPressDone = ClientFunction(value => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('.arrangeCircleOptions button[icon=check]').click();
+  });
   // every widget of the arrangement is drawn inside the board - the box a
   // turned or enlarged widget covers, not the width and height it stores
   const onBoard = ClientFunction(() => {
@@ -977,6 +985,10 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
   await dragRadiusSlider(null);
   await t
     .expect(radius.value).eql('213')
+    // the ceiling the slider is given again on every step keeps the thumb where
+    // the drag left it rather than pulling it back
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('213')
+    .expect(options.find('input[type=range]').value).eql('213')
     .expect(placement()).eql('c1: 489,265 @0 | c2: 169,450 @45 | c3: 169,81 @-30')
     .expect(onBoard()).ok()
     // an emptied field keeps the radius the arrangement is standing on, so it
@@ -1003,15 +1015,90 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     .expect(circleButton.hasClass('open')).notOk();
 
   // done is the other way out: it closes the settings and leaves the widgets on
-  // the circle rather than putting them back
+  // the circle rather than putting them back. The radius it is pressed on is
+  // still being applied at that moment, so it is the one that has to end up on
+  // the board - not the one before it
+  await t.click(circleButton);
+  await setRadiusAndPressDone('100');
   await t
-    .click(circleButton)
-    .typeText(radius, '100', { replace: true })
-    .expect(placement()).eql('c1: 376,265 @0 | c2: 226,352 @45 | c3: 226,179 @-30')
-    .click(options.find('button[icon=check]'))
     .expect(placement()).eql('c1: 376,265 @0 | c2: 226,352 @45 | c3: 226,179 @-30')
     .expect(options.find('input').exists).notOk()
     .expect(circleButton.hasClass('open')).notOk();
+});
+
+test('The arrange bar arranges a selection inside another widget on the board around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    // x, y and rotation of the three widgets are the box's, and the box shows
+    // them at half the size they are stored in: what the tool reads and the
+    // board the circle has to fit on are two different spaces
+    box: { id: 'box', type: 'basic', x: 600, y: 200, width: 400, height: 400, scale: 0.5 },
+    p1: { id: 'p1', type: 'basic', parent: 'box', x: 10, y: 10, width: 60, height: 60 },
+    p2: { id: 'p2', type: 'basic', parent: 'box', x: 200, y: 10, width: 60, height: 60 },
+    p3: { id: 'p3', type: 'basic', parent: 'box', x: 100, y: 200, width: 60, height: 60 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // the arrangement measured where it is drawn: around the middle of the three
+  // widgets on the board, each of them the radius away from it
+  const circleOnBoard = ClientFunction(expected => {
+    const centers = [ 'p1', 'p2', 'p3' ].map(id => ({
+      x: widgets.get(id).get('_centerAbsoluteX'),
+      y: widgets.get(id).get('_centerAbsoluteY')
+    }));
+    const middle = {
+      x: centers.reduce((sum, c) => sum + c.x, 0) / centers.length,
+      y: centers.reduce((sum, c) => sum + c.y, 0) / centers.length
+    };
+    const radii = centers.map(c => Math.hypot(c.x - middle.x, c.y - middle.y));
+    const off = Math.hypot(middle.x - expected.x, middle.y - expected.y);
+    return off <= 2 && radii.every(r => Math.abs(r - expected.radius) <= 2)
+      ? `on a circle of ${expected.radius} around ${expected.x},${expected.y}`
+      : `${Math.round(middle.x)},${Math.round(middle.y)} r${radii.map(r => Math.round(r)).join('/')}`;
+  });
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'p1', 'p2', 'p3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  // where the widgets sit in the box they belong to, which is what they store
+  const placement = ClientFunction(() => [ 'p1', 'p2', 'p3' ].map(id => `${id}: ${widgets.get(id).get('x')},${widgets.get(id).get('y')}`).join(' | '));
+  const dragRadiusSliderToMax = ClientFunction(() => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = slider.max;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const start = 'p1: 10,10 | p2: 200,10 | p3: 100,200';
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
+  const options = Selector('.arrangeCircleOptions');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  await bandSelect(t, 700, 300, 835, 435);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 200 })).eql('on a circle of 200 around 767.5,367.5')
+    // the space around the selection is measured on the board as well, so the
+    // slider keeps the travel the board has room for instead of ending at the
+    // radius that is already applied
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('352')
+    .expect(onBoard()).ok();
+
+  await dragRadiusSliderToMax();
+  await t
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 352 })).eql('on a circle of 352 around 767.5,367.5')
+    .expect(onBoard()).ok()
+    // and taking it back puts every widget where its own box had it
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start);
 });
 
 test('Create game using edit mode', async t => {
