@@ -4,6 +4,12 @@ class UndoButton extends ToolbarButton {
   }
 
   click() {
+    // the History module steps back through the list it shows, which keeps what was undone
+    // reachable in it - with the module closed there is no list to keep it in, so the protocol
+    // is simply cut short
+    if(undoModule && undoModule.undoOneStep())
+      return;
+
     const protocol = [...getUndoProtocol()];
 
     if(protocol.length > 1) {
