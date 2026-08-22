@@ -88,6 +88,17 @@ describe('uploading a game file', () => {
     expect(overlay.uploaded.length).toBe(1);
   });
 
+  // Room.addState names a game after the file it came from and removes the extension itself, so
+  // a tile that removed a different set would rename itself once the server answers
+  test('removes the same file extensions from the fallback name as the server', async () => {
+    const overlay = loadStatesOverlay();
+    const noMeta = { '0.json': { _meta: { version: 8 } } };
+
+    expect((await upload(overlay, vttFile('My Game.VTT', noMeta)))[0][0]).toBe('My Game');
+    expect((await upload(overlay, vttFile('My Game v1.2.vtt', noMeta)))[0][0]).toBe('My Game v1.2');
+    expect((await upload(overlay, vttFile('My Game.data', noMeta)))[0][0]).toBe('My Game.data');
+  });
+
   test('keeps one variant per JSON file when none of them has metadata', async () => {
     const overlay = loadStatesOverlay();
     const meta = await upload(overlay, vttFile('Handwritten.vtt', {
@@ -135,7 +146,7 @@ describe('uploading a game file', () => {
     const meta = await upload(overlay, vttFile('Pictures.zip', { 'image.png': 'not a game' }));
 
     expect(meta).toEqual([]);
-    expect(overlay.alerts).toEqual([ 'Pictures.zip is not a valid VTT, VTTC, VTTS or PCIO file.' ]);
+    expect(overlay.alerts).toEqual([ 'Pictures.zip does not contain a game. You can add VTT files (.vtt, .vttc, .vtts), playingcards.io files (.pcio) and Tabletop Simulator workshop files (.zip).' ]);
     expect(overlay.uploaded.length).toBe(0);
   });
 });
