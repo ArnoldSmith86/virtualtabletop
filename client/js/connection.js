@@ -96,21 +96,39 @@ export function clientIsOutdated() {
   return outdated;
 }
 
+// The editor is a second bundle that is only fetched the first time edit mode is opened, so by
+// then the server may already be a different build - one whose editor does not fit the client
+// bundle this page is running. Ask for the build this page belongs to rather than for the editor
+// as such, so a server that has been replaced refuses the request instead of handing out a half
+// that does not fit: checking first and importing afterwards leaves a window in between in which
+// the server changes and the answer to the check no longer describes what arrives.
+export function editModeURL() {
+  // a page that has never been connected does not know which build served it, so it has nothing to
+  // ask for and takes whatever the server has
+  return serverStart == null ? './edit.js' : `./edit.js?serverStart=${encodeURIComponent(serverStart)}`;
+}
+
 // The socket only learns about a restart once it manages to reconnect, while the new server starts
-// answering over HTTP the moment it binds the port - so in between, a bundle that is fetched on
-// demand already comes from the new build while this page still believes it is up to date. Ask the
-// server that serves that bundle who it is rather than going by the last thing the socket heard.
-// Throws when it cannot be reached, which is just as good a reason not to fetch anything from it.
+// answering over HTTP the moment it binds the port - so in between, this page still believes it is
+// up to date. Ask the server directly rather than going by the last thing the socket heard.
+// Resolves to whether it answered at all: a server that does not is a server in the middle of
+// restarting, which says on its own that nothing is to be expected from it right now.
 export async function checkForServerRestart() {
-  const response = await fetch('edit.js', { method: 'HEAD', cache: 'no-store' });
-  if(!response.ok)
-    throw new Error(`Server answered ${response.status} when asked which build it is running`);
+  let response;
+  try {
+    response = await fetch('edit.js', { method: 'HEAD', cache: 'no-store' });
+  } catch(error) {
+    console.error('Could not ask the server which build it is running.', error);
+    return false;
+  }
 
   // a page that has never been connected has nothing to compare against: its bundle came from
   // whichever server answered the request for the page itself, which nothing here has seen
   const currentStart = response.headers.get('X-Server-Start');
   if(serverStart != null && currentStart != null && currentStart != serverStart)
     outdated = true;
+
+  return response.ok;
 }
 
 export function onMessage(func, callback) {

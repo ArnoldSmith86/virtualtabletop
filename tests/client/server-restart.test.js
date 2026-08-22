@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 const connectionSource = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../../client/js/connection.js'), 'utf8');
 const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$', '$a', 'rand', 'urlProperties', 'playerName', 'roomID',
   connectionSource.replace(/^export /gm, '') + `;
-  return { startWebSocket, clientIsOutdated, checkForServerRestart };
+  return { startWebSocket, clientIsOutdated, checkForServerRestart, editModeURL };
 `);
 
 // Location.reload belongs to its Location - a browser throws "Illegal invocation" when it is called
@@ -65,6 +65,7 @@ function startedClient(onReload, serving) {
   return {
     clientIsOutdated: client.clientIsOutdated,
     checkForServerRestart: client.checkForServerRestart,
+    editModeURL: client.editModeURL,
     requests,
     overlays,
     overlayClasses,
@@ -142,13 +143,32 @@ describe('Scenarios: the server the page is talking to restarts', () => {
       expect(client.clientIsOutdated()).toBe(false);
     });
 
-    test('Then asking a server that cannot be reached fails instead of claiming anything', async () => {
+    test('Then asking a server that cannot be reached says so instead of claiming anything', async () => {
       const client = startedClient(_=>{});
       client.serverStart(1000);
 
-      await expect(client.checkForServerRestart()).rejects.toThrow();
+      expect(await client.checkForServerRestart()).toBe(false);
 
       expect(client.clientIsOutdated()).toBe(false);
+    });
+  });
+
+  describe('Given a page that is about to fetch the editor bundle', () => {
+    test('Then it asks for the build it is running rather than for whatever is being served', () => {
+      const client = startedClient(_=>{});
+      client.serverStart(1000);
+
+      // the server compares this against its own start and refuses when it no longer matches, so a
+      // restart between deciding to fetch the bundle and fetching it cannot slip a mismatched
+      // editor into this page - a check of its own before the import could not rule that out
+      expect(client.editModeURL()).toBe('./edit.js?serverStart=1000');
+    });
+
+    test('Then a page that has never been connected takes whatever the server has', () => {
+      const client = startedClient(_=>{});
+
+      // nothing here has seen which build served this page, so there is nothing to ask for
+      expect(client.editModeURL()).toBe('./edit.js');
     });
   });
 
