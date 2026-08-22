@@ -762,12 +762,16 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   if($('#stateDetailsOverlay').style.display != 'none' || $('#statesOverlay.withDetails')) {
     const stateID = $('#stateDetailsOverlay').dataset.id;
-    if(!states[stateID]) {
+    // the details are filled from the game's tile, so a game that the list does not show any more
+    // has no details to show either - it was either removed or lost its tile, like a public
+    // library game whose variants are all linked from the shelf by now
+    const entry = $(`#statesOverlay .roomState[data-id="${stateID}"]`);
+    if(!states[stateID] || !entry) {
       $('#closeDetails').click();
     } else if(!$('#stateDetailsOverlay').classList.contains('editing')) {
       if(!$('#statesOverlay.withDetails'))
         showOverlay();
-      fillStateDetails(states, states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
+      fillStateDetails(states, states[stateID], entry);
     }
   }
 

@@ -766,6 +766,15 @@ export default class Room {
 
     }
 
+    // a game is nothing but its variants, and the save files of the deleted ones are already gone -
+    // keeping the metadata of a game without a single variant would leave an entry that the game
+    // list has nothing to show for and that nobody can reach again
+    if(!variants.length) {
+      this.removeState(player, id);
+      if(!this.state._meta.states[id])
+        return;
+    }
+
     for(const variantID in variantInput)
       Object.assign(variants[variantID], variantInput[variantID]);
 
