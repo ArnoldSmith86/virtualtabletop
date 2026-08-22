@@ -86,12 +86,14 @@ const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'i
 // the engine and the SVG replacements editor make, so the three cannot disagree
 // about the same file. It also spares decoding a whole bitmap as text just to
 // find no <svg> in it, and does not call a PNG that happens to contain the
-// three bytes "svg" somewhere an SVG.
+// three bytes "svg" somewhere an SVG. A file that could not be read at all is
+// answered with undefined: that says nothing about what the file is, so it must
+// not be remembered as a verdict - fetchSVG() retries such a file as well.
 async function checkIfSVG(url) {
   try {
     return (await fetchSVG(url)) !== null;
   } catch (e) {
-    return false;
+    return undefined;
   }
 }
 
@@ -220,7 +222,8 @@ const jeCommands = [
       if (url.match(/\.svg$/i))
         return true;
       checkIfSVG(url).then(result => {
-        jeIsSVG[url] = result;
+        if (typeof result === 'boolean')
+          jeIsSVG[url] = result;
         jeShowCommands();
       });
       return false;
@@ -2515,42 +2518,41 @@ function jeSVGColors() {
   // image the engine and the SVG replacements editor go through as well: it answers with the file's
   // text, with null for a file that turned out not to be an SVG, and rejects when the file could not
   // be read at all - a cross-origin image blocked by CORS, a server that is not answering, a URL
-  // that 404s. Both of those are reported in the panel: an unhandled rejection here is treated as a
-  // client crash and takes the whole session down with the error overlay.
+  // that 404s. Every outcome gets a sentence in the panel, including an SVG that simply uses no hex
+  // colors, so it never sits empty looking like it is still loading. An unhandled rejection here is
+  // treated as a client crash and takes the whole session down with the error overlay.
   const colorsDiv = div.querySelector('div');
-  const sayInPanel = text => {
-    if (colorsDiv)
-      colorsDiv.textContent = text;
-  };
+  const sayInPanel = text => colorsDiv.textContent = text;
+  sayInPanel('Loading the image \u2026');
   fetchSVG(jeStateNow.image).then(svg => {
     if (svg === null)
       return sayInPanel('This image is not an SVG, so it has no colors that could be replaced.');
     const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
     const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
     const colors = [...new Set(uniqueColors)];
-    if (colorsDiv) {
-      colorsDiv.innerHTML = colors.map(color => {
-        const backgroundColor = color === 'currentColor' ? 'black' : color;
-        const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
-        return `<button style="width: 100%; background-color: ${backgroundColor}; color: ${textColor}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
-      }).join('');
+    if (!colors.length)
+      return sayInPanel('This SVG does not use any hex colors that could be replaced.');
+    colorsDiv.innerHTML = colors.map(color => {
+      const backgroundColor = color === 'currentColor' ? 'black' : color;
+      const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
+      return `<button style="width: 100%; background-color: ${backgroundColor}; color: ${textColor}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
+    }).join('');
 
-      // Create the buttons
-      const buttons = colorsDiv.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          if (!jeStateNow.svgReplaces) {
-            jeStateNow.svgReplaces = {};
-          }
-          const color = this.getAttribute('data-color');
-          if (!(color in jeStateNow.svgReplaces)) {
-            jeStateNow.svgReplaces[color] = "###SELECT ME###";
-            jeSetAndSelect("");
-          }
-        });
+    // Create the buttons
+    const buttons = colorsDiv.querySelectorAll('button');
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        if (!jeStateNow.svgReplaces) {
+          jeStateNow.svgReplaces = {};
+        }
+        const color = this.getAttribute('data-color');
+        if (!(color in jeStateNow.svgReplaces)) {
+          jeStateNow.svgReplaces[color] = "###SELECT ME###";
+          jeSetAndSelect("");
+        }
       });
-    }
-  }, _=>sayInPanel('This image could not be loaded, so the colors it uses could not be listed.'));
+    });
+  }).catch(_=>sayInPanel('This image could not be loaded, so the colors it uses could not be listed.'));
 
   $a('#jeSVGColors button')[0].addEventListener('click', function () {
     div.remove();
@@ -2563,6 +2565,7 @@ function jeSVGColors() {
     const classObserver = new MutationObserver(() => {
       if (!widgetDiv.classList.contains('selectedInEdit')) {
         div.remove();
+        observer.disconnect();
         classObserver.disconnect();
       }
     });
