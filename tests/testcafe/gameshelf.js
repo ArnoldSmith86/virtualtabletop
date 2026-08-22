@@ -38,6 +38,11 @@ async function saveDetails(t) {
   await t.click('#stateDetailsOverlay > .buttons button[icon=save]');
 }
 
+// saving a game whose last variant was deleted removes the game, which asks first
+async function confirmSave(t) {
+  await t.click('#confirmOverlay [data-field=confirmButton]');
+}
+
 test('Deleting the last variant of a game removes the game from the shelf', async t => {
   await setRoomState();
   await ClientFunction(prepareClient)();
@@ -45,7 +50,16 @@ test('Deleting the last variant of a game removes the game from the shelf', asyn
   await addGameFromRoomState(t);
   await deleteVariant(t, 0);
   await t.expect(variants.count).eql(0);
+
+  // keeping the game at the confirmation returns to its details and changes nothing
   await saveDetails(t);
+  await t
+    .click('#confirmOverlay [data-field=cancelButton]')
+    .expect(detailsOverlay.visible).ok()
+    .expect(shelfGames.count).eql(1);
+
+  await saveDetails(t);
+  await confirmSave(t);
 
   // the game is gone, so its details close instead of being refilled from a tile that the game
   // list no longer has
