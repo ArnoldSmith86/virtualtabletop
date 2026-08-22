@@ -123,6 +123,23 @@ describe('uploading a game file', () => {
     expect(overlay.uploaded.length).toBe(1);
   });
 
+  // addVariant writes variantImage into every variant it renders, so a variant that is not an
+  // object would throw there - in the "add variant from file" flow before the file is even sent
+  test('ignores metadata that is not an object', async () => {
+    const overlay = loadStatesOverlay();
+    expect(await upload(overlay, vttFile('Odd.vtt', {
+      '0.json': { _meta: { version: 8, info: 'bad metadata' } }
+    }))).toEqual([ [ 'Odd', '', null, [ {} ], null, null ] ]);
+
+    expect(await upload(overlay, vttFile('Odd.vtt', {
+      '0.json': { _meta: { version: 8, info: 'bad metadata' } },
+      '1.json': { _meta: { version: 8, info: { name: 'Second Variant' } } }
+    }))).toEqual([ [ 'Second Variant', undefined, null, [ {}, { name: 'Second Variant' } ], undefined, undefined ] ]);
+
+    expect(overlay.alerts).toEqual([]);
+    expect(overlay.uploaded.length).toBe(2);
+  });
+
   test('falls back to the file name for PCIO and TTS files, whose JSON is not a variant', async () => {
     const overlay = loadStatesOverlay();
     expect(await upload(overlay, vttFile('game.pcio', { 'widgets.json': [ { id: 'w1' } ] })))
