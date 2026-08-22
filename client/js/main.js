@@ -1,5 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
-import { clientIsOutdated, startWebSocket, toServer } from './connection.js';
+import { checkForServerRestart, clientIsOutdated, startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
@@ -801,41 +801,49 @@ export function getSVG(url, replaces, callback) {
 }
 
 async function loadEditMode() {
-  // Edit mode is a second bundle that is only fetched the first time it is opened, so an outdated
-  // page would pair the client bundle it is running with an editor bundle of whatever the server
-  // has now. The two halves only know each other through the names handed over below, and a pair
-  // from two builds fails on the first name one of them does not have - so bring the reload the
-  // restart already scheduled forward instead of opening an editor that does not fit this page.
-  if(clientIsOutdated()) {
-    location.reload();
-    await new Promise(_=>{});  // the page is on its way out: nothing waiting for edit mode may run
-  }
-
   if(edit === null) {
-    edit = false;
-    Object.assign(window, {
-      $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
-      setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
-      toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
-      addWidgetLocal, updateWidgetId, removeWidgetLocal,
-      loadZipLibrary, waitForZipLibrary, zipBlob,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
-      iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
-      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
-      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
-      html, formField,
-      Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
-      toHex, contrastAnyColor,
-      asArray, compute_ops, positionNames, expressionError, expressionNames,
-      eventCoords,
-      getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
-    });
     $('body').classList.add('loadingEditMode');
-    const editmode = await import('./edit.js');
-    $('body').classList.remove('loadingEditMode');
-    Object.assign(window, editmode);
-    initializeEditMode(currentMetaData);
+    try {
+      // Edit mode is a second bundle that is only fetched the first time it is opened, so an
+      // outdated page would pair the client bundle it is running with an editor bundle of whatever
+      // the server has now. The two halves only know each other through the names handed over
+      // below, and a pair from two builds fails on the first name one of them does not have - so
+      // reload this page instead of fetching an editor bundle that does not fit it.
+      await checkForServerRestart();
+      if(clientIsOutdated()) {
+        location.reload();
+        await new Promise(_=>{});  // the page is on its way out: nothing waiting for edit mode may run
+      }
+
+      edit = false;
+      Object.assign(window, {
+        $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
+        setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
+        toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
+        addWidgetLocal, updateWidgetId, removeWidgetLocal,
+        loadZipLibrary, waitForZipLibrary, zipBlob,
+        generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
+        uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+        iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
+        config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+        viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
+        html, formField,
+        Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
+        toHex, contrastAnyColor,
+        asArray, compute_ops, positionNames, expressionError, expressionNames,
+        eventCoords,
+        getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
+      });
+
+      const editmode = await import('./edit.js');
+      Object.assign(window, editmode);
+      initializeEditMode(currentMetaData);
+    } catch(e) {
+      edit = null;  // an editor bundle that did not arrive is fetched again on the next attempt
+      throw e;
+    } finally {
+      $('body').classList.remove('loadingEditMode');
+    }
   }
 }
 
@@ -916,11 +924,19 @@ onLoad(function() {
       e.stopImmediatePropagation();
       return;
     }
+    const previousTab = [...$a('.toolbarTab')].filter(tabButton=>tabButton.classList.contains('active'))[0];
     for(const tabButton of $a('.toolbarTab'))
       toggleClass(tabButton, 'active', tabButton == e.currentTarget);
 
     if(e.currentTarget == $('#editButton') || edit)
-      toggleEditMode();
+      // a tab that could not be opened - edit mode is fetched on demand and the server may be
+      // away - must not stay marked as the open one, or the next click on it counts as a click on
+      // the active tab and does nothing at all
+      toggleEditMode().catch(error=>{
+        for(const tabButton of $a('.toolbarTab'))
+          toggleClass(tabButton, 'active', tabButton == previousTab);
+        throw error;
+      });
   });
 
   on('#activeGameButton', 'click', function() {
