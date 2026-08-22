@@ -18,6 +18,20 @@ class UndoModule extends SidebarModule {
       this.renderModule(this.moduleDOM);
   }
 
+  // changes made while edit mode is closed never reach the modules, so the list is out of date
+  // by the time it is on screen again
+  onEditorOpen() {
+    if(this.moduleDOM)
+      this.renderModule(this.moduleDOM);
+  }
+
+  // a complete room state - loading another game, or a reconnect - appends an entry to the
+  // protocol the same way a change does
+  onStateReceivedWhileActive(state) {
+    if(!this.inUndoMode)
+      this.renderModule(this.moduleDOM);
+  }
+
   onUndoProtocolChangedWhileActive() {
     if(!this.inUndoMode)
       this.renderModule(this.moduleDOM);

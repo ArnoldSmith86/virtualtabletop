@@ -13,8 +13,17 @@ class UndoButton extends ToolbarButton {
     const protocol = [...getUndoProtocol()];
 
     if(protocol.length > 1) {
+      // between the undo delta and the shortened protocol the entry being undone is still the
+      // last one of the protocol, so a render in between would give that undo a row of its own
+      if(undoModule)
+        undoModule.inUndoMode = true;
+
       sendRawDelta({s:protocol[protocol.length-1].undoDelta});
       setUndoProtocol(protocol.slice(0, protocol.length-1));
+
+      if(undoModule)
+        undoModule.inUndoMode = false;
+
       setSelection([...selectedWidgets].filter(w=>widgets.has(w.id)));
       undoProtocolChanged();
     }

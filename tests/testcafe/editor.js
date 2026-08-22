@@ -256,6 +256,61 @@ test('Clicking a History row returns to that state and keeps the newer rows unti
   await setEditorState(null);
 });
 
+// The panel only hears about a change while edit mode is open, and a complete room state does
+// not reach it at all - both leave the list describing an older protocol than the room is in. The
+// undo button steps back through that list, so it has to be caught up before it is used again.
+test('The History module catches up on changes it did not see', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const undoButton = Selector('#editorToolbar [icon=undo]');
+  const widgetX = ClientFunction(() => widgets.get('widget').get('x'));
+  const moveWidget = ClientFunction(() => widgets.get('widget').set('x', 400));
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+1)
+    // leave edit mode, change something while playing and come back: the change is listed and is
+    // the state the room is in, so undoing it takes the widget back instead of adding a row of
+    // its own for the undo
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk();
+  await moveWidget();
+  await t
+    .click('#editButton')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    .expect(widgetX()).eql(200);
+
+  // a complete room state is an entry of the protocol as well, so the list takes it the same way -
+  // it replaces the row of the state the undo above stepped over, which it just made unreachable
+  await setRoomState({
+    other: { id: 'other', type: 'basic', x: 100, y: 100 }
+  });
+  await t
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(historyRows.nth(0).innerText).contains('complete room state')
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok();
+  await setEditorState(null);
+});
+
 test('Pan in edit mode while holding Space', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
