@@ -128,6 +128,9 @@ export default class Room {
         let name = type == 'file' && srcName || 'Unnamed';
 
         const variant = states[state][v];
+        // only an object holds metadata - assigning a string here would spread it into the
+        // game as one property per character
+        const variantInfo = variant._meta && typeof variant._meta.info == 'object' ? variant._meta.info : null;
         const meta = Object.assign({
           name: name.replace(/\.(vtt|vttc|vtts|pcio|zip)$/i, ''),
           image: '',
@@ -141,7 +144,7 @@ export default class Room {
           variant: '',
           link: '',
           attribution: ''
-        }, (variant._meta || {}).info || {});
+        }, variantInfo || {});
 
         if(stateID.match(/^PL:/)) {
           this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
