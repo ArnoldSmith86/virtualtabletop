@@ -448,6 +448,13 @@ class EventsEditor {
       });
       headerDOM.append(jsonButton);
 
+      aiRoutineButton(headerDOM, this.widget, property, _=>this.routineSource(target)[property], routine=>{
+        delete this.routineEditors[key]; // it keeps its own copy of the old one
+        this.expandedEvents[key] = true; // land on the result rather than a closed card
+        this.setRoutine(entry, routine);
+        this.render();
+      });
+
       const removeButton = document.createElement('span');
       removeButton.className = 'material-symbols events-editor-remove';
       removeButton.textContent = 'delete';
