@@ -9,7 +9,7 @@ import * as fflate from 'fflate';
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const statesSource = fs.readFileSync(path.join(dir, '../../client/js/overlays/states.js'), 'utf8').replace(/^export /gm, '');
 
-function loadStatesOverlay() {
+function loadStatesOverlay(serverStatus=200) {
   document.body.innerHTML = `<select id="librarySort"><option value="name">name</option></select>`;
 
   const alerts = [];
@@ -22,7 +22,7 @@ function loadStatesOverlay() {
     setRequestHeader() {}
     send(body) {
       uploaded.push(body);
-      this.onload({ target: { status: 200 } });
+      this.onload({ target: { status: serverStatus, response: 'Unable to load and add the game.' } });
     }
   }
 
@@ -40,7 +40,7 @@ function loadStatesOverlay() {
     XHR
   );
 
-  return Object.assign(scope, { alerts, uploaded });
+  return Object.assign(scope, { alerts, uploaded, uploadFailed: [] });
 }
 
 function vttFile(name, files) {
@@ -54,7 +54,7 @@ function vttFile(name, files) {
 
 async function upload(overlay, file) {
   const meta = [];
-  await overlay.uploadStateFile(file, 'addState/room/id/file/name', (...args)=>meta.push(args), ()=>{}, ()=>{});
+  await overlay.uploadStateFile(file, 'addState/room/id/file/name', (...args)=>meta.push(args), ()=>{}, failed=>overlay.uploadFailed.push(failed));
   return meta;
 }
 
@@ -136,8 +136,14 @@ describe('uploading a game file', () => {
       '1.json': { _meta: { version: 8, info: { name: 'Second Variant' } } }
     }))).toEqual([ [ 'Second Variant', undefined, null, [ {}, { name: 'Second Variant' } ], undefined, undefined ] ]);
 
+    // an array is an object as far as typeof is concerned, and assigning one into a game
+    // spreads it in as one property per element
+    expect(await upload(overlay, vttFile('Odd.vtt', {
+      '0.json': { _meta: { version: 8, info: [ 'bad', 'metadata' ] } }
+    }))).toEqual([ [ 'Odd', '', null, [ {} ], null, null ] ]);
+
     expect(overlay.alerts).toEqual([]);
-    expect(overlay.uploaded.length).toBe(2);
+    expect(overlay.uploaded.length).toBe(3);
   });
 
   test('falls back to the file name for PCIO and TTS files, whose JSON is not a variant', async () => {
@@ -165,5 +171,19 @@ describe('uploading a game file', () => {
     expect(meta).toEqual([]);
     expect(overlay.alerts).toEqual([ 'Pictures.zip does not contain a game. You can add VTT files (.vtt, .vttc, .vtts), playingcards.io files (.pcio) and Tabletop Simulator workshop files (.zip).' ]);
     expect(overlay.uploaded.length).toBe(0);
+  });
+
+  // the "add variant" flow adds its rows before the server has seen the file, so it has to be
+  // told that the upload failed to be able to take them back
+  test('reports whether the upload succeeded to the done callback', async () => {
+    const overlay = loadStatesOverlay();
+    await upload(overlay, vttFile('Good.vtt', { '0.json': { _meta: { version: 8 } } }));
+    expect(overlay.uploadFailed).toEqual([ false ]);
+
+    const rejected = loadStatesOverlay(404);
+    await upload(rejected, vttFile('Broken.vtt', { '0.json': 'not json at all' }));
+    await upload(rejected, vttFile('Pictures.zip', { 'image.png': 'not a game' }));
+    await upload(rejected, { name: 'Notes.txt', arrayBuffer: async () => fflate.strToU8('not a zip').buffer });
+    expect(rejected.uploadFailed).toEqual([ true, true, true ]);
   });
 });

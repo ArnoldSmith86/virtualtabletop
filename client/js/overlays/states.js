@@ -136,8 +136,8 @@ function addStateFile(f) {
   function metaCallback(name, similarName, image, variants, savePlayers, saveDate) {
     if(image) {
       stateDOM.classList.remove('noImage');
-      $('img', stateDOM).onerror = _=>stateDOM.classList.add('noImage');
-      $('img', stateDOM).src = image;
+      $('img:not(.emoji)', stateDOM).onerror = _=>stateDOM.classList.add('noImage');
+      $('img:not(.emoji)', stateDOM).src = image;
     }
 
     isSave = !!savePlayers;
@@ -192,6 +192,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
   } catch(e) {
     alertNotAGameFile(sourceFile.name);
+    loadCallback(true);
     return;
   }
 
@@ -211,7 +212,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
         if(content && content._meta) {
           // the info of a hand-written file can hold anything, while everything that reads a
           // variant treats it as an object it can read properties from and write them to
-          const variantInfo = typeof content._meta.info == 'object' ? content._meta.info : null;
+          const variantInfo = typeof content._meta.info == 'object' && !Array.isArray(content._meta.info) ? content._meta.info : null;
           variants.push(variantInfo || {});
           if(!info)
             info = variantInfo;
@@ -224,6 +225,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   if(!containsJSON) {
     alertNotAGameFile(sourceFile.name);
+    loadCallback(true);
     return;
   } else if(!info) {
     // without metadata the file name is all the tile can show until the server has read the file
@@ -282,7 +284,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       console.error(`Uploading ${sourceFile.name} failed with status ${e.target.status}: ${e.target.response}`);
       alert(`${sourceFile.name}: ${e.target.response || 'The server did not accept the file.'}`);
     }
-    loadCallback();
+    loadCallback(e.target.status != 200);
   };
   req.upload.onprogress = e=>progressCallback(e.loaded/e.total);
 
@@ -554,12 +556,17 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     state.starred = starred && starred[state.publicLibrary];
     state.stars = state.stars || 0;
     // metadata written by hand or by another tool can hold anything, and everything that shows
-    // the image of a game here expects a string or nothing
+    // one of the images of a game here expects a string or nothing
     if(typeof state.image != 'string')
       state.image = '';
-    for(const variant of state.variants)
+    if(typeof state.similarImage != 'string')
+      state.similarImage = '';
+    for(const variant of state.variants) {
+      if(typeof variant.variantImage != 'string')
+        variant.variantImage = '';
       if(variant.plStateID)
         publicLibraryLinksFound[`${variant.plStateID} - ${variant.plVariantID}`] = true;
+    }
   }
 
   const categories = {
@@ -616,6 +623,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     if(state.image) {
       const mappedURL = mapAssetURLs(state.image);
+      $('img:not(.emoji)', entry).onerror = _=>entry.classList.add('noImage');
       if(loadedLibraryImages[mappedURL]) {
         $('img:not(.emoji)', entry).dataset.src = $('img:not(.emoji)', entry).src = mappedURL;
       } else {
@@ -908,7 +916,7 @@ function fillStateDetails(states, state, dom) {
     vEntry.className = isLinkedVariant ? 'linked variant' : 'variant';
 
     // a variant without a name of its own renders as a blank row, which gives the user nothing to
-    // tell several of them apart - the number is the one the play button loads
+    // tell several of them apart - the number is its position in the list
     if(!variant.variant)
       $('.variant-name', vEntry).dataset.placeholder = `Variant ${+variantID + 1}`;
 
@@ -1016,12 +1024,14 @@ function fillStateDetails(states, state, dom) {
 
       const variantDOM = [];
       const filenameSuffix = rand().toString(36).substring(3, 11);
+      let createOperation = null;
 
       function metaCallback(name, similarName, image, variants) {
-        variantOperationQueue.push({
+        createOperation = {
           operation: 'create',
           filenameSuffix
-        });
+        };
+        variantOperationQueue.push(createOperation);
         for(const variant of variants) {
           const vEntry = addVariant($a('#stateDetailsOverlay .variant').length, variant);
           vEntry.classList.add('uploading');
@@ -1033,7 +1043,17 @@ function fillStateDetails(states, state, dom) {
         for(const d of variantDOM)
           d.style.setProperty('--progress', percent);
       }
-      function doneCallback() {
+      function doneCallback(failed) {
+        // the rows and the operation were added before the server saw the file, so a rejected
+        // upload has to take them back: saving them would send more variants than the game has,
+        // which makes the server drop the whole edit
+        if(failed) {
+          for(const d of variantDOM)
+            removeFromDOM(d);
+          variantDOM.length = 0;
+          if(createOperation)
+            variantOperationQueue.splice(variantOperationQueue.indexOf(createOperation), 1);
+        }
         for(const d of variantDOM)
           d.classList.remove('uploading');
         if(!$('#stateDetailsOverlay .uploading.variant'))
