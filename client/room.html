@@ -750,6 +750,27 @@
       </div>
     </div>
 
+    <div id="connectionLostOverlay" class="overlay" style="display:none;">
+      <h1 class="whileDisconnected">Connection lost</h1>
+      <h1 class="whileRestarting">The server was updated</h1>
+      <div class="disconnected">
+        <div class="cable">&nbsp;</div>
+        <div class="plug">&nbsp;</div>
+        <div class="cable">&nbsp;</div>
+      </div>
+      <p class="whileDisconnected">The connection to the server was lost. It should be reestablished in a few moments.</p>
+      <p class="whileDisconnected">In case that doesn't work, try reloading the page or use a different room.</p>
+      <p class="whileRestarting">This page is reloading with the new version in a moment. Your room is not affected - it comes back exactly as you left it.</p>
+      <p class="whileRestarting"><button id="reloadNowButton">Reload now</button></p>
+    </div>
+
+    <div id="editModeUnavailableOverlay" class="overlay" style="display:none;">
+      <h1>Edit mode could not be loaded</h1>
+      <p>The editor is fetched from the server the first time it is opened, and the server did not answer - it is most likely restarting.</p>
+      <p>Nothing is broken and nothing is lost. Please try again in a moment.</p>
+      <p><button icon="close">Close</button></p>
+    </div>
+
     <div id="playerCursors"></div>
   </div>
 

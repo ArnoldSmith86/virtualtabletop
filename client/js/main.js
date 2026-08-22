@@ -1,5 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
-import { checkForServerRestart, clientIsOutdated, startWebSocket, toServer } from './connection.js';
+import { checkForServerRestart, clientIsOutdated, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 import { setCurrentOverlayId, getCurrentOverlayId, getEditMode } from './overlaystate.js';
 import { updateContainerQueryFallback } from './containerQueryFallback.js';
@@ -807,9 +807,12 @@ export function getSVG(url, replaces, callback) {
   return unreadableCache[url] ? mapAssetURLs(url) : '';
 }
 
+// Resolves to whether edit mode is available: false means the editor could not be fetched, which
+// the user has been told about and can retry - the callers must not go on to use it.
 async function loadEditMode() {
   if(edit === null) {
     $('body').classList.add('loadingEditMode');
+    let editmode;
     try {
       // Edit mode is a second bundle that is only fetched the first time it is opened, so an
       // outdated page would pair the client bundle it is running with an editor bundle of whatever
@@ -818,6 +821,10 @@ async function loadEditMode() {
       // reload this page instead of fetching an editor bundle that does not fit it.
       await checkForServerRestart();
       if(clientIsOutdated()) {
+        // long enough for the message to be on screen before the reload takes the page away, so a
+        // click on the edit button does not just flash the whole app for no visible reason
+        showServerRestartOverlay();
+        await sleep(1000);
         location.reload();
         await new Promise(_=>{});  // the page is on its way out: nothing waiting for edit mode may run
       }
@@ -843,16 +850,23 @@ async function loadEditMode() {
         getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
       });
 
-      const editmode = await import('./edit.js');
-      Object.assign(window, editmode);
-      initializeEditMode(currentMetaData);
+      editmode = await import('./edit.js');
     } catch(e) {
-      edit = null;  // an editor bundle that did not arrive is fetched again on the next attempt
-      throw e;
+      // the editor comes over the network, so it cannot be loaded while the server is away - which
+      // is what a deploy looks like from here. Nothing crashed and nothing is lost, so say that and
+      // let the next click fetch the bundle again instead of asking for a crash report.
+      console.error('Edit mode could not be loaded.', e);
+      edit = null;
+      showOverlay('editModeUnavailableOverlay');
+      return false;
     } finally {
       $('body').classList.remove('loadingEditMode');
     }
+
+    Object.assign(window, editmode);
+    initializeEditMode(currentMetaData);
   }
+  return true;
 }
 
 window.addEventListener('keydown', async function(e) {
@@ -862,8 +876,7 @@ window.addEventListener('keydown', async function(e) {
       $('#editorToolbar button[icon=close]').click();
     } else if(edit === false) {
       $('#editButton').click();
-    } else {
-      await loadEditMode();
+    } else if(await loadEditMode()) {
       $('#editButton').click();
       if(!$('#editorSidebar button[icon=data_object].active'))
         $('#editorSidebar button[icon=data_object]').click();
@@ -872,7 +885,8 @@ window.addEventListener('keydown', async function(e) {
 });
 
 async function toggleEditMode() {
-  await loadEditMode();
+  if(!await loadEditMode())
+    return false;
   if(edit) {
     $('body').classList.remove('edit');
     // A routine recording watches the room on the editor's behalf and puts a
@@ -889,6 +903,7 @@ async function toggleEditMode() {
     openEditor();
   showOverlay();
   setScale();
+  return true;
 }
 
 onLoad(function() {
@@ -948,19 +963,23 @@ onLoad(function() {
       e.stopImmediatePropagation();
       return;
     }
-    const previousTab = [...$a('.toolbarTab')].filter(tabButton=>tabButton.classList.contains('active'))[0];
     for(const tabButton of $a('.toolbarTab'))
       toggleClass(tabButton, 'active', tabButton == e.currentTarget);
 
-    if(e.currentTarget == $('#editButton') || edit)
+    if(e.currentTarget == $('#editButton') || edit) {
       // a tab that could not be opened - edit mode is fetched on demand and the server may be
       // away - must not stay marked as the open one, or the next click on it counts as a click on
-      // the active tab and does nothing at all
-      toggleEditMode().catch(error=>{
+      // the active tab and does nothing at all. What is on screen then belongs to no tab, so none
+      // of them is marked either.
+      const noTabIsOpen = _=>{
         for(const tabButton of $a('.toolbarTab'))
-          toggleClass(tabButton, 'active', tabButton == previousTab);
+          tabButton.classList.remove('active');
+      };
+      toggleEditMode().then(opened=>opened || noTabIsOpen(), error=>{
+        noTabIsOpen();
         throw error;
       });
+    }
   });
 
   on('#activeGameButton', 'click', function() {
@@ -970,8 +989,8 @@ onLoad(function() {
   on('.toolbarButton', 'click', async function(e) {
     const overlay = e.currentTarget.dataset.overlay;
     if(overlay) {
-      if(overlay == 'addOverlay')
-        await loadEditMode();
+      if(overlay == 'addOverlay' && !await loadEditMode())
+        return;
 
       showOverlay(overlay);
       if(overlay == 'statesOverlay')
@@ -1041,6 +1060,13 @@ onLoad(function() {
   onMessage('redirect', function(url) {
     window.location.href = `${url}#player:${encodeURIComponent(playerName)}:${encodeURIComponent(playerColor)}`;
   });
+
+  // the delay before the reload after a server restart spreads the clients over a few seconds,
+  // which is the server's concern and not the waiting player's
+  on('#reloadNowButton', 'click', _=>location.reload());
+
+  on('#editModeUnavailableOverlay button', 'click', _=>showOverlay());
+
   on('#returnOverlay button', 'click', function() {
     toServer('setRedirect', 'return');
   });

@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 // error inside a Function body), and every global it touches is a parameter below - a missing one
 // shows up as a ReferenceError from whichever handler was exercised.
 const connectionSource = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../../client/js/connection.js'), 'utf8');
-const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$a', 'rand', 'urlProperties', 'playerName', 'roomID',
+const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$', '$a', 'rand', 'urlProperties', 'playerName', 'roomID',
   connectionSource.replace(/^export /gm, '') + `;
   return { startWebSocket, clientIsOutdated, checkForServerRestart };
 `);
@@ -33,6 +33,8 @@ function startedClient(onReload, serving) {
   const timers = [];
   const sockets = [];
   const requests = [];
+  const overlays = [];
+  const overlayClasses = new Set();
 
   function FakeWebSocket(url) {
     this.url = url;
@@ -56,13 +58,16 @@ function startedClient(onReload, serving) {
     };
   }
 
-  const client = loadConnection(fakeLocation(onReload), (callback, delay)=>timers.push({ callback, delay }), FakeWebSocket, fakeFetch, _=>{}, _=>[], _=>0, {}, 'tester', 'testroom');
+  const client = loadConnection(fakeLocation(onReload), (callback, delay)=>timers.push({ callback, delay }), FakeWebSocket, fakeFetch,
+    id=>overlays.push(id), _=>({ classList: overlayClasses }), _=>[], _=>0, {}, 'tester', 'testroom');
   client.startWebSocket();
 
   return {
     clientIsOutdated: client.clientIsOutdated,
     checkForServerRestart: client.checkForServerRestart,
     requests,
+    overlays,
+    overlayClasses,
     connect: _=>sockets[sockets.length-1].onopen(),
     disconnect: _=>sockets[sockets.length-1].onclose(),
     reconnectDelays: _=>timers.map(timer=>timer.delay),
@@ -94,6 +99,17 @@ describe('Scenarios: the server the page is talking to restarts', () => {
       expect(reloads).toBe(0);  // spread over a few seconds so not every client comes back at once
       client.runTimers();
       expect(reloads).toBe(1);
+    });
+
+    test('Then the overlay says what is happening instead of promising a reconnect', () => {
+      const client = startedClient(_=>{});
+      client.serverStart(1000);
+      client.serverStart(2000);
+
+      // the connection is not coming back and the page is going away, so neither "it should be
+      // reestablished in a few moments" nor "use a different room" applies any longer
+      expect(client.overlays).toContain('connectionLostOverlay');
+      expect(client.overlayClasses.has('serverRestarting')).toBe(true);
     });
 
     test('Then the page knows that it is outdated before the reload happens', () => {

@@ -101,6 +101,7 @@ const CLIENT_CSS = [
   'client/css/overlays/rooms.css',
   'client/css/overlays/states.css',
   'client/css/overlays/status.css',
+  'client/css/overlays/connectionlost.css',
   'client/css/overlays/about.css',
   'client/css/overlays/welcome.css',
 

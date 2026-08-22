@@ -69,6 +69,7 @@ export function startWebSocket() {
         // preventReconnect() below makes onclose skip these, so the connection monitor would keep
         // showing a live connection for the seconds until the reload
         for(const cb of onConnectionCloseCallbacks) cb();
+        showServerRestartOverlay();
         preventReconnect();
         connection.close();
       }
@@ -78,6 +79,15 @@ export function startWebSocket() {
     for(const callback of (messageCallbacks[func] || []))
       callback(args);
   };
+}
+
+// The overlay that comes up when the connection drops explains that it is expected back and
+// suggests reloading or switching rooms, none of which applies to a restart: reconnecting has been
+// switched off and the page is reloading by itself. Say that instead, and offer the reload right
+// away for whoever does not want to wait out the delay that spreads the clients over a few seconds.
+export function showServerRestartOverlay() {
+  $('#connectionLostOverlay').classList.add('serverRestarting');
+  showOverlay('connectionLostOverlay', true);
 }
 
 // True once this page has seen the server it is talking to restart: everything it was served -
