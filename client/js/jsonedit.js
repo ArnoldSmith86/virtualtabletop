@@ -2511,14 +2511,23 @@ function jeSVGColors() {
     observer.observe(jeCommands, { childList: true, subtree: false });
   }
 
-  // Extract and display SVG colors
-  fetch(mapAssetURLs(jeStateNow.image))
-  .then(response => response.text())
-  .then(svg => {
+  // Extract and display SVG colors. The file comes from fetchSVG() (main.js), the one request per
+  // image the engine and the SVG replacements editor go through as well: it answers with the file's
+  // text, with null for a file that turned out not to be an SVG, and rejects when the file could not
+  // be read at all - a cross-origin image blocked by CORS, a server that is not answering, a URL
+  // that 404s. Both of those are reported in the panel: an unhandled rejection here is treated as a
+  // client crash and takes the whole session down with the error overlay.
+  const colorsDiv = div.querySelector('div');
+  const sayInPanel = text => {
+    if (colorsDiv)
+      colorsDiv.textContent = text;
+  };
+  fetchSVG(jeStateNow.image).then(svg => {
+    if (svg === null)
+      return sayInPanel('This image is not an SVG, so it has no colors that could be replaced.');
     const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
     const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
     const colors = [...new Set(uniqueColors)];
-    const colorsDiv = div.querySelector('div');
     if (colorsDiv) {
       colorsDiv.innerHTML = colors.map(color => {
         const backgroundColor = color === 'currentColor' ? 'black' : color;
@@ -2541,7 +2550,7 @@ function jeSVGColors() {
         });
       });
     }
-  });
+  }, _=>sayInPanel('This image could not be loaded, so the colors it uses could not be listed.'));
 
   $a('#jeSVGColors button')[0].addEventListener('click', function () {
     div.remove();
