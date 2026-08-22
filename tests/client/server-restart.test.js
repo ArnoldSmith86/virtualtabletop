@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 const connectionSource = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../../client/js/connection.js'), 'utf8');
 const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$', '$a', 'rand', 'urlProperties', 'playerName', 'roomID',
   connectionSource.replace(/^export /gm, '') + `;
-  return { startWebSocket, clientIsOutdated, checkForServerRestart, editModeURL };
+  return { startWebSocket, clientIsOutdated, checkForServerRestart, editModeURL, editModeLoadFailed, showServerRestartOverlay };
 `);
 
 // Location.reload belongs to its Location - a browser throws "Illegal invocation" when it is called
@@ -66,6 +66,8 @@ function startedClient(onReload, serving) {
     clientIsOutdated: client.clientIsOutdated,
     checkForServerRestart: client.checkForServerRestart,
     editModeURL: client.editModeURL,
+    editModeLoadFailed: client.editModeLoadFailed,
+    showServerRestartOverlay: client.showServerRestartOverlay,
     requests,
     overlays,
     overlayClasses,
@@ -153,6 +155,21 @@ describe('Scenarios: the server the page is talking to restarts', () => {
     });
   });
 
+  describe('Given a restart that was noticed over HTTP rather than over the socket', () => {
+    test('Then reconnecting does not take the notice away again before the reload', () => {
+      const client = startedClient(_=>{}, 2000);
+      client.connect();
+      client.serverStart(1000);
+
+      client.showServerRestartOverlay();
+      client.disconnect();
+
+      // a reconnect restores whatever overlay was up before the connection dropped, which here
+      // would clear the message a second before the page reloads
+      expect(client.reconnectDelays()).toEqual([]);
+    });
+  });
+
   describe('Given a page that is about to fetch the editor bundle', () => {
     test('Then it asks for the build it is running rather than for whatever is being served', () => {
       const client = startedClient(_=>{});
@@ -162,6 +179,22 @@ describe('Scenarios: the server the page is talking to restarts', () => {
       // restart between deciding to fetch the bundle and fetching it cannot slip a mismatched
       // editor into this page - a check of its own before the import could not rule that out
       expect(client.editModeURL()).toBe('./edit.js?serverStart=1000');
+    });
+
+    test('Then a second attempt is a request the browser has not seen fail', () => {
+      const client = startedClient(_=>{});
+      client.serverStart(1000);
+
+      // a dynamic import that failed is remembered as failed for that URL and re-thrown without
+      // another request, so retrying the same one could only ever repeat the failure - while the
+      // build being asked for has to stay the same
+      client.editModeLoadFailed();
+      const second = client.editModeURL();
+      client.editModeLoadFailed();
+
+      expect(second).not.toBe('./edit.js?serverStart=1000');
+      expect(second).toContain('serverStart=1000');
+      expect(client.editModeURL()).not.toBe(second);
     });
 
     test('Then a page that has never been connected takes whatever the server has', () => {
@@ -176,13 +209,27 @@ describe('Scenarios: the server the page is talking to restarts', () => {
     test('Then the next disconnect is retried as quickly as the first one was', () => {
       const client = startedClient(_=>{}, 1000);
       client.connect();
+      client.serverStart(1000);
       client.disconnect();
       client.connect();
+      client.serverStart(1000);
       client.disconnect();
 
       // a backoff that is never reset keeps doubling for the lifetime of the tab, which delays
       // noticing a restart by minutes in a session that has hiccuped a few times
       expect(client.reconnectDelays()).toEqual([ 2000, 2000 ]);
+    });
+
+    test('Then a socket that is accepted but never works keeps backing off', () => {
+      const client = startedClient(_=>{}, 1000);
+      client.connect();
+      client.disconnect();
+      client.connect();
+      client.disconnect();
+
+      // a server that accepts the connection and drops it without ever saying anything is as away
+      // as one that refuses it, and every open tab hammering it every two seconds does not help
+      expect(client.reconnectDelays()).toEqual([ 2000, 4000 ]);
     });
 
     test('Then a server that stays away is retried less and less often', () => {

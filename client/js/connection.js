@@ -4,6 +4,7 @@ let connection;
 let serverStart = null;
 let userNavigatedAway = false;
 let outdated = false;
+let editModeAttempts = 0;
 let messageCallbacks = {};
 
 //used by unit tests until jest supports mocking ESM static imports
@@ -19,7 +20,6 @@ export function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
-    lastTimeout = 1000;  // the backoff is about how long the server stays away, not about the tab's age
     showOverlay(null, true);
     showOverlay(lastOverlay);
     if(!urlProperties.askID) {
@@ -58,6 +58,11 @@ export function startWebSocket() {
     }
 
     if(func == 'serverStart') {
+      // the first thing the server sends, so a connection that gets this far is one that works: the
+      // backoff is about how long the server stays away, not about the tab's age, and resetting it
+      // on the handshake alone keeps retrying a socket that is accepted and dropped every two seconds
+      lastTimeout = 1000;
+
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
         outdated = true;
@@ -65,7 +70,6 @@ export function startWebSocket() {
         // which throws instead of reloading
         setTimeout(_=>location.reload(), rand()*10000);
         showServerRestartOverlay();
-        preventReconnect();
         connection.close();
       }
       serverStart = args;
@@ -81,6 +85,9 @@ export function startWebSocket() {
 // switched off and the page is reloading by itself. Say that instead, and offer the reload right
 // away for whoever does not want to wait out the delay that spreads the clients over a few seconds.
 export function showServerRestartOverlay() {
+  // a reconnect that lands in the meantime restores whatever overlay was up before the connection
+  // dropped, which would take this message away again moments before the page reloads
+  preventReconnect();
   $('#connectionLostOverlay').classList.add('serverRestarting');
   showOverlay('connectionLostOverlay', true);
 }
@@ -98,9 +105,25 @@ export function clientIsOutdated() {
 // that does not fit: checking first and importing afterwards leaves a window in between in which
 // the server changes and the answer to the check no longer describes what arrives.
 export function editModeURL() {
+  const parameters = new URLSearchParams();
   // a page that has never been connected does not know which build served it, so it has nothing to
   // ask for and takes whatever the server has
-  return serverStart == null ? './edit.js' : `./edit.js?serverStart=${encodeURIComponent(serverStart)}`;
+  if(serverStart != null)
+    parameters.set('serverStart', serverStart);
+  // a dynamic import that failed is remembered as failed for that exact URL: importing it again
+  // re-throws the recorded error without going to the network at all, so the retry the user is
+  // invited to make needs a URL this page has not asked for yet. The server reads nothing but
+  // serverStart, so counting the attempts costs it nothing and still asks for the same build.
+  if(editModeAttempts)
+    parameters.set('retry', editModeAttempts);
+  const query = String(parameters);
+  return query ? `./edit.js?${query}` : './edit.js';
+}
+
+// Called when fetching the editor bundle failed, so that the next attempt is a request the browser
+// has no recorded failure for rather than a replay of this one.
+export function editModeLoadFailed() {
+  editModeAttempts++;
 }
 
 // The socket only learns about a restart once it manages to reconnect, while the new server starts

@@ -1,5 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
-import { checkForServerRestart, clientIsOutdated, editModeURL, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
+import { checkForServerRestart, clientIsOutdated, editModeLoadFailed, editModeURL, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
@@ -810,6 +810,7 @@ async function editModeUnavailable(error) {
   // kept out of the message on screen but not out of the console: whoever debugs a bundle that does
   // not load needs the original failure, restart or not
   console.error('Edit mode could not be loaded.', error);
+  editModeLoadFailed();
 
   const serverAnswered = await checkForServerRestart();
   if(clientIsOutdated()) {
@@ -821,6 +822,9 @@ async function editModeUnavailable(error) {
     return false;
   }
   if(!serverAnswered) {
+    // while the connection is down its own overlay is up and forced, so it stays and this one does
+    // not appear - which is the right way round: it already says the server is away, and unlike
+    // this one it goes when the server comes back
     showOverlay('editModeUnavailableOverlay');
     return false;
   }
