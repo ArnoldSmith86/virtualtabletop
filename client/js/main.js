@@ -1,5 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
-import { startWebSocket, toServer } from './connection.js';
+import { clientIsOutdated, startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
@@ -801,6 +801,16 @@ export function getSVG(url, replaces, callback) {
 }
 
 async function loadEditMode() {
+  // Edit mode is a second bundle that is only fetched the first time it is opened, so an outdated
+  // page would pair the client bundle it is running with an editor bundle of whatever the server
+  // has now. The two halves only know each other through the names handed over below, and a pair
+  // from two builds fails on the first name one of them does not have - so bring the reload the
+  // restart already scheduled forward instead of opening an editor that does not fit this page.
+  if(clientIsOutdated()) {
+    location.reload();
+    await new Promise(_=>{});  // the page is on its way out: nothing waiting for edit mode may run
+  }
+
   if(edit === null) {
     edit = false;
     Object.assign(window, {
