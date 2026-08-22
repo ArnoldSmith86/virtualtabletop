@@ -1141,7 +1141,19 @@ function fillStateDetails(states, state, dom) {
       showStatesOverlay(detailsOverlay);
     }
   };
-  $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
+  $('#stateDetailsOverlay .buttons [icon=save]').onclick = async function() {
+    // saving a game without a single variant left removes the game itself, so it asks the same
+    // question the delete button asks instead of doing that silently
+    if(!$('#variantsList .variant')) {
+      const type     = state.savePlayers ? 'saved game'        : 'game';
+      const category = state.savePlayers ? 'in-progress games' : 'game shelf';
+      $('#statesButton').dataset.overlay = 'confirmOverlay';
+      if(!await confirmOverlay(`Delete ${type}`, `You deleted the last variant of this ${type}. Saving now removes the whole ${type} from your ${category}. Are you sure?`, 'Delete', 'Keep', 'delete', 'undo', 'red')) {
+        showStatesOverlay(detailsOverlay);
+        return;
+      }
+    }
+
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
     const main = $('#showName').checked, similar = $('#showNameSimilar').checked;
     meta.showName = main && similar ? true : !main && !similar ? false : main ? 'only main' : 'only similar';

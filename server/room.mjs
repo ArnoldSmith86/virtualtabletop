@@ -424,7 +424,9 @@ export default class Room {
 
     // a game is nothing but its variants, and the save files of the deleted ones are already gone -
     // keeping the metadata of a game without a single variant would leave an entry that the game
-    // list has nothing to show for and that nobody can reach again
+    // list has nothing to show for and that nobody can reach again. removeState refuses public
+    // library games on servers that do not allow editing them, so the game can survive the call -
+    // its metadata is then updated like in any other edit.
     if(!variants.length) {
       this.removeState(player, id);
       if(!this.state._meta.states[id])
@@ -559,6 +561,7 @@ export default class Room {
       this.migrateBrokenSaveWithoutVersion();
       await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
+      this.removeStatesWithoutVariants(player);
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.normalizeGameSettings(this.state._meta.gameSettings);
@@ -898,7 +901,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    if(stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+    if(String(stateID).match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
       return;
 
     for(const variantID in this.state._meta.states[stateID].variants) {
@@ -907,7 +910,7 @@ export default class Room {
         fs.unlinkSync(savefile);
     }
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       this.state._meta.states[stateID].variants = [];
       this.writePublicLibraryAssetsToFilesystem(stateID);
 
@@ -918,12 +921,22 @@ export default class Room {
 
     delete this.state._meta.states[stateID];
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       delete Room.publicLibrary;
       this.publicLibraryUpdatedCallback();
     } else {
       this.sendMetaUpdate();
     }
+  }
+
+  // older versions kept a game whose last variant was deleted, leaving an entry with an empty
+  // variant list that the game list has nothing to show for, so it can neither be played nor
+  // deleted. Public library games are left alone - their variants come from the filesystem and are
+  // emptied for a moment while their game directory is removed.
+  removeStatesWithoutVariants(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states))
+      if(!String(id).match(/^PL:/) && !Object.keys(state.variants || {}).length)
+        this.removeState(player, id);
   }
 
   renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
