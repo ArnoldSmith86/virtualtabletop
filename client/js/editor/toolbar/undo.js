@@ -13,4 +13,22 @@ class UndoButton extends ToolbarButton {
       undoProtocolChanged();
     }
   }
+
+  onDeltaReceived(delta) {
+    this.updateEnabled();
+  }
+
+  onEditorOpen() {
+    this.updateEnabled();
+  }
+
+  onUndoProtocolChanged() {
+    this.updateEnabled();
+  }
+
+  // the first protocol entry is the room as it was loaded, so there is nothing left to
+  // undo while it is the only one - clicking would be a silent no-op
+  isDisabled() {
+    return getUndoProtocol().length <= 1;
+  }
 }

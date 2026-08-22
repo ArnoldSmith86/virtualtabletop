@@ -1,6 +1,6 @@
 class UndoModule extends SidebarModule {
   constructor() {
-    super('undo', 'History', 'Undo changes from editing or playing.');
+    super('undo', 'History', 'See and return to earlier states of this room.');
     this.lastRenderedIndex = -2;
     this.renderedEntries = [];
     this.latestEntryDOM = null;
@@ -54,7 +54,7 @@ class UndoModule extends SidebarModule {
   renderModule(target) {
     if(this.lastRenderedIndex == -2) {
       this.addHeader('History');
-      const hintDiv = hint('This lists all the changes that were done to this room until you loaded the page.<br><br>You can click on any row to return the room to the state after the described action.<br><br>You can afterwards return to a future state by clicking that one but as soon as you make new changes after returning to a state in the past, you can no longer restore anything from the now parallel timeline.');
+      const hintDiv = hint('This lists all the changes that were done to this room until you loaded the page.<br><br>You can click on any row to return the room to the state after the described action.<br><br>You can afterwards return to a future state by clicking that one but as soon as you make new changes after returning to a state in the past, you can no longer restore anything from the now parallel timeline.<br><br>The Undo button in the toolbar works differently: it removes the change from this list for good, together with everything that happened after it, so those rows disappear and their states cannot be returned to.');
       this.moduleDOM.append(hintDiv);
       this.lastRenderedIndex = -1;
     }
@@ -74,14 +74,14 @@ class UndoModule extends SidebarModule {
 
     if(this.latestEntryDOM) {
       const d = this.protocol[this.lastRenderedIndex].delta;
-      this.latestEntryDOM.innerText = `${this.lastRenderedIndex+1} - ${d.c || 'unknown'} (${Object.keys(d.s).length} widget${Object.keys(d.s).length == 1 ? '' : 's'} changed)`;
+      this.latestEntryDOM.innerText = `${this.lastRenderedIndex+1} - ${d.c || 'change with no description'} (${Object.keys(d.s).length} widget${Object.keys(d.s).length == 1 ? '' : 's'} changed)`;
     }
 
     for(let i=this.lastRenderedIndex+1; i<this.protocol.length; ++i) {
       const div = document.createElement('div');
       const affectedWidgets = Object.keys(this.protocol[i].delta.s);
-      div.innerText = `${i+1} - ${this.protocol[i].delta.c || 'unknown'} (${affectedWidgets.length} widget${affectedWidgets.length == 1 ? '' : 's'} changed)`;
-      div.onclick = _=>this.onEntryClick(i, div);
+      div.innerText = `${i+1} - ${this.protocol[i].delta.c || 'change with no description'} (${affectedWidgets.length} widget${affectedWidgets.length == 1 ? '' : 's'} changed)`;
+      focusable(div, _=>this.onEntryClick(i, div));
       div.className = 'undoEntry';
       this.moduleDOM.insertBefore(div, $('.undoEntry', this.moduleDOM));
       this.latestEntryDOM = div;

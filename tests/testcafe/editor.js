@@ -150,6 +150,7 @@ test('Undoing from the toolbar keeps the History module in sync', async t => {
   await setName(t);
 
   const historyRows = Selector('.undoEntry');
+  const undoButton = Selector('#editorToolbar [icon=undo]');
   const widgetCount = ClientFunction(() => widgets.size);
   await t
     .click('#editButton')
@@ -179,6 +180,12 @@ test('Undoing from the toolbar keeps the History module in sync', async t => {
     .click('#editorToolbar [icon=undo]')
     .expect(historyRows.count).eql(rowsBefore)
     .expect(widgetCount()).eql(1);
+
+  // the first entry is the room as it was loaded, so the button turns off once it is the
+  // only one left and clicking it would do nothing
+  for(let rows = await historyRows.count; rows > 1; --rows)
+    await t.expect(undoButton.hasAttribute('disabled')).notOk().click(undoButton);
+  await t.expect(undoButton.hasAttribute('disabled')).ok();
   await setEditorState(null);
 });
 
