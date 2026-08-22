@@ -2971,12 +2971,13 @@ test('the Debug module logs each operation of a routine with its result', async 
     .expect(operation.nth(3).find('.jeLogResult').innerText).eql('null')
     .expect(operation.nth(0).find('.jeLogFailed').exists).notOk();
 
-  // its problem is one readable sentence rather than a JSON array of escaped strings
+  // its problem is one readable sentence rather than a JSON array of escaped strings - the wording
+  // of the SyntaxError itself differs between browsers, so only the sentence around it is checked
   await t
     .click(headerOf(operation.nth(3)))
     .click(detailsOf(operation.nth(3), 'Problems').child('div').nth(0))
     .expect(operation.nth(3).find('.jeLogProblems').innerText)
-      .eql('The expression "5 / (1 - 1) *" threw an exception: SyntaxError: Unexpected end of input.');
+      .match(/^The expression "5 \/ \(1 - 1\) \*" threw an exception: SyntaxError: .+\.$/);
 
   // the variables the engine puts into every routine are behind their own expander, so the pane
   // opens on the variables the routine itself works with
