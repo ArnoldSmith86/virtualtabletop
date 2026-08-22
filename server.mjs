@@ -450,6 +450,12 @@ MinifyHTML().then(function(result) {
 
   router.get('/edit.js', function(req, res, next) {
     res.setHeader('Content-Type', 'text/javascript');
+    // the editor bundle only fits the client bundle of the same build, so a page says which build
+    // it belongs to - see editModeURL in the client - and a server that has replaced that build
+    // refuses rather than hand out an editor that does not fit the page asking for it
+    res.setHeader('X-Server-Start', serverStart);
+    if(req.query.serverStart !== undefined && req.query.serverStart != serverStart)
+      return res.status(409).send(`// this server is running build ${serverStart} and has no editor for the build that was asked for`);
     sendMinified(req, res, result.editorJSmin, result.editorJSgzipped);
   });
 
