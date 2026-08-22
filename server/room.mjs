@@ -1221,7 +1221,10 @@ export default class Room {
       const operations = [];
       for(const [ variantID, variant ] of Object.entries(state.variants))
         if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
-          operations.push({ operation: 'delete', variantID });
+          operations.push({ operation: 'delete', variantID: +variantID });
+      // deleting a variant shifts every later one down by one index, so the queue runs from the last
+      // dead link to the first - that way each operation still addresses the variant it was collected for
+      operations.reverse();
       if(operations.length)
         this.editState(player, id, state, state.variants, operations);
     }

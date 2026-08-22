@@ -84,6 +84,20 @@ describe('server/room.mjs', function() {
     expect(states['PL:games/Alive']).toBeDefined();
   });
 
+  test('removeInvalidPublicLibraryLinks removes several dead links and keeps the surviving variant', function() {
+    const states = {
+      'PL:games/Alive': { name: 'Alive', variants: [ {} ] },
+      several:          { name: 'Several', variants: [ { plStateID: 'PL:games/Gone', plVariantID: 0 }, { plStateID: 'PL:games/AlsoGone', plVariantID: 0 }, {} ] }
+    };
+    const room = roomWithStates(states);
+    writeVariantFiles('several', 3);
+
+    room.removeInvalidPublicLibraryLinks(player);
+
+    expect(states.several.variants).toEqual([ {} ]);
+    expect(fs.readFileSync(path.join(directory, 'several-0.json'), 'utf8')).toEqual('{"variant":2}');
+  });
+
   test('removeStatesWithoutVariants removes games that have no variant left', function() {
     const states = {
       empty:            { name: 'Empty', variants: [] },
