@@ -5430,10 +5430,12 @@ test('Editing the widgets array of a selection with different parents works', as
 // contains one has to arrive somewhere the creator can find and fix it.
 test('A widget whose parent does not exist is loaded into limbo', async t => {
   await t.resizeWindow(1280, 800);
+  // the child comes before its parent so the load has to follow the chain instead of
+  // relying on the order the widgets happen to be stored in
   await setRoomState({
     box: { id: 'box', type: 'basic', x: 100, y: 100, width: 600, height: 400 },
-    orphan: { id: 'orphan', type: 'basic', parent: 'ghost', x: 700, y: 300, width: 100, height: 100 },
-    child: { id: 'child', type: 'basic', parent: 'orphan', x: 10, y: 10, width: 50, height: 50 }
+    child: { id: 'child', type: 'basic', parent: 'orphan', x: 10, y: 10, width: 50, height: 50 },
+    orphan: { id: 'orphan', type: 'basic', parent: 'ghost', x: 700, y: 300, width: 100, height: 100 }
   });
   await ClientFunction(prepareClient)();
   await setName(t);
