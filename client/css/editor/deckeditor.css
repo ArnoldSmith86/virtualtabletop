@@ -808,13 +808,13 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   display: block;
 }
 
-/* A finished deck can look like something that is taken as it is, so the group offering them says up front
-   that it is only the starting point of a deck of this game. */
+/* Introduces the options of a group with what picking one of them does. Kept no louder than the
+   descriptions of the options it stands above. */
 .deckEditorNewDeckGroupNote {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-size: 12px;
   line-height: 1.35;
-  opacity: 0.85;
+  opacity: 0.7;
 }
 
 .deckEditorNewDeckModes {
