@@ -2,6 +2,8 @@
   --scale: 1;
   --roomWidth: 1600px;
   --roomHeight: 1000px;
+  --addOverlayScale: 1;
+  --addOverlayHeaderHeight: 90px;
   --roomTop: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
   --roomLeft: 0px;
   --toolbarSize: 44px;
@@ -49,7 +51,16 @@ body.loadingEditMode * {
   cursor: wait;
 }
 
+/* the overlays are children of #roomArea, so their size is the board's, not the window's.
+   Their breakpoints are container queries against this box: as media queries they measured
+   the window, which only said something about how much room an overlay has back when every
+   board was 1600x1000. A square or portrait board now leaves a much smaller overlay in the
+   same window and would still have gotten the layout of a wide one.
+   Only for overlays that stay in here: an element the deck editor re-parents into #editor (the
+   symbol picker, its own dialogs) has no roomArea container left, and a @container rule on it
+   silently stops matching at any size - those keep their media queries. */
 #roomArea {
+  container: roomArea / size;
   position: fixed;
   overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
@@ -59,11 +70,14 @@ body.loadingEditMode * {
   z-index: 1;
 }
 
-@media (min-aspect-ratio: 1600/1000) {
-  body {
-    --roomTop: 0px;
-    --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
-  }
+/* the window is wider than the board, so the toolbar sits beside it - this used to be a
+   media query against the hardcoded 1600/1000 aspect ratio, but that is exactly what
+   setScale already decides when it picks the toolbar layout for the board's own size.
+   .edit is excluded explicitly: edit mode positions the room itself (editor/layout.css)
+   and would otherwise only win this on source order */
+body:not(.edit,.horizontalToolbar,.aspectTooGood) {
+  --roomTop: 0px;
+  --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
 }
 
 body.aspectTooGood {
@@ -75,29 +89,34 @@ body.aspectTooGood.hiddenToolbar {
   --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
-@media (orientation: portrait) {
-  body:not(.lightsOff,.jsonEdit) {
-    background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
-    background-size: calc(100% - 40px) calc(var(--roomTop) - 40px);
-    background-repeat: no-repeat;
-    background-position: 20px 20px;
-    height: 100vh;
-  }
-  body:not(.lightsOff,.jsonEdit)::after {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* the branding wash and the "rotate your device" hint above the board. This used to be
+   @media (orientation: portrait), which told a player with a portrait board in a portrait
+   window - the best fit there is - to rotate away from it. isOrientationMismatch decides it
+   from the board's own shape now, so only a landscape board asks to be turned landscape.
+   The heights are clamped because --roomTop goes negative on a board that nearly fills the
+   window, which dropped the declaration and left the text sliced across the board. */
+body.orientationMismatch:not(.lightsOff,.jsonEdit) {
+  background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
+  background-size: calc(100% - 40px) max(0px, calc(var(--roomTop) - 40px));
+  background-repeat: no-repeat;
+  background-position: 20px 20px;
+  height: 100vh;
+}
+body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
-    bottom: 0;
-    height: calc(var(--roomTop) - 40px);
-    width: calc(100vw - 40px);
+  bottom: 0;
+  height: max(0px, calc(var(--roomTop) - 40px));
+  width: calc(100vw - 40px);
 
-    content: "Please rotate your device to landscape orientation and switch to fullscreen.";
-    margin: 20px;
-    font-size: 20px;
-    color: #fff2;
-  }
+  content: "Please rotate your device to landscape orientation and switch to fullscreen.";
+  margin: 20px;
+  font-size: 20px;
+  color: #fff2;
 }
 
 
@@ -120,8 +139,17 @@ body.aspectTooGood.hiddenToolbar {
       height: 100%;
 
       --toolbarColor: var(--VTTblue);
+      --toolbarTextColor: #fff;
+      --toolbarArrowSize: 24px;
       background: var(--toolbarColor);
       padding: 20px 0 10px 0;
+    }
+
+    /* the toolbar contents never shrink - updateToolbarLayout in main.js applies the lowest
+       toolbarCompact* level that makes everything fit and switches the toolbar to scrolling
+       (body.toolbarOverflow) if even the most compact one does not */
+    #toolbar > * {
+      flex-shrink: 0;
     }
 
     #toolbar > img {
@@ -152,53 +180,72 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
+    /* hiding the toolbar used to be one way - with the board size configurable, aspectTooGood
+       is something a game can put every player in, so there has to be a way back. A thin strip
+       at the left edge, out of the way until it is hovered. */
+    #showToolbarButton {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      z-index: 3;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+
+      margin: 0;
+      padding: 0;
+      width: 10px;
+      height: 80px;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      background: var(--wcMain);
+      color: var(--wcFont);
+      opacity: 0.4;
+      overflow: hidden;
+      cursor: pointer;
+      transition: width 0.15s ease, opacity 0.15s ease;
+    }
+
+    #showToolbarButton::before {
+      font-size: 20px;
+      width: auto;
+    }
+
+    #showToolbarButton:hover, #showToolbarButton:focus-visible {
+      width: var(--toolbarSize);
+      opacity: 1;
+    }
+
+    /* edit mode hides the whole toolbar anyway, so there is nothing to bring back there */
+    body.aspectTooGood.hiddenToolbar:not(.edit) #showToolbarButton {
+      display: flex;
+    }
+
     body.loading #toolbar, body.loading #toolbar * {
       cursor: not-allowed;
     }
 
-    @media (min-height: 350px) {
-      body.wideToolbar #toolbar > img {
-        display: block;
-        margin: 10px 20px 3px 20px;
-        height: 52px;
-      }
-      body.wideToolbar #toolbar .divider:nth-child(2) {
-        display: block;
-        margin: 20px 10%;
-      }
+    body.wideToolbar #toolbar > img {
+      display: block;
+      margin: 10px 20px 3px 20px;
+      height: 52px;
     }
 
-    @media (max-height: 430px) {
-      body.wideToolbar #toolbar {
-        padding: 0;
-      }
-      body.wideToolbar #toolbar > img {
-        margin: 10px 20px;
-      }
+    body.wideToolbar.toolbarCompact1 #toolbar > img {
+      margin: 10px 20px;
     }
 
-    @media (max-height: 480px) {
-      body.wideToolbar #toolbar .divider:nth-child(2) {
-        display: none;
-      }
+    body.wideToolbar.toolbarCompact4 #toolbar > img {
+      display: none;
     }
 
-    @media (max-height: 440px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar {
-        padding: 0;
-      }
+    body.toolbarCompact1:not(.horizontalToolbar) #toolbar {
+      padding: 0;
     }
 
-    @media (max-width: 760px) {
-      body.aspectTooGood #toolbar {
-        padding: 0;
-      }
-    }
-
-    @media (max-width: 530px) {
-      body.horizontalToolbar #toolbar {
-        padding: 0 5px;
-      }
+    body.horizontalToolbar.toolbarCompact3 #toolbar {
+      padding: 0 5px;
     }
 
   /* dividers */
@@ -208,7 +255,7 @@ body.aspectTooGood.hiddenToolbar {
       margin: 10px 10%;
     }
 
-    #toolbar .divider:nth-child(2) {
+    #toolbar .logoDivider {
       display: none;
     }
 
@@ -222,22 +269,18 @@ body.aspectTooGood.hiddenToolbar {
       margin: auto 10px;
     }
 
-    @media (max-height: 480px) {
-      body.wideToolbar #toolbar .divider {
-        display: none;
-      }
+    body.wideToolbar #toolbar .logoDivider {
+      display: block;
+      margin: 20px 10%;
     }
 
-    @media (max-height: 440px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar .divider {
-        display: none;
-      }
+    body.wideToolbar.toolbarCompact1 #toolbar .logoDivider {
+      margin: 10px 10%;
     }
 
-    @media (max-width: 760px) {
-      body.aspectTooGood #toolbar .divider {
-        display: none;
-      }
+    body.toolbarCompact2:not(.horizontalToolbar) #toolbar .divider,
+    body.horizontalToolbar.toolbarCompact4 #toolbar .divider {
+      display: none;
     }
 
   /* buttons */
@@ -291,29 +334,17 @@ body.aspectTooGood.hiddenToolbar {
       justify-content: flex-end;
     }
 
-    @media (max-height: 530px) {
-      body.wideToolbar .toolbarButton:not(.toolbarTab) {
-        padding: 0 10%;
-      }
+    body.wideToolbar.toolbarCompact1 .toolbarButton:not(.toolbarTab) {
+      padding: 0 10%;
     }
 
-    @media (max-height: 440px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarButton:not(.toolbarTab) {
-        padding: 2px;
-      }
+    body.toolbarCompact1:not(.wideToolbar,.horizontalToolbar) .toolbarButton:not(.toolbarTab) {
+      padding: 2px;
     }
 
-    @media (max-width: 760px) {
-      body.aspectTooGood #toolbar .toolbarButton:not(.toolbarTab) {
-        padding: 2px;
-      }
-    }
-
-    @media (max-width: 530px) {
-      body.horizontalToolbar .toolbarButton:not(.toolbarTab) {
-        padding: 2px;
-        margin: 0;
-      }
+    body.horizontalToolbar.toolbarCompact3 .toolbarButton:not(.toolbarTab) {
+      padding: 2px;
+      margin: 0;
     }
 
   /* tabs */
@@ -345,34 +376,21 @@ body.aspectTooGood.hiddenToolbar {
       width: unset;
     }
 
-    @media (max-height: 405px) {
-      body.wideToolbar .toolbarTab {
-        height: 30px;
-      }
+    body.toolbarCompact3:not(.horizontalToolbar) .toolbarTab {
+      height: 30px;
     }
 
-    @media (max-height: 440px) {
-      body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarTab {
-        height: 30px;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab::before {
+      font-size: 24px;
     }
 
-    @media (max-width: 760px) {
-      body.aspectTooGood #toolbar .toolbarTab {
-        height: 30px;
-      }
+    /* the horizontal toolbar first shrinks the tab labels and only removes them one level later */
+    body.horizontalToolbar.toolbarCompact1:not(.toolbarCompact2) .toolbarTab {
+      padding: 0 10px;
     }
 
-    @media (min-width: 950px) {
-      body.horizontalToolbar .toolbarTab::before {
-        font-size: 24px;
-      }
-    }
-
-    @media (max-width: 530px) {
-      body.horizontalToolbar .toolbarTab {
-        padding: 0 8px;
-      }
+    body.horizontalToolbar.toolbarCompact3 .toolbarTab {
+      padding: 0 8px;
     }
 
   /* button tooltips */
@@ -385,7 +403,7 @@ body.aspectTooGood.hiddenToolbar {
       font-size: 14px;
       border-radius: 4px;
       white-space: nowrap;
-      color: #fff;
+      color: var(--toolbarTextColor);
       background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
@@ -419,30 +437,32 @@ body.aspectTooGood.hiddenToolbar {
       bottom: 46px;
     }
 
-    @media (min-width: 950px) {
-      body.horizontalToolbar .toolbarTab .tooltip {
-        box-shadow: unset;
-        background: none;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
+      box-shadow: unset;
+      background: none;
+    }
 
-      body.horizontalToolbar .toolbarButton .tooltip {
-        margin-left: -4px;
-        font-size: 12px;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarButton .tooltip {
+      margin-left: -4px;
+      font-size: 12px;
+    }
 
-      body.horizontalToolbar .toolbarTab .tooltip {
-        font-size: 20px;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
+      font-size: 20px;
+    }
 
-      body.horizontalToolbar .active.toolbarTab .tooltip {
-        color: var(--toolbarColor);
-      }
+    body.horizontalToolbar.toolbarCompact1:not(.toolbarCompact2) .toolbarTab .tooltip {
+      font-size: 15px;
+    }
 
-      body.horizontalToolbar .toolbarTab .tooltip {
-        display: block;
-        position: static;
-        padding-right: 0;
-      }
+    body.horizontalToolbar:not(.toolbarCompact2) .active.toolbarTab .tooltip {
+      color: var(--toolbarColor);
+    }
+
+    body.horizontalToolbar:not(.toolbarCompact2) .toolbarTab .tooltip {
+      display: block;
+      position: static;
+      padding-right: 0;
     }
 
   /* button specific styles */
@@ -456,7 +476,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     #playersButton::before {
-      content: '[users_settings]';
+      content: '[people]';
     }
 
     #editButton::before {
@@ -528,131 +548,101 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (max-height: 120px) {
-      body.wideToolbar #editButton, body.wideToolbar #addButton {
-        display: none;
-      }
+  /* scrolling (when even the most compact layout does not fit) */
+
+    body.toolbarOverflow #toolbar {
+      overflow-y: auto;
+      overflow-x: clip;
+      scrollbar-width: none;
+      padding-top: 0;
+      padding-bottom: 0;
+      /* every compaction level changes the size of the contents, so scroll anchoring would keep
+         adjusting scrollTop while the window is resized until the toolbar sits at its end */
+      overflow-anchor: none;
+      /* scrolling comes to rest on a button instead of cutting one in half behind an arrow */
+      scroll-snap-type: y proximity;
+      scroll-padding: var(--toolbarArrowSize) 0;
     }
 
-    @media (max-height: 340px) {
-      body:not(.horizontalToolbar,.aspectTooGood) #feedbackButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar {
+      overflow-x: auto;
+      overflow-y: clip;
+      padding-left: 0;
+      padding-right: 0;
+      scroll-snap-type: x proximity;
+      scroll-padding: 0 var(--toolbarArrowSize);
     }
 
-    /* the wide toolbar's logo and text labels leave less vertical room for buttons */
-    @media (max-height: 370px) {
-      body.wideToolbar #feedbackButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar > * {
+      scroll-snap-align: start;
     }
 
-    @media (max-height: 290px) {
-      body:not(.horizontalToolbar,.aspectTooGood) #toolbar .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar::-webkit-scrollbar {
+      display: none;
     }
 
-    @media (max-width: 620px) {
-      body.aspectTooGood #feedbackButton {
-        display: none;
-      }
+    /* the arrows hint that scrolling reveals more buttons and scroll on click - they get a strip
+       of their own at both ends (which doubles as padding) so that they never cover a button;
+       they stay in place while the content scrolls underneath them and only turn invisible when
+       there is nothing left to scroll to, so that the buttons never jump */
+    body.toolbarOverflow #toolbar::before,
+    body.toolbarOverflow #toolbar::after {
+      display: flex;
+      visibility: hidden;
+      position: sticky;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      height: var(--toolbarArrowSize);
+      font-family: "Material Symbols";
+      font-size: var(--toolbarArrowSize);
+      color: var(--toolbarTextColor);
+      background: var(--toolbarColor);
+      cursor: pointer;
     }
 
-    @media (max-width: 550px) {
-      body.aspectTooGood #toolbar .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar::before {
+      content: 'keyboard_arrow_up';
+      top: 0;
     }
 
-    @media (max-height: 230px) {
-      body:not(.horizontalToolbar) #aboutButton {
-        display: none;
-      }
+    body.toolbarOverflow #toolbar::after {
+      content: 'keyboard_arrow_down';
+      bottom: 0;
     }
 
-    @media (max-width: 460px) {
-      body.aspectTooGood #aboutButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar::before,
+    body.horizontalToolbar.toolbarOverflow #toolbar::after {
+      top: auto;
+      bottom: auto;
+      width: var(--toolbarArrowSize);
+      height: auto;
     }
 
-    @media (max-width: 410px) {
-      body.aspectTooGood #editButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar::before {
+      content: 'keyboard_arrow_left';
+      left: 0;
     }
 
-    @media (max-height: 190px) {
-      body:not(.horizontalToolbar) #editButton {
-        display: none;
-      }
+    body.horizontalToolbar.toolbarOverflow #toolbar::after {
+      content: 'keyboard_arrow_right';
+      right: 0;
     }
 
-    @media (max-height: 160px) {
-      body:not(.horizontalToolbar) #playersButton {
-        display: none;
-      }
+    body.toolbarOverflow.toolbarScrollBack #toolbar::before,
+    body.toolbarOverflow.toolbarScrollForward #toolbar::after {
+      visibility: visible;
     }
 
-    @media (max-height: 120px) {
-      body:not(.horizontalToolbar) #zoom2xButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 350px) {
-      body.aspectTooGood #playersButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 295px) {
-      body.aspectTooGood #hideToolbarButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 250px) {
-      body.aspectTooGood #zoom2xButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 440px) {
-      body.horizontalToolbar #feedbackButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 390px) {
-      body.horizontalToolbar #toolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 320px) {
-      body.horizontalToolbar #aboutButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 260px) {
-      body.horizontalToolbar #editButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 220px) {
-      body.horizontalToolbar #playersButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 160px) {
-      body.horizontalToolbar #zoom2xButton {
-        display: none;
-      }
+    /* popups and tooltips reach outside of the toolbar and would be clipped by the scroll
+       container - positionToolbarPopups and positionToolbarTooltip in main.js place them
+       relative to the viewport instead (the wide toolbar has its tooltips inside of it) */
+    body.toolbarOverflow #options,
+    body.toolbarOverflow #zoomControls,
+    body.toolbarOverflow:not(.wideToolbar) .toolbarButton .tooltip {
+      position: fixed;
+      bottom: auto;
     }
 
   /* sound settings */
@@ -773,6 +763,16 @@ body.aspectTooGood.hiddenToolbar {
   background: #00000022;
 }
 
+/* the stack is scrolled inside the overlay instead of stretching it. cqh, not vh: the overlay is
+   the board, which can be a lot shorter than the window - 40vh was taller than the whole overlay
+   on a wide board in a tall window */
+#clientErrorStack {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 40cqh;
+  overflow: auto;
+}
+
 div[icon] {
   background: var(--roomColor);
   position: relative;
@@ -841,6 +841,14 @@ body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomA
   cursor: default;
 }
 
+body.zoom2x.edit.spacePanActive #roomArea {
+  cursor: grab;
+}
+
+body.zoom2x.edit.spacePanActive.panning #roomArea {
+  cursor: grabbing;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -900,6 +908,17 @@ body.edit:not(.hitTest) .widget.foreign, body.edit:not(.hitTest):not(.showHidden
   pointer-events: none;
 }
 
+/* A widget whose game switches pointer events off in its css cannot be clicked at
+   all, which is exactly what the editor's list of widgets under the pointer is
+   there for - so the hit test gives every widget its events back for the length
+   of the scan. !important because that css is an inline style. A line keeps its
+   own box out of it: the box is only the bounding box of the drawn path, and
+   listing every line the pointer happens to be inside the box of would bury the
+   widgets that really are under it. */
+body.hitTest .widget:not(.line) {
+  pointer-events: auto !important;
+}
+
 .widget.limbo {
   opacity: 0.5;
   border: 5px dashed darkred;
@@ -934,8 +953,7 @@ body:not(.edit) .widget.limbo {
   position: fixed;
   top: 5vh;
   left: 5vw;
-  transition: opacity 200ms ease;
-  transition-delay: 400ms, 400ms;
+  transition: opacity 200ms ease 400ms;
   transform-origin: top left;
   pointer-events: none;
 }
@@ -1207,6 +1225,13 @@ button:disabled:hover {
   background-color: #808080;
   color: #d3d3d3;
   cursor: not-allowed;
+}
+
+/* The colored variants above are more specific than button:disabled, so a disabled green/red icon button
+   would keep its full color and not look disabled at all. */
+button[icon]:disabled,
+button[icon]:disabled:hover {
+  background-color: #808080;
 }
 
 .ui-button {

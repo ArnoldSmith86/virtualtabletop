@@ -1,6 +1,13 @@
+import { onMessage, toServer } from './connection.js';
+import { onLoad } from './domhelpers.js';
+import { ALL_LEGACY_MODES, LEGACY_MODES } from './legacymoderegistry.js';
+
 let currentGameSettings = {};
 
 export function legacyMode(name, value) {
+  if(!LEGACY_MODES[name])
+    console.error(`Unknown legacy mode '${name}' - add it to LEGACY_MODES in legacymoderegistry.js.`);
+
   if(!currentGameSettings.legacyModes)
     currentGameSettings.legacyModes = {};
 
@@ -12,9 +19,7 @@ export function legacyMode(name, value) {
 }
 
 export function getEnabledLegacyModes() {
-  return Object.entries(currentGameSettings.legacyModes || {})
-    .filter(([_, enabled]) => enabled)
-    .map(([name]) => name);
+  return ALL_LEGACY_MODES.filter(name => (currentGameSettings.legacyModes || {})[name]);
 }
 
 export function getCurrentGameSettings() {
@@ -27,5 +32,9 @@ onLoad(function() {
   });
   onMessage('meta', args=>{
     currentGameSettings = args.meta.gameSettings || {};
+    // meta arrives for all kinds of unrelated events (a player joining, a save,
+    // a rename), so only re-layout when the board size actually changed
+    if(setViewportSize(currentGameSettings.boardSize))
+      applyViewportLayout();
   });
 });

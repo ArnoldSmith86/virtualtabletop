@@ -9,7 +9,6 @@ let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
-let jeFKeyOrderDescending = 1;
 let jeIsSVG = {};
 let jeWidgetHighlighting = true;
 let jeDebugViewing = null;
@@ -27,11 +26,6 @@ let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
 let jeIgnoreBlurOnce = false;
-let jeWidgetHistory = [];
-let jeWidgetHistoryIndex = -1;
-let jeWidgetHistoryNavigating = false;
-let jeMultiSelectedCountCache = null;
-const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
   shift: false,
@@ -87,15 +81,22 @@ if (w.type=="seat" && w.player==null) {
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
+// whether a file is an SVG is decided by fetchSVG() (main.js) - the same call
+// the engine and the SVG replacements editor make, so the three cannot disagree
+// about the same file. It also spares decoding a whole bitmap as text just to
+// find no <svg> in it, and does not call a PNG that happens to contain the
+// three bytes "svg" somewhere an SVG.
 async function checkIfSVG(url) {
   try {
-    const response = await fetch(url);
-    if (!response.ok) return false;
-    const text = await response.text();
-    return /svg/i.test(text);
+    return (await fetchSVG(url)) !== null;
   } catch (e) {
     return false;
   }
+}
+
+// true while a "write" face object of a deck is selected - a box players can type into while playing
+function jeIsWriteFaceObject() {
+  return jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].type == 'write';
 }
 
 const jeCommands = [
@@ -175,16 +176,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_reverseFkeys',
-    name: 'Reverse order of F-key shortcuts',
-    icon:  _=>jeFKeyOrderDescending ==1 ? '[arrow_down]' : '[arrow_up]',
-    forceKey: 'K',
-    call: async function() {
-      jeFKeyOrderDescending = -jeFKeyOrderDescending;
-      jeShowCommands();
-    }
-  },
-  {
     id: 'je_duplicateWidget',
     name: 'Duplicate widget',
     icon: '[auto_awesome]',
@@ -196,8 +187,9 @@ const jeCommands = [
       { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
       { label: 'Inherit properties',     type: 'string', value: '' },
       { label: 'Copy recursively',       type: 'checkbox', value: true  },
-      { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
+      // getters because jeCommands is built at load time, before the game's viewport is known
+      { label: 'X offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetWidth  }, get max() { return viewportConfig.targetWidth  } },
+      { label: 'Y offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetHeight }, get max() { return viewportConfig.targetHeight } },
       { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
       { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
     ],
@@ -217,18 +209,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleHighlight',
-    name: 'Toggle widget highlighting',
-    icon: 'flashlight_on',
-    forceKey: 'H',
-    classes: _=> jeWidgetHighlighting ? ' onState' : '',
-    call: async function() {
-      jeWidgetHighlighting = ! jeWidgetHighlighting;
-      jeShowCommands();
-      jeHighlightWidgets();
-    }
-  },
-  {
     id: 'je_SVGColors',
     name: 'Show colors in SVG image',
     icon: 'colors',
@@ -238,7 +218,7 @@ const jeCommands = [
       if (typeof jeIsSVG[url] === 'boolean') return jeIsSVG[url];
       if (url.match(/\.svg$/i))
         return true;
-      checkIfSVG(mapAssetURLs(url)).then(result => {
+      checkIfSVG(url).then(result => {
         jeIsSVG[url] = result;
         jeShowCommands();
       });
@@ -508,17 +488,35 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
-      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', opacity: null, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null, hoverOpacity: null };
-      if(Array.isArray(jeGetValueAt('icon'))) {
-        const current = jeGetValueAt('icon');
-        const name = current[jeGetKeyAfter('icon')];
-        current[jeGetKeyAfter('icon')] = newValue;
-        await jeSetValueAt('icon', current, name);
+      // fill in the default advanced options while keeping whatever is already
+      // set (name/scale/color/...), then put the cursor back on the icon name
+      const defaults = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', opacity: null, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null, hoverOpacity: null };
+      const expand = current => {
+        const isObject = typeof current == 'object' && current !== null;
+        const merged = isObject ? Object.assign({}, defaults, current) : Object.assign({}, defaults);
+        const name = isObject ? current.name : current;
+        merged.name = '###SELECT ME###';
+        return { merged, name: typeof name == 'undefined' ? '' : name };
+      };
+      const icon = jeGetValueAt('icon');
+      if(Array.isArray(icon)) {
+        const index = jeGetKeyAfter('icon');
+        const { merged, name } = expand(icon[index]);
+        icon[index] = merged;
+        await jeSetValueAt('icon', icon, name);
       } else {
-        await jeSetValueAt('icon', newValue, jeGetValueAt('icon'));
+        const { merged, name } = expand(icon);
+        await jeSetValueAt('icon', merged, name);
       }
     },
-    show: _=>typeof jeGetValueAt('icon') == 'string' || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'string'
+    show: _=>{
+      const icon = jeGetValueAt('icon');
+      if(Array.isArray(icon)) {
+        const element = icon[jeGetKeyAfter('icon')];
+        return typeof element == 'string' || typeof element == 'object' && element !== null;
+      }
+      return typeof icon == 'string' || typeof icon == 'object' && icon !== null;
+    }
   },
   {
     id: 'je_iconToString',
@@ -542,6 +540,18 @@ const jeCommands = [
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
     call: async function() {
       const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_audioPicker',
+    name: 'pick a sound from the sound picker',
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
+    call: async function() {
+      const a = await pickAudio();
       if(a) {
         jeInsert(null, jeGetLastKey(), a);
         await jeApplyChanges();
@@ -1000,6 +1010,30 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_writeTemplate',
+    name: 'write template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text box,
+      // so there has to be some card left around it for the player to grab. The placeholder is what tells a
+      // player the card can be written on - without it an empty text box is blank.
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'write',
+        placeholder: 'write here…',
+        x: 10,
+        y: 10,
+        fontSize: 14,
+        textAlign: 'left',
+        width: (jeStateNow.cardDefaults && jeStateNow.cardDefaults.width || 103) - 20,
+        height: 60,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
+      });
+      jeSetAndSelect('note');
+    }
+  },
+  {
     id: 'je_inputField',
     name: 'add field',
     context: '^.* ↦ \\(INPUT\\) ↦ fields',
@@ -1046,6 +1080,56 @@ const jeCommands = [
     call: async function() {
       jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].display = '###SELECT ME###';
       jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_editable',
+    name: 'editable',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_placeholder',
+    name: 'placeholder',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder = '###SELECT ME###';
+      jeSetAndSelect('');
+    }
+  },
+  {
+    id: 'je_spellCheck',
+    name: 'spellCheck',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_backgroundColor',
+    name: 'backgroundColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor = '###SELECT ME###';
+      jeSetAndSelect('transparent');
+    }
+  },
+  {
+    id: 'je_borderColor',
+    name: 'borderColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor = '###SELECT ME###';
+      jeSetAndSelect('#000000');
     }
   },
   {
@@ -1359,6 +1443,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Line(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
@@ -1366,8 +1451,8 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
-  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
-  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
+  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result', collection: 'result' });
+  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6', count: 1 });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
@@ -1377,10 +1462,10 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
-  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "", player: null, block: false } );
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "", player: null, block: false, randomRotation: 5 } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, z: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null, byDistance: false });
   jeAddRoutineOperationCommands('RESET', { property: 'resetProperties' });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
@@ -1389,7 +1474,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
+  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
@@ -1419,12 +1504,18 @@ function jeAddCommands() {
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
+  jeAddConditionCommands('grid', '^[^ ]* ↦ grid ↦ [0-9]+', _=>jeStateNow.grid[+jeContext[2]]);
 
   jeAddLimitCommand('minX', 0);
   jeAddLimitCommand('minY', 0);
   // Default max limits are computed dynamically.
   jeAddLimitCommand('maxX');
   jeAddLimitCommand('maxY');
+  // which point of the widget the limit is about: 0.5 is its middle, i.e. the
+  // value that is wanted often enough to be the one the button inserts
+  jeAddLimitCommand('alignX', 0.5);
+  jeAddLimitCommand('alignY', 0.5);
+  jeAddConditionCommands('limit', '^[^ ]* ↦ dragLimit', _=>jeStateNow.dragLimit);
 
   // Default values computed dynamically.
   jeAddResetPropertiesCommand('parent');
@@ -1520,7 +1611,7 @@ function jeAddAlignmentCommands() {
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
-      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? viewportConfig.targetWidth : viewportConfig.targetHeight);
       jeStateNow[key] = '###SELECT ME###';
       jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
     }
@@ -1751,10 +1842,43 @@ function jeAddLimitCommand(key, value) {
       jeStateNow.dragLimit[key] = '###SELECT ME###';
       let limit = value;
       if (key == 'maxX')
-        limit = 1600 - w.get('width');
+        limit = viewportConfig.targetWidth - w.get('width');
       else if (key == 'maxY')
-        limit = 1000 - w.get('height');
+        limit = viewportConfig.targetHeight - w.get('height');
       jeSetAndSelect(limit);
+    }
+  });
+}
+
+// Neither the area a widget can be dragged in nor the area a snap grid applies
+// to has to be a rectangle: a condition is an inequality in x and y (the
+// position being judged, in the same coordinates as the four sides next to it)
+// that the drag keeps true, respectively that the grid needs to apply. A widget
+// property is read as ${PROPERTY name}. The starting point is the half-plane
+// below the diagonal - short, and it shows the syntax. The second command turns
+// one condition into the list of them that a shape needs more than one
+// inequality for. `owner` is a function because the object the buttons write
+// into is looked up again on every click (a grid entry is one of an array).
+function jeAddConditionCommands(idPrefix, context, owner) {
+  const object = _=>typeof owner() == "object" && owner() !== null ? owner() : null;
+  jeCommands.push({
+    id: idPrefix + '_condition',
+    name: 'add condition',
+    context,
+    show: _=>!!object() && object().condition === undefined,
+    call: async function() {
+      object().condition = '###SELECT ME###';
+      jeSetAndSelect('y > x');
+    }
+  });
+  jeCommands.push({
+    id: idPrefix + '_condition_add',
+    name: 'add another condition',
+    context,
+    show: _=>!!object() && object().condition !== undefined,
+    call: async function() {
+      object().condition = asArray(object().condition).concat([ '###SELECT ME###' ]);
+      jeSetAndSelect('x > y');
     }
   });
 }
@@ -1791,7 +1915,10 @@ function jeAddResetPropertiesCommand(key) {
 
 function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
-    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
+    // lineOriginalRotation is a valid global property but only meaningful while a
+    // line rotates one of its stops, so it gets no per-widget-type insert button
+    // (it would be noise on every type).
+    if(property != 'typeClasses' && property != 'lineOriginalRotation' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   if(type != 'card' && type != 'pile') {
@@ -2122,7 +2249,6 @@ function jeSelectWidget(widget, addToSelection) {
     jeStateBefore = jePreProcessText(jsonString);
     jeSet(jePreProcessText(jsonString, false));
     editPanel.style.setProperty('--treeHeight', "20%");
-    jeAddWidgetToHistory(widget.id);
   }
 
   if(newCursorState)
@@ -2131,7 +2257,7 @@ function jeSelectWidget(widget, addToSelection) {
   jeCenterSelection();
 
   jeGetContext();
-  jeUpdateWidgetSwitcher();
+  updateSelectionBars();
 }
 
 function jeSelectWidgetMulti(widget) {
@@ -2161,7 +2287,7 @@ function jeSelectSetMulti(widgets) {
   jeMode = 'multi';
   jeUpdateMulti();
   jeGetContext();
-  jeUpdateWidgetSwitcher();
+  updateSelectionBars();
 }
 
 function jeMultiSelectedWidgets() {
@@ -2207,10 +2333,23 @@ function jeCenterSelection() {
   jeHighlightWidgets();
 }
 
+// The toggle for this sits in the selection bar, which every module that edits
+// the selection carries - so it has to answer for a plain room selection as well
+// as for whatever the JSON editor is showing.
 function jeHighlightWidgets() {
-  const selectedIDs = jeSelectedIDs();
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
   for(const [ id, w ] of widgets)
     w.setHighlighted(jeWidgetHighlighting && selectedIDs.indexOf(id) != -1);
+}
+
+function jeWidgetHighlightingEnabled() {
+  return jeWidgetHighlighting;
+}
+
+function jeToggleWidgetHighlighting() {
+  jeWidgetHighlighting = !jeWidgetHighlighting;
+  jeHighlightWidgets();
+  updateSelectionBars();
 }
 
 function jeSVGColors() {
@@ -2384,7 +2523,9 @@ const isNodeCollapsed = {};
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   const oldFilterValue = $('#jeWidgetSearchBox') && $('#jeWidgetSearchBox').value;
-  $('#jeTree').innerHTML = '<div><input id="jeWidgetSearchBox" placeholder="🔍 Filter"><button>Collapse</button></div><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
+  // the tree is also shown from sidebar modules other than the JSON one, which leave jeStateNow at whatever they last saw
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
+  $('#jeTree').innerHTML = '<div><input id="jeWidgetSearchBox" placeholder="🔍 Filter"><button>Collapse</button></div><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, selectedIDs) + '</ul>';
 
   treeNodes = {};
   for(const dom of $a('#jeTree .key'))
@@ -2393,16 +2534,14 @@ function jeDisplayTree() {
   // Add handlers to tree elements to display widget contents
   on('.jeTreeExpander', 'click', function(e) {
     if(e.target.classList.contains('jeTreeExpander')) {
-      $('.nested', e.target.parentElement).classList.toggle('active');
-      e.target.classList.toggle('jeTreeExpander-down');
-      isNodeCollapsed[e.target.parentNode.dataset.filter] = !e.target.classList.contains('jeTreeExpander-down');
+      jeToggleTreeNode(e.target, !e.target.classList.contains('jeTreeExpander-down'));
       e.stopImmediatePropagation();
     }
   });
 
   // Add handler to search box to display widget list
   on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
-  on('#jeWidgetSearchBox + button', 'click', e=>$a('.jeTreeExpander-down').forEach(e=>e.click()));
+  on('#jeWidgetSearchBox + button', 'click', e=>$a('#jeTree .jeTreeExpander-down').forEach(expander=>jeToggleTreeNode(expander, false)));
 
   on('.jeTreeWidget', 'click', function(e) {
     const widget = widgets.get($('.key', e.currentTarget).innerText);
@@ -2424,6 +2563,52 @@ function jeDisplayTree() {
   }
 }
 
+// Opening and closing a branch, for the arrow of the tree and for the keys of
+// the selection bar alike. The collapsed state is remembered per widget, so a
+// tree that is rebuilt - or opened again in another module - comes back the way
+// it was left.
+function jeToggleTreeNode(expander, open) {
+  if(!expander || !expander.classList.contains('jeTreeExpander') || expander.classList.contains('jeTreeExpander-down') == open)
+    return;
+  jeSetTreeNodeOpen(expander, open);
+  isNodeCollapsed[expander.parentNode.dataset.filter] = !open;
+}
+
+// Showing and hiding a branch without saying anything about what the user wants
+// to see: this is what the filter uses to bring the branches that hold a match
+// into view.
+function jeSetTreeNodeOpen(expander, open) {
+  if(!expander || !expander.classList.contains('jeTreeExpander') || expander.classList.contains('jeTreeExpander-down') == open)
+    return;
+  $('.nested', expander.parentElement).classList.toggle('active', open);
+  expander.classList.toggle('jeTreeExpander-down', open);
+}
+
+// A branch is collapsed if the user left it that way - and a pile, whose cards
+// nobody wants to scroll past, also if it was never touched at all.
+function jeTreeNodeIsCollapsed(filter, widget) {
+  return isNodeCollapsed[filter] !== undefined ? isNodeCollapsed[filter] : !!widget && widget.get('type') == 'pile';
+}
+
+// Bringing the selected widgets into view: what somebody opening the tree is
+// looking for is almost always the widget the editor is already on. A row inside
+// a collapsed branch has no box at all, so the branches on the way down to it are
+// opened before it is scrolled to.
+function jeScrollTreeToSelection() {
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
+  let firstRow = null;
+  for(const node of $a('#jeTree li.jeTreeWidget')) {
+    if(selectedIDs.indexOf(node.dataset.id) == -1)
+      continue;
+    for(let list = node.parentElement; list && list.id != 'jeTree'; list = list.parentElement)
+      if(list.classList.contains('jeNestedTree'))
+        jeToggleTreeNode(list.previousElementSibling, true);
+    firstRow = firstRow || $('.key', node);
+  }
+  if(firstRow)
+    firstRow.scrollIntoView({ block: 'nearest' });
+}
+
 function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   function colored(str, kind) {
     return `<i class=${kind}>${html(str)}</i>`
@@ -2436,7 +2621,7 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
     const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
     const filterText = `data-filter="${filter}"`;
     const idText = `data-id="${widget.get('id')}"`;
-    const isCollapsed = isNodeCollapsed[filter] || widget.get('type')=='pile';
+    const isCollapsed = jeTreeNodeIsCollapsed(filter, widget);
 
     if(children)
       result += `<li ${filterText} ${idText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
@@ -2493,8 +2678,20 @@ function jeDisplayFilteredWidgets(e) {
   const propertyFilter = $('#jeWidgetSearchBox').value.match(/^([a-zA-Z0-9_-]+):([a-zA-Z0-9_-]*)$/);
   for(const previousParent of $a('#jeTree .filterChildIncluded'))
     previousParent.classList.remove('filterChildIncluded');
+
+  // An empty filter matches every widget, so carrying on would mark every branch
+  // as one that holds a match and open the whole tree. Instead the tree goes
+  // back to the shape the user left it in.
+  if(!subtext) {
+    for(const node of $a('#jeTree li.jeTreeWidget')) {
+      node.classList.remove('filterIncluded', 'filterNotIncluded');
+      jeSetTreeNodeOpen(node.firstElementChild, !jeTreeNodeIsCollapsed(node.dataset.filter, widgets.get(node.dataset.id)));
+    }
+    return;
+  }
+
   for(const node of $a('#jeTree li.jeTreeWidget')) {
-    let nodeMatchesFilter = !subtext || node.dataset.filter && node.dataset.filter.includes(subtext);
+    let nodeMatchesFilter = !!node.dataset.filter && node.dataset.filter.includes(subtext);
     if(propertyFilter) {
       const value = String(widgets.get(node.dataset.id).get(propertyFilter[1])).toLowerCase();
       if(!propertyFilter[2] && value != 'null' && value != '' || propertyFilter[2] && value.includes(propertyFilter[2]))
@@ -2502,168 +2699,19 @@ function jeDisplayFilteredWidgets(e) {
     }
     node.classList.toggle('filterIncluded', nodeMatchesFilter);
     node.classList.toggle('filterNotIncluded', !nodeMatchesFilter);
+    // The branches on the way to a match are opened for real instead of being
+    // forced open by CSS: that way their arrow tells the truth, and one click on
+    // it - or one ← - folds the branch away again while the filter still stands.
     if(nodeMatchesFilter)
       for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
-        parent.classList.add('filterChildIncluded');
+        if(parent.classList.contains('jeNestedTree'))
+          jeSetTreeNodeOpen(parent.previousElementSibling, true);
+        else
+          parent.classList.add('filterChildIncluded');
   }
 }
 
 /* End of tree subpane control */
-
-/* Widget switcher (breadcrumbs, back/forward history, tree dropdown) */
-
-let jeBreadcrumbWidget = null; // widget whose ancestry chain is currently shown in breadcrumbs
-
-function jeAddWidgetToHistory(id) {
-  if(jeWidgetHistoryNavigating || jeWidgetHistory[jeWidgetHistoryIndex] === id)
-    return;
-  jeWidgetHistory = jeWidgetHistory.slice(0, jeWidgetHistoryIndex + 1);
-  jeWidgetHistory.push(id);
-  if(jeWidgetHistory.length > 100)
-    jeWidgetHistory.shift();
-  jeWidgetHistoryIndex = jeWidgetHistory.length - 1;
-}
-
-function jeHistoryCanNavigate(direction) {
-  for(let i = jeWidgetHistoryIndex + direction; i >= 0 && i < jeWidgetHistory.length; i += direction)
-    if(widgets.has(jeWidgetHistory[i]))
-      return true;
-  return false;
-}
-
-function jeHistoryNavigate(direction) {
-  let index = jeWidgetHistoryIndex + direction;
-  while(index >= 0 && index < jeWidgetHistory.length && !widgets.has(jeWidgetHistory[index]))
-    index += direction;
-  if(index < 0 || index >= jeWidgetHistory.length)
-    return;
-
-  jeWidgetHistoryIndex = index;
-  jeWidgetHistoryNavigating = true;
-  setSelection([ widgets.get(jeWidgetHistory[index]) ]);
-  jeWidgetHistoryNavigating = false;
-}
-
-// Check if ancestor is an ancestor of descendant in the widget tree
-function jeIsAncestorOf(ancestor, descendant) {
-  const seen = new Set();
-  for(let w = descendant; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
-    seen.add(w);
-    if(w === ancestor)
-      return true;
-  }
-  return false;
-}
-
-function jeUpdateWidgetSwitcher() {
-  if(!$('#jeWidgetSwitcher'))
-    return;
-
-  $('#jeNavBack').disabled = !jeHistoryCanNavigate(-1);
-  $('#jeNavForward').disabled = !jeHistoryCanNavigate(1);
-
-  // Determine which widget's ancestry chain to show in breadcrumbs
-  // Keep showing the same chain until selecting a widget outside it
-  let displayWidget = jeBreadcrumbWidget;
-  if(jeMode == 'widget' && jeWidget && widgets.has(jeWidget.id)) {
-    if(!displayWidget || !widgets.has(displayWidget.id) || !jeIsAncestorOf(jeWidget, displayWidget)) {
-      // jeWidget is not in the ancestry of the breadcrumb widget, update to its chain
-      displayWidget = jeBreadcrumbWidget = jeWidget;
-    }
-  } else {
-    displayWidget = jeBreadcrumbWidget = null;
-  }
-
-  const separator = '<span class=jeCrumbSeparator>chevron_right</span>';
-  let breadcrumbsHTML = '';
-  if(jeMode == 'widget' && displayWidget && widgets.has(displayWidget.id)) {
-    const chain = [];
-    const seen = new Set();
-    for(let w = displayWidget; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
-      seen.add(w);
-      chain.unshift(w);
-    }
-    const crumbs = chain.slice(-3).map(w => {
-      if(w != jeWidget)
-        return `<span class=jeCrumb data-id="${html(w.id)}">${html(w.id)}</span>`;
-      else
-        return `<span class="jeCrumb jeCrumbCurrent">${html(w.id)}</span>`;
-    });
-    if(chain.length > 3)
-      crumbs.unshift('<span class=jeCrumbEllipsis>…</span>');
-    breadcrumbsHTML = crumbs.join(separator);
-  } else if(jeMode == 'multi') {
-    // jeStateNow is null while the edited JSON is invalid; cache the count because this runs on every delta
-    let count = 'multiple';
-    if(jeStateNow && Array.isArray(jeStateNow.widgets)) {
-      const key = JSON.stringify(jeStateNow.widgets);
-      if(!jeMultiSelectedCountCache || jeMultiSelectedCountCache.key !== key) {
-        try {
-          jeMultiSelectedCountCache = { key, count: jeMultiSelectedWidgets().length };
-        } catch(e) {
-          jeMultiSelectedCountCache = { key, count: 'multiple' };
-        }
-      }
-      count = jeMultiSelectedCountCache.count;
-    }
-    breadcrumbsHTML = `<span class=jeCrumbInfo>${count} widgets selected</span>`;
-  } else if(jeMode == 'macro') {
-    breadcrumbsHTML = '<span class=jeCrumbInfo>macro</span>';
-  } else {
-    breadcrumbsHTML = '<span class=jeCrumbInfo>no widget selected</span>';
-  }
-  $('#jeBreadcrumbs').innerHTML = breadcrumbsHTML;
-
-  on('#jeBreadcrumbs .jeCrumb[data-id]', 'click', function(e) {
-    const widget = widgets.get(e.currentTarget.dataset.id);
-    if(widget)
-      setSelection([ widget ]);
-  });
-}
-
-function jeTreeIsVisible() {
-  return !!$('#jeWidgetSwitcher.treeVisible');
-}
-
-function jeTreeIsPinned() {
-  return localStorage.getItem('jeTreePinned') == 'true';
-}
-
-function jeSetTreePinned(pinned) {
-  localStorage.setItem('jeTreePinned', pinned);
-  $('#jeWidgetSwitcher').classList.toggle('treePinned', pinned);
-  $('#jePinTree').classList.toggle('active', pinned);
-}
-
-function jeToggleTreeDropdown(forceClose, focusSearch) {
-  const open = !forceClose && !jeTreeIsVisible();
-  $('#jeWidgetSwitcher').classList.toggle('treeVisible', open);
-  $('#jeShowTree').classList.toggle('active', open);
-  if(open) {
-    jeSetTreePinned(jeTreeIsPinned());
-    $('#jeTreeContainer').append($('#jeTree'));
-    jeDisplayTree();
-    if(focusSearch)
-      $('#jeWidgetSearchBox').focus();
-  } else {
-    $('#jeEditArea').append($('#jeTree'));
-  }
-}
-
-function jeInitWidgetSwitcher() {
-  on('#jeNavBack', 'click', _=>jeHistoryNavigate(-1));
-  on('#jeNavForward', 'click', _=>jeHistoryNavigate(1));
-  on('#jeShowTree', 'click', _=>jeToggleTreeDropdown(false, true));
-  on('#jePinTree', 'click', _=>jeSetTreePinned(!jeTreeIsPinned()));
-
-  // unless pinned, close the dropdown when a widget is picked in the tree (capture so it runs despite stopPropagation)
-  $('#jeTreeContainer').addEventListener('click', function(e) {
-    if(!jeTreeIsPinned() && !e.shiftKey && !e.target.classList.contains('jeTreeExpander') && e.target.closest('.jeTreeWidget'))
-      jeToggleTreeDropdown(true);
-  }, true);
-}
-
-/* End of widget switcher */
 
 function jeGetContext() {
   const aO = getSelection().anchorOffset;
@@ -3045,12 +3093,21 @@ let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
+// Empty the log. Operations of a routine that is currently running have the log so far saved on
+// jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
+// again and resurrects what was just cleared.
+function jeLoggingClear() {
+  jeLoggingHTML = '';
+  for(const entry of jeHTMLStack)
+    entry[0] = '';
+}
+
 function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
 export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
       jeRoutineResetOnNextLog = false;
@@ -3068,42 +3125,71 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
 }
 
 export function jeLoggingRoutineEnd(variables, collections) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  if(!jeLoggingDepth)
+    return; // defensive: unmatched End, should not happen since #2672
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
-  if(!jeLoggingDepth) {
-    $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
+  if(!jeLoggingDepth)
+    jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+}
 
-    // Make it so clicking on the arrows expands the subtree
-    const expanders = document.getElementsByClassName('jeExpander');
-    let i;
-    for (i=0; i < expanders.length; i++) {
-      expanders[i].addEventListener('click', function() {
-        this.classList.toggle('jeExpander-down');
-        this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
-        if(this.classList.contains('jeExpander-down')) {
-          this.classList.add('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
-        } else {
-          this.classList.remove('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
-        }
-      });
-    }
-    // Make expander arrows that are parents of nodes with problems show up red.
-    const problems = document.getElementsByClassName('jeLogHasProblems');
-    for (i=0; i<problems.length; i++) {
-      let node = problems[i];
-      while (node && node.id != 'jeLog') {
-        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
-          node.firstElementChild.classList.remove('jeExpander');
-          node.firstElementChild.classList.add('jeRedExpander')
-        }
-        node = node.parentNode;
+// Put the log into the panel. Everything that depends on the rendered DOM (the expander click
+// handlers and the filter) has to be applied again afterwards, so all rendering goes through here.
+function jeLoggingRenderLog(logHTML) {
+  $('#jeLog').innerHTML = logHTML;
+
+  // Make it so clicking on the arrows expands the subtree
+  const expanders = document.getElementsByClassName('jeExpander');
+  let i;
+  for (i=0; i < expanders.length; i++) {
+    expanders[i].addEventListener('click', function() {
+      this.classList.toggle('jeExpander-down');
+      this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
+      if(this.classList.contains('jeExpander-down')) {
+        this.classList.add('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+      } else {
+        this.classList.remove('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
       }
+    });
+  }
+  // Make expander arrows that are parents of nodes with problems show up red.
+  const problems = document.getElementsByClassName('jeLogHasProblems');
+  for (i=0; i<problems.length; i++) {
+    let node = problems[i];
+    while (node && node.id != 'jeLog') {
+      if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
+        node.firstElementChild.classList.remove('jeExpander');
+        node.firstElementChild.classList.add('jeRedExpander')
+      }
+      node = node.parentNode;
     }
   }
+
   if($('#jeLogFilter') && $('#jeLogFilter').value)
     jeLoggingFilterLog($('#jeLogFilter').value);
+}
+
+// Called instead of jeLoggingRoutineEnd when logging was switched on while the routine was already
+// running (e.g. the Debug module was opened while the routine waited for an INPUT). That routine
+// cannot be logged retroactively, so leave a note explaining the gap instead of showing nothing.
+export function jeLoggingRoutineNotLogged(widget, property) {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
+    return;
+  if(jeRoutineResetOnNextLog) {
+    jeLoggingHTML = '';
+    jeRoutineResetOnNextLog = false;
+  }
+  const routine = typeof property == 'string'
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> <span class="jeLogProperty">${html(property)}</span>`
+    : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
+  jeLoggingHTML += `
+    <div class="jeLog jeLogNote">
+      ${routine} was already running when the Debug panel was opened, so it could not be recorded. Run it again to see its log.
+    </div>
+  `;
+  jeLoggingRenderLog(jeLoggingHTML);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {
@@ -3127,6 +3213,11 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
 
   const savedHTML = jeHTMLStack.shift();
+  if(!savedHTML) {
+    // defensive: unmatched End, should not happen since #2672. Nothing to close.
+    jeRoutineResult = '';
+    return;
+  }
   const original = savedHTML[1];
   const originalText = jeLoggingJSON(original);
   const applied = savedHTML[2];
@@ -3882,7 +3973,6 @@ function jeInitTree() {
 export function jeToggle() {
   if(jeEnabled === null) {
     jeInitTree();
-    jeInitWidgetSwitcher();
     jeAddCommands();
     jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
@@ -3890,7 +3980,7 @@ export function jeToggle() {
   }
   jeEnabled = !jeEnabled;
   setJEenabled(jeEnabled);
-  jeLoggingHTML = '';
+  jeLoggingClear();
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
@@ -3912,7 +4002,7 @@ function jeEmpty() {
 
   jeSet('');
   jeShowCommands();
-  jeUpdateWidgetSwitcher();
+  updateSelectionBars();
 }
 
 const clickButton = async function(event) {
@@ -3926,76 +4016,14 @@ const clickButton = async function(event) {
   }
 }
 
-let widgetCoordCache = null;
-
 function jeInitEventListeners() {
   window.addEventListener('mousemove', function(e) {
     if(!jeEnabled)
       return;
     const surfaceRect = $('#topSurface').getBoundingClientRect();
-    const scaleX = 1600 / surfaceRect.width;
-    const scaleY = 1000 / surfaceRect.height;
 
-    jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
-    jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);
-
-    if(jeMouseButtonIsDown)
-      return;
-
-    if(!widgetCoordCache) {
-      widgetCoordCache = [];
-      for(const widget of widgets.values()) {
-        const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-        coords.r = coords.x + widget.get('width');
-        coords.b = coords.y + widget.get('height');
-        coords.widget = widget;
-        widgetCoordCache.push(coords);
-      }
-    }
-
-    // Adding hitTest makes foreign elements temporarily hittable.
-    document.body.classList.add('hitTest');
-    let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
-    document.body.classList.remove('hitTest');
-
-    hoveredWidgets.sort(function(w1,w2) {
-      const hiddenParent =  function(widget) {
-        return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
-      };
-      const w1card = w1.get('type') == 'card';
-      const w2card = w2.get('type') == 'card';
-      const w1foreign = !w1card && hiddenParent(w1);
-      const w2foreign =  !w2card && hiddenParent(w2);
-      const w1normal = !w1foreign && !w1card;
-      const w2normal = !w2foreign && !w2card;
-      return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
-        jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
-        ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
-    });
-
-    for(let i=1; i<=11; ++i) {
-      const hotkey = i>=4 ? i+1 : i;
-      if(hoveredWidgets[i-1]) {
-        jeWidgetLayers[hotkey] = hoveredWidgets[i-1];
-        var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `deck: ${hoveredWidgets[i-1].get('deck')} ` : "";
-        var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
-        $(`#jeWidgetLayer${hotkey} .id`).textContent = hoveredWidgets[i-1].get('id');
-        $(`#jeWidgetLayer${hotkey} .type`).textContent = hoveredWidgets[i-1].get('type') || 'basic';
-        $(`#jeWidgetLayer${hotkey} .details`).textContent = `${deck}${cardType}`;
-        $(`#jeWidgetLayer${hotkey}`).classList.remove('hidden');
-      } else {
-        delete jeWidgetLayers[hotkey];
-        $(`#jeWidgetLayer${hotkey}`).classList.add('hidden');
-      }
-    }
-
-    $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
-
-    if((surfaceRect.left <= e.clientX && e.clientX <= surfaceRect.right && surfaceRect.top <= e.clientY && e.clientY <= surfaceRect.bottom)) {
-      $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
-    } else {
-      $('#jeMouseCoords').innerHTML = ""
-    }
+    jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * viewportConfig.targetWidth  / surfaceRect.width);
+    jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * viewportConfig.targetHeight / surfaceRect.height);
   });
 
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
@@ -4031,24 +4059,6 @@ function jeInitEventListeners() {
           jeSelect(+locationPostion[1], +locationPostion[1], true);
       }
     }
-
-    const functionKey = e.key.match(/F([0-9]+)/);
-    if(functionKey && jeWidgetLayers[+functionKey[1]]) {
-      e.preventDefault();
-      if(e.ctrlKey) {
-        let id = jeWidgetLayers[+functionKey[1]].get('id');
-        if(jeContext[jeContext.length-1] == '"null"')
-          id = `"${id}"`;
-        jePasteText(id, true);
-      } else if(e.shiftKey) {
-        if(selectedWidgets.includes(jeWidgetLayers[+functionKey[1]]))
-          setSelection(selectedWidgets.filter(w=>w!=jeWidgetLayers[+functionKey[1]]));
-        else
-          setSelection([ jeWidgetLayers[+functionKey[1]] ].concat(selectedWidgets));
-      } else {
-        setSelection([ jeWidgetLayers[+functionKey[1]] ]);
-      }
-    }
   });
 
   on('#jeText', 'paste', function(e) {
@@ -4067,7 +4077,7 @@ function jeInitEventListeners() {
       e.preventDefault();
       e.stopPropagation();
       const direction = e.key == 'ArrowLeft' ? -1 : 1;
-      if (jeHistoryCanNavigate(direction)) {
+      if (selectionBarHistoryCanNavigate(direction)) {
         // close the search overlay that Tab opened; we're navigating instead
         if (jeTabSearchActive) {
           jeTabSearchActive = false;
@@ -4076,7 +4086,7 @@ function jeInitEventListeners() {
           jeTabArrowKeysUsed = false;
         }
         jeIgnoreBlurOnce = true;
-        jeHistoryNavigate(direction);
+        selectionBarHistoryNavigate(direction);
         jeShowCommands();
         $('#jeText').focus();
       }

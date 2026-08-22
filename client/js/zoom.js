@@ -1,3 +1,5 @@
+import { viewportConfig } from './calculateLayout.js';
+
 let zoomScale = 1;
 let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
 
@@ -21,6 +23,12 @@ export function getZoomLevel() {
   return zoomScale;
 }
 
+// A text field that has more text than fits (a writable card text, a label) owns the wheel: without this the
+// room zoom swallows the event and the overflow can only be reached with the caret keys or the scrollbar.
+function scrollableTextField(element) {
+  return element && (element.tagName == 'TEXTAREA' || element.isContentEditable) && element.scrollHeight > element.clientHeight;
+}
+
 function resetZoomAndPan() {
   setZoomLevel(1);
   setPan(0, 0);
@@ -29,8 +37,8 @@ function resetZoomAndPan() {
 
 function setPan(x, y) {
   // Clamp pan to valid range
-  const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
-  const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
+  const maxPanX = viewportConfig.targetWidth * scale * zoomScale - viewportConfig.targetWidth * scale;
+  const maxPanY = viewportConfig.targetHeight * scale * zoomScale - viewportConfig.targetHeight * scale;
   const clampedPanX = Math.max(-maxPanX, Math.min(0, x));
   const clampedPanY = Math.max(-maxPanY, Math.min(0, y));
 
@@ -92,9 +100,52 @@ onLoad(function() {
   let dragStartY = 0;
   let panStartX = 0;
   let panStartY = 0;
+  const pressedMouseButtons = new Set();
+  let isSpacePanModifierActive = false;
+  let isSpacePanPointerActive = false;
   let lastWheelZoomTime = 0;
   const minWheelZoomInterval = 40; // milliseconds between zoom events
   let zoomControlsHidden = true;
+
+  function isEditableElement(target) {
+    const editableTags = ['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
+    return editableTags.includes(target.tagName) || target.isContentEditable;
+  }
+
+  function updateSpacePanClass() {
+    document.body.classList.toggle('spacePanActive', isSpacePanModifierActive || isSpacePanPointerActive);
+  }
+
+  function stopDraggingPan() {
+    isDraggingPan = false;
+    document.body.classList.remove('panning');
+  }
+
+  function handleSpaceKeyDown(e) {
+    if(edit && !overlayActive && !pressedMouseButtons.size && !Object.keys(mouseStatus).length && (e.code === 'Space' || e.key === ' ') && !isEditableElement(e.target)) {
+      isSpacePanModifierActive = true;
+      updateSpacePanClass();
+      e.preventDefault();
+    }
+  }
+
+  function handleSpaceKeyUp(e) {
+    if (e.code === 'Space' || e.key === ' ') {
+      isSpacePanModifierActive = false;
+      updateSpacePanClass();
+      if(edit && isDraggingPan)
+        stopDraggingPan();
+    }
+  }
+
+  function handleWindowBlur() {
+    pressedMouseButtons.clear();
+    isSpacePanModifierActive = false;
+    isSpacePanPointerActive = false;
+    updateSpacePanClass();
+    if(isDraggingPan)
+      stopDraggingPan();
+  }
 
   // Button click toggles zoom controls panel
   on('#zoom2xButton', 'click', function(e){
@@ -122,6 +173,8 @@ onLoad(function() {
   on('#roomArea', 'wheel', function(e){
     if(overlayActive || zoomLocked)
       return; // allow normal wheel behavior when an overlay is active or zoom is locked
+    if(scrollableTextField(e.target))
+      return; // a writable card text or label scrolls its own overflow instead of zooming the room
     e.preventDefault();
 
     const now = Date.now();
@@ -136,6 +189,8 @@ onLoad(function() {
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
+    if(e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT' || e.target.isContentEditable)
+      return; // paging inside a text field moves the caret, it does not zoom
     if(!overlayActive && !edit && !zoomLocked && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();
       const currentIndex = zoomLevels.indexOf(zoomScale);
@@ -146,7 +201,32 @@ onLoad(function() {
 
   // Drag to pan functionality (left mouse only)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button === 0 && !edit && !overlayActive && zoomScale > 1 && !isDraggingPan && !elementIsMovableWidget(e.target)) {
+    const spacePan = edit && isSpacePanModifierActive;
+    if(e.button !== 0 || overlayActive)
+      return;
+
+    // If Space is held in edit mode, always prevent selection rectangle
+    if(spacePan) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      isSpacePanPointerActive = true;
+      updateSpacePanClass();
+
+      // If zoomed in, start panning regardless of widget under cursor
+      if(zoomScale > 1 && !isDraggingPan) {
+        isDraggingPan = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
+        panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
+        $('body').classList.add('panning');
+      }
+      return;
+    }
+
+    // Normal pan behavior when not in edit/space-pan
+    if(zoomScale > 1 && !isDraggingPan && !elementIsMovableWidget(e.target) && !edit) {
       isDraggingPan = true;
       dragStartX = e.clientX;
       dragStartY = e.clientY;
@@ -178,14 +258,21 @@ onLoad(function() {
   });
 
   on('body', 'mousemove', function(e){
-    if(isDraggingPan)
+    if(isDraggingPan) {
+      if(edit && !isSpacePanModifierActive) {
+        stopDraggingPan();
+        return;
+      }
       setPan(panStartX + (e.clientX - dragStartX), panStartY + (e.clientY - dragStartY));
+    }
   });
 
   on('body', 'mouseup', function(e){
-    if(isDraggingPan) {
-      isDraggingPan = false;
-      $('body').classList.remove('panning');
+    if(isDraggingPan)
+      stopDraggingPan();
+    if(isSpacePanPointerActive) {
+      isSpacePanPointerActive = false;
+      setTimeout(updateSpacePanClass);
     }
   });
 
@@ -262,4 +349,10 @@ onLoad(function() {
       $('body').classList.remove('panning');
     }
   });
+
+  window.addEventListener('keydown', handleSpaceKeyDown);
+  window.addEventListener('keyup', handleSpaceKeyUp);
+  window.addEventListener('mousedown', e => pressedMouseButtons.add(e.button), true);
+  window.addEventListener('mouseup', e => pressedMouseButtons.delete(e.button), true);
+  window.addEventListener('blur', handleWindowBlur);
 });
