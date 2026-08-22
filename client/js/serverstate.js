@@ -125,8 +125,8 @@ export function addWidget(widget, instance, allowMissingParent) {
       addWidget(c);
   delete deferredCards[widget.id];
 
-  // a parent chain that closes into a cycle is entered through one of its
-  // widgets, which is already here again when the chain leads back to it
+  // a widget that was deferred more than once (its parent changed while it was
+  // waiting) is only added by the first of those parents that shows up
   for(const c of deferredChildren[widget.id] || [])
     if(!widgets.has(c.id))
       addWidget(c);
@@ -512,15 +512,30 @@ function receiveStateFromServer(args) {
   }
 
   // Whatever still waits for a parent here waits for a widget the state does not
-  // contain. Those widgets go onto the surface in limbo instead of being dropped:
-  // edit mode outlines them as "Invalid Parent", so they can be found and given a
-  // real parent rather than silently disappearing from the room.
+  // contain, or for one that is itself still waiting. Only the former go onto the
+  // surface in limbo instead of being dropped - edit mode outlines them as "Invalid
+  // Parent", so they can be found and given a real parent rather than silently
+  // disappearing from the room. Their own descendants follow through the regular
+  // deferred handling once they are there, so the hierarchy below an orphan survives
+  // no matter in which order the widgets appear in the state.
+  const deferredIDs = new Set();
+  for(const children of Object.values(deferredChildren))
+    for(const widget of children)
+      deferredIDs.add(widget.id);
   for(const parentID of Object.keys(deferredChildren)) {
-    for(const widget of deferredChildren[parentID] || []) {
+    if(deferredIDs.has(parentID))
+      continue;
+    for(const widget of deferredChildren[parentID]) {
       console.error(`Widget "${widget.id}" is in limbo because its parent "${parentID}" does not exist!`);
       addWidget(widget, undefined, true);
     }
+    delete deferredChildren[parentID];
   }
+
+  // a parent chain that closes into a cycle has no widget that could be added first
+  for(const [ parentID, children ] of Object.entries(deferredChildren))
+    for(const widget of children)
+      console.error(`Could not add widget "${widget.id}" because its parent "${parentID}" could not be added!`);
   deferredChildren = {};
 
   if(Object.keys(deferredCards).length) {
