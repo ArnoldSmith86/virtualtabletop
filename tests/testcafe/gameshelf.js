@@ -8,6 +8,8 @@ setupTestEnvironment();
 const shelfGames = Selector('#statesList > div:nth-of-type(2) .list .roomState');
 const variants = Selector('#stateDetailsOverlay .variantsList .variant');
 const detailsOverlay = Selector('#stateDetailsOverlay');
+const statesOverlay = Selector('#statesOverlay');
+const emptyVariantsHint = Selector('#emptyVariants');
 
 // "Add game" -> "Save room state" adds the current room to the shelf as a game named Unnamed and
 // opens its details in edit mode
@@ -49,7 +51,9 @@ test('Deleting the last variant of a game removes the game from the shelf', asyn
 
   await addGameFromRoomState(t);
   await deleteVariant(t, 0);
-  await t.expect(variants.count).eql(0);
+  await t
+    .expect(variants.count).eql(0)
+    .expect(emptyVariantsHint.visible).ok();
 
   // keeping the game at the confirmation returns to its details and changes nothing
   await saveDetails(t);
@@ -62,10 +66,11 @@ test('Deleting the last variant of a game removes the game from the shelf', asyn
   await confirmSave(t);
 
   // the game is gone, so its details close instead of being refilled from a tile that the game
-  // list no longer has
+  // list no longer has - and the game shelf stays open like it does after the delete button
   await t
     .expect(shelfGames.count).eql(0)
-    .expect(detailsOverlay.visible).notOk();
+    .expect(detailsOverlay.visible).notOk()
+    .expect(statesOverlay.visible).ok();
 });
 
 test('Deleting one of several variants keeps the game', async t => {
