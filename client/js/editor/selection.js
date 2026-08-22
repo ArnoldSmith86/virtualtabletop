@@ -350,6 +350,8 @@ export function editorReceiveDelta(delta) {
 
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
+  for(const button of toolbarButtons)
+    button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
   smartCloneDeltaReceived(delta);
