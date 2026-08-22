@@ -2241,8 +2241,19 @@ async function jeCallCommand(command) {
 function jeCommandOptions() {
   const div = document.createElement('div');
   div.id = 'jeCommandOptions';
-  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
-  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  const name = typeof jeCommandWithOptions.name == 'function' ? jeCommandWithOptions.name() : jeCommandWithOptions.name;
+  div.innerHTML = `<b>${html(String(name))} options:</b><div></div><button>Go</button><button class=cancel>Cancel</button>`;
+
+  // the options belong to the command button that was clicked, so they open right below it and that
+  // button is marked. Opening them above the list instead would push the whole list down, away
+  // from the pointer that just clicked into it.
+  const button = $(`#jeContextButtons > [id="${jeCommandWithOptions.id}"]`);
+  if(button) {
+    button.classList.add('jeHighlight');
+    button.parentElement.insertBefore(div, button.nextSibling);
+  } else {
+    $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  }
 
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
@@ -2313,6 +2324,7 @@ function jeCursorStateGet() {
   return {
     scroll: $('#jeText').scrollTop,
     currentLine,
+    lineNumber: linesUntilCursor.length,
     defaultValueToAdd,
     sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
     start: s-linesUntilCursor.join('\n').length,
@@ -2325,13 +2337,25 @@ function jeCursorStateSet(state) {
   const lines = v.split('\n');
   let offset = 0;
   let linesFound = 0;
+  let lineRestored = false;
   for(const line of lines) {
     if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
       jeSelect(offset + state.start - 1, offset + state.end - 1);
+      lineRestored = true;
       break;
     } else {
       offset += line.length + 1;
     }
+  }
+  // a command that rewrites the very line the cursor sits on - shift on "x" for example - leaves
+  // no line to match it by, so the cursor falls back to the same line number. Without that it ends
+  // up nowhere and the next command runs on the top of the JSON instead of on the property the
+  // panel still offers commands for.
+  if(!lineRestored && lines[state.lineNumber] !== undefined) {
+    const lineStart = lines.slice(0, state.lineNumber).reduce((total, line)=>total + line.length + 1, 0);
+    const lineEnd = lineStart + lines[state.lineNumber].length;
+    const inLine = offsetInLine=>Math.max(lineStart, Math.min(lineEnd, lineStart + offsetInLine - 1));
+    jeSelect(inLine(state.start), inLine(state.end));
   }
   $('#jeText').scrollTop = state.scroll;
 }
@@ -4068,6 +4092,20 @@ function jeShowCommands() {
 
   if(jeCommandWithOptions)
     jeCommandOptions();
+  jeMarkCommandLine();
+}
+
+// A command with options runs on the line the cursor was left on, which no longer shows a caret
+// once the dialog has taken the selection - so that line is marked while the dialog is open.
+function jeMarkCommandLine() {
+  for(const line of $a('#jeTextHighlight > .jeCommandLine'))
+    line.classList.remove('jeCommandLine');
+  if(!jeCommandWithOptions)
+    return;
+  const content = jeGetEditorContent();
+  const line = $a('#jeTextHighlight > .jeTextLine')[content.substr(0, jeCursorOffsets()[0]).split('\n').length - 1];
+  if(line)
+    line.classList.add('jeCommandLine');
 }
 
 let editPanel = null;
