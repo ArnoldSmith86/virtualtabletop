@@ -253,9 +253,7 @@ const jeCommands = [
       
       // Get current indentation from the JSON structure
       // Find the line with the property key
-      const aO = getSelection().anchorOffset;
-      const fO = getSelection().focusOffset;
-      const s = Math.min(aO, fO);
+      const s = jeCursorOffsets()[0];
       const v = jeGetEditorContent();
       const lines = v.split('\n');
       
@@ -1175,8 +1173,7 @@ const jeCommands = [
       else
         delete pointer[jeContext[jeContext.length-1]];
 
-      const oldStart = getSelection().anchorOffset;
-      const oldEnd   = getSelection().focusOffset;
+      const [ oldStart, oldEnd ] = jeCursorOffsets();
       jeSet(JSON.stringify(jeStateNow, null, '  '));
       jeSelect(oldStart, oldEnd, true);
     },
@@ -2138,8 +2135,19 @@ async function jeCallCommand(command) {
 function jeCommandOptions() {
   const div = document.createElement('div');
   div.id = 'jeCommandOptions';
-  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
-  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  const name = typeof jeCommandWithOptions.name == 'function' ? jeCommandWithOptions.name() : jeCommandWithOptions.name;
+  div.innerHTML = `<b>${html(String(name))} options:</b><div></div><button>Go</button><button class=cancel>Cancel</button>`;
+
+  // the options belong to the command button that was clicked, so they open right below it and that
+  // button is marked. Opening them above the list instead would push the whole list down, away
+  // from the pointer that just clicked into it.
+  const button = $(`#jeContextButtons > [id="${jeCommandWithOptions.id}"]`);
+  if(button) {
+    button.classList.add('jeCommandOwner');
+    button.parentElement.insertBefore(div, button.nextSibling);
+  } else {
+    $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  }
 
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
@@ -2148,6 +2156,10 @@ function jeCommandOptions() {
     if(firstInput)
       firstInput.focus();
   }
+
+  // the command list scrolls, so options opening near its bottom edge would have their buttons cut
+  // off. 'nearest' scrolls only in that case, which keeps the list still in the common one
+  div.scrollIntoView({ block: 'nearest' });
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
     const options = {};
@@ -2178,11 +2190,26 @@ export async function jeClick(widget, e) {
   }
 }
 
+// The offsets getSelection() reports are indices into whichever node holds the selection, so
+// they only describe the editor while the editor holds it. Clicking a command button - or
+// typing into the option fields of a command that has some - moves the selection out of
+// #jeText, so the position the editor was last at is remembered here and used instead. Every
+// read of the editor cursor goes through this, which keeps that memory up to date.
+let jeLastCursorOffsets = [ 0, 0 ];
+
+function jeCursorOffsets() {
+  const selection = getSelection();
+  // both ends have to sit in the text node #jeText holds: a selection dragged out of the editor
+  // reports its two ends in different nodes, and one anchored on #jeText itself counts child
+  // nodes rather than characters - neither pair says where the cursor is in the JSON
+  const text = $('#jeText').firstChild;
+  if(text && selection.anchorNode === text && selection.focusNode === text)
+    jeLastCursorOffsets = [ Math.min(selection.anchorOffset, selection.focusOffset), Math.max(selection.anchorOffset, selection.focusOffset) ];
+  return jeLastCursorOffsets;
+}
+
 function jeCursorStateGet() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
   const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
   const currentLine = linesUntilCursor.pop();
@@ -2195,6 +2222,7 @@ function jeCursorStateGet() {
   return {
     scroll: $('#jeText').scrollTop,
     currentLine,
+    lineNumber: linesUntilCursor.length,
     defaultValueToAdd,
     sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
     start: s-linesUntilCursor.join('\n').length,
@@ -2205,17 +2233,41 @@ function jeCursorStateGet() {
 function jeCursorStateSet(state) {
   const v = jeGetEditorContent();
   const lines = v.split('\n');
+  // moving the selection focuses the editor, which must not happen while a command's options are
+  // being typed into: a change arriving from another player would else pull the caret out of the
+  // option field and the next keystroke would land in the JSON. The position is only remembered
+  // then, which is where the commands read it from anyway.
+  const restore = function(start, end) {
+    const options = $('#jeCommandOptions');
+    if(options && options.contains(document.activeElement))
+      jeLastCursorOffsets = [ start, end ];
+    else
+      jeSelect(start, end);
+  };
   let offset = 0;
   let linesFound = 0;
+  let lineRestored = false;
   for(const line of lines) {
     if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
-      jeSelect(offset + state.start - 1, offset + state.end - 1);
+      restore(offset + state.start - 1, offset + state.end - 1);
+      lineRestored = true;
       break;
     } else {
       offset += line.length + 1;
     }
   }
+  // a command that rewrites the very line the cursor sits on - shift on "x" for example - leaves
+  // no line to match it by, so the cursor falls back to the same line number. Without that it ends
+  // up nowhere and the next command runs on the top of the JSON instead of on the property the
+  // panel still offers commands for.
+  if(!lineRestored && lines[state.lineNumber] !== undefined) {
+    const lineStart = lines.slice(0, state.lineNumber).reduce((total, line)=>total + line.length + 1, 0);
+    const lineEnd = lineStart + lines[state.lineNumber].length;
+    const inLine = offsetInLine=>Math.max(lineStart, Math.min(lineEnd, lineStart + offsetInLine - 1));
+    restore(inLine(state.start), inLine(state.end));
+  }
   $('#jeText').scrollTop = state.scroll;
+  jeMarkCommandLine();
 }
 
 const jeCursorStateStorage = {};
@@ -2515,6 +2567,7 @@ function jeColorize() {
   }
   $('#jeTextHighlight').innerHTML = out.join('');
   $('#editor').style.setProperty('--linenumbers-digits', Math.floor(Math.log10(nr)+1));
+  jeMarkCommandLine();
 }
 
 /* Displaying and controlling tree subpane of edit area */
@@ -2714,10 +2767,7 @@ function jeDisplayFilteredWidgets(e) {
 /* End of tree subpane control */
 
 function jeGetContext() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
@@ -3316,16 +3366,13 @@ function jeLoggingFilterLog(filter) {
 // END routine logging
 
 function jeNewline() {
-  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const s = jeCursorOffsets()[0];
   const match = jeGetEditorContent().substr(0,s).match(/( *)[^\n]*$/);
   jePasteText('\n' + match[1], false);
 }
 
 function jePasteText(text, select) {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   jeSetEditorContent(v.substr(0, s) + text + v.substr(e));
@@ -3551,6 +3598,8 @@ function jeSetAndSelect(replaceBy, insideString) {
 }
 
 function jeSetEditorContent(content) {
+  // the remembered offsets index the text that is replaced here, so they say nothing afterwards
+  jeLastCursorOffsets = [ 0, 0 ];
   $('#jeText').textContent = content.replace(/\u00a0/g, ' ');
 }
 
@@ -3917,8 +3966,7 @@ function jeShowCommands() {
       }
     } else if (jeContext && jeContext[jeContext.length - 1] == '(var expression)') {
       const v = jeGetEditorContent();
-      const aO = getSelection().anchorOffset;
-      const s = Math.min(aO, getSelection().focusOffset);
+      const s = jeCursorOffsets()[0];
       const before = v.substr(0, s);
       const after = v.substr(s);
       const newContent = before + sample + after;
@@ -3942,6 +3990,20 @@ function jeShowCommands() {
 
   if(jeCommandWithOptions)
     jeCommandOptions();
+  jeMarkCommandLine();
+}
+
+// A command with options runs on the line the cursor was left on, which no longer shows a caret
+// once the dialog has taken the selection - so that line is marked while the dialog is open.
+function jeMarkCommandLine() {
+  for(const line of $a('#jeTextHighlight > .jeCommandLine'))
+    line.classList.remove('jeCommandLine');
+  if(!jeCommandWithOptions)
+    return;
+  const content = jeGetEditorContent();
+  const line = $a('#jeTextHighlight > .jeTextLine')[content.substr(0, jeCursorOffsets()[0]).split('\n').length - 1];
+  if(line)
+    line.classList.add('jeCommandLine');
 }
 
 let editPanel = null;

@@ -197,6 +197,11 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
   -webkit-text-fill-color: var(--textColor);
 }
 
+/* the line a command with options is about to act on, marked while its dialog holds the cursor */
+#jeTextHighlight > .jeCommandLine {
+  background-color: var(--backgroundHighlightColor1);
+}
+
 /*** CSS to handle search box for tree widget ***/
 #jeTree > div {
   display: flex;
@@ -499,7 +504,7 @@ body.jsonEdit #toolbar {
   font-family: monospace;
   white-space: pre-wrap;
 }
-#jeContextButtons > button.jeHighlight, #jeContextButtons .jeEditorLineDesc mark {
+#jeContextButtons > button.jeHighlight, #jeContextButtons > button.jeCommandOwner, #jeContextButtons .jeEditorLineDesc mark {
   background-color: gold;
   color: black;
   font-weight: bold;
@@ -566,6 +571,30 @@ body.jsonEdit #toolbar {
   display: none;
 }
 
+#jeCommands #jeCommandOptions {
+  border-left: 3px solid gold;
+  padding: 2px 0 4px 6px;
+}
+
 #jeCommands #jeCommandOptions input[type="number"]{
-  width: 6ch;
+  width: 7ch;
+}
+
+#jeCommands #jeCommandOptions input:not([type="checkbox"]), #jeCommands #jeCommandOptions select {
+  padding: 4px 2px;
+}
+
+#jeCommands #jeCommandOptions label {
+  margin-right: 4px;
+}
+
+#jeCommands #jeCommandOptions button.cancel {
+  background: none;
+  border: 1px solid var(--VTTblue);
+  color: var(--textColor);
+}
+
+#jeCommands #jeCommandOptions button.cancel:hover {
+  background-color: var(--VTTblueDark);
+  color: white;
 }
