@@ -1,4 +1,4 @@
-class Seat extends Widget {
+export class Seat extends Widget {
   constructor(id) {
     super(id);
 
