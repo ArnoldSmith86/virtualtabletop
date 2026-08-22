@@ -129,11 +129,14 @@ function addStateFile(f) {
   } while($(`.roomState[data-id="${id}"]`));
   stateDOM.dataset.id = id;
   stateDOM.className = 'uploading visible roomState noImage';
+  // the badge belongs to games that declare AI imagery, but the template shows it by default
+  $('.ai-badge', stateDOM).classList.add('hidden');
 
   let isSave = false;
   function metaCallback(name, similarName, image, variants, savePlayers, saveDate) {
     if(image) {
       stateDOM.classList.remove('noImage');
+      $('img', stateDOM).onerror = _=>stateDOM.classList.add('noImage');
       $('img', stateDOM).src = image;
     }
 
@@ -160,6 +163,23 @@ function addStateFile(f) {
   uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
 }
 
+// the extensions the server removes from the name of an uploaded file (see Room.addState) - the
+// tile has to remove the same ones so its provisional name is the one the game ends up with
+const gameFileExtension = /\.(vtt|vttc|vtts|pcio|zip)$/i;
+
+// the file types readStatesFromBuffer can read, named the way a first-time user knows them
+function alertNotAGameFile(fileName) {
+  alert(`${fileName} does not contain a game. You can add VTT files (.vtt, .vttc, .vtts), playingcards.io files (.pcio) and Tabletop Simulator workshop files (.zip).`);
+}
+
+function parseJSONorNull(bytes) {
+  try {
+    return JSON.parse(fflate.strFromU8(bytes));
+  } catch(e) {
+    return null;
+  }
+}
+
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
   await waitForZipLibrary();
 
@@ -171,40 +191,51 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     entries = zipIndex(buffer);
     jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
   } catch(e) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
+    alertNotAGameFile(sourceFile.name);
     return;
   }
 
-  let json = null;
+  const fileName = sourceFile.name.replace(gameFileExtension, '');
+  let containsJSON = false;
+  let info = null;
+  const variants = [];
   const assets = {};
   for(const [ filename, entry ] of Object.entries(entries)) {
     if(jsonFiles[filename]) {
-      const content = JSON.parse(fflate.strFromU8(jsonFiles[filename]));
-      if(!json) {
-        json = content;
-        if(json._meta)
-          json._meta.info.variants = [];
+      containsJSON = true;
+      // the server reads a variant from every JSON file in the top level of the zip, so the
+      // JSON of a PCIO or TTS file and anything an asset happens to contain is not one - and
+      // a game file written by hand or by another tool can be missing its metadata entirely
+      if(filename.match(/^[^\/]+\.json$/)) {
+        const content = parseJSONorNull(jsonFiles[filename]);
+        if(content && content._meta) {
+          // the info of a hand-written file can hold anything, while everything that reads a
+          // variant treats it as an object it can read properties from and write them to
+          const variantInfo = typeof content._meta.info == 'object' ? content._meta.info : null;
+          variants.push(variantInfo || {});
+          if(!info)
+            info = variantInfo;
+        }
       }
-      if(json._meta)
-        json._meta.info.variants.push(content._meta.info);
     }
     if(filename.match(/^\/?(user)?assets/) && entry.size)
       assets[entry.crc + '_' + entry.size] = filename;
   }
 
-  if(json === null) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
+  if(!containsJSON) {
+    alertNotAGameFile(sourceFile.name);
     return;
-  } else if(Array.isArray(json)) {
-    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
+  } else if(!info) {
+    // without metadata the file name is all the tile can show until the server has read the file
+    metaCallback(fileName, '', null, variants.length ? variants : [{}], null, null);
   } else {
     let imageURL = null;
 
-    if(json._meta.info.image) {
-      if(json._meta.info.image.match(/^http/)) {
-        imageURL = json._meta.info.image;
-      } else if(entries[json._meta.info.image.substr(1)]) {
-        const imageFile = json._meta.info.image.substr(1);
+    if(typeof info.image == 'string') {
+      if(info.image.match(/^http/)) {
+        imageURL = info.image;
+      } else if(entries[info.image.substr(1)]) {
+        const imageFile = info.image.substr(1);
         const image = toBase64((await unzipBuffer(buffer, name=>name == imageFile))[imageFile]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
@@ -212,7 +243,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       }
     }
 
-    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL, json._meta.info.variants, json._meta.info.savePlayers, json._meta.info.saveDate);
+    metaCallback(info.name || fileName, info.similarName, imageURL, variants, info.savePlayers, info.saveDate);
   }
 
   const result = await fetch('assetcheck', {
@@ -247,8 +278,10 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   var req = new XMLHttpRequest();
   req.onload = function(e) {
-    if(e.target.status != 200)
-      alert(`${e.target.status}: ${e.target.response}`);
+    if(e.target.status != 200) {
+      console.error(`Uploading ${sourceFile.name} failed with status ${e.target.status}: ${e.target.response}`);
+      alert(`${sourceFile.name}: ${e.target.response || 'The server did not accept the file.'}`);
+    }
     loadCallback();
   };
   req.upload.onprogress = e=>progressCallback(e.loaded/e.total);
@@ -520,6 +553,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   for(const state of Object.values(states)) {
     state.starred = starred && starred[state.publicLibrary];
     state.stars = state.stars || 0;
+    // metadata written by hand or by another tool can hold anything, and everything that shows
+    // the image of a game here expects a string or nothing
+    if(typeof state.image != 'string')
+      state.image = '';
     for(const variant of state.variants)
       if(variant.plStateID)
         publicLibraryLinksFound[`${variant.plStateID} - ${variant.plVariantID}`] = true;
@@ -869,6 +906,11 @@ function fillStateDetails(states, state, dom) {
 
     const vEntry = domByTemplate('template-variantslist-entry', variant);
     vEntry.className = isLinkedVariant ? 'linked variant' : 'variant';
+
+    // a variant without a name of its own renders as a blank row, which gives the user nothing to
+    // tell several of them apart - the number is the one the play button loads
+    if(!variant.variant)
+      $('.variant-name', vEntry).dataset.placeholder = `Variant ${+variantID + 1}`;
 
     if(isLinkedVariant)
       for(const dom of $a('[data-field]', vEntry))
