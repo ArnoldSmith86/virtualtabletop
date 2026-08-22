@@ -3092,6 +3092,12 @@ let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
+// The log below is built while the Debug module is open, but a routine is recorded for the
+// routine editor's cards whenever the editor is loaded (see jeRoutineDebug in main.js). Which of
+// the two applies is decided when the outermost routine starts, so opening or closing the module
+// while a routine waits - for an INPUT, say - can never leave the log half built.
+let jeLoggingHTMLEnabled = false;
+let jeLoggingOutermostRoutine = null;
 
 // Empty the log. Operations of a routine that is currently running have the log so far saved on
 // jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
@@ -3106,8 +3112,13 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference, path) {
+  if(!jeLoggingDepth) {
+    jeLoggingHTMLEnabled = jeRoutineLogging;
+    jeLoggingOutermostRoutine = { widget, property };
+  }
+  routineDebugRoutineStart(path);
+  if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
       jeRoutineResetOnNextLog = false;
@@ -3127,10 +3138,15 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
 export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
     return; // defensive: unmatched End, should not happen since #2672
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  routineDebugRoutineEnd();
+  if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
-  if(!jeLoggingDepth)
-    jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+  if(!jeLoggingDepth) {
+    if(jeLoggingHTMLEnabled)
+      jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+    else if(jeRoutineLogging)
+      jeLoggingRoutineNotLogged(jeLoggingOutermostRoutine.widget, jeLoggingOutermostRoutine.property); // logging was enabled while this routine was running
+  }
 }
 
 // Put the log into the panel. Everything that depends on the rendered DOM (the expander click
@@ -3174,7 +3190,7 @@ function jeLoggingRenderLog(logHTML) {
 // Called instead of jeLoggingRoutineEnd when logging was switched on while the routine was already
 // running (e.g. the Debug module was opened while the routine waited for an INPUT). That routine
 // cannot be logged retroactively, so leave a note explaining the gap instead of showing nothing.
-export function jeLoggingRoutineNotLogged(widget, property) {
+function jeLoggingRoutineNotLogged(widget, property) {
   if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
     return;
   if(jeRoutineResetOnNextLog) {
@@ -3192,7 +3208,10 @@ export function jeLoggingRoutineNotLogged(widget, property) {
   jeLoggingRenderLog(jeLoggingHTML);
 }
 
-export function jeLoggingRoutineOperationStart(original, applied) {
+export function jeLoggingRoutineOperationStart(original, applied, index) {
+  routineDebugOperationStart(index);
+  if(!jeLoggingHTMLEnabled)
+    return;
   let fcn;
   if (typeof applied == 'string')
     if (applied.substring(0,3) == 'var')
@@ -3208,6 +3227,11 @@ export function jeLoggingRoutineOperationStart(original, applied) {
 }
 
 export function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped) {
+  routineDebugOperationEnd(problems, skipped);
+  if(!jeLoggingHTMLEnabled) {
+    jeRoutineResult = '';
+    return;
+  }
   const collDisplay = {};
   for(const name in collections)
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
@@ -3279,6 +3303,9 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
 }
 
 export function jeLoggingRoutineOperationSummary(definition, result) {
+  routineDebugOperationSummary(definition, result);
+  if(!jeLoggingHTMLEnabled)
+    return;
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
@@ -4029,6 +4056,7 @@ function jeInitEventListeners() {
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
   window.addEventListener('mouseup', async function(e) {
     jeRoutineResetOnNextLog = jeRoutineAutoReset;
+    routineDebugResetAfterInteraction();
     if(!jeEnabled)
       return;
     jeMouseButtonIsDown = false;

@@ -24,8 +24,10 @@ globalThis.dropTargets = dropTargets;
 globalThis.getMaxZ = getMaxZ;
 globalThis.resetMaxZ = resetMaxZ;
 globalThis.updateMaxZ = updateMaxZ;
-// same for the routine logger the JSON editor installs
+// same for the routine logger the JSON editor installs and the per-operation results the routine
+// editor collects
 globalThis.jeRoutineLogging = false;
+globalThis.jeRoutineDebug = false;
 
 // jsdom has no CSS layout and no DOMMatrix/DOMPoint, which the geometry helpers use to turn a
 // widget's transform into coordinates. Operations that move widgets go through them, so the

@@ -430,6 +430,14 @@ class EventsEditor {
       name.textContent = routineTargets[target].describe(property);
       headerDOM.append(name);
 
+      // whether the last interaction went through this routine at all - worth seeing without
+      // opening every card in the list (see routinedebug.js)
+      const runs = document.createElement('span');
+      runs.className = 'events-editor-runs';
+      runs.dataset.debugRoutine = `${this.widgetID}/${key}`;
+      routineDebugRenderRoutine(runs);
+      headerDOM.append(runs);
+
       infoButton(headerDOM, `<pre>${escapeHTML(event.description)}</pre>`);
 
       // the sentences below lean on their colors, so the key to them is where a

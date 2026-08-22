@@ -65,6 +65,17 @@
   flex: 1;
 }
 
+/* whether the last interaction went through this routine at all (see routinedebug.js): the same
+   dimmed note the results on the operation cards are written in, so it reads as an observation
+   about the routine rather than as part of its name */
+.events-editor-runs {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-style: italic;
+  white-space: nowrap;
+  color: var(--textHelpColor);
+}
+
 body.edit.darkMode .events-editor-property {
   color: var(--textHighlightColor7);
 }

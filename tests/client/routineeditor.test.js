@@ -36,6 +36,7 @@ beforeAll(() => {
     'client/js/editor/controls/widgetselection.js',
     'client/js/editor/controls/popup.js',
     'client/js/editor/controls/routine.js',
+    'client/js/editor/controls/routinedebug.js',
     'client/js/editor/controls/events.js'
   ];
   const code = files.map(f => fs.readFileSync(f, 'utf8')).join('\n');
@@ -54,7 +55,9 @@ beforeAll(() => {
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
-    'structureInfoHTML'
+    'structureInfoHTML',
+    'routineDebugRoutineStart', 'routineDebugRoutineEnd', 'routineDebugOperationStart', 'routineDebugOperationSummary',
+    'routineDebugOperationEnd', 'routineDebugRefreshNow', 'routineDebugResetAfterInteraction', 'routineDebugClear'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -3932,5 +3935,108 @@ describe('working out a value with var', () => {
     expect(plain.querySelector('.popup-operation-func')).toBeNull();
     expect(plain.querySelector('.popup-operation-example').textContent).toBe('the value');
     popup.hide();
+  });
+});
+
+// What every operation did the last time it ran, on the card of the operation itself. The runs are
+// collected by the logging calls of evaluateRoutine (see tests/client/engine/routinedebug.test.js
+// for the addresses they carry) - here they are played back by hand, so a case says what a card
+// shows without a room having to run anything.
+describe('what an operation did last time', () => {
+  const buttonWidget = { state: { id: 'button1', type: 'button' } };
+
+  // one run of a routine: every operation in order, each with what it did
+  function runRoutine(path, operations) {
+    routineDebugRoutineStart(path);
+    for (const [ index, operation ] of operations.entries()) {
+      routineDebugOperationStart(index);
+      if (operation.definition !== undefined)
+        routineDebugOperationSummary(operation.definition, operation.result);
+      if (operation.blocks)
+        for (const [ block, blockOperations ] of Object.entries(operation.blocks))
+          runRoutine(`${path}/${index}/${block}`, blockOperations);
+      routineDebugOperationEnd(operation.problems || [], operation.skipped);
+    }
+    routineDebugRoutineEnd();
+  }
+
+  function editorFor(routine) {
+    return new RoutineEditor(buttonWidget, routine, [], [], { routineKey: 'clickRoutine' });
+  }
+
+  function strips(editor) {
+    return [...editor.domElement.querySelectorAll('.routine-editor-debug')].map(strip => strip.textContent);
+  }
+
+  beforeEach(() => routineDebugClear());
+
+  test('a card says what its operation worked with and what came out', () => {
+    runRoutine('button1/clickRoutine', [ { definition: "'hand' to 'discard'", result: '2' } ]);
+    expect(strips(editorFor([ { func: 'MOVE' } ]))[0]).toBe("'hand' to 'discard' → 2");
+  });
+
+  test('runs that read the same are counted instead of listed twice', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    expect(strips(editorFor([ { func: 'SHUFFLE' } ]))[0]).toBe('3× the deck');
+  });
+
+  test('a loop shows the first of its rounds and offers the rest', () => {
+    runRoutine('button1/clickRoutine', [ { blocks: { loopRoutine: [] } } ]);
+    for (let i = 1; i <= 6; ++i)
+      runRoutine('button1/clickRoutine/0/loopRoutine', [ { definition: 'var seen =', result: String(i) } ]);
+
+    const editor = editorFor([ { func: 'FOREACH', loopRoutine: [ 'var seen = ${value}' ] } ]);
+    const strip = editor.domElement.querySelector('[data-debug-key="button1/clickRoutine/0/loopRoutine/0"]');
+    expect(strip.textContent).toBe('var seen = → 1var seen = → 2var seen = → 3+ 3 more runs');
+
+    strip.querySelector('.routine-editor-debug-more').click();
+    expect(strip.textContent).toContain('var seen = → 6');
+    expect(strip.textContent).toContain('show less');
+  });
+
+  test('what an operation ran into is on a line of its own', () => {
+    runRoutine('button1/clickRoutine', [ { definition: "from 'nowhere'", problems: [ 'Widget ID nowhere does not exist.' ] } ]);
+    const editor = editorFor([ { func: 'MOVE' } ]);
+    expect(editor.domElement.querySelector('.routine-editor-debug-problem').textContent).toBe('Widget ID nowhere does not exist.');
+  });
+
+  test('an operation a routine did not reach says so, one it never ran at all says nothing', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'cancelled' } ]); // the routine stopped after the first operation
+    const editor = editorFor([ { func: 'INPUT' }, { func: 'FLIP' } ]);
+    expect(strips(editor)).toEqual([ 'cancelled', 'not run' ]);
+
+    const untouched = new RoutineEditor(buttonWidget, [ { func: 'FLIP' } ], [], [], { routineKey: 'enterRoutine' });
+    expect(strips(untouched)).toEqual([ '' ]);
+  });
+
+  test('a card on screen follows the routine that runs after it was rendered', () => {
+    const editor = editorFor([ { func: 'SHUFFLE' } ]);
+    document.body.append(editor.domElement);
+    try {
+      expect(strips(editor)).toEqual([ '' ]);
+      runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+      routineDebugRefreshNow();
+      expect(strips(editor)).toEqual([ 'the deck' ]);
+    } finally {
+      editor.domElement.remove();
+    }
+  });
+
+  test('the next interaction starts from nothing rather than adding to the last one', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'first' } ]);
+    routineDebugResetAfterInteraction();
+    runRoutine('button1/clickRoutine', [ { definition: 'second' } ]);
+    expect(strips(editorFor([ { func: 'SHUFFLE' } ]))).toEqual([ 'second' ]);
+  });
+
+  test('the list of routines says which of them ran', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    const widget = { state: { id: 'button1', type: 'button', clickRoutine: [ { func: 'SHUFFLE' } ], enterRoutine: [] } };
+    const eventsEditor = new EventsEditor(widget, () => {});
+    const runs = [...eventsEditor.domElement.querySelectorAll('.events-editor-runs')].map(r => r.textContent);
+    expect(runs).toEqual([ 'ran 2×', '' ]);
   });
 });

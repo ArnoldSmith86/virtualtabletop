@@ -10,6 +10,7 @@ describe("Scenarios: Math expressions in routines", () => {
   const testName = "routine-math";
   beforeAll(() => {
     window.jeRoutineLogging = false;
+    window.jeRoutineDebug = false;
   });
 
   async function evaluate(expression) {

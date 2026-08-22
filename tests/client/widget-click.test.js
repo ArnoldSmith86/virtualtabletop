@@ -44,6 +44,7 @@ describe("Scenarios: Clicking widgets", () => {
 
     testLabel = addLabel(`${testName}-test-label`);
     window.jeRoutineLogging = false;
+    window.jeRoutineDebug = false;
   });
   afterAll(() => {
     removeWidget(testWidget.get('id'));

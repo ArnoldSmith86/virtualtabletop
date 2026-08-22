@@ -423,6 +423,15 @@ export class Card extends Widget {
     return super.getDefaultValue(property);
   }
 
+  // a card runs the routines its deck defines for all of its cards, and that is where the routine
+  // editor shows them: on the deck, in its card defaults
+  routineDebugPath(property) {
+    const cardDefaults = this.deck && this.deck.get('cardDefaults');
+    if(cardDefaults && this.state[property] === undefined && cardDefaults[property] === this.get(property))
+      return `${this.deck.get('id')}/cardDefaults.${property}`;
+    return super.routineDebugPath(property);
+  }
+
   getFaceCount() {
     const faceTemplates = this.deck.get('faceTemplates');
     if(Array.isArray(faceTemplates))

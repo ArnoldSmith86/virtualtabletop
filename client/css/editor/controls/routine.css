@@ -495,3 +495,79 @@ body.edit.darkMode .routine-editor-parameter-missing {
 .routine-editor-fields .routine-editor-func-name {
   color: var(--routineVariableColor);
 }
+
+/* What an operation did the last time it ran, under its sentence (see routinedebug.js). It is
+   there to be glanced at while a routine is written, not read like the sentence above it: one
+   size down, in the dimmed text the controls of a card are drawn in, and separated from the
+   sentence by a perforation in the page color rather than by a box of its own. Only what came
+   out and what went wrong carry a color, so the eye finds them without the strip competing with
+   the sentence above it. */
+.routine-editor-debug {
+  margin-top: 3px;
+  padding-top: 2px;
+  border-top: 1px dashed var(--backgroundColor);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* a card of a routine that has not run has nothing to say, and says it by not being there */
+.routine-editor-debug:empty {
+  display: none;
+}
+
+/* one run per line: a loop that went round twenty times reads as twenty statements under each
+   other, which is what makes them comparable at a glance */
+.routine-editor-debug-run {
+  display: block;
+  word-break: break-word;
+}
+
+/* everything but the values: the text color turned down the same way the controls of a card are,
+   which is what keeps it readable on the card (see --routineChromeOpacity) while staying clearly
+   behind the sentence */
+.routine-editor-debug-count,
+.routine-editor-debug-definition,
+.routine-editor-debug-arrow,
+.routine-editor-debug-idle,
+.routine-editor-debug-more {
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+}
+
+/* how many of the runs below it read the same, in front of the line the way a multiplier is */
+.routine-editor-debug-count {
+  font-weight: bold;
+}
+
+/* What came out, in the color a value has everywhere else in the editor - and on the same
+   background the chips of the sentence sit on, because that is what those colors are tuned
+   against and what makes a result read as a value rather than as another word. */
+.routine-editor-debug-result {
+  background: var(--backgroundColor);
+  border-radius: 3px;
+  padding: 0 4px;
+  color: var(--routineVariableColor);
+}
+
+/* what the engine had to complain about, on a line of its own: a problem is not a footnote to
+   the result */
+.routine-editor-debug-problem {
+  display: block;
+  color: var(--routineProblemColor);
+}
+
+/* an operation that ran without a result, was skipped, or was never reached: a statement about
+   nothing having happened, so it is the one part of the strip written in italics */
+.routine-editor-debug-idle {
+  font-style: italic;
+}
+
+.routine-editor-debug-more {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.routine-editor-debug-more:hover {
+  color: var(--VTTblue);
+  opacity: 1;
+}

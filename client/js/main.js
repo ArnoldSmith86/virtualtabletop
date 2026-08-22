@@ -12,6 +12,10 @@ export let jeEnabled = null;
 let zoom = 1;
 let offset = [ 0, 0 ];
 let jeRoutineLogging = false;
+// Whether every operation of a routine records what it did, so the routine editor can show it on
+// the card of the operation itself. Unlike the Debug module's log this stays on once the editor
+// has been loaded: a routine is run by playing the game, which happens with the editor closed.
+let jeRoutineDebug = false;
 
 let urlProperties = {};
 
@@ -825,6 +829,7 @@ async function loadEditMode() {
     const editmode = await import('./edit.js');
     $('body').classList.remove('loadingEditMode');
     Object.assign(window, editmode);
+    jeRoutineDebug = true;
     initializeEditMode(currentMetaData);
   }
 }
