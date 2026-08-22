@@ -345,7 +345,12 @@ body.jsonEdit #toolbar {
   font-weight: bold;
 }
 
+#jeLog:not(:empty) ~ .jeLogEmptyNote {
+  display: none;
+}
+
 .jeLogSkipped { color: var(--textDimColor1); }
+.jeLogFailed  { color: var(--textHighlightColor3); font-weight: bold; }
 .jeLogSummary { color: var(--textHighlightColor4); }
 .jeLogResult  { color: var(--textHighlightColor2); }
 .jeLogTime    { color: var(--textDimColor1); }
@@ -395,7 +400,7 @@ body.jsonEdit #toolbar {
 }
 
 .jeLogDetails {
-  word-break: break-all;
+  overflow-wrap: anywhere;
   margin-left: 20px;
   color: var(--textColor);
 }
@@ -406,12 +411,18 @@ body.jsonEdit #toolbar {
 }
 .jeLogOperation {
   margin-left: 20px;
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
-.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections, .jeLogProblems {
+.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections {
   margin-left:20px;
   white-space: pre;
+  overflow-x: auto;
+}
+
+.jeLogProblems {
+  margin-left:20px;
+  white-space: pre-wrap;
 }
 
 [id=jeTopButtons] button {

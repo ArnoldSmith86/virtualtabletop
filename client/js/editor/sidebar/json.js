@@ -83,6 +83,7 @@ class DebugModule extends SidebarModule {
     jeRoutineAutoReset = !$('#clearLogButton').disabled;
 
     $('#clearLogButton').disabled = $('#autoClearLog').checked;
+    this.setClearButtonTitle();
     if($('#clearLogButton').disabled)
       jeLoggingClear();
   }
@@ -125,13 +126,25 @@ class DebugModule extends SidebarModule {
     this.updateValidation();
   }
 
+  // The Clear button spends most of its life disabled because the log clears itself. Saying so in
+  // its tooltip keeps it from reading like a button that is simply broken.
+  setClearButtonTitle() {
+    $('#clearLogButton').title = $('#clearLogButton').disabled
+      ? 'The log is cleared automatically. Uncheck the box to keep it and clear it yourself.'
+      : 'Empty the log now.';
+  }
+
   renderModule(target) {
+    this.addHeader('Debug', target);
+    this.addSubHeader('Routine log', target);
     div(target, 'buttonBar', `
       <input type=text id=jeLogFilter placeholder="Filter log...">
-      <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
+      <label id=autoClearLogLabel title="Keep only the routines started by the most recent interaction with the room."><input type=checkbox id=autoClearLog checked> Clear after each interaction</label>
       <button icon=backspace id=clearLogButton disabled>Clear</button>
     `);
+    this.setClearButtonTitle();
     target.append($('#jeLog'));
+    div(target, 'jeLogNote jeLogEmptyNote', 'Nothing has been logged yet. Run a routine - click a widget, or right-click it in edit mode - and every operation it runs shows up here.');
 
     on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
@@ -139,6 +152,7 @@ class DebugModule extends SidebarModule {
 
     setJEroutineLogging(jeRoutineLogging = true);
 
+    this.addSubHeader('Validation', target);
     div(target, 'staticErrors', `
       <div class="validation-controls" style="margin-top: 10px; display: none;">
         <button id="runValidationButton" icon=data_check>Run Validation</button>

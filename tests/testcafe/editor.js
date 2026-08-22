@@ -2908,10 +2908,12 @@ test('the Debug module logs a var operation with its result', async t => {
     button: {
       id: 'button',
       type: 'button',
-      // a range of one, so the result is a fixed number. The second operation is arithmetic that
-      // the operation regex does not match, so it goes through the other branch, which reads the
-      // operation string again next to the eval that evaluates the expression
-      clickRoutine: [ 'var roll = randInt 5 5', 'var calc = (1 + 2) * 3' ]
+      // a range of one, so the result is a fixed number. The other two operations are arithmetic
+      // that the operation regex does not match, so they go through the other branch, which reads
+      // the operation string again next to the eval that evaluates the expression - once without
+      // and once with a variable in the expression, which is what decides whether the summary
+      // also shows the expression with the variables filled in
+      clickRoutine: [ 'var roll = randInt 5 5', 'var calc = (1 + 2) * 3', 'var withVars = (${roll} + 2) * 3' ]
     }
   });
   await ClientFunction(prepareClient)();
@@ -2931,8 +2933,10 @@ test('the Debug module logs a var operation with its result', async t => {
   await t
     .expect(Selector('#jeLog .jeLogSummary').nth(0).innerText).eql('roll = randInt 5 5')
     .expect(Selector('#jeLog .jeLogResult').nth(0).innerText).eql('5')
-    .expect(Selector('#jeLog .jeLogSummary').nth(1).innerText).eql('calc = (1 + 2) * 3 => (1 + 2) * 3')
-    .expect(Selector('#jeLog .jeLogResult').nth(1).innerText).eql('9');
+    .expect(Selector('#jeLog .jeLogSummary').nth(1).innerText).eql('calc = (1 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(1).innerText).eql('9')
+    .expect(Selector('#jeLog .jeLogSummary').nth(2).innerText).eql('withVars = (${roll} + 2) * 3 => (5 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(2).innerText).eql('21');
   await setEditorState(null);
 });
 
