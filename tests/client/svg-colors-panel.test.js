@@ -29,8 +29,9 @@ function buttonShowFor(widgetState, fetchSVG, jeIsSVG, jeShowCommands = _=>{}) {
 const tick = _=>new Promise(resolve => setTimeout(resolve, 0));
 
 // what the panel put where the color buttons go
-const panelText = _=>$('#jeSVGColors > div').textContent;
-const colorButtons = _=>[ ...$a('#jeSVGColors > div button') ].map(button => button.getAttribute('data-color'));
+const panelText = _=>$('#jeSVGColors .jeSVGColorsBody').textContent;
+const colorButtons = _=>[ ...$a('#jeSVGColors .jeSVGColorList button') ].map(button => button.getAttribute('data-color'));
+const markedAsMapped = _=>[ ...$a('#jeSVGColors .jeSVGColorList button.jeSVGColorMapped') ].map(button => button.getAttribute('data-color'));
 
 beforeEach(() => {
   document.body.insertAdjacentHTML('beforeend', '<div id="jeCommands"><div id="jeTopButtons"></div></div>');
@@ -48,7 +49,7 @@ test('the panel offers every color the SVG uses', async () => {
   expect(colorButtons()).toEqual([ '#3366cc', 'currentColor' ]);
 
   // clicking one maps it to a property the user then fills in
-  $('#jeSVGColors > div button').dispatchEvent(new Event('click'));
+  $('#jeSVGColors .jeSVGColorList button').dispatchEvent(new Event('click'));
   expect(widget.svgReplaces).toEqual({ '#3366cc': '###SELECT ME###' });
 });
 
@@ -80,7 +81,7 @@ test('an SVG without replaceable colors is reported in the panel', async () => {
   await tick();
 
   expect(colorButtons()).toEqual([]);
-  expect(panelText()).toMatch(/does not use any hex colors/);
+  expect(panelText()).toMatch(/Only hex colors/);
 });
 
 test('the panel says it is loading while the image is on its way', async () => {
@@ -129,4 +130,66 @@ test('an image that could not be read does not hide the button for the session',
   await tick();
   expect(jeIsSVG).toEqual({ '/assets/5_5': true });
   expect(buttonShowFor(widget, fetchSVG, jeIsSVG)()).toBe(true);
+});
+
+test('an image that could not be read is not requested over and over', async () => {
+  // nothing is cached for a file that could not be read, so every redraw of the buttons asks for it
+  // again - which means the failure itself must not redraw them, or the pane rebuilds and refetches
+  // without ever stopping and the property list below cannot even be scrolled
+  const jeIsSVG = {};
+  let fetches = 0;
+  const fetchSVG = _=>{
+    fetches++;
+    return Promise.reject(new TypeError('Failed to fetch'));
+  };
+  let show;
+  const redrawTheButtons = _=>{ if(fetches < 20) show(); };
+  show = buttonShowFor({ id: 'w1', image: '/assets/6_6' }, fetchSVG, jeIsSVG, redrawTheButtons);
+
+  show();
+  show();
+  for(let i=0; i<10; i++)
+    await tick();
+  expect(fetches).toBe(1);
+
+  // the next redraw does try the file again, in step with the retry fetchSVG() does for it anyway
+  show();
+  await tick();
+  expect(fetches).toBe(2);
+});
+
+test('a color that already has a replacement is checked off in the palette', async () => {
+  const widget = { id: 'w1', image: '/assets/7_7', svgReplaces: { '#3366cc': 'red' } };
+  panelFor(widget, _=>Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#3366cc"/><rect fill="#abcdef"/></svg>'))();
+  await tick();
+
+  expect(markedAsMapped()).toEqual([ '#3366cc' ]);
+
+  // a palette of a whole deck of cards is worked through one color at a time, so a click has to show
+  $a('#jeSVGColors .jeSVGColorList button')[1].dispatchEvent(new Event('click'));
+  expect(markedAsMapped()).toEqual([ '#3366cc', '#abcdef' ]);
+});
+
+test('a request that failed can be retried from the panel', async () => {
+  // fetchSVG() forgets a request that failed, so the file really is asked for again
+  let fileArrives = false;
+  const fetchSVG = _=>fileArrives ? Promise.resolve('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#abcdef"/></svg>') : Promise.reject(new TypeError('Failed to fetch'));
+  panelFor({ id: 'w1', image: '/assets/8_8' }, fetchSVG)();
+  await tick();
+
+  expect(panelText()).toMatch(/could not be loaded/);
+
+  fileArrives = true;
+  $('#jeSVGColors .jeSVGColorsBody button').dispatchEvent(new Event('click'));
+  await tick();
+  expect(colorButtons()).toEqual([ '#abcdef' ]);
+});
+
+test('the panel names the image it is talking about', async () => {
+  // the panel is a narrow column and the image property it answers for is easily scrolled out of
+  // the JSON pane, so "this image" alone does not say which file did not load
+  panelFor({ id: 'w1', image: 'https://example.com/pieces/blocked.svg' }, _=>Promise.reject(new TypeError('Failed to fetch')))();
+  await tick();
+
+  expect(panelText()).toMatch('https://example.com/pieces/blocked.svg');
 });
