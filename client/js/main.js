@@ -1,5 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
-import { checkForServerRestart, clientIsOutdated, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
+import { checkForServerRestart, clientIsOutdated, editModeURL, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
@@ -800,6 +800,34 @@ export function getSVG(url, replaces, callback) {
   return unreadableCache[url] ? mapAssetURLs(url) : '';
 }
 
+// Decides what the user gets when the editor bundle did not load, by asking the server what it is:
+// a server that has been replaced means this page belongs to a build that is gone and reloads, a
+// server that does not answer at all is restarting and the click can simply be repeated once it is
+// back, and a server that is there and is still the build this page belongs to means the bundle
+// itself is at fault - a genuine defect, which has to reach the error report rather than be excused
+// as downtime. Resolves to false where edit mode is unavailable for now, throws where it is broken.
+async function editModeUnavailable(error) {
+  // kept out of the message on screen but not out of the console: whoever debugs a bundle that does
+  // not load needs the original failure, restart or not
+  console.error('Edit mode could not be loaded.', error);
+
+  const serverAnswered = await checkForServerRestart();
+  if(clientIsOutdated()) {
+    showServerRestartOverlay();
+    // long enough for the message to be on screen before the reload takes the page away, so a click
+    // on the edit button does not just flash the whole app for no visible reason. The arrow keeps
+    // reload() on its Location: a timer calls what it is handed on the window, which throws.
+    setTimeout(_=>location.reload(), 1000);
+    return false;
+  }
+  if(!serverAnswered) {
+    showOverlay('editModeUnavailableOverlay');
+    return false;
+  }
+
+  throw error;
+}
+
 // Resolves to whether edit mode is available: false means the editor could not be fetched, which
 // the user has been told about and can retry - the callers must not go on to use it.
 async function loadEditMode() {
@@ -807,21 +835,6 @@ async function loadEditMode() {
     $('body').classList.add('loadingEditMode');
     let editmode;
     try {
-      // Edit mode is a second bundle that is only fetched the first time it is opened, so an
-      // outdated page would pair the client bundle it is running with an editor bundle of whatever
-      // the server has now. The two halves only know each other through the names handed over
-      // below, and a pair from two builds fails on the first name one of them does not have - so
-      // reload this page instead of fetching an editor bundle that does not fit it.
-      await checkForServerRestart();
-      if(clientIsOutdated()) {
-        // long enough for the message to be on screen before the reload takes the page away, so a
-        // click on the edit button does not just flash the whole app for no visible reason
-        showServerRestartOverlay();
-        await sleep(1000);
-        location.reload();
-        await new Promise(_=>{});  // the page is on its way out: nothing waiting for edit mode may run
-      }
-
       edit = false;
       Object.assign(window, {
         $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
@@ -842,15 +855,13 @@ async function loadEditMode() {
         getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
       });
 
-      editmode = await import('./edit.js');
+      // The two halves of the client only know each other through the names handed over above, so
+      // a pair from two builds fails on the first name one of them does not have - which is why
+      // the bundle is asked for by build rather than by name alone.
+      editmode = await import(editModeURL());
     } catch(e) {
-      // the editor comes over the network, so it cannot be loaded while the server is away - which
-      // is what a deploy looks like from here. Nothing crashed and nothing is lost, so say that and
-      // let the next click fetch the bundle again instead of asking for a crash report.
-      console.error('Edit mode could not be loaded.', e);
       edit = null;
-      showOverlay('editModeUnavailableOverlay');
-      return false;
+      return await editModeUnavailable(e);
     } finally {
       $('body').classList.remove('loadingEditMode');
     }
