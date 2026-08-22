@@ -335,6 +335,12 @@ async function saveState(e) {
   };
 }
 
+// the variants panel is otherwise an unlabelled empty card once the last variant is deleted, which
+// gives no hint that the game is not playable any more
+function updateEmptyVariantsHint() {
+  $('#emptyVariants').style.display = $('#variantsList .variant') ? 'none' : 'block';
+}
+
 function updateEmptyLibraryHint() {
   const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
   const hasPublicLibrary = Object.keys(config.libraries || {}).length > 0;
@@ -746,12 +752,16 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   if($('#stateDetailsOverlay').style.display != 'none' || $('#statesOverlay.withDetails')) {
     const stateID = $('#stateDetailsOverlay').dataset.id;
-    if(!states[stateID]) {
+    // the details are filled from the game's tile, so a game that the list does not show any more
+    // has no details to show either - it was either removed or lost its tile, like a public
+    // library game whose variants are all linked from the shelf by now
+    const entry = $(`#statesOverlay .roomState[data-id="${stateID}"]`);
+    if(!states[stateID] || !entry) {
       $('#closeDetails').click();
     } else if(!$('#stateDetailsOverlay').classList.contains('editing')) {
       if(!$('#statesOverlay.withDetails'))
         showOverlay();
-      fillStateDetails(states, states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
+      fillStateDetails(states, states[stateID], entry);
     }
   }
 
@@ -932,15 +942,18 @@ function fillStateDetails(states, state, dom) {
         variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry)
       });
       removeFromDOM(vEntry);
+      updateEmptyVariantsHint();
     };
 
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
+    updateEmptyVariantsHint();
     return vEntry;
   }
 
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants)
     addVariant(variantID, state.variants[variantID]);
+  updateEmptyVariantsHint();
 
 
 
@@ -1137,7 +1150,19 @@ function fillStateDetails(states, state, dom) {
       showStatesOverlay(detailsOverlay);
     }
   };
-  $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
+  $('#stateDetailsOverlay .buttons [icon=save]').onclick = async function() {
+    // saving a game without a single variant left removes the game itself, so it asks the same
+    // question the delete button asks instead of doing that silently. in-progress games never get
+    // here: their details have no edit button (see the editable check in fillStateDetails)
+    const removesGame = !$('#variantsList .variant');
+    if(removesGame) {
+      $('#statesButton').dataset.overlay = 'confirmOverlay';
+      if(!await confirmOverlay('Save without variants', 'You deleted the last variant of this game. Saving now removes the whole game from your game shelf. Are you sure?', 'Delete game', 'Back to editing', 'delete', 'undo', 'red')) {
+        showStatesOverlay(detailsOverlay);
+        return;
+      }
+    }
+
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
     const main = $('#showName').checked, similar = $('#showNameSimilar').checked;
     meta.showName = main && similar ? true : !main && !similar ? false : main ? 'only main' : 'only similar';
@@ -1160,6 +1185,11 @@ function fillStateDetails(states, state, dom) {
       variantInput,
       variantOperationQueue
     });
+
+    // the removed game leaves no details to go back to, so this ends on the game shelf just like
+    // the details' delete button does
+    if(removesGame)
+      showStatesOverlay('statesOverlay');
   };
 }
 
