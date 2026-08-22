@@ -3106,6 +3106,31 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
+// The variables evaluateRoutine adds to every routine by itself. They are identical in every
+// operation of every routine, so they are shown behind their own expander and the variables the
+// routine actually works with stay at the top of the pane. A name that is missing here just shows
+// up with the routine's own variables, so the list going out of date costs nothing but noise.
+const jeLoggingEngineVariables = [ 'activeColors', 'mouseCoords', 'seatIndex', 'seatID', 'activeSeats', 'playerName', 'playerColor', 'activePlayers', 'thisID' ];
+
+function jeLoggingVariables(variables) {
+  const own = {};
+  const engine = {};
+  for(const name in variables)
+    (jeLoggingEngineVariables.indexOf(name) == -1 ? own : engine)[name] = variables[name];
+  const ownBlock = Object.keys(own).length ?
+        `<div class="jeLogVariables"><h3>Variables afterwards</h3>${jeLoggingJSON(own)}</div>` : '';
+  const engineBlock = Object.keys(engine).length ?
+        `<div class="jeLogDetails">
+            <div class="jeExpander">
+              <span class="jeLogName">Built-in variables</span>
+            </div>
+            <div class="jeLogNested">
+              <div class="jeLogVariables">${jeLoggingJSON(engine)}</div>
+            </div>
+          </div>` : '';
+  return ownBlock + engineBlock;
+}
+
 export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
@@ -3115,7 +3140,7 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
     jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-          <span class="jeLogWidget">${widget.get('id')}</span>
+          <span class="jeLogWidget">${widget.get('id')}</span> &rsaquo;
           <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
@@ -3182,7 +3207,7 @@ export function jeLoggingRoutineNotLogged(widget, property) {
     jeRoutineResetOnNextLog = false;
   }
   const routine = typeof property == 'string'
-    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> <span class="jeLogProperty">${html(property)}</span>`
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo; <span class="jeLogProperty">${html(property)}</span>`
     : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
   jeLoggingHTML += `
     <div class="jeLog jeLogNote">
@@ -3231,7 +3256,7 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
             <span class="jeLogName">Problems</span>
           </div>
           <div class="jeLogNested">
-            <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
+            <div class="jeLogProblems">${problems.map(p=>html(typeof p == 'string' ? p : JSON.stringify(p))).join('\n')}</div>
           </div>
         </div>` : '';
   const originalOp = originalText.length ?
@@ -3246,31 +3271,36 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
            <div class="jeLogNested">
              ${originalOp}
              ${appliedOp}
-             <h3></h3>
            </div>
          </div>` : '';
+
+  const deltaText = jeLoggingJSON(getDelta().s);
+  const collectionsBlock = Object.keys(collDisplay).length ?
+        `<div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>` : '';
+  const deltaBlock = deltaText.length ?
+        `<div class="jeLogVariables"><h3>Delta afterwards</h3>${deltaText}</div>` : '';
+  const opState = `${jeLoggingVariables(variables)}${collectionsBlock}${deltaBlock}`;
+  const opStateBlock = opState.length ?
+        `<div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Variables, collections and delta afterwards</span>
+          </div>
+          <div class="jeLogNested">
+            ${opState}
+          </div>
+        </div>` : '';
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
-        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} ${problems.length ? '<span class="jeLogFailed">failed</span>' : ''} <span class="jeLogTime" title="how long this operation took">(${+new Date() - startTime}ms)</span>
       </div>
       <div class="jeLogNested">
         ${opProblems}
         ${opOperation}
         ${jeLoggingHTML}
-        <div class="jeLogDetails">
-          <div class="jeExpander">
-            <span class="jeLogName">Variables, collections and delta afterwards</span>
-          </div>
-          <div class="jeLogNested">
-            <div class="jeLogVariables"    ><h3>Variables afterwards</h3>${jeLoggingJSON(variables   )}</div>
-            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay )}</div>
-            <div class="jeLogVariables"        ><h3>Delta afterwards</h3>${jeLoggingJSON(getDelta().s)}</div>
-            <h3></h3>
-          </div>
-        </div>
+        ${opStateBlock}
       </div>
     </div>
   `;

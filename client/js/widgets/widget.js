@@ -1442,7 +1442,10 @@ export class Widget extends StateManaged {
                 variables[variable][index] = result;
               else
                 variables[variable] = result;
-              if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+              // the expression with the variables filled in is only worth showing next to the
+              // original when filling them in changed something - without variables it is a
+              // verbatim repeat of the right hand side the user already sees
+              if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + (withoutVars == a ? '' : ' => ' + mathExpression[5]), JSON.stringify(result));
             } else {
               problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
             }
