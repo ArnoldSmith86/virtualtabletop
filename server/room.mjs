@@ -129,7 +129,7 @@ export default class Room {
 
         const variant = states[state][v];
         const meta = Object.assign({
-          name: name.replace(/\.pcio/, ''),
+          name: name.replace(/\.(vtt|vttc|vtts|pcio|zip)$/i, ''),
           image: '',
           rules: '',
           bgg: '',
