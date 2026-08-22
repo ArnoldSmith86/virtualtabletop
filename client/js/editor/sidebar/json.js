@@ -144,7 +144,7 @@ class DebugModule extends SidebarModule {
     `);
     this.setClearButtonTitle();
     target.append($('#jeLog'));
-    div(target, 'jeLogNote jeLogEmptyNote', 'Nothing has been logged yet. Run a routine - click a widget, or right-click it in edit mode - and every operation it runs shows up here.');
+    div(target, 'jeLogNote jeLogEmptyNote', 'Nothing has been logged yet. Middle-click a widget to run it as if you were playing, and every operation of the routine it starts shows up here.');
 
     on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
