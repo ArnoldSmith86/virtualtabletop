@@ -1606,6 +1606,12 @@ class PropertiesModule extends SidebarModule {
     // per line: the widget new stops inherit from. Kept outside the panel because
     // picking a widget in the room re-selects the line and re-renders the panel.
     this.lineStopInheritIDs = {};
+    // circle align settings: tool parameters rather than widget properties, so
+    // they are kept for the editing session instead of in the game state
+    this.circleAlignRadius = 200;
+    this.circleAlignRotate = false;
+    // where the widgets of the arrangement being adjusted were before it ran
+    this.circleAlignOriginals = null;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -2107,6 +2113,278 @@ class PropertiesModule extends SidebarModule {
         groupWrap.appendChild(groupDOM);
       }
     }
+    // the circle settings belong to the bar above them (the CSS pulls them up
+    // against it), so both are appended here, next to each other
+    this.renderCircleAlign(bar, div(this.moduleDOM, 'arrangeCircleOptions'));
+  }
+
+  // Circle align is the one arranging tool with settings of its own. The button
+  // arranges the selection right away with the settings it has, and opens them
+  // below the bar: every change re-arranges the selection from where the button
+  // found it, Done keeps it and Undo circle puts it back there.
+  renderCircleAlign(bar, options) {
+    const groupWrap = div(bar, 'arrangeGroupWrap');
+    div(groupWrap, 'arrangeGroupLabel', 'Circle');
+    const groupDOM = div(groupWrap, 'arrangeGroup');
+
+    const button = document.createElement('button');
+    // like every other glyph in the bar, several things being positioned - a
+    // filled disc reads as a color swatch rather than as an arrangement
+    button.setAttribute('icon', 'scatter_plot');
+    button.disabled = selectedWidgets.length < 3;
+    button.title = this.circleAlignButtonTitle(button.disabled);
+    button.onclick = _=>this.startCircleAlign(button, options);
+    groupDOM.appendChild(button);
+
+    // an arrangement that is still being adjusted survives a re-render of the
+    // panel; one of a selection that is gone is nobody's to take back
+    if(this.circleAlignOriginals && this.circleAlignOriginals.map(original=>original.id).join(' ') == selectedWidgets.map(widget=>widget.id).join(' '))
+      this.renderCircleAlignOptions(button, options);
+    else
+      this.circleAlignOriginals = null;
+  }
+
+  // The radius is kept for the whole editing session, so a press half an hour
+  // later applies it to a fresh selection before a single control is on screen -
+  // naming it in the tooltip is what takes the surprise out of that.
+  circleAlignButtonTitle(disabled) {
+    return `Arrange the selected widgets evenly on a circle of radius ${this.circleAlignRadius} around the center of the selection.` + (disabled ? ' (needs 3+ widgets)' : '');
+  }
+
+  startCircleAlign(button, options) {
+    if(selectedWidgets.length < 3)
+      return;
+    // where the widgets were before the tool touched them: every change of the
+    // settings arranges them from here again, and Undo circle puts them back
+    if(!this.circleAlignOriginals)
+      this.circleAlignOriginals = selectedWidgets.map(widget=>({
+        id: widget.id,
+        x: widget.get('x'),
+        y: widget.get('y'),
+        rotation: widget.get('rotation')
+      }));
+    this.renderCircleAlignOptions(button, options);
+    this.scheduleCircleAlign();
+  }
+
+  renderCircleAlignOptions(button, options) {
+    options.textContent = '';
+    // the box holds the settings of one of ten look-alike glyphs in the bar -
+    // the caption names it, the pressed look on the button itself points at it
+    button.classList.add('open');
+    div(options, 'arrangeGroupLabel', 'Circle');
+
+    // listenTo is empty for both inputs (neither edits a widget property), so
+    // nothing fires the initial update a property listener would give them
+    const radius = new NumberInput(this, null, 'Radius', {
+      listenTo: [],
+      min: 1,
+      max: Math.round(Math.max(viewportConfig.targetWidth, viewportConfig.targetHeight) / 2),
+      // the slider is a live preview, so its travel ends where the circle stops
+      // fitting on the board: a range whose upper half only ever pushes the
+      // selection out of sight is a range that cannot be dragged through. The
+      // field still takes anything up to max.
+      sliderMax: this.circleAlignSliderMax(),
+      step: 1,
+      slider: true,
+      getValue: _=>this.circleAlignRadius,
+      setValue: value=>{
+        this.circleAlignRadius = value;
+        button.title = this.circleAlignButtonTitle(false);
+        radius.slider.max = this.circleAlignSliderMax();
+        this.scheduleCircleAlign();
+      },
+      hint: 'Distance between the center of the circle and the center of each widget, in pixels. The circle is centered on the selection.'
+    });
+    radius.render(options);
+    radius.update(radius.getValue());
+    // an emptied field keeps the last radius, which the arrangement on screen is
+    // still standing on - put the value that is in use back. The input is
+    // written directly because a browser can still name it as the active
+    // element while its own blur handler runs.
+    radius.input.onblur = _=>radius.input.value = this.circleAlignRadius;
+
+    const rotate = new CheckboxInput(this, null, 'Rotate away from center', {
+      listenTo: [],
+      getValue: _=>this.circleAlignRotate,
+      setValue: value=>{
+        this.circleAlignRotate = value;
+        // turned widgets cover a different footprint, so the largest circle that
+        // still fits on the board is a different one
+        radius.slider.max = this.circleAlignSliderMax();
+        this.scheduleCircleAlign();
+      },
+      hint: 'Turn each widget so that its top points away from the center of the circle. Switched off again, every widget gets the rotation it had back.'
+    });
+    rotate.render(options);
+    rotate.update(rotate.getValue());
+
+    // the arrangement is already on the board, so the box needs a way out that
+    // keeps it: without one the only labelled exit would be the one that
+    // throws it away, and keeping it would mean guessing (click away, Escape)
+    const done = document.createElement('button');
+    done.setAttribute('icon', 'check');
+    done.className = 'green';
+    done.textContent = 'Done';
+    done.title = 'Keep the arrangement and close these settings.';
+    done.onclick = _=>this.closeCircleAlign(button, options);
+
+    const cancel = document.createElement('button');
+    cancel.setAttribute('icon', 'undo');
+    cancel.textContent = 'Undo circle';
+    cancel.title = 'Put the widgets back where they were before the circle was applied.';
+    cancel.onclick = _=>this.cancelCircleAlign(button, options);
+
+    const buttons = div(options, 'buttonBar');
+    buttons.appendChild(done);
+    buttons.appendChild(cancel);
+  }
+
+  // The widgets of the arrangement being adjusted, each with where it was before
+  // the tool ran: that is what every rearrangement starts from, so the widgets
+  // already on the circle are not moved again by the next change of a setting.
+  circleAlignWidgets() {
+    return (this.circleAlignOriginals || []).map(original=>({ original, widget: widgets.get(original.id) })).filter(entry=>entry.widget);
+  }
+
+  // Middle of the bounding box of the selection as the tool found it - the same
+  // reference the align and distribute buttons use, and the one that keeps the
+  // arrangement where the widgets already are.
+  circleAlignCenter(arranged) {
+    const boxes = arranged.map(({ original, widget })=>({
+      x: original.x + widget.get('width') / 2,
+      y: original.y + widget.get('height') / 2,
+      extent: this.circleAlignExtent(widget, original.rotation)
+    }));
+    return {
+      x: (Math.min(...boxes.map(b=>b.x - b.extent.x)) + Math.max(...boxes.map(b=>b.x + b.extent.x))) / 2,
+      y: (Math.min(...boxes.map(b=>b.y - b.extent.y)) + Math.max(...boxes.map(b=>b.y + b.extent.y))) / 2
+    };
+  }
+
+  // The rotation a widget gets at its place on the circle: turned away from the
+  // center, or the one it brought along while the switch is off.
+  circleAlignRotation(original, angle) {
+    return this.circleAlignRotate ? (angle + Math.PI) * 180 / Math.PI - 90 : original.rotation;
+  }
+
+  // How far a widget reaches from its center along each axis. Rotation and scale
+  // both happen around that center, so what a widget covers on the board is the
+  // upright box around the turned, scaled rectangle - a turned or scaled widget
+  // reaches considerably further than half its width and height.
+  circleAlignExtent(widget, rotation) {
+    const angle = (rotation || 0) * Math.PI / 180;
+    const scale = widget.get('_absoluteScale') || 1;
+    const width = widget.get('width') * scale;
+    const height = widget.get('height') * scale;
+    return {
+      x: (Math.abs(width * Math.cos(angle)) + Math.abs(height * Math.sin(angle))) / 2,
+      y: (Math.abs(width * Math.sin(angle)) + Math.abs(height * Math.cos(angle))) / 2
+    };
+  }
+
+  // Largest radius that still keeps every widget of the circle on the board.
+  // It depends on where the selection sits: a circle drawn around a point in
+  // the corner of the board is necessarily a small one.
+  circleAlignFittingRadius() {
+    const arranged = this.circleAlignWidgets();
+    if(!arranged.length)
+      return Math.round(Math.min(viewportConfig.targetWidth, viewportConfig.targetHeight) / 2);
+    const center = this.circleAlignCenter(arranged);
+    const angleStep = 2 * Math.PI / arranged.length;
+    // a widget can end up anywhere on the circle, so its whole footprint has to
+    // fit past the point closest to the edge of the board
+    const reach = Math.max(...arranged.map(({ original, widget }, index)=>{
+      const extent = this.circleAlignExtent(widget, this.circleAlignRotation(original, angleStep * index));
+      return Math.max(extent.x, extent.y);
+    }));
+    return Math.max(1, Math.round(Math.min(center.x, viewportConfig.targetWidth - center.x, center.y, viewportConfig.targetHeight - center.y) - reach));
+  }
+
+  // The slider never ends below the radius in use, so a radius typed past the
+  // cap still has the thumb at the end of the scale rather than off it.
+  circleAlignSliderMax() {
+    return Math.max(this.circleAlignRadius, this.circleAlignFittingRadius());
+  }
+
+  // Both the live arranging and taking it back move the same widgets, and a drag
+  // of the radius slider fires the first many times over. A set() runs the
+  // widget's change routines and the room's global update routines before it
+  // resolves, so overlapping runs would interleave those - and the run that is
+  // first inside a global update routine locks the others out of theirs
+  // entirely. Chaining the runs keeps each one whole.
+  queueCircleAlign(run) {
+    this.circleAlignQueue = Promise.resolve(this.circleAlignQueue).then(run).catch(error=>console.error(error));
+    return this.circleAlignQueue;
+  }
+
+  // A run arranges the selection from the settings as they are when it starts,
+  // so one waiting run is enough however fast the slider is dragged.
+  scheduleCircleAlign() {
+    if(this.circleAlignScheduled)
+      return this.circleAlignQueue;
+    this.circleAlignScheduled = true;
+    return this.queueCircleAlign(_=>{
+      this.circleAlignScheduled = false;
+      return this.applyCircleAlign();
+    });
+  }
+
+  // Spreads the selection evenly over a circle centered on the middle of the
+  // selection. Both that center and the rotation of a widget come from where it
+  // was before the tool ran, so changing a setting arranges the same selection
+  // again instead of moving the widgets that are already on the circle.
+  async applyCircleAlign() {
+    const arranged = this.circleAlignWidgets();
+    if(arranged.length < 3)
+      return;
+
+    const { x: centerX, y: centerY } = this.circleAlignCenter(arranged);
+    const angleStep = 2 * Math.PI / arranged.length;
+    const radius = +this.circleAlignRadius || 0;
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} aligned selected widgets in a circle in editor`);
+    let index = 0;
+    for(const { original, widget } of arranged) {
+      const angle = angleStep * index;
+      await widget.set('x', Math.floor(centerX + radius * Math.cos(angle)) - widget.get('width') / 2);
+      await widget.set('y', Math.floor(centerY + radius * Math.sin(angle)) - widget.get('height') / 2);
+      await widget.set('rotation', this.circleAlignRotation(original, angle));
+      index++;
+    }
+    batchEnd();
+  }
+
+  // Leaves the arrangement as it is. Both exits end the tool for this selection,
+  // so a second press starts over from wherever the widgets are then.
+  closeCircleAlign(button, options) {
+    this.circleAlignOriginals = null;
+    options.textContent = '';
+    button.classList.remove('open');
+  }
+
+  // Takes the whole arrangement back, down to the rotation each widget had, and
+  // closes the settings: the tool is done with this selection either way.
+  cancelCircleAlign(button, options) {
+    const originals = this.circleAlignOriginals || [];
+    // the widgets to arrange are gone with that, so an arrangement still waiting
+    // in the queue turns into a no-op instead of landing after the restore
+    this.closeCircleAlign(button, options);
+
+    this.queueCircleAlign(async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} took back the circle arrangement of the selected widgets in editor`);
+      for(const original of originals) {
+        const widget = widgets.get(original.id);
+        if(!widget)
+          continue;
+        await widget.set('x', original.x);
+        await widget.set('y', original.y);
+        await widget.set('rotation', original.rotation);
+      }
+      batchEnd();
+    });
   }
 
   // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
