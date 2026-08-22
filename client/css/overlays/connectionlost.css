@@ -14,11 +14,26 @@
 }
 #connectionLostOverlay .disconnected{
   display: flex;
+  /* the illustration is measured against the overlay, which is the board and not the window: a vw
+     height squashed it into a sliver next to a narrow board and blew it up into a banner on a wide
+     one, in both cases regardless of how much room the overlay actually has */
+  --plugHeight: clamp(70px, min(15cqw, 20cqh), 200px);
+}
+
+/* the same overlay covers two situations: a connection that is expected back, and a server that was
+   updated - where reconnecting is off and the page is about to reload instead */
+#connectionLostOverlay .whileRestarting,
+#connectionLostOverlay.serverRestarting .whileDisconnected{
+  display: none;
+}
+
+#connectionLostOverlay.serverRestarting .whileRestarting{
+  display: block;
 }
 
 #connectionLostOverlay .disconnected .cable{
   flex-grow: 1;
-  height: 15vw;
+  height: var(--plugHeight);
   background-position: center center;
   background-size: contain;
   background-repeat: repeat;
@@ -28,8 +43,8 @@
 #connectionLostOverlay .disconnected .plug{
   flex-grow: 0;
   flex-shrink: 0;
-  height: 15vw;
-  width: 25vw;
+  height: var(--plugHeight);
+  aspect-ratio: 5 / 3;
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;

@@ -51,6 +51,18 @@ body.loadingEditMode * {
   cursor: wait;
 }
 
+/* the editor is fetched from the server the first time it is opened, which takes long enough to
+   need an answer to the click - and a wait cursor is not one on a touch device */
+body.loadingEditMode #editButton {
+  animation: loadingEditMode 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes loadingEditMode {
+  to {
+    opacity: 0.35;
+  }
+}
+
 /* the overlays are children of #roomArea, so their size is the board's, not the window's.
    Their breakpoints are container queries against this box: as media queries they measured
    the window, which only said something about how much room an overlay has back when every
