@@ -1,6 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import * as fflate from 'fflate';
 
 import Room from '../../server/room.mjs';
 import { VERSION } from '../../server/fileupdater.mjs';
@@ -35,6 +36,14 @@ function roomLoadingStates(states) {
 function writeVariantFiles(stateID, count) {
   for(let i=0; i<count; ++i)
     fs.writeFileSync(path.join(directory, `${stateID}-${i}.json`), `{"variant":${i}}`);
+}
+
+// a zip of the given files, the way an uploaded game file reaches addState
+function gameFile(files) {
+  const entries = {};
+  for(const [ filename, content ] of Object.entries(files))
+    entries[filename] = fflate.strToU8(typeof content == 'string' ? content : JSON.stringify(content));
+  return Buffer.from(fflate.zipSync(entries));
 }
 
 beforeEach(function() {
@@ -141,5 +150,51 @@ describe('server/room.mjs', function() {
     expect(states.empty).toBeUndefined();
     expect(states.filled).toBeDefined();
     expect(states['PL:games/Empty']).toBeDefined();
+  });
+
+  // the tile the client shows while the file is uploading is named after the file the same way,
+  // so a game that is named after its file here must not rename itself once this answers
+  test('addState names a game after its file without the extension', async function() {
+    const room = roomWithStates({});
+    const noMeta = { '0.json': { _meta: { version: 8 } } };
+
+    await room.addState('a', 'file', gameFile(noMeta), 'My Game.vtt');
+    await room.addState('b', 'file', gameFile(noMeta), 'My Game.VTTS');
+    await room.addState('c', 'file', gameFile(noMeta), 'My Game v1.2.vtt');
+    await room.addState('d', 'file', gameFile(noMeta), 'My Game.data');
+
+    expect(Object.values(room.state._meta.states).map(state=>state.name)).toEqual([ 'My Game', 'My Game', 'My Game v1.2', 'My Game.data' ]);
+  });
+
+  // metadata written by hand or by another tool can hold anything, and assigning something that
+  // is not an object into the game spreads it in one property per character or element
+  test('addState reads the metadata of a variant only when it is an object', async function() {
+    const room = roomWithStates({});
+
+    await room.addState('a', 'file', gameFile({ '0.json': { _meta: { version: 8, info: 'bad metadata' } } }), 'Odd.vtt');
+    await room.addState('b', 'file', gameFile({ '0.json': { _meta: { version: 8, info: [ 'bad', 'metadata' ] } } }), 'Odd.vtt');
+    await room.addState('c', 'file', gameFile({ '0.json': { _meta: { version: 8, info: { name: 'Good', variant: 'Advanced' } } } }), 'Odd.vtt');
+
+    expect(room.state._meta.states.a.name).toEqual('Odd');
+    expect(Object.keys(room.state._meta.states.a)).not.toContain('0');
+    expect(room.state._meta.states.a.variants).toEqual([ { players: '', language: '', variant: '', variantImage: undefined } ]);
+
+    expect(room.state._meta.states.b.name).toEqual('Odd');
+    expect(Object.keys(room.state._meta.states.b)).not.toContain('0');
+
+    expect(room.state._meta.states.c.name).toEqual('Good');
+    expect(room.state._meta.states.c.variants[0].variant).toEqual('Advanced');
+  });
+
+  // a client whose optimistic variant rows got ahead of the game sends input for a variant that
+  // does not exist - dropping the rest of the edit over that loses everything the user typed
+  test('editState ignores input for a variant that does not exist', function() {
+    const room = roomWithStates({});
+    room.state._meta.states.a = { name: 'Game', variants: [ { variant: '' } ] };
+
+    room.editState(player, 'a', { name: 'Renamed' }, [ { variant: 'Basic' }, { variant: 'Ghost' } ], []);
+
+    expect(room.state._meta.states.a.name).toEqual('Renamed');
+    expect(room.state._meta.states.a.variants).toEqual([ { variant: 'Basic' } ]);
   });
 });
