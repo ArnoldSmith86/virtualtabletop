@@ -1095,7 +1095,11 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
   await setRoomState({
     c1: { id: 'c1', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
     c2: { id: 'c2', type: 'basic', x: 400, y: 100, width: 100, height: 100, rotation: 45 },
-    c3: { id: 'c3', type: 'basic', x: 400, y: 400, width: 100, height: 100, rotation: -30 }
+    c3: { id: 'c3', type: 'basic', x: 400, y: 400, width: 100, height: 100, rotation: -30, scale: 1.5 },
+    // a global update routine runs once per property change, and only for a
+    // change that has the room to itself - one dot per widget the tool moves
+    tally: { id: 'tally', type: 'basic', x: 1200, y: 800, width: 50, height: 50, moves: '',
+      xGlobalUpdateRoutine: [ { func: 'SET', collection: 'thisButton', property: 'moves', value: '${PROPERTY moves OF tally}.' } ] }
   });
   await ClientFunction(prepareClient)();
   await setEditorState(propertiesModuleOpen);
@@ -1106,11 +1110,22 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     const widget = widgets.get(id);
     return `${id}: ${widget.get('x')},${widget.get('y')} @${Math.round(widget.get('rotation') || 0)}`;
   }).join(' | '));
-  const dragRadiusSlider = ClientFunction(() => {
+  const dragRadiusSlider = ClientFunction(value => {
     const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
-    slider.value = '150';
+    slider.value = value === null ? slider.max : value;
     slider.dispatchEvent(new Event('input', { bubbles: true }));
   });
+  // every widget of the arrangement is drawn inside the board - the box a
+  // turned or enlarged widget covers, not the width and height it stores
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'c1', 'c2', 'c3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  const clearTally = ClientFunction(() => widgets.get('tally').set('moves', ''));
+  const tallied = ClientFunction(() => widgets.get('tally').get('moves'));
   const start = 'c1: 100,100 @0 | c2: 400,100 @45 | c3: 400,400 @-30';
   const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
   const options = Selector('.arrangeCircleOptions');
@@ -1128,8 +1143,9 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     .expect(circleButton.getAttribute('title')).contains('needs 3+ widgets');
 
   // the button arranges the selection right away, with the settings it comes
-  // with, and only then shows them: the circle is centered on the selection
-  // (100,100 to 500,500, so 300,300) with each widget 200 from that center
+  // with, and only then shows them: the circle is centered on what the
+  // selection covers - the turned and the enlarged widget with the box they
+  // are drawn in, not the one their width and height describe
   await bandSelect(t, 40, 40, 560, 560);
   await t
     .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
@@ -1143,41 +1159,59 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
     // the box below the bar belongs to this button, which stays pressed for it
     .expect(circleButton.hasClass('open')).ok()
     .expect(radius.value).eql('200')
-    .expect(placement()).eql('c1: 450,250 @0 | c2: 150,423 @45 | c3: 149,76 @-30')
+    .expect(placement()).eql('c1: 476,265 @0 | c2: 176,439 @45 | c3: 176,92 @-30')
+    // each of the three moves is a change of its own, so a routine listening for
+    // one runs three times rather than being swallowed by an overlapping move
+    .expect(tallied()).eql('...')
     // a radius that is typed in arranges the selection again, from where it was
     // before the tool ran - so the widgets do not walk outwards step by step
     .typeText(radius, '250', { replace: true })
     .pressKey('enter')
-    .expect(placement()).eql('c1: 500,250 @0 | c2: 125,466 @45 | c3: 124,33 @-30')
+    .expect(placement()).eql('c1: 526,265 @0 | c2: 151,482 @45 | c3: 151,49 @-30')
     // the slider is the other half of the same setting: it takes over from the
     // field once that is no longer the one being typed in
     .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'));
 
-  await dragRadiusSlider();
+  await dragRadiusSlider('150');
   await t
     .expect(radius.value).eql('150')
-    .expect(placement()).eql('c1: 400,250 @0 | c2: 175,379 @45 | c3: 174,120 @-30')
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30')
     // rotation goes on and off again, which gives every widget the rotation it
     // brought rather than leaving it turned away from the center
     .click(options.find('label.switchbox'))
-    .expect(placement()).eql('c1: 400,250 @90 | c2: 175,379 @210 | c3: 174,120 @330')
+    .expect(placement()).eql('c1: 426,265 @90 | c2: 201,395 @210 | c3: 201,135 @330')
     .click(options.find('label.switchbox'))
-    .expect(placement()).eql('c1: 400,250 @0 | c2: 175,379 @45 | c3: 174,120 @-30')
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30');
+
+  // the slider ends its travel at the largest circle that keeps the selection
+  // on the board, so dragging it all the way leaves everything in sight - the
+  // widget drawn half again its size included, which needs the room it is drawn
+  // in rather than the 100x100 it stores
+  await dragRadiusSlider(null);
+  await t
+    .expect(radius.value).eql('213')
+    .expect(placement()).eql('c1: 489,265 @0 | c2: 169,450 @45 | c3: 169,81 @-30')
+    .expect(onBoard()).ok()
     // an emptied field keeps the radius the arrangement is standing on, so it
     // has to show that radius again rather than read as blank
     .selectText(radius)
     .pressKey('delete')
     .expect(radius.value).eql('')
     .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'))
-    .expect(radius.value).eql('150')
+    .expect(radius.value).eql('213')
     // and a circle of radius 0, which would stack the selection on one point,
     // is not one of the values the field takes
     .typeText(radius, '0', { replace: true })
-    .expect(radius.value).eql('1')
-    // undoing puts the whole selection back, rotations included, and closes the
-    // settings again
+    .expect(radius.value).eql('1');
+
+  // undoing puts the whole selection back, rotations included, and closes the
+  // settings again
+  await clearTally();
+  await t
     .click(options.find('button[icon=undo]'))
     .expect(placement()).eql(start)
+    // and putting them back is three changes as well, not one
+    .expect(tallied()).eql('...')
     .expect(options.find('input').exists).notOk()
     .expect(circleButton.hasClass('open')).notOk();
 
@@ -1186,9 +1220,9 @@ test('The arrange bar puts a multi-selection on a circle around it', async t => 
   await t
     .click(circleButton)
     .typeText(radius, '100', { replace: true })
-    .expect(placement()).eql('c1: 350,250 @0 | c2: 200,336 @45 | c3: 199,163 @-30')
+    .expect(placement()).eql('c1: 376,265 @0 | c2: 226,352 @45 | c3: 226,179 @-30')
     .click(options.find('button[icon=check]'))
-    .expect(placement()).eql('c1: 350,250 @0 | c2: 200,336 @45 | c3: 199,163 @-30')
+    .expect(placement()).eql('c1: 376,265 @0 | c2: 226,352 @45 | c3: 226,179 @-30')
     .expect(options.find('input').exists).notOk()
     .expect(circleButton.hasClass('open')).notOk();
 });

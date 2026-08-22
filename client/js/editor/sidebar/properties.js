@@ -2174,7 +2174,7 @@ class PropertiesModule extends SidebarModule {
         rotation: widget.get('rotation')
       }));
     this.renderCircleAlignOptions(button, options);
-    this.applyCircleAlign();
+    this.scheduleCircleAlign();
   }
 
   renderCircleAlignOptions(button, options) {
@@ -2194,14 +2194,15 @@ class PropertiesModule extends SidebarModule {
       // fitting on the board: a range whose upper half only ever pushes the
       // selection out of sight is a range that cannot be dragged through. The
       // field still takes anything up to max.
-      sliderMax: Math.max(this.circleAlignRadius, this.circleAlignFittingRadius()),
+      sliderMax: this.circleAlignSliderMax(),
       step: 1,
       slider: true,
       getValue: _=>this.circleAlignRadius,
       setValue: value=>{
         this.circleAlignRadius = value;
         button.title = this.circleAlignButtonTitle(false);
-        this.applyCircleAlign();
+        radius.slider.max = this.circleAlignSliderMax();
+        this.scheduleCircleAlign();
       },
       hint: 'Distance between the center of the circle and the center of each widget, in pixels. The circle is centered on the selection.'
     });
@@ -2218,7 +2219,10 @@ class PropertiesModule extends SidebarModule {
       getValue: _=>this.circleAlignRotate,
       setValue: value=>{
         this.circleAlignRotate = value;
-        this.applyCircleAlign();
+        // turned widgets cover a different footprint, so the largest circle that
+        // still fits on the board is a different one
+        radius.slider.max = this.circleAlignSliderMax();
+        this.scheduleCircleAlign();
       },
       hint: 'Turn each widget so that its top points away from the center of the circle. Switched off again, every widget gets the rotation it had back.'
     });
@@ -2257,9 +2261,35 @@ class PropertiesModule extends SidebarModule {
   // reference the align and distribute buttons use, and the one that keeps the
   // arrangement where the widgets already are.
   circleAlignCenter(arranged) {
+    const boxes = arranged.map(({ original, widget })=>({
+      x: original.x + widget.get('width') / 2,
+      y: original.y + widget.get('height') / 2,
+      extent: this.circleAlignExtent(widget, original.rotation)
+    }));
     return {
-      x: (Math.min(...arranged.map(e=>e.original.x)) + Math.max(...arranged.map(e=>e.original.x + e.widget.get('width')))) / 2,
-      y: (Math.min(...arranged.map(e=>e.original.y)) + Math.max(...arranged.map(e=>e.original.y + e.widget.get('height')))) / 2
+      x: (Math.min(...boxes.map(b=>b.x - b.extent.x)) + Math.max(...boxes.map(b=>b.x + b.extent.x))) / 2,
+      y: (Math.min(...boxes.map(b=>b.y - b.extent.y)) + Math.max(...boxes.map(b=>b.y + b.extent.y))) / 2
+    };
+  }
+
+  // The rotation a widget gets at its place on the circle: turned away from the
+  // center, or the one it brought along while the switch is off.
+  circleAlignRotation(original, angle) {
+    return this.circleAlignRotate ? (angle + Math.PI) * 180 / Math.PI - 90 : original.rotation;
+  }
+
+  // How far a widget reaches from its center along each axis. Rotation and scale
+  // both happen around that center, so what a widget covers on the board is the
+  // upright box around the turned, scaled rectangle - a turned or scaled widget
+  // reaches considerably further than half its width and height.
+  circleAlignExtent(widget, rotation) {
+    const angle = (rotation || 0) * Math.PI / 180;
+    const scale = widget.get('_absoluteScale') || 1;
+    const width = widget.get('width') * scale;
+    const height = widget.get('height') * scale;
+    return {
+      x: (Math.abs(width * Math.cos(angle)) + Math.abs(height * Math.sin(angle))) / 2,
+      y: (Math.abs(width * Math.sin(angle)) + Math.abs(height * Math.cos(angle))) / 2
     };
   }
 
@@ -2271,15 +2301,50 @@ class PropertiesModule extends SidebarModule {
     if(!arranged.length)
       return Math.round(Math.min(viewportConfig.targetWidth, viewportConfig.targetHeight) / 2);
     const center = this.circleAlignCenter(arranged);
-    const reach = Math.max(...arranged.map(e=>Math.max(e.widget.get('width'), e.widget.get('height')))) / 2;
+    const angleStep = 2 * Math.PI / arranged.length;
+    // a widget can end up anywhere on the circle, so its whole footprint has to
+    // fit past the point closest to the edge of the board
+    const reach = Math.max(...arranged.map(({ original, widget }, index)=>{
+      const extent = this.circleAlignExtent(widget, this.circleAlignRotation(original, angleStep * index));
+      return Math.max(extent.x, extent.y);
+    }));
     return Math.max(1, Math.round(Math.min(center.x, viewportConfig.targetWidth - center.x, center.y, viewportConfig.targetHeight - center.y) - reach));
+  }
+
+  // The slider never ends below the radius in use, so a radius typed past the
+  // cap still has the thumb at the end of the scale rather than off it.
+  circleAlignSliderMax() {
+    return Math.max(this.circleAlignRadius, this.circleAlignFittingRadius());
+  }
+
+  // Both the live arranging and taking it back move the same widgets, and a drag
+  // of the radius slider fires the first many times over. A set() runs the
+  // widget's change routines and the room's global update routines before it
+  // resolves, so overlapping runs would interleave those - and the run that is
+  // first inside a global update routine locks the others out of theirs
+  // entirely. Chaining the runs keeps each one whole.
+  queueCircleAlign(run) {
+    this.circleAlignQueue = Promise.resolve(this.circleAlignQueue).then(run).catch(error=>console.error(error));
+    return this.circleAlignQueue;
+  }
+
+  // A run arranges the selection from the settings as they are when it starts,
+  // so one waiting run is enough however fast the slider is dragged.
+  scheduleCircleAlign() {
+    if(this.circleAlignScheduled)
+      return this.circleAlignQueue;
+    this.circleAlignScheduled = true;
+    return this.queueCircleAlign(_=>{
+      this.circleAlignScheduled = false;
+      return this.applyCircleAlign();
+    });
   }
 
   // Spreads the selection evenly over a circle centered on the middle of the
   // selection. Both that center and the rotation of a widget come from where it
   // was before the tool ran, so changing a setting arranges the same selection
   // again instead of moving the widgets that are already on the circle.
-  applyCircleAlign() {
+  async applyCircleAlign() {
     const arranged = this.circleAlignWidgets();
     if(arranged.length < 3)
       return;
@@ -2293,9 +2358,9 @@ class PropertiesModule extends SidebarModule {
     let index = 0;
     for(const { original, widget } of arranged) {
       const angle = angleStep * index;
-      widget.set('x', Math.floor(centerX + radius * Math.cos(angle)) - widget.get('width') / 2);
-      widget.set('y', Math.floor(centerY + radius * Math.sin(angle)) - widget.get('height') / 2);
-      widget.set('rotation', this.circleAlignRotate ? (angle + Math.PI) * 180 / Math.PI - 90 : original.rotation);
+      await widget.set('x', Math.floor(centerX + radius * Math.cos(angle)) - widget.get('width') / 2);
+      await widget.set('y', Math.floor(centerY + radius * Math.sin(angle)) - widget.get('height') / 2);
+      await widget.set('rotation', this.circleAlignRotation(original, angle));
       index++;
     }
     batchEnd();
@@ -2313,19 +2378,23 @@ class PropertiesModule extends SidebarModule {
   // closes the settings: the tool is done with this selection either way.
   cancelCircleAlign(button, options) {
     const originals = this.circleAlignOriginals || [];
+    // the widgets to arrange are gone with that, so an arrangement still waiting
+    // in the queue turns into a no-op instead of landing after the restore
     this.closeCircleAlign(button, options);
 
-    batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} took back the circle arrangement of the selected widgets in editor`);
-    for(const original of originals) {
-      const widget = widgets.get(original.id);
-      if(!widget)
-        continue;
-      widget.set('x', original.x);
-      widget.set('y', original.y);
-      widget.set('rotation', original.rotation);
-    }
-    batchEnd();
+    this.queueCircleAlign(async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} took back the circle arrangement of the selected widgets in editor`);
+      for(const original of originals) {
+        const widget = widgets.get(original.id);
+        if(!widget)
+          continue;
+        await widget.set('x', original.x);
+        await widget.set('y', original.y);
+        await widget.set('rotation', original.rotation);
+      }
+      batchEnd();
+    });
   }
 
   // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
