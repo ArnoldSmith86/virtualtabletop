@@ -45,13 +45,15 @@ export class Card extends Widget {
         this.domElement.innerHTML = '';
         this.deck.removeCard(this);
       }
-      if(delta.deck) {
-        this.deck = widgets.get(delta.deck);
+      // a deck that does not exist in the room leaves the card without faces instead
+      // of throwing halfway through updating the DOM
+      this.deck = delta.deck && widgets.get(delta.deck) || null;
+      if(this.deck) {
         this.deck.addCard(this);
         const faceTemplates = this.deck.get('faceTemplates');
         this.createFaces(Array.isArray(faceTemplates) ? faceTemplates : []);
-      } else {
-        this.deck = null;
+      } else if(delta.deck) {
+        console.error(`Card ${this.get('id')} has no faces because its deck ${delta.deck} does not exist!`);
       }
       for(const child of childNodes)
         if(!child.className.match(/cardFace/))
@@ -424,7 +426,7 @@ export class Card extends Widget {
   }
 
   getFaceCount() {
-    const faceTemplates = this.deck.get('faceTemplates');
+    const faceTemplates = this.deck && this.deck.get('faceTemplates');
     if(Array.isArray(faceTemplates))
       return faceTemplates.length;
     else

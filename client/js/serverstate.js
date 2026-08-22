@@ -533,7 +533,7 @@ function receiveStateFromServer(args) {
   for(const parentID of Object.keys(deferredChildren)) {
     if(deferredIDs.has(parentID))
       continue;
-    for(const widget of deferredChildren[parentID]) {
+    for(const widget of deferredChildren[parentID] || []) {
       console.error(`Widget "${widget.id}" is in limbo because its parent "${parentID}" does not exist!`);
       addWidget(widget, undefined, true);
     }

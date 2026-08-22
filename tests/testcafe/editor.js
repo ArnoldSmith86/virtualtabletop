@@ -5307,6 +5307,9 @@ const jsonError = ClientFunction(() => {
   return error ? error.textContent.trim() : '';
 });
 const parentOf = ClientFunction(id => widgets.get(id).get('parent'));
+const deckOf = ClientFunction(id => widgets.get(id).get('deck'));
+const faceCountOf = ClientFunction(id => document.querySelectorAll(`#w_${id} .cardFace`).length);
+const layerOf = ClientFunction(id => widgets.get(id).get('layer'));
 // the band that selects both widgets at once, in offsets of the surface it is drawn on
 const selectionBand = ClientFunction(() => {
   const surface = document.querySelector('#topSurface').getBoundingClientRect();
@@ -5364,6 +5367,10 @@ test('A multi-widget selection is not given a parent that does not exist', async
     .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'holder', twoo: 'holder' } }), null, '  '), { replace: true, paste: true })
     .pressKey('end')
     .expect(jsonError()).eql('Parent has to be a widget ID, or an object with one entry per selected widget.')
+    // one key per widget but a value that is not an id points at that widget
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'holder', two: { holder: true } } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent has to be a widget ID (widget "two").')
     // the commands that would fix it stay reachable while the message is up
     .expect(Selector('#jeContextButtons button').withText('enter new parent ID').exists).ok()
     // a parent that does exist still goes to every widget of the selection
@@ -5454,4 +5461,94 @@ test('A widget whose parent does not exist is loaded into limbo', async t => {
     .expect(Selector('#w_orphan').hasClass('limbo')).notOk()
     .expect(parentOf('orphan')).eql('box')
     .expect(ClientFunction(() => widgets.get('orphan').get('x'))()).eql(600);
+});
+
+// A deck that names no widget throws while the card builds its DOM, and unlike a bad
+// parent it is written out before that happens - so the card is gone on the next load.
+test('A multi-widget selection is not given a deck that does not exist', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', parent: 'holder', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 400 },
+    one: { id: 'one', type: 'card', deck: 'deck', cardType: 'a', parent: 'holder', x: 100, y: 200 },
+    two: { id: 'two', type: 'card', deck: 'deck', cardType: 'a', parent: 'holder', x: 350, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+  await ClientFunction(() => {
+    window.jsonEditErrors = [];
+    window.addEventListener('error', event => window.jsonEditErrors.push(String(event.error || event.message)));
+    window.addEventListener('unhandledrejection', event => window.jsonEditErrors.push(String(event.reason)));
+  })();
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok();
+
+  const band = await selectionBand();
+  await t
+    .drag('#topSurface', band.dx, band.dy, { offsetX: band.offsetX, offsetY: band.offsetY })
+    .expect(jsonText()).contains('"widgets"');
+
+  const selection = JSON.parse(await jsonText());
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { deck: 'nope' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Deck nope does not exist.')
+    .expect(deckOf('one')).eql('deck')
+    .expect(deckOf('two')).eql('deck')
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([]);
+
+  // a routine reaches the same property without going through the editor, so the card
+  // has to survive it there too - without faces until it names a deck again
+  await ClientFunction(() => widgets.get('one').set('deck', 'nope'))();
+  await t
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    .expect(Selector('#w_one').exists).ok()
+    .expect(faceCountOf('one')).eql(0);
+  await ClientFunction(() => widgets.get('one').set('deck', 'deck'))();
+  await t
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    .expect(faceCountOf('one')).eql(1);
+  await setEditorState(null);
+});
+
+// The message says the state cannot be handed to the room yet, not that the editor is
+// out of order - the commands that write the property the message asks for keep working.
+test('The context commands still insert while a semantic error is shown', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 400 },
+    one: { id: 'one', type: 'basic', parent: 'holder', x: 100, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#w_one')
+    .expect(jsonText()).contains('"id": "one"');
+
+  const state = JSON.parse(await jsonText());
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, state, { parent: 'nope' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent nope does not exist.')
+    .expect(Selector('#widget_basic_layer').exists).ok()
+    .click('#widget_basic_layer')
+    .expect(jsonText()).contains('"layer"')
+    // the room only takes it once the parent names a widget again
+    .expect(parentOf('one')).eql('holder')
+    .expect(layerOf('one')).eql(1);
+
+  const inserted = JSON.parse(await jsonText());
+  inserted.layer = 2;
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, inserted, { parent: 'holder' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('')
+    .expect(layerOf('one')).eql(2);
+  await setEditorState(null);
 });
