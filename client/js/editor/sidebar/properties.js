@@ -1338,7 +1338,7 @@ const editorPropertyHints = {
   player: 'The player currently seated here. Setting it also stores their color.',
   index: 'Seat order used by turn and scoreboard logic.',
   display: 'Text shown on the seat while a player sits here. The words playerName and seatIndex are replaced with the seated player\'s name and this seat\'s index; everything else is shown exactly as typed.',
-  displayEmpty: 'Text shown on the seat while it is empty. The word seatIndex is replaced with this seat\'s index; everything else is shown exactly as typed.',
+  displayEmpty: 'Text shown on the seat while it is empty. The word seatIndex is replaced with this seat\'s index and the word playerName with nothing, since nobody is sitting here; everything else is shown exactly as typed.',
   hand: 'ID of the holder used as this seat\'s private hand.',
   turn: 'Marks this seat as currently taking its turn.',
   skipTurn: 'Skip this seat when routines advance turns.',
@@ -8908,7 +8908,9 @@ class PropertiesModule extends SidebarModule {
     new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
 
     this.addAppearanceSubTitle('When empty');
-    this.renderCompactStyledTextInput(widget, 'Text', 'displayEmpty', 'default');
+    this.renderCompactStyledTextInput(widget, 'Text', 'displayEmpty', 'default', {
+      placeholders: [ 'seatIndex' ]
+    });
     new ColorInput(this, widget, 'Inactive color', { property: 'colorEmpty', hint: 'The border color while no player sits here.' }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide when unused', { property: 'hideWhenUnused', hint: editorPropertyHints.hideWhenUnused }).render(this.moduleDOM);
 

@@ -1,3 +1,5 @@
+import { regexEscape } from './domhelpers.js';
+
 const compute_ops = [
   {
     name: '=',
@@ -550,7 +552,7 @@ const compute_ops = [
     desc: 'returns a string with all occurences of string y replaced by string z',
     sample: 'var a = ${x} replaceAll ${y} ${z}',
     // y is a literal string, escaped into the global regex that replaces every occurrence
-    call: function(v, x, y, z) { return v = x.replace(new RegExp(String(y).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), z) },
+    call: function(v, x, y, z) { return v = x.replace(new RegExp(regexEscape(String(y)), 'g'), z) },
     hash: '907134df3b97bb1e910897ea1eadf3e1'
   },
   {

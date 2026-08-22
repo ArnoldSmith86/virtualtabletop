@@ -3,6 +3,8 @@
  */
 import fs from 'fs';
 
+import { regexEscape } from '../../client/js/domhelpers.js';
+
 // The routine editor files are plain scripts that the server concatenates into
 // the editor bundle, so load them the same way here and provide the handful of
 // globals they use from other bundle files.
@@ -3787,8 +3789,8 @@ describe('the lines of an INPUT dialog', () => {
 // quietly landing on a raw card.
 describe('working out a value with var', () => {
   const computeOps = (() => {
-    const source = fs.readFileSync('client/js/compute.js', 'utf8').replace(/^export .*$/m, '');
-    return new Function(`${source}\nreturn compute_ops;`)();
+    const source = fs.readFileSync('client/js/compute.js', 'utf8').replace(/^(?:import|export) .*$/gm, '');
+    return new Function('regexEscape', `${source}\nreturn compute_ops;`)(regexEscape);
   })();
   const editorFor = statement => {
     const editor = editorForOperation(statement);

@@ -5,17 +5,16 @@ import { fileURLToPath } from 'url';
 import { compute_ops } from '../../client/js/compute.js';
 import { mapAssetURLs, unmapAssetURLs, escapeID, unescapeID } from '../../client/js/domhelpers.js';
 
-const clientDirectory = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../client');
+const repositoryRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
-// Everything that is served to the browser: the modules below client/js and the inline scripts
-// of the HTML files loading them.
-function clientSources(directory) {
-  return fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
-    const full = path.join(directory, entry.name);
-    if(entry.isDirectory())
-      return clientSources(full);
-    return entry.isFile() && /\.(js|html)$/.test(entry.name) ? [ full ] : [];
-  });
+// Everything that is served to the browser, taken from the bundle lists of server/minify.mjs
+// rather than from a directory walk: what the browser gets is not only client/, it is also the
+// validator shipped in the editor bundle and the two dependencies loaded as they are. Read as
+// text rather than imported: minify.mjs pulls in the server config and the three minifiers.
+function servedSources() {
+  const minify = fs.readFileSync(path.join(repositoryRoot, 'server/minify.mjs'), 'utf8');
+  const listed = [ ...minify.matchAll(/'([\w./-]+\.(?:js|html))'/g) ].map(match => match[1]);
+  return [ ...new Set(listed) ].filter(file => fs.existsSync(path.join(repositoryRoot, file)));
 }
 
 // Every API here is younger than the browsers the client is served to, so calling one throws and
@@ -25,15 +24,29 @@ const bannedClientAPIs = [
 ];
 
 describe("Scenarios: The client stays away from APIs its browsers do not have", () => {
-  const sources = clientSources(clientDirectory);
+  const sources = servedSources();
 
-  test.each(bannedClientAPIs)("no client source calls $api (added in $arrivedIn)", ({ pattern }) => {
+  // A regex over minify.mjs is only as good as the way that file spells its lists, so make a
+  // silently shrinking scan fail here instead of letting a banned call through unnoticed.
+  test("the scan reads the whole list of served files", () => {
+    expect(sources).toEqual(expect.arrayContaining([
+      'client/room.html',
+      'client/js/main.js',
+      'client/js/editor/sidebar/properties.js',
+      'validator/validate_gamefile.js',
+      'node_modules/dompurify/dist/purify.js',
+      'node_modules/fflate/umd/index.js'
+    ]));
+    expect(sources.length).toBeGreaterThan(80);
+  });
+
+  test.each(bannedClientAPIs)("no served source calls $api (added in $arrivedIn)", ({ pattern }) => {
     const offenders = sources.flatMap(file => {
-      return fs.readFileSync(file, 'utf8').split('\n')
-        .map((text, index) => ({ file: path.relative(clientDirectory, file), line: index + 1, text: text.trim() }))
+      return fs.readFileSync(path.join(repositoryRoot, file), 'utf8').split('\n')
+        .map((text, index) => ({ file, line: index + 1, text: text.trim() }))
         .filter(({ text }) => pattern.test(text));
     });
-    expect(offenders.map(o => `client/${o.file}:${o.line} ${o.text}`)).toEqual([]);
+    expect(offenders.map(o => `${o.file}:${o.line} ${o.text}`)).toEqual([]);
   });
 
   describe("with String.prototype.replaceAll missing, as on those browsers", () => {

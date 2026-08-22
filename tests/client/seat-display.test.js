@@ -43,6 +43,10 @@ describe('Scenarios: A seat shows who is sitting on it', () => {
     expect(seatText({ id: 'seat-empty', index: 2, display: 'playerName', displayEmpty: 'seat seatIndex is free' })).toBe('seat 2 is free');
   });
 
+  test('drops playerName from the empty text, since nobody is sitting there', () => {
+    expect(seatText({ id: 'seat-empty-name', index: 4, displayEmpty: 'waiting for playerName' })).toBe('waiting for ');
+  });
+
   test('replaces every occurrence of a placeholder', () => {
     expect(seatText({ id: 'seat-repeat', index: 7, player: 'Bo', display: 'playerName vs playerName (seatIndex)' })).toBe('Bo vs Bo (7)');
   });
