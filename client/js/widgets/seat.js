@@ -30,8 +30,8 @@ class Seat extends Widget {
     if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
       const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
       let displayedText = String(display || '')
-      displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
-      displayedText = displayedText.replaceAll('playerName',this.get('player'))
+      displayedText = displayedText.replace(/seatIndex/g,this.get('index'))
+      displayedText = displayedText.replace(/playerName/g,this.get('player'))
       setText(this.domElement, displayedText);
     }
 
