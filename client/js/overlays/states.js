@@ -212,11 +212,11 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     return;
   } else if(!info) {
     // without metadata the file name is all the tile can show until the server has read the file
-    metaCallback(fileName, '', null, [{}], null, null);
+    metaCallback(fileName, '', null, variants.length ? variants : [{}], null, null);
   } else {
     let imageURL = null;
 
-    if(info.image) {
+    if(typeof info.image == 'string') {
       if(info.image.match(/^http/)) {
         imageURL = info.image;
       } else if(entries[info.image.substr(1)]) {

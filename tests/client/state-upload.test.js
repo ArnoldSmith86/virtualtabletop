@@ -88,6 +88,30 @@ describe('uploading a game file', () => {
     expect(overlay.uploaded.length).toBe(1);
   });
 
+  test('keeps one variant per JSON file when none of them has metadata', async () => {
+    const overlay = loadStatesOverlay();
+    const meta = await upload(overlay, vttFile('Handwritten.vtt', {
+      '0.json': { _meta: { version: 8 }, w1: { id: 'w1' } },
+      '1.json': { _meta: { version: 8 }, w2: { id: 'w2' } }
+    }));
+
+    expect(meta).toEqual([ [ 'Handwritten', '', null, [ {}, {} ], null, null ] ]);
+    expect(overlay.uploaded.length).toBe(1);
+  });
+
+  // metadata written by hand or by another tool can hold anything, so nothing in it may be
+  // dereferenced as if its type was known
+  test('ignores an image that is not a string', async () => {
+    const overlay = loadStatesOverlay();
+    const meta = await upload(overlay, vttFile('Odd.vtt', {
+      '0.json': { _meta: { version: 8, info: { name: 'Odd Game', image: 3 } } }
+    }));
+
+    expect(meta).toEqual([ [ 'Odd Game', undefined, null, [ { name: 'Odd Game', image: 3 } ], undefined, undefined ] ]);
+    expect(overlay.alerts).toEqual([]);
+    expect(overlay.uploaded.length).toBe(1);
+  });
+
   test('falls back to the file name for PCIO and TTS files, whose JSON is not a variant', async () => {
     const overlay = loadStatesOverlay();
     expect(await upload(overlay, vttFile('game.pcio', { 'widgets.json': [ { id: 'w1' } ] })))
