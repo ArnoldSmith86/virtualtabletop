@@ -1184,7 +1184,21 @@ export class Widget extends StateManaged {
     return isValid;
   }
 
+  // Whatever the routine below leaves on the recorders - the Debug module's log and the results the
+  // routine editor shows on its cards - is taken off again even when an operation throws: the
+  // matched jeLogging calls simply stop coming then, and the depth they count would stay standing
+  // for good, so the log would never be rendered and the switches never read again.
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference, debugPath) {
+    try {
+      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath);
+    } catch(problem) {
+      if(jeRoutineLogging || jeRoutineDebug)
+        jeLoggingRoutineAbort(depth || 0, problem && problem.message || String(problem));
+      throw problem;
+    }
+  }
+
+  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -1334,10 +1348,11 @@ export class Widget extends StateManaged {
 
     const routine = this.get(property) !== null ? this.get(property) : property;
 
-    // indexed rather than iterated: a game file can put something that is not an array here, and a
-    // routine reading nonsense has always run to its end instead of taking the client down with it
-    for(let operationIndex = 0; operationIndex < routine.length; ++operationIndex) {
-      const original = routine[operationIndex];
+    // counted alongside rather than indexed into: which operation of the routine this is says where
+    // its card in the routine editor is, and a routine is not always something to index into
+    let operationIndex = -1;
+    for(const original of routine) {
+      ++operationIndex;
       var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')

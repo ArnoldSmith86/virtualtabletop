@@ -149,11 +149,55 @@ describe('a card runs a routine of its deck', () => {
     expect(operationKeys()).toEqual([ 'card1/clickRoutine/0' ]);
   });
 
-  test('a card type that overrides the routine is not addressed in the card defaults', async () => {
+  // A card type and a face template are the two other places a deck can put a routine, and the
+  // routine editor has no card for either of them - so there is nowhere to show what they did, and
+  // nothing is filed rather than filing it under a routine that did not run.
+  test('a routine of a card type is not addressed in the card defaults, nor anywhere else', async () => {
     await runOnCard(deckState({
       cardDefaults: { clickRoutine: [ 'var fromDeck = 1' ] },
       cardTypes: { a: { clickRoutine: [ 'var fromType = 1' ] } }
     }));
-    expect(operationKeys()).toEqual([ 'card1/clickRoutine/0' ]);
+    expect(operationKeys()).toEqual([]);
+  });
+
+  test('a routine of a face template is not addressed either', async () => {
+    await runOnCard(deckState({
+      faceTemplates: [ { properties: { clickRoutine: [ 'var fromFace = 1' ] } } ]
+    }));
+    expect(operationKeys()).toEqual([]);
+  });
+});
+
+// An operation that throws never reports its end, and neither does the routine it was in. What
+// those calls would have taken off the log and the recorder is unwound in one go instead - without
+// it the depth they count stays standing, and with it the log is never rendered again.
+describe('a routine that dies half way', () => {
+  test('says so once, with the depth it started at and what went wrong', async () => {
+    const aborts = [];
+    globalThis.jeLoggingRoutineAbort = (depth, problem)=>aborts.push({ depth, problem });
+    globalThis.jeRoutineLogging = false;
+    try {
+      await expect(runRoutine(routineState({
+        trigger: { type: 'button', clickRoutine: { notARoutine: true } }
+      }), 'clickRoutine')).rejects.toThrow();
+      expect(aborts).toEqual([ { depth: 0, problem: expect.any(String) } ]);
+    } finally {
+      delete globalThis.jeLoggingRoutineAbort;
+    }
+  });
+
+  test('nothing is unwound while neither the editor nor the Debug module is there', async () => {
+    const aborts = [];
+    globalThis.jeLoggingRoutineAbort = (depth, problem)=>aborts.push({ depth, problem });
+    globalThis.jeRoutineDebug = false;
+    globalThis.jeRoutineLogging = false;
+    try {
+      await expect(runRoutine(routineState({
+        trigger: { type: 'button', clickRoutine: { notARoutine: true } }
+      }), 'clickRoutine')).rejects.toThrow();
+      expect(aborts).toEqual([]);
+    } finally {
+      delete globalThis.jeLoggingRoutineAbort;
+    }
   });
 });

@@ -3100,6 +3100,10 @@ let jeHTMLStack = [];
 let jeLoggingHTMLEnabled = false;
 let jeLoggingCardsEnabled = false;
 let jeLoggingOutermostRoutine = null;
+// operations of the routine that is running which have not reported an end yet, and the same for
+// the routines it is nested in - what jeLoggingRoutineAbort has to close when a routine dies
+let jeLoggingOpenOperations = 0;
+let jeLoggingOpenOperationStack = [];
 
 // Empty the log. Operations of a routine that is currently running have the log so far saved on
 // jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
@@ -3108,6 +3112,17 @@ function jeLoggingClear() {
   jeLoggingHTML = '';
   for(const entry of jeHTMLStack)
     entry[0] = '';
+}
+
+// A new user interaction starts the log - and the results on the routine editor's cards - over, so
+// that what they show always belongs to one interaction. Nothing is emptied here: the flag is only
+// read once a routine actually runs, so clicking around without running anything leaves the last
+// interaction standing to be read. Called once per interaction, which for a widget hotkey is the
+// key event rather than the routines it sets off (client/js/mousehandling.js).
+export function jeRoutineNewInteraction() {
+  jeRoutineResetOnNextLog = jeRoutineAutoReset;
+  if(jeRoutineAutoReset)
+    routineDebugResetAfterInteraction();
 }
 
 function jeLoggingJSON(obj) {
@@ -3136,7 +3151,23 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
   }
+  jeLoggingOpenOperationStack.push(jeLoggingOpenOperations);
+  jeLoggingOpenOperations = 0;
   ++jeLoggingDepth;
+}
+
+// An operation that throws never reports its end, and neither does the routine it was in - the
+// matched calls above simply stop coming. Everything that routine still holds is closed off here,
+// back to the depth it started at, so one routine that dies half way cannot leave the log unrendered
+// and the switches unread for the rest of the session. Every operation that was still running gets
+// the problem written on it, so the cards read as the chain that died rather than going quiet.
+export function jeLoggingRoutineAbort(depth, problem) {
+  const problems = problem ? [ problem ] : [];
+  while(jeLoggingDepth > depth) {
+    while(jeLoggingOpenOperations)
+      jeLoggingRoutineOperationEnd(problems, {}, {}, false);
+    jeLoggingRoutineEnd({}, {});
+  }
 }
 
 export function jeLoggingRoutineEnd(variables, collections) {
@@ -3146,6 +3177,7 @@ export function jeLoggingRoutineEnd(variables, collections) {
     routineDebugRoutineEnd();
   if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
+  jeLoggingOpenOperations = jeLoggingOpenOperationStack.pop() || 0;
   if(!jeLoggingDepth) {
     if(jeLoggingHTMLEnabled)
       jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
@@ -3214,6 +3246,7 @@ function jeLoggingRoutineNotLogged(widget, property) {
 }
 
 export function jeLoggingRoutineOperationStart(original, applied, index) {
+  ++jeLoggingOpenOperations;
   if(jeLoggingCardsEnabled)
     routineDebugOperationStart(index);
   if(!jeLoggingHTMLEnabled)
@@ -3233,6 +3266,8 @@ export function jeLoggingRoutineOperationStart(original, applied, index) {
 }
 
 export function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped) {
+  if(jeLoggingOpenOperations)
+    --jeLoggingOpenOperations;
   if(jeLoggingCardsEnabled)
     routineDebugOperationEnd(problems, skipped);
   if(!jeLoggingHTMLEnabled) {
@@ -4063,9 +4098,7 @@ function jeInitEventListeners() {
 
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
   window.addEventListener('mouseup', async function(e) {
-    jeRoutineResetOnNextLog = jeRoutineAutoReset;
-    if(jeRoutineAutoReset)
-      routineDebugResetAfterInteraction();
+    jeRoutineNewInteraction();
     if(!jeEnabled)
       return;
     jeMouseButtonIsDown = false;
