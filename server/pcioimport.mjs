@@ -1,8 +1,8 @@
-import fs from 'fs';
 import CRC32 from 'crc-32';
 
 import Config from './config.mjs';
 import { VERSION } from './fileupdater.mjs';
+import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
 import Zip from './zip.mjs';
 
@@ -157,7 +157,7 @@ export default async function convertPCIO(content) {
       const targetFile = CRC32.buf(asset) + '_' + asset.length;
       nameMap['package://' + filename] = '/assets/' + targetFile;
       if(!Config.resolveAsset(targetFile))
-        fs.writeFileSync(Config.directory('assets') + '/' + targetFile, asset);
+        FileWriter.writeFileSync(Config.directory('assets') + '/' + targetFile, asset);
     }
   }
 
