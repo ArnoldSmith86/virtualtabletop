@@ -4,31 +4,62 @@ import Config from './config.mjs';
 import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
 
-const statisticsFilename = Config.directory('save') + '/statistics.json';
+const defaultFilename = Config.directory('save') + '/statistics.json';
+
+function isObject(value) {
+  return typeof value == 'object' && value !== null && !Array.isArray(value);
+}
 
 class Statistics {
-  constructor() {
+  constructor(filename = defaultFilename) {
+    this.filename = filename;
     this.data = this.readFromFilesystem();
   }
 
+  // Runs at import time and must never throw - statistics are a nice-to-have and may not keep
+  // the server from starting. Anything missing, unreadable, unparseable or shaped differently
+  // than expected falls back to empty statistics. A file that does have content is moved aside
+  // first: the next autosave would overwrite it within a minute otherwise, while a file
+  // truncated mid-write is usually still mostly recoverable by hand.
   readFromFilesystem() {
-    const defaults = {
+    const empty = {
       starsPerState: {},
       timePerState: {}
     };
 
-    if(!fs.existsSync(statisticsFilename))
-      return defaults;
+    let raw;
+    try {
+      raw = fs.readFileSync(this.filename, 'utf8').trim();
+    } catch(e) {
+      if(e.code != 'ENOENT')
+        Logging.log(`WARNING - could not read ${this.filename}, starting with empty statistics: ${e.message}`);
+      return empty;
+    }
 
-    const raw = fs.readFileSync(statisticsFilename, 'utf8').trim();
     if(raw === '')
-      return defaults;
+      return empty;
 
     try {
-      return JSON.parse(raw);
+      const data = JSON.parse(raw);
+      if(!isObject(data))
+        throw new Error('it does not contain a JSON object');
+      for(const key of Object.keys(empty))
+        if(data[key] !== undefined && !isObject(data[key]))
+          throw new Error(`its ${key} is not a JSON object`);
+      return Object.assign(empty, data);
     } catch(e) {
-      Logging.log(`WARNING - could not parse ${statisticsFilename}, starting with empty statistics: ${e.message}`);
-      return defaults;
+      this.moveAside(e.message);
+      return empty;
+    }
+  }
+
+  moveAside(reason) {
+    const corruptFilename = `${this.filename}.corrupt`;
+    try {
+      fs.renameSync(this.filename, corruptFilename);
+      Logging.log(`WARNING - ${this.filename} is unusable (${reason}), moved it to ${corruptFilename} and starting with empty statistics`);
+    } catch(e) {
+      Logging.log(`WARNING - ${this.filename} is unusable (${reason}), starting with empty statistics - moving it to ${corruptFilename} failed: ${e.message}`);
     }
   }
 
@@ -53,8 +84,9 @@ class Statistics {
   }
 
   writeToFilesystem() {
-    FileWriter.writeFileSync(statisticsFilename, JSON.stringify(this.data, null, '  '));
+    FileWriter.writeFileSync(this.filename, JSON.stringify(this.data, null, '  '));
   }
 }
 
+export { Statistics };
 export default new Statistics();
