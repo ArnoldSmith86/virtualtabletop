@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1783919296236,
+      "lastUpdate": 1787460981259,
       "skill": "",
       "description": "",
       "variantImage": "",
@@ -47,7 +47,7 @@
     "type": "button",
     "id": "button2",
     "x": 537,
-    "y": 194,
+    "y": 215,
     "z": 22839,
     "clickRoutine": [
       "var a = ${PROPERTY text} + 1",
@@ -73,13 +73,13 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "SHIFT is used to move widgets between the holders and seats listed in <b>holders</b>. If <b>holders</b> is left out, every occupied seat takes part, in the order of the seat <b>index</b> property. Click the oval buttons below to cycle through the options for the various parameters. Press the round SHIFT button at any time to move the widgets in the examples. For seats, the function uses the holder linked in the <b>hand</b> property of the seat. Empty seats are skipped."
+    "html": "SHIFT is used to move widgets between the holders and seats listed in <b>holders</b>. If <b>holders</b> is left out, every occupied seat takes part, in the order of the seat <b>index</b> property. For seats, the function uses the holder linked in the <b>hand</b> property of the seat. Empty seats are skipped.Click the oval buttons below to cycle through the options for the various parameters. Press the round SHIFT button at any time to move the widgets in the examples."
   },
   "button3": {
     "type": "button",
     "id": "button3",
     "x": 953,
-    "y": 194,
+    "y": 215,
     "z": 22840,
     "clickRoutine": [
       {
@@ -126,7 +126,7 @@
     "type": "button",
     "id": "button4",
     "x": 1359,
-    "y": 194,
+    "y": 215,
     "z": 22840,
     "clickRoutine": [
       {
@@ -172,7 +172,7 @@
     "type": "button",
     "id": "button1",
     "x": 129,
-    "y": 194,
+    "y": 215,
     "z": 22841,
     "clickRoutine": [
       {
@@ -245,13 +245,14 @@
   "button5": {
     "type": "button",
     "id": "button5",
-    "x": 730,
-    "y": 352,
+    "x": 1359,
+    "y": 541,
     "width": 81,
     "height": 81,
     "z": 238,
     "text": "SHIFT",
     "clickRoutine": [
+      "// This first SHIFT moves the club cards along the holders.",
       {
         "func": "SHIFT",
         "direction": "${PROPERTY text OF button3}",
@@ -268,6 +269,7 @@
         "widgets": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       },
+      "// This second SHIFT moves the marble around the score track.",
       {
         "func": "SHIFT",
         "direction": "${PROPERTY text OF button3}",
@@ -331,15 +333,10 @@
         "widgets": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       },
+      "// This third SHIFT leaves the 'holders' parameter empty. It moves the pawn along the holders which are in the 'hand' property of each seat. Empty seats are skipped.",
       {
         "func": "SHIFT",
         "direction": "${PROPERTY text OF button3}",
-        "holders": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4"
-        ],
         "interval": "${PROPERTY text OF button2}",
         "widgets": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
@@ -637,7 +634,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 10
   },
   "move11": {
     "type": "holder",
@@ -650,7 +648,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 11
   },
   "move12": {
     "type": "holder",
@@ -663,7 +662,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 12
   },
   "move13": {
     "type": "holder",
@@ -676,7 +676,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 13
   },
   "move14": {
     "type": "holder",
@@ -689,7 +690,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 14
   },
   "move15": {
     "type": "holder",
@@ -702,7 +704,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 15
   },
   "move16": {
     "type": "holder",
@@ -715,7 +718,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 16
   },
   "move17": {
     "type": "holder",
@@ -728,7 +732,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 17
   },
   "move18": {
     "type": "holder",
@@ -741,7 +746,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 18
   },
   "move19": {
     "type": "holder",
@@ -754,7 +760,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 19
   },
   "move20": {
     "type": "holder",
@@ -767,7 +774,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 20
   },
   "move21": {
     "type": "holder",
@@ -780,7 +788,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 21
   },
   "move22": {
     "type": "holder",
@@ -793,7 +802,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 22
   },
   "move23": {
     "type": "holder",
@@ -806,7 +816,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 23
   },
   "move24": {
     "type": "holder",
@@ -819,7 +830,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 24
   },
   "move25": {
     "type": "holder",
@@ -832,7 +844,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 25
   },
   "move26": {
     "type": "holder",
@@ -845,7 +858,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 26
   },
   "move27": {
     "type": "holder",
@@ -858,7 +872,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 27
   },
   "move28": {
     "type": "holder",
@@ -871,7 +886,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 28
   },
   "move29": {
     "type": "holder",
@@ -884,7 +900,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 29
   },
   "move30": {
     "type": "holder",
@@ -897,7 +914,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 30
   },
   "move31": {
     "type": "holder",
@@ -910,7 +928,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 31
   },
   "move32": {
     "type": "holder",
@@ -923,7 +942,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 32
   },
   "move33": {
     "type": "holder",
@@ -936,7 +956,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 33
   },
   "move34": {
     "type": "holder",
@@ -949,7 +970,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 34
   },
   "move35": {
     "type": "holder",
@@ -962,7 +984,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 35
   },
   "move36": {
     "type": "holder",
@@ -975,7 +998,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 36
   },
   "move37": {
     "type": "holder",
@@ -988,7 +1012,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 37
   },
   "move38": {
     "type": "holder",
@@ -1001,7 +1026,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 38
   },
   "move39": {
     "type": "holder",
@@ -1014,7 +1040,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 39
   },
   "move40": {
     "type": "holder",
@@ -1027,7 +1054,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 40
   },
   "move41": {
     "type": "holder",
@@ -1040,7 +1068,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 41
   },
   "move42": {
     "type": "holder",
@@ -1053,7 +1082,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 42
   },
   "move43": {
     "type": "holder",
@@ -1066,7 +1096,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 43
   },
   "move44": {
     "type": "holder",
@@ -1079,7 +1110,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 44
   },
   "move45": {
     "type": "holder",
@@ -1092,7 +1124,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 45
   },
   "move46": {
     "type": "holder",
@@ -1105,7 +1138,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 46
   },
   "move47": {
     "type": "holder",
@@ -1118,7 +1152,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 47
   },
   "move48": {
     "type": "holder",
@@ -1131,7 +1166,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 48
   },
   "move49": {
     "type": "holder",
@@ -1144,7 +1180,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 49
   },
   "move50": {
     "type": "holder",
@@ -1157,7 +1194,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 50
   },
   "move51": {
     "type": "holder",
@@ -1170,7 +1208,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 51
   },
   "move52": {
     "type": "holder",
@@ -1183,7 +1222,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 52
   },
   "move53": {
     "type": "holder",
@@ -1196,7 +1236,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 53
   },
   "move1": {
     "type": "holder",
@@ -1209,7 +1250,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 1
   },
   "move2": {
     "type": "holder",
@@ -1222,7 +1264,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 2
   },
   "move3": {
     "type": "holder",
@@ -1235,7 +1278,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 3
   },
   "move4": {
     "type": "holder",
@@ -1248,7 +1292,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 4
   },
   "move5": {
     "type": "holder",
@@ -1261,7 +1306,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 5
   },
   "move6": {
     "type": "holder",
@@ -1274,7 +1320,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 6
   },
   "move7": {
     "type": "holder",
@@ -1287,7 +1334,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 7
   },
   "move8": {
     "type": "holder",
@@ -1300,7 +1348,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 8
   },
   "move9": {
     "type": "holder",
@@ -1313,7 +1362,8 @@
     "movableInEdit": false,
     "dropTarget": {
       "marble": true
-    }
+    },
+    "text": 9
   },
   "move0": {
     "type": "holder",
@@ -1327,7 +1377,8 @@
     "dropTarget": {
       "marble": true
     },
-    "stackOffsetY": 40
+    "stackOffsetY": 40,
+    "text": 0
   },
   "a7d3": {
     "x": 4,
