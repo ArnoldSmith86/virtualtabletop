@@ -9,6 +9,7 @@ import CRC32 from 'crc-32';
 import WebSocket  from './server/websocket.mjs';
 import FileLoader from './server/fileloader.mjs';
 import FileUpdater from './server/fileupdater.mjs';
+import FileWriter from './server/filewriter.mjs';
 import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
@@ -353,7 +354,7 @@ MinifyHTML().then(function(result) {
       customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
       customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
     }
-    fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
+    FileWriter.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
   });
 
@@ -442,7 +443,7 @@ MinifyHTML().then(function(result) {
 
       const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
       sharedLinks[newLink] = target;
-      fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
+      FileWriter.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
       res.send(Config.get('urlPrefix') + newLink.replace(/^\/s\//, '/game/'));
     }).catch(next);
   });
@@ -547,7 +548,7 @@ MinifyHTML().then(function(result) {
       const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
       const filename = `/${CRC32.buf(content)}_${content.length}`;
       if(!Config.resolveAsset(filename.substr(1)))
-        fs.writeFileSync(assetsdir + filename, content);
+        FileWriter.writeFileSync(assetsdir + filename, content);
       res.send(`/assets${filename}`);
     } catch(e) {
       res.status(404).send('Downloading external asset failed.');
@@ -557,7 +558,7 @@ MinifyHTML().then(function(result) {
   router.put('/asset', express.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!Config.resolveAsset(filename.substr(1)))
-      fs.writeFileSync(assetsdir + filename, req.body);
+      FileWriter.writeFileSync(assetsdir + filename, req.body);
     res.send(`/assets${filename}`);
   });
 
@@ -610,8 +611,28 @@ MinifyHTML().then(function(result) {
 
   router.use(Logging.errorHandler);
 
+  server.on('error', function(e) {
+    if(server.listening) {
+      Logging.handleGenericException('HTTP server', e);
+      return;
+    }
+
+    const port = Config.get('port');
+    // Config.get prefers the environment variable, so pointing at config.json would be the wrong
+    // advice for a deployment that sets PORT - the documented way to configure the Docker image
+    const portSource = process.env.PORT !== undefined ? 'the PORT environment variable' : '"port" in config.json';
+    if(e.code == 'EADDRINUSE')
+      Logging.logFatal(`ERROR - Port ${port} is already in use. Stop the program listening on it or set a different port via ${portSource}. If you just restarted VirtualTabletop, wait a few seconds and try again.`);
+    else if(e.code == 'EACCES')
+      Logging.logFatal(`ERROR - Not allowed to listen on port ${port}. Ports below 1024 usually require root privileges. Run VirtualTabletop with sudo, put it behind a reverse proxy, or set a different port via ${portSource}.`);
+    else
+      Logging.handleFatalException(`listening on port ${port}`, e);
+    process.exit(1);
+  });
+
   server.listen(Config.get('port'), function() {
     Logging.log(`Listening on ${server.address().port}`);
+    autosaveRooms();
   });
 });
 
@@ -623,13 +644,15 @@ const ws = new WebSocket(server, serverStart, function(connection, { playerName,
   }).catch(e=>Logging.handleGenericException(`player ${playerName} connected to room ${roomID}`, e));
 });
 
-autosaveRooms();
-
 ['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
   process.on(eventType, function() {
-    for(const [ _, room ] of activeRooms)
-      room.unload();
-    Statistics.writeToFilesystem();
+    // a process that never took over the port shares its save directory with the instance that
+    // did, so it must not write anything back on the way out
+    if(server.listening) {
+      for(const [ _, room ] of activeRooms)
+        room.unload();
+      Statistics.writeToFilesystem();
+    }
     if(eventType != 'exit')
       process.exit();
   });
