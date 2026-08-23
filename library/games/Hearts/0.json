@@ -966,7 +966,7 @@
     ],
     "movableInEdit": false,
     "score": [
-      0
+      
     ],
     "scoreNoRounds": 11
   },
@@ -1012,7 +1012,7 @@
     ],
     "movableInEdit": false,
     "score": [
-      0
+      
     ],
     "scoreNoRounds": 6
   },
@@ -1168,7 +1168,7 @@
     ],
     "movableInEdit": false,
     "score": [
-      0
+      
     ],
     "scoreNoRounds": 4
   },
@@ -1214,7 +1214,7 @@
     ],
     "movableInEdit": false,
     "score": [
-      0
+      
     ],
     "scoreNoRounds": []
   },
@@ -3088,7 +3088,7 @@
         ],
         "property": "score",
         "value": [
-          0
+          
         ]
       },
       {
