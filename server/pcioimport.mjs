@@ -90,6 +90,77 @@ export default async function convertPCIO(content) {
     return target;
   }
 
+  // PCIO identifies its widgets with random strings. Replace them with IDs
+  // derived from the widget type they are imported as, so that the resulting
+  // game is readable in the editor. The shared hand keeps its ID: both this
+  // importer and the routines it generates refer to it by the name 'hand'.
+  const idPrefixes = {
+    automationButton: 'button',
+    turnButton:       'button',
+    cardDeck:         'deck',
+    cardPile:         'holder',
+    hand:             'holder',
+    piece:            'card',
+    chooser:          'card',
+    labelText:        'label'
+  };
+  const piecePrefixes = {
+    checkers: 'checker',
+    classic:  'pawn'
+  };
+
+  function idPrefix(widget) {
+    if(widget.type == 'gamePiece')
+      return piecePrefixes[widget.pieceType] || String(widget.pieceType || '').replace(/[^a-zA-Z]/g, '').toLowerCase() || 'piece';
+    return idPrefixes[widget.type] || String(widget.type || '').replace(/[^a-zA-Z]/g, '') || 'widget';
+  }
+
+  const idCounters = {};
+  function uniqueID(prefix) {
+    return prefix + (idCounters[prefix] = (idCounters[prefix] || 0) + 1);
+  }
+
+  const idMap = { hand: 'hand' };
+  for(const widget of widgets)
+    if(idMap[widget.id] === undefined)
+      idMap[widget.id] = uniqueID(idPrefix(widget));
+
+  const mapID = id=>idMap[id] !== undefined ? idMap[id] : id;
+  const mapIDs = ids=>Array.isArray(ids) ? ids.map(mapID) : mapID(ids);
+
+  // routine arguments holding widget IDs, as opposed to numbers, modes or question IDs
+  const routineIDArgs = [ 'choosers', 'counters', 'decks', 'dice', 'from', 'holders', 'sources', 'spinners', 'timers', 'to' ];
+
+  function mapRoutineIDs(routine) {
+    if(!routine)
+      return;
+    for(const question of routine.questions || [])
+      if(question.holders)
+        question.holders = mapIDs(question.holders);
+    for(const step of routine.steps || (Array.isArray(routine) ? routine : [])) {
+      const args = step.args || {};
+      for(const arg of routineIDArgs)
+        if(args[arg] && args[arg].value !== undefined)
+          args[arg].value = mapIDs(args[arg].value);
+      if(args.objects) {
+        if(args.objects.holders)
+          args.objects.holders = mapIDs(args.objects.holders);
+        if(args.objects.collections)
+          args.objects.collections = mapIDs(args.objects.collections);
+      }
+    }
+  }
+
+  for(const widget of widgets) {
+    widget.id = mapID(widget.id);
+    for(const key of [ 'parent', 'deck', 'linkedSeat' ])
+      if(widget[key])
+        widget[key] = mapID(widget[key]);
+    if(widget.allowedDecks)
+      widget.allowedDecks = mapIDs(widget.allowedDecks);
+    mapRoutineIDs(widget.clickRoutine);
+  }
+
   const pileHasDeck = {};
   const pileOverlaps = {};
   const pileTransparent = {};
@@ -150,7 +221,7 @@ export default async function convertPCIO(content) {
   const piles = {};
   for(const coord in cardsPerCoordinates) {
     if(cardsPerCoordinates[coord] > 1) {
-      const id = Math.random().toString(36).substring(3, 7);
+      const id = uniqueID('pile');
       output[id] = piles[coord] = {
         id,
         type: 'pile',
