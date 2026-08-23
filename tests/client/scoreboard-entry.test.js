@@ -46,7 +46,7 @@ afterEach(() => {
 describe('which surface a cell opens', () => {
   test('a board that names one gets it, whatever the device says', () => {
     globalThis.matchMedia = _=>({ matches: true });
-    for(const mode of [ 'cell', 'keypad', 'type' ])
+    for(const mode of [ 'keypad', 'pane', 'type' ])
       expect(scoreboard({ scoreEntry: mode }).scoreEntryMode()).toBe(mode);
   });
 
@@ -114,7 +114,7 @@ describe('the cells of the table', () => {
     seat('seat2', 2, [ 9 ]);
     // the pane picks the round it writes itself, so no extra row is offered -
     // the cells are still addressed, so a click on one prefills the pane
-    const board = scoreboard({ scoreEntry: 'cell' });
+    const board = scoreboard({ scoreEntry: 'pane' });
     expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1' ]);
   });
 });

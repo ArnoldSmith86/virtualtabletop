@@ -6,7 +6,7 @@ import { Widget } from './widget.js';
 // gets the keypad, a keyboard gets the cell itself - and lets the player's own
 // choice on this browser overrule that; the other values name one surface for
 // everybody at the table.
-const scoreEntryModes = [ 'auto', 'cell', 'keypad', 'type' ];
+const scoreEntryModes = [ 'auto', 'keypad', 'pane', 'type' ];
 
 // The keypad, row by row: the digit block, with the corrections and the two
 // operators a score sheet is added up with beside it. A key whose face is not
@@ -131,8 +131,8 @@ export class Scoreboard extends Widget {
   // the cell it writes itself.
   async enterScore() {
     const cell = this.pressedCell();
-    const mode = cell && this.cellAddress(cell) ? this.scoreEntryMode() : 'cell';
-    if(mode == 'cell')
+    const mode = cell && this.cellAddress(cell) ? this.scoreEntryMode() : 'pane';
+    if(mode == 'pane')
       await this.showScorePane(cell);
     else
       this.openEntrySurface(mode, cell);
@@ -150,7 +150,7 @@ export class Scoreboard extends Widget {
   // edit pane offers that round in its round list, so a board that asks for it
   // keeps the table it has always had.
   nextRoundOffered() {
-    return this.cellEntryEnabled() && this.get('scoreEntry') != 'cell';
+    return this.cellEntryEnabled() && this.get('scoreEntry') != 'pane';
   }
 
   // Which surface a cell opens. A board that names one gets it everywhere;

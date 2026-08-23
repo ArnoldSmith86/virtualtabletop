@@ -1589,7 +1589,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
-  jeAddEnumCommands('^scoreboard ↦ scoreEntry',['auto', 'cell', 'keypad', 'type']);
+  jeAddEnumCommands('^scoreboard ↦ scoreEntry',['auto', 'keypad', 'pane', 'type']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);

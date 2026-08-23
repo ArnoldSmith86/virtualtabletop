@@ -223,7 +223,7 @@ const WIDGET_PROPERTIES = {
     },
     Scoreboard: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'any', playersInColumns: 'any', rounds: 'any', roundLabel: 'any', totalsLabel: 'any', scoreProperty: 'any', scoreEntry: getEnumValidator([ 'auto', 'cell', 'keypad', 'type' ]), firstColWidth: 'any', verticalHeader: 'any', seats: 'any', showAllRounds: 'any', showAllSeats: 'any', showPlayerColors: 'any', showTotals: 'any', sortField: 'any', sortAscending: 'any', currentRound: 'any', autosizeColumns: 'any', borderRadius: 'any', editPaneTitle: 'any'
+        movable: 'boolean', layer: 'any', playersInColumns: 'any', rounds: 'any', roundLabel: 'any', totalsLabel: 'any', scoreProperty: 'any', scoreEntry: getEnumValidator([ 'auto', 'keypad', 'pane', 'type' ]), firstColWidth: 'any', verticalHeader: 'any', seats: 'any', showAllRounds: 'any', showAllSeats: 'any', showPlayerColors: 'any', showTotals: 'any', sortField: 'any', sortAscending: 'any', currentRound: 'any', autosizeColumns: 'any', borderRadius: 'any', editPaneTitle: 'any'
     },
     Seat: {
         ...COMMON_PROPERTIES,
