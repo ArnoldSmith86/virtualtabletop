@@ -27,6 +27,9 @@
 // localStorage editor.aiRoutineEndpoint.
 
 const AI_DONATE_URL = 'https://www.patreon.com/virtualtabletop/about';
+// The one service whose handling of a request this can speak for. Any other
+// endpoint is somebody else's, and what it keeps is theirs to say.
+const AI_FIRST_PARTY_HOST = 'agent.virtualtabletop.io';
 const AI_POLL_INTERVAL = 1200;
 const AI_POLL_TIMEOUT = 5 * 60 * 1000;
 const AI_MAX_REQUEST_SIZE = 8 * 1024 * 1024;
@@ -210,6 +213,33 @@ function aiRecordResult(widgetID, routineKey, before, after, result, property) {
   aiDonateAsked = true;
 }
 
+// Writing an answer onto the widget, with everything the note above the routine
+// needs afterwards: what the routine was before, and which entry of the room's
+// history the write became.
+function aiApplyResult(widgetID, routineKey, before, routine, result, property, write) {
+  aiRecordResult(widgetID, routineKey, before, routine, result, property);
+  const historyLength = getUndoProtocol().length;
+  write();
+  const protocol = getUndoProtocol();
+  const record = aiRoutineResults.get(aiResultKey(widgetID, routineKey));
+  // a write that merged into the entry before it (the editor merges changes with
+  // the same cause) would take that entry's other changes back with it, so there
+  // is no step of its own to offer
+  if(record)
+    record.undoStep = protocol.length == historyLength + 1 ? protocol[protocol.length-1] : null;
+}
+
+// Whether the note's Undo would still put this routine back. It is the room's
+// Undo, and that always takes back the latest change - so it is this routine's
+// undo only for as long as writing this routine IS the latest change. Editing
+// anything afterwards, in this routine or somewhere else entirely, takes the
+// offer away rather than reverting a stranger in the routine's name.
+function aiUndoStillAvailable(record, routine) {
+  const protocol = getUndoProtocol();
+  return !!record.undoStep && protocol[protocol.length-1] === record.undoStep
+    && JSON.stringify(Array.isArray(routine) ? routine : []) === JSON.stringify(record.after);
+}
+
 // Which operations the validator's problems are about. A problem carries the
 // path it was found at, which for a routine of the widget starts with the
 // routine's own property and continues with the index of the operation - so the
@@ -351,11 +381,18 @@ function aiShowResultNote(container, routineEditor) {
   }
 
   // one press of undo only puts back what the assistant wrote for as long as
-  // nothing has been changed by hand since - and the note is where the offer
-  // belongs, rather than sending the reader to look for the toolbar
-  if(JSON.stringify(routine) === JSON.stringify(record.after)) {
+  // nothing has been changed since - and the note is where the offer belongs,
+  // rather than sending the reader to look for the toolbar
+  if(aiUndoStillAvailable(record, routine)) {
     const actions = div(note, 'ai-routine-note-actions');
     const undo = button(actions, 'Undo - put the routine back', _=>{
+      // the panel is not re-rendered for every change in the room, so what was
+      // true when this was drawn is checked again before it is acted on
+      if(!aiUndoStillAvailable(record, routineEditor.routine)) {
+        actions.textContent = 'Something else has been changed since, so undo would take that back instead of this routine.';
+        actions.className = 'ai-routine-note-warning';
+        return;
+      }
       forget();
       undoLastChange();
     });
@@ -412,10 +449,18 @@ function aiForgetAllResults() {
   aiDonateAsked = false;
 }
 
+// A routine as it is written down, for telling two of them apart. A routine that
+// is not there at all and an empty one are the same thing to ask about.
+function aiRoutineJSON(routine) {
+  return JSON.stringify(Array.isArray(routine) ? routine : []);
+}
+
 class AiRoutinePopup extends Popup {
   // entry is the routine card this belongs to: { property, target, key }.
+  // routineNow() reads the routine off the widget - it is read again when the
+  // answer comes back, because a minute is long enough for it to have changed.
   // apply(routine, result) writes the result; the popup never touches the widget
-  constructor(source, widget, entry, currentRoutine, apply) {
+  constructor(source, widget, entry, routineNow, apply) {
     super(source);
     this.widget = widget;
     this.widgetID = widget.get('id');
@@ -423,7 +468,8 @@ class AiRoutinePopup extends Popup {
     // 'widget' or, for a routine a deck hands to its cards, 'cardDefaults' - the
     // two are separate routines that run on different widgets
     this.target = entry.target || 'widget';
-    this.currentRoutine = currentRoutine;
+    this.routineNow = routineNow;
+    this.currentRoutine = routineNow();
     this.apply = apply;
     this.busy = false;
     this.cancelled = false;
@@ -498,8 +544,12 @@ class AiRoutinePopup extends Popup {
     const privacyIcon = document.createElement('span');
     privacyIcon.className = 'material-symbols';
     privacyIcon.textContent = 'cloud_upload';
+    const host = aiRoutineHost();
     privacy.append(privacyIcon, document.createTextNode(
-      `What you write and the widgets in this room are sent to ${aiRoutineHost()}, so the routine can use the widgets you actually have. They are not stored there.`));
+      `What you write and the widgets in this room are sent to ${host}, so the routine can use the widgets you actually have. `
+      + (host == AI_FIRST_PARTY_HOST
+        ? 'They are not stored there.'
+        : 'What is kept of them there is up to whoever runs that service.')));
 
     this.renderQuality();
 
@@ -581,6 +631,9 @@ class AiRoutinePopup extends Popup {
       return;
     }
     aiLastPrompts.set(this.promptKey, prompt);
+    // what the answer will be written from, read again for a second attempt
+    this.currentRoutine = this.routineNow();
+    const asked = aiRoutineJSON(this.currentRoutine);
     this.busy = true;
     this.generateButton.disabled = true;
     this.qualityInput.disabled = true;
@@ -594,6 +647,12 @@ class AiRoutinePopup extends Popup {
         return;
       if(!widgets.has(this.widgetID)) {
         this.setStatus('The widget this routine belongs to is not in the room any more.', 'error');
+      } else if(aiRoutineJSON(this.routineNow()) !== asked) {
+        // rooms are edited by more than one person at a time, and a minute of
+        // writing is long enough for the routine this was asked about to have
+        // become somebody else's work - which an answer to the old one would
+        // quietly throw away
+        this.setStatus('This routine has changed since the request was sent, so nothing was written. Try again to have it written from the routine as it is now.', 'error');
       } else {
         // Straight onto the widget: the highlighted operations in the editor are
         // a better preview than any popup could be, and undo is one press away.
@@ -685,7 +744,7 @@ function aiRoutineButton(headerDOM, widget, entry, getRoutine, apply) {
   aiButton.title = 'Describe this routine in plain English and have it written';
   // the info buttons in the same header are reachable by keyboard; the icons
   // next to this one are not - this follows the better of the two
-  focusable(aiButton, _=>new AiRoutinePopup(aiButton, widget, entry, getRoutine(), apply).show());
+  focusable(aiButton, _=>new AiRoutinePopup(aiButton, widget, entry, getRoutine, apply).show());
   aiButton.dataset.routineKey = entry.key || entry.property;
   headerDOM.append(aiButton);
   return aiButton;
@@ -706,12 +765,4 @@ function aiAddRoutineButton(container, onPick) {
   icon.textContent = 'auto_awesome';
   addAI.prepend(icon);
   return addAI;
-}
-
-// The card's own AI button, for opening the assistant on a routine that was
-// just added - the popup is anchored to the control it belongs to.
-function aiOpenOnRoutine(container, key) {
-  const aiButton = [ ...container.querySelectorAll('.events-editor-ai') ].find(b=>b.dataset.routineKey == key);
-  if(aiButton)
-    aiButton.click();
 }

@@ -24,6 +24,8 @@ beforeAll(() => {
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.undoneChanges = 0;
   window.undoLastChange = () => window.undoneChanges++; // the editor toolbar's own action (toolbar/undo.js)
+  window.undoProtocol = [ { delta: { s: {} } } ]; // the room as it was loaded (serverstate.js)
+  window.getUndoProtocol = () => window.undoProtocol;
   window.setSelection = () => {};
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
@@ -3952,8 +3954,18 @@ describe('AI routine assistant', () => {
     widget.unalteredState = widget.state;
     widgets.set(widget.state.id, widget);
     inRoom.push(widget.state.id);
-    return { widget, editor: new EventsEditor(widget, onChange) };
+    // a change becomes an entry of the room's history, the way it does in the
+    // running editor - which is what the note's undo offer is judged against
+    const changed = (property, value) => {
+      window.undoProtocol.push({ delta: { s: {} } });
+      onChange(property, value);
+    };
+    return { widget, editor: new EventsEditor(widget, changed) };
   }
+
+  beforeEach(() => {
+    window.undoProtocol = [ { delta: { s: {} } } ];
+  });
 
   afterEach(() => {
     for(const id of inRoom.splice(0))
@@ -4065,16 +4077,14 @@ describe('AI routine assistant', () => {
     expect([ ...aiChangedOperations([ op('A'), op('B') ], [ op('A'), op('B') ]) ]).toEqual([]);
   });
 
-  // an editor showing what the assistant just wrote into clickRoutine
+  // an editor showing what the assistant just wrote into clickRoutine, applied
+  // the way the popup applies it so the note is judged on a real history entry
   function withResult(result = { explanation: 'It shuffles the deck too.' }) {
     const before = [ { func: 'FLIP' } ];
     const after = [ { func: 'FLIP' }, { func: 'SHUFFLE', holder: 'deck' } ];
-    // the widget already holds what the assistant wrote; the marks say which parts are new
-    const { widget, editor } = makeEditor({ type: 'button', clickRoutine: after });
-    editor.expandedEvents.clickRoutine = true;
-    aiRecordResult(widget.get('id'), 'clickRoutine', before, after, result);
-    editor.render();
-    return { widget, editor, before, after };
+    const made = makeEditor({ type: 'button', clickRoutine: before }, (property, value) => made.widget.state[property] = value);
+    made.editor.applyAiRoutine({ property: 'clickRoutine', target: 'widget', key: 'clickRoutine' }, after, result);
+    return { widget: made.widget, editor: made.editor, before, after };
   }
 
   const marksOf = editor => editor.routineEditors.clickRoutine.directChildCards()
@@ -4340,12 +4350,81 @@ describe('AI routine assistant', () => {
     const picker = openPopups.find(p => p instanceof AddEventPopup);
     expect(picker).toBeDefined();
     picker.callback('clickRoutine', 'widget');
-    // ...and then opens the assistant on the routine it just made
-    expect(editor.expandedEvents.clickRoutine).toBe(true);
     const popup = openPopups.filter(p => p instanceof AiRoutinePopup).pop();
     expect(popup).toBeDefined();
+    // ...and the answer is what makes the routine
+    popup.apply([ { func: 'FLIP' } ], {});
+    expect(made.widget.state.clickRoutine).toEqual([ { func: 'FLIP' } ]);
+    expect(editor.expandedEvents.clickRoutine).toBe(true);
     popup.hide();
     picker.hide();
+  });
+
+  test('giving up on the assistant leaves no empty routine behind', () => {
+    const made = makeEditor({ type: 'button' }, (property, value) => made.widget.state[property] = value);
+    made.editor.domElement.querySelector('.events-editor-add-ai').dispatchEvent(new Event('click'));
+    const picker = openPopups.find(p => p instanceof AddEventPopup);
+    picker.callback('clickRoutine', 'widget');
+    const popup = openPopups.filter(p => p instanceof AiRoutinePopup).pop();
+    popup.hide(); // Escape, Cancel, the x - the widget is as it was
+    expect(made.widget.state.clickRoutine).toBeUndefined();
+    expect(made.editor.routineEditors.clickRoutine).toBeUndefined();
+    picker.hide();
+  });
+
+  test('an answer is not written over a routine that changed while it was being written', async () => {
+    const service = answeringService({ routine: [ { func: 'SHUFFLE', holder: 'deck' } ] });
+    const written = [];
+    const { widget, editor } = makeEditor({ type: 'button', clickRoutine: [ { func: 'FLIP' } ] },
+      (property, value) => written.push([ property, value ]));
+    const popup = openAiPopup(editor);
+    popup.input.value = 'shuffle the deck as well';
+    const running = popup.generate();
+    // somebody else edits the same routine while the answer is being written
+    widget.state.clickRoutine = [ { func: 'FLIP' }, { func: 'ROTATE' } ];
+    await running;
+    expect(written).toEqual([]);
+    expect(popup.domElement.querySelector('.ai-routine-status').textContent).toContain('has changed since');
+    popup.hide();
+    service.restore();
+  });
+
+  test('the note stops offering undo once something else has been changed', () => {
+    const { editor } = withResult();
+    expect(editor.domElement.querySelector('.ai-routine-note-undo')).not.toBe(null);
+    // one press of the room's undo would now take that other change back instead
+    window.undoProtocol.push({ delta: { s: {} } });
+    editor.render();
+    expect(editor.domElement.querySelector('.ai-routine-note-undo')).toBe(null);
+    expect(editor.domElement.querySelector('.ai-routine-note')).not.toBe(null); // the marks stay
+  });
+
+  test('undo pressed after the room moved on takes nothing back', () => {
+    const { editor } = withResult();
+    const undo = editor.domElement.querySelector('.ai-routine-note-undo');
+    // the panel is not re-rendered for every change in the room, so the offer
+    // can still be on screen when it has stopped being true
+    window.undoProtocol.push({ delta: { s: {} } });
+    const undone = window.undoneChanges;
+    undo.dispatchEvent(new Event('click'));
+    expect(window.undoneChanges).toBe(undone);
+    expect(editor.domElement.querySelector('.ai-routine-note').textContent).toContain('Something else has been changed since');
+  });
+
+  test('what is kept of the request is only promised for the service that can promise it', () => {
+    const configured = config.aiRoutineEndpoint;
+    config.aiRoutineEndpoint = 'https://ai.example.com/routine';
+    try {
+      const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+      const popup = openAiPopup(editor);
+      const said = popup.domElement.querySelector('.ai-routine-privacy').textContent;
+      expect(said).toContain('ai.example.com');
+      expect(said).not.toContain('not stored'); // nobody here knows what that service does
+      expect(said).toContain('up to whoever runs that service');
+      popup.hide();
+    } finally {
+      config.aiRoutineEndpoint = configured;
+    }
   });
 
   test('what the assistant wrote is forgotten when the room is replaced', () => {
