@@ -22,14 +22,14 @@ const routineDebugRoutineRuns = new Map(); // routine path -> how often the rout
 const routineDebugExpanded = new Set();    // operation keys that were asked to show every run
 
 // The routines and operations currently running, outermost first. Both are kept in step by the
-// logging calls of evaluateRoutine, which come in matched pairs - except when an operation throws,
-// which reports the end of nothing at all. So a routine that starts drops the frames its own
-// nesting depth says cannot be running any more, and a routine that ends drops the operations of
-// its own that were left behind: a routine that dies half way cannot wedge the cards on stale
-// results until the page is reloaded. Two routines that interleave across an await - a delta from
-// another player running a changeRoutine while a local routine waits for an INPUT - file their
-// operations under whichever of them started last; that is a wrong line on a card, never a wrong
-// stack.
+// logging calls of evaluateRoutine, which come in matched pairs - a routine that dies half way is
+// closed off by jeLoggingRoutineAbort, which makes the calls the operations that threw never made.
+// A routine that ends still drops the operations of its own that were left behind, and a routine
+// that starts drops anything the logging no longer counts as running, so nothing can wedge the
+// cards on stale results until the page is reloaded. Two routines that interleave across an await
+// - a delta from another player running a changeRoutine while a local routine waits for an INPUT -
+// file their operations under whichever of them started last; that is a wrong line on a card,
+// never a wrong stack.
 const routineDebugRoutineStack = [];    // { path, operationDepth }
 const routineDebugOperationStack = [];
 
@@ -53,6 +53,9 @@ function routineDebugSetEnabled(enabled) {
   routineDebugRefreshNow();
 }
 
+// Everything the cards show goes, but not which of them were asked to show every run they have:
+// that is how the reader left the editor, not something the last interaction produced, so a card
+// whose operation runs again comes back open.
 function routineDebugClear() {
   routineDebugRuns.clear();
   routineDebugOmitted.clear();
@@ -61,12 +64,15 @@ function routineDebugClear() {
   routineDebugRecorded = false;
 }
 
-// depth is how many routines evaluateRoutine is already inside, so anything below that on the
-// stacks belongs to a routine that never came back
-function routineDebugRoutineStart(path, depth) {
-  if(routineDebugRoutineStack.length > depth) {
-    routineDebugOperationStack.length = routineDebugRoutineStack[depth].operationDepth;
-    routineDebugRoutineStack.length = depth;
+// frame is the nesting the logging opened this routine at (jeLoggingRoutineStart), which is the
+// one thing that counts the same routines this stack does - anything above it belongs to a routine
+// that never came back. Not evaluateRoutine's own depth: a routine the engine starts as a side
+// effect of an operation begins at depth 0 with the routine that set it off still running, and
+// keying on that would throw away the frame of the routine the player actually clicked.
+function routineDebugRoutineStart(path, frame) {
+  if(routineDebugRoutineStack.length > frame) {
+    routineDebugOperationStack.length = routineDebugRoutineStack[frame].operationDepth;
+    routineDebugRoutineStack.length = frame;
   }
   if(!routineDebugRoutineStack.length && routineDebugResetOnNextRun)
     routineDebugClear();
@@ -141,16 +147,25 @@ function routineDebugRoutineOf(key) {
   return key.replace(/\/[^/]*$/, '');
 }
 
+// the routine a nested block sits in: a block is addressed as "<routine>/<index>/<blockName>", so
+// dropping those two segments is its parent. Only that shape is walked out of, never a bare
+// "<widget>/<property>" - a widget whose id contains a slash would otherwise be read as a path
+// into another widget's routines.
+function routineDebugRoutineAround(path) {
+  const nested = path.match(/^(.*)\/\d+\/[^/]+$/);
+  return nested && nested[1];
+}
+
 // whether a routine this operation sits inside ran at all, however deeply nested it is. The
 // nearest one counts rather than only its own block: an operation in a branch that was not taken
 // sits in a block that never started, and saying nothing there would read as "never ran" while the
 // operation after an aborted CALL - the same situation - says so.
 function routineDebugRanAbove(key) {
   let path = routineDebugRoutineOf(key);
-  while(path.indexOf('/') != -1) {
+  while(path) {
     if(routineDebugRoutineRuns.get(path))
       return true;
-    path = routineDebugRoutineOf(path);
+    path = routineDebugRoutineAround(path);
   }
   return false;
 }

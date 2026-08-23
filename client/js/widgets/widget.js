@@ -1186,19 +1186,22 @@ export class Widget extends StateManaged {
 
   // Whatever the routine below leaves on the recorders - the Debug module's log and the results the
   // routine editor shows on its cards - is taken off again even when an operation throws: the
-  // matched jeLogging calls simply stop coming then, and the depth they count would stay standing
-  // for good, so the log would never be rendered and the switches never read again.
+  // matched jeLogging calls simply stop coming then, and the nesting they count would stay standing
+  // for good, so the log would never be rendered and the switches never read again. Only this
+  // routine is unwound, back to the frame the recorders handed out when it started - the routine
+  // that set it off, if there is one, is still running and keeps what it holds.
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference, debugPath) {
+    const logging = {}; // .frame is filled in below, once the recorders know about this routine
     try {
-      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath);
+      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath, logging);
     } catch(problem) {
-      if(jeRoutineLogging || jeRoutineDebug)
-        jeLoggingRoutineAbort(depth || 0, problem && problem.message || String(problem));
+      if(logging.frame !== undefined)
+        jeLoggingRoutineAbort(logging.frame, problem && problem.message || String(problem));
       throw problem;
     }
   }
 
-  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath) {
+  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath, logging) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -1319,7 +1322,7 @@ export class Widget extends StateManaged {
     // in, and for a nested block the path its parent operation passed down
     const routinePath = typeof property == 'string' ? this.routineDebugPath(property) : debugPath;
     if(routineLogging)
-      jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference, routinePath, depth || 0);
+      logging.frame = jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference, routinePath);
 
     let variables = initialVariables;
     let collections = initialCollections;

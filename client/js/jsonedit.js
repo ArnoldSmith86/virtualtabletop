@@ -3129,14 +3129,20 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference, path, depth) {
+// Returns the frame this routine opens: the nesting the log and the recorder are at when it
+// starts, and with that the token that closes it again if it dies (jeLoggingRoutineAbort). The
+// depth evaluateRoutine counts is not that - the routines the engine starts as a side effect of an
+// operation (the enterRoutine of a MOVE, the changeRoutine of a property change, the clickRoutine
+// a CLICK runs) all begin at depth 0 while the routine that set them off is still running.
+export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference, path) {
+  const frame = jeLoggingDepth;
   if(!jeLoggingDepth) {
     jeLoggingHTMLEnabled = jeRoutineLogging;
     jeLoggingCardsEnabled = getJEroutineDebug();
     jeLoggingOutermostRoutine = { widget, property };
   }
   if(jeLoggingCardsEnabled)
-    routineDebugRoutineStart(path, depth || 0);
+    routineDebugRoutineStart(path, frame);
   if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -3154,16 +3160,19 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
   jeLoggingOpenOperationStack.push(jeLoggingOpenOperations);
   jeLoggingOpenOperations = 0;
   ++jeLoggingDepth;
+  return frame;
 }
 
 // An operation that throws never reports its end, and neither does the routine it was in - the
 // matched calls above simply stop coming. Everything that routine still holds is closed off here,
-// back to the depth it started at, so one routine that dies half way cannot leave the log unrendered
-// and the switches unread for the rest of the session. Every operation that was still running gets
-// the problem written on it, so the cards read as the chain that died rather than going quiet.
-export function jeLoggingRoutineAbort(depth, problem) {
+// back to the frame jeLoggingRoutineStart handed out for it, so one routine that dies half way
+// cannot leave the log unrendered and the switches unread for the rest of the session - while the
+// routine that set it off, which is still running, keeps everything it holds. Every operation that
+// was still running gets the problem written on it, so the cards read as the chain that died
+// rather than going quiet.
+export function jeLoggingRoutineAbort(frame, problem) {
   const problems = problem ? [ problem ] : [];
-  while(jeLoggingDepth > depth) {
+  while(jeLoggingDepth > frame) {
     while(jeLoggingOpenOperations)
       jeLoggingRoutineOperationEnd(problems, {}, {}, false);
     jeLoggingRoutineEnd({}, {});
