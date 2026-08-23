@@ -22,7 +22,7 @@
 
 .ai-routine-intro {
   font-size: 12px;
-  color: var(--textDimColor1);
+  color: var(--textHelpColor);
   margin-bottom: 6px;
 }
 
@@ -43,7 +43,7 @@ textarea.ai-routine-prompt {
 
 .ai-routine-quality-end {
   font-size: 11px;
-  color: var(--textDimColor1);
+  color: var(--textHelpColor);
   white-space: nowrap;
 }
 
@@ -55,7 +55,7 @@ input.ai-routine-quality-slider {
 
 .ai-routine-quality-label {
   font-size: 11px;
-  color: var(--textDimColor1);
+  color: var(--textHelpColor);
   margin-top: 2px;
   text-align: center;
 }
@@ -69,7 +69,7 @@ input.ai-routine-quality-slider {
 .ai-routine-status {
   margin-top: 6px;
   font-size: 12px;
-  color: var(--textDimColor1);
+  color: var(--textHelpColor);
   min-height: 1em;
 }
 
@@ -97,14 +97,22 @@ input.ai-routine-quality-slider {
   font-weight: bold;
 }
 
+/* the note sits on the highlight background rather than on a panel, where the
+   dim text colors are the same shade as the background it would be read on -
+   so what is secondary here is said with opacity, not with another color */
 .ai-routine-note-text {
   margin-top: 2px;
-  color: var(--textDimColor1);
+  opacity: .8;
 }
 
 .ai-routine-note-warning {
   margin-top: 2px;
   color: var(--textHighlightColor2, orange);
+}
+
+.ai-routine-note-donate {
+  margin-top: 4px;
+  opacity: .8;
 }
 
 .ai-routine-note-close {
@@ -120,12 +128,16 @@ input.ai-routine-quality-slider {
   opacity: 1;
 }
 
-/* The operations the assistant added or changed: a flash to catch the eye, then
-   a lasting marker, so it still reads as "this is what it touched" a minute
-   later. Cleared by the note's dismiss button and by any edit that re-renders
-   the routine. */
+/* The operations the assistant added or changed: a flash to catch the eye when
+   the answer lands, then a lasting marker, so it still reads as "this is what
+   it touched" a minute and a few edits later. Both are put back on every
+   re-render and go away only with the note's dismiss button - hence two
+   classes, the flash being for the first render alone. */
 .routine-editor-operation.routine-editor-operation-ai-changed {
   border-left: 3px solid var(--VTTblue);
+}
+
+.routine-editor-operation.routine-editor-operation-ai-flash {
   animation: aiRoutineChanged 2.5s ease-out;
 }
 

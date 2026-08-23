@@ -2191,6 +2191,10 @@ class RoutineEditor {
     });
     addButton.className = 'routine-editor-add-operation';
 
+    // the cards are new ones, so what the AI assistant wrote into this routine
+    // is marked again here: it is shown until dismissed, not until the next edit
+    aiMarkChangedOperations(this);
+
     return this.domElement;
   }
 

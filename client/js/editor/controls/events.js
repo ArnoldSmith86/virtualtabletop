@@ -452,11 +452,11 @@ class EventsEditor {
         const before = this.routineSource(target)[property];
         delete this.routineEditors[key]; // it keeps its own copy of the old one
         this.expandedEvents[key] = true; // land on the result rather than a closed card
+        // recorded before anything renders: rendering is what marks the changed
+        // operations and writes the note, here and on every re-render after it
+        aiRecordResult(this.widget.get('id'), key, before, routine, result);
         this.setRoutine(entry, routine);
         this.render();
-        // render() is synchronous and rebuilds the operation cards, so the ones
-        // the assistant changed can only be marked once it has run
-        aiHighlightResult(this.routineEditors[key], before, routine, result);
       });
 
       const removeButton = document.createElement('span');
@@ -497,6 +497,7 @@ class EventsEditor {
           this.routineEditors[key].registerChangeListener(v=>this.setRoutine(entry, JSON.parse(JSON.stringify(v))));
         }
         contentDOM.append(this.routineEditors[key].domElement);
+        aiShowResultNote(contentDOM, this.routineEditors[key]);
       }
     }
 

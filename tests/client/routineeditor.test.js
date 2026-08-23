@@ -56,7 +56,8 @@ beforeAll(() => {
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
-    'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine', 'aiChangedOperations', 'aiHighlightResult'
+    'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine', 'aiChangedOperations',
+    'aiRecordResult', 'aiForgetResult'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -3977,20 +3978,64 @@ describe('AI routine assistant', () => {
     expect([ ...aiChangedOperations([ op('A'), op('B') ], [ op('A'), op('B') ]) ]).toEqual([]);
   });
 
-  test('applying marks the changed operations in the editor and says what happened', () => {
+  // an editor showing what the assistant just wrote into clickRoutine
+  function withResult(result = { explanation: 'It shuffles the deck too.' }) {
     const before = [ { func: 'FLIP' } ];
     const after = [ { func: 'FLIP' }, { func: 'SHUFFLE', holder: 'deck' } ];
-    // the widget already holds what the assistant wrote; the highlight says which parts are new
-    const { editor } = makeEditor({ type: 'button', clickRoutine: after });
+    // the widget already holds what the assistant wrote; the marks say which parts are new
+    const { widget, editor } = makeEditor({ type: 'button', clickRoutine: after });
     editor.expandedEvents.clickRoutine = true;
+    aiRecordResult(widget.get('id'), 'clickRoutine', before, after, result);
     editor.render();
-    const routineEditor = editor.routineEditors.clickRoutine;
-    aiHighlightResult(routineEditor, before, after, { explanation: 'It shuffles the deck too.' });
-    const marked = routineEditor.directChildCards().map(c => c.classList.contains('routine-editor-operation-ai-changed'));
-    expect(marked).toEqual([ false, true ]); // the operation that was already there is left alone
+    return { widget, editor, before, after };
+  }
+
+  const marksOf = editor => editor.routineEditors.clickRoutine.directChildCards()
+    .map(c => c.classList.contains('routine-editor-operation-ai-changed'));
+
+  test('applying marks the changed operations in the editor and says what happened', () => {
+    const { editor } = withResult();
+    expect(marksOf(editor)).toEqual([ false, true ]); // the operation that was already there is left alone
     const note = editor.domElement.querySelector('.ai-routine-note');
     expect(note.textContent).toContain('Undo');
     expect(note.textContent).toContain('It shuffles the deck too.');
+    expect(note.textContent).toContain("If you like this feature, please consider donating. AI isn't free.");
+    expect(note.querySelector('a').href).toContain('patreon.com');
+  });
+
+  test('the marks and the note outlive the re-renders an edit causes', () => {
+    const { editor } = withResult();
+    // editing anything rebuilds the whole section and every operation card
+    editor.routineEditors.clickRoutine.routineChanged();
+    editor.render();
+    expect(marksOf(editor)).toEqual([ false, true ]);
+    expect(editor.domElement.querySelector('.ai-routine-note')).not.toBe(null);
+    // ...but the flash belongs to the moment the answer landed, not to every edit
+    const flashing = editor.routineEditors.clickRoutine.directChildCards()
+      .filter(c => c.classList.contains('routine-editor-operation-ai-flash'));
+    expect(flashing).toEqual([]);
+  });
+
+  test('dismissing the note takes the marks with it, for good', () => {
+    const { editor } = withResult();
+    editor.domElement.querySelector('.ai-routine-note-close').dispatchEvent(new Event('click'));
+    expect(editor.domElement.querySelector('.ai-routine-note')).toBe(null);
+    expect(marksOf(editor)).toEqual([ false, false ]);
+    editor.render(); // and it does not come back on the next one
+    expect(editor.domElement.querySelector('.ai-routine-note')).toBe(null);
+    expect(marksOf(editor)).toEqual([ false, false ]);
+  });
+
+  test('the note stops promising undo once the routine was edited by hand', () => {
+    const { widget, editor } = withResult();
+    expect(editor.domElement.querySelector('.ai-routine-note').textContent).toContain('Undo');
+    editor.routineEditors.clickRoutine.routine.push({ func: 'FLIP' });
+    editor.routineEditors.clickRoutine.routineChanged();
+    editor.render();
+    const note = editor.domElement.querySelector('.ai-routine-note');
+    expect(note.textContent).not.toContain('Undo');
+    expect(note.textContent).toContain('2 of 3 operations are new or changed, 1 kept');
+    aiForgetResult(widget.get('id'), 'clickRoutine');
   });
 
   test('validation reports only what the routine adds, not what the room already had', () => {

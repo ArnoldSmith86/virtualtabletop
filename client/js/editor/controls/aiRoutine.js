@@ -6,7 +6,9 @@
 // approve: it is written to the routine straight away, with the operations that
 // changed highlighted, because reading a page of JSON in a popup is a worse way
 // to judge a routine than looking at the routine itself. It goes through the
-// same setRoutine() path the visual editor uses, so undo takes it back.
+// same setRoutine() path the visual editor uses, so undo takes it back. The
+// marks and the note above the routine survive every re-render in between and
+// go away when the note is dismissed, not when the next edit lands.
 //
 // The slider says how much thought to buy for it: a two-operation button does
 // not need the expensive model, and a whole game's setup does. The position is
@@ -20,6 +22,7 @@
 // point it elsewhere with localStorage editor.aiRoutineEndpoint.
 
 const AI_ROUTINE_ENDPOINT = 'https://agent.virtualtabletop.io/routine-assist';
+const AI_DONATE_URL = 'https://www.patreon.com/virtualtabletop/about';
 const AI_POLL_INTERVAL = 1200;
 const AI_POLL_TIMEOUT = 5 * 60 * 1000;
 
@@ -117,53 +120,113 @@ function aiChangedOperations(before, after) {
   return changed;
 }
 
-// Mark what the assistant just wrote, on the routine itself, and say in one
-// line what it did. Called after the Automations section has re-rendered, so
-// the operation cards exist.
-function aiHighlightResult(routineEditor, before, after, result) {
-  if(!routineEditor || !routineEditor.domElement)
-    return;
-  const changed = aiChangedOperations(before, after);
-  const cards = routineEditor.directChildCards();
-  for(const index of changed)
-    if(cards[index])
-      cards[index].classList.add('routine-editor-operation-ai-changed');
+// What the assistant last wrote, per routine of a widget, kept until the note
+// above that routine is dismissed. Both the note and the marks on the changed
+// operations live in DOM the editor throws away and builds again on every edit
+// anywhere in the routine, so without a record of them they would last until
+// the next keystroke - and "these are the operations it touched" is worth
+// reading a minute later, next to the routine it is talking about.
+const aiRoutineResults = new Map();
 
-  const container = routineEditor.domElement.parentElement;
-  if(!container)
+function aiResultKey(widgetID, routineKey) {
+  // both halves can hold anything a widget id can, so they are keyed as a pair
+  // rather than joined on a separator one of them could contain
+  return JSON.stringify([ widgetID, routineKey ]);
+}
+
+function aiRecordResult(widgetID, routineKey, before, after, result) {
+  aiRoutineResults.set(aiResultKey(widgetID, routineKey), {
+    before: JSON.parse(JSON.stringify(Array.isArray(before) ? before : [])),
+    after: JSON.parse(JSON.stringify(Array.isArray(after) ? after : [])),
+    hadRoutine: Array.isArray(before) && before.length > 0,
+    explanation: result && result.explanation,
+    problems: (result && result.problems) || [],
+    flashed: false
+  });
+}
+
+function aiForgetResult(widgetID, routineKey) {
+  aiRoutineResults.delete(aiResultKey(widgetID, routineKey));
+}
+
+// Mark the operations that are not in the routine as it was before the
+// assistant rewrote it. Called at the end of every render of a routine editor,
+// because that is what rebuilds the cards these classes sit on.
+function aiMarkChangedOperations(routineEditor) {
+  const record = aiRoutineResults.get(aiResultKey(routineEditor.widgetID, routineEditor.routineKey));
+  if(!record)
     return;
+  const changed = aiChangedOperations(record.before, routineEditor.routine);
+  const cards = routineEditor.directChildCards();
+  for(const index of changed) {
+    if(!cards[index])
+      continue;
+    cards[index].classList.add('routine-editor-operation-ai-changed');
+    // the flash is for the moment the answer lands; replaying it on every later
+    // render would make typing somewhere else in the routine a light show
+    if(!record.flashed)
+      cards[index].classList.add('routine-editor-operation-ai-flash');
+  }
+  record.flashed = true;
+  return changed;
+}
+
+// The line above the routine saying what was just written into it, rebuilt
+// whenever the Automations section re-renders and gone only once dismissed.
+function aiShowResultNote(container, routineEditor) {
   for(const old of container.querySelectorAll('.ai-routine-note'))
     old.remove();
+  const record = aiRoutineResults.get(aiResultKey(routineEditor.widgetID, routineEditor.routineKey));
+  if(!record)
+    return null;
+
+  const routine = Array.isArray(routineEditor.routine) ? routineEditor.routine : [];
+  const changed = aiChangedOperations(record.before, routine);
+  const kept = routine.length - changed.size;
+  const summary = record.hadRoutine
+    ? `Rewritten - ${changed.size} of ${routine.length} operations are new or changed${kept ? `, ${kept} kept` : ''}.`
+    : `Written - ${routine.length} operation${routine.length == 1 ? '' : 's'}.`;
+  // one press of undo only puts back what the assistant wrote for as long as
+  // nothing has been changed by hand since
+  const undone = JSON.stringify(routine) === JSON.stringify(record.after) ? ' Undo puts it back.' : '';
 
   const note = document.createElement('div');
   note.className = 'ai-routine-note';
-  const kept = after.length - changed.size;
-  const summary = before && before.length
-    ? `Rewritten - ${changed.size} of ${after.length} operations are new or changed${kept ? `, ${kept} kept` : ''}.`
-    : `Written - ${after.length} operation${after.length == 1 ? '' : 's'}.`;
-  div(note, 'ai-routine-note-head').textContent = `${summary} Undo puts it back.`;
-  if(result && result.explanation)
-    div(note, 'ai-routine-note-text').textContent = result.explanation;
+  div(note, 'ai-routine-note-head').textContent = `${summary}${undone}`;
+  if(record.explanation)
+    div(note, 'ai-routine-note-text').textContent = record.explanation;
 
-  if(result && result.problems && result.problems.length) {
+  if(record.problems.length) {
     const warn = div(note, 'ai-routine-note-warning');
-    warn.textContent = result.problems.length == 1
-      ? `It could not get one thing right: ${result.problems[0].message}`
-      : `${result.problems.length} things in it are still wrong: ${result.problems.map(p=>p.message).join('; ')}`;
+    warn.textContent = record.problems.length == 1
+      ? `It could not get one thing right: ${record.problems[0].message}`
+      : `${record.problems.length} things in it are still wrong: ${record.problems.map(p=>p.message).join('; ')}`;
   }
+
+  // asked for right where the feature has just paid off, which is the only
+  // place the answer to "is this worth paying for" is in front of the reader
+  const donate = div(note, 'ai-routine-note-donate');
+  donate.append(document.createTextNode('If you like this feature, please consider '));
+  const donateLink = document.createElement('a');
+  donateLink.href = AI_DONATE_URL;
+  donateLink.target = '_blank';
+  donateLink.rel = 'noopener';
+  donateLink.textContent = 'donating';
+  donate.append(donateLink, document.createTextNode(". AI isn't free."));
 
   const dismiss = document.createElement('span');
   dismiss.className = 'material-symbols ai-routine-note-close';
   dismiss.textContent = 'close';
   dismiss.title = 'Dismiss';
   dismiss.addEventListener('click', _=>{
+    aiForgetResult(routineEditor.widgetID, routineEditor.routineKey);
     note.remove();
-    for(const card of cards)
-      card.classList.remove('routine-editor-operation-ai-changed');
+    for(const card of routineEditor.directChildCards())
+      card.classList.remove('routine-editor-operation-ai-changed', 'routine-editor-operation-ai-flash');
   });
   note.append(dismiss);
   container.insertBefore(note, routineEditor.domElement);
-  return changed;
+  return note;
 }
 
 class AiRoutinePopup extends Popup {
