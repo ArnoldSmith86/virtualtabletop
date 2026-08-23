@@ -228,6 +228,30 @@ describe('entering a score', () => {
     expect(reaches('5')).toBe(false);
   });
 
+  test('names the value the cell holds now beside its entry, not inside it', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ scoreEntry: 'keypad' });
+    board.openEntrySurface('keypad', board.cellFor('seat1', 1));
+    // pressing enter on an untouched pad erases the cell, so the entry has to
+    // read as empty rather than as the value it is about to replace
+    expect(document.querySelector('.scoreboardKeypadValue').textContent).toBe('');
+    expect(document.querySelector('.scoreboardKeypadCurrent').textContent).toBe('was 12');
+  });
+
+  test('carries what has been entered so far to the other surface', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ scoreEntry: 'auto' });
+    const cell = board.cellFor('seat1', 1);
+    board.openEntrySurface('type', cell, '10+5');
+    const input = document.querySelector('input.scoreCellInput');
+    input.value = '10+7';
+    input.dispatchEvent(new Event('input'));
+    document.querySelector('.scoreEntrySwitchBar button.scoreEntrySwitch').click();
+    expect(document.querySelector('.scoreboardKeypadValue').textContent).toBe('10+7');
+    document.querySelector('.scoreboardKeypadHeader button.scoreEntrySwitch').click();
+    expect(document.querySelector('input.scoreCellInput').value).toBe('10+7');
+  });
+
   test('takes its surface down with the board it belongs to', () => {
     seat('seat1', 1, [ 12 ]);
     const board = scoreboard();

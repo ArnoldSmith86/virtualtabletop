@@ -71,8 +71,8 @@ export class Scoreboard extends Widget {
   }
 
   applyRemove() {
-    // the surfaces are anchored in #roomArea rather than inside the widget, so
-    // removing the board does not take them with it
+    // the surfaces hang off <body> rather than off the widget, so removing the
+    // board does not take them with it
     this.closeEntrySurface();
     super.applyRemove();
   }
@@ -125,12 +125,13 @@ export class Scoreboard extends Widget {
       await this.enterScore();
   }
 
-  // A click that landed on a score cell opens the surface the board asks for;
-  // one that did not - a hotkey, a CLICK operation, a press on a header - has no
-  // cell to start from and falls back to the pane, which brings its own.
+  // A click that landed on a score cell opens the surface the board asks for; one
+  // that did not - a hotkey, a CLICK operation, a press on a header or on a
+  // computed total - has no cell to enter and falls back to the pane, which picks
+  // the cell it writes itself.
   async enterScore() {
     const cell = this.pressedCell();
-    const mode = cell ? this.scoreEntryMode() : 'cell';
+    const mode = cell && this.cellAddress(cell) ? this.scoreEntryMode() : 'cell';
     if(mode == 'cell')
       await this.showScorePane(cell);
     else
@@ -182,6 +183,9 @@ export class Scoreboard extends Widget {
 
   async showScorePane(cell) {
     const address = cell && this.cellAddress(cell);
+    // a cell that holds no round of its own - the computed total of a seat - still
+    // says whose column it is in, so the pane opens on that player
+    const pressedSeat = address ? address.seat.get('id') : (cell && cell.dataset.seat);
     const scoreProperty = this.get('scoreProperty');
     const seats = this.getIncludedSeats();
     const seatsArray = Array.isArray(seats)? seats : [];
@@ -213,7 +217,7 @@ export class Scoreboard extends Widget {
             label: 'Player',
             options: players,
             variable: 'player',
-            value: address ? address.seat.get('id') : null
+            value: pressedSeat || null
           },
           {
             type: 'select',
@@ -230,7 +234,11 @@ export class Scoreboard extends Widget {
           }
         ]
       });
-      await this.setCellScore({ seat: widgets.get(result.variables.player), round: this.totalsOnly ? 0 : +result.variables.round }, +result.variables.score);
+      // an empty Value erases the cell, the way an empty entry does on the other
+      // surfaces, rather than writing the 0 an empty number field reads as
+      const value = this.parseScore(result.variables.score);
+      if(value !== null)
+        await this.setCellScore({ seat: widgets.get(result.variables.player), round: this.totalsOnly ? 0 : +result.variables.round }, value);
     } catch(e) {
       console.log('The input overlay for the scoreboard failed to load.', e);
     }
@@ -243,7 +251,7 @@ export class Scoreboard extends Widget {
   pressedCell() {
     const cell = this.pressedCellDOM;
     this.pressedCellDOM = null;
-    return cell && this.tableDOM && this.tableDOM.contains(cell) && this.cellAddress(cell) ? cell : null;
+    return cell && this.tableDOM && this.tableDOM.contains(cell) ? cell : null;
   }
 
   // The seat and the round a cell holds the score of. Round 0 is the single
@@ -369,29 +377,61 @@ export class Scoreboard extends Widget {
       this.openEntrySurface(surface.mode, cell, surface.text);
   }
 
-  // A fixed-size overlay beside the cell rather than inside it: the keypad
-  // stays thumb-sized whatever the board is scaled to, and #roomArea keeps it
-  // within the board.
+  // A fixed-size overlay beside the board rather than inside the table, positioned
+  // against the viewport: the keypad stays thumb-sized whatever the board is scaled
+  // to, and a room area shorter than the pad - a phone in portrait - would clip the
+  // row the enter key is on. Beside the whole board rather than beside the cell,
+  // because a score sheet is read down a column and covering one hides the running
+  // total that is being added to; only where neither side has room does it fall
+  // back to under the cell, or over it.
   anchorToCell(dom, cell) {
-    const area = $('#roomArea');
-    if(!area)
-      return;
-    area.appendChild(dom);
-    const room = area.getBoundingClientRect();
+    if(dom.parentNode !== document.body)
+      document.body.appendChild(dom);
     const target = cell.getBoundingClientRect();
+    const board = this.domElement.getBoundingClientRect();
     const box = dom.getBoundingClientRect();
-    let top = target.bottom - room.top + 6;
-    if(top + box.height > room.height)
-      top = target.top - room.top - box.height - 6;
-    const left = target.left - room.left + target.width/2 - box.width/2;
-    dom.style.left = `${Math.max(4, Math.min(left, room.width - box.width - 4))}px`;
-    dom.style.top = `${Math.max(4, Math.min(top, room.height - box.height - 4))}px`;
+    const gap = 6;
+    const maxLeft = window.innerWidth - box.width - 4;
+    const maxTop = window.innerHeight - box.height - 4;
+    let left = board.right + gap;
+    let top = target.top;
+    if(left > maxLeft) {
+      left = board.left - box.width - gap;
+      if(left < 4) {
+        left = target.left + target.width/2 - box.width/2;
+        top = target.bottom + gap;
+        if(top > maxTop)
+          top = target.top - box.height - gap;
+      }
+    }
+    dom.style.left = `${Math.max(4, Math.min(left, maxLeft))}px`;
+    dom.style.top = `${Math.max(4, Math.min(top, maxTop))}px`;
+  }
+
+  // The table scrolls under the surface and the room is laid out again when the
+  // window changes, so the surface is put back beside its cell instead of being
+  // left floating over rows it has nothing to do with.
+  keepAnchoredToCell(surface, dom, cell) {
+    const reanchor = _=>this.anchorToCell(dom, cell);
+    const scroller = cell.closest('.scoreboardIntermediate');
+    if(scroller)
+      scroller.addEventListener('scroll', reanchor);
+    window.addEventListener('resize', reanchor);
+    const inner = surface.cleanup;
+    surface.cleanup = _=>{
+      if(scroller)
+        scroller.removeEventListener('scroll', reanchor);
+      window.removeEventListener('resize', reanchor);
+      if(inner)
+        inner();
+    };
+    reanchor();
   }
 
   // The button that switches to the other surface. It is offered only where the
   // board left the choice to the device, and what it chooses is remembered for
   // this browser.
-  addSurfaceSwitch(parent, mode, cell, text) {
+  addSurfaceSwitch(parent, mode, cell) {
     if(this.get('scoreEntry') != 'auto')
       return;
     const button = document.createElement('button');
@@ -402,6 +442,8 @@ export class Scoreboard extends Widget {
     // the press must not blur the cell being typed into before the click arrives
     button.addEventListener('mousedown', e=>e.preventDefault());
     button.addEventListener('click', _=>{
+      // what has been entered so far moves to the other surface, whichever way round
+      const text = this.entrySurface ? this.entrySurface.text : '';
       this.pinPlayerScoreEntry(mode);
       this.openEntrySurface(mode, cell, text);
     });
@@ -413,7 +455,7 @@ export class Scoreboard extends Widget {
     const header = div(pad, 'scoreboardKeypadHeader');
     const title = div(header, 'scoreboardKeypadTitle');
     title.textContent = `${address.seat.get('player') || '-'} · ${this.roundName(address.round)}`;
-    this.addSurfaceSwitch(header, 'type', cell, text);
+    this.addSurfaceSwitch(header, 'type', cell);
     // closing belongs with the title of the pad rather than among the keys,
     // where a cross reads as an operator next to the ones that are
     const close = document.createElement('button');
@@ -424,9 +466,12 @@ export class Scoreboard extends Widget {
     close.addEventListener('click', _=>this.keypadPress('cancel'));
     header.appendChild(close);
 
+    const current = this.cellText(address);
+    if(current !== '')
+      div(pad, 'scoreboardKeypadCurrent').textContent = `was ${current}`;
+
     const display = div(pad, 'scoreboardKeypadValue');
     display.textContent = text;
-    display.dataset.current = this.cellText(address);
 
     const keys = div(pad, 'scoreboardKeypadKeys');
     for(const row of keypadKeys) {
@@ -471,7 +516,7 @@ export class Scoreboard extends Widget {
         document.removeEventListener(event, outside);
     };
 
-    this.anchorToCell(pad, cell);
+    this.keepAnchoredToCell(surface, pad, cell);
   }
 
   async keypadPress(key) {
@@ -526,10 +571,10 @@ export class Scoreboard extends Widget {
     cell.appendChild(input);
 
     const switchBar = div(null, 'scoreEntrySwitchBar');
-    this.addSurfaceSwitch(switchBar, 'keypad', cell, '');
+    this.addSurfaceSwitch(switchBar, 'keypad', cell);
     if(switchBar.firstChild) {
       surface.dom = switchBar;
-      this.anchorToCell(switchBar, cell);
+      this.keepAnchoredToCell(surface, switchBar, cell);
     }
 
     input.addEventListener('input', _=>surface.text = input.value);

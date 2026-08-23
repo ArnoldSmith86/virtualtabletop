@@ -1325,7 +1325,7 @@ const editorPropertyHints = {
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
-  scoreEntry: 'How a player enters a score after clicking a cell. Automatic gives a keypad to a touch device and typing in the cell to a keyboard, and lets each player switch.',
+  scoreEntry: 'How a player enters a score after clicking a cell. In JSON the values are auto, type (in the cell), keypad and cell (the pop-up edit pane). Automatic gives a keypad to a touch device and typing in the cell to a keyboard, and lets each player switch.',
   scoreProperty: 'The seat property recorded as the score for each round.',
   playersInColumns: 'Put players in columns instead of rows.',
   showTotals: 'Add a total across all recorded rounds.',

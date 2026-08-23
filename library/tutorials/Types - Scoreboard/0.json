@@ -275,7 +275,7 @@
     "width": 525,
     "z": 10076,
     "movable": false,
-    "text": "This scoreboard has 'playersInColumns' set to false. It swaps rows and columns in the display. You can also click on this scoreboard to enter data. This is the default but it has been disabled on the other scoreboards in the room. When clicking, use the pop-up menu to select the player, round, and score, and the information will be added to the scoreboard.",
+    "text": "This scoreboard has 'playersInColumns' set to false. It swaps rows and columns in the display. You can also click on this scoreboard to enter data: clicking a cell types the score straight into that cell. This is the default but 'clickable' has been set to false on several of the other scoreboards in the room, which turns it off.",
     "layer": -2
   },
   "scoreboard5": {
@@ -320,6 +320,7 @@
     "scoreProperty": "bids",
     "roundLabel": "Bids",
     "autosizeColumns": false,
+    "scoreEntry": "cell",
     "editPaneTitle": "Enter Bids"
   },
   "comment6": {
@@ -329,7 +330,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard uses 'scoreProperty' property to pull different data from the seat. The default is 'score'. This example uses 'bids'. It also changes the text in the first cell from 'Round' to 'Bids' using the `roundLabel' property. The 'editPaneTitle' property was also changed, which shows up when you click to change the score.",
+    "text": "This scoreboard uses 'scoreProperty' property to pull different data from the seat. The default is 'score'. This example uses 'bids'. It also changes the text in the first cell from 'Round' to 'Bids' using the `roundLabel' property. 'scoreEntry' is set to 'cell', so clicking opens the pop-up pane instead of typing in the cell, and the 'editPaneTitle' property changes its title.",
     "layer": -2
   },
   "scoreboard7": {

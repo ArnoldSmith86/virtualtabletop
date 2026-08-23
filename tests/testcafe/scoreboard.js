@@ -161,3 +161,27 @@ test('The wheel scrolls a scoreboard that has a scrollbar instead of zooming the
   await t.expect(await wheelOver('#w_board .scoreboardIntermediate')).notOk();
   await t.expect(await wheelOver('#roomArea')).ok();
 });
+
+test('The total of a player opens the pane on that player, and an empty value erases', async t => {
+  await t.resizeWindow(1280, 800);
+  await roomWithBoard(t);
+  const pane = Selector('#buttonInputOverlay');
+  const player = pane.find('select').nth(0);
+  const round = pane.find('select').nth(1);
+  const value = pane.find('input[type=number]');
+  // a computed total holds no round of its own, so it opens the pane - on the
+  // player whose column it is in
+  await t
+    .click(Selector('#w_board td[data-seat="seat2"][data-total]'))
+    .expect(pane.visible).ok()
+    .expect(player.value).eql('seat2');
+  // an empty Value erases the cell the way an empty entry does on the other
+  // surfaces, instead of writing the 0 an empty number field reads as
+  await t
+    .click(round)
+    .click(round.find('option').withText('R1'))
+    .selectText(value)
+    .pressKey('delete')
+    .click('#buttonInputGo');
+  await t.expect((await scores()).seat2).eql([ '', 11 ]);
+});
