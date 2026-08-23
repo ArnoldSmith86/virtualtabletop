@@ -1,0 +1,484 @@
+{
+  "name": "Spanish playing cards",
+  "description": "Spanish-suited 48-card deck (baraja española) with coins, cups, swords and clubs.",
+  "attribution": "Card images by Germarquezm, deck arrangement by Basquetteur, available under CC BY-SA 3.0.",
+  "deck": {
+    "type": "deck",
+    "cardTypes": {
+      "Club 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 1
+      },
+      "Club 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 2
+      },
+      "Club 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 3
+      },
+      "Club 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 4
+      },
+      "Club 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 5
+      },
+      "Club 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 6
+      },
+      "Club 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 7
+      },
+      "Club 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 8
+      },
+      "Club 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 9
+      },
+      "Club 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 10
+      },
+      "Club 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 11
+      },
+      "Club 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Club.svg",
+        "suitImage": "i/cards-spanish/club.svg",
+        "suit": 1,
+        "order": 12
+      },
+      "Coin 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 1
+      },
+      "Coin 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 2
+      },
+      "Coin 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 3
+      },
+      "Coin 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 4
+      },
+      "Coin 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 5
+      },
+      "Coin 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 6
+      },
+      "Coin 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 7
+      },
+      "Coin 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 8
+      },
+      "Coin 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 9
+      },
+      "Coin 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 10
+      },
+      "Coin 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 11
+      },
+      "Coin 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Coin.svg",
+        "suitImageR": "i/cards-spanish/coin.svg",
+        "suit": 2,
+        "order": 12
+      },
+      "Cup 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 1
+      },
+      "Cup 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 2
+      },
+      "Cup 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 3
+      },
+      "Cup 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 4
+      },
+      "Cup 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 5
+      },
+      "Cup 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 6
+      },
+      "Cup 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 7
+      },
+      "Cup 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 8
+      },
+      "Cup 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 9
+      },
+      "Cup 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 10
+      },
+      "Cup 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 11
+      },
+      "Cup 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Cup.svg",
+        "suitImageR": "i/cards-spanish/cup.svg",
+        "suit": 3,
+        "order": 12
+      },
+      "Sword 01": {
+        "rank": "1",
+        "rankImage": "i/cards-spanish/1Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 1
+      },
+      "Sword 02": {
+        "rank": "2",
+        "rankImage": "i/cards-spanish/2Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 2
+      },
+      "Sword 03": {
+        "rank": "3",
+        "rankImage": "i/cards-spanish/3Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 3
+      },
+      "Sword 04": {
+        "rank": "4",
+        "rankImage": "i/cards-spanish/4Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 4
+      },
+      "Sword 05": {
+        "rank": "5",
+        "rankImage": "i/cards-spanish/5Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 5
+      },
+      "Sword 06": {
+        "rank": "6",
+        "rankImage": "i/cards-spanish/6Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 6
+      },
+      "Sword 07": {
+        "rank": "7",
+        "rankImage": "i/cards-spanish/7Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 7
+      },
+      "Sword 08": {
+        "rank": "8",
+        "rankImage": "i/cards-spanish/8Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 8
+      },
+      "Sword 09": {
+        "rank": "9",
+        "rankImage": "i/cards-spanish/9Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 9
+      },
+      "Sword 10": {
+        "rank": "10",
+        "rankImage": "i/cards-spanish/10Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 10
+      },
+      "Sword 11": {
+        "rank": "11",
+        "rankImage": "i/cards-spanish/11Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 11
+      },
+      "Sword 12": {
+        "rank": "12",
+        "rankImage": "i/cards-spanish/12Sword.svg",
+        "suitImage": "i/cards-spanish/sword.svg",
+        "suit": 4,
+        "order": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 20,
+            "y": 20,
+            "width": 63,
+            "height": 120,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImageR"
+            },
+            "css": {
+              "background-size": "50% 50%"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImageR"
+            },
+            "rotation": 180,
+            "css": {
+              "background-size": "50% 50%"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            },
+            "rotation": 180
+          }
+        ]
+      }
+    ]
+  }
+}

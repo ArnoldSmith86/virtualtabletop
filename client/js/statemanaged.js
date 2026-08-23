@@ -86,7 +86,7 @@ export class StateManaged {
   }
 
   inheritFromIsValid(properties, key) {
-    if([ 'id', 'type', 'deck', 'cardType' ].indexOf(key) != -1)
+    if([ 'id', 'type', 'deck', 'cardType', 'lineOriginalRotation' ].indexOf(key) != -1)
       return false;
     if(properties == '*')
       return true;

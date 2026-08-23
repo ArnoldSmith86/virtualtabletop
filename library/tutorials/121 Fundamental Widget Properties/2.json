@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1764462779921,
+      "lastUpdate": 1787512070708,
       "showName": false,
       "skill": "",
       "description": "",
@@ -75,7 +75,7 @@
   "text1": {
     "id": "text1",
     "x": 4,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -83,7 +83,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above is the default <b>rotation</b> for a button, which is 0. Like most properties, <b>rotation</b> does not even show up as grey in the Editor if it is the default value. Click the button to use SET to change the rotation by 30 degrees counter-clockwise per click. After changing the <b>rotation</b> several times, erase the <b>rotation</b> line in the editor. Notice how it goes back to the default value. Now directly set the property to whatever value you want in the Editor.",
+    "html": "The button above is the default <b>rotation</b> for a button, which is 0. Like most properties, <b>rotation</b> does not even show up as grey in the JSON Editor menu if it is the default value. Click the button to use SET to change the rotation by 30 degrees counter-clockwise per click. After changing it several times, erase the <b>rotation</b> line in the JSON Editor menu and it goes back to the default. Now set it to whatever you want there, or in the <b>Rotation</b> field under Position in the Edit Widgets menu.",
     "layer": -2
   },
   "button1": {
@@ -106,7 +106,7 @@
   "text2": {
     "id": "text2",
     "x": 325,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 121,
     "movable": false,
@@ -120,7 +120,7 @@
   "text3": {
     "id": "text3",
     "x": 651,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -703,7 +703,7 @@
     "type": "holder",
     "id": "holder",
     "x": 1064,
-    "y": 549,
+    "y": 499,
     "z": 133,
     "dropTarget": {
       "type": "card"
@@ -1218,7 +1218,7 @@
   "text5": {
     "id": "text5",
     "x": 1294,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "height": 445,
     "z": 9732,
@@ -1232,7 +1232,7 @@
   "basic": {
     "id": "basic",
     "x": 398,
-    "y": 845,
+    "y": 795,
     "width": 125,
     "height": 125,
     "movable": false,
