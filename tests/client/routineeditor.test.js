@@ -22,6 +22,8 @@ beforeAll(() => {
   window.config = { aiRoutineEndpoint: 'https://agent.virtualtabletop.io/routine-assist' }; // inlined into room.html by the server
   window.validateGameFile = validateGameFile; // the editor bundle carries the validator
   window.roomID = 'testroom'; // the tutorial links of info popups use it
+  window.undoneChanges = 0;
+  window.undoLastChange = () => window.undoneChanges++; // the editor toolbar's own action (toolbar/undo.js)
   window.setSelection = () => {};
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
@@ -59,7 +61,8 @@ beforeAll(() => {
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine', 'aiChangedOperations',
-    'aiRecordResult', 'aiForgetResult', 'aiForgetAllResults', 'aiMergeProblems', 'aiWithoutInlineData', 'AI_POLL_INTERVAL'
+    'aiRecordResult', 'aiForgetResult', 'aiForgetAllResults', 'aiMergeProblems', 'aiWithoutInlineData', 'AI_POLL_INTERVAL',
+    'AI_PROMPT_EXAMPLES'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -4247,6 +4250,102 @@ describe('AI routine assistant', () => {
     expect(aiMergeProblems([ { message: 'a' } ], [ { message: 'a' }, { message: 'b' } ]))
       .toEqual([ { message: 'a' }, { message: 'b' } ]);
     expect(aiMergeProblems([ 'said as a plain string' ], [])).toEqual([ { message: 'said as a plain string' } ]);
+  });
+
+  test('the mark on a changed operation is its own, not the border that says what it is', () => {
+    const { editor } = withResult();
+    const cards = editor.routineEditors.clickRoutine.directChildCards();
+    // the card's left border carries the color legend the routine editor teaches,
+    // so the mark is a tint of the card plus a badge of its own
+    expect(cards[1].classList.contains('routine-editor-operation-ai-changed')).toBe(true);
+    expect(cards[1].querySelector('.routine-editor-operation-ai-badge')).not.toBe(null);
+    expect(cards[0].querySelector('.routine-editor-operation-ai-badge')).toBe(null);
+    // and it is not doubled when the section renders again
+    editor.render();
+    expect(editor.routineEditors.clickRoutine.directChildCards()[1]
+      .querySelectorAll('.routine-editor-operation-ai-badge').length).toBe(1);
+  });
+
+  test('a problem in the note marks the operation it is about', () => {
+    const before = [ { func: 'FLIP' } ];
+    const after = [ { func: 'FLIP' }, { func: 'MOVE', from: 'ghost', to: 'ghost' } ];
+    const { widget, editor } = makeEditor({ type: 'button', clickRoutine: before });
+    // the popup validates the answer before it is written, the way it really runs
+    const problems = aiValidateRoutine(widget.get('id'), 'clickRoutine', after, 'widget');
+    expect(problems.length).toBeGreaterThan(0);
+    widget.state.clickRoutine = after;
+    editor.expandedEvents.clickRoutine = true;
+    aiRecordResult(widget.get('id'), 'clickRoutine', before, after, { problems }, 'clickRoutine');
+    editor.render();
+    const cards = editor.routineEditors.clickRoutine.directChildCards();
+    expect(cards[0].querySelector('.routine-editor-operation-ai-problem')).toBe(null);
+    expect(cards[1].querySelector('.routine-editor-operation-ai-problem')).not.toBe(null);
+    // and every problem is a line of its own rather than one run-on sentence
+    expect(editor.domElement.querySelectorAll('.ai-routine-note-problems li').length).toBe(problems.length);
+  });
+
+  test('the note offers the undo it promises', () => {
+    const { editor } = withResult();
+    const before = window.undoneChanges;
+    editor.domElement.querySelector('.ai-routine-note-undo').dispatchEvent(new Event('click'));
+    expect(window.undoneChanges).toBe(before + 1);
+    // the note goes with what it took back, here and on the render the undo causes
+    expect(editor.domElement.querySelector('.ai-routine-note')).toBe(null);
+    editor.render();
+    expect(editor.domElement.querySelector('.ai-routine-note')).toBe(null);
+  });
+
+  test('the donation is asked for once, not on every routine written', () => {
+    const first = withResult();
+    expect(first.editor.domElement.querySelector('.ai-routine-note-donate')).not.toBe(null);
+    const second = withResult();
+    expect(second.editor.domElement.querySelector('.ai-routine-note-donate')).toBe(null);
+  });
+
+  test('the popup leads with its action and offers a way out of the wait', () => {
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+    const popup = openAiPopup(editor);
+    const buttons = [ ...popup.domElement.querySelectorAll('.ai-routine-buttons button') ];
+    expect(buttons.map(b => b.textContent)).toEqual([ 'Write it', 'Cancel' ]);
+    expect(buttons[0].classList.contains('primary')).toBe(true);
+    popup.hide();
+  });
+
+  test('the title says which routine is about to be written', () => {
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+    const popup = openAiPopup(editor);
+    expect(popup.domElement.querySelector('h1').textContent).toContain('Write the click routine with AI');
+    popup.hide();
+  });
+
+  test('the examples are offered as something to press, not only as a placeholder', () => {
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+    const popup = openAiPopup(editor);
+    const chips = [ ...popup.domElement.querySelectorAll('.ai-routine-example') ];
+    expect(chips.map(c => c.textContent)).toEqual(AI_PROMPT_EXAMPLES);
+    chips[1].dispatchEvent(new Event('click'));
+    expect(popup.input.value).toBe(AI_PROMPT_EXAMPLES[1]);
+    popup.hide();
+  });
+
+  test('a widget with no routine yet is offered one in words', () => {
+    // the editor reads the routines back off the widget, so the change lands there
+    const made = makeEditor({ type: 'button' }, (property, value) => made.widget.state[property] = value);
+    const editor = made.editor;
+    const addAI = editor.domElement.querySelector('.events-editor-add-ai');
+    expect(addAI).not.toBe(null);
+    expect(addAI.textContent).toContain('write one with AI');
+    addAI.dispatchEvent(new Event('click'));
+    // it picks which routine to write with the same popup "add routine" uses...
+    const picker = openPopups.find(p => p instanceof AddEventPopup);
+    expect(picker).toBeDefined();
+    picker.callback('clickRoutine', 'widget');
+    // ...and then opens the assistant on the routine it just made
+    expect(editor.expandedEvents.clickRoutine).toBe(true);
+    const popup = openPopups.filter(p => p instanceof AiRoutinePopup).pop();
+    expect(popup).toBeDefined();
+    popup.hide();
+    picker.hide();
   });
 
   test('what the assistant wrote is forgotten when the room is replaced', () => {

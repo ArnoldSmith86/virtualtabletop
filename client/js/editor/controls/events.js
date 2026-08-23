@@ -454,9 +454,12 @@ class EventsEditor {
         this.expandedEvents[key] = true; // land on the result rather than a closed card
         // recorded before anything renders: rendering is what marks the changed
         // operations and writes the note, here and on every re-render after it
-        aiRecordResult(this.widget.get('id'), key, before, routine, result);
+        aiRecordResult(this.widget.get('id'), key, before, routine, result, property);
         this.setRoutine(entry, routine);
         this.render();
+        // the routine can be further down the panel than the answer is tall, and
+        // the popup has just closed - without this nothing on screen has changed
+        aiScrollToResult(this.domElement.querySelector('.ai-routine-note'));
       });
 
       const removeButton = document.createElement('span');
@@ -521,6 +524,22 @@ class EventsEditor {
       popup.show();
     });
     addButton.className = 'events-editor-add';
+
+    aiAddRoutineButton(this.domElement, source=>{
+      const existing = {};
+      for(const target of targets)
+        existing[target] = routinePropertiesIn(this.routineSource(target));
+      // which routine to write is picked with the same popup "add routine" uses,
+      // and the assistant then opens on the empty routine it made
+      const popup = new AddEventPopup(source, existing, (property, target)=>{
+        const key = routineEntryKey(property, target);
+        this.expandedEvents[key] = true;
+        this.setRoutine({ property, target, key }, []);
+        this.render();
+        aiOpenOnRoutine(this.domElement, key);
+      }, widgetTypeOf(this.widget));
+      popup.show();
+    });
 
     this.renderPropertyAutomations();
   }

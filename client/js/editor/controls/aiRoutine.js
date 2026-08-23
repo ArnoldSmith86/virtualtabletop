@@ -2,7 +2,9 @@
 //
 // The button sits on every routine card of the Automations section, so the AI
 // works on the routine you are already looking at rather than asking you to name
-// a widget and a property first. What comes back is not shown as a preview to
+// a widget and a property first. It is offered a second time in words next to
+// "add routine", for the author who has no routine yet - which is where not
+// knowing what to write is a wall in the first place. What comes back is not shown as a preview to
 // approve: it is written to the routine straight away, with the operations that
 // changed highlighted, because reading a page of JSON in a popup is a worse way
 // to judge a routine than looking at the routine itself. It goes through the
@@ -37,13 +39,15 @@ const AI_PROMPT_EXAMPLES = [
 ];
 
 // Mirrors the steps the service offers; the descriptions are what the player
-// actually chooses between - a name like "Sonnet" would mean nothing to them.
+// actually chooses between - a name like "Sonnet" would mean nothing to them,
+// and neither does "more thinking" without the seconds it costs, which is the
+// half of the trade the reader is about to sit through.
 const AI_QUALITY_STEPS = [
-  { label: 'Quickest', note: 'seconds - fine for a couple of operations' },
-  { label: 'Quick', note: 'thinks a little before answering' },
-  { label: 'Balanced', note: 'the usual choice' },
-  { label: 'Careful', note: 'for routines with several steps' },
-  { label: 'Best', note: 'for the ones that need to get the game right' }
+  { label: 'Quickest', note: 'about 10 seconds - fine for a couple of operations' },
+  { label: 'Quick', note: 'about 20 seconds - thinks a little before answering' },
+  { label: 'Balanced', note: 'about half a minute - the usual choice' },
+  { label: 'Careful', note: 'about a minute - for routines with several steps' },
+  { label: 'Best', note: 'a minute or more - for the ones that need to get the game right' }
 ];
 const AI_DEFAULT_QUALITY = 3;
 
@@ -187,15 +191,39 @@ function aiResultKey(widgetID, routineKey) {
   return JSON.stringify([ widgetID, routineKey ]);
 }
 
-function aiRecordResult(widgetID, routineKey, before, after, result) {
+// Asked once per session rather than on every answer: the ask belongs where the
+// feature has just paid off, but on the tenth routine of an afternoon it is only
+// in the way of the routine it is sitting on top of.
+let aiDonateAsked = false;
+
+function aiRecordResult(widgetID, routineKey, before, after, result, property) {
   aiRoutineResults.set(aiResultKey(widgetID, routineKey), {
     before: JSON.parse(JSON.stringify(Array.isArray(before) ? before : [])),
     after: JSON.parse(JSON.stringify(Array.isArray(after) ? after : [])),
     hadRoutine: Array.isArray(before) && before.length > 0,
     explanation: result && result.explanation,
     problems: (result && result.problems) || [],
+    property, // the name a validator problem's path starts with
+    donate: !aiDonateAsked,
     flashed: false
   });
+  aiDonateAsked = true;
+}
+
+// Which operations the validator's problems are about. A problem carries the
+// path it was found at, which for a routine of the widget starts with the
+// routine's own property and continues with the index of the operation - so the
+// warning above the routine can be tied to the card it is warning about.
+function aiProblemOperations(record) {
+  const operations = new Set();
+  for(const problem of record.problems) {
+    const path = problem && problem.property;
+    if(!Array.isArray(path) || path[0] !== record.property)
+      continue;
+    if(typeof path[1] == 'number')
+      operations.add(path[1]);
+  }
+  return operations;
 }
 
 function aiForgetResult(widgetID, routineKey) {
@@ -210,18 +238,63 @@ function aiMarkChangedOperations(routineEditor) {
   if(!record)
     return;
   const changed = aiChangedOperations(record.before, routineEditor.routine);
+  const problems = aiProblemOperations(record);
   const cards = routineEditor.directChildCards();
+  const marked = [];
   for(const index of changed) {
     if(!cards[index])
       continue;
     cards[index].classList.add('routine-editor-operation-ai-changed');
-    // the flash is for the moment the answer lands; replaying it on every later
-    // render would make typing somewhere else in the routine a light show
-    if(!record.flashed)
-      cards[index].classList.add('routine-editor-operation-ai-flash');
+    aiOperationBadge(cards[index], 'auto_awesome', 'routine-editor-operation-ai-badge', 'Written by the AI assistant');
+    marked.push(cards[index]);
   }
-  record.flashed = true;
+  for(const index of problems)
+    if(cards[index])
+      aiOperationBadge(cards[index], 'warning', 'routine-editor-operation-ai-problem', 'The note above the routine says what is wrong here');
+
+  // the flash is for the moment the answer lands, and only once it can be seen:
+  // the routine can be rendered below the fold, and replaying it on every later
+  // render would make typing somewhere else in the routine a light show
+  if(record.observer)
+    record.observer.disconnect();
+  if(!record.flashed && marked.length)
+    record.observer = aiFlashWhenVisible(marked, _=>record.flashed = true);
   return changed;
+}
+
+// A mark in the operation's own header line, next to the name of the operation.
+function aiOperationBadge(card, symbol, className, title) {
+  const header = card.querySelector('.routine-editor-operation-func');
+  if(!header || header.querySelector(`.${className}`))
+    return;
+  const badge = document.createElement('span');
+  badge.className = `material-symbols ${className}`;
+  badge.textContent = symbol;
+  badge.title = title;
+  header.append(badge);
+}
+
+// Play the flash once the cards are actually on screen. Without a viewport
+// observer it is played straight away, which is what happens in a browser that
+// has none and in the tests.
+function aiFlashWhenVisible(cards, done) {
+  const flash = _=>{
+    for(const card of cards)
+      card.classList.add('routine-editor-operation-ai-flash');
+    done();
+  };
+  if(typeof IntersectionObserver != 'function') {
+    flash();
+    return null;
+  }
+  const observer = new IntersectionObserver(entries=>{
+    if(!entries.some(entry=>entry.isIntersecting))
+      return;
+    observer.disconnect();
+    flash();
+  });
+  observer.observe(cards[0]);
+  return observer;
 }
 
 // The line above the routine saying what was just written into it, rebuilt
@@ -239,47 +312,89 @@ function aiShowResultNote(container, routineEditor) {
   const summary = record.hadRoutine
     ? `Rewritten - ${changed.size} of ${routine.length} operations are new or changed${kept ? `, ${kept} kept` : ''}.`
     : `Written - ${routine.length} operation${routine.length == 1 ? '' : 's'}.`;
-  // one press of undo only puts back what the assistant wrote for as long as
-  // nothing has been changed by hand since
-  const undone = JSON.stringify(routine) === JSON.stringify(record.after) ? ' Undo puts it back.' : '';
 
   const note = document.createElement('div');
   note.className = 'ai-routine-note';
-  div(note, 'ai-routine-note-head').textContent = `${summary}${undone}`;
+  // dismissing the note and undoing what it is about both end it: it stops being
+  // shown from now on, and the marks it put on the cards go with it
+  const forget = _=>{
+    aiForgetResult(routineEditor.widgetID, routineEditor.routineKey);
+    note.remove();
+    for(const card of routineEditor.directChildCards()) {
+      card.classList.remove('routine-editor-operation-ai-changed', 'routine-editor-operation-ai-flash');
+      for(const badge of card.querySelectorAll('.routine-editor-operation-ai-badge, .routine-editor-operation-ai-problem'))
+        badge.remove();
+    }
+  };
+  div(note, 'ai-routine-note-head').textContent = summary;
   if(record.explanation)
     div(note, 'ai-routine-note-text').textContent = record.explanation;
 
   if(record.problems.length) {
     const warn = div(note, 'ai-routine-note-warning');
-    warn.textContent = record.problems.length == 1
-      ? `It could not get one thing right: ${record.problems[0].message}`
-      : `${record.problems.length} things in it are still wrong: ${record.problems.map(p=>p.message).join('; ')}`;
+    const head = document.createElement('span');
+    head.className = 'material-symbols';
+    head.textContent = 'warning';
+    warn.append(head, document.createTextNode(record.problems.length == 1
+      ? ' It could not get one thing right:'
+      : ` ${record.problems.length} things in it are still wrong:`));
+    // one per line: joined into a sentence they wrap into a block nobody reads,
+    // and a routine can come back with six of them
+    const list = document.createElement('ul');
+    list.className = 'ai-routine-note-problems';
+    for(const problem of record.problems) {
+      const item = document.createElement('li');
+      item.textContent = problem.message;
+      list.append(item);
+    }
+    warn.append(list);
+  }
+
+  // one press of undo only puts back what the assistant wrote for as long as
+  // nothing has been changed by hand since - and the note is where the offer
+  // belongs, rather than sending the reader to look for the toolbar
+  if(JSON.stringify(routine) === JSON.stringify(record.after)) {
+    const actions = div(note, 'ai-routine-note-actions');
+    const undo = button(actions, 'Undo - put the routine back', _=>{
+      forget();
+      undoLastChange();
+    });
+    undo.className = 'ai-routine-note-undo';
   }
 
   // asked for right where the feature has just paid off, which is the only
   // place the answer to "is this worth paying for" is in front of the reader
-  const donate = div(note, 'ai-routine-note-donate');
-  donate.append(document.createTextNode('If you like this feature, please consider '));
-  const donateLink = document.createElement('a');
-  donateLink.href = AI_DONATE_URL;
-  donateLink.target = '_blank';
-  donateLink.rel = 'noopener';
-  donateLink.textContent = 'donating';
-  donate.append(donateLink, document.createTextNode(". AI isn't free."));
+  if(record.donate) {
+    const donate = div(note, 'ai-routine-note-donate');
+    donate.append(document.createTextNode('If you like this feature, please consider '));
+    const donateLink = document.createElement('a');
+    donateLink.href = AI_DONATE_URL;
+    donateLink.target = '_blank';
+    donateLink.rel = 'noopener';
+    donateLink.title = 'Opens virtualtabletop.io on Patreon in a new tab';
+    donateLink.textContent = 'donating';
+    donate.append(donateLink, document.createTextNode(". AI isn't free."));
+  }
 
   const dismiss = document.createElement('span');
   dismiss.className = 'material-symbols ai-routine-note-close';
   dismiss.textContent = 'close';
   dismiss.title = 'Dismiss';
-  dismiss.addEventListener('click', _=>{
-    aiForgetResult(routineEditor.widgetID, routineEditor.routineKey);
-    note.remove();
-    for(const card of routineEditor.directChildCards())
-      card.classList.remove('routine-editor-operation-ai-changed', 'routine-editor-operation-ai-flash');
-  });
+  focusable(dismiss, forget);
   note.append(dismiss);
   container.insertBefore(note, routineEditor.domElement);
   return note;
+}
+
+// Bring what was just written on screen. The routine can be rendered far below
+// the fold of the sidebar - the popup then closes, the panel still shows what it
+// showed before, and nothing says the answer has landed at all.
+function aiScrollToResult(note) {
+  // the routine card the note belongs to, so what was written keeps the header
+  // that says which routine it is
+  const target = note && (note.closest('.events-editor-event') || note);
+  if(target && typeof target.scrollIntoView == 'function')
+    target.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 // What was last asked of a routine, so reopening the popup to say it differently
@@ -294,6 +409,7 @@ const aiLastPrompts = new Map();
 function aiForgetAllResults() {
   aiRoutineResults.clear();
   aiLastPrompts.clear();
+  aiDonateAsked = false;
 }
 
 class AiRoutinePopup extends Popup {
@@ -316,6 +432,13 @@ class AiRoutinePopup extends Popup {
     this.domElement.classList.add('ai-routine-popup');
   }
 
+  // A few sentences are typed into this one, and the half-window every other
+  // popup settles for is a thirty-character box on a phone. Wider than a line of
+  // prose reads comfortably is no use either, hence the cap.
+  maxPopupWidth() {
+    return Math.min(460, window.innerWidth * 0.9);
+  }
+
   show() {
     super.show();
     // closing the popup gives up on the job: writing a routine takes long enough
@@ -323,7 +446,7 @@ class AiRoutinePopup extends Popup {
     // itself onto a widget nobody is looking at any more is worse than none
     this.registerCancelListener(_=>this.giveUp());
     const label = describeEventProperty(this.property).label;
-    this.setTitle(`Write ${label}${this.target == 'cardDefaults' ? ' of every card' : ''} with AI`);
+    this.setTitle(`Write the ${label} routine${this.target == 'cardDefaults' ? ' of every card' : ''} with AI`);
     this.renderBody();
     this.moveIntoView();
   }
@@ -341,20 +464,17 @@ class AiRoutinePopup extends Popup {
       this.bodyDOM.remove();
     this.bodyDOM = div(this.domElement, 'ai-routine-body');
 
+    // what it does for the reader first, the safety net second: the sentence
+    // that might make someone hesitate is not the one to open with
     const has = Array.isArray(this.currentRoutine) && this.currentRoutine.length;
     div(this.bodyDOM, 'ai-routine-intro').textContent = has
-      ? 'Say what this routine should do instead, or what to change about it. It is rewritten as a whole and applied right away - undo takes it back.'
+      ? 'Say what this routine should do instead, or what to change about it. Name the things you see on the board - the widgets are looked up for you. It is rewritten as a whole; undo takes it back.'
       : 'Say what should happen, in your own words. Name the things you see on the board - the widgets are looked up for you.';
     // the one thing the name of the routine cannot say, and the thing the answer
     // is wrong about if it is not said: which widget this ends up running on
     if(this.target == 'cardDefaults')
       div(this.bodyDOM, 'ai-routine-intro').textContent
         = 'It runs on every card this deck hands out, not on the deck - so "this widget" is a card.';
-    // a routine is written out of this room, so this room is what the request
-    // carries - worth saying next to the box it is typed into rather than only
-    // in the source of the thing sending it
-    div(this.bodyDOM, 'ai-routine-privacy').textContent
-      = `What you write and the widgets in this room are sent to ${aiRoutineHost()}, so the routine can use the widgets you actually have.`;
 
     this.input = document.createElement('textarea');
     this.input.className = 'ai-routine-prompt';
@@ -369,15 +489,50 @@ class AiRoutinePopup extends Popup {
       e.stopPropagation();
     });
 
+    this.renderExamples();
+
+    // a routine is written out of this room, so this room is what the request
+    // carries - worth saying next to the box it is typed into rather than only
+    // in the source of the thing sending it
+    const privacy = div(this.bodyDOM, 'ai-routine-privacy');
+    const privacyIcon = document.createElement('span');
+    privacyIcon.className = 'material-symbols';
+    privacyIcon.textContent = 'cloud_upload';
+    privacy.append(privacyIcon, document.createTextNode(
+      `What you write and the widgets in this room are sent to ${aiRoutineHost()}, so the routine can use the widgets you actually have. They are not stored there.`));
+
     this.renderQuality();
 
     const buttons = div(this.bodyDOM, 'ai-routine-buttons');
     this.generateButton = button(buttons, 'Write it', _=>this.generate());
+    this.generateButton.classList.add('primary');
     this.generateButton.disabled = this.busy;
+    // the x in the title bar gives up on the job, but nothing says so - and
+    // "can I still stop this" is the question of a minute-long wait
+    this.cancelButton = button(buttons, 'Cancel', _=>{
+      this.giveUp();
+      this.hide();
+    });
 
     this.statusDOM = div(this.bodyDOM, 'ai-routine-status');
     if(!this.busy)
       setTimeout(_=>this.input.focus(), 0);
+  }
+
+  // The examples the placeholder can only show one of, offered as something to
+  // press: "I don't know what to type" is the first wall, and they are also what
+  // teaches how much detail the assistant wants.
+  renderExamples() {
+    const examples = div(this.bodyDOM, 'ai-routine-examples');
+    for(const example of AI_PROMPT_EXAMPLES) {
+      const chip = div(examples, 'ai-routine-example');
+      chip.textContent = example;
+      chip.title = 'Put this in the box';
+      focusable(chip, _=>{
+        this.input.value = example;
+        this.input.focus();
+      });
+    }
   }
 
   renderQuality() {
@@ -396,7 +551,7 @@ class AiRoutinePopup extends Popup {
     });
     this.qualityInput.addEventListener('keydown', e=>e.stopPropagation());
     row.append(this.qualityInput);
-    div(row, 'ai-routine-quality-end').textContent = 'Good';
+    div(row, 'ai-routine-quality-end').textContent = 'Thorough';
     this.qualityLabel = div(this.bodyDOM, 'ai-routine-quality-label');
     this.showQualityLabel();
   }
@@ -408,7 +563,12 @@ class AiRoutinePopup extends Popup {
 
   setStatus(text, kind) {
     this.statusDOM.className = `ai-routine-status${kind ? ` ai-routine-${kind}` : ''}`;
-    this.statusDOM.textContent = text || '';
+    this.statusDOM.textContent = '';
+    // something moving for as long as it is working: a line of text that changes
+    // every other second reads as a popup that has stalled
+    if(this.busy && !kind)
+      div(this.statusDOM, 'ai-routine-spinner');
+    this.statusDOM.append(document.createTextNode(text || ''));
     this.moveIntoView();
   }
 
@@ -451,6 +611,7 @@ class AiRoutinePopup extends Popup {
     this.generateButton.disabled = false;
     this.qualityInput.disabled = false;
     this.generateButton.textContent = 'Try again';
+    this.cancelButton.textContent = 'Close';
   }
 
   // Start a job, then follow it: writing a routine takes long enough that a
@@ -522,10 +683,35 @@ function aiRoutineButton(headerDOM, widget, entry, getRoutine, apply) {
   aiButton.className = 'material-symbols events-editor-ai';
   aiButton.textContent = 'auto_awesome';
   aiButton.title = 'Describe this routine in plain English and have it written';
-  aiButton.addEventListener('click', e=>{
-    e.stopPropagation();
-    new AiRoutinePopup(aiButton, widget, entry, getRoutine(), apply).show();
-  });
+  // the info buttons in the same header are reachable by keyboard; the icons
+  // next to this one are not - this follows the better of the two
+  focusable(aiButton, _=>new AiRoutinePopup(aiButton, widget, entry, getRoutine(), apply).show());
+  aiButton.dataset.routineKey = entry.key || entry.property;
   headerDOM.append(aiButton);
   return aiButton;
+}
+
+// The other way in: the icon on a routine card only exists once a routine does,
+// and it is one of five 16px glyphs on a card an author has to have made first.
+// This says it in words in the row that makes routines, which is where someone
+// who has none yet - and does not know what to type - actually is.
+function aiAddRoutineButton(container, onPick) {
+  if(!aiRoutineEndpoint())
+    return null;
+
+  const addAI = button(container, 'write one with AI', _=>onPick(addAI));
+  addAI.className = 'events-editor-add events-editor-add-ai';
+  const icon = document.createElement('span');
+  icon.className = 'material-symbols';
+  icon.textContent = 'auto_awesome';
+  addAI.prepend(icon);
+  return addAI;
+}
+
+// The card's own AI button, for opening the assistant on a routine that was
+// just added - the popup is anchored to the control it belongs to.
+function aiOpenOnRoutine(container, key) {
+  const aiButton = [ ...container.querySelectorAll('.events-editor-ai') ].find(b=>b.dataset.routineKey == key);
+  if(aiButton)
+    aiButton.click();
 }
