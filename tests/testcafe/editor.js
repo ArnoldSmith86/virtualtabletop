@@ -4361,6 +4361,56 @@ test('Back and forward give the keyboard back to the JSON editor', async t => {
   await setEditorState(null);
 });
 
+// What is in the widget buffer is written by whichever game it was copied out of, so pasting it
+// into a game with different legacy modes asks first. The dialog it asks in hides every other
+// overlay - including the one a sidebar module is opened into with shift+click - so answering it
+// has to give that module back.
+const setWidgetBuffer = ClientFunction(buffer => {
+  if(buffer)
+    localStorage.setItem('widgetBuffer', JSON.stringify(buffer));
+  else
+    localStorage.removeItem('widgetBuffer');
+});
+
+test('Pasting the widget buffer across legacy modes asks, and keeps the module it asks from', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  // a holder that draws an image itself: what disableHolderImageWidget switches, so the mode can
+  // reach these widgets and the difference is worth telling the user about
+  await setWidgetBuffer({
+    legacyModes: { disableHolderImageWidget: true },
+    widgets: [ { id: 'legacyHolder', type: 'holder', image: '/i/box.svg', x: 100, y: 100 } ]
+  });
+  await setName(t);
+
+  const toolboxButton = Selector('#editorSidebar button[icon=home_repair_service]');
+  const moduleInOverlay = Selector('#editorModuleInOverlay');
+  const confirmDialog = Selector('#confirmOverlay');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click(toolboxButton, { modifiers: { shift: true } })
+    .expect(moduleInOverlay.hasClass('active')).ok()
+    .expect(moduleInOverlay.find('.legacyModeWarning').innerText).contains('Disable holder image support')
+    .click(moduleInOverlay.find('#loadWidgetsFromBuffer'))
+    .expect(confirmDialog.visible).ok()
+    .expect(confirmDialog.innerText).contains('These widgets were saved in a game with different legacy modes')
+    .click(confirmDialog.find('.buttons button').nth(1))
+    .expect(Selector('#w_legacyHolder').exists).ok()
+    // the panel the question was asked from is still open, and its sidebar button still says so
+    .expect(Selector('#editorModuleOverlay').visible).ok()
+    .expect(moduleInOverlay.hasClass('active')).ok()
+    .expect(toolboxButton.hasClass('active')).ok();
+
+  await setWidgetBuffer(null);
+  await setEditorState(null);
+});
+
 test('Send feedback', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

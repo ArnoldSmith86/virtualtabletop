@@ -219,6 +219,7 @@ const EDITOR_JS = [
   'client/js/editor/dragbuttons/resize.js',
   'client/js/editor/sidebarModule.js',
   'client/js/editor/propertyInputs.js',
+  'client/js/editor/legacyModeWarning.js',
   'client/js/editor/controls/selectionbar.js',
   'client/js/editor/controls/widgetselection.js',
   'client/js/editor/cssEditor.js',
