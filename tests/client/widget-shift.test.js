@@ -478,7 +478,31 @@ describe("Scenarios: Shifting widgets through seats", () => {
     });
   });
 
-  describe("Given a seat in the holders without a valid hand", () => {
+  // a list the game wrote down names the exact cycle it wants, but a list derived from
+  // the room was not chosen by anybody, so a seat that cannot take part is left out of it
+  describe("Given an occupied seat without a valid hand and a SHIFT without holders", () => {
+    let handA, token;
+    beforeEach(async () => {
+      handA = createHand(`${testName}-handA`);
+      createHand(`${testName}-handC`);
+      createSeat(`${testName}-seatA`, handA.get('id'), 'Alice', 1);
+      createSeat(`${testName}-seatNoHand`, null, 'Bob', 2);
+      createSeat(`${testName}-seatC`, `${testName}-handC`, 'Carol', 3);
+      [ token ] = await createOwnedTokens(handA.get('id'), 1, 'Alice');
+
+      await button.set('clickRoutine', [ { "func": "SHIFT" } ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the seat is skipped and the other hands still move", async () => {
+        await button.click();
+        expect(token.get('parent')).toBe(`${testName}-handC`);
+        expect(token.get('owner')).toBe('Carol');
+      });
+    });
+  });
+
+  describe("Given a written-out seat in the holders without a valid hand", () => {
     let holder, token;
     beforeEach(async () => {
       holder = createHand(`${testName}-holder`);

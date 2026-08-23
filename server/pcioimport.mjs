@@ -2098,19 +2098,13 @@ export default async function convertPCIO(content) {
           }
           if(seats.length) {
             // a hand is one holder per room in VTT and it is the owner that makes
-            // its cards a player's own, which is exactly what SHIFT passes on
-            routine.push({
-              func: 'SELECT',
-              property: 'id',
-              relation: 'in',
-              value: seats,
-              type: 'seat',
-              collection: 'pcioSeats'
-            });
+            // its cards a player's own, which is exactly what SHIFT passes on. the
+            // seats are handed over as a written-out list so that the hands travel
+            // along the order the automation gives rather than along the seat index
             const shift = {
               note: 'Pass the hands on',
               func: 'SHIFT',
-              holders: 'pcioSeats',
+              holders: seats,
               interval: steps,
               direction: reversed ? 'backward' : 'forward'
             };

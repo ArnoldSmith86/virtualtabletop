@@ -2350,7 +2350,7 @@ export class Widget extends StateManaged {
           a.direction = 'forward'
         }
 
-        function shiftContainer(id) {
+        function shiftContainer(id, derived) {
           const entry = widgets.get(id);
           if(entry.get('type') != 'seat')
             return { seat: null, holder: entry };
@@ -2360,7 +2360,11 @@ export class Widget extends StateManaged {
             return { empty: true };
           if(!entry.get('hand') || !widgets.has(entry.get('hand'))) {
             problems.push(`Seat ${id} does not define a valid hand.`);
-            return null;
+            // a written-down list names the exact cycle the game asked for, so a broken
+            // entry in it stops the shift. A list derived from the room was not chosen
+            // by anybody, so the seat is skipped like an unoccupied one and the rest
+            // still move
+            return derived ? { empty: true } : null;
           }
           return { seat: entry, holder: widgets.get(entry.get('hand')) };
         }
@@ -2397,7 +2401,7 @@ export class Widget extends StateManaged {
         let order = [];
         if(valid && this.isValidID(a.holders, problems)) {
           for(const id of a.holders) {
-            const container = shiftContainer(id);
+            const container = shiftContainer(id, useActiveSeats || fromCollection);
             if(!container) {
               valid = false;
               break;
@@ -2465,7 +2469,7 @@ export class Widget extends StateManaged {
           }
 
           if(moves.length) {
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationStart("Moves", "Moves");
             for(const move of moves) {
               // a seat entry is moved to the seat itself instead of to its hand so that
@@ -2491,11 +2495,11 @@ export class Widget extends StateManaged {
                   collections[collection] = shadowed;
               }
             }
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
 
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
             jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.direction} ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
           }
@@ -2559,6 +2563,12 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
         }
       }
+
+      // an operation an existing save carries is rewritten by the file updater, but one a
+      // routine builds while it runs or one pasted into the editor never passes through it
+      // and would otherwise do nothing at all, without saying so
+      if(a.func == 'SWAPHANDS')
+        problems.push(`SWAPHANDS was replaced by SHIFT.`);
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });

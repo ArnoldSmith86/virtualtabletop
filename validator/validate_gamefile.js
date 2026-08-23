@@ -911,7 +911,7 @@ const operationProps = {
     },
     'SHIFT': {
         'holders': getHoldersOrCollectionValidator(['holder', 'seat']),
-        'widgets': v=>typeof v === 'string' || '"all", "top", or a collection name expected',
+        'widgets': (v, context, propertyPath)=>v === 'all' || v === 'top' || validators.inCollection(v, context, propertyPath),
         'interval': v=>typeof v === 'number' && Number.isInteger(v) || 'integer expected',
         'direction': getEnumValidator(['forward','backward','random']),
         'wrap': 'boolean',
