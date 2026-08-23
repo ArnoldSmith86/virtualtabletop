@@ -187,6 +187,14 @@ function iconSearchTermScore(entry, term) {
     : term.forms.some(form => entry.tags.has(form)) ? 1 : 0;
 }
 
+// The icon that is called exactly what was typed and nothing else: as many words in the name as
+// there are in the query, each of them one of the forms its term stands for. The forms rather than
+// the literal query, so that the number and the spelling of what was typed matter as little here
+// as they do everywhere else - "souls" and "sabre" lead with the same icon as "soul" and "saber".
+function iconSearchExactName(entry, terms) {
+  return entry.name.length == terms.length && terms.every((term, i) => term.forms.includes(entry.name[i]));
+}
+
 // An entry has to match every term and is worth as much as its weakest one.
 function iconSearchScore(entry, terms) {
   let score = 3;
@@ -200,14 +208,18 @@ function iconSearchScore(entry, terms) {
 }
 
 // Scores a whole list of search entries against one query: 0 for the entries that do not match,
-// 1 to 3 for the ones that do. Both pickers rank by it, which is what makes them agree on what a
-// query means - the sidebar sorts its result list, the picker below lays its matches out in three
+// 1 to 4 for the ones that do. Both pickers rank by it, which is what makes them agree on what a
+// query means - the sidebar sorts its result list, the picker below lays its matches out in four
 // CSS orders because its list is built once and only filtered afterwards.
+//
+// 4 is the icon that is called exactly what was typed and nothing else: a whole-word match says
+// nothing about how much of the name it leaves over, so "soul" led with soul-vessel and "anvil"
+// with anvil-impact - the icon that owns the word sat among the ones that only contain it.
 function iconSearchScores(entries, query) {
   if(!query.trim())
     return entries.map(_=>1);
   const terms = iconSearchWords(query).map(iconSearchTerm);
-  const scores = terms.length ? entries.map(entry => iconSearchScore(entry, terms)) : [];
+  const scores = terms.length ? entries.map(entry => iconSearchExactName(entry, terms) ? 4 : iconSearchScore(entry, terms)) : [];
   if(scores.some(score => score))
     return scores;
   // a half typed tag ("cthulh") or a pasted emoji has no word to match, so rather than showing an
@@ -250,7 +262,8 @@ export async function loadSymbolPicker() {
           // find the icon without spending one of its tags on it
           const name = symbol.split('/')[1];
           symbolSearch.push(iconSearchEntry(name, keywords));
-          // increase resource limits in /etc/ImageMagick-6/policy.xml to 8GiB and then: montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview.png
+          // --x and --y address the icon in the sprite sheets by its position in the montage; the
+          // _instructions of assets/game-icons.net/icon-metadata.json say how those are rebuilt
           list += `<i class="gameicons" data-family="image" title="game-icons.net: ${symbol}" data-type="game-icons" data-symbol="${symbol}" style="--x:${gameIconsIndex%60};--y:${Math.floor(gameIconsIndex/60)};--url:url('i/game-icons.net/${symbol}.svg')"></i>`;
         } else {
           const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
@@ -307,10 +320,11 @@ export async function loadSymbolPicker() {
       for(const [ i, icon ] of icons.entries()) {
         toggleClass(icon, 'hidden', !scores[i]);
         // the list is built once and is only filtered afterwards, so the matches cannot be
-        // re-sorted: these two classes lay them out in the three CSS orders of their score
+        // re-sorted: these three classes lay them out in the four CSS orders of their score
         // instead, which is the ranking the sidebar's icon picker sorts its own results by
-        toggleClass(icon, 'nameMatch', ranked && scores[i] == 3);
-        toggleClass(icon, 'tagMatch',  ranked && scores[i] == 1);
+        toggleClass(icon, 'exactMatch', ranked && scores[i] == 4);
+        toggleClass(icon, 'nameMatch',  ranked && scores[i] == 3);
+        toggleClass(icon, 'tagMatch',   ranked && scores[i] == 1);
       }
       for(const title of $a('#symbolList h2'))
         toggleClass(title, 'hidden', text);

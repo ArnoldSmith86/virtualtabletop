@@ -1,5 +1,6 @@
 import { BSON } from 'bson';
 
+import { expectNoLegacyModes } from './fileupdater-util.js';
 import TTS from '../../server/ttsimport.mjs';
 import Zip from '../../server/zip.mjs';
 
@@ -16,6 +17,7 @@ function png(width, height) {
 
 async function convert(save) {
   const widgets = (await TTS.fromBSON(BSON.serialize(save))).TTS['0.json'];
+  expectNoLegacyModes(widgets);
   delete widgets._meta;
   return widgets;
 }
@@ -228,6 +230,17 @@ describe('TTS import: stacks', () => {
   });
 });
 
+describe('TTS import: notecards', () => {
+  it('keeps the line breaks and the runs of spaces the author typed', async () => {
+    const widgets = await convert(objects(
+      { Name: 'Notecard', GUID: 'note', Transform: { posX: 0, posZ: 0 }, Nickname: 'Title', Description: 'a   b\nsecond line' }
+    ));
+
+    expect(widgets.note.html).toBe('<b>Title</b><br><br>a   b<br>second line');
+    expect(widgets.note.css).toContain('white-space: pre-wrap');
+  });
+});
+
 describe('TTS import: files', () => {
   it('converts a save from a workshop upload zip', async () => {
     const zip = await Zip.create({
@@ -238,6 +251,20 @@ describe('TTS import: files', () => {
     const widgets = await TTS.fromZIP(zip);
     expect(widgets.a.type).toBe('dice');
     expect(widgets._meta.info.importerTemp).toBe('TTS');
+  });
+
+  it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
+    // convert() checks the version and the round trip through FileUpdater for every
+    // conversion of this suite - this one holds the widgets the legacy modes look for
+    const widgets = await convert({
+      SaveName: 'test',
+      Hands: { Enable: true },
+      ObjectStates: [ die('a', 0), { Name: 'HandTrigger', GUID: 'h1', FogColor: 'Red' } ]
+    });
+
+    // the caption of the hand is what the legacy mode for holders without image support
+    // looks for in an old file - it would hide the very text the importer just wrote
+    expect(widgets.hand.text).toBe('Your hand');
   });
 
   it('keeps the widget IDs of two imports that run at the same time apart', async () => {
@@ -437,6 +464,18 @@ describe('TTS import: seats', () => {
 
     expect(typed(widgets, 'seat').map(s=>s.color)).toEqual([ '#da1917', '#118ed7' ]);
     expect(widgets.hand.type).toBe('holder');
+  });
+
+  it('gives the hand the drop shadow and the hidden cursors of a VirtualTabletop hand', async () => {
+    const widgets = await convert({
+      SaveName: 'test',
+      Hands: { Enable: true },
+      ObjectStates: [ die('a', 0), { Name: 'HandTrigger', GUID: 'h1', FogColor: 'Red' } ]
+    });
+
+    expect(widgets.hand.childrenPerOwner).toBe(true);
+    expect(widgets.hand.dropShadow).toBe(true);
+    expect(widgets.hand.hidePlayerCursors).toBe(true);
   });
 
   it('fits the seats onto the surface even with a hand zone per TTS color', async () => {

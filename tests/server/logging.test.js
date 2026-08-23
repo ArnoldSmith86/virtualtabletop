@@ -10,6 +10,20 @@ function tooLargeError(length, limit) {
   return e;
 }
 
+// console.log/console.error decide whether a message reaches stdout or stderr
+function captureConsole(func) {
+  const captured = { stdout: '', stderr: '' };
+  const original = { log: console.log, error: console.error };
+  console.log = (...args)=>captured.stdout += args.join(' ') + '\n';
+  console.error = (...args)=>captured.stderr += args.join(' ') + '\n';
+  try {
+    func();
+  } finally {
+    Object.assign(console, original);
+  }
+  return captured;
+}
+
 function fakeResponse() {
   const res = { code: null, body: null };
   res.status = c=>{ res.code = c; return res; };
@@ -37,6 +51,18 @@ describe('server/logging.mjs', function() {
     Logging.userErrorHandler(new Logging.UserError(404, 'Invalid room.'), {}, res, function() {});
     expect(res.code).toBe(404);
     expect(res.body).toBe('Invalid room.');
+  });
+
+  test('logs a nonfatal exception with its stack on stdout', function() {
+    const captured = captureConsole(()=>Logging.handleGenericException('HTTP server', new Error('boom')));
+    expect(captured.stdout).toContain('ERROR - GENERIC HTTP server - Error: boom');
+    expect(captured.stderr).toBe('');
+  });
+
+  test('logs an exception that ends the process on stderr', function() {
+    const captured = captureConsole(()=>Logging.handleFatalException('listening on port 8272', new Error('boom')));
+    expect(captured.stderr).toContain('ERROR - GENERIC listening on port 8272 - Error: boom');
+    expect(captured.stdout).toBe('');
   });
 
   test('leaves anything else to the next handler', function() {

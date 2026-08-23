@@ -1,4 +1,5 @@
 import fs from 'fs';
+import zlib from 'zlib';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -30,7 +31,7 @@ for(const [ category, entries ] of Object.entries(symbols))
     for(const [ name, entry ] of Object.entries(entries))
       pickerIcons[name] = { category, index: entry[0], tags: entry.slice(1) };
 
-// the checks below run over 4131 icons and 70000 tags, so they collect what is wrong and assert once
+// the checks below run over 4181 icons and 80000 tags, so they collect what is wrong and assert once
 // instead of asserting per icon - a failure names the icons, an empty list is the passing case
 function collect(check) {
   const problems = [];
@@ -46,6 +47,96 @@ test('every game-icons.net SVG is in both metadata files and nothing else is', (
 
 test('the sprite sheet indices are the glob order of the SVG files', () => {
   expect(svgFiles.map(name => pickerIcons[name].index)).toEqual(svgFiles.map((_, index) => index));
+});
+
+test('the sprite sheets cover every icon and fonts.css has a row for each of them', () => {
+  // the pickers place an icon in the sheet with --x/--y and scale the sheet with --spritesheetX/Y,
+  // so a sheet that gained a row without fonts.css following draws every icon at the wrong offset
+  const rows = Math.ceil(svgFiles.length / 60);
+  const fonts = fs.readFileSync(path.join(dir, '../client/css/fonts.css'), 'utf8');
+  expect(+fonts.match(/--spritesheetX:\s*(\d+)/)[1]).toBe(60);
+  expect(+fonts.match(/--spritesheetY:\s*(\d+)/)[1]).toBe(rows);
+  for(const size of [ 24, 48 ]) {
+    // the IHDR of a PNG: width, height, bit depth and color type, right behind the signature
+    const ihdr = fs.readFileSync(path.join(assets, `game-icons.net/overview${size}.png`)).subarray(16, 26);
+    expect([ ihdr.readUInt32BE(0), ihdr.readUInt32BE(4) ]).toEqual([ 60 * size, rows * size ]);
+    // color type 4 is grayscale + alpha - the artwork is black on transparent, and keeping that
+    // one gray in three RGBA channels costs 1.7 MB on overview48.png alone
+    expect(ihdr[9]).toBe(4);
+  }
+});
+
+// The pixels of a grayscale+alpha PNG, one gray and one alpha byte each: enough of a decoder to look at
+// the sheets, and no dependency to add for it. Every scanline of the inflated image data carries the
+// filter it was written with in front of it, and each of the five undoes to the pixel two bytes to the
+// left (a), the one above (b) and the one above that one (c).
+function decodeGrayAlphaPNG(file) {
+  const png = fs.readFileSync(file);
+  const idat = [];
+  let pos = 8, width = 0, height = 0;
+  while(pos < png.length) {
+    const length = png.readUInt32BE(pos), type = png.toString('ascii', pos + 4, pos + 8);
+    if(type == 'IHDR') {
+      width = png.readUInt32BE(pos + 8);
+      height = png.readUInt32BE(pos + 12);
+    }
+    if(type == 'IDAT')
+      idat.push(png.subarray(pos + 8, pos + 8 + length));
+    pos += length + 12;
+  }
+  const raw = zlib.inflateSync(Buffer.concat(idat)), bpp = 2, stride = width * bpp;
+  const pixels = Buffer.alloc(height * stride);
+  for(let y = 0; y < height; y++) {
+    const filter = raw[y * (stride + 1)];
+    for(let x = 0; x < stride; x++) {
+      const a = x >= bpp ? pixels[y * stride + x - bpp] : 0;
+      const b = y ? pixels[(y - 1) * stride + x] : 0;
+      const c = x >= bpp && y ? pixels[(y - 1) * stride + x - bpp] : 0;
+      let value = raw[y * (stride + 1) + 1 + x];
+      if(filter == 1)
+        value += a;
+      else if(filter == 2)
+        value += b;
+      else if(filter == 3)
+        value += (a + b) >> 1;
+      else if(filter == 4) {
+        const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
+        value += pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+      }
+      pixels[y * stride + x] = value;
+    }
+  }
+  return { width, height, pixels };
+}
+
+test('the sprite sheets hold artwork up to the last icon and nothing after it', () => {
+  // The test above sees a montage of the right size; this one sees where the artwork sits in it. A run
+  // that stopped short of the last icon, left a gap, or laid the cells out from another offset writes a
+  // sheet of exactly the right dimensions in which the icons sit at each other's indices - the one thing
+  // an index into a sprite sheet cannot survive, and the one thing nothing else here would notice.
+  const cells = 60 * Math.ceil(svgFiles.length / 60);
+  for(const size of [ 24, 48 ]) {
+    const { width, pixels } = decodeGrayAlphaPNG(path.join(assets, `game-icons.net/overview${size}.png`));
+    const empty = [];
+    let lightest = 0;
+    for(let cell = 0; cell < cells; cell++) {
+      const left = cell % 60 * size, top = Math.floor(cell / 60) * size;
+      let opaque = false;
+      for(let y = top; y < top + size; y++)
+        for(let x = left; x < left + size; x++)
+          if(pixels[(y * width + x) * 2 + 1]) {
+            opaque = true;
+            lightest = Math.max(lightest, pixels[(y * width + x) * 2]);
+          }
+      if(!opaque)
+        empty.push(cell);
+    }
+    // every icon has artwork, so the cells that hold some are the first svgFiles.length and no others
+    expect(empty).toEqual(Array.from({ length: cells - svgFiles.length }, (_, index) => svgFiles.length + index));
+    // the sheets are the artwork of the SVGs, which is black on transparent - a montage of
+    // game-icons.net's own downloads (white on a black background rect) fills the same cells with its negative
+    expect(lightest).toBe(0);
+  }
 });
 
 test('symbols.json and icon-metadata.json agree on every tag', () => {
@@ -106,7 +197,7 @@ test('the tags of an icon are searchable, distinct and add something to its name
 
 // The rest of the file checks the data; this checks what the pickers make of it. Both of them
 // score a query with client/js/symbols.js, which is a plain script the bundler concatenates, so
-// evaluate it the way tests/client/property-inputs.test.js does and search the real 13288 icons.
+// evaluate it the way tests/client/property-inputs.test.js does and search the real picker index.
 const searchSource = fs.readFileSync(path.join(dir, '../client/js/symbols.js'), 'utf8')
   .replace(/^import\s+[^;]+;\r?\n/gm, '')
   .replace(/^export\s+/gm, '');
@@ -121,6 +212,14 @@ const searchIndex = Object.entries(symbols).filter(([ category ]) => category !=
 function searchSymbols(query) {
   const scores = iconSearchScores(searchIndex, query);
   return searchIndex.filter((entry, i) => scores[i]).map(entry => entry.symbol);
+}
+
+// what the pickers show: the sidebar sorts its matches by their score, the picker of the room lays
+// them out in the CSS orders of the same score, so both of them read in this order
+function rankedSymbols(query) {
+  const scores = iconSearchScores(searchIndex, query);
+  return searchIndex.map((entry, i) => ({ symbol: entry.symbol, score: scores[i] })).filter(match => match.score)
+    .sort((a, b) => b.score - a.score).map(match => match.symbol);
 }
 
 test('a plural finds what its singular finds', () => {
@@ -155,6 +254,52 @@ test('a word that only ends in s is not searched as a plural', () => {
   // "cross" is not the plural of "cros" either, and "crosses" still finds the crosses
   expect(searchSymbols('crosses')).toContain('delapouite/jerusalem-cross');
   expect(searchSymbols('lens')).toContain('lorc/microscope-lens');
+});
+
+test('an icon is found by the name of the set it belongs to', () => {
+  // the 22 major arcana are one set, and are looked for as one: their file names carry "tarot" and
+  // the number, so without the tags "major arcana" answered with nothing and "tarot card" with the
+  // joker while all 22 of them sat in the picker
+  const arcana = svgFiles.filter(name => name.startsWith('caro-asercion/tarot-'));
+  expect(arcana.length).toBe(22);
+  for(const query of [ 'major arcana', 'tarot card' ])
+    expect(searchSymbols(query)).toEqual(expect.arrayContaining(arcana));
+  // and the set is found by its own name only: 22 icons joining a query the picker already fills
+  // twice over push 22 icons that are really about it past the 100 results it shows
+  expect(searchSymbols('deck').filter(symbol => arcana.includes(symbol))).toEqual([]);
+});
+
+test('two icons of the same subject are told apart by their tags', () => {
+  // the two Schroedinger cats share their box, their trefoil and 16 of their tags, and at the size
+  // of the picker grid they are the same picture - the tags that differ are what names them
+  expect(searchSymbols('live cat')).toContain('caro-asercion/schrodingers-cat-alive');
+  expect(searchSymbols('awake cat')).toContain('caro-asercion/schrodingers-cat-alive');
+  expect(searchSymbols('dead cat')).not.toContain('caro-asercion/schrodingers-cat-alive');
+  expect(searchSymbols('limp cat')).toEqual([ 'caro-asercion/schrodingers-cat-dead' ]);
+});
+
+test('the icon that is called exactly what was typed comes first', () => {
+  // a whole-word match says nothing about how much of the name is left over, so the icon that owns
+  // the word used to rank wherever the montage order happened to put it
+  expect(rankedSymbols('soul')[0]).toBe('delapouite/soul');
+  expect(rankedSymbols('anvil')[0]).toBe('lorc/anvil');
+  expect(rankedSymbols('shield')[0]).toBe('sbed/shield');
+  // in whichever number it was typed: the search treats "souls" and "soul" as the same word
+  // everywhere else, so the icon that owns it leads either way
+  expect(rankedSymbols('souls')[0]).toBe('delapouite/soul');
+  expect(rankedSymbols('anvils')[0]).toBe('lorc/anvil');
+  expect(rankedSymbols('shields')[0]).toBe('sbed/shield');
+  // and the ranking still puts the names in front of the icons that are only tagged with the word
+  expect(rankedSymbols('dragon').slice(0, 3).every(symbol => symbol.includes('dragon'))).toBe(true);
+});
+
+test('an icon game-icons.net has renamed is found by the name the site uses now', () => {
+  // the file names stay as they are - renaming one breaks every game that references it by URL -
+  // so the name of today has to be in the tags, and as one phrase: every word of a query has to
+  // match something, down to the "in" that no single-word tag carries
+  expect(searchSymbols('person in blizzard')).toContain('lorc/eskimo');
+  expect(searchSymbols('satellite')).toContain('lorc/sattelite');
+  expect(searchSymbols('star satellites')).toContain('lorc/star-sattelites');
 });
 
 // The emoji categories name their SVG by code point, the way emojiToFilename() spells it. A key
