@@ -4219,3 +4219,22 @@ test('Back and forward give the keyboard back to the JSON editor', async t => {
     .expect(activeElementID()).eql('jeText');
   await setEditorState(null);
 });
+
+test('Send feedback', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#statesButton')
+    .click('#feedbackButton')
+    .expect(Selector('#feedbackOverlay').visible).ok()
+    .expect(Selector('#statesButton').hasClass('active')).notOk()
+    .typeText('#feedbackOverlay textarea', 'TestCafe feedback test', { replace: true })
+    .click('#feedbackOverlay button[icon=check]')
+    .expect(Selector('#feedbackOverlay .feedbackThanks').visible).ok()
+    // after the thanks message, the previously open overlay and its active tab come back
+    .expect(Selector('#statesOverlay').visible).ok({ timeout: 5000 })
+    .expect(Selector('#feedbackOverlay').visible).notOk()
+    .expect(Selector('#statesButton').hasClass('active')).ok();
+});
