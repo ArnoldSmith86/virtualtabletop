@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
 
 const statisticsFilename = Config.directory('save') + '/statistics.json';
@@ -19,9 +20,6 @@ class Statistics {
     if(!fs.existsSync(statisticsFilename))
       return defaults;
 
-    // Tolerate an empty or truncated file: an unwritten/corrupt statistics.json
-    // used to make JSON.parse throw "Unexpected end of JSON input" and crash the
-    // server on startup (issue #2993). Fall back to empty statistics instead.
     const raw = fs.readFileSync(statisticsFilename, 'utf8').trim();
     if(raw === '')
       return defaults;
@@ -55,7 +53,7 @@ class Statistics {
   }
 
   writeToFilesystem() {
-    fs.writeFileSync(statisticsFilename, JSON.stringify(this.data, null, '  '));
+    FileWriter.writeFileSync(statisticsFilename, JSON.stringify(this.data, null, '  '));
   }
 }
 

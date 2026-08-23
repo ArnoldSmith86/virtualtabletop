@@ -1,0 +1,104 @@
+[
+  {
+    "tag": "div",
+    "id": "w_deck",
+    "classes": "deck movable widget",
+    "box": [
+      -57,
+      -18,
+      0,
+      0
+    ],
+    "style": {
+      "display": "none",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "1000000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": []
+  },
+  {
+    "tag": "div",
+    "id": "w_card",
+    "classes": "card clickable movable widget",
+    "box": [
+      300,
+      20,
+      103,
+      160
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "hidden",
+      "z-index": "1000000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "active cardFace",
+        "box": [
+          300,
+          20,
+          103,
+          160
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "iframe",
+            "id": "",
+            "classes": "cardFaceObject",
+            "box": [
+              300,
+              20,
+              103,
+              160
+            ],
+            "style": {
+              "display": "block",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "clip",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

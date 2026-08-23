@@ -18,14 +18,12 @@
   --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
+#jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
   display: none;
 }
 
-#jsonEditor > *, #jeWidgetLayers > div {
-  background: var(--backgroundColor);
-}
 #jsonEditor > * {
+  background: var(--backgroundColor);
   color: var(--textColor);
   padding: 5px;
   margin: 0;
@@ -33,6 +31,17 @@
   border: none;
   resize: none;
   box-sizing: border-box;
+}
+
+/* the selection bar sits above the JSON text inside the sidebar module - and
+   above the command pane too, so that it (and the dropdowns hanging off it) can
+   use the full width of a docked module */
+.editorModule #jeText, .editorModule #jeTextHighlight, .editorModule #jeCommands {
+  top: 40px;
+}
+
+.editorModule #jeCommands {
+  height: auto;
 }
 
 /*** Tree and widget display/edit area ***/
@@ -54,10 +63,6 @@
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   border-bottom: 1px solid white;
-}
-
-#jeMouseCoords {
-  margin: 5px;
 }
 
 #jeTree {
@@ -165,7 +170,7 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
+.jeNestedTree.active, .jeLogNested.active {
   display: block;
 }
 
@@ -261,109 +266,6 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
   flex-direction: column;
 }
 
-#jeWidgetLayers {
-  background: var(--backgroundColor);
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  right: 10px;
-  width: calc(var(--commandPaneWidth) - 34px);
-  border: 2px solid var(--VTTblue);
-  border-radius: 10px;
-  overflow: hidden;
-  padding: 5px;
-  white-space: normal;
-}
-
-#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers {
-  display: none;
-}
-
-#jeWidgetLayers > p {
-  font-size: 12px;
-  margin: 0;
-}
-
-#jeWidgetLayers > div {
-  display: flex;
-  align-items: center;
-  padding: 2px;
-  font-size: 12px;
-}
-
-#jeWidgetLayers > div.hidden {
-  display: none;
-}
-
-#jeWidgetLayers .key {
-  font-size: inherit;
-  line-height: inherit;
-  margin-bottom: 0.4375rem;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-  margin-top: 0.25rem;
-  padding: 0.1rem 0.2rem;
-  box-shadow: 0 0 #d9d9d9, 0 0px #d9d9d9, 0 1px #d9d9d9, 0 2px #d9d9d9, 0 3px #d9d9d9, 0 4px #d9d9d9, 0 5px #d9d9d9, 2px 2.5px 4px #adb5bd, 0 -1px 2.5px #adb5bd;
-  background-color: #fff;
-  border-color: #e6e6e6;
-  color: #343a40;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border: 1px solid #e6e6e6;
-  border-radius: 0.25rem;
-  display: inline-block;
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-weight: 400;
-  text-align: left;
-  transform: translate3d(0, 0, 5px);
-  transform-style: preserve-3d;
-  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
-  cursor: pointer;
-  user-select: none;
-}
-
-
-#jeWidgetLayers .key::after {
-  border-style: solid;
-  box-sizing: content-box;
-  content: '';
-  display: block;
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
-  border-color: #cccccc;
-  border-radius: 0.5rem;
-  border-width: 0.125rem;
-  bottom: -9px;
-  left: -0.3125rem;
-  right: -0.3125rem;
-  top: -3px;
-  transform: translate3d(0, 0, -3px);
-}
-
-#jeWidgetLayers .keyDetails {
-  margin-left: 4px;
-}
-
-#jeWidgetLayers .id {
-  color: var(--textHighlightColor1);
-  display: inline-block;
-}
-
-#jeWidgetLayers .type {
-  color: var(--textHighlightColor4);
-}
-
-#jeWidgetLayers .details {
-  color: var(--textHighlightColor3);
-  white-space: pre;
-  display: block;
-}
-
-#jeWidgetLayers .details:empty {
-  display: none;
-}
-
 body.jsonEdit #jsonEditor {
   display: block;
 }
@@ -389,10 +291,6 @@ body.jsonEdit #toolbar {
   position: fixed;
   bottom: 0;
   white-space: normal;
-}
-
-#jeLog {
-  margin-left: -40px;
 }
 
 @media (max-width: 1000px) {
@@ -429,6 +327,22 @@ body.jsonEdit #toolbar {
 }
 #jeLog > .jeLog + .jeLog {
   margin-top: 20px;
+}
+
+/* a message about the log itself rather than a logged routine, so make it a readable callout */
+.jeLogNote {
+  color: var(--textColor);
+  background-color: var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--textHighlightColor2);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin: 10px 0 10px 20px;
+  font-family: Arial, sans-serif;
+}
+.jeLogNote .jeLogWidget,
+.jeLogNote .jeLogProperty {
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .jeLogSkipped { color: var(--textDimColor1); }
@@ -522,22 +436,9 @@ body.jsonEdit #toolbar {
   opacity: 0.5;
 }
 
-/* For the zoom, edit, wide, highlight, and debug "on" states */
+/* For the zoom, edit, wide and debug "on" states */
 [id=jeTopButtons] button.onState {
   color: yellow
-}
-#je_toggleHighlight.onState {
-  position: relative;
-}
-#je_toggleHighlight.onState::before {
-  position: absolute;
-  height: 22px;
-  width: 17px;
-  content: '';
-  top: 1px;
-  left: 4px;
-  border: 2px solid yellow;
-  border-radius: 20%;
 }
 
 #jeCommands .context{
@@ -617,8 +518,6 @@ body.jsonEdit #toolbar {
 }
 #je_showWidget{
 }
-#je_reverseFkeys{
-}
 #je_addNewWidget{
   color: rgb(95, 167, 95);
 }
@@ -630,8 +529,6 @@ body.jsonEdit #toolbar {
 #je_editMode{
 }
 #je_openParent{
-}
-#je_toggleHighlight{
 }
 #je_toggleDebug{
 }

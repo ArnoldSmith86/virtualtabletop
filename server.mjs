@@ -3,14 +3,17 @@ import path from 'path';
 import v8 from 'v8';
 
 import express from 'express';
-import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
-import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
+import FileLoader from './server/fileloader.mjs';
+import FileUpdater from './server/fileupdater.mjs';
+import FileWriter from './server/filewriter.mjs';
+import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
+import LibraryDecks from './server/librarydecks.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
@@ -47,6 +50,7 @@ async function ensureRoomIsLoaded(id) {
       activeRooms.delete(id);
     }, function() {
       Logging.log(`The public library was edited in room ${id}. Reloading in every room...`);
+      LibraryDecks.invalidateCache();
       for(const [ _, room ] of activeRooms)
         room.reloadPublicLibraryGames();
     });
@@ -125,15 +129,38 @@ MinifyHTML().then(function(result) {
   router.get('/i/fonts/', cache5m);
   router.use('/fonts.css', express.static(path.resolve() + '/client/css/fonts.css'));
 
-  router.use('/i', express.static(path.resolve() + '/assets'));
-
-  router.get('/scripts/:name', function(req, res) {
-    res.setHeader('Content-Type', 'application/javascript');
-    if(req.params.name == 'jszip')
-      res.send(fs.readFileSync('node_modules/jszip/dist/jszip.min.js'));
+  // the icon pickers fetch symbols.json whole, so it is served from the buffer that was gzipped at
+  // startup; a client that does not accept gzip falls through to express.static below
+  router.get('/i/fonts/symbols.json', function(req, res, next) {
+    res.setHeader('Vary', 'Accept-Encoding');
+    if(!req.headers['accept-encoding'] || !req.headers['accept-encoding'].match(/\bgzip\b/))
+      return next();
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Encoding', 'gzip');
+    res.send(result.symbolsGzipped);
   });
 
-  router.post('/assetcheck', bodyParser.json({ limit: '10mb' }), function(req, res) {
+  router.use('/i', express.static(path.resolve() + '/assets'));
+
+  function sendMinified(req, res, minified, gzipped) {
+    // the body depends on the request header, so anything caching this in between has to key on it
+    res.setHeader('Vary', 'Accept-Encoding');
+    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
+      res.setHeader('Content-Encoding', 'gzip');
+      res.send(gzipped);
+    } else {
+      res.send(minified);
+    }
+  }
+
+  router.get('/scripts/:name', function(req, res, next) {
+    if(req.params.name != 'fflate')
+      return next();  // without this the request would just hang
+    res.setHeader('Content-Type', 'application/javascript');
+    sendMinified(req, res, result.fflateMin, result.fflateGzipped);
+  });
+
+  router.post('/assetcheck', express.json({ limit: '10mb' }), function(req, res) {
     const result = {};
     if(Array.isArray(req.body))
       for(const asset of req.body)
@@ -232,7 +259,7 @@ MinifyHTML().then(function(result) {
     handleGetState(req, res, next, false);
   });
 
-  router.put('/state/:room', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.put('/state/:room', express.json({ limit: '10mb' }), function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     if(typeof req.body == 'object') {
       ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
@@ -299,20 +326,101 @@ MinifyHTML().then(function(result) {
     }
   });
 
+  router.get('/api/library/decks', function(req, res, next) {
+    LibraryDecks.getIndex().then(function(index) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(index));
+    }).catch(next);
+  });
+
+  router.get('/api/library/decks/:library/:game/:file/:deck', function(req, res, next) {
+    LibraryDecks.getDeck(req.params.library, req.params.game, req.params.file, req.params.deck).then(function(deck) {
+      if(!deck)
+        return res.sendStatus(404);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(deck));
+    }).catch(next);
+  });
+
   router.get('/api/widgets', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(customWidgets));
   });
 
-  router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.put('/api/widgets', express.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const data = req.body;
     if (typeof data === 'object' && data !== null) {
       customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
       customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
     }
-    fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
+    FileWriter.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
+  });
+
+  router.post('/api/decksFromLink', express.json({ limit: '1mb' }), function(req, res, next) {
+    (async function() {
+      if(typeof req.body != 'object' || req.body === null || typeof req.body.link != 'string' || !req.body.link.match(/^https?:\/\//))
+        throw new Logging.UserError(400, 'Please provide a link.');
+      // Keep this endpoint TTS-specific: only ever fetch resolved Steam Workshop
+      // items, not arbitrary URLs (defense-in-depth against SSRF).
+      if(!TTS.isTTSlink(req.body.link))
+        throw new Logging.UserError(400, 'Please enter a Tabletop Simulator Steam Workshop link (…/filedetails/?id=…).');
+
+      let states;
+      try {
+        states = await FileLoader.readStatesFromLink(req.body.link);
+      } catch(e) {
+        if(e instanceof Logging.UserError)
+          throw e;
+        Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+      }
+      if(!states || typeof states != 'object')
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+
+      const decks = [];
+      for(const [ stateID, variants ] of Object.entries(states)) {
+        const variantList = Object.values(variants || {});
+        for(const [ variantIndex, rawVariant ] of variantList.entries()) {
+          if(!rawVariant || typeof rawVariant != 'object' || !rawVariant._meta)
+            continue;
+          let variant;
+          try {
+            variant = FileUpdater(rawVariant);
+          } catch(e) {
+            continue;
+          }
+          const source = variantList.length > 1 ? `${stateID} #${variantIndex + 1}` : stateID;
+          const widgets = Object.entries(variant).filter(([ id, w ])=>id != '_meta' && w && typeof w == 'object');
+
+          // single pass over widgets: collect decks and group card counts by deck
+          const deckEntries = [];
+          const cardCountsByDeck = {};
+          for(const [ id, w ] of widgets) {
+            if(w.type == 'deck') {
+              deckEntries.push([ id, w ]);
+            } else if(w.type == 'card' && w.deck != null && w.cardType != null) {
+              (cardCountsByDeck[w.deck] || (cardCountsByDeck[w.deck] = {}));
+              cardCountsByDeck[w.deck][w.cardType] = (cardCountsByDeck[w.deck][w.cardType] || 0) + 1;
+            }
+          }
+          for(const [ deckID, deck ] of deckEntries) {
+            const rawCounts = cardCountsByDeck[deckID] || {};
+            // only count cardTypes registered on the deck: addDeckWithCards recreates
+            // cards from deck.cardTypes, so the badge stays equal to what gets imported
+            const cardTypes = (deck.cardTypes && typeof deck.cardTypes == 'object') ? deck.cardTypes : {};
+            const cardCounts = {};
+            for(const cardType in rawCounts)
+              if(Object.prototype.hasOwnProperty.call(cardTypes, cardType))
+                cardCounts[cardType] = rawCounts[cardType];
+            decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts, source });
+          }
+        }
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(decks));
+    })().catch(next);
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
@@ -335,19 +443,14 @@ MinifyHTML().then(function(result) {
 
       const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
       sharedLinks[newLink] = target;
-      fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
+      FileWriter.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
       res.send(Config.get('urlPrefix') + newLink.replace(/^\/s\//, '/game/'));
     }).catch(next);
   });
 
   router.get('/edit.js', function(req, res, next) {
     res.setHeader('Content-Type', 'text/javascript');
-    if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-      res.setHeader('Content-Encoding', 'gzip');
-      res.send(result.editorJSgzipped);
-    } else {
-      res.send(result.editorJSmin);
-    }
+    sendMinified(req, res, result.editorJSmin, result.editorJSgzipped);
   });
 
   function createBotPattern(crawlers) {
@@ -366,6 +469,8 @@ MinifyHTML().then(function(result) {
   router.get('/game/:plName', gameRoomHandler);
   router.get('/game/:shareID/:name', gameRoomHandler);
   router.get('/tutorial/:plName', gameRoomHandler);
+  router.get('/game/:shareID/:name/ROOM\\::roomInPath', gameRoomHandler);
+  router.get('/tutorial/:plName/ROOM\\::roomInPath', gameRoomHandler);
   router.get('/library/:folder/:plName', gameRoomHandler);
   async function gameRoomHandler(req, res, next) {
     try {
@@ -417,12 +522,7 @@ MinifyHTML().then(function(result) {
         res.send(ogOutput);
       } else {
         res.setHeader('Content-Type', 'text/html');
-        if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
-          res.setHeader('Content-Encoding', 'gzip');
-          res.send(result.gzipped);
-        } else {
-          res.send(result.min);
-        }
+        sendMinified(req, res, result.min, result.gzipped);
       }
     } catch(e) {
       next(e);
@@ -436,7 +536,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/createTempState/:room/:tempID', bodyParser.raw({ limit: '500mb' }), function(req, res, next) {
+  router.put('/createTempState/:room/:tempID', express.raw({ limit: '500mb' }), function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded && req.params.tempID.match(/^[a-z0-9]{8}$/))
         res.send(await activeRooms.get(req.params.room).createTempState(req.params.tempID, req.body));
@@ -448,17 +548,17 @@ MinifyHTML().then(function(result) {
       const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
       const filename = `/${CRC32.buf(content)}_${content.length}`;
       if(!Config.resolveAsset(filename.substr(1)))
-        fs.writeFileSync(assetsdir + filename, content);
+        FileWriter.writeFileSync(assetsdir + filename, content);
       res.send(`/assets${filename}`);
     } catch(e) {
       res.status(404).send('Downloading external asset failed.');
     }
   });
 
-  router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
+  router.put('/asset', express.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!Config.resolveAsset(filename.substr(1)))
-      fs.writeFileSync(assetsdir + filename, req.body);
+      FileWriter.writeFileSync(assetsdir + filename, req.body);
     res.send(`/assets${filename}`);
   });
 
@@ -473,8 +573,8 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   }
 
-  router.put('/addState/:room/:id/:type/:name/:addAsVariant', bodyParser.raw({ limit: '500mb' }), handleAddState);
-  router.put('/addState/:room/:id/:type/:name', bodyParser.raw({ limit: '500mb' }), handleAddState);
+  router.put('/addState/:room/:id/:type/:name/:addAsVariant', express.raw({ limit: '500mb' }), handleAddState);
+  router.put('/addState/:room/:id/:type/:name', express.raw({ limit: '500mb' }), handleAddState);
 
   router.get('/saveCurrentState/:room/:mode/:name', async function(req, res, next) {
     if(!validateInput(res, next, [ req.params.mode ])) return;
@@ -486,7 +586,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/moveServer/:room/:returnServer/:returnState', bodyParser.raw({ limit: '500mb' }), async function(req, res, next) {
+  router.put('/moveServer/:room/:returnServer/:returnState', express.raw({ limit: '500mb' }), async function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
         activeRooms.get(req.params.room).receiveState(req.body, req.params.returnServer, req.params.returnState).then(function() {
@@ -496,7 +596,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/clientError', bodyParser.json({ limit: '50mb' }), function(req, res, next) {
+  router.put('/clientError', express.json({ limit: '50mb' }), function(req, res, next) {
     if(typeof req.body == 'object') {
       const errorID = Math.random().toString(36).substring(2, 10);
       fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));

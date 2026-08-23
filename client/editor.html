@@ -114,30 +114,172 @@
   </div>
 
   <div id="addOverlay" class="overlay" style="display: none">
-    <div class="category cards">
-      <h2>Cards</h2>
-      <button class="ui-button" id="addHand">Add hand</button>
-    </div>
-    <div class="category pieces">
-      <h2>Game Pieces</h2>
-    </div>
-    <div class="category interactive">
-      <h2>Interactive</h2>
-      <div style="display: flex;justify-content: center;">
-        <button class="ui-button" id="addCanvas">Add Canvas</button><br>
-        <button class="ui-button" id="addScoreboard">Add Scoreboard</button>
-        <button class="ui-button" id="addSeat">Add Seat</button><br>
-        <button class="ui-button" id="addSeatCounter">+ Counter</button>
+    <div id="addOverlayContent">
+      <button id="addOverlayClose" icon="close" title="Close (Esc)"></button>
+      <div id="addOverlayHeader">
+        <h1>Add a widget</h1>
+        <p>Click any piece to add it to your board.</p>
+      </div>
+      <div id="addOverlayLayout">
+        <div class="category cards">
+          <h2>Cards</h2>
+          <div style="display: flex;justify-content: center;">
+            <button class="ui-button" id="addHand">Add hand</button>
+            <button class="ui-button" id="browseLibraryDecks">Browse decks</button>
+          </div>
+        </div>
+        <div class="category pieces">
+          <h2>Game Pieces</h2>
+        </div>
+        <div class="category interactive">
+          <h2>Interactive</h2>
+          <div style="display: flex;justify-content: center;">
+            <button class="ui-button" id="addCanvas">Add Canvas</button><br>
+            <button class="ui-button" id="addScoreboard">Add Scoreboard</button>
+            <button class="ui-button" id="addSeat">Add Seat</button><br>
+            <button class="ui-button" id="addSeatCounter">Add Seat + Counter</button>
+          </div>
+        </div>
+        <div class="category decorative">
+          <h2>Decorative</h2>
+        </div>
+        <div class="category custom">
+          <h2>Custom</h2>
+          <button class="ui-button" id="uploadBoard">Upload Board</button>
+          <button class="ui-button" id="uploadToken">Upload Token</button>
+          <button class="ui-button" id="addBasicWidget">Add Basic Widget</button>
+        </div>
       </div>
     </div>
-    <div class="category decorative">
-      <h2>Decorative</h2>
+  </div>
+  <div id="libraryDecksOverlay" class="overlay" style="display: none">
+    <button id="libraryDecksClose" icon="close"></button>
+    <div id="libraryDecksHeader">
+      <h1>Decks in the public library</h1>
+      <div id="libraryDecksControls">
+        <input type="text" id="libraryDecksFilter" placeholder="Filter by game or deck...">
+        <label for="libraryDecksSort">Sort by</label>
+        <select id="libraryDecksSort">
+          <option value="name" selected>Name</option>
+          <option value="stars">Stars</option>
+          <option value="popularity">Popularity</option>
+        </select>
+        <span id="libraryDecksSortHint"></span>
+      </div>
+      <p>Click a deck to add a copy of it - including a holder, all its cards and a shuffle button - to your game. Some decks appear differently than in their game due to CSS or fonts not available within the deck widget itself.</p>
     </div>
-    <div class="category custom">
-      <h2>Custom</h2>
-      <button class="ui-button" id="uploadBoard">Upload Board</button>
-      <button class="ui-button" id="uploadToken">Upload Token</button>
-      <button class="ui-button" id="addBasicWidget">Add Basic Widget</button>
+    <div id="libraryDecksList"></div>
+  </div>
+  <div id="deckEditorExportOverlay" class="overlay" style="display: none">
+    <div id="deckEditorExportDialog" class="deckEditorModal">
+      <button id="deckEditorExportClose" icon="close" title="Close"></button>
+      <h1>Print or save deck as PDF</h1>
+      <p>Cards are arranged to use as much of each sheet as possible. Print to a printer or choose “Save as PDF” in the browser print dialog. Front/back output alternates mirrored pages; enable two-sided printing with the matching duplex flip setting.</p>
+      <div class="deckEditorExportOptions">
+        <label>Cards
+          <select id="deckEditorExportCopies">
+            <option value="game" selected>Use card counts in game</option>
+            <option value="one">One of each card type</option>
+          </select>
+        </label>
+        <label>Faces
+          <select id="deckEditorExportFaces">
+            <option value="frontBack" selected>Fronts and backs</option>
+            <option value="front">Fronts only</option>
+            <option value="all">All faces</option>
+          </select>
+        </label>
+        <label>Paper
+          <select id="deckEditorExportPaper">
+            <option value="letter" selected>Letter (8.5 × 11 in)</option>
+            <option value="a4">A4 (210 × 297 mm)</option>
+            <option value="legal">Legal (8.5 × 14 in)</option>
+          </select>
+        </label>
+        <label>Orientation
+          <select id="deckEditorExportOrientation">
+            <option value="portrait" selected>Portrait</option>
+            <option value="landscape">Landscape</option>
+          </select>
+        </label>
+        <label>Duplex flip
+          <select id="deckEditorExportDuplex">
+            <option value="long" selected>Long edge</option>
+            <option value="short">Short edge</option>
+          </select>
+        </label>
+        <label>Card width (mm)<input id="deckEditorExportCardWidth" type="number" min="10" max="300" step="0.1" value="63.5"></label>
+        <label>Card height (mm)<input id="deckEditorExportCardHeight" type="number" min="10" max="400" step="0.1" value="88.9"></label>
+        <label>Paper margin (mm)<input id="deckEditorExportMargin" type="number" min="0" max="50" step="0.5" value="6"></label>
+        <label>Card spacing (mm)<input id="deckEditorExportGap" type="number" min="0" max="50" step="0.5" value="0"></label>
+        <label>Bleed (mm)<input id="deckEditorExportBleed" type="number" min="0" max="10" step="0.5" value="0"></label>
+      </div>
+      <label class="deckEditorExportCheckbox"><input id="deckEditorExportCropMarks" type="checkbox">Include crop marks in print/PDF</label>
+      <div id="deckEditorExportSummary"></div>
+      <div class="deckEditorExportActions">
+        <button id="deckEditorExportCSV" icon="table_view">Export card types to CSV</button>
+        <button id="deckEditorExportPDF" icon="print">Print / Save as PDF</button>
+      </div>
+    </div>
+  </div>
+  <div id="deckEditorImportOverlay" class="overlay" style="display: none">
+    <div id="deckEditorImportDialog" class="deckEditorModal">
+      <button id="deckEditorImportClose" icon="close" title="Close"></button>
+      <h1>Import card types from CSV</h1>
+      <p>Choose a CSV file to import from. This will not import other deck data such as face objects. This makes each row in the CSV a card type; the id::INTERNAL column sets its name and cardCount::INTERNAL sets how many cards of it are in the game. To generate a CSV file with the appropriate data, use the save icon in the upper left.</p>
+      <div class="deckEditorImportModes">
+        <label><input type="radio" name="deckEditorImportMode" value="replace" checked>Replace all card types with the file</label>
+        <label><input type="radio" name="deckEditorImportMode" value="add">Add the file's card types to the existing ones</label>
+      </div>
+      <div class="deckEditorImportActions">
+        <button id="deckEditorImportChoose" icon="upload">Choose CSV file &amp; import</button>
+      </div>
+    </div>
+  </div>
+  <div id="deckEditorNewDeckOverlay" class="overlay" style="display: none">
+    <div id="deckEditorNewDeckDialog" class="deckEditorModal">
+      <button id="deckEditorNewDeckClose" icon="close" title="Close"></button>
+      <h1>Add a new deck</h1>
+      <p>Where should the cards come from? Open one of the three sections.</p>
+      <div class="deckEditorNewDeckGroups">
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupBlank">
+          <button class="deckEditorNewDeckGroupHeader">New blank deck<span>Start from nothing and design the faces and card types here in the deck editor</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes deckEditorNewDeckModesSingle">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="empty" checked>Empty deck</label>
+            </div>
+          </div>
+        </div>
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupExisting">
+          <button class="deckEditorNewDeckGroupHeader">Use an existing deck<span>Take a deck that is already finished, from the library or another game</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="library"><b>Public library</b><span>Browse the ready-made decks shared in the public library</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="traditional"><b>Traditional deck</b><span>Standard, Spanish, German, Swiss, tarot, hanafuda, mahjong or dominoes</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="tts"><b>Tabletop Simulator</b><span>Import a deck from a Tabletop Simulator save file</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="deckEditorNewDeckGroup" id="deckEditorNewDeckGroupCustom">
+          <button class="deckEditorNewDeckGroupHeader">Create a custom deck<span>Let the editor build the cards from your own suits, images or texts</span></button>
+          <div class="deckEditorNewDeckGroupBody">
+            <div class="deckEditorNewDeckModes deckEditorNewDeckModesIllustrated">
+              <label><input type="radio" name="deckEditorNewDeckMode" value="custom"><svg class="deckEditorNewDeckModeIcon" viewBox="0 0 34 26"><rect x="11" y="1" width="16" height="24" rx="2"/><path d="M19 8l3 3.5-3 3.5-3-3.5z" class="deckEditorNewDeckModeIconFill"/><path d="M14.5 19h9"/></svg><b>Suits and ranks</b><span>One card for every combination of a suit and a rank</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="images"><svg class="deckEditorNewDeckModeIcon" viewBox="0 0 34 26"><rect x="1" y="1" width="14" height="24" rx="2"/><path d="M3.5 20l3.5-4.5 2.5 3 2-2.5 2.5 4z" class="deckEditorNewDeckModeIconFill"/><rect x="19" y="1" width="14" height="24" rx="2"/><path d="M21.5 20l3.5-4.5 2.5 3 2-2.5 2.5 4z" class="deckEditorNewDeckModeIconFill"/></svg><b>One picture per card</b><span>Upload a separate image file for every card &mdash; one shared back for the whole deck</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="imageSheet"><svg class="deckEditorNewDeckModeIcon" viewBox="0 0 34 26"><rect x="1" y="1" width="32" height="24" rx="2"/><path d="M3.5 20l3.5-4.5 2.5 3 2-2.5 2.5 4z" class="deckEditorNewDeckModeIconFill"/><path d="M11.67 1v24M22.33 1v24M1 13h32" class="deckEditorNewDeckModeIconCut"/></svg><b>One picture with all the cards on it</b><span>Upload a single sheet holding a grid of cards and cut it up into one card per grid cell</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="imagePairs"><svg class="deckEditorNewDeckModeIcon" viewBox="0 0 34 26"><rect x="1" y="1" width="14" height="24" rx="2"/><path d="M3.5 20l3.5-4.5 2.5 3 2-2.5 2.5 4z" class="deckEditorNewDeckModeIconFill"/><rect x="19" y="1" width="14" height="24" rx="2" class="deckEditorNewDeckModeIconBack"/><path d="M20 6l12 12M20 12l12 12M20 18l6 6M26 2l6 6M20 20l12-12M20 14l12-12M20 8l6-6M26 24l6-6" class="deckEditorNewDeckModeIconBack"/></svg><b>A front and a back image per card</b><span>Upload all fronts and all backs &mdash; they are paired up by file name</span></label>
+              <label><input type="radio" name="deckEditorNewDeckMode" value="text"><svg class="deckEditorNewDeckModeIcon" viewBox="0 0 34 26"><rect x="11" y="1" width="16" height="24" rx="2"/><path d="M14.5 8h9M14.5 12h9M14.5 16h5"/></svg><b>Text cards</b><span>One card per line, or per paragraph when a card needs line breaks</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deckEditorNewDeckOptions">
+        <span class="deckEditorNewDeckOptionsLabel">Added to the table with every new deck</span>
+        <label title="A holder in the middle of the table that the deck and all its cards are put into. Without it, the cards go into a pile in the middle of the table instead."><input type="checkbox" id="deckEditorNewDeckHolder" checked>Card holder on the table, holding all the cards</label>
+        <label title="A button below the holder that gathers all cards back into it, turns them face-down and shuffles them."><input type="checkbox" id="deckEditorNewDeckResetButton" checked>Reset button that gathers all cards back, turns them face-down and shuffles</label>
+        <span class="deckEditorNewDeckOptionsHint">Without a holder, the cards go into a pile in the middle of the table.</span>
+      </div>
+      <div id="deckEditorNewDeckPanel"></div>
     </div>
   </div>
   <div id="editorModuleOverlay" class="overlay" style="display: none">
@@ -149,6 +291,78 @@
   <div id="editorSelection"></div>
   <div id="editorToolbar"></div>
   <div id="editorDragToolbar"><div id="editorDragToolbarFeedback"></div></div>
+  <div id="deckEditor">
+    <div id="deckEditorBody">
+      <div id="deckEditorLeftSidebar">
+        <div id="deckEditorLeftToolbar">
+          <button id="deckEditorTreeAdd" icon="add"></button>
+          <button id="deckEditorTreeCopy" icon="content_copy"></button>
+          <button id="deckEditorTreeDelete" icon="delete_forever"></button>
+          <button id="deckEditorShowAll" icon="highlight_alt" title="Outline all face objects on the card so you can see every area at once."></button>
+          <button id="deckEditorExport" icon="save" title="Save, print, or export decks"></button>
+        </div>
+        <!-- The add-object submenu is one node that moves between this host and the one the Object tab of the
+             right sidebar renders, so both "+" buttons share its mode and type buttons. -->
+        <div id="deckEditorAddSectionHost">
+          <div class="deckEditorAddGroup deckEditorAddGroupStatic" id="deckEditorAddSection">
+            <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type).">
+              <span class="deckEditorAddModeTitle">Add to:</span>
+              <div class="deckEditorAddModeRadios">
+                <label><input type="radio" name="deckEditorAddMode" value="static" checked>All Cards</label>
+                <label><input type="radio" name="deckEditorAddMode" value="dynamic">Card Type</label>
+              </div>
+            </div>
+            <button icon="format_size" id="deckEditorAddText">Text</button>
+            <button icon="edit_note" id="deckEditorAddWritable" title="Adds a box players can write in while playing - what they write is kept on the card.">Write box</button>
+            <button icon="image" id="deckEditorAddImage">Image</button>
+            <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
+            <button icon="palette" id="deckEditorAddColor" title="Adds a solid color box, e.g. as a background.">Color</button>
+            <!-- The one thing a creator has to know about a write box, in the panel rather than only in the
+                 button's tooltip. It is only shown in the Card Type mode, the only one offering the button. -->
+            <div class="deckEditorAddModeNote">A <b>Write box</b> stores what players type on the card itself. A card can not be dragged or flipped by its box, so leave some card around it to grab.</div>
+          </div>
+        </div>
+        <div id="deckEditorTree"></div>
+      </div>
+      <div id="deckEditorRight">
+        <div id="deckEditorHistory">
+          <button icon="library_add" id="deckEditorAddDeck" title="Add blank deck or choose an existing one to add to the game">Add New Deck</button>
+          <span class="deckEditorHistoryDivider"></span>
+          <button icon="undo" id="deckEditorUndo" title="Undo the last change (Ctrl+Z).">Undo</button>
+          <button icon="redo" id="deckEditorRedo" title="Redo the last undone change (Ctrl+Y).">Redo</button>
+          <span id="deckEditorHistoryLabel">History:</span>
+          <div id="deckEditorBreadcrumb" title="Your edits this session — click a step to jump back or forward to it."></div>
+          <span class="deckEditorHistoryDivider"></span>
+          <button icon="crop_portrait" id="deckEditorCardView" class="active">Card view</button>
+          <button icon="close" id="deckEditorClose" title="Close the deck editor.">Close</button>
+        </div>
+        <div id="deckEditorContent">
+          <div id="deckEditorMainCol">
+            <div id="deckEditorMain"></div>
+            <div id="deckEditorObjectHint"></div>
+          </div>
+          <div id="deckEditorSidebar"></div>
+        </div>
+        <div id="deckEditorStripHeader">
+          <span id="deckEditorStripLabel">Card types</span>
+          <div id="deckEditorStripToolbar">
+            <button id="deckEditorStripAdd" icon="add" title="Add a blank card type"></button>
+            <button id="deckEditorStripImport" icon="upload" title="Import card types from a CSV file"></button>
+            <button id="deckEditorStripCopy" icon="content_copy" title="Copy the selected card type"></button>
+            <button id="deckEditorStripDelete" icon="delete_forever" title="Delete the selected card type"></button>
+          </div>
+          <div class="deckEditorStripHeaderDivider"></div>
+          <span id="deckEditorCountAllLabel">Card count</span>
+          <div id="deckEditorCountAllToolbar">
+            <button id="deckEditorCountAllRemove" icon="remove" title="One fewer card of every type">All</button>
+            <button id="deckEditorCountAllAdd" icon="add" title="One more card of every type">All</button>
+          </div>
+        </div>
+        <div id="deckEditorStrip"></div>
+      </div>
+    </div>
+    <div id="deckEditorDragToolbar"><div id="deckEditorDragToolbarFeedback"></div></div>
+  </div>
   <div id="editorSidebar"></div>
   <div id="editorModules">
     <div id="editorModulesResizer"></div>
@@ -167,21 +381,6 @@
     <div id="jeText" contenteditable="true" spellcheck="false"></div>
   </div>
   <div id="jeCommands"></div>
-  <div id="jeWidgetLayers">
-    <p>This will show you the widgets under your cursor. In order to interact with an obscured widget, you can press the corresponding function key to select it.</p>
-    <div id="jeMouseCoords"></div>
-    <div id="jeWidgetLayer1" class="hidden"><span class="key">F1</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer2" class="hidden"><span class="key">F2</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer3" class="hidden"><span class="key">F3</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer5" class="hidden"><span class="key">F5</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer6" class="hidden"><span class="key">F6</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer7" class="hidden"><span class="key">F7</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer8" class="hidden"><span class="key">F8</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer9" class="hidden"><span class="key">F9</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer10" class="hidden"><span class="key">F10</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer11" class="hidden"><span class="key">F11</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-    <div id="jeWidgetLayer12" class="hidden"><span class="key">F12</span><span class="keyDetails"><span class="type"></span> <span class="id"></span><span class="details"></span></span></div>
-  </div>
   <div id="jeLogWrapper">
     <div id="jeLog">
     </div>

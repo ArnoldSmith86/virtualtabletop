@@ -6,29 +6,70 @@ on:
   pull_request:
     branches: [ main ]
 
+concurrency:
+  group: testcafe-chrome-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
     name: Run TestCafe Tests
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        testfile:
+          - card.js
+          - editor.js
+          - toolbar.js
+          - boardsize.js
+          - draglimit.js
+          - compute-1.js
+          - compute-2.js
+          - compute-3.js
+          - compute-4.js
+          - publiclibrary-1.js
+          - publiclibrary-2.js
+          - publiclibrary-3.js
+          - publiclibrary-4.js
+          - routines.js
+          - legacymatrix.js
+          - interactions.js
+          # holderevents.js drives its drags with synthetic mouse events whose timing against
+          # the drop animation has only been measured in Chrome so far
+          - holderevents.js
+          - keyboardzoom.js
+          - canvas.js
+          - inheritfrom.js
+          # the DOM baselines record computed styles and rounded boxes, which are browser
+          # specific, so they are recorded and checked in Chrome only
+          - domsnapshot.js
+          # the pixel half compares two captures from the same run rather than a checked-in
+          # image, but a screenshot is still browser specific enough to keep in one browser
+          - pixelsnapshot.js
+          - multiclient.js
+        include:
+          # a second browser window is the whole point of this file, and native automation mode
+          # refuses to open one
+          - testfile: multiclient.js
+            flags: --disable-native-automation
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Install Node.js 18.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v4
       with:
         node-version: 18.x
+        cache: npm
     - name: Install dependencies
       run: npm ci
     - name: Start virtualtabletop server
       run: |
-        npm run debug &
-        sleep 5
-        curl -I http://localhost:8272
+        npm start &
+        timeout 30 bash -c 'until curl -sf http://localhost:8272 -o /dev/null; do sleep 0.5; done'
     - name: Run TestCafe tests
       uses: DevExpress/testcafe-action@latest
       with:
         version: "3.7.3"
-        args: "chrome:headless tests/testcafe"
+        args: "chrome:headless ${{ matrix.flags }} tests/testcafe/${{ matrix.testfile }}"
