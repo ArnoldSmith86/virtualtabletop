@@ -1387,7 +1387,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###', random: false});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
-  jeAddRoutineOperationCommands('SHIFT', { holders: '${activeSeats}', source: 'all', interval: 1, direction: 'forward', wrap: true });
+  jeAddRoutineOperationCommands('SHIFT', { holders: [], widgets: 'all', interval: 1, direction: 'forward', wrap: true });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
@@ -1488,7 +1488,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(SHUFFLE\\) ↦ mode', [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ]);
-  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ source', [ 'all', 'top' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ widgets', [ 'all', 'top' ]);
   jeAddEnumCommands('^.*\\(SHIFT\\) ↦ direction', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(SHIFT\\) ↦ wrap', [ true, false ]);
   jeAddEnumCommands('^.*\\(SWAPHANDS\\) ↦ direction', [ 'forward', 'backward', 'random']);

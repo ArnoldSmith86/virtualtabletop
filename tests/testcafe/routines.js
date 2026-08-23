@@ -65,6 +65,21 @@ function sharedHandRoom() {
   return state;
 }
 
+// the seats are created in an order that does not match their index property, so a
+// bare SHIFT handing hand1 on to hand3 shows that the default follows the seat index
+function outOfOrderSeatsRoom() {
+  const state = {
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+    shift: { id: 'shift', type: 'button', text: 'shift', x: 800, y: 400, clickRoutine: [ { func: 'SHIFT' } ] },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand1' }
+  };
+  for(const [ position, index ] of [ [ 1, 1 ], [ 2, 3 ], [ 3, 2 ] ]) {
+    state[`hand${position}`] = { id: `hand${position}`, type: 'holder', x: 50, y: 200*position, width: 700, height: 180 };
+    state[`seat${position}`] = { id: `seat${position}`, type: 'seat', index, player: `Player ${position}`, hand: `hand${position}`, x: 800, y: 200*position };
+  }
+  return state;
+}
+
 async function expectEventually(t, get, expected) {
   let actual = null;
   for(let wait=50; wait<1000; wait*=2) {
@@ -169,6 +184,16 @@ test('SHIFT does not pass on a card that a routine of an earlier move removed', 
   await expectEventually(t, ()=>widgetExists('doomed'), false);
   await expectEventually(t, ()=>cardsInHand('hand1'), []);
   await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+test('SHIFT without holders follows the seat index rather than the widget order', async t => {
+  await setRoomState(outOfOrderSeatsRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await expectEventually(t, ()=>cardsInHand('hand1'), [ 'card1' ]);
+  await t.click('#w_shift');
+  await expectEventually(t, ()=>cardsInHand('hand3'), [ 'card1' ]);
+  await expectEventually(t, ()=>cardsInHand('hand1'), []);
 });
 
 test('SHIFT passes on a hand that all seats share by changing the owner', async t => {

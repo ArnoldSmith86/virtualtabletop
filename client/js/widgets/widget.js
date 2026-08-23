@@ -1974,7 +1974,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SHIFT') {
-        setDefaults(a, { holders: variables.activeSeats, source: 'all', interval: 1, direction: 'forward', wrap: true });
+        setDefaults(a, { widgets: 'all', interval: 1, direction: 'forward', wrap: true });
         if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
           problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
           a.direction = 'forward'
@@ -1999,8 +1999,15 @@ export class Widget extends StateManaged {
           return (container.seat || container.holder).get('id');
         }
 
+        // without an explicit list every occupied seat takes part, ordered by the seat
+        // index property - the same set in the same order a bare SWAPHANDS uses
+        const useActiveSeats = a.holders === undefined || a.holders === null;
+        if(useActiveSeats)
+          a.holders = Array.from(widgets.values()).filter(w=>w.get('type')=='seat' && w.get('player')).sort((x, y)=>x.get('index')-y.get('index')).map(seat=>seat.get('id'));
+
         let valid = Array.isArray(a.holders) && a.holders.length > 1;
-        if(!valid)
+        // fewer than two occupied seats is not an error, there is simply nothing to shift
+        if(!valid && !useActiveSeats)
           problems.push(`SHIFT requires a 'holders' array of at least two holders or seats.`);
 
         let order = [];
@@ -2019,8 +2026,8 @@ export class Widget extends StateManaged {
         }
 
         let widgetCollection = null;
-        if(valid && a.source != 'all' && a.source != 'top')
-          valid = !!(widgetCollection = getCollection(a.source));
+        if(valid && a.widgets != 'all' && a.widgets != 'top')
+          valid = !!(widgetCollection = getCollection(a.widgets));
 
         if(valid && !Number.isFinite(a.interval)) {
           problems.push(`SHIFT 'interval' must be a finite number.`);
@@ -2053,7 +2060,7 @@ export class Widget extends StateManaged {
             // only the widgets owned by that seat's player belong to that seat
             const perOwner = source.seat && source.holder.get('childrenPerOwner');
             let selected = source.holder.children().filter(c=>!perOwner || c.get('owner') == source.seat.get('player'));
-            if(a.source == 'top')
+            if(a.widgets == 'top')
               selected = selected.slice(0, 1);
             else if(collectionSet)
               selected = selected.filter(c=>collectionSet.has(c));
@@ -2100,8 +2107,8 @@ export class Widget extends StateManaged {
           }
 
           if(jeRoutineLogging) {
-            const sourceDesc = a.source == 'all' || a.source == 'top' ? a.source : `collection '${a.source}'`;
-            jeLoggingRoutineOperationSummary(`shifted ${sourceDesc} widgets ${shift} step(s) ${a.direction} ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
+            const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
+            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.direction} ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
           }
         }
       }

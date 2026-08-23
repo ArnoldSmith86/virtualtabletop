@@ -73,7 +73,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "SHIFT is used to move widgets between the holders and seats listed in <b>holders</b>, which defaults to ${activeSeats}. Click the oval buttons below to cycle through the options for the various parameters. Press the round SHIFT button at any time to move the widgets in the examples. For seats, the function uses the holder linked in the <b>hand</b> property of the seat. Empty seats are skipped."
+    "html": "SHIFT is used to move widgets between the holders and seats listed in <b>holders</b>. If <b>holders</b> is left out, every occupied seat takes part, in the order of the seat <b>index</b> property. Click the oval buttons below to cycle through the options for the various parameters. Press the round SHIFT button at any time to move the widgets in the examples. For seats, the function uses the holder linked in the <b>hand</b> property of the seat. Empty seats are skipped."
   },
   "button3": {
     "type": "button",
@@ -165,7 +165,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>source</b>: Specifies which widgets in each holder are moved. Defaults to &quotall&quot. If set to &quottop&quot it will just move the top widget. It can also be set to a named collection to move all widgets in that collection.",
+    "html": "<b>widgets</b>: Specifies which widgets in each holder are moved. Defaults to &quotall&quot. If set to &quottop&quot it will just move the top widget. It can also be set to a named collection to move all widgets in that collection.",
     "layer": -3
   },
   "button1": {
@@ -265,7 +265,7 @@
           "holder7"
         ],
         "interval": "${PROPERTY text OF button2}",
-        "source": "${PROPERTY text OF button1}",
+        "widgets": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       },
       {
@@ -328,7 +328,7 @@
           "move53"
         ],
         "interval": "${PROPERTY text OF button2}",
-        "source": "${PROPERTY text OF button1}",
+        "widgets": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       },
       {
@@ -341,7 +341,7 @@
           "seat4"
         ],
         "interval": "${PROPERTY text OF button2}",
-        "source": "${PROPERTY text OF button1}",
+        "widgets": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       }
     ]

@@ -774,7 +774,7 @@ const operationProps = {
     },
     'SHIFT': {
         'holders': getWidgetTypeValidator(['holder', 'seat'], true),
-        'source': v=>typeof v === 'string' || '"all", "top", or a collection name expected',
+        'widgets': v=>typeof v === 'string' || '"all", "top", or a collection name expected',
         'interval': v=>typeof v === 'number' && Number.isInteger(v) || 'integer expected',
         'direction': getEnumValidator(['forward','backward','random']),
         'wrap': 'boolean'
