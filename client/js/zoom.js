@@ -1,3 +1,5 @@
+import { viewportConfig } from './calculateLayout.js';
+
 let zoomScale = 1;
 let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
 
@@ -21,6 +23,12 @@ export function getZoomLevel() {
   return zoomScale;
 }
 
+// A text field that has more text than fits (a writable card text, a label) owns the wheel: without this the
+// room zoom swallows the event and the overflow can only be reached with the caret keys or the scrollbar.
+function scrollableTextField(element) {
+  return element && (element.tagName == 'TEXTAREA' || element.isContentEditable) && element.scrollHeight > element.clientHeight;
+}
+
 function resetZoomAndPan() {
   setZoomLevel(1);
   setPan(0, 0);
@@ -29,8 +37,8 @@ function resetZoomAndPan() {
 
 function setPan(x, y) {
   // Clamp pan to valid range
-  const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
-  const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
+  const maxPanX = viewportConfig.targetWidth * scale * zoomScale - viewportConfig.targetWidth * scale;
+  const maxPanY = viewportConfig.targetHeight * scale * zoomScale - viewportConfig.targetHeight * scale;
   const clampedPanX = Math.max(-maxPanX, Math.min(0, x));
   const clampedPanY = Math.max(-maxPanY, Math.min(0, y));
 
@@ -165,6 +173,8 @@ onLoad(function() {
   on('#roomArea', 'wheel', function(e){
     if(overlayActive || zoomLocked)
       return; // allow normal wheel behavior when an overlay is active or zoom is locked
+    if(scrollableTextField(e.target))
+      return; // a writable card text or label scrolls its own overflow instead of zooming the room
     e.preventDefault();
 
     const now = Date.now();
@@ -179,6 +189,8 @@ onLoad(function() {
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
+    if(e.target.tagName == 'TEXTAREA' || e.target.tagName == 'INPUT' || e.target.isContentEditable)
+      return; // paging inside a text field moves the caret, it does not zoom
     if(!overlayActive && !edit && !zoomLocked && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();
       const currentIndex = zoomLevels.indexOf(zoomScale);

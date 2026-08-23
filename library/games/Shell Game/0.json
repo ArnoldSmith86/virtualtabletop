@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {},
       "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30-45",
       "attribution": "<div>Layout, scripting, and library image by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and LawDawg and released to the Public Domain under CC0.</div><div><br></div><div>The sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at https://pixabay.com/sound-effects/wrong-answer-129254/.</div><div><br></div><div>The tile bag by mousewax is in the Public Domain.</div>",
-      "lastUpdate": 1778852638074,
+      "lastUpdate": 1786167901137,
       "skill": "",
       "description": "Place tiles in sequences or sets to score points and maximize control of each of the four areas on the board.",
       "similarImage": "",
@@ -2731,9 +2731,18 @@
       "masterMarker": "css"
     },
     "activeFace": 1,
-    "x": 34,
+    "x": 4,
     "y": 4,
     "classes": "transitions",
+    "dragLimit": {
+      "minX": 650,
+      "maxX": 1570,
+      "minY": 40,
+      "maxY": 900,
+      "condition": "x < 700 || x > 1520 || y < 80 || y > 860",
+      "alignX": 0.5,
+      "alignY": 0.5
+    },
     "parent": "scoreMarkerHolder"
   },
   "scoreMarker4": {
@@ -2757,7 +2766,16 @@
     "cColor": "#71c9c4",
     "activeFace": 1,
     "parent": "scoreMarkerHolder",
-    "classes": "transitions"
+    "classes": "transitions",
+    "dragLimit": {
+      "minX": 650,
+      "maxX": 1570,
+      "minY": 40,
+      "maxY": 900,
+      "condition": "x < 700 || x > 1520 || y < 80 || y > 860",
+      "alignX": 0.5,
+      "alignY": 0.5
+    }
   },
   "scoreMarker3": {
     "id": "scoreMarker3",
@@ -2769,7 +2787,7 @@
     "resetProperties": {
       "parent": "scoreMarkerHolder"
     },
-    "x": 19,
+    "x": 34,
     "inheritFrom": {
       "masterMarker": "css"
     },
@@ -2778,7 +2796,16 @@
     "cColor": "#dee21d",
     "activeFace": 1,
     "classes": "transitions",
-    "parent": "scoreMarkerHolder"
+    "parent": "scoreMarkerHolder",
+    "dragLimit": {
+      "minX": 650,
+      "maxX": 1570,
+      "minY": 40,
+      "maxY": 900,
+      "condition": "x < 700 || x > 1520 || y < 80 || y > 860",
+      "alignX": 0.5,
+      "alignY": 0.5
+    }
   },
   "scoreMarker2": {
     "id": "scoreMarker2",
@@ -2796,10 +2823,19 @@
     "bColor": "#743b75",
     "cColor": "#9452a0",
     "activeFace": 1,
-    "x": 4,
+    "x": 19,
     "y": 4,
     "classes": "transitions",
-    "parent": "scoreMarkerHolder"
+    "parent": "scoreMarkerHolder",
+    "dragLimit": {
+      "minX": 650,
+      "maxX": 1570,
+      "minY": 40,
+      "maxY": 900,
+      "condition": "x < 700 || x > 1520 || y < 80 || y > 860",
+      "alignX": 0.5,
+      "alignY": 0.5
+    }
   },
   "scoreHolder17": {
     "inheritFrom": {
@@ -12282,7 +12318,7 @@
     "text": "It's Your Turn!",
     "background_color_solid": "#9c27b0",
     "background_color_transparent": "#ffeb3b48",
-    "clickCount": 1460,
+    "clickCount": 1461,
     "animatePropertyChange": [
       {
         "property": "clickCount",
@@ -12342,7 +12378,7 @@
         "value": 1
       }
     ],
-    "clickCount": 1324,
+    "clickCount": 1325,
     "borderRadius": 20,
     "movable": false,
     "movableInEdit": false

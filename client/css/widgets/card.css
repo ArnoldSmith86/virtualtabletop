@@ -27,3 +27,77 @@
 .card > .cardFace > .cardFaceObject.html {
   white-space: collapse;
 }
+
+/* A write object is a box a player types into, so it is outlined and filled: the defaults for its own
+   backgroundColor (transparent) and borderColor (the object's own text color) properties live here, an object
+   that sets either of them overrides this rule inline. Following the text color rather than being black keeps
+   the box readable on a dark card face, where a black outline is what a creator has to notice and override.
+   What a player types is plain text, so their line breaks and spacing are kept and long words break inside
+   the box instead of running out of it. */
+.card > .cardFace > .cardFaceObject.write {
+  background-color: transparent;
+  border: 1px solid currentColor;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* Only while it can be written on: the text is clipped into the box and scrolls, the way a text field does.
+   A locked object overflows the object like every other text object, so a note nobody can scroll anymore
+   stays readable. The scrollbar is the only cue that there is more text - keep it thin, but in the object's
+   own color so it shows on dark card faces too. */
+.card > .cardFace > .cardFaceObject.write[contenteditable] {
+  overflow: auto;
+  user-select: text;
+  -webkit-user-select: text;
+  scrollbar-width: thin;
+  scrollbar-color: currentColor transparent;
+}
+
+/* Where that scrollbar is drawn as an overlay (headless and mobile browsers, macOS by default) it is hidden
+   while nothing is scrolling, and text scrolled out of the box then goes without any cue at all. So a box
+   holding more text than it shows fades its bottom edge out, in the object's own color. The class is set by
+   card.js, which is the only place that can tell whether the text overflows. */
+.card > .cardFace > .cardFaceObject.write[contenteditable].cardFaceOverflow {
+  box-shadow: inset 0 -8px 6px -8px currentColor;
+}
+
+/* A box that can still be written on says so while the pointer is over it: a locked one looks exactly like a
+   filled-in writable one otherwise. Only while playing - in edit mode the same pointer moves the card. */
+body:not(.edit) .card > .cardFace > .cardFaceObject.write[contenteditable] {
+  cursor: text;
+}
+
+body:not(.edit) .card > .cardFace > .cardFaceObject.write[contenteditable]:hover:not(:focus) {
+  outline: 1px solid currentColor;
+  outline-offset: -1px;
+}
+
+/* .widget sets touch-action: none so that a drag moves the card. While playing, a card can not be dragged by
+   its write object anyway, so let a vertical drag scroll the overflow there - on a touch device that is the
+   only way to reach it. In edit mode the same drag moves the card, so leave it alone. */
+body:not(.edit) .card > .cardFace > .cardFaceObject.write[contenteditable] {
+  touch-action: pan-y;
+}
+
+/* The focused box has to be recognizable on any card face, and a single color can always be the one the face
+   happens to be painted in (the blue below is exactly the background of the cards in the decks tutorial).
+   Blue inside a white ring is: whichever of the two a face matches, the other one still shows. */
+.card > .cardFace > .cardFaceObject.write[contenteditable]:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -1px;
+  box-shadow: 0 0 0 2px #ffffffcc;
+}
+
+/* box-shadow carries both the ring and the overflow fade, so a focused overflowing box has to name both. */
+.card > .cardFace > .cardFaceObject.write[contenteditable].cardFaceOverflow:focus {
+  box-shadow: 0 0 0 2px #ffffffcc, inset 0 -8px 6px -8px currentColor;
+}
+
+/* The hint shown while the object is still empty, dimmed like a text field dims its placeholder but in the
+   object's own color (the browser's fixed grey is unreadable on a dark card face). It is generated content
+   so that it can not be typed into, selected or read back as the text a player wrote - and so that it is
+   laid out by the object's css exactly like that text is. */
+.card > .cardFace > .cardFaceObject.write.cardFacePlaceholder::before {
+  content: attr(data-placeholder);
+  opacity: 0.45;
+}

@@ -84,6 +84,20 @@ There's also an official Docker image: https://hub.docker.com/r/arnoldsmith86/vi
 </details>
 
 <details>
+    <summary><b>🐧 Linux AppImage</b></summary>
+
+If you don't want to install Node.js, you can download an AppImage from the [releases page](https://github.com/ArnoldSmith86/virtualtabletop/releases). It bundles Node.js and a small graphical launcher and is rebuilt monthly. The launcher needs Python 3 with Tk on the host (`python3-tk` on Debian/Ubuntu).
+
+Two variants are available:
+
+- `VirtualTabletop-<hash>-x86_64.AppImage` includes the whole public game library.
+- `VirtualTabletop-<hash>-nolibrary-x86_64.AppImage` is much smaller and skips the library - useful if you only play your own games.
+
+Make the file executable (`chmod +x VirtualTabletop-*.AppImage`) and run it.
+
+</details>
+
+<details>
     <summary><b>📱 Android</b></summary>
 
 Using [Termux](https://termux.dev/), you can use an Android phone as the server and play with any devices offline by using its wifi hotspot:

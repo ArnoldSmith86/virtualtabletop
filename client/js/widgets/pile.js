@@ -1,6 +1,8 @@
+import { viewportConfig } from '../calculateLayout.js';
+
 const defaultPileSnapRange = 10;
 
-class Pile extends Widget {
+export class Pile extends Widget {
   constructor(id) {
     super(id);
     this.handle = document.createElement('div');
@@ -16,6 +18,7 @@ class Pile extends Widget {
       inheritChildZ: true,
 
       text: null,
+      showLimit: false,
       pileSnapRange: defaultPileSnapRange,
 
       handleCSS: '',
@@ -45,7 +48,7 @@ class Pile extends Widget {
     super.applyDeltaToDOM(delta);
     if(this.handle && delta.handleCSS !== undefined)
       this.handle.style = mapAssetURLs(this.cssAsText(this.get('handleCSS'),null,true));
-    if(this.handle && delta.text !== undefined)
+    if(this.handle && (delta.text !== undefined || delta.showLimit !== undefined || delta.dropLimit !== undefined))
       this.updateText();
     if(this.handle && (delta.width !== undefined || delta.height !== undefined || delta.handleSize !== undefined)) {
       if(this.get('handleSize') == 'auto' && (this.get('width') < 50 || this.get('height') < 50))
@@ -54,24 +57,33 @@ class Pile extends Widget {
         this.handle.classList.remove('small');
     }
 
+    if(this.handle && [ 'x', 'y', 'width', 'height', 'parent', 'handlePosition', 'handleOffset' ].some(p=>delta[p] !== undefined))
+      this.updateHandlePlacement();
+  }
+
+  // The handle sticks out of the pile, so it is flipped inwards when the pile
+  // sits close to a board edge. That depends on the board size, which can change
+  // while people are playing - so this also has to run outside of a delta.
+  updateHandlePlacement() {
+    if(!this.handle)
+      return;
+
     const threshold = this.get('handleOffset')+5;
     const handlePosition = String(this.get('handlePosition'));
-    for(const e of [ [ 'x', 'right', 1600-this.get('width'), 'center' ], [ 'y', 'bottom', 1000-this.get('height'), 'middle' ] ]) {
-      if(this.handle && (delta[e[0]] !== undefined || delta.parent !== undefined || delta.handlePosition !== undefined || delta.handleOffset !== undefined)) {
-        if(handlePosition == 'static') {
+    for(const e of [ [ 'x', 'right', viewportConfig.targetWidth-this.get('width'), 'center' ], [ 'y', 'bottom', viewportConfig.targetHeight-this.get('height'), 'middle' ] ]) {
+      if(handlePosition == 'static') {
+        this.handle.classList.remove(e[1]);
+        this.handle.classList.remove(e[3]);
+      } else if(handlePosition.match(e[3])) {
+        this.handle.classList.remove(e[1]);
+        this.handle.classList.add(e[3]);
+      } else {
+        this.handle.classList.remove(e[3]);
+        const isRightOrBottom = handlePosition.match(e[1]);
+        if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
+          this.handle.classList.add(e[1]);
+        else
           this.handle.classList.remove(e[1]);
-          this.handle.classList.remove(e[3]);
-        } else if(handlePosition.match(e[3])) {
-          this.handle.classList.remove(e[1]);
-          this.handle.classList.add(e[3]);
-        } else {
-          this.handle.classList.remove(e[3]);
-          const isRightOrBottom = handlePosition.match(e[1]);
-          if(isRightOrBottom && this.absoluteCoord(e[0]) < e[2]-threshold || !isRightOrBottom && this.absoluteCoord(e[0]) < threshold)
-            this.handle.classList.add(e[1]);
-          else
-            this.handle.classList.remove(e[1]);
-        }
       }
     }
   }
@@ -80,7 +92,9 @@ class Pile extends Widget {
     if(!await super.click(mode)) {
 
       const childCount = this.children().length;
-      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${childCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
+      const dropLimit = this.get('dropLimit');
+      const cardCount = this.get('showLimit') && dropLimit > -1 ? `${childCount} of ${dropLimit}` : childCount;
+      $('#pileOverlay > .modal').innerHTML = `<div class="inputtitle"><label>${cardCount} cards</label></div><div class="inputtext"><label>TIP: Drag the handle with the number to drag the entire pile.</label></div>`;
 
 
       const buttonBar1 = document.createElement('div');
@@ -269,9 +283,15 @@ class Pile extends Widget {
     return false;
   }
 
+  // The handle shows how many cards the pile holds. A pile with showLimit set
+  // says how many it takes as well - "2/3" - so the limit is readable before a
+  // drop is refused rather than only after.
   updateText() {
     const text = this.get('text');
-    this.handle.textContent = text === null ? this.childCount : text;
+    const limit = this.get('dropLimit');
+    const withLimit = text === null && this.get('showLimit') && limit > -1;
+    this.handle.classList.toggle('withLimit', withLimit);
+    this.handle.textContent = text !== null ? text : withLimit ? `${this.childCount}/${limit}` : this.childCount;
   }
 
   validDropTargets() {
