@@ -3966,6 +3966,59 @@ describe('AI routine assistant', () => {
     popup.hide();
   });
 
+  test('the popup says what is sent and where', () => {
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+    editor.domElement.querySelector('.events-editor-ai').dispatchEvent(new Event('click'));
+    const popup = openPopups.find(p => p instanceof AiRoutinePopup);
+    const said = popup.domElement.querySelector('.ai-routine-privacy').textContent;
+    expect(said).toContain('the widgets in this room are sent to');
+    expect(said).toContain('agent.virtualtabletop.io');
+    popup.hide();
+  });
+
+  // a job the service never finishes, so the popup is still waiting on it
+  function runningService() {
+    const previous = globalThis.fetch;
+    globalThis.fetch = async (url, options) => ({
+      ok: true,
+      json: async () => options ? { jobId: 'job1' } : { status: 'running', step: 'Reading widgets…' }
+    });
+    return () => { globalThis.fetch = previous; };
+  }
+
+  test('closing the popup gives up on the answer instead of writing it later', async () => {
+    const restore = runningService();
+    const written = [];
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] }, (property, value) => written.push([ property, value ]));
+    editor.domElement.querySelector('.events-editor-ai').dispatchEvent(new Event('click'));
+    const popup = openPopups.find(p => p instanceof AiRoutinePopup);
+    popup.input.value = 'shuffle the deck';
+    const running = popup.generate();
+    popup.hide(); // Escape, a click outside, the x - all of them end up here
+    await running;
+    expect(popup.cancelled).toBe(true);
+    expect(written).toEqual([]); // nothing lands on the widget afterwards
+    restore();
+  });
+
+  test('reopening the popup starts from what was asked for last time', async () => {
+    const restore = runningService();
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+    const openPopup = () => {
+      editor.domElement.querySelector('.events-editor-ai').dispatchEvent(new Event('click'));
+      return openPopups.find(p => p instanceof AiRoutinePopup);
+    };
+    const first = openPopup();
+    first.input.value = 'deal five cards to everyone';
+    const running = first.generate();
+    first.hide();
+    await running;
+    // saying it differently is the usual second try, and retyping it is not
+    expect(openPopup().input.value).toBe('deal five cards to everyone');
+    openPopups.find(p => p instanceof AiRoutinePopup).hide();
+    restore();
+  });
+
   test('only the operations that really changed count as changed', () => {
     const op = f => ({ func: f });
     // an operation inserted in the middle does not make everything after it new

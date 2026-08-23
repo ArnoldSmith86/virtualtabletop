@@ -26,6 +26,13 @@
   margin-bottom: 6px;
 }
 
+/* where the request goes, said above the box it is typed into */
+.ai-routine-privacy {
+  font-size: 11px;
+  color: var(--textHelpColor);
+  margin-bottom: 6px;
+}
+
 textarea.ai-routine-prompt {
   width: 100%;
   box-sizing: border-box;

@@ -52,6 +52,13 @@ function aiRoutineEndpoint() {
   }
 }
 
+// Where the request goes, for the line in the popup that says so.
+function aiRoutineHost() {
+  const endpoint = aiRoutineEndpoint();
+  const host = endpoint.match(/^[a-z]+:\/\/([^/?#]+)/i);
+  return host ? host[1] : endpoint;
+}
+
 function aiRoutineQuality() {
   try {
     const stored = Number(localStorage.getItem('editor.aiRoutineQuality'));
@@ -229,6 +236,10 @@ function aiShowResultNote(container, routineEditor) {
   return note;
 }
 
+// What was last asked of a routine, so reopening the popup to say it differently
+// starts from what was said the first time rather than from an empty box.
+const aiLastPrompts = new Map();
+
 class AiRoutinePopup extends Popup {
   // apply(routine, result) writes the result; the popup never touches the widget
   constructor(source, widget, property, currentRoutine, apply) {
@@ -238,14 +249,17 @@ class AiRoutinePopup extends Popup {
     this.currentRoutine = currentRoutine;
     this.apply = apply;
     this.busy = false;
+    this.cancelled = false;
+    this.promptKey = aiResultKey(widget.get('id'), property);
     this.domElement.classList.add('ai-routine-popup');
-  }
-
-  onClick(e) {
   }
 
   show() {
     super.show();
+    // closing the popup gives up on the job: writing a routine takes long enough
+    // that the answer can land after the editor has moved on, and one that writes
+    // itself onto a widget nobody is looking at any more is worse than none
+    this.registerCancelListener(_=>this.cancelled = true);
     this.setTitle(`Write ${describeEventProperty(this.property).label} with AI`);
     this.renderBody();
     this.moveIntoView();
@@ -260,12 +274,17 @@ class AiRoutinePopup extends Popup {
     div(this.bodyDOM, 'ai-routine-intro').textContent = has
       ? 'Say what this routine should do instead, or what to change about it. It is rewritten as a whole and applied right away - undo takes it back.'
       : 'Say what should happen, in your own words. Name the things you see on the board - the widgets are looked up for you.';
+    // a routine is written out of this room, so this room is what the request
+    // carries - worth saying next to the box it is typed into rather than only
+    // in the source of the thing sending it
+    div(this.bodyDOM, 'ai-routine-privacy').textContent
+      = `What you write and the widgets in this room are sent to ${aiRoutineHost()}, so the routine can use the widgets you actually have.`;
 
     this.input = document.createElement('textarea');
     this.input.className = 'ai-routine-prompt';
     this.input.rows = 4;
     this.input.placeholder = AI_PROMPT_EXAMPLES[Math.floor(Math.random() * AI_PROMPT_EXAMPLES.length)];
-    this.input.value = this.lastPrompt || '';
+    this.input.value = aiLastPrompts.get(this.promptKey) || '';
     this.bodyDOM.append(this.input);
     // Ctrl/Cmd+Enter sends, plain Enter is a new line: these are sentences
     this.input.addEventListener('keydown', e=>{
@@ -325,7 +344,7 @@ class AiRoutinePopup extends Popup {
       this.setStatus('Say what the routine should do first.', 'warning');
       return;
     }
-    this.lastPrompt = prompt;
+    aiLastPrompts.set(this.promptKey, prompt);
     this.busy = true;
     this.generateButton.disabled = true;
     this.qualityInput.disabled = true;
@@ -340,6 +359,8 @@ class AiRoutinePopup extends Popup {
       this.hide();
       return;
     } catch(e) {
+      if(this.cancelled)
+        return;
       this.setStatus(e.message, 'error');
     }
     this.busy = false;
@@ -373,8 +394,10 @@ class AiRoutinePopup extends Popup {
       throw new Error('The AI service did not start a job.');
 
     const until = Date.now() + AI_POLL_TIMEOUT;
-    while(Date.now() < until) {
+    while(!this.cancelled && Date.now() < until) {
       await new Promise(resolve=>setTimeout(resolve, AI_POLL_INTERVAL));
+      if(this.cancelled)
+        break;
       const poll = await fetch(`${endpoint}?job=${encodeURIComponent(started.jobId)}`);
       const state = await poll.json().catch(_=>({}));
       if(state.status == 'running') {
@@ -388,7 +411,7 @@ class AiRoutinePopup extends Popup {
       }
       throw new Error(state.error || 'The AI service lost track of the request.');
     }
-    throw new Error('The AI service took too long. Try again, or ask for something smaller.');
+    throw new Error(this.cancelled ? 'The request was given up on.' : 'The AI service took too long. Try again, or ask for something smaller.');
   }
 }
 
