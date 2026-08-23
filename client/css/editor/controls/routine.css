@@ -504,8 +504,9 @@ body.edit.darkMode .routine-editor-parameter-missing {
    the sentence above it. */
 .routine-editor-debug {
   margin-top: 3px;
+  margin-bottom: 2px;
   padding-top: 2px;
-  border-top: 1px dashed var(--backgroundColor);
+  border-top: 1px dashed var(--routineDebugSeparatorColor);
   font-size: 11px;
   line-height: 1.5;
 }
@@ -547,6 +548,10 @@ body.edit.darkMode .routine-editor-parameter-missing {
   border-radius: 3px;
   padding: 0 4px;
   color: var(--routineVariableColor);
+  /* a result long enough to wrap is one value either way, so it keeps one box around it instead
+     of being cut into two half-pills */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* what the engine had to complain about, on a line of its own: a problem is not a footnote to
@@ -562,9 +567,19 @@ body.edit.darkMode .routine-editor-parameter-missing {
   font-style: italic;
 }
 
+/* the runs a card does not show, opened the way everything else in the editor is opened: a
+   chevron, with enough padding around it to be hit rather than aimed at */
 .routine-editor-debug-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: -4px;
+  padding: 2px 4px;
   cursor: pointer;
-  text-decoration: underline;
+}
+
+.routine-editor-debug-more .material-symbols {
+  font-size: 14px;
 }
 
 .routine-editor-debug-more:hover {

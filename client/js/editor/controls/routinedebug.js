@@ -34,6 +34,9 @@ const routineDebugRoutineStack = [];    // { path, operationDepth }
 const routineDebugOperationStack = [];
 
 let routineDebugResetOnNextRun = true;
+// whether any routine has run since the recording started, which is what tells a card that has
+// nothing to show from one that could not have anything to show yet
+let routineDebugRecorded = false;
 let routineDebugRefreshPending = false;
 
 // A new user interaction starts with a clean slate, but only once it actually runs something:
@@ -55,6 +58,7 @@ function routineDebugClear() {
   routineDebugOmitted.clear();
   routineDebugRoutineRuns.clear();
   routineDebugResetOnNextRun = false;
+  routineDebugRecorded = false;
 }
 
 // depth is how many routines evaluateRoutine is already inside, so anything below that on the
@@ -67,6 +71,7 @@ function routineDebugRoutineStart(path, depth) {
   if(!routineDebugRoutineStack.length && routineDebugResetOnNextRun)
     routineDebugClear();
   routineDebugRoutineStack.push({ path: path || null, operationDepth: routineDebugOperationStack.length });
+  routineDebugRecorded = true;
   if(path)
     routineDebugRoutineRuns.set(path, (routineDebugRoutineRuns.get(path) || 0) + 1);
 }
@@ -136,6 +141,20 @@ function routineDebugRoutineOf(key) {
   return key.replace(/\/[^/]*$/, '');
 }
 
+// whether a routine this operation sits inside ran at all, however deeply nested it is. The
+// nearest one counts rather than only its own block: an operation in a branch that was not taken
+// sits in a block that never started, and saying nothing there would read as "never ran" while the
+// operation after an aborted CALL - the same situation - says so.
+function routineDebugRanAbove(key) {
+  let path = routineDebugRoutineOf(key);
+  while(path.indexOf('/') != -1) {
+    if(routineDebugRoutineRuns.get(path))
+      return true;
+    path = routineDebugRoutineOf(path);
+  }
+  return false;
+}
+
 // The results of one operation, as the markup of the strip below its sentence. Everything the
 // cards show goes through here, so a card rendered now and a card updated after a routine ran
 // look the same.
@@ -144,24 +163,56 @@ function routineDebugRunsHTML(key) {
   if(!runs.length) {
     // a routine that ran without reaching this operation says so - within a routine that did run,
     // the operations it stepped over are half of what there is to see
-    return routineDebugRoutineRuns.get(routineDebugRoutineOf(key))
+    return routineDebugRanAbove(key)
       ? '<span class="routine-editor-debug-idle">not run</span>'
       : '';
   }
 
+  const omitted = routineDebugOmitted.get(key) || 0;
+  if(routineDebugIsSequence(runs))
+    return routineDebugSequenceHTML(runs, omitted);
+
   const expanded = routineDebugExpanded.has(key);
   const shown = expanded ? runs : runs.slice(0, ROUTINE_DEBUG_COLLAPSED_RUNS);
-  const omitted = routineDebugOmitted.get(key) || 0;
   const hidden = runs.slice(shown.length).reduce((sum, run)=>sum + run.count, 0) + omitted;
 
   let html = shown.map(run=>routineDebugRunHTML(run)).join('');
-  // a loop long enough to fill the card is cut off rather than kept in full, and says so instead
-  // of letting the last line it shows read as the last round there was
   if(expanded && omitted)
-    html += `<span class="routine-editor-debug-idle">${omitted} further ${omitted == 1 ? 'run' : 'runs'} were not kept</span>`;
+    html += routineDebugOmittedHTML(omitted);
   if(runs.length > ROUTINE_DEBUG_COLLAPSED_RUNS)
-    html += `<span class="routine-editor-debug-more">${expanded ? 'show less' : `+ ${hidden} more ${hidden == 1 ? 'run' : 'runs'}`}</span>`;
+    html += routineDebugMoreHTML(expanded, hidden);
   return html;
+}
+
+// A loop that repeats one operation writes the same sentence on every round with only the result
+// differing, and then the sequence of results is the whole of what there is to read. Those runs are
+// written as one line - the sentence once, the results after it - so a five-round loop reads as
+// "1 3 6 10 15" instead of five lines the eye has to compare across their full width. Rounds that
+// differ in anything else keep a line each, because then the lines are what says what happened.
+function routineDebugIsSequence(runs) {
+  return runs.length > 1 && Boolean(runs[0].definition)
+    && runs.every(run=>!run.skipped && !run.problems.length && run.result !== '' && run.definition === runs[0].definition);
+}
+
+function routineDebugSequenceHTML(runs, omitted) {
+  const results = runs.map(run=>
+    (run.count > 1 ? `<span class="routine-editor-debug-count">${run.count}&times;</span>` : '')
+    + `<span class="routine-editor-debug-result">${escapeHTML(run.result)}</span>`).join(' ');
+  return `<span class="routine-editor-debug-run"><span class="routine-editor-debug-definition">${escapeHTML(runs[0].definition)}</span> <span class="routine-editor-debug-arrow">&rarr;</span> ${results}</span>`
+    + routineDebugOmittedHTML(omitted);
+}
+
+// a loop long enough to fill the card is cut off rather than kept in full, and says so instead of
+// letting the last line it shows read as the last round there was
+function routineDebugOmittedHTML(omitted) {
+  return omitted ? `<span class="routine-editor-debug-idle">${omitted} further ${omitted == 1 ? 'run' : 'runs'} were not kept</span>` : '';
+}
+
+// what asks a card for the runs it does not show, written the way the rest of the editor opens
+// something: the chevron of a collapsed section, with room around it to be hit
+function routineDebugMoreHTML(expanded, hidden) {
+  const label = expanded ? 'show less' : `+ ${hidden} more ${hidden == 1 ? 'run' : 'runs'}`;
+  return `<span class="routine-editor-debug-more"><span class="material-symbols">${expanded ? 'expand_more' : 'chevron_right'}</span>${label}</span>`;
 }
 
 function routineDebugRunHTML(run) {
@@ -198,6 +249,15 @@ function routineDebugRender(dom) {
   }
 }
 
+// Why every card of the widget is empty, above its list of routines. The results are only
+// collected once edit mode has been loaded, so the first thing anybody tries - press a button and
+// then open the editor to see what it did - has nothing to show and looks exactly like a routine
+// that never ran. Saying so is the difference between "run it again" and "this is broken".
+function routineDebugRenderHint(dom) {
+  const waiting = getJEroutineDebug() && !routineDebugRecorded;
+  dom.textContent = waiting ? 'Nothing recorded yet - what the operations do is collected from now on. Run a routine to see it on its cards.' : '';
+}
+
 // how often a whole routine ran, for the list of routines: which of them an interaction went
 // through is worth seeing without opening every one of them
 function routineDebugRenderRoutine(dom) {
@@ -224,4 +284,6 @@ function routineDebugRefreshNow() {
     routineDebugRender(dom);
   for(const dom of $a('[data-debug-routine]'))
     routineDebugRenderRoutine(dom);
+  for(const dom of $a('[data-debug-hint]'))
+    routineDebugRenderHint(dom);
 }

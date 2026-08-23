@@ -1197,6 +1197,16 @@ export class Widget extends StateManaged {
       return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
     }
 
+    // What a line worked with rather than what it says, for the log and for the results on the
+    // routine editor's cards: every ${name} of a plain variable replaced by the value it holds at
+    // that moment, so "total = ${total} + ${value}" is written down as "total = 1 + 2". Only names
+    // are filled in - anything more involved, and anything that is not a value a reader can read
+    // in passing, is left as it stands.
+    const substituteVariables = string=>string.replace(/\${([^}]+)}/g, (written, name)=>{
+      const value = variables[name];
+      return value === undefined || (value !== null && typeof value == 'object') ? written : JSON.stringify(value);
+    });
+
     const evaluateVariables = string=>{
       const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
       const identifier          = identifierWithSpace.replace(/ /, '');
@@ -1402,13 +1412,16 @@ export class Widget extends StateManaged {
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
+          // read before the assignment below: a line that changes a variable it also reads would
+          // otherwise be written down with the value it produced on both sides
+          const definition = routineLogging ? substituteVariables(a.substr(4)) : '';
           if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
           else if(index !== undefined)
             variables[variable][index] = await getValue(variables[variable][index]);
           else
             variables[variable] = await getValue(variables[variable]);
-          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
+          if(routineLogging) jeLoggingRoutineOperationSummary(definition, JSON.stringify(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
           if (comment) {

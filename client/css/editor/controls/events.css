@@ -73,7 +73,22 @@
   font-size: 11px;
   font-style: italic;
   white-space: nowrap;
-  color: var(--textHelpColor);
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+}
+
+/* why every card below is blank: shown until the first routine has been recorded (see
+   routinedebug.js), and gone the moment there is something to see */
+.events-editor-debug-hint {
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  font-size: 11px;
+  font-style: italic;
+  margin: 0 2px 2px;
+}
+
+.events-editor-debug-hint:empty {
+  display: none;
 }
 
 body.edit.darkMode .events-editor-property {

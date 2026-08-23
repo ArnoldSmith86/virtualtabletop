@@ -20,6 +20,7 @@ beforeAll(() => {
   window.widgets = new Map();
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
+  window.getJEroutineDebug = () => true; // the switch in the Debug module (main.js), which is on by default
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
   // the validator tables are part of the editor bundle; the property proposals read them
@@ -3985,18 +3986,31 @@ describe('what an operation did last time', () => {
     expect(strips(editorFor([ { func: 'SHUFFLE' } ]))[0]).toBe('3× the deck');
   });
 
-  test('a loop shows the first of its rounds and offers the rest', () => {
+  test('rounds that only differ in what came out are one line, the sentence first', () => {
     runRoutine('button1/clickRoutine', [ { blocks: { loopRoutine: [] } } ]);
     for (let i = 1; i <= 6; ++i)
       runRoutine('button1/clickRoutine/0/loopRoutine', [ { definition: 'var seen =', result: String(i) } ]);
 
     const editor = editorFor([ { func: 'FOREACH', loopRoutine: [ 'var seen = ${value}' ] } ]);
     const strip = editor.domElement.querySelector('[data-debug-key="button1/clickRoutine/0/loopRoutine/0"]');
-    expect(strip.textContent).toBe('var seen = → 1var seen = → 2var seen = → 3+ 3 more runs');
+    expect(strip.textContent).toBe('var seen = → 1 2 3 4 5 6');
+    expect(strip.querySelector('.routine-editor-debug-more')).toBeNull();
+  });
+
+  test('rounds that did different things keep a line each, and offer the ones they hide', () => {
+    runRoutine('button1/clickRoutine', [ { blocks: { loopRoutine: [] } } ]);
+    for (let i = 1; i <= 6; ++i)
+      runRoutine('button1/clickRoutine/0/loopRoutine', [ { definition: `from 'box${i}'`, result: '1' } ]);
+
+    const editor = editorFor([ { func: 'FOREACH', loopRoutine: [ { func: 'MOVE' } ] } ]);
+    const strip = editor.domElement.querySelector('[data-debug-key="button1/clickRoutine/0/loopRoutine/0"]');
+    const runs = [...strip.querySelectorAll('.routine-editor-debug-run')].map(run => run.textContent);
+    expect(runs).toEqual([ "from 'box1' → 1", "from 'box2' → 1", "from 'box3' → 1" ]);
+    expect(strip.querySelector('.routine-editor-debug-more').textContent).toContain('+ 3 more runs');
 
     strip.querySelector('.routine-editor-debug-more').click();
-    expect(strip.textContent).toContain('var seen = → 6');
-    expect(strip.textContent).toContain('show less');
+    expect(strip.textContent).toContain("from 'box6' → 1");
+    expect(strip.querySelector('.routine-editor-debug-more').textContent).toContain('show less');
   });
 
   test('what an operation ran into is on a line of its own', () => {
@@ -4012,6 +4026,27 @@ describe('what an operation did last time', () => {
 
     const untouched = new RoutineEditor(buttonWidget, [ { func: 'FLIP' } ], [], [], { routineKey: 'enterRoutine' });
     expect(strips(untouched)).toEqual([ '' ]);
+  });
+
+  test('an operation in a branch that was not taken says so like any other one that was not reached', () => {
+    runRoutine('button1/clickRoutine', [ { definition: '1 > 2 → false', blocks: { thenRoutine: [] } } ]);
+    const editor = editorFor([ { func: 'IF', thenRoutine: [ { func: 'FLIP' } ], elseRoutine: [ { func: 'SHUFFLE' } ] } ]);
+    const notTaken = editor.domElement.querySelector('[data-debug-key="button1/clickRoutine/0/elseRoutine/0"]');
+    expect(notTaken.textContent).toBe('not run');
+  });
+
+  test('the list of routines says why its cards are blank until something has run', () => {
+    const widget = { state: { id: 'button1', type: 'button', clickRoutine: [ { func: 'SHUFFLE' } ] } };
+    const eventsEditor = new EventsEditor(widget, () => {});
+    document.body.append(eventsEditor.domElement);
+    try {
+      expect(eventsEditor.domElement.querySelector('.events-editor-debug-hint').textContent).toContain('Nothing recorded yet');
+      runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+      routineDebugRefreshNow();
+      expect(eventsEditor.domElement.querySelector('.events-editor-debug-hint').textContent).toBe('');
+    } finally {
+      eventsEditor.domElement.remove();
+    }
   });
 
   test('a card on screen follows the routine that runs after it was rendered', () => {

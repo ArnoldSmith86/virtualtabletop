@@ -100,6 +100,13 @@ describe('where a running operation says it sits', () => {
     expect(calls).toContainEqual({ type: 'summary', definition: '3 < 5', result: 'true' });
   });
 
+  test('a var line is recorded with the values it read, not with the names it wrote', async () => {
+    await runRoutine(routineState({
+      trigger: { type: 'button', clickRoutine: [ 'var total = 4', 'var value = 3', 'var total = ${total} + ${value}' ] }
+    }), 'clickRoutine');
+    expect(calls).toContainEqual({ type: 'summary', definition: 'total = 4 + 3', result: '7' });
+  });
+
   test('nothing is recorded while neither the editor nor the Debug module is there', async () => {
     globalThis.jeRoutineDebug = false;
     await runRoutine(routineState({
