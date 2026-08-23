@@ -2915,14 +2915,16 @@ test('the Debug module logs each operation of a routine with its result', async 
       // which reads the operation string again next to the eval that evaluates the expression - once
       // without and once with a variable in the expression, which is what decides whether the
       // summary also shows the expression with the variables filled in, and once with an expression
-      // the eval throws on. SELECT and SET fill the collections and the delta of an operation.
+      // the eval throws on. SELECT and SET fill the collections and the delta of an operation, and
+      // the last one writes to a variable the engine puts into every routine by itself.
       clickRoutine: [
         'var roll = randInt 5 5',
         'var calc = (1 + 2) * 3',
         'var withVars = (${roll} + 2) * 3',
         'var broken = ${roll} / (1 - 1) *',
         { func: 'SELECT', property: 'id', value: 'button' },
-        { func: 'SET', property: 'text', value: 'rolled' }
+        { func: 'SET', property: 'text', value: 'rolled' },
+        'var thisID = 42'
       ]
     }
   });
@@ -2997,12 +2999,30 @@ test('the Debug module logs each operation of a routine with its result', async 
     .expect(rollState.find('h3').withExactText('Delta afterwards').exists).notOk()
     .expect(detailsOf(operation.nth(5), 'Variables, collections and delta afterwards')
       .find('h3').withExactText('Delta afterwards').exists).ok();
+  // a variable of an engine name that the routine assigned itself is one of the routine's own, so
+  // it is in the block that opens rather than behind the Built-in variables expander
+  const overriddenState = detailsOf(operation.nth(6), 'Variables, collections and delta afterwards');
+  await t
+    .click(headerOf(operation.nth(6)))
+    .click(overriddenState.child('div').nth(0))
+    .expect(overriddenState.child('div').nth(1).child('.jeLogVariables').innerText).contains('"thisID": 42');
+
   const emptyHeadings = await ClientFunction(() => {
     let count = 0;
     document.querySelectorAll('#jeLog h3').forEach(h=>{ if(h.textContent.trim() == '') ++count; });
     return count;
   })();
   await t.expect(emptyHeadings).eql(0);
+
+  // the filter marks the operations whose summary contains what was typed and dims the rest
+  await t
+    .typeText('#jeLogFilter', 'withVars')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).ok()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).ok()
+    .selectText('#jeLogFilter')
+    .pressKey('delete')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).notOk()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).notOk();
 
   // the Clear button is disabled as long as the log clears itself, and says which of the two it is
   await t

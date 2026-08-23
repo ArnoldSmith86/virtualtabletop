@@ -345,6 +345,9 @@ body.jsonEdit #toolbar {
   font-weight: bold;
 }
 
+/* The note explains an empty log, so it keys off the log holding nothing at all. A filter that
+   matches none of the entries dims them instead of removing them, so the log is not empty then and
+   the note stays away. */
 #jeLog:not(:empty) ~ .jeLogEmptyNote {
   display: none;
 }

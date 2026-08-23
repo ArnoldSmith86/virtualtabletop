@@ -3106,17 +3106,22 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-// The variables evaluateRoutine adds to every routine by itself. They are identical in every
-// operation of every routine, so they are shown behind their own expander and the variables the
-// routine actually works with stay at the top of the pane. A name that is missing here just shows
-// up with the routine's own variables, so the list going out of date costs nothing but noise.
-const jeLoggingEngineVariables = [ 'activeColors', 'mouseCoords', 'seatIndex', 'seatID', 'activeSeats', 'playerName', 'playerColor', 'activePlayers', 'thisID' ];
+// The variables evaluateRoutine adds to every routine by itself, one entry per routine on the
+// stack - the innermost one belongs to the routine the operation being logged is part of. They are
+// identical in every operation of a routine, so they are shown behind their own expander and the
+// variables the routine actually works with stay at the top of the pane. A variable the routine
+// brought along or assigned itself stays in the routine's own block even when it carries an engine
+// name, because its value then differs from the one the engine put in.
+let jeLoggingEngineVariableStack = [];
 
 function jeLoggingVariables(variables) {
+  const fromEngine = jeLoggingEngineVariableStack[0] || {};
   const own = {};
   const engine = {};
-  for(const name in variables)
-    (jeLoggingEngineVariables.indexOf(name) == -1 ? own : engine)[name] = variables[name];
+  for(const name in variables) {
+    const untouched = name in fromEngine && JSON.stringify(variables[name]) === JSON.stringify(fromEngine[name]);
+    (untouched ? engine : own)[name] = variables[name];
+  }
   const ownBlock = Object.keys(own).length ?
         `<div class="jeLogVariables"><h3>Variables afterwards</h3>${jeLoggingJSON(own)}</div>` : '';
   const engineBlock = Object.keys(engine).length ?
@@ -3131,7 +3136,7 @@ function jeLoggingVariables(variables) {
   return ownBlock + engineBlock;
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
+export function jeLoggingRoutineStart(widget, property, engineVariables) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -3140,12 +3145,15 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
     jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-          <span class="jeLogWidget">${widget.get('id')}</span> &rsaquo;
-          <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+          <span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo;
+          <span class="jeLogProperty">${html(typeof property == 'string' ? property : '--custom--')}</span>
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
   }
+  // a routine that runs by reference works on the variables of the routine that started it, so the
+  // engine added nothing of its own there and the enclosing routine's set still applies
+  jeLoggingEngineVariableStack.unshift(engineVariables || jeLoggingEngineVariableStack[0] || {});
   ++jeLoggingDepth;
 }
 
@@ -3153,6 +3161,7 @@ export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
     return; // defensive: unmatched End, should not happen since #2672
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  jeLoggingEngineVariableStack.shift();
   --jeLoggingDepth;
   if(!jeLoggingDepth)
     jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
