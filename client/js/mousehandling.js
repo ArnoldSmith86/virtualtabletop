@@ -269,6 +269,12 @@ async function keyHandler(e) {
   if(isLoading || overlayActive || $('body').classList.contains('edit') || e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')
     return;
 
+  // one interaction, however many widgets share the key - the routines below never pass through the
+  // mouse handling that otherwise tells the Debug module that a new interaction has begun. Both
+  // flags are off until edit mode has been loaded, which is what puts the function there.
+  if(jeRoutineLogging || jeRoutineDebug)
+    jeRoutineNewInteraction();
+
   batchStart();
   for(const widget of widgetFilter(w=>w.get('hotkey')===e.key&&w.isVisible()).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
     await widget.click();

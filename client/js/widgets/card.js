@@ -423,6 +423,17 @@ export class Card extends Widget {
     return super.getDefaultValue(property);
   }
 
+  // A card runs the routines its deck defines for all of its cards, and that is where the routine
+  // editor shows them: on the deck, in its card defaults. A routine that comes from a card type or
+  // a face template instead has no card in the editor at all, so there is nowhere to file what it
+  // did - saying nothing beats writing it under a routine that never ran.
+  routineDebugPath(property) {
+    if(this.state[property] !== undefined || !this.deck)
+      return super.routineDebugPath(property);
+    const cardDefaults = this.deck.get('cardDefaults');
+    return cardDefaults && cardDefaults[property] === this.get(property) ? `${this.deck.get('id')}/cardDefaults.${property}` : null;
+  }
+
   getFaceCount() {
     const faceTemplates = this.deck.get('faceTemplates');
     if(Array.isArray(faceTemplates))

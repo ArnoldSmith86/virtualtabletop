@@ -3092,6 +3092,18 @@ let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
+// The log below is built while the Debug module is open, but a routine is recorded for the
+// routine editor's cards whenever the editor is loaded and the cards are switched on (see
+// jeRoutineDebug in main.js). Which of the two applies is decided when the outermost routine
+// starts, so opening or closing the module - or flipping that switch - while a routine waits for
+// an INPUT can never leave the log or the stacks of the recorder half built.
+let jeLoggingHTMLEnabled = false;
+let jeLoggingCardsEnabled = false;
+let jeLoggingOutermostRoutine = null;
+// operations of the routine that is running which have not reported an end yet, and the same for
+// the routines it is nested in - what jeLoggingRoutineAbort has to close when a routine dies
+let jeLoggingOpenOperations = 0;
+let jeLoggingOpenOperationStack = [];
 
 // Empty the log. Operations of a routine that is currently running have the log so far saved on
 // jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
@@ -3102,12 +3114,36 @@ function jeLoggingClear() {
     entry[0] = '';
 }
 
+// A new user interaction starts the log - and the results on the routine editor's cards - over, so
+// that what they show always belongs to one interaction. Nothing is emptied here: the flag is only
+// read once a routine actually runs, so clicking around without running anything leaves the last
+// interaction standing to be read. Called once per interaction, which for a widget hotkey is the
+// key event rather than the routines it sets off (client/js/mousehandling.js).
+export function jeRoutineNewInteraction() {
+  jeRoutineResetOnNextLog = jeRoutineAutoReset;
+  if(jeRoutineAutoReset)
+    routineDebugResetAfterInteraction();
+}
+
 function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+// Returns the frame this routine opens: the nesting the log and the recorder are at when it
+// starts, and with that the token that closes it again if it dies (jeLoggingRoutineAbort). The
+// depth evaluateRoutine counts is not that - the routines the engine starts as a side effect of an
+// operation (the enterRoutine of a MOVE, the changeRoutine of a property change, the clickRoutine
+// a CLICK runs) all begin at depth 0 while the routine that set them off is still running.
+export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference, path) {
+  const frame = jeLoggingDepth;
+  if(!jeLoggingDepth) {
+    jeLoggingHTMLEnabled = jeRoutineLogging;
+    jeLoggingCardsEnabled = getJEroutineDebug();
+    jeLoggingOutermostRoutine = { widget, property };
+  }
+  if(jeLoggingCardsEnabled)
+    routineDebugRoutineStart(path, frame);
+  if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
       jeRoutineResetOnNextLog = false;
@@ -3121,16 +3157,42 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
   }
+  jeLoggingOpenOperationStack.push(jeLoggingOpenOperations);
+  jeLoggingOpenOperations = 0;
   ++jeLoggingDepth;
+  return frame;
+}
+
+// An operation that throws never reports its end, and neither does the routine it was in - the
+// matched calls above simply stop coming. Everything that routine still holds is closed off here,
+// back to the frame jeLoggingRoutineStart handed out for it, so one routine that dies half way
+// cannot leave the log unrendered and the switches unread for the rest of the session - while the
+// routine that set it off, which is still running, keeps everything it holds. Every operation that
+// was still running gets the problem written on it, so the cards read as the chain that died
+// rather than going quiet.
+export function jeLoggingRoutineAbort(frame, problem) {
+  const problems = problem ? [ problem ] : [];
+  while(jeLoggingDepth > frame) {
+    while(jeLoggingOpenOperations)
+      jeLoggingRoutineOperationEnd(problems, {}, {}, false);
+    jeLoggingRoutineEnd({}, {});
+  }
 }
 
 export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
     return; // defensive: unmatched End, should not happen since #2672
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  if(jeLoggingCardsEnabled)
+    routineDebugRoutineEnd();
+  if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
-  if(!jeLoggingDepth)
-    jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+  jeLoggingOpenOperations = jeLoggingOpenOperationStack.pop() || 0;
+  if(!jeLoggingDepth) {
+    if(jeLoggingHTMLEnabled)
+      jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+    else if(jeRoutineLogging)
+      jeLoggingRoutineNotLogged(jeLoggingOutermostRoutine.widget, jeLoggingOutermostRoutine.property); // logging was enabled while this routine was running
+  }
 }
 
 // Put the log into the panel. Everything that depends on the rendered DOM (the expander click
@@ -3174,7 +3236,7 @@ function jeLoggingRenderLog(logHTML) {
 // Called instead of jeLoggingRoutineEnd when logging was switched on while the routine was already
 // running (e.g. the Debug module was opened while the routine waited for an INPUT). That routine
 // cannot be logged retroactively, so leave a note explaining the gap instead of showing nothing.
-export function jeLoggingRoutineNotLogged(widget, property) {
+function jeLoggingRoutineNotLogged(widget, property) {
   if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
     return;
   if(jeRoutineResetOnNextLog) {
@@ -3192,7 +3254,12 @@ export function jeLoggingRoutineNotLogged(widget, property) {
   jeLoggingRenderLog(jeLoggingHTML);
 }
 
-export function jeLoggingRoutineOperationStart(original, applied) {
+export function jeLoggingRoutineOperationStart(original, applied, index) {
+  ++jeLoggingOpenOperations;
+  if(jeLoggingCardsEnabled)
+    routineDebugOperationStart(index);
+  if(!jeLoggingHTMLEnabled)
+    return;
   let fcn;
   if (typeof applied == 'string')
     if (applied.substring(0,3) == 'var')
@@ -3208,6 +3275,14 @@ export function jeLoggingRoutineOperationStart(original, applied) {
 }
 
 export function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped) {
+  if(jeLoggingOpenOperations)
+    --jeLoggingOpenOperations;
+  if(jeLoggingCardsEnabled)
+    routineDebugOperationEnd(problems, skipped);
+  if(!jeLoggingHTMLEnabled) {
+    jeRoutineResult = '';
+    return;
+  }
   const collDisplay = {};
   for(const name in collections)
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
@@ -3279,6 +3354,10 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
 }
 
 export function jeLoggingRoutineOperationSummary(definition, result) {
+  if(jeLoggingCardsEnabled)
+    routineDebugOperationSummary(definition, result);
+  if(!jeLoggingHTMLEnabled)
+    return;
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>
      ${result ? '=&gt;' : ''} <span class="jeLogResult">${html(result || '')}</span>`;
 }
@@ -4028,7 +4107,7 @@ function jeInitEventListeners() {
 
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
   window.addEventListener('mouseup', async function(e) {
-    jeRoutineResetOnNextLog = jeRoutineAutoReset;
+    jeRoutineNewInteraction();
     if(!jeEnabled)
       return;
     jeMouseButtonIsDown = false;

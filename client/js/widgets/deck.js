@@ -1,4 +1,4 @@
-class Deck extends Widget {
+export class Deck extends Widget {
   constructor(id) {
     super(id);
 

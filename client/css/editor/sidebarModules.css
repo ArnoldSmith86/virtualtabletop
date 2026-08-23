@@ -26,6 +26,36 @@
   display: inline-flex;
 }
 
+/* The header of the Debug module: what the log shows (the filter and the Clear button) on one
+   line, what is recorded (the two checkboxes) on the next - four controls that do not fit one line
+   in a panel this narrow. Each checkbox stays glued to its own label rather than the phrase
+   breaking across the wrap. */
+.editorModule .buttonBar.debugHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  padding-right: 8px;
+}
+
+.editorModule .buttonBar.debugHeader #jeLogFilter {
+  flex: 1 1 120px;
+}
+
+.editorModule .buttonBar.debugHeader .debugHeaderSettings {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.editorModule .buttonBar.debugHeader label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
    explanation of why it is disabled - sits next to it instead of somewhere further up the panel. It wraps
    because that explanation is a sentence: in a narrow panel it was squeezed into a 40px wide column of

@@ -44,6 +44,17 @@ body {
      the 4.5:1 the rest of this file budgets for. Dark mode is fine as it is. */
   --routineBlankColor: #d32f2f;
 
+  /* What an operation ran into, on the card it ran on rather than on a chip: red as dark as it
+     has to be to clear 4.5:1 against --backgroundHighlightColor1, which the reds tuned against
+     the page and the chips both miss there. */
+  --routineProblemColor: #a50e0e;
+
+  /* The perforation between the sentence of an operation and what it did last. It sits on two
+     different card backgrounds (--backgroundHighlightColor1 and the lighter
+     --routineActiveCardColor), so it is written as a wash of the text color rather than as a
+     fixed color that vanishes on one of them. */
+  --routineDebugSeparatorColor: rgba(0, 0, 0, 0.25);
+
   /* The card of the routine editor that was worked on last: a clear step lighter
      than the other cards (--backgroundHighlightColor1) so it is spotted without
      reading, while the chrome on it (see --routineChromeOpacity) still clears
@@ -96,6 +107,8 @@ body.edit.darkMode {
   --routinePropertyColor: #ff8fb1;
   --routineNumberColor: #40e0d0;
   --routineBlankColor: red;
+  --routineProblemColor: #ffb4ab;
+  --routineDebugSeparatorColor: rgba(255, 255, 255, 0.3);
   --routineActiveCardColor: #626262;
 
   color-scheme: dark;

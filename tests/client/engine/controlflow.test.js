@@ -139,3 +139,16 @@ forEachLegacy(({ name, legacy }) => {
     });
   });
 });
+
+// A game file can put anything into a property a routine is read from. A string is read one
+// character at a time rather than as a line of its own, which is nonsense that runs to its end
+// instead of taking the client down with it - and every one of those characters is an operation
+// the routine editor addresses by its place in the routine.
+describe('a routine property that holds a string', () => {
+  test('it runs to its end instead of throwing', async () => {
+    const result = await runRoutine(routineState({
+      trigger: { type: 'button', clickRoutine: 'var broken = 1' }
+    }), 'clickRoutine');
+    expect(result.variable).toBe(null);
+  });
+});

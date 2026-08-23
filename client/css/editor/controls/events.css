@@ -65,6 +65,32 @@
   flex: 1;
 }
 
+/* whether the last interaction went through this routine at all (see routinedebug.js): the same
+   dimmed note the results on the operation cards are written in, so it reads as an observation
+   about the routine rather than as part of its name */
+.events-editor-runs {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-style: italic;
+  white-space: nowrap;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+}
+
+/* why every card below is blank: shown until the first routine has been recorded (see
+   routinedebug.js), and gone the moment there is something to see */
+.events-editor-debug-hint {
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  font-size: 11px;
+  font-style: italic;
+  margin: 0 2px 2px;
+}
+
+.events-editor-debug-hint:empty {
+  display: none;
+}
+
 body.edit.darkMode .events-editor-property {
   color: var(--textHighlightColor7);
 }

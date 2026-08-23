@@ -12,6 +12,11 @@ export let jeEnabled = null;
 let zoom = 1;
 let offset = [ 0, 0 ];
 let jeRoutineLogging = false;
+// Whether every operation of a routine records what it did, so the routine editor can show it on
+// the card of the operation itself. Unlike the Debug module's log this stays on once the editor
+// has been loaded: a routine is run by playing the game, which happens with the editor closed.
+let jeRoutineDebug = false;
+const ROUTINE_DEBUG_SETTING = 'vtt-routine-card-results';
 
 let urlProperties = {};
 
@@ -805,7 +810,7 @@ async function loadEditMode() {
     edit = false;
     Object.assign(window, {
       $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
-      setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
+      setJEenabled, setJEroutineLogging, setJEroutineDebug, getJEroutineDebug, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadZipLibrary, waitForZipLibrary, zipBlob,
@@ -825,6 +830,7 @@ async function loadEditMode() {
     const editmode = await import('./edit.js');
     $('body').classList.remove('loadingEditMode');
     Object.assign(window, editmode);
+    jeRoutineDebug = localStorage.getItem(ROUTINE_DEBUG_SETTING) != 'false';
     initializeEditMode(currentMetaData);
   }
 }
@@ -1028,6 +1034,18 @@ function setJEenabled(v) {
 
 function setJEroutineLogging(v) {
   jeRoutineLogging = v;
+}
+
+// Whether the routine editor collects what each operation did. Kept for the browser rather than
+// for the session, because somebody who does not want the results on the cards does not want them
+// again tomorrow either.
+function setJEroutineDebug(v) {
+  jeRoutineDebug = v;
+  localStorage.setItem(ROUTINE_DEBUG_SETTING, v);
+}
+
+function getJEroutineDebug() {
+  return jeRoutineDebug;
 }
 
 window.onresize = function(event) {

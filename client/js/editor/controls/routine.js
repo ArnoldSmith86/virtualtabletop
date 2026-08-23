@@ -272,6 +272,17 @@ const routineColorLegendHTML = `
     <dt class="routine-editor-parameter-missing">number or text</dt>
     <dd>a blank the operation still needs - the word says what belongs there</dd>
   </dl>
+  <p>Under the sentence, dimmed, is what the operation did the last time it ran (switch it off in the Debug module):</p>
+  <dl class="routine-legend">
+    <dt class="routine-editor-debug-definition">'hand' to 'discard'</dt>
+    <dd>the values it worked with, once the variables in the sentence were filled in</dd>
+    <dt class="routine-editor-debug-result">2</dt>
+    <dd>what came out of it</dd>
+    <dt class="routine-editor-debug-problem">crate does not exist</dt>
+    <dd>what it ran into - the operation did not do what its sentence says</dd>
+    <dt class="routine-editor-debug-idle">ran</dt>
+    <dd>it did its work and there is no value to show for it. <i>not run</i> means the routine ran but never reached this operation, <i>skipped</i> that the operation itself is switched off.</dd>
+  </dl>
 `;
 
 // A chip has padding on both sides, which puts a space between it and the comma
@@ -2071,6 +2082,7 @@ class RoutineEditor {
         this.routineChanged();
       };
       editor.routineEditor = this;
+      editor.routineIndex = index;
 
       variables = [ ...new Set([ ...variables, ...editor.getDefinedVariables() ]) ];
       collections = [ ...new Set([ ...collections, ...editor.getDefinedCollections() ]) ];
@@ -2974,6 +2986,7 @@ class RoutineOperationEditor {
     this.renderSentenceView(div(body, 'routine-editor-sentence'));
 
     this.renderParameterWarnings(body);
+    this.renderDebug(body);
 
     // the controls of the card, in two rows next to the sentence: what changes
     // the operation itself (its JSON, deleting it) on top, what moves it around
@@ -3008,6 +3021,26 @@ class RoutineOperationEditor {
       });
     }
     return dom;
+  }
+
+  // What this operation did the last time it ran, on a strip below its sentence (see
+  // routinedebug.js). It stays empty - and with that invisible - until the routine has run, so a
+  // card that is only being written reads exactly as it did before.
+  renderDebug(dom) {
+    const key = this.debugKey();
+    if(!key)
+      return;
+    const debugDOM = div(dom, 'routine-editor-debug');
+    debugDOM.dataset.debugKey = key;
+    routineDebugRender(debugDOM);
+  }
+
+  // where this card sits in the game, which is how the runs of its operation are filed
+  debugKey() {
+    const editor = this.routineEditor;
+    if(!editor || !editor.widgetID || !editor.routineKey || typeof this.routineIndex != 'number')
+      return null;
+    return `${editor.widgetID}/${editor.routineKey}/${this.routineIndex}`;
   }
 
   // the popup a chip edits its parameter in, and the hand-over to the full popup

@@ -1184,7 +1184,24 @@ export class Widget extends StateManaged {
     return isValid;
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+  // Whatever the routine below leaves on the recorders - the Debug module's log and the results the
+  // routine editor shows on its cards - is taken off again even when an operation throws: the
+  // matched jeLogging calls simply stop coming then, and the nesting they count would stay standing
+  // for good, so the log would never be rendered and the switches never read again. Only this
+  // routine is unwound, back to the frame the recorders handed out when it started - the routine
+  // that set it off, if there is one, is still running and keeps what it holds.
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference, debugPath) {
+    const logging = {}; // .frame is filled in below, once the recorders know about this routine
+    try {
+      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath, logging);
+    } catch(problem) {
+      if(logging.frame !== undefined)
+        jeLoggingRoutineAbort(logging.frame, problem && problem.message || String(problem));
+      throw problem;
+    }
+  }
+
+  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, debugPath, logging) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -1196,6 +1213,16 @@ export class Widget extends StateManaged {
     function evaluateIdentifier(dollarMatch, stringMatch) {
       return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
     }
+
+    // What a line worked with rather than what it says, for the log and for the results on the
+    // routine editor's cards: every ${name} of a plain variable replaced by the value it holds at
+    // that moment, so "total = ${total} + ${value}" is written down as "total = 1 + 2". Only names
+    // are filled in - anything more involved, and anything that is not a value a reader can read
+    // in passing, is left as it stands.
+    const substituteVariables = string=>string.replace(/\${([^}]+)}/g, (written, name)=>{
+      const value = variables[name];
+      return value === undefined || (value !== null && typeof value == 'object') ? written : JSON.stringify(value);
+    });
 
     const evaluateVariables = string=>{
       const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
@@ -1285,14 +1312,17 @@ export class Widget extends StateManaged {
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
 
-    // Capture the routine logging state once, at the start of the routine. Toggling the Debug
-    // panel while the routine is suspended (e.g. waiting for an INPUT modal) would otherwise
-    // mismatch the jeLogging start/end calls and crash the client. (#2672) A routine that was
-    // already running when logging got enabled can not be logged retroactively - it adds a note
-    // to the log instead (see jeLoggingRoutineNotLogged at the end of this function).
-    const routineLogging = jeRoutineLogging;
+    // Capture once, at the start of the routine, whether what it does is recorded - for the
+    // Debug module's log, for the results the routine editor shows on its cards, or for both.
+    // Toggling the Debug panel while the routine is suspended (e.g. waiting for an INPUT modal)
+    // would otherwise mismatch the jeLogging start/end calls and crash the client. (#2672)
+    const routineLogging = jeRoutineLogging || jeRoutineDebug;
+    // where the operations of this routine live, so the routine editor can file what each of them
+    // did under the card that stands for it: the widget and property a named routine is written
+    // in, and for a nested block the path its parent operation passed down
+    const routinePath = typeof property == 'string' ? this.routineDebugPath(property) : debugPath;
     if(routineLogging)
-      jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
+      logging.frame = jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference, routinePath);
 
     let variables = initialVariables;
     let collections = initialCollections;
@@ -1321,7 +1351,11 @@ export class Widget extends StateManaged {
 
     const routine = this.get(property) !== null ? this.get(property) : property;
 
+    // counted alongside rather than indexed into: which operation of the routine this is says where
+    // its card in the routine editor is, and a routine is not always something to index into
+    let operationIndex = -1;
     for(const original of routine) {
+      ++operationIndex;
       var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
@@ -1336,7 +1370,7 @@ export class Widget extends StateManaged {
         property: typeof property == 'string' ? property : 'literal'
       };
 
-      if(routineLogging) jeLoggingRoutineOperationStart(original, a)
+      if(routineLogging) jeLoggingRoutineOperationStart(original, a, operationIndex)
 
       if(a.skip) {
         if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, true);
@@ -1396,13 +1430,16 @@ export class Widget extends StateManaged {
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
           const index = match[3] !== undefined ? variables[unescape(match[4])] : unescape(match[4]);
+          // read before the assignment below: a line that changes a variable it also reads would
+          // otherwise be written down with the value it produced on both sides
+          const definition = routineLogging ? substituteVariables(a.substr(4)) : '';
           if(index !== undefined && (typeof variables[variable] != 'object' || variables[variable] === null))
             problems.push(`The variable ${variable} is not an object, so indexing it doesn't work.`);
           else if(index !== undefined)
             variables[variable][index] = await getValue(variables[variable][index]);
           else
             variables[variable] = await getValue(variables[variable]);
-          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
+          if(routineLogging) jeLoggingRoutineOperationSummary(definition, JSON.stringify(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
           if (comment) {
@@ -1493,9 +1530,9 @@ export class Widget extends StateManaged {
             if(routineLogging) {
               const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
-                let returnCollection = result.collection.map(w=>w.get('id')).join(',');
-                if(!result.collection.length || result.collection.length >= 5)
-                  returnCollection = `(${result.collection.length} widgets)`;
+                const returnCollection = result.collection.length && result.collection.length < 5
+                  ? result.collection.map(w=>w.get('id')).join(',')
+                  : `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
                   `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
                   `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
@@ -1726,7 +1763,7 @@ export class Widget extends StateManaged {
           }
           if(routineLogging)
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true, routinePath && `${routinePath}/${operationIndex}/loopRoutine`);
           if(routineLogging)
             jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
@@ -1860,10 +1897,10 @@ export class Widget extends StateManaged {
             condition = await compute(a.relation, null, a.operand1, a.operand2);
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true, routinePath && `${routinePath}/${operationIndex}/${branch}`);
           if(routineLogging) {
             if (a.condition === undefined)
-              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
+              jeLoggingRoutineOperationSummary(`${JSON.stringify(a.operand1)} ${a.relation} ${JSON.stringify(a.operand2)}`, `${JSON.stringify(condition)}`)
             else
               jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${JSON.stringify(condition)}`)
           }
@@ -2289,9 +2326,8 @@ export class Widget extends StateManaged {
             await sortWidgets(collections[a.collection], a.sortBy);
 
           if(routineLogging) {
-            let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
-            if(!collections[a.collection].length || collections[a.collection].length >= 5)
-              selectedWidgets = `(${collections[a.collection].length} widgets)`;
+            const selected = collections[a.collection];
+            const selectedWidgets = selected.length && selected.length < 5 ? selected.map(w=>w.get('id')).join(',') : `(${selected.length} widgets)`;
             jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
           }
         }
@@ -2646,7 +2682,7 @@ export class Widget extends StateManaged {
 
       if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
-      if(!routineLogging && problems.length)
+      if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
       if(abortRoutine)
@@ -2656,8 +2692,6 @@ export class Widget extends StateManaged {
 
     if(routineLogging)
       jeLoggingRoutineEnd(variables, collections);
-    else if(jeRoutineLogging)
-      jeLoggingRoutineNotLogged(this, property); // logging was enabled while this routine was running
 
     batchEnd();
 
@@ -2672,6 +2706,13 @@ export class Widget extends StateManaged {
     }
 
     return { variable: variables.result === undefined ? null : variables.result, collection: collections.result || [] };
+  }
+
+  // Where the routine a property runs is written down, in the terms the routine editor addresses
+  // its cards with, so it can show every operation what it did the last time it ran. A widget
+  // that runs a routine it does not own itself says where it comes from instead (see Card).
+  routineDebugPath(property) {
+    return `${this.get('id')}/${property}`;
   }
 
   get(property) {

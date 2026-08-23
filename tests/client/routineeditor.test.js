@@ -20,6 +20,7 @@ beforeAll(() => {
   window.widgets = new Map();
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
+  window.getJEroutineDebug = () => true; // the switch in the Debug module (main.js), which is on by default
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
   // the validator tables are part of the editor bundle; the property proposals read them
@@ -36,6 +37,7 @@ beforeAll(() => {
     'client/js/editor/controls/widgetselection.js',
     'client/js/editor/controls/popup.js',
     'client/js/editor/controls/routine.js',
+    'client/js/editor/controls/routinedebug.js',
     'client/js/editor/controls/events.js'
   ];
   const code = files.map(f => fs.readFileSync(f, 'utf8')).join('\n');
@@ -54,7 +56,10 @@ beforeAll(() => {
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
-    'structureInfoHTML'
+    'structureInfoHTML',
+    'routineDebugRoutineStart', 'routineDebugRoutineEnd', 'routineDebugOperationStart', 'routineDebugOperationSummary',
+    'routineDebugOperationEnd', 'routineDebugRefreshNow', 'routineDebugResetAfterInteraction', 'routineDebugClear',
+    'routineDebugSetEnabled'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -3932,5 +3937,171 @@ describe('working out a value with var', () => {
     expect(plain.querySelector('.popup-operation-func')).toBeNull();
     expect(plain.querySelector('.popup-operation-example').textContent).toBe('the value');
     popup.hide();
+  });
+});
+
+// What every operation did the last time it ran, on the card of the operation itself. The runs are
+// collected by the logging calls of evaluateRoutine (see tests/client/engine/routinedebug.test.js
+// for the addresses they carry) - here they are played back by hand, so a case says what a card
+// shows without a room having to run anything.
+describe('what an operation did last time', () => {
+  const buttonWidget = { state: { id: 'button1', type: 'button' } };
+
+  // one run of a routine: every operation in order, each with what it did. depth is what
+  // evaluateRoutine passes for a nested block, and with it the recorder drops frames of routines
+  // that never reported their end.
+  function runRoutine(path, operations, depth = 0) {
+    routineDebugRoutineStart(path, depth);
+    for (const [ index, operation ] of operations.entries()) {
+      routineDebugOperationStart(index);
+      if (operation.definition !== undefined)
+        routineDebugOperationSummary(operation.definition, operation.result);
+      if (operation.blocks)
+        for (const [ block, blockOperations ] of Object.entries(operation.blocks))
+          runRoutine(`${path}/${index}/${block}`, blockOperations, depth + 1);
+      routineDebugOperationEnd(operation.problems || [], operation.skipped);
+    }
+    routineDebugRoutineEnd();
+  }
+
+  function editorFor(routine) {
+    return new RoutineEditor(buttonWidget, routine, [], [], { routineKey: 'clickRoutine' });
+  }
+
+  function strips(editor) {
+    return [...editor.domElement.querySelectorAll('.routine-editor-debug')].map(strip => strip.textContent);
+  }
+
+  beforeEach(() => routineDebugClear());
+
+  test('a card says what its operation worked with and what came out', () => {
+    runRoutine('button1/clickRoutine', [ { definition: "'hand' to 'discard'", result: '2' } ]);
+    expect(strips(editorFor([ { func: 'MOVE' } ]))[0]).toBe("'hand' to 'discard' → 2");
+  });
+
+  test('runs that read the same are counted instead of listed twice', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    expect(strips(editorFor([ { func: 'SHUFFLE' } ]))[0]).toBe('3× the deck');
+  });
+
+  test('rounds that only differ in what came out are one line, the sentence first', () => {
+    runRoutine('button1/clickRoutine', [ { blocks: { loopRoutine: [] } } ]);
+    for (let i = 1; i <= 6; ++i)
+      runRoutine('button1/clickRoutine/0/loopRoutine', [ { definition: 'var seen =', result: String(i) } ]);
+
+    const editor = editorFor([ { func: 'FOREACH', loopRoutine: [ 'var seen = ${value}' ] } ]);
+    const strip = editor.domElement.querySelector('[data-debug-key="button1/clickRoutine/0/loopRoutine/0"]');
+    expect(strip.textContent).toBe('var seen = → 1 2 3 4 5 6');
+    expect(strip.querySelector('.routine-editor-debug-more')).toBeNull();
+  });
+
+  test('rounds that did different things keep a line each, and offer the ones they hide', () => {
+    runRoutine('button1/clickRoutine', [ { blocks: { loopRoutine: [] } } ]);
+    for (let i = 1; i <= 6; ++i)
+      runRoutine('button1/clickRoutine/0/loopRoutine', [ { definition: `from 'box${i}'`, result: '1' } ]);
+
+    const editor = editorFor([ { func: 'FOREACH', loopRoutine: [ { func: 'MOVE' } ] } ]);
+    const strip = editor.domElement.querySelector('[data-debug-key="button1/clickRoutine/0/loopRoutine/0"]');
+    const runs = [...strip.querySelectorAll('.routine-editor-debug-run')].map(run => run.textContent);
+    expect(runs).toEqual([ "from 'box1' → 1", "from 'box2' → 1", "from 'box3' → 1" ]);
+    expect(strip.querySelector('.routine-editor-debug-more').textContent).toContain('+ 3 more runs');
+
+    strip.querySelector('.routine-editor-debug-more').click();
+    expect(strip.textContent).toContain("from 'box6' → 1");
+    expect(strip.querySelector('.routine-editor-debug-more').textContent).toContain('show less');
+  });
+
+  test('what an operation ran into is on a line of its own', () => {
+    runRoutine('button1/clickRoutine', [ { definition: "from 'nowhere'", problems: [ 'Widget ID nowhere does not exist.' ] } ]);
+    const editor = editorFor([ { func: 'MOVE' } ]);
+    expect(editor.domElement.querySelector('.routine-editor-debug-problem').textContent).toBe('Widget ID nowhere does not exist.');
+  });
+
+  test('an operation a routine did not reach says so, one it never ran at all says nothing', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'cancelled' } ]); // the routine stopped after the first operation
+    const editor = editorFor([ { func: 'INPUT' }, { func: 'FLIP' } ]);
+    expect(strips(editor)).toEqual([ 'cancelled', 'not run' ]);
+
+    const untouched = new RoutineEditor(buttonWidget, [ { func: 'FLIP' } ], [], [], { routineKey: 'enterRoutine' });
+    expect(strips(untouched)).toEqual([ '' ]);
+  });
+
+  test('an operation in a branch that was not taken says so like any other one that was not reached', () => {
+    runRoutine('button1/clickRoutine', [ { definition: '1 > 2 → false', blocks: { thenRoutine: [] } } ]);
+    const editor = editorFor([ { func: 'IF', thenRoutine: [ { func: 'FLIP' } ], elseRoutine: [ { func: 'SHUFFLE' } ] } ]);
+    const notTaken = editor.domElement.querySelector('[data-debug-key="button1/clickRoutine/0/elseRoutine/0"]');
+    expect(notTaken.textContent).toBe('not run');
+  });
+
+  test('the list of routines says why its cards are blank until something has run', () => {
+    const widget = { state: { id: 'button1', type: 'button', clickRoutine: [ { func: 'SHUFFLE' } ] } };
+    const eventsEditor = new EventsEditor(widget, () => {});
+    document.body.append(eventsEditor.domElement);
+    try {
+      expect(eventsEditor.domElement.querySelector('.events-editor-debug-hint').textContent).toContain('Nothing recorded yet');
+      runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+      routineDebugRefreshNow();
+      expect(eventsEditor.domElement.querySelector('.events-editor-debug-hint').textContent).toBe('');
+    } finally {
+      eventsEditor.domElement.remove();
+    }
+  });
+
+  test('a card on screen follows the routine that runs after it was rendered', () => {
+    const editor = editorFor([ { func: 'SHUFFLE' } ]);
+    document.body.append(editor.domElement);
+    try {
+      expect(strips(editor)).toEqual([ '' ]);
+      runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+      routineDebugRefreshNow();
+      expect(strips(editor)).toEqual([ 'the deck' ]);
+    } finally {
+      editor.domElement.remove();
+    }
+  });
+
+  test('the next interaction starts from nothing rather than adding to the last one', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'first' } ]);
+    routineDebugResetAfterInteraction();
+    runRoutine('button1/clickRoutine', [ { definition: 'second' } ]);
+    expect(strips(editorFor([ { func: 'SHUFFLE' } ]))).toEqual([ 'second' ]);
+  });
+
+  test('a routine that never reported its end leaves nothing behind for the next interaction', () => {
+    // an operation that throws takes the end of its routine with it, so that routine stays on the
+    // stack of the recorder - where it used to keep the next interaction from starting clean
+    routineDebugRoutineStart('button1/clickRoutine', 0);
+    routineDebugOperationStart(0);
+    routineDebugOperationSummary('half way', '');
+    routineDebugOperationEnd([], false);
+
+    routineDebugResetAfterInteraction();
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    expect(strips(editorFor([ { func: 'SHUFFLE' } ]))).toEqual([ 'the deck' ]);
+  });
+
+  test('switching the results off takes what is on the cards with it', () => {
+    const editor = editorFor([ { func: 'SHUFFLE' } ]);
+    document.body.append(editor.domElement);
+    try {
+      runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+      routineDebugRefreshNow();
+      expect(strips(editor)).toEqual([ 'the deck' ]);
+      routineDebugSetEnabled(false);
+      expect(strips(editor)).toEqual([ '' ]);
+    } finally {
+      editor.domElement.remove();
+    }
+  });
+
+  test('the list of routines says which of them ran', () => {
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    const widget = { state: { id: 'button1', type: 'button', clickRoutine: [ { func: 'SHUFFLE' } ], enterRoutine: [] } };
+    const eventsEditor = new EventsEditor(widget, () => {});
+    const runs = [...eventsEditor.domElement.querySelectorAll('.events-editor-runs')].map(r => r.textContent);
+    expect(runs).toEqual([ 'ran 2×', '' ]);
   });
 });

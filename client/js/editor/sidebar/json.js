@@ -91,6 +91,14 @@ class DebugModule extends SidebarModule {
     jeLoggingFilterLog($('#jeLogFilter').value);
   }
 
+  // What every operation did last, shown on its card in the routine editor. It is collected for the
+  // rest of the session once edit mode has been loaded, so switching it off has to stop the
+  // collecting as well as empty the cards.
+  button_routineCardResults() {
+    setJEroutineDebug($('#routineCardResults').checked);
+    routineDebugSetEnabled($('#routineCardResults').checked);
+  }
+
   button_validationProblem(problem) {
     if(!jeEnabled)
       return;
@@ -126,15 +134,22 @@ class DebugModule extends SidebarModule {
   }
 
   renderModule(target) {
-    div(target, 'buttonBar', `
+    // What the log shows on the first line, what the recorder does on the second: four controls
+    // that no longer fit one line in a narrow panel, so the row wraps - with each checkbox and its
+    // label kept together, because a label that breaks mid-phrase ends up next to the wrong box.
+    div(target, 'buttonBar debugHeader', `
       <input type=text id=jeLogFilter placeholder="Filter log...">
-      <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
       <button icon=backspace id=clearLogButton disabled>Clear</button>
+      <span class=debugHeaderSettings>
+        <label title="Empty the log whenever you do something in the room, so it always shows what one interaction did."><input type=checkbox id=autoClearLog checked> Clear after each interaction</label>
+        <label title="Also collect what every operation of a routine does, and show it in the routine editor under the sentence of the operation that did it."><input type=checkbox id=routineCardResults ${getJEroutineDebug() ? 'checked' : ''}> Show results on the routine editor's cards</label>
+      </span>
     `);
     target.append($('#jeLog'));
 
     on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
+    on('#routineCardResults', 'change', e=>this.button_routineCardResults());
     on('#clearLogButton', 'click', e=>this.button_clearButton());
 
     setJEroutineLogging(jeRoutineLogging = true);

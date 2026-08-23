@@ -395,6 +395,14 @@ class EventsEditor {
 
     const entries = this.routineEntries();
     const targets = routineTargetsOf(this.widget);
+
+    // why the cards of the routines below are blank when nothing has run yet (see routinedebug.js)
+    if(entries.length) {
+      const debugHint = div(this.domElement, 'events-editor-debug-hint');
+      debugHint.dataset.debugHint = '1';
+      routineDebugRenderHint(debugHint);
+    }
+
     // the same routine in both places of a deck: each card says so, because on
     // its own neither would explain why the routine appears twice
     const inBothPlaces = entries.filter(entry=>entries.filter(other=>other.property == entry.property).length > 1).map(entry=>entry.property);
@@ -462,6 +470,15 @@ class EventsEditor {
         }
       });
       headerDOM.append(removeButton);
+
+      // whether the last interaction went through this routine at all - worth seeing without
+      // opening every card in the list (see routinedebug.js). Behind the controls rather than
+      // behind the name, which is what a narrow panel has to shorten first.
+      const runs = document.createElement('span');
+      runs.className = 'events-editor-runs';
+      runs.dataset.debugRoutine = `${this.widgetID}/${key}`;
+      routineDebugRenderRoutine(runs);
+      headerDOM.append(runs);
 
       focusable(headerDOM, _=>{
         this.expandedEvents[key] = !expanded;
