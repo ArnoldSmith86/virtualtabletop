@@ -1183,29 +1183,31 @@ const routineOperationMetadata = {
     ignored: v=>v('relation') == '!' ? { value: 'ignored because ! only negates the current value' } : {}
   },
   SHIFT: {
-    description: 'Pass what holders hold on around a circle',
+    description: 'Pass the contents of holders to other holders',
     // where the widgets travel is one slot rather than two ways of working: the
-    // entries are holders, seats, or - while nothing is written down - the hand
-    // of every seat somebody sits on, which is a value that slot shows in words
+    // entries are holders, seats, a group of them, or - while nothing is written
+    // down - the hand of every seat somebody sits on, which the slot shows in words
     variants: [
-      { id: 'shift', label: 'Pass widgets on from holder to holder', template: 'Pass the contents of {holders} on to the next one{{interval}}{{direction}}{{wrap}}{{widgets}}' }
+      { id: 'shift', label: 'Pass widgets on from holder to holder', template: 'Pass the contents of {holders} on to the next one{{interval}}{{direction}}{{wrap}}{{widgets}}{{keepOrder}}' }
     ],
     clauses: [
       { id: 'interval', label: 'n places along', template: ' but {interval} places along' },
       { id: 'direction', label: 'which way round', template: ', {direction}' },
       { id: 'wrap', label: 'stopping at the last one', template: ', {wrap}', add: { wrap: false } },
-      { id: 'widgets', label: 'only some of what they hold', active: v=>v('widgets') != 'all', add: { widgets: 'top' }, template: ', only {widgets}' }
+      { id: 'widgets', label: 'only some of what they hold', active: v=>v('widgets') != 'all', add: { widgets: 'top' }, template: ', only {widgets}' },
+      { id: 'keepOrder', label: 'in the order the widgets were created', template: ', {keepOrder}', add: { keepOrder: false } }
     ],
     parameters: {
-      holders: { type: 'widgets', default: null, widgetType: 'holder', display: { 'null': "every occupied seat's hand" } },
+      holders: { type: 'collection', default: null, widgetType: 'holder', display: { 'null': "every occupied seat's hand" } },
       // all and top are the two ways of saying it without naming a group, so they
       // are the phrases the chip offers, with a group of widgets a popup away
       widgets: { type: 'collection', default: 'all', menu: true, special: [ 'all', 'top' ], otherLabel: 'a named group of widgets…',
         display: { 'all': 'all of them', 'top': 'the top widget', 'DEFAULT': 'the picked widgets' } },
       interval: { type: 'number', default: 1 },
       direction: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward',
-        display: { forward: 'in the order they come in', backward: 'the other way round', random: 'to a random other one' } },
-      wrap: { type: 'enum', values: [ true, false ], default: true, display: yesNo('wrapping around at the end', 'stopping at the last one') }
+        display: { forward: 'in the order they are listed', backward: 'the other way round', random: 'to a random other one' } },
+      wrap: { type: 'enum', values: [ true, false ], default: true, display: yesNo('wrapping around at the end', 'stopping at the last one') },
+      keepOrder: { type: 'enum', values: [ true, false ], default: true, display: yesNo('keeping the order of each holder', 'in the order the widgets were created') }
     }
   },
   SHUFFLE: {
@@ -1268,24 +1270,6 @@ const routineOperationMetadata = {
       if(v('holder') != null)
         ignored.rearrange = 'ignored because sorting a holder always rearranges it';
       return ignored;
-    }
-  },
-  SWAPHANDS: {
-    description: 'Pass the hands around the table',
-    variants: [
-      { id: 'swaphands', label: 'Swap the hands of the players', template: 'Pass every hand on to the next seat{{interval}}{{direction}}{{source}}' }
-    ],
-    clauses: [
-      { id: 'interval', label: 'n seats along', template: ' but {interval} seats along' },
-      { id: 'direction', label: 'which way round', template: ', {direction}' },
-      { id: 'keepOrder', label: 'keeping the order of each hand', template: ', {keepOrder}', add: { keepOrder: true } },
-      { id: 'source', label: 'among some of the seats', template: ', among {source}' }
-    ],
-    parameters: {
-      source: { type: 'collection', default: 'all', display: { 'all': 'all seats', 'DEFAULT': 'the picked seats' }, widgetType: 'seat' },
-      interval: { type: 'number', default: 1 },
-      keepOrder: { type: 'enum', values: [ true, false ], default: false, display: yesNo('keeping the order of each hand', 'in the order the widgets were created') },
-      direction: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward', display: { forward: 'in the seating order', backward: 'against the seating order', random: 'to a random other seat' } }
     }
   },
   TIMER: {
@@ -4042,7 +4026,7 @@ function editorForOperation(operation) {
 // something"), not as the part of the engine they belong to.
 const routineOperationGroups = [
   { title: 'Pick widgets and work out values', funcs: [ 'SELECT', 'COUNT', 'GET', 'VAR', 'var' ] },
-  { title: 'Move and order widgets', funcs: [ 'MOVE', 'MOVEXY', 'RECALL', 'SWAPHANDS', 'SHIFT', 'SHUFFLE', 'SORT' ] },
+  { title: 'Move and order widgets', funcs: [ 'MOVE', 'MOVEXY', 'RECALL', 'SHIFT', 'SHUFFLE', 'SORT' ] },
   { title: 'Add, change and remove widgets', funcs: [ 'SET', 'FLIP', 'ROTATE', 'LABEL', 'CANVAS', 'CLONE', 'DELETE', 'RESET' ] },
   { title: 'The game and its players', funcs: [ 'SCORE', 'TURN', 'TIMER' ] },
   { title: 'Talk to the players', funcs: [ 'AUDIO', 'INPUT', 'UPLOAD' ] },

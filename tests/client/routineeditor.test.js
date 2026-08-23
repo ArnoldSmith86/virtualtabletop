@@ -600,7 +600,6 @@ describe('operation rendering', () => {
     [ { func: 'SHIFT', holders: [ 'h1', 'h2', 'h3' ], widgets: 'top' }, 'Pass the contents of h1, h2 and h3 on to the next one, only the top widget' ],
     [ { func: 'SHIFT', holders: [ 'h1', 'h2' ], interval: 2, direction: 'backward', wrap: false },
       'Pass the contents of h1 and h2 on to the next one but 2 places along, the other way round, stopping at the last one' ],
-    [ { func: 'SWAPHANDS' }, 'Pass every hand on to the next seat' ],
     [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player "Choose a card" to fill in 3 fields' ],
     // a dialog with nothing to fill in is a question, and the sentence says so
     [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", canceling with "No"' ],
@@ -2830,7 +2829,6 @@ describe('widget type presets', () => {
       'SHIFT.holders': 'holder',
       'SHUFFLE.holder': 'holder',
       'SORT.holder': 'holder',
-      'SWAPHANDS.source': 'seat',
       'TIMER.timer': 'timer', 'TIMER.collection': 'timer',
       'TURN.turn': 'seat', 'TURN.source': 'seat'
     });
@@ -3287,9 +3285,9 @@ describe('the words and the units of an operation', () => {
       'RECALL byDistance': 'nearest cards first',
       'SELECT random': 'in random order',
       'SHIFT wrap': 'stopping at the last one',
+      'SHIFT keepOrder': 'in the order the widgets were created',
       'SORT reverse': 'biggest first',
-      'SORT rearrange': 'without moving them',
-      'SWAPHANDS keepOrder': 'keeping the order of each hand'
+      'SORT rearrange': 'without moving them'
     });
   });
 

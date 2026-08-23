@@ -164,6 +164,33 @@ describe("Scenarios: Shifting widgets between containers", () => {
     });
   });
 
+  // the widgets keep the order of the container they come from unless the operation
+  // asks for the order they were created in
+  describe("Given a container whose stack order differs from the order its tokens were created", () => {
+    let tokens;
+    beforeEach(async () => {
+      tokens = await createTokens(testName, containers[0].get('id'), 3);
+      for(const [ index, z ] of [ 2, 0, 1 ].entries())
+        await tokens[index].set('z', z);
+    });
+
+    async function shiftInto(operation) {
+      await button.set('clickRoutine', [ Object.assign({ func: 'SHIFT', holders: containers.map(c => c.get('id')) }, operation) ]);
+      await button.click();
+      return containers[1].children().sort((a, b) => a.get('z') - b.get('z')).map(w => w.get('id'));
+    }
+
+    describe("When clicked", () => {
+      test("Then the tokens arrive in the order of the container they come from", async () => {
+        expect(await shiftInto({})).toEqual([ tokens[1], tokens[2], tokens[0] ].map(w => w.get('id')));
+      });
+
+      test("Then keepOrder false hands them over in the order they were created", async () => {
+        expect(await shiftInto({ keepOrder: false })).toEqual(tokens.map(w => w.get('id')));
+      });
+    });
+  });
+
   describe("Given containers with two tokens each and widgets set to 'top'", () => {
     beforeEach(async () => {
       await createTokens(testName, containers[0].get('id'), 2);
@@ -388,6 +415,34 @@ describe("Scenarios: Shifting widgets through seats", () => {
 
     describe("When clicked", () => {
       test("Then the hand is passed on to the occupied seat with the next index", async () => {
+        await button.click();
+        expect(token.get('parent')).toBe(`${testName}-handC`);
+        expect(token.get('owner')).toBe('Carol');
+      });
+    });
+  });
+
+  // a collection lists the widgets in the order they were created, which is not the
+  // order the seats sit in - so the seats of a collection take part in index order
+  describe("Given seats out of index order and holders naming a collection", () => {
+    let handA, token;
+    beforeEach(async () => {
+      handA = createHand(`${testName}-handA`);
+      createHand(`${testName}-handB`);
+      createHand(`${testName}-handC`);
+      createSeat(`${testName}-seatA`, handA.get('id'), 'Alice', 1);
+      createSeat(`${testName}-seatB`, `${testName}-handB`, 'Bob', 3);
+      createSeat(`${testName}-seatC`, `${testName}-handC`, 'Carol', 2);
+      [ token ] = await createOwnedTokens(handA.get('id'), 1, 'Alice');
+
+      await button.set('clickRoutine', [
+        { "func": "SELECT", "type": "seat", "collection": "seats" },
+        { "func": "SHIFT", "holders": "seats" }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the hand is passed on to the seat with the next index", async () => {
         await button.click();
         expect(token.get('parent')).toBe(`${testName}-handC`);
         expect(token.get('owner')).toBe('Carol');

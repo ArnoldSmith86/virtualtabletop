@@ -66,11 +66,11 @@ function sharedHandRoom() {
 }
 
 // the seats are created in an order that does not match their index property, so a
-// bare SHIFT handing hand1 on to hand3 shows that the default follows the seat index
-function outOfOrderSeatsRoom() {
+// SHIFT handing hand1 on to hand3 shows that the seats follow the seat index
+function outOfOrderSeatsRoom(clickRoutine = [ { func: 'SHIFT' } ]) {
   const state = {
     deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
-    shift: { id: 'shift', type: 'button', text: 'shift', x: 800, y: 400, clickRoutine: [ { func: 'SHIFT' } ] },
+    shift: { id: 'shift', type: 'button', text: 'shift', x: 800, y: 400, clickRoutine },
     card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand1' }
   };
   for(const [ position, index ] of [ [ 1, 1 ], [ 2, 3 ], [ 3, 2 ] ]) {
@@ -187,40 +187,6 @@ async function clickSwap(t, clickRoutine) {
   await expectEventually(t, ()=>cardsInHand('hand1'), []);
 }
 
-test('SWAPHANDS passes the cards on in widget creation order', async t => {
-  await clickSwap(t, [ { func: 'SWAPHANDS' } ]);
-  await expectEventually(t, ()=>cardsInHand('hand2'), creationOrder);
-});
-
-test('SWAPHANDS with keepOrder passes the cards on in the order of the hand', async t => {
-  await clickSwap(t, [ { func: 'SWAPHANDS', keepOrder: true } ]);
-  await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
-});
-
-// SWAPHANDS names its temporary collections after the seats they come from, so a
-// collection of the surrounding routine using such a name has to survive the operation
-test('SWAPHANDS leaves a collection of the surrounding routine intact', async t => {
-  await clickSwap(t, [
-    { func: 'SELECT', property: 'id', value: 'card1', collection: 'hand of seat1' },
-    { func: 'SWAPHANDS' },
-    { func: 'SET', collection: 'hand of seat1', property: 'marked', value: true }
-  ]);
-  await expectEventually(t, ()=>cardsInHand('hand2'), creationOrder);
-  await expectEventually(t, markedWidgets, [ 'card1' ]);
-});
-
-test('SWAPHANDS does not pass on a card that a routine of an earlier move removed', async t => {
-  await setRoomState(removeOnEnterRoom({ func: 'SWAPHANDS' }));
-  await ClientFunction(prepareClient)();
-  await setName(t);
-  await expectEventually(t, ()=>cardsInHand('hand3'), [ 'doomed' ]);
-  await t.click('#w_swap');
-  await expectEventually(t, ()=>cardsInHand('hand2'), [ 'card1' ]);
-  await expectEventually(t, ()=>widgetExists('doomed'), false);
-  await expectEventually(t, ()=>cardsInHand('hand1'), []);
-  await expectEventually(t, markedWidgets, [ 'card1' ]);
-});
-
 test('SHIFT passes the cards on in the order of the hand', async t => {
   await clickSwap(t, [ { func: 'SHIFT', holders: [ 'seat1', 'seat2' ] } ]);
   await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
@@ -229,6 +195,26 @@ test('SHIFT passes the cards on in the order of the hand', async t => {
 test('SHIFT defaults to shifting the hands of the active seats', async t => {
   await clickSwap(t, [ { func: 'SHIFT' } ]);
   await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
+});
+
+test('SHIFT without keepOrder passes the cards on in widget creation order', async t => {
+  await clickSwap(t, [ { func: 'SHIFT', keepOrder: false } ]);
+  await expectEventually(t, ()=>cardsInHand('hand2'), creationOrder);
+});
+
+// a collection has the widgets in the order they were created, which is not the order
+// the seats sit around the table - so its seats take part in seat index order
+test('SHIFT takes the holders from a collection and orders its seats by index', async t => {
+  await setRoomState(outOfOrderSeatsRoom([
+    { func: 'SELECT', type: 'seat', collection: 'seats' },
+    { func: 'SHIFT', holders: 'seats' }
+  ]));
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await expectEventually(t, ()=>cardsInHand('hand1'), [ 'card1' ]);
+  await t.click('#w_shift');
+  await expectEventually(t, ()=>cardsInHand('hand3'), [ 'card1' ]);
+  await expectEventually(t, ()=>cardsInHand('hand1'), []);
 });
 
 // SHIFT names its temporary collections after the entries they come from, so a

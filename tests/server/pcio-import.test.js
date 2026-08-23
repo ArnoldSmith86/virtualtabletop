@@ -268,7 +268,7 @@ describe('PCIO importer', () => {
 
     expect(state.button.clickRoutine).toEqual([
       { func: 'SELECT', property: 'id', relation: 'in', value: [ 'seat1', 'seat2' ], type: 'seat', collection: 'pcioSeats' },
-      { note: 'Pass the hands on', func: 'SWAPHANDS', source: 'pcioSeats', interval: 1, direction: 'forward', keepOrder: true }
+      { note: 'Pass the hands on', func: 'SHIFT', holders: 'pcioSeats', interval: 1, direction: 'forward' }
     ]);
   });
 
