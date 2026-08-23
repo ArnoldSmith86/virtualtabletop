@@ -2352,6 +2352,169 @@ export class Widget extends StateManaged {
           jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
       }
 
+      if(a.func == 'SHIFT') {
+        setDefaults(a, { widgets: 'all', interval: 1, direction: 'forward', wrap: true, keepOrder: true });
+        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
+          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
+          a.direction = 'forward'
+        }
+
+        function shiftContainer(id, derived) {
+          const entry = widgets.get(id);
+          if(entry.get('type') != 'seat')
+            return { seat: null, holder: entry };
+          // An unoccupied seat is skipped entirely: it neither contributes nor
+          // receives widgets, so the shift cycles through the remaining entries.
+          if(!entry.get('player'))
+            return { empty: true };
+          if(!entry.get('hand') || !widgets.has(entry.get('hand'))) {
+            problems.push(`Seat ${id} does not define a valid hand.`);
+            // a written-down list names the exact cycle the game asked for, so a broken
+            // entry in it stops the shift. A list derived from the room was not chosen
+            // by anybody, so the seat is skipped like an unoccupied one and the rest
+            // still move
+            return derived ? { empty: true } : null;
+          }
+          return { seat: entry, holder: widgets.get(entry.get('hand')) };
+        }
+
+        function shiftContainerID(container) {
+          return (container.seat || container.holder).get('id');
+        }
+
+        // without an explicit list every occupied seat takes part, ordered by the seat
+        // index property
+        const useActiveSeats = a.holders === undefined || a.holders === null;
+        if(useActiveSeats)
+          a.holders = Array.from(widgets.values()).filter(w=>w.get('type')=='seat' && w.get('player')).sort((x, y)=>x.get('index')-y.get('index')).map(seat=>seat.get('id'));
+
+        // holders can name a collection instead of listing ids: the widgets in it take
+        // part, the seats among them in seat index order like the derived list above,
+        // every other holder in the place the collection has it
+        const fromCollection = typeof a.holders == 'string';
+        let collectionExists = true;
+        if(fromCollection) {
+          const holderCollection = getCollection(a.holders);
+          collectionExists = !!holderCollection;
+          const entries = collectionExists ? collections[holderCollection] : [];
+          const seatsByIndex = entries.filter(w=>w.get('type')=='seat').sort((x, y)=>x.get('index')-y.get('index'));
+          a.holders = entries.map(w=>(w.get('type') == 'seat' ? seatsByIndex.shift() : w).get('id'));
+        }
+
+        let valid = collectionExists && Array.isArray(a.holders) && a.holders.length > 1;
+        // fewer than two entries in a derived list is not an error, there is simply
+        // nothing to shift
+        if(!valid && collectionExists && !useActiveSeats && !fromCollection)
+          problems.push(`SHIFT requires a 'holders' array of at least two holders or seats.`);
+
+        let order = [];
+        if(valid && this.isValidID(a.holders, problems)) {
+          for(const id of a.holders) {
+            const container = shiftContainer(id, useActiveSeats || fromCollection);
+            if(!container) {
+              valid = false;
+              break;
+            }
+            if(!container.empty)
+              order.push(container);
+          }
+        } else {
+          valid = false;
+        }
+
+        let widgetCollection = null;
+        if(valid && a.widgets != 'all' && a.widgets != 'top')
+          valid = !!(widgetCollection = getCollection(a.widgets));
+
+        if(valid && !Number.isFinite(a.interval)) {
+          problems.push(`SHIFT 'interval' must be a finite number.`);
+          valid = false;
+        }
+
+        if(valid) {
+          // the direction is applied to the order itself, so the shift is always
+          // forward along it: backward walks the entries the other way round and
+          // random hands each entry's widgets to an arbitrary other one
+          if(a.direction == 'backward') {
+            order.reverse();
+          } else if(a.direction == 'random') {
+            for(let i = order.length - 1; i > 0; i--) {
+              const rand = Math.floor(Math.random() * (i + 1));
+              [order[i], order[rand]] = [order[rand], order[i]];
+            }
+          }
+
+          const length = order.length;
+          const shift = Math.trunc(a.interval);
+          const collectionSet = widgetCollection ? new Set(collections[widgetCollection]) : null;
+          // the contents of every entry are collected before anything is moved so that
+          // an entry does not pass on the widgets an earlier entry just gave it
+          const moves = [];
+
+          for(let i = 0; i < length; i++) {
+            const source = order[i];
+            // seats can share a single hand through childrenPerOwner, in which case
+            // only the widgets owned by that seat's player belong to that seat
+            const perOwner = source.seat && source.holder.get('childrenPerOwner');
+            let selected = source.holder.children().filter(c=>!perOwner || c.get('owner') == source.seat.get('player'));
+            if(a.widgets == 'top')
+              selected = selected.slice(0, 1);
+            else if(collectionSet)
+              selected = selected.filter(c=>collectionSet.has(c));
+            if(!selected.length)
+              continue;
+            // children() is top-first (z descending) and MOVE brings each widget to
+            // front as it moves it, so hand them over bottom-first to keep the order
+            selected.reverse();
+
+            let targetIndex = i + shift;
+            if(a.wrap)
+              targetIndex = ((targetIndex % length) + length) % length;
+            else
+              targetIndex = Math.max(0, Math.min(length - 1, targetIndex));
+
+            if(targetIndex != i)
+              moves.push({ source, contents: selected, to: shiftContainerID(order[targetIndex]) });
+          }
+
+          if(moves.length) {
+            if(routineLogging)
+              jeLoggingRoutineOperationStart("Moves", "Moves");
+            for(const move of moves) {
+              // a seat entry is moved to the seat itself instead of to its hand so that
+              // ownership, hands shared through childrenPerOwner and the arranging of
+              // the receiving hand are all handled by MOVE rather than duplicated here
+              const collection = `${move.source.seat ? 'hand' : 'contents'} of ${shiftContainerID(move.source)}`;
+              // a collection of the surrounding routine that happens to use the same
+              // name is shadowed only while its MOVE runs and then put back
+              const shadowed = collections[collection];
+              // the widgets are looked up right before their own MOVE so that one which
+              // a routine of an earlier MOVE removed is left alone. keepOrder hands them
+              // over in the order of their holder, without it they arrive in the order
+              // they were created
+              collections[collection] = a.keepOrder
+                ? move.contents.filter(w=>!w.isBeingRemoved)
+                : widgetFilter(w=>move.contents.indexOf(w) != -1);
+              try {
+                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+              } finally {
+                if(shadowed === undefined)
+                  delete collections[collection];
+                else
+                  collections[collection] = shadowed;
+              }
+            }
+            if(routineLogging)
+              jeLoggingRoutineOperationEnd([], variables, collections, false);
+          }
+
+          if(routineLogging) {
+            const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
+            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.direction} ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
+          }
+        }
+      }
+
       if(a.func == 'SHUFFLE') {
         setDefaults(a, { collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
         let collection;
@@ -2410,84 +2573,11 @@ export class Widget extends StateManaged {
         }
       }
 
-      if(a.func == 'SWAPHANDS') {
-        setDefaults(a, { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
-        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
-          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
-          a.direction = 'forward'
-        }
-        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
-        let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
-        if (c.length > 1) {
-          if(a.direction == 'forward') {
-            c.sort((a, b)=>a.get('index')-b.get('index'));
-          } else if(a.direction == 'backward') {
-            c.sort((a, b)=>b.get('index')-a.get('index'));
-          } else if (a.direction == 'random') {
-            for (let i = c.length - 1; i > 0; i--) {
-              const rand = Math.floor(Math.random() * (i + 1));
-              [c[i], c[rand]] = [c[rand], c[i]];
-            }
-          }
-          // all hands are collected before anything is moved so that a hand does not
-          // pick up the widgets an earlier seat just passed to it
-          let moves = [];
-          for (let i = 0; i < c.length; i++) {
-            let source = c[i];
-            let target = c[(i + a.interval) % c.length];
-            let hand = source.get('hand');
-            if (this.isValidID(hand, problems)) {
-              let perOwner = widgets.get(hand).get('childrenPerOwner');
-              let contents = widgets.get(hand).children().reduce(
-                function (collect, w) {
-                  if (!perOwner || w.get('owner') == source.get('player')) {
-                    collect.unshift(w);
-                  }
-                  return collect
-                },
-                []
-              );
-              moves.push({ source, contents, to: target.get('id') });
-            }
-          }
-          if(moves.length) {
-            if(routineLogging)
-              jeLoggingRoutineOperationStart("Moves", "Moves");
-            for(const move of moves) {
-              // the collection is named after the seat it comes from so that the
-              // generated MOVE reads like "from 'hand of seat1' to 'seat2'" in the log.
-              // a collection of the surrounding routine that happens to use the same
-              // name is shadowed only while its MOVE runs and then put back
-              const collection = `hand of ${move.source.get('id')}`;
-              const shadowed = collections[collection];
-              // the widgets are looked up right before their own MOVE so that one which
-              // a routine of an earlier MOVE removed is left alone, exactly like when
-              // the generated MOVE still received a list of IDs. keepOrder keeps the
-              // order of the hand, the default is the creation order because that is
-              // the order widgetFilter - and with it MOVE - used all along
-              collections[collection] = a.keepOrder
-                ? move.contents.filter(w=>!w.isBeingRemoved)
-                : widgetFilter(w=>move.contents.indexOf(w) != -1);
-              try {
-                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
-              } finally {
-                if(shadowed === undefined)
-                  delete collections[collection];
-                else
-                  collections[collection] = shadowed;
-              }
-            }
-            if(routineLogging)
-              jeLoggingRoutineOperationEnd([], variables, collections, false);
-          }
-          if(routineLogging) {
-            const how = a.direction == 'random' ? `hands in a random seat order by ${a.interval}` : `hands ${a.direction} by ${a.interval}`;
-            jeLoggingRoutineOperationSummary(moves.length ? `${how}${a.keepOrder ? ', keeping the card order' : ''}` : 'no seat with a player has a valid hand, nothing to swap');
-          }
-        } else if(routineLogging) {
-          jeLoggingRoutineOperationSummary('less than two seats with a player, nothing to swap');
-        }
-      }
+      // an operation an existing save carries is rewritten by the file updater, but one a
+      // routine builds while it runs or one pasted into the editor never passes through it
+      // and would otherwise do nothing at all, without saying so
+      if(a.func == 'SWAPHANDS')
+        problems.push(`SWAPHANDS was replaced by SHIFT.`);
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });

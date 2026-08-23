@@ -2175,25 +2175,21 @@ export default async function convertPCIO(content) {
           }
           if(seats.length) {
             // a hand is one holder per room in VTT and it is the owner that makes
-            // its cards a player's own, which is exactly what SWAPHANDS shifts
-            if(!wrap)
-              warn(`Passing the hands of the players on towards the last seat instead of around the table is not supported - ${widgetName(widget)} wraps them around.`);
-            routine.push({
-              func: 'SELECT',
-              property: 'id',
-              relation: 'in',
-              value: seats,
-              type: 'seat',
-              collection: 'pcioSeats'
-            });
-            routine.push({
+            // its cards a player's own, which is exactly what SHIFT passes on. the
+            // seats are handed over as a written-out list so that the hands travel
+            // along the order the automation gives rather than along the seat index
+            const shift = {
               note: 'Pass the hands on',
-              func: 'SWAPHANDS',
-              source: 'pcioSeats',
+              func: 'SHIFT',
+              holders: seats,
               interval: steps,
-              direction: reversed ? 'backward' : 'forward',
-              keepOrder: true
-            });
+              direction: reversed ? 'backward' : 'forward'
+            };
+            if(count == 1)
+              shift.widgets = 'top';
+            if(!wrap)
+              shift.wrap = false;
+            routine.push(shift);
             return;
           }
 
