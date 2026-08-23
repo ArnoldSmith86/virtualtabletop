@@ -3107,6 +3107,7 @@
   "scoreboard": {
     "type": "scoreboard",
     "id": "scoreboard",
+    "scoreEntry": "auto",
     "y": 70,
     "height": 830,
     "z": 107,

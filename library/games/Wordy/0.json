@@ -2848,6 +2848,7 @@
   },
   "exzi": {
     "type": "scoreboard",
+    "scoreEntry": "auto",
     "x": 1175,
     "y": 461,
     "id": "exzi",
