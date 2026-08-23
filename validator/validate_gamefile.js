@@ -32,6 +32,14 @@ const validators = {
             return `Widget '${v[0]}' does not exist but it is a valid collection. Did you mean '${v[0]}' (without brackets)?`;
         return problems;
     },
+    // target, holder, source and the MOVE holders: the name of a collection or a
+    // list of widget IDs - a string that names no collection but does name a
+    // widget is read as that single widget
+    collectionOrIDs: (v,p,propertyPath=[])=>{
+        if(typeof v === 'string' && !p.validCollections[v])
+            return validators.idArray(v,p) === true || `'${v}' is neither the name of a collection nor a widget ID`;
+        return validators.inCollection(v,p,propertyPath);
+    },
     routine: (v,p,propertyPath=[])=>{
         const context = Object.assign({}, p, { validVariables: p.validVariables || {...SUPER_GLOBALS.variables}, validCollections: p.validCollections || {...SUPER_GLOBALS.collections} });
         return validateRoutine(v,context,propertyPath);
@@ -512,36 +520,32 @@ function validateRoutine(routine, context, propertyPath = []) {
             continue;
         }
         
-        const requiredInputCollections = {
-            CANVAS: [ 'canvas' ],
-            COUNT: [],
-            CLICK: [],
-            COUNT: [ 'holder' ],
-            DELETE: [],
-            FLIP: [ 'holder' ],
-            FOREACH: [ 'in', 'range' ],
-            GET: [],
-            LABEL: [ 'label'],
-            MOVE: [ 'from' ],
-            MOVEXY: [ 'from' ],
-            ROTATE: [ 'holder' ],
-            SET: [],
-            SHUFFLE: [ 'holder' ],
-            SORT: [ 'holder' ],
-            TIMER: [ 'timer' ]
+        // the parameters an operation takes its widgets from, including the
+        // deprecated names - when none of them is given it falls back to the
+        // collection DEFAULT
+        const inputParameters = {
+            CANVAS: [ 'target', 'holder', 'canvas', 'collection' ],
+            CLICK: [ 'target', 'holder', 'collection' ],
+            CLONE: [ 'target', 'holder', 'source' ], // collection is the output of a CLONE
+            COUNT: [ 'target', 'holder', 'collection' ],
+            DELETE: [ 'target', 'holder', 'collection' ],
+            FLIP: [ 'target', 'holder', 'collection' ],
+            FOREACH: [ 'in', 'range', 'collection' ],
+            GET: [ 'target', 'holder', 'collection' ],
+            LABEL: [ 'target', 'holder', 'label', 'collection' ],
+            MOVE: [ 'target', 'fromHolder', 'from', 'collection' ],
+            MOVEXY: [ 'target', 'fromHolder', 'from' ],
+            ROTATE: [ 'target', 'holder', 'collection' ],
+            SET: [ 'target', 'holder', 'collection' ],
+            SHUFFLE: [ 'source', 'holder', 'collection' ],
+            SORT: [ 'source', 'holder', 'collection' ],
+            TIMER: [ 'target', 'holder', 'timer', 'collection' ]
         }
-        if (requiredInputCollections[operation.func] && !operation.collection && !context.validCollections.DEFAULT && !requiredInputCollections[operation.func].some(prop => operation[prop])) {
+        if (inputParameters[operation.func] && !context.validCollections.DEFAULT && !inputParameters[operation.func].some(prop => operation[prop])) {
             problems.push({
                 widget: context.widgetId,
                 property: operationPath,
                 message: 'no input given and collection DEFAULT is undefined'
-            });
-        }
-        if (operation.func == 'CLONE' && !operation.source && !context.validCollections.DEFAULT) {
-            problems.push({
-                widget: context.widgetId,
-                property: operationPath,
-                message: 'no source given and collection DEFAULT is undefined'
             });
         }
 
@@ -715,6 +719,16 @@ function getWidgetTypeValidator(types, canBeArray = false) {
     }
 }
 
+// like validators.collectionOrIDs, but widgets named directly have to be one of
+// the given types - the contents of a collection are only known while it runs
+function getCollectionOrIDsValidator(types) {
+    return (v, context, propertyPath = []) => {
+        if((typeof v !== 'string' || !context.validCollections[v]) && asArray(v).every(id=>context.widgets[id]))
+            return getWidgetTypeValidator(types, true)(v, context);
+        return validators.collectionOrIDs(v, context, propertyPath);
+    }
+}
+
 function checkForDollarSign(value, context, propertyPath = []) {
     const problems = [];
     if (typeof value === 'string' && value.includes('$')) {
@@ -741,17 +755,21 @@ const operationProps = {
         'count':     v => v === 'loop' || (typeof v === 'number' && v >= 0),
         'silence':   'boolean'
     },
-    'CALL': { 
-        'routine':   'routineProperty', 
-        'widget':    'idArray', 
+    'CALL': {
+        'routine':   'routineProperty',
+        'target':    'collectionOrIDs',
+        'holder':    'collectionOrIDs',
+        'widget':    'collectionOrIDs', // deprecated, use target
         'variable':  'string',
         'collection': 'string',
         'return':    'boolean',
         'arguments': 'object'
     },
-    'CANVAS': { 
-        'canvas':     'idArray', 
-        'collection': 'inCollection', 
+    'CANVAS': {
+        'target':     'collectionOrIDs',
+        'holder':     'collectionOrIDs',
+        'canvas':     'collectionOrIDs', // deprecated, use target
+        'collection': 'collectionOrIDs', // deprecated, use target
         'count':      'positiveNumber',
         'color':      v=>typeof v === 'string' && /^#[0-9A-Fa-f]{3,8}$/.test(v) || 'color expected (format: #RGB, #RGBA, #RRGGBB or #RRGGBBAA)',
         'mode':       getEnumValidator(['set', 'inc', 'dec', 'change', 'reset', 'setPixel']),
@@ -759,13 +777,17 @@ const operationProps = {
         'x':          'positiveNumber',
         'y':          'positiveNumber'
     },
-    'CLICK': { 
-        'collection': 'inCollection', 
+    'CLICK': {
+        'target':     'collectionOrIDs',
+        'holder':     'collectionOrIDs',
+        'collection': 'collectionOrIDs', // deprecated, use target
         'count':      'positiveNumber',
         'mode':       getEnumValidator(['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'])
     },
-    'CLONE': { 
-        'source':     'inCollection', 
+    'CLONE': {
+        'target':     'collectionOrIDs',
+        'holder':     'collectionOrIDs',
+        'source':     'collectionOrIDs', // deprecated, use target
         'count':      'positiveNumber',
         'xOffset':    'number',
         'yOffset':    'number',
@@ -773,21 +795,25 @@ const operationProps = {
         'recursive':  'boolean',
         'collection': 'string'
     },
-    'COUNT': { 
-        'collection': 'inCollection', 
-        'holder':     'idArray',
+    'COUNT': {
+        'target':     'collectionOrIDs',
+        'holder':     'collectionOrIDs',
+        'collection': 'collectionOrIDs', // deprecated, use target
         'owner':      'string',
         'variable':   'string'
     },
     'DELAY': {
         'milliseconds': 'positiveNumber'
     },
-    'DELETE': { 
-        'collection': 'inCollection'
+    'DELETE': {
+        'target':     'collectionOrIDs',
+        'holder':     'collectionOrIDs',
+        'collection': 'collectionOrIDs' // deprecated, use target
     },
-    'FLIP': { 
-        'holder':     'idArray', 
-        'collection': 'inCollection', 
+    'FLIP': {
+        'target':     'collectionOrIDs',
+        'holder':     'collectionOrIDs',
+        'collection': 'collectionOrIDs', // deprecated, use target
         'count':      'countOrAll',
         'face':       'number',
         'faceCycle':  getEnumValidator(['forward', 'backward', 'random'])
@@ -811,7 +837,9 @@ const operationProps = {
         }
     },
     'GET': {
-        'collection':  'inCollection',
+        'target':      'collectionOrIDs',
+        'holder':      'collectionOrIDs',
+        'collection':  'collectionOrIDs', // deprecated, use target
         'property':    validateGetProperty,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
@@ -838,21 +866,28 @@ const operationProps = {
         'randomRotation': 'number',
     },
     'LABEL': {
-        'label': 'idArray',
-        'collection': 'inCollection',
+        'target': 'collectionOrIDs',
+        'holder': 'collectionOrIDs',
+        'label': 'collectionOrIDs', // deprecated, use target
+        'collection': 'collectionOrIDs', // deprecated, use target
         'mode': getEnumValidator(['set','inc','dec','append']),
         'value': v=>typeof v === 'string' || typeof v === 'number' || v === undefined
     },
     'MOVE': {
-        'from': getWidgetTypeValidator(['holder', 'seat'], true),
-        'collection': 'inCollection',
-        'to': getWidgetTypeValidator(['holder', 'seat'], true),
+        'target': 'collectionOrIDs',
+        'fromHolder': getCollectionOrIDsValidator(['holder', 'seat']),
+        'toHolder': getCollectionOrIDsValidator(['holder', 'seat']),
+        'from': getCollectionOrIDsValidator(['holder', 'seat']), // deprecated, use fromHolder
+        'to': getCollectionOrIDsValidator(['holder', 'seat']), // deprecated, use toHolder
+        'collection': 'collectionOrIDs', // deprecated, use target
         'count': 'countOrAll',
         'fillTo': 'number',
         'face': 'positiveNumber'
     },
     'MOVEXY': {
-        'from': 'idArray',
+        'target': 'collectionOrIDs',
+        'fromHolder': 'collectionOrIDs',
+        'from': 'collectionOrIDs', // deprecated, use fromHolder
         'count': 'countOrAll',
         'x': 'number',
         'y': 'number',
@@ -863,7 +898,8 @@ const operationProps = {
     },
     'RECALL': {
         'excludeCollection': 'inCollection',
-        'holder': 'idArray',
+        'holder': 'collectionOrIDs',
+        'target': 'collectionOrIDs',
         'inHolder': 'boolean',
         'owned': 'boolean',
         'byDistance': 'boolean'
@@ -872,8 +908,9 @@ const operationProps = {
         'property': 'string'
     },
     'ROTATE': {
-        'holder': 'idArray',
-        'collection': 'inCollection',
+        'target': 'collectionOrIDs',
+        'holder': 'collectionOrIDs',
+        'collection': 'collectionOrIDs', // deprecated, use target
         'angle': 'number',
         'count': 'countOrAll',
         'mode': getEnumValidator(['set','add']),
@@ -898,20 +935,24 @@ const operationProps = {
         'random': 'boolean'
     },
     'SET': {
-        'collection': 'inCollection',
+        'target': 'collectionOrIDs',
+        'holder': 'collectionOrIDs',
+        'collection': 'collectionOrIDs', // deprecated, use target
         'property': 'string',
         'relation': 'string',
         'value': 'any'
     },
     'SHUFFLE': {
-        'holder': 'idArray',
-        'collection': 'inCollection',
+        'source': 'collectionOrIDs',
+        'holder': 'collectionOrIDs',
+        'collection': 'collectionOrIDs', // deprecated, use source
         'mode': getEnumValidator(['overhand','reverse','riffle','seeded','true random']),
         'modeValue': 'number'
     },
     'SORT': {
-        'holder': 'idArray',
-        'collection': 'inCollection',
+        'source': 'collectionOrIDs',
+        'holder': 'collectionOrIDs',
+        'collection': 'collectionOrIDs', // deprecated, use source
         'key': 'any',
         'reverse': 'boolean',
         'locales': 'any',
@@ -925,8 +966,10 @@ const operationProps = {
         'keepOrder': 'boolean'
     },
     'TIMER': {
-        'timer': 'idArray',
-        'collection': 'inCollection',
+        'target': 'collectionOrIDs',
+        'holder': 'collectionOrIDs',
+        'timer': 'collectionOrIDs', // deprecated, use target
+        'collection': 'collectionOrIDs', // deprecated, use target
         'mode': getEnumValidator(['set','inc','dec','pause','start','toggle','reset']),
         'value': v=>typeof v === 'number' || typeof v === 'string',
         'seconds': v=>typeof v === 'number' || typeof v === 'string' && /^-?\d+:\d+(\.\d+)?$/.test(v)
@@ -934,7 +977,9 @@ const operationProps = {
     'TURN': {
         'turn': v=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last',
         'turnCycle': getEnumValidator(['forward','backward','random','position','seat']),
-        'source': 'inCollection',
+        // 'all' takes every seat, anything else names the seats to take
+        'target': (v,p,propertyPath)=>v === 'all' || validators.collectionOrIDs(v,p,propertyPath),
+        'source': (v,p,propertyPath)=>v === 'all' || validators.collectionOrIDs(v,p,propertyPath), // deprecated, use target
         'collection': 'string'
     },
     'UPLOAD': {

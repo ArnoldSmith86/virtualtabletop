@@ -1,0 +1,484 @@
+{
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - Widget Inputs",
+      "image": "/assets/-1354062221_3242",
+      "rules": "",
+      "bgg": "",
+      "year": "2026",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1786320000000,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "target and holder",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    }
+  },
+  "title": {
+    "id": "title",
+    "type": "label",
+    "x": 100,
+    "y": -2,
+    "width": 1400,
+    "height": 80,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: widget inputs (target and holder)"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px"
+    },
+    "html": "Every function that works on widgets reads them from the same two parameters. <b>target</b> names the widgets themselves, <b>holder</b> names widgets whose <i>content</i> is meant &ndash; for a seat that is what lies in its hand and belongs to its player. Both accept either a list of widget ids or the name of a <b>collection</b> an earlier function filled, so it no longer matters which of the two the function before produced. If both are given, holder wins. Put a button into edit mode and press ctrl-j to read the routine behind it."
+  },
+  "holder1": {
+    "id": "holder1",
+    "type": "holder",
+    "x": 140,
+    "y": 280,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "token1": {
+    "id": "token1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "1",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder1",
+    "overlap": false
+  },
+  "token2": {
+    "id": "token2",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "2",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder1",
+    "overlap": false
+  },
+  "token3": {
+    "id": "token3",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "3",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder1",
+    "overlap": false
+  },
+  "holder2": {
+    "id": "holder2",
+    "type": "holder",
+    "x": 560,
+    "y": 280,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "token4": {
+    "id": "token4",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "4",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder2",
+    "overlap": false
+  },
+  "token5": {
+    "id": "token5",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "5",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder2",
+    "overlap": false
+  },
+  "token6": {
+    "id": "token6",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "6",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder2",
+    "overlap": false
+  },
+  "holder3": {
+    "id": "holder3",
+    "type": "holder",
+    "x": 980,
+    "y": 280,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "token7": {
+    "id": "token7",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "7",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder3",
+    "overlap": false
+  },
+  "token8": {
+    "id": "token8",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "8",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder3",
+    "overlap": false
+  },
+  "token9": {
+    "id": "token9",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "9",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder3",
+    "overlap": false
+  },
+  "button1": {
+    "id": "button1",
+    "type": "button",
+    "x": 140,
+    "y": 430,
+    "width": 240,
+    "height": 50,
+    "text": "ROTATE target",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "target": [
+          "token1",
+          "token3"
+        ],
+        "angle": 45,
+        "mode": "add",
+        "count": "all"
+      }
+    ]
+  },
+  "button2": {
+    "id": "button2",
+    "type": "button",
+    "x": 560,
+    "y": 430,
+    "width": 240,
+    "height": 50,
+    "text": "ROTATE holder",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "holder": [
+          "holder2"
+        ],
+        "angle": 45,
+        "mode": "add",
+        "count": "all"
+      }
+    ]
+  },
+  "button3": {
+    "id": "button3",
+    "type": "button",
+    "x": 980,
+    "y": 430,
+    "width": 240,
+    "height": 50,
+    "text": "ROTATE a collection",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder3",
+        "collection": "picked"
+      },
+      {
+        "func": "ROTATE",
+        "target": "picked",
+        "angle": 45,
+        "mode": "add",
+        "count": "all"
+      }
+    ]
+  },
+  "text1": {
+    "id": "text1",
+    "x": 120,
+    "y": 500,
+    "width": 300,
+    "height": 130,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>target</b> takes a list of widget ids &ndash; here <i>[\"token1\", \"token3\"]</i>. Only the widgets on that list turn."
+  },
+  "text2": {
+    "id": "text2",
+    "x": 540,
+    "y": 500,
+    "width": 300,
+    "height": 130,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>holder</b> takes widgets whose content is meant, so everything in this holder turns without listing a single token."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 960,
+    "y": 500,
+    "width": 340,
+    "height": 130,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "A string is the name of a <b>collection</b>: SELECT fills one, <b>target</b> reads it. Every widget parameter accepts both forms."
+  },
+  "holder4": {
+    "id": "holder4",
+    "type": "holder",
+    "x": 140,
+    "y": 700,
+    "width": 240,
+    "height": 100,
+    "dropTarget": {},
+    "stackOffsetX": 1
+  },
+  "token10": {
+    "id": "token10",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "10",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder4",
+    "overlap": false
+  },
+  "token11": {
+    "id": "token11",
+    "x": 68,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "11",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder4",
+    "overlap": false
+  },
+  "token12": {
+    "id": "token12",
+    "x": 132,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "text": "12",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "parent": "holder4",
+    "overlap": false
+  },
+  "tokenLoose": {
+    "id": "tokenLoose",
+    "x": 440,
+    "y": 715,
+    "width": 60,
+    "height": 60,
+    "text": "?",
+    "css": {
+      "background-color": "#c98d2e",
+      "border-radius": "10px",
+      "font-size": "26px",
+      "text-align": "center",
+      "line-height": "60px",
+      "color": "white"
+    },
+    "overlap": false
+  },
+  "button4": {
+    "id": "button4",
+    "type": "button",
+    "x": 560,
+    "y": 715,
+    "width": 240,
+    "height": 50,
+    "text": "holder beats target",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "holder": [
+          "holder4"
+        ],
+        "target": [
+          "tokenLoose"
+        ],
+        "angle": 45,
+        "mode": "add",
+        "count": "all"
+      }
+    ]
+  },
+  "text4": {
+    "id": "text4",
+    "x": 120,
+    "y": 830,
+    "width": 900,
+    "height": 110,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This button sets <b>holder</b> and <b>target</b> at the same time. Only the holder's content turns &ndash; the loose token stays put. FLIP and ROTATE always worked that way; now every function does."
+  }
+}
