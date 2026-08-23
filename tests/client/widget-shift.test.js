@@ -62,9 +62,9 @@ describe("Scenarios: Shifting widgets between containers", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": containers.map(c => c.get('id')),
-          "widgets": "all",
-          "steps": 1
+          "holders": containers.map(c => c.get('id')),
+          "source": "all",
+          "interval": 1
         }
       ]);
     });
@@ -82,17 +82,17 @@ describe("Scenarios: Shifting widgets between containers", () => {
     });
   });
 
-  describe("Given a container with two tokens and a reverse SHIFT without wrap", () => {
+  describe("Given a container with two tokens and a backward SHIFT without wrap", () => {
     beforeEach(async () => {
       await createTokens(testName, containers[0].get('id'), 2);
 
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": containers.map(c => c.get('id')),
-          "widgets": "all",
-          "steps": 1,
-          "reverse": true,
+          "holders": containers.map(c => c.get('id')),
+          "source": "all",
+          "interval": 1,
+          "direction": "backward",
           "wrap": false
         }
       ]);
@@ -119,9 +119,9 @@ describe("Scenarios: Shifting widgets between containers", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": containers.map(c => c.get('id')),
-          "widgets": "all",
-          "steps": 1
+          "holders": containers.map(c => c.get('id')),
+          "source": "all",
+          "interval": 1
         }
       ]);
     });
@@ -145,15 +145,15 @@ describe("Scenarios: Shifting widgets between containers", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": containers.map(c => c.get('id')),
-          "widgets": "all",
-          "steps": 2
+          "holders": containers.map(c => c.get('id')),
+          "source": "all",
+          "interval": 2
         }
       ]);
     });
 
     describe("When clicked", () => {
-      test("Then the token moves two positions along the order", async () => {
+      test("Then the token moves two positions along the holders", async () => {
         const before = idsOf(containers);
         await button.click();
         const after = idsOf(containers);
@@ -164,7 +164,7 @@ describe("Scenarios: Shifting widgets between containers", () => {
     });
   });
 
-  describe("Given containers with two tokens each and widgets set to 'top'", () => {
+  describe("Given containers with two tokens each and source set to 'top'", () => {
     beforeEach(async () => {
       await createTokens(testName, containers[0].get('id'), 2);
       await createTokens(testName, containers[1].get('id'), 2);
@@ -172,9 +172,9 @@ describe("Scenarios: Shifting widgets between containers", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": containers.map(c => c.get('id')),
-          "widgets": "top",
-          "steps": 1
+          "holders": containers.map(c => c.get('id')),
+          "source": "top",
+          "interval": 1
         }
       ]);
     });
@@ -252,9 +252,9 @@ describe("Scenarios: Shifting widgets through seats", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": [ seatA.get('id'), seatB.get('id') ],
-          "widgets": "all",
-          "steps": 1
+          "holders": [ seatA.get('id'), seatB.get('id') ],
+          "source": "all",
+          "interval": 1
         }
       ]);
     });
@@ -284,9 +284,9 @@ describe("Scenarios: Shifting widgets through seats", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": [ seatA.get('id'), seatEmpty.get('id'), seatC.get('id') ],
-          "widgets": "all",
-          "steps": 1
+          "holders": [ seatA.get('id'), seatEmpty.get('id'), seatC.get('id') ],
+          "source": "all",
+          "interval": 1
         }
       ]);
     });
@@ -316,9 +316,9 @@ describe("Scenarios: Shifting widgets through seats", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": [ holderX.get('id'), seatEmpty.get('id'), holderZ.get('id') ],
-          "widgets": "all",
-          "steps": 1
+          "holders": [ holderX.get('id'), seatEmpty.get('id'), holderZ.get('id') ],
+          "source": "all",
+          "interval": 1
         }
       ]);
     });
@@ -349,9 +349,9 @@ describe("Scenarios: Shifting widgets through seats", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": [ seatA.get('id'), seatB.get('id'), seatC.get('id') ],
-          "widgets": "all",
-          "steps": 1
+          "holders": [ seatA.get('id'), seatB.get('id'), seatC.get('id') ],
+          "source": "all",
+          "interval": 1
         }
       ]);
     });
@@ -368,7 +368,58 @@ describe("Scenarios: Shifting widgets through seats", () => {
     });
   });
 
-  describe("Given a seat in the order without a valid hand", () => {
+  describe("Given three occupied seats and a SHIFT without holders", () => {
+    let handA, token;
+    beforeEach(async () => {
+      handA = createHand(`${testName}-handA`);
+      createHand(`${testName}-handB`);
+      createHand(`${testName}-handC`);
+      createSeat(`${testName}-seatA`, handA.get('id'), 'Alice');
+      createSeat(`${testName}-seatB`, `${testName}-handB`, 'Bob');
+      createSeat(`${testName}-seatC`, `${testName}-handC`, 'Carol');
+      [ token ] = await createOwnedTokens(handA.get('id'), 1, 'Alice');
+
+      await button.set('clickRoutine', [ { "func": "SHIFT" } ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the hand is passed on along the active seats", async () => {
+        await button.click();
+        expect(token.get('parent')).toBe(`${testName}-handB`);
+        expect(token.get('owner')).toBe('Bob');
+      });
+    });
+  });
+
+  describe("Given two occupied seats and a random SHIFT", () => {
+    let handA, token;
+    beforeEach(async () => {
+      handA = createHand(`${testName}-handA`);
+      createHand(`${testName}-handB`);
+      const seatA = createSeat(`${testName}-seatA`, handA.get('id'), 'Alice');
+      const seatB = createSeat(`${testName}-seatB`, `${testName}-handB`, 'Bob');
+      [ token ] = await createOwnedTokens(handA.get('id'), 1, 'Alice');
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "holders": [ seatA.get('id'), seatB.get('id') ],
+          "direction": "random"
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      // whichever way two entries are shuffled, one step along them is a swap
+      test("Then the token still ends up in the other seat's hand", async () => {
+        await button.click();
+        expect(token.get('parent')).toBe(`${testName}-handB`);
+        expect(token.get('owner')).toBe('Bob');
+      });
+    });
+  });
+
+  describe("Given a seat in the holders without a valid hand", () => {
     let holder, token;
     beforeEach(async () => {
       holder = createHand(`${testName}-holder`);
@@ -378,9 +429,9 @@ describe("Scenarios: Shifting widgets through seats", () => {
       await button.set('clickRoutine', [
         {
           "func": "SHIFT",
-          "order": [ holder.get('id'), seatNoHand.get('id') ],
-          "widgets": "all",
-          "steps": 1
+          "holders": [ holder.get('id'), seatNoHand.get('id') ],
+          "source": "all",
+          "interval": 1
         }
       ]);
     });

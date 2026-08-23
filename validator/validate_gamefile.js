@@ -401,7 +401,6 @@ function validateRoutine(routine, context, propertyPath = []) {
             MOVEXY: [ 'from' ],
             ROTATE: [ 'holder' ],
             SET: [],
-            SHIFT: [ 'order' ],
             SHUFFLE: [ 'holder' ],
             SORT: [ 'holder' ],
             TIMER: [ 'timer' ]
@@ -774,10 +773,10 @@ const operationProps = {
         'value': 'any'
     },
     'SHIFT': {
-        'order': getWidgetTypeValidator(['holder', 'seat'], true),
-        'widgets': v=>typeof v === 'string' || '"all", "top", or a collection name expected',
-        'steps': v=>typeof v === 'number' && Number.isInteger(v) || 'integer expected',
-        'reverse': 'boolean',
+        'holders': getWidgetTypeValidator(['holder', 'seat'], true),
+        'source': v=>typeof v === 'string' || '"all", "top", or a collection name expected',
+        'interval': v=>typeof v === 'number' && Number.isInteger(v) || 'integer expected',
+        'direction': getEnumValidator(['forward','backward','random']),
         'wrap': 'boolean'
     },
     'SHUFFLE': {

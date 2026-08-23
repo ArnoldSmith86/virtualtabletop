@@ -55,7 +55,7 @@ function sharedHandRoom() {
     deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
     hand: { id: 'hand', type: 'holder', childrenPerOwner: true, x: 50, y: 600, width: 700, height: 180 },
     shift: { id: 'shift', type: 'button', text: 'shift', x: 800, y: 400, clickRoutine: [
-      { func: 'SHIFT', order: [ 'seat1', 'seat2', 'seat3' ] }
+      { func: 'SHIFT', holders: [ 'seat1', 'seat2', 'seat3' ] }
     ] }
   };
   for(const index of [ 1, 2, 3 ]) {
@@ -138,7 +138,12 @@ test('SWAPHANDS does not pass on a card that a routine of an earlier move remove
 });
 
 test('SHIFT passes the cards on in the order of the hand', async t => {
-  await clickSwap(t, [ { func: 'SHIFT', order: [ 'seat1', 'seat2' ] } ]);
+  await clickSwap(t, [ { func: 'SHIFT', holders: [ 'seat1', 'seat2' ] } ]);
+  await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
+});
+
+test('SHIFT defaults to shifting the hands of the active seats', async t => {
+  await clickSwap(t, [ { func: 'SHIFT' } ]);
   await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
 });
 
@@ -147,7 +152,7 @@ test('SHIFT passes the cards on in the order of the hand', async t => {
 test('SHIFT leaves a collection of the surrounding routine intact', async t => {
   await clickSwap(t, [
     { func: 'SELECT', property: 'id', value: 'card1', collection: 'hand of seat1' },
-    { func: 'SHIFT', order: [ 'seat1', 'seat2' ] },
+    { func: 'SHIFT', holders: [ 'seat1', 'seat2' ] },
     { func: 'SET', collection: 'hand of seat1', property: 'marked', value: true }
   ]);
   await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
@@ -155,7 +160,7 @@ test('SHIFT leaves a collection of the surrounding routine intact', async t => {
 });
 
 test('SHIFT does not pass on a card that a routine of an earlier move removed', async t => {
-  await setRoomState(removeOnEnterRoom({ func: 'SHIFT', order: [ 'seat1', 'seat2', 'seat3' ] }));
+  await setRoomState(removeOnEnterRoom({ func: 'SHIFT', holders: [ 'seat1', 'seat2', 'seat3' ] }));
   await ClientFunction(prepareClient)();
   await setName(t);
   await expectEventually(t, ()=>cardsInHand('hand3'), [ 'doomed' ]);

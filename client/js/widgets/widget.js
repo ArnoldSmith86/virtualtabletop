@@ -1974,7 +1974,11 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SHIFT') {
-        setDefaults(a, { widgets: 'all', steps: 1, reverse: false, wrap: true });
+        setDefaults(a, { holders: variables.activeSeats, source: 'all', interval: 1, direction: 'forward', wrap: true });
+        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
+          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
+          a.direction = 'forward'
+        }
 
         function shiftContainer(id) {
           const entry = widgets.get(id);
@@ -1995,13 +1999,13 @@ export class Widget extends StateManaged {
           return (container.seat || container.holder).get('id');
         }
 
-        let valid = Array.isArray(a.order) && a.order.length > 1;
+        let valid = Array.isArray(a.holders) && a.holders.length > 1;
         if(!valid)
-          problems.push(`SHIFT requires an 'order' array of at least two holders or seats.`);
+          problems.push(`SHIFT requires a 'holders' array of at least two holders or seats.`);
 
         let order = [];
-        if(valid && this.isValidID(a.order, problems)) {
-          for(const id of a.order) {
+        if(valid && this.isValidID(a.holders, problems)) {
+          for(const id of a.holders) {
             const container = shiftContainer(id);
             if(!container) {
               valid = false;
@@ -2015,17 +2019,29 @@ export class Widget extends StateManaged {
         }
 
         let widgetCollection = null;
-        if(valid && a.widgets != 'all' && a.widgets != 'top')
-          valid = !!(widgetCollection = getCollection(a.widgets));
+        if(valid && a.source != 'all' && a.source != 'top')
+          valid = !!(widgetCollection = getCollection(a.source));
 
-        if(valid && !Number.isFinite(a.steps)) {
-          problems.push(`SHIFT 'steps' must be a finite number.`);
+        if(valid && !Number.isFinite(a.interval)) {
+          problems.push(`SHIFT 'interval' must be a finite number.`);
           valid = false;
         }
 
         if(valid) {
+          // the direction is applied to the order itself, so the shift is always
+          // forward along it: backward walks the entries the other way round and
+          // random hands each entry's widgets to an arbitrary other one
+          if(a.direction == 'backward') {
+            order.reverse();
+          } else if(a.direction == 'random') {
+            for(let i = order.length - 1; i > 0; i--) {
+              const rand = Math.floor(Math.random() * (i + 1));
+              [order[i], order[rand]] = [order[rand], order[i]];
+            }
+          }
+
           const length = order.length;
-          const shift = (a.reverse ? -1 : 1) * Math.trunc(a.steps);
+          const shift = Math.trunc(a.interval);
           const collectionSet = widgetCollection ? new Set(collections[widgetCollection]) : null;
           // the contents of every entry are collected before anything is moved so that
           // an entry does not pass on the widgets an earlier entry just gave it
@@ -2037,7 +2053,7 @@ export class Widget extends StateManaged {
             // only the widgets owned by that seat's player belong to that seat
             const perOwner = source.seat && source.holder.get('childrenPerOwner');
             let selected = source.holder.children().filter(c=>!perOwner || c.get('owner') == source.seat.get('player'));
-            if(a.widgets == 'top')
+            if(a.source == 'top')
               selected = selected.slice(0, 1);
             else if(collectionSet)
               selected = selected.filter(c=>collectionSet.has(c));
@@ -2084,8 +2100,8 @@ export class Widget extends StateManaged {
           }
 
           if(jeRoutineLogging) {
-            const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
-            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
+            const sourceDesc = a.source == 'all' || a.source == 'top' ? a.source : `collection '${a.source}'`;
+            jeLoggingRoutineOperationSummary(`shifted ${sourceDesc} widgets ${shift} step(s) ${a.direction} ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
           }
         }
       }

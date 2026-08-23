@@ -73,7 +73,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "SHIFT is used to move widgets in a specified order between holders. Click the oval buttons below to cycle through the options for the various parameters. Press the round SHIFT button at any time to move the widgets in the examples. For seats, the function uses the holder linked in the <b>hand</b> property of the seat. Empty seats are skipped."
+    "html": "SHIFT is used to move widgets between the holders and seats listed in <b>holders</b>, which defaults to ${activeSeats}. Click the oval buttons below to cycle through the options for the various parameters. Press the round SHIFT button at any time to move the widgets in the examples. For seats, the function uses the holder linked in the <b>hand</b> property of the seat. Empty seats are skipped."
   },
   "button3": {
     "type": "button",
@@ -85,27 +85,42 @@
       {
         "func": "IF",
         "operand1": "${PROPERTY text}",
-        "operand2": true,
+        "operand2": "forward",
         "thenRoutine": [
           {
             "func": "SET",
             "collection": "thisButton",
             "property": "text",
-            "value": false
+            "value": "backward"
           }
         ],
         "elseRoutine": [
           {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": true
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "backward",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "random"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "forward"
+              }
+            ]
           }
         ]
       }
     ],
     "height": 40,
-    "text": false
+    "text": "forward"
   },
   "button4": {
     "type": "button",
@@ -150,7 +165,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>widgets</b>: Specifies which widgets in each holder are move. Defaults to &quotall&quot. If set to &quottop&quot it will just move the top widget. It can also be set to a named collection to move all widgets in that collection.",
+    "html": "<b>source</b>: Specifies which widgets in each holder are moved. Defaults to &quotall&quot. If set to &quottop&quot it will just move the top widget. It can also be set to a named collection to move all widgets in that collection.",
     "layer": -3
   },
   "button1": {
@@ -196,7 +211,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>steps</b>: Specifies how many positions along the <b>order</b> the widget(s) move. Defaults to 1.",
+    "html": "<b>interval</b>: Specifies how many positions along <b>holders</b> the widget(s) move. Defaults to 1.",
     "layer": -3
   },
   "text3": {
@@ -210,7 +225,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>reverse</b>: Specifies whether the widgets move in reverse order. Defaults to false.",
+    "html": "<b>direction</b>: Specifies whether the widgets move forwards or backwards along <b>holders</b>, or to a random other entry. Defaults to &quotforward&quot.",
     "layer": -3
   },
   "text4": {
@@ -224,7 +239,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>wrap</b>: Specifies whether the widgets that reach the end of <b>order</b> wrap around or stay at the end. Defaults to true.",
+    "html": "<b>wrap</b>: Specifies whether the widgets that reach the end of <b>holders</b> wrap around or stay at the end. Defaults to true.",
     "layer": -3
   },
   "button5": {
@@ -239,7 +254,8 @@
     "clickRoutine": [
       {
         "func": "SHIFT",
-        "order": [
+        "direction": "${PROPERTY text OF button3}",
+        "holders": [
           "holder1",
           "holder2",
           "holder3",
@@ -248,14 +264,14 @@
           "holder6",
           "holder7"
         ],
-        "reverse": "${PROPERTY text OF button3}",
-        "steps": "${PROPERTY text OF button2}",
-        "widgets": "${PROPERTY text OF button1}",
+        "interval": "${PROPERTY text OF button2}",
+        "source": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       },
       {
         "func": "SHIFT",
-        "order": [
+        "direction": "${PROPERTY text OF button3}",
+        "holders": [
           "move0",
           "move1",
           "move2",
@@ -311,22 +327,21 @@
           "move52",
           "move53"
         ],
-        "reverse": "${PROPERTY text OF button3}",
-        "steps": "${PROPERTY text OF button2}",
-        "widgets": "${PROPERTY text OF button1}",
+        "interval": "${PROPERTY text OF button2}",
+        "source": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       },
       {
         "func": "SHIFT",
-        "order": [
+        "direction": "${PROPERTY text OF button3}",
+        "holders": [
           "seat1",
           "seat2",
           "seat3",
           "seat4"
         ],
-        "reverse": "${PROPERTY text OF button3}",
-        "steps": "${PROPERTY text OF button2}",
-        "widgets": "${PROPERTY text OF button1}",
+        "interval": "${PROPERTY text OF button2}",
+        "source": "${PROPERTY text OF button1}",
         "wrap": "${PROPERTY text OF button4}"
       }
     ]
