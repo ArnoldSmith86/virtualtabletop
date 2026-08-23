@@ -219,6 +219,15 @@ describe("Scenarios: Shifting widgets through seats", () => {
     return seat;
   }
 
+  // a real childrenPerOwner hand stamps the owner onto everything that arrives in
+  // it, so widgets placed there directly for a test need the same owner
+  async function createOwnedTokens(handId, count, player) {
+    const tokens = await createTokens(testName, handId, count);
+    for(const token of tokens)
+      await token.set('owner', player);
+    return tokens;
+  }
+
   beforeEach(() => {
     created = [];
     button = createWidget({ id: `${testName}-button`, type: 'widget' });
@@ -238,7 +247,7 @@ describe("Scenarios: Shifting widgets through seats", () => {
       createHand(`${testName}-handB`);
       const seatA = createSeat(`${testName}-seatA`, handA.get('id'), 'Alice');
       const seatB = createSeat(`${testName}-seatB`, `${testName}-handB`, 'Bob');
-      [ token ] = await createTokens(testName, handA.get('id'), 1);
+      [ token ] = await createOwnedTokens(handA.get('id'), 1, 'Alice');
 
       await button.set('clickRoutine', [
         {
@@ -270,7 +279,7 @@ describe("Scenarios: Shifting widgets through seats", () => {
       const seatA = createSeat(`${testName}-seatA`, handA.get('id'), 'Alice');
       const seatEmpty = createSeat(`${testName}-seatEmpty`, `${testName}-handEmpty`, null);
       const seatC = createSeat(`${testName}-seatC`, `${testName}-handC`, 'Carol');
-      [ token ] = await createTokens(testName, handA.get('id'), 1);
+      [ token ] = await createOwnedTokens(handA.get('id'), 1, 'Alice');
 
       await button.set('clickRoutine', [
         {
@@ -319,6 +328,42 @@ describe("Scenarios: Shifting widgets through seats", () => {
         await button.click();
         expect(tokenX.get('parent')).toBe(`${testName}-holderZ`);
         expect(tokenZ.get('parent')).toBe(`${testName}-holderX`);
+      });
+    });
+  });
+
+  describe("Given three seats that share one childrenPerOwner hand", () => {
+    let hand, cardA, cardB, cardC;
+    beforeEach(async () => {
+      // the layout a PCIO import produces: every seat points at the same hand and
+      // ownership alone says whose cards are whose
+      hand = createHand(`${testName}-sharedHand`);
+      const seatA = createSeat(`${testName}-seatA`, hand.get('id'), 'Alice');
+      const seatB = createSeat(`${testName}-seatB`, hand.get('id'), 'Bob');
+      const seatC = createSeat(`${testName}-seatC`, hand.get('id'), 'Carol');
+      [ cardA, cardB, cardC ] = await createTokens(testName, hand.get('id'), 3);
+      await cardA.set('owner', 'Alice');
+      await cardB.set('owner', 'Bob');
+      await cardC.set('owner', 'Carol');
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "order": [ seatA.get('id'), seatB.get('id'), seatC.get('id') ],
+          "widgets": "all",
+          "steps": 1
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then each card is handed to the next seat's player and stays in the shared hand", async () => {
+        await button.click();
+
+        expect(cardA.get('owner')).toBe('Bob');
+        expect(cardB.get('owner')).toBe('Carol');
+        expect(cardC.get('owner')).toBe('Alice');
+        expect([ cardA, cardB, cardC ].map(c => c.get('parent'))).toEqual([ hand.get('id'), hand.get('id'), hand.get('id') ]);
       });
     });
   });

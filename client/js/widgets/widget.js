@@ -1991,6 +1991,10 @@ export class Widget extends StateManaged {
           return { seat: entry, holder: widgets.get(entry.get('hand')) };
         }
 
+        function shiftContainerID(container) {
+          return (container.seat || container.holder).get('id');
+        }
+
         let valid = Array.isArray(a.order) && a.order.length > 1;
         if(!valid)
           problems.push(`SHIFT requires an 'order' array of at least two holders or seats.`);
@@ -2023,16 +2027,25 @@ export class Widget extends StateManaged {
           const length = order.length;
           const shift = (a.reverse ? -1 : 1) * Math.trunc(a.steps);
           const collectionSet = widgetCollection ? new Set(collections[widgetCollection]) : null;
+          // the contents of every entry are collected before anything is moved so that
+          // an entry does not pass on the widgets an earlier entry just gave it
           const moves = [];
 
           for(let i = 0; i < length; i++) {
-            let selected = order[i].holder.children();
+            const source = order[i];
+            // seats can share a single hand through childrenPerOwner, in which case
+            // only the widgets owned by that seat's player belong to that seat
+            const perOwner = source.seat && source.holder.get('childrenPerOwner');
+            let selected = source.holder.children().filter(c=>!perOwner || c.get('owner') == source.seat.get('player'));
             if(a.widgets == 'top')
               selected = selected.slice(0, 1);
             else if(collectionSet)
               selected = selected.filter(c=>collectionSet.has(c));
             if(!selected.length)
               continue;
+            // children() is top-first (z descending) and MOVE brings each widget to
+            // front as it moves it, so hand them over bottom-first to keep the order
+            selected.reverse();
 
             let targetIndex = i + shift;
             if(a.wrap)
@@ -2041,27 +2054,38 @@ export class Widget extends StateManaged {
               targetIndex = Math.max(0, Math.min(length - 1, targetIndex));
 
             if(targetIndex != i)
-              moves.push({ widgets: selected, target: order[targetIndex] });
+              moves.push({ source, contents: selected, to: shiftContainerID(order[targetIndex]) });
           }
 
-          for(const move of moves) {
-            // children() is top-first (z descending); moveToHolder brings each widget
-            // to front, so move bottom-first to preserve the source stacking order.
-            for(const c of move.widgets.slice().reverse()) {
-              c.movedByButton = true;
-              if(move.target.seat)
-                c.targetPlayer = move.target.seat.get('player');
-              await c.moveToHolder(move.target.holder);
-              delete c.targetPlayer;
-              delete c.movedByButton;
+          if(moves.length) {
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationStart("Moves", "Moves");
+            for(const move of moves) {
+              // a seat entry is moved to the seat itself instead of to its hand so that
+              // ownership, hands shared through childrenPerOwner and the arranging of
+              // the receiving hand are all handled by MOVE rather than duplicated here
+              const collection = `${move.source.seat ? 'hand' : 'contents'} of ${shiftContainerID(move.source)}`;
+              // a collection of the surrounding routine that happens to use the same
+              // name is shadowed only while its MOVE runs and then put back
+              const shadowed = collections[collection];
+              // a widget that a routine of an earlier MOVE removed is left alone
+              collections[collection] = move.contents.filter(w=>!w.isBeingRemoved);
+              try {
+                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+              } finally {
+                if(shadowed === undefined)
+                  delete collections[collection];
+                else
+                  collections[collection] = shadowed;
+              }
             }
-            if(typeof move.target.holder.updateAfterShuffle == 'function')
-              await move.target.holder.updateAfterShuffle();
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
 
           if(jeRoutineLogging) {
             const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
-            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(o=>(o.seat||o.holder).get('id')))}`);
+            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
           }
         }
       }

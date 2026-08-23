@@ -27,12 +27,12 @@ function swapHandsRoom(clickRoutine) {
 // it receives one - so the last hand would pass on a card that no longer exists.
 // the witness is marked by the first hand's enterRoutine, so it stays unmarked as
 // long as nothing arrives there
-function removeOnEnterRoom() {
+function removeOnEnterRoom(operation) {
   const state = {
     deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
     witness: { id: 'witness', type: 'basic', x: 1000, y: 400 },
     swap: { id: 'swap', type: 'button', text: 'swap', x: 800, y: 400, clickRoutine: [
-      { func: 'SWAPHANDS' },
+      operation,
       { func: 'SELECT', property: 'id', value: 'card1' },
       { func: 'SET', property: 'marked', value: true }
     ] },
@@ -45,6 +45,23 @@ function removeOnEnterRoom() {
   }
   state.hand1.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'witness' }, { func: 'SET', property: 'marked', value: true } ];
   state.hand2.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'doomed' }, { func: 'DELETE' } ];
+  return state;
+}
+
+// a PCIO import gives every seat the same hand and tells the cards apart by their
+// owner, so passing a hand on there only changes owners and no card changes parent
+function sharedHandRoom() {
+  const state = {
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+    hand: { id: 'hand', type: 'holder', childrenPerOwner: true, x: 50, y: 600, width: 700, height: 180 },
+    shift: { id: 'shift', type: 'button', text: 'shift', x: 800, y: 400, clickRoutine: [
+      { func: 'SHIFT', order: [ 'seat1', 'seat2', 'seat3' ] }
+    ] }
+  };
+  for(const index of [ 1, 2, 3 ]) {
+    state[`seat${index}`] = { id: `seat${index}`, type: 'seat', index, player: `Player ${index}`, hand: 'hand', x: 800, y: 200*index };
+    state[`card${index}`] = { id: `card${index}`, type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand', owner: `Player ${index}`, z: index };
+  }
   return state;
 }
 
@@ -66,6 +83,11 @@ async function cardsInHand(hand) {
 
 async function markedWidgets() {
   return Object.values(JSON.parse(await getState())).filter(w=>w.marked).map(w=>w.id).sort();
+}
+
+async function cardOwners() {
+  const state = JSON.parse(await getState());
+  return [ 'card1', 'card2', 'card3' ].map(id=>state[id].owner);
 }
 
 async function widgetExists(id) {
@@ -104,7 +126,7 @@ test('SWAPHANDS leaves a collection of the surrounding routine intact', async t 
 });
 
 test('SWAPHANDS does not pass on a card that a routine of an earlier move removed', async t => {
-  await setRoomState(removeOnEnterRoom());
+  await setRoomState(removeOnEnterRoom({ func: 'SWAPHANDS' }));
   await ClientFunction(prepareClient)();
   await setName(t);
   await expectEventually(t, ()=>cardsInHand('hand3'), [ 'doomed' ]);
@@ -113,4 +135,43 @@ test('SWAPHANDS does not pass on a card that a routine of an earlier move remove
   await expectEventually(t, ()=>widgetExists('doomed'), false);
   await expectEventually(t, ()=>cardsInHand('hand1'), []);
   await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+test('SHIFT passes the cards on in the order of the hand', async t => {
+  await clickSwap(t, [ { func: 'SHIFT', order: [ 'seat1', 'seat2' ] } ]);
+  await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
+});
+
+// SHIFT names its temporary collections after the entries they come from, so a
+// collection of the surrounding routine using such a name has to survive the operation
+test('SHIFT leaves a collection of the surrounding routine intact', async t => {
+  await clickSwap(t, [
+    { func: 'SELECT', property: 'id', value: 'card1', collection: 'hand of seat1' },
+    { func: 'SHIFT', order: [ 'seat1', 'seat2' ] },
+    { func: 'SET', collection: 'hand of seat1', property: 'marked', value: true }
+  ]);
+  await expectEventually(t, ()=>cardsInHand('hand2'), handOrder);
+  await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+test('SHIFT does not pass on a card that a routine of an earlier move removed', async t => {
+  await setRoomState(removeOnEnterRoom({ func: 'SHIFT', order: [ 'seat1', 'seat2', 'seat3' ] }));
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await expectEventually(t, ()=>cardsInHand('hand3'), [ 'doomed' ]);
+  await t.click('#w_swap');
+  await expectEventually(t, ()=>cardsInHand('hand2'), [ 'card1' ]);
+  await expectEventually(t, ()=>widgetExists('doomed'), false);
+  await expectEventually(t, ()=>cardsInHand('hand1'), []);
+  await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+test('SHIFT passes on a hand that all seats share by changing the owner', async t => {
+  await setRoomState(sharedHandRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await expectEventually(t, cardOwners, [ 'Player 1', 'Player 2', 'Player 3' ]);
+  await t.click('#w_shift');
+  await expectEventually(t, cardOwners, [ 'Player 2', 'Player 3', 'Player 1' ]);
+  await expectEventually(t, async ()=>(await cardsInHand('hand')).sort(), [ 'card1', 'card2', 'card3' ]);
 });
