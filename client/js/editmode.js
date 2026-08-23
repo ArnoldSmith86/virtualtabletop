@@ -308,6 +308,15 @@ function generateTimerWidgets(id, x, y) {
   ];
 }
 
+// A composite widget is a base widget plus children whose IDs are derived from
+// the base ID, so the base is only usable when none of the derived IDs is taken.
+async function addCompositeWidget(type, generate) {
+  const id = generateUniqueWidgetID(type, base=>generate(base).map(w=>w.id));
+  for(const w of generate(id))
+    await addWidgetLocal(w);
+  return id;
+}
+
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
@@ -401,18 +410,10 @@ function populateAddWidgetOverlay() {
     y: 150
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
-    const id = generateUniqueWidgetID('deck');
-    for(const w of generateCardDeckWidgets(id, x, 340, false))
-      await addWidgetLocal(w);
-    return id
-  });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
-    const id = generateUniqueWidgetID('deck');
-    for(const w of generateCardDeckWidgets(id, x, 570, true))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false),
+    ()=>addCompositeWidget('deck', id=>generateCardDeckWidgets(id, x, 340, false)));
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true),
+    ()=>addCompositeWidget('deck', id=>generateCardDeckWidgets(id, x, 570, true)));
 
   //Add svg game pieces
   // First row
@@ -898,12 +899,8 @@ function populateAddWidgetOverlay() {
 
   }, 'dealer');
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
-    const id = generateUniqueWidgetID('chips');
-    for(const w of generateChipPileWidgets(id, 916, 300, 2))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2),
+    ()=>addCompositeWidget('chips', id=>generateChipPileWidgets(id, 916, 300, 2)));
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
     x: 1010,
@@ -956,12 +953,8 @@ function populateAddWidgetOverlay() {
     primaryColor: "#55bb66"
   }, 'dealer');
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
-    const id = generateUniqueWidgetID('chips');
-    for(const w of generateChipPileWidgets(id, 1010, 309, 3))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3),
+    ()=>addCompositeWidget('chips', id=>generateChipPileWidgets(id, 1010, 309, 3)));
 
   // Populate the dice. The real dice choosing happens in a popup.
   const dice2D = new Dice('add-dice2D0');
@@ -1157,20 +1150,12 @@ function populateAddWidgetOverlay() {
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
-    const id = generateUniqueWidgetID('timer');
-    for(const w of generateTimerWidgets(id, 1005, 825))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825),
+    ()=>addCompositeWidget('timer', id=>generateTimerWidgets(id, 1005, 825)));
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
-    const id = generateUniqueWidgetID('counter');
-    for(const w of generateCounterWidgets(id, 1058, 890))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890),
+    ()=>addCompositeWidget('counter', id=>generateCounterWidgets(id, 1058, 890)));
 
   // Populate the Decorative panel in the add widget overlay
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
@@ -1390,11 +1375,8 @@ async function addLibraryDeckToGame(entry) {
   batchStart();
   setDeltaCause(`${getPlayerDetails().playerName} added deck ${entry.deck} from public library game ${entry.gameName} in editor`);
 
-  let id = null;
   const suffixes = [ 'B', 'D', 'P', ...details.cards.map((_, i)=>`C${i+1}`) ];
-  do {
-    id = generateUniqueWidgetID();
-  } while(suffixes.some(suffix=>widgets.has(id+suffix)));
+  const id = generateUniqueWidgetID('deck', base=>suffixes.map(suffix=>base+suffix));
 
   const holderWidth  = entry.cardWidth  + 8;
   const holderHeight = entry.cardHeight + 11;

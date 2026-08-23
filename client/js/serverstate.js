@@ -41,12 +41,15 @@ function applyCustomCss(gameSettings) {
   }
 }
 
-function generateUniqueWidgetID(type) {
+// derivedIDs is passed by composite widgets that build their child IDs from the
+// base ID (deck1B, deck1P, deck1_A_C, ...): a base is only accepted when none of
+// those is taken either, so adding a composite never overwrites another widget.
+function generateUniqueWidgetID(type, derivedIDs) {
   let id;
   let i = 1;
   do {
     id = type ? type + i++ : rand().toString(36).substring(3, 7);
-  } while (widgets.has(id));
+  } while (widgets.has(id) || derivedIDs && derivedIDs(id).some(derived=>widgets.has(String(derived))));
   return id;
 }
 

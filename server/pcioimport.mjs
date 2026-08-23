@@ -105,14 +105,18 @@ export default async function convertPCIO(content) {
     labelText:        'label'
   };
   const piecePrefixes = {
-    checkers: 'checker',
-    classic:  'pawn'
+    classic: 'pawn'
   };
 
+  // PCIO names most of its piece types in the plural ('checkers', 'pucks'), the
+  // ID prefix uses the single piece ('checker1', 'puck1').
+  const singular = name=>name.replace(/([^s])s$/, '$1');
+
   function idPrefix(widget) {
+    const name = String((widget.type == 'gamePiece' ? widget.pieceType : widget.type) || '').replace(/[^a-zA-Z]/g, '').toLowerCase();
     if(widget.type == 'gamePiece')
-      return piecePrefixes[widget.pieceType] || String(widget.pieceType || '').replace(/[^a-zA-Z]/g, '').toLowerCase() || 'piece';
-    return idPrefixes[widget.type] || String(widget.type || '').replace(/[^a-zA-Z]/g, '') || 'widget';
+      return piecePrefixes[widget.pieceType] || singular(name) || 'piece';
+    return idPrefixes[widget.type] || name || 'widget';
   }
 
   const idCounters = {};
@@ -120,9 +124,16 @@ export default async function convertPCIO(content) {
     return prefix + (idCounters[prefix] = (idCounters[prefix] || 0) + 1);
   }
 
+  // Widgets that are dropped further down must not consume an ID number, or the
+  // output would be numbered with gaps like card1, card2, card4.
+  const pcioIDs = new Set(widgets.map(w=>w.id));
+  const isDropped = widget=>
+    widget.type == 'hand' && widget.enabled === false ||
+    [ 'card', 'piece', 'chooser' ].includes(widget.type) && !pcioIDs.has(widget.deck);
+
   const idMap = { hand: 'hand' };
   for(const widget of widgets)
-    if(idMap[widget.id] === undefined)
+    if(idMap[widget.id] === undefined && !isDropped(widget))
       idMap[widget.id] = uniqueID(idPrefix(widget));
 
   const mapID = id=>idMap[id] !== undefined ? idMap[id] : id;
@@ -131,6 +142,24 @@ export default async function convertPCIO(content) {
   // routine arguments holding widget IDs, as opposed to numbers, modes or question IDs
   const routineIDArgs = [ 'choosers', 'counters', 'decks', 'dice', 'from', 'holders', 'sources', 'spinners', 'timers', 'to' ];
 
+  // PCIO operations the conversion below knows. Their arguments are read one by
+  // one, so only the ones listed in routineIDArgs need mapping. Any other
+  // operation is copied into the output routine verbatim, so every widget ID it
+  // happens to carry is mapped as well - the step is not a valid VTT operation
+  // either way, but it still shows which widgets it was meant to act on.
+  const convertedFuncs = [ 'CHANGE_CHOOSER', 'CHANGE_COUNTER', 'CHANGE_TIMER_STATE', 'CHANGE_TIMER_TIME', 'FLIP_CARDS', 'MOVE_CARDS_BETWEEN_HOLDERS', 'RECALL_CARDS', 'ROLL_DICE', 'SHUFFLE_CARDS', 'SORT_CARDS', 'SPIN_SPINNER' ];
+
+  function mapKnownIDs(value) {
+    if(Array.isArray(value))
+      return value.map(mapKnownIDs);
+    if(value && typeof value == 'object') {
+      for(const key in value)
+        value[key] = mapKnownIDs(value[key]);
+      return value;
+    }
+    return typeof value == 'string' && idMap[value] !== undefined ? idMap[value] : value;
+  }
+
   function mapRoutineIDs(routine) {
     if(!routine)
       return;
@@ -138,6 +167,12 @@ export default async function convertPCIO(content) {
       if(question.holders)
         question.holders = mapIDs(question.holders);
     for(const step of routine.steps || (Array.isArray(routine) ? routine : [])) {
+      if(!convertedFuncs.includes(step.func)) {
+        for(const key in step)
+          if(key != 'func')
+            step[key] = mapKnownIDs(step[key]);
+        continue;
+      }
       const args = step.args || {};
       for(const arg of routineIDArgs)
         if(args[arg] && args[arg].value !== undefined)
