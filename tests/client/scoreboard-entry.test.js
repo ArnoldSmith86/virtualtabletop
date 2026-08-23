@@ -92,16 +92,16 @@ describe('the cells of the table', () => {
     expect(enterable(board)).toEqual([]);
   });
 
-  test('carry the round after the last one that has been scored', async () => {
+  test('are the rounds that have been scored, and no empty one on top of them', async () => {
     const seat1 = seat('seat1', 1, [ 12 ]);
     seat('seat2', 2, [ 9 ]);
     const board = scoreboard();
-    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1', 'seat1/2', 'seat2/2' ]);
-    // the round grows with the seat that is furthest ahead, so a seat the others
-    // are waiting for never keeps the table from reaching the next round
+    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1' ]);
+    // the table grows with the seat that is furthest ahead, so a seat the others
+    // are waiting for never keeps a scored round out of it
     await seat1.set('score', [ 12, 5 ]);
     board.updateTable();
-    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1', 'seat1/2', 'seat2/2', 'seat1/3', 'seat2/3' ]);
+    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1', 'seat1/2', 'seat2/2' ]);
   });
 
   test('are a single score per seat on a board no round has been scored on', () => {
@@ -117,6 +117,76 @@ describe('the cells of the table', () => {
     // the cells are still addressed, so a click on one prefills the pane
     const board = scoreboard({ scoreEntry: 'pane' });
     expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1' ]);
+  });
+});
+
+describe('the button that starts the next round', () => {
+  const addRound = board => board.tableDOM.querySelector('button.addRound');
+
+  test('adds a round nobody has scored, without writing to any seat', () => {
+    const seat1 = seat('seat1', 1, [ 12 ]);
+    seat('seat2', 2, [ 9 ]);
+    const board = scoreboard();
+    addRound(board).dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1', 'seat1/2', 'seat2/2' ]);
+    expect(seat1.get('score')).toEqual([ 12 ]);
+    // and it is still there to start the round after that one
+    addRound(board).dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(enterable(board)).toContain('seat1/3');
+  });
+
+  test('is named with the label the round column carries', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ roundLabel: 'Deal' });
+    expect(addRound(board).textContent).toBe('Deal');
+    expect(addRound(board).title).toBe('New Deal');
+  });
+
+  test('sits under the sheet, above the totals line', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard();
+    const rows = [ ...board.tableDOM.rows ];
+    expect(rows[rows.length-1].cells[0].innerText).toBe('Totals');
+    expect(rows[rows.length-2].querySelector('button.addRound')).not.toBe(null);
+  });
+
+  test('is not offered where a click does not enter a cell', async () => {
+    seat('seat1', 1, [ 12 ]);
+    // the pane offers the next round in its round list, so a board that asks
+    // for it needs no button - nor does a printed table
+    expect(addRound(scoreboard({ scoreEntry: 'pane' }))).toBe(null);
+    removeWidget('board');
+    expect(addRound(scoreboard({ clickable: false }))).toBe(null);
+  });
+
+  test('is not offered on a board that adds its seats up in teams', () => {
+    seat('seat1', 1, [ 12 ]);
+    seat('seat2', 2, [ 9 ]);
+    // a team column is the sum of the seats in it, so there is no cell to enter
+    // a round in and nothing for a new one to offer
+    expect(addRound(scoreboard({ seats: { Reds: [ 'seat1' ], Blues: [ 'seat2' ] } }))).toBe(null);
+  });
+
+  test('is not offered on a board that has no rounds at all', () => {
+    seat('seat1', 1);
+    // a single score per seat is the shape that board was written in: the round
+    // it would add is a different table, not the next line of this one
+    expect(addRound(scoreboard())).toBe(null);
+  });
+
+  test('stops at the last round the game names', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ rounds: [ 'R1', 'R2' ] });
+    addRound(board).dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(enterable(board)).toEqual([ 'seat1/1', 'seat1/2' ]);
+    expect(addRound(board)).toBe(null);
+    board.addRound(3);
+    expect(enterable(board)).toEqual([ 'seat1/1', 'seat1/2' ]);
+  });
+
+  test('is not offered at all where the game names every round it shows', () => {
+    seat('seat1', 1, [ 12 ]);
+    expect(addRound(scoreboard({ rounds: [ 'R1', 'R2' ], showAllRounds: true }))).toBe(null);
   });
 });
 

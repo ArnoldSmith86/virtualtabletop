@@ -140,6 +140,46 @@ test('The keypad writes and erases the score of the cell it opened on', async t 
   await t.expect((await scores()).seat1).eql([ 12, 15 ]);
 });
 
+test('The button under the sheet starts the next round', async t => {
+  await t.resizeWindow(1280, 800);
+  // no named rounds, so the sheet shows the two rounds that have been scored
+  // and there is no cell for the one about to be played
+  await roomWithBoard(t, { rounds: null, showAllRounds: false });
+  const addRound = Selector('#w_board button.addRound');
+  await t
+    .expect(cell('seat1', 3).exists).notOk()
+    .expect(addRound.visible).ok()
+    .expect(addRound.innerText).eql('Round')
+    .click(addRound)
+    .expect(cell('seat1', 3).exists).ok()
+    // pressing it is not a click on the board behind it
+    .expect(Selector('#buttonInputOverlay').visible).notOk();
+  // the round is added to the table, not to the seats: nothing is written until
+  // a score is entered into it
+  await t.expect((await scores()).seat1).eql([ 12, 7 ]);
+  await t
+    .click(cell('seat1', 3))
+    .typeText('#w_board input.scoreCellInput', '5', { replace: true })
+    .pressKey('enter')
+    .pressKey('esc');
+  await t.expect((await scores()).seat1).eql([ 12, 7, 5 ]);
+  // typing past the last round asks for the next one the same way the button does
+  await t
+    .click(cell('seat1', 3))
+    .typeText('#w_board input.scoreCellInput', '6', { replace: true })
+    .pressKey('tab')
+    .expect(Selector('#w_board td.scoreCell[data-seat="seat1"][data-round="4"] input').exists).ok()
+    .pressKey('esc');
+});
+
+test('A board whose rounds the game names has no button to add one', async t => {
+  await t.resizeWindow(1280, 800);
+  // R1 and R2 with showAllRounds: every round the board will ever have is in
+  // the table already
+  await roomWithBoard(t);
+  await t.expect(Selector('#w_board button.addRound').exists).notOk();
+});
+
 // A press on a scrollbar is one between the client box of the scrolling element and
 // the room it reserves for the bar; anything past that is its border. Headless
 // browsers draw overlay scrollbars, which reserve nothing and swallow the press

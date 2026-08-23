@@ -72,6 +72,10 @@ export class Scoreboard extends Widget {
       editPaneTitle: 'Set score'
     });
 
+    // the rounds the player has asked for with the add-round button, which are
+    // shown empty until a score is entered into them
+    this.requestedRounds = 0;
+
     // mousehandling.js calls click() without the event, so the cell a press
     // landed on is noted here and read when the click arrives. A press that
     // misses the table notes nothing, so it falls back to the edit pane instead
@@ -155,12 +159,32 @@ export class Scoreboard extends Widget {
     return !!this.get('clickable') && !Array.isArray(this.get('clickRoutine'));
   }
 
-  // Whether the table offers the round after the last one that has been scored
-  // as an extra row. Only a board whose cells are entered into needs one - the
-  // edit pane offers that round in its round list, so a board that asks for it
-  // keeps the table it has always had.
-  nextRoundOffered() {
-    return this.cellEntryEnabled() && this.get('scoreEntry') != 'pane';
+  // Whether the table carries the button that starts the next round. Only a
+  // board whose cells are entered into needs one - the edit pane offers that
+  // round in its round list, and a board of teams adds up columns that no click
+  // can enter - and only for as long as the board can hold another round.
+  addRoundOffered(seats) {
+    return Array.isArray(seats) && this.cellEntryEnabled() && this.get('scoreEntry') != 'pane'
+        && !this.totalsOnly && (this.displayedRounds || []).length < this.roundLimit();
+  }
+
+  // How many rounds the board can ever show: a game that names its rounds has
+  // said how many there are, anything else grows for as long as scores are
+  // entered into it.
+  roundLimit() {
+    const rounds = this.get('rounds');
+    return Array.isArray(rounds) ? rounds.length : Infinity;
+  }
+
+  // Show a round nobody has scored yet, so that there is a cell to enter it in.
+  // Nothing is written to any seat until a score is: the round is a request of
+  // this browser, so one asked for by mistake costs the table nothing, and the
+  // round reaches the other players with the first score entered into it.
+  addRound(round) {
+    if(round > this.roundLimit())
+      return;
+    this.requestedRounds = Math.max(this.requestedRounds, round);
+    this.updateTable();
   }
 
   // Which surface a cell opens. A board that names one gets it everywhere;
@@ -668,6 +692,11 @@ export class Scoreboard extends Widget {
     if(String(value) !== this.cellText(address))
       await this.setCellScore(address, value);
     if(next) {
+      // typing past the last round of the sheet asks for the next one, the way
+      // the button under the table does - the move is the player saying they
+      // want it - and a board whose rounds are named stops at the last of them
+      if(next.round > this.displayedRounds.length)
+        this.addRound(next.round);
       const cell = this.cellFor(next.seatID, next.round);
       if(cell)
         this.openEntrySurface('type', cell, '');
@@ -845,6 +874,35 @@ export class Scoreboard extends Widget {
     return tr;
   }
 
+  // A strip along the foot of the table carrying the button that starts the next
+  // round. A round is a row where the players are columns and a column where
+  // they are rows, but the button sits under the sheet either way: it is out of
+  // the run of the scores there, and it is as wide as the table rather than as
+  // wide as a cell, which gives a finger something to hit.
+  // mousehandling.js leaves a press on a <button> in a widget alone, so pressing
+  // this one adds the round instead of opening the score pane behind it.
+  addRoundStrip(numCols, aboveTotals) {
+    const body = this.tableDOM.tBodies[0];
+    if(!body)
+      return;
+    const row = document.createElement('tr');
+    row.className = 'addRoundRow';
+    const cell = document.createElement('td');
+    cell.colSpan = numCols;
+    row.appendChild(cell);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'addRound';
+    button.setAttribute('icon', 'add');
+    button.textContent = this.get('roundLabel');
+    button.title = `New ${this.get('roundLabel')}`;
+    button.addEventListener('click', _=>this.addRound(this.displayedRounds.length + 1));
+    cell.appendChild(button);
+
+    body.insertBefore(row, aboveTotals ? body.rows[body.rows.length-1] : null);
+  }
+
   updateTable() {
     /* This routine creates the HTML table for display in the scoreboard. It is
      * complicated by the fact that the `seats` property can be either an array of
@@ -883,11 +941,13 @@ export class Scoreboard extends Widget {
     let sortField = this.get('sortField');
 
     // Compute number of scoring rounds to show and create round names table.
-    // A board that scores are entered into carries one round more than has been
-    // scored, the same round the edit pane offers - otherwise there would be no
-    // cell to click for the round about to be played.
+    // The table shows the rounds that have been scored, plus the ones the player
+    // has asked for with the add-round button and nobody has scored yet.
     const enterable = this.cellEntryEnabled();
-    const rounds = this.getRounds(seats, scoreProperty, this.nextRoundOffered() ? 1 : 0);
+    let rounds = this.getRounds(seats, scoreProperty);
+    const requested = Math.min(this.requestedRounds, this.roundLimit());
+    if(!this.totalsOnly && requested > rounds.length)
+      rounds = this.getRounds(seats, scoreProperty, requested - rounds.length);
     let numRounds = rounds.length;
     this.displayedRounds = [...rounds];
     if(showTotals)
@@ -1005,6 +1065,8 @@ export class Scoreboard extends Widget {
       }
     }
     this.numCols = numCols;
+    if(this.addRoundOffered(seats))
+      this.addRoundStrip(numCols, showTotals && this.get('playersInColumns'));
     this.domElement.style.cssText = mapAssetURLs(this.css());
     if(reopen)
       this.reopenEntrySurface(reopen);
