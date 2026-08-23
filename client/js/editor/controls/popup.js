@@ -2753,6 +2753,21 @@ function commonInfoTopic(topicName) {
       </pre>
     `, tutorial: 'functions-set' };
   }
+  if(topicName == 'SHIFT') {
+    return { info: `
+      <pre>
+      This function passes the contents of a circle of holders on: every entry hands its widgets to the next one and receives the widgets of the one before it. A seat hands on its hand, so the widgets end up owned by the seat they arrive at.
+
+      Parameters:
+
+      holders: holderID/seatID array - the holders and seats the widgets travel along, in that order (defaults to the hands of all seats a player sits on, in seat index order). A seat nobody sits on is skipped.
+      widgets: all/top/collection - which widgets of each entry are passed on: everything, the topmost widget only, or the widgets of a collection (defaults to all).
+      interval: number - how many places along each entry hands its widgets (defaults to 1).
+      direction: forward/backward/random - forward walks the holders in the given order, backward the other way round, random pairs them randomly (defaults to forward).
+      wrap: true/false - whether the last entry hands on to the first one; without it the widgets pile up in the last entry instead (defaults to true).
+      </pre>
+    `, tutorial: 'functions-shift' };
+  }
   if(topicName == 'SHUFFLE') {
     return { info: `
       <pre>

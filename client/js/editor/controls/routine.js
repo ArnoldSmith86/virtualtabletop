@@ -1182,6 +1182,32 @@ const routineOperationMetadata = {
     // ! is the one relation that takes a single operand (the current value)
     ignored: v=>v('relation') == '!' ? { value: 'ignored because ! only negates the current value' } : {}
   },
+  SHIFT: {
+    description: 'Pass what holders hold on around a circle',
+    // where the widgets travel is one slot rather than two ways of working: the
+    // entries are holders, seats, or - while nothing is written down - the hand
+    // of every seat somebody sits on, which is a value that slot shows in words
+    variants: [
+      { id: 'shift', label: 'Pass widgets on from holder to holder', template: 'Pass the contents of {holders} on to the next one{{interval}}{{direction}}{{wrap}}{{widgets}}' }
+    ],
+    clauses: [
+      { id: 'interval', label: 'n places along', template: ' but {interval} places along' },
+      { id: 'direction', label: 'which way round', template: ', {direction}' },
+      { id: 'wrap', label: 'stopping at the last one', template: ', {wrap}', add: { wrap: false } },
+      { id: 'widgets', label: 'only some of what they hold', active: v=>v('widgets') != 'all', add: { widgets: 'top' }, template: ', only {widgets}' }
+    ],
+    parameters: {
+      holders: { type: 'widgets', default: null, widgetType: 'holder', display: { 'null': "every occupied seat's hand" } },
+      // all and top are the two ways of saying it without naming a group, so they
+      // are the phrases the chip offers, with a group of widgets a popup away
+      widgets: { type: 'collection', default: 'all', menu: true, special: [ 'all', 'top' ], otherLabel: 'a named group of widgets…',
+        display: { 'all': 'all of them', 'top': 'the top widget', 'DEFAULT': 'the picked widgets' } },
+      interval: { type: 'number', default: 1 },
+      direction: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward',
+        display: { forward: 'in the order they come in', backward: 'the other way round', random: 'to a random other one' } },
+      wrap: { type: 'enum', values: [ true, false ], default: true, display: yesNo('wrapping around at the end', 'stopping at the last one') }
+    }
+  },
   SHUFFLE: {
     description: 'Shuffle widgets into another order',
     // shuffling is one thing an operation does, however it goes about it: the
@@ -4016,7 +4042,7 @@ function editorForOperation(operation) {
 // something"), not as the part of the engine they belong to.
 const routineOperationGroups = [
   { title: 'Pick widgets and work out values', funcs: [ 'SELECT', 'COUNT', 'GET', 'VAR', 'var' ] },
-  { title: 'Move and order widgets', funcs: [ 'MOVE', 'MOVEXY', 'RECALL', 'SWAPHANDS', 'SHUFFLE', 'SORT' ] },
+  { title: 'Move and order widgets', funcs: [ 'MOVE', 'MOVEXY', 'RECALL', 'SWAPHANDS', 'SHIFT', 'SHUFFLE', 'SORT' ] },
   { title: 'Add, change and remove widgets', funcs: [ 'SET', 'FLIP', 'ROTATE', 'LABEL', 'CANVAS', 'CLONE', 'DELETE', 'RESET' ] },
   { title: 'The game and its players', funcs: [ 'SCORE', 'TURN', 'TIMER' ] },
   { title: 'Talk to the players', funcs: [ 'AUDIO', 'INPUT', 'UPLOAD' ] },
