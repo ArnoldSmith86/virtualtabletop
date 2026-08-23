@@ -8,13 +8,28 @@ import { Widget } from './widget.js';
 // everybody at the table.
 const scoreEntryModes = [ 'auto', 'cell', 'keypad', 'type' ];
 
-// The keypad, row by row: the digit block with the corrections beside it.
+// The keypad, row by row: the digit block, with the corrections and the two
+// operators a score sheet is added up with beside it. A key whose face is not
+// what it types - the minus sign is drawn properly and types a hyphen - says so
+// in 'value'.
 const keypadKeys = [
-  [ { text: '7' }, { text: '8' }, { text: '9' }, { icon: 'backspace', action: 'delete', title: 'Delete the last digit' } ],
-  [ { text: '4' }, { text: '5' }, { text: '6' }, { text: '\u00b1', action: 'negate', title: 'Positive or negative' } ],
-  [ { text: '1' }, { text: '2' }, { text: '3' }, { text: 'C', action: 'clear', title: 'Clear' } ],
-  [ { text: '.' }, { text: '0' }, { icon: 'close', action: 'cancel', title: 'Cancel' }, { icon: 'check', action: 'enter', title: 'Enter the score' } ]
+  [ { text: '7' }, { text: '8' }, { text: '9' }, { icon: 'backspace', action: 'delete', title: 'Delete the last character' } ],
+  [ { text: '4' }, { text: '5' }, { text: '6' }, { text: '+', title: 'Add' } ],
+  [ { text: '1' }, { text: '2' }, { text: '3' }, { text: '\u2212', value: '-', title: 'Subtract, or a negative score' } ],
+  [ { text: '.' }, { text: '0' }, { text: 'C', action: 'clear', title: 'Clear' }, { icon: 'check', action: 'enter', title: 'Enter the score' } ]
 ];
+
+// What a key of a physical keyboard does on the open keypad, so that a player
+// on a device with both does not have to aim for the buttons. Everything the
+// keypad itself offers, and the comma that a numeric block types on a good many
+// layouts; anything else is left to the room.
+function keypadKeyFor(key) {
+  if(/^[0-9+-]$/.test(key))
+    return key;
+  if(key == '.' || key == ',')
+    return '.';
+  return { Enter: 'enter', Escape: 'cancel', Backspace: 'delete', Delete: 'clear', c: 'clear', C: 'clear' }[key] || null;
+}
 
 export class Scoreboard extends Widget {
   constructor(object, surface) {
@@ -46,6 +61,20 @@ export class Scoreboard extends Widget {
       borderRadius: 8,
       editPaneTitle: 'Set score'
     });
+
+    // mousehandling.js calls click() without the event, so the cell a press
+    // landed on is noted here and read when the click arrives. A press that
+    // misses the table notes nothing, so it falls back to the edit pane instead
+    // of reopening the cell that was pressed before it.
+    for(const event of [ 'mousedown', 'touchstart' ])
+      this.domElement.addEventListener(event, e=>this.pressedCellDOM = e.target.closest('td'));
+  }
+
+  applyRemove() {
+    // the surfaces are anchored in #roomArea rather than inside the widget, so
+    // removing the board does not take them with it
+    this.closeEntrySurface();
+    super.applyRemove();
   }
 
   applyDeltaToDOM(delta) {
@@ -113,6 +142,14 @@ export class Scoreboard extends Widget {
   // answer to a click.
   cellEntryEnabled() {
     return !!this.get('clickable') && !Array.isArray(this.get('clickRoutine'));
+  }
+
+  // Whether the table offers the round being scored now as an extra row. Only a
+  // board whose cells are entered into needs one - the edit pane picks the round
+  // it writes itself, so a board that asks for it keeps the table it has always
+  // had.
+  nextRoundOffered() {
+    return this.cellEntryEnabled() && this.get('scoreEntry') != 'cell';
   }
 
   // Which surface a cell opens. A board that names one gets it everywhere;
@@ -199,12 +236,13 @@ export class Scoreboard extends Widget {
     }
   }
 
-  // The cell the press that led to this click landed on. mousehandling.js calls
-  // click() without the event, so the table notes the cell on the way down and
-  // it is read here on the way up. A cell of a table that has been rebuilt since
-  // is not one of ours any more.
+  // The cell the press that led to this click landed on, read once: the press
+  // noted it on the way down, and a click no press of ours preceded - a hotkey,
+  // a CLICK operation - finds nothing here. A cell of a table that has been
+  // rebuilt since is not one of ours any more either.
   pressedCell() {
     const cell = this.pressedCellDOM;
+    this.pressedCellDOM = null;
     return cell && this.tableDOM && this.tableDOM.contains(cell) && this.cellAddress(cell) ? cell : null;
   }
 
@@ -283,11 +321,14 @@ export class Scoreboard extends Widget {
     }
   }
 
-  // What a player typed, as a number - including the arithmetic expressions
-  // that dragLimit and the grid conditions already speak ("10+15+8-5").
+  // What a player typed, as the value to write: a number - including the
+  // arithmetic expressions that dragLimit and the grid conditions already speak
+  // ("10+15+8-5") - or the empty string for an entry left empty, which is the
+  // erased cell the table renders for a round nobody has scored. Text that is
+  // not a score at all is null and is not written anywhere.
   parseScore(text) {
     text = String(text === undefined || text === null ? '' : text).trim();
-    return text === '' ? null : expressionNumber(text, _=>null, null);
+    return text === '' ? '' : expressionNumber(text, _=>null, null);
   }
 
   // --- the surfaces a score is entered on ----------------------------------
@@ -373,6 +414,15 @@ export class Scoreboard extends Widget {
     const title = div(header, 'scoreboardKeypadTitle');
     title.textContent = `${address.seat.get('player') || '-'} · ${this.roundName(address.round)}`;
     this.addSurfaceSwitch(header, 'type', cell, text);
+    // closing belongs with the title of the pad rather than among the keys,
+    // where a cross reads as an operator next to the ones that are
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'scoreEntryClose';
+    close.setAttribute('icon', 'close');
+    close.title = 'Close without entering a score';
+    close.addEventListener('click', _=>this.keypadPress('cancel'));
+    header.appendChild(close);
 
     const display = div(pad, 'scoreboardKeypadValue');
     display.textContent = text;
@@ -391,7 +441,7 @@ export class Scoreboard extends Widget {
           button.title = key.title;
         if(key.action)
           button.classList.add(key.action);
-        button.addEventListener('click', _=>this.keypadPress(key.action || key.text));
+        button.addEventListener('click', _=>this.keypadPress(key.action || key.value || key.text));
         keys.appendChild(button);
       }
     }
@@ -404,7 +454,19 @@ export class Scoreboard extends Widget {
     };
     for(const event of [ 'mousedown', 'touchstart' ])
       document.addEventListener(event, outside);
+    // a key the keypad answers to is consumed here, so that it types into the
+    // pad instead of reaching the hotkeys of the room behind it
+    const typed = e=>{
+      const key = this.entrySurface === surface && !e.ctrlKey && !e.metaKey && !e.altKey && keypadKeyFor(e.key);
+      if(!key)
+        return;
+      e.preventDefault();
+      e.stopPropagation();
+      this.keypadPress(key);
+    };
+    document.addEventListener('keydown', typed);
     surface.cleanup = _=>{
+      document.removeEventListener('keydown', typed);
       for(const event of [ 'mousedown', 'touchstart' ])
         document.removeEventListener(event, outside);
     };
@@ -421,20 +483,33 @@ export class Scoreboard extends Widget {
     if(key == 'enter') {
       const value = this.parseScore(surface.text);
       const seat = widgets.get(surface.seatID);
+      const address = seat && { seat, round: surface.round };
       this.closeEntrySurface();
-      if(value !== null && seat)
-        await this.setCellScore({ seat, round: surface.round }, value);
+      if(value !== null && address && String(value) !== this.cellText(address))
+        await this.setCellScore(address, value);
       return;
     }
-    if(key == 'clear')
-      surface.text = '';
-    else if(key == 'delete')
-      surface.text = surface.text.slice(0, -1);
-    else if(key == 'negate')
-      surface.text = surface.text.startsWith('-') ? surface.text.slice(1) : '-' + surface.text;
-    else if(surface.text.length < 12 && (key != '.' || !surface.text.includes('.')))
-      surface.text += key;
+    surface.text = this.keypadText(surface.text, key);
     surface.display.textContent = surface.text;
+  }
+
+  // What a key does to what has been typed so far. Operators do not stack, and
+  // only the minus sign opens an entry - that is a negative score - so the pad
+  // cannot produce anything expressionNumber refuses to read.
+  keypadText(text, key) {
+    if(key == 'clear')
+      return '';
+    if(key == 'delete')
+      return text.slice(0, -1);
+    if(key == '+' || key == '-') {
+      const base = text.replace(/[-+]$/, '');
+      return base === '' && key == '+' ? base : base + key;
+    }
+    if(text.length >= 12)
+      return text;
+    if(key == '.')
+      return /\.\d*$/.test(text) ? text : text + '.';
+    return text + key;
   }
 
   openCellInput(cell, address, text) {
@@ -479,8 +554,10 @@ export class Scoreboard extends Widget {
   // of the same player - the way a score sheet is filled in.
   async commitCellInput(surface, move) {
     const seat = widgets.get(surface.seatID);
-    if(this.entrySurface !== surface || !seat)
+    if(this.entrySurface !== surface)
       return;
+    if(!seat)
+      return this.closeEntrySurface();
     const address = { seat, round: surface.round };
     const value = this.parseScore(surface.text);
     const next = move && this.neighbourCell(surface, move);
@@ -697,10 +774,6 @@ export class Scoreboard extends Widget {
       intermediateDiv.className = 'scoreboardIntermediate';
       this.domElement.appendChild(intermediateDiv);
       intermediateDiv.appendChild(this.tableDOM);
-      // mousehandling.js calls click() without the event, so the cell a press
-      // landed on is noted here and read when the click arrives
-      for(const event of [ 'mousedown', 'touchstart' ])
-        this.tableDOM.addEventListener(event, e=>this.pressedCellDOM = e.target.closest('td'));
     } else {
       this.tableDOM.innerHTML = '';
     }
@@ -719,7 +792,7 @@ export class Scoreboard extends Widget {
     // a board that scores are entered into shows the next round as soon as the
     // current one is complete - otherwise there is no cell to click for it
     const enterable = this.cellEntryEnabled();
-    if(enterable && this.roundIsComplete(seats, rounds.length))
+    if(this.nextRoundOffered() && this.roundIsComplete(seats, rounds.length))
       rounds = this.getRounds(seats, scoreProperty, 1);
     let numRounds = rounds.length;
     this.displayedRounds = [...rounds];

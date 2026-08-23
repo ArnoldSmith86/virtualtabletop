@@ -107,6 +107,39 @@ describe('the cells of the table', () => {
     const board = scoreboard();
     expect(enterable(board)).toEqual([ 'seat1/total' ]);
   });
+
+  test('keep the table they have always had on a board that asks for the pane', () => {
+    seat('seat1', 1, [ 12 ]);
+    seat('seat2', 2, [ 9 ]);
+    // the pane picks the round it writes itself, so no extra row is offered -
+    // the cells are still addressed, so a click on one prefills the pane
+    const board = scoreboard({ scoreEntry: 'cell' });
+    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1' ]);
+  });
+});
+
+describe('the cell a press landed on', () => {
+  function press(element) {
+    element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+  }
+
+  test('is read once, so the click after it is the only one it answers', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard();
+    const cell = board.cellFor('seat1', 1);
+    press(cell);
+    expect(board.pressedCell()).toBe(cell);
+    // a hotkey or a CLICK operation reaches click() without a press of ours
+    expect(board.pressedCell()).toBe(null);
+  });
+
+  test('is forgotten by a press that missed the table', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard();
+    press(board.cellFor('seat1', 1));
+    press(board.domElement);
+    expect(board.pressedCell()).toBe(null);
+  });
 });
 
 describe('entering a score', () => {
@@ -132,13 +165,74 @@ describe('entering a score', () => {
     expect(seat1.get('score')).toBe(40);
   });
 
+  test('erases the round of a seat when the entry is left empty', async () => {
+    const seat1 = seat('seat1', 1, [ 12, 7 ]);
+    const board = scoreboard();
+    await board.setCellScore({ seat: seat1, round: 2 }, board.parseScore(''));
+    expect(seat1.get('score')).toEqual([ 12, '' ]);
+  });
+
   test('reads what was typed as a number, including arithmetic', () => {
     const board = scoreboard();
     expect(board.parseScore('42')).toBe(42);
     expect(board.parseScore('-7.5')).toBe(-7.5);
     expect(board.parseScore('10+15+8-5')).toBe(28);
-    expect(board.parseScore('')).toBe(null);
-    expect(board.parseScore('  ')).toBe(null);
+    // an empty entry erases the cell, text that is not a score writes nothing
+    expect(board.parseScore('')).toBe('');
+    expect(board.parseScore('  ')).toBe('');
     expect(board.parseScore('twelve')).toBe(null);
+  });
+
+  test('adds up what the keypad typed, without stacking operators', () => {
+    const board = scoreboard();
+    let text = '';
+    for(const key of [ '1', '0', '+', '+', '5', '.', '.', '2', '-', '3' ])
+      text = board.keypadText(text, key);
+    expect(text).toBe('10+5.2-3');
+    expect(board.parseScore(text)).toBe(12.2);
+  });
+
+  test('opens a keypad entry with a minus, which is a negative score, but not with a plus', () => {
+    const board = scoreboard();
+    expect(board.keypadText('', '-')).toBe('-');
+    expect(board.keypadText('', '+')).toBe('');
+    expect(board.parseScore(board.keypadText('-', '7'))).toBe(-7);
+  });
+
+  test('types into the open keypad from a physical keyboard', async () => {
+    const seat1 = seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ scoreEntry: 'keypad' });
+    board.openEntrySurface('keypad', board.cellFor('seat1', 1));
+    const press = key => document.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+    for(const key of [ '9', 'Backspace', '4', ',', '5', '+', '3' ])
+      press(key);
+    expect(document.querySelector('.scoreboardKeypadValue').textContent).toBe('4.5+3');
+    press('Enter');
+    await new Promise(resolve=>setTimeout(resolve, 0));
+    expect(seat1.get('score')).toEqual([ 7.5 ]);
+    expect(document.querySelector('.scoreboardKeypad')).toBe(null);
+  });
+
+  test('leaves a key the keypad has no use for to the room', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ scoreEntry: 'keypad' });
+    board.openEntrySurface('keypad', board.cellFor('seat1', 1));
+    const reaches = key => {
+      const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+      document.dispatchEvent(event);
+      return !event.defaultPrevented;
+    };
+    // a hotkey of a widget in the room still works, a digit types into the pad
+    expect(reaches('s')).toBe(true);
+    expect(reaches('5')).toBe(false);
+  });
+
+  test('takes its surface down with the board it belongs to', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard();
+    board.openEntrySurface('keypad', board.cellFor('seat1', 1));
+    expect(document.querySelector('.scoreboardKeypad')).not.toBe(null);
+    removeWidget('board');
+    expect(document.querySelector('.scoreboardKeypad')).toBe(null);
   });
 });

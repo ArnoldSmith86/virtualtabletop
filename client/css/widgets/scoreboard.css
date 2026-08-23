@@ -139,6 +139,13 @@
   font-weight: 700;
 }
 
+.scoreboardKeypadTitle {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .scoreboardKeypadValue {
   min-height: 28px;
   padding: 2px 6px;
@@ -185,21 +192,27 @@
   background-color: var(--positiveInput);
 }
 
-.scoreboardKeypadKeys > button.cancel {
+.scoreboardKeypadKeys > button.clear {
   background-color: var(--neutralInput);
 }
 
-button.scoreEntrySwitch {
+button.scoreEntrySwitch, button.scoreEntryClose {
   padding: 3px;
   margin: 0;
   opacity: 0.75;
 }
 
-button.scoreEntrySwitch:hover {
+/* the close of the pad is part of its title bar, not one more key to hit */
+button.scoreEntryClose {
+  background: none;
+  color: inherit;
+}
+
+button.scoreEntrySwitch:hover, button.scoreEntryClose:hover {
   opacity: 1;
 }
 
-button.scoreEntrySwitch::before {
+button.scoreEntrySwitch::before, button.scoreEntryClose::before {
   margin: 0;
   font-size: 18px;
   width: 18px;
