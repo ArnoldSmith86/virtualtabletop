@@ -3072,6 +3072,147 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
 
+// A "var" operation is the one kind of operation whose log entry is cut out of the string the
+// operation came from, so logging it is the only place in the routine engine that reads that
+// string again after the operation ran. This file is one of the two the production environment
+// workflow drives against a minified client, which is where that reference is at risk: a minified
+// name that shadows the operation string crashes the client instead of logging the wrong text.
+// The assertions after the summaries pin down the rest of what the panel renders - the empty state,
+// the failed marker, the problem text, the built-in variables and the Clear button.
+test('the Debug module logs each operation of a routine with its result', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: {
+      id: 'button',
+      type: 'button',
+      // randInt with a range of one, so the result is a fixed number. The three operations after it
+      // are arithmetic that the operation regex does not match, so they go through the other branch,
+      // which reads the operation string again next to the eval that evaluates the expression - once
+      // without and once with a variable in the expression, which is what decides whether the
+      // summary also shows the expression with the variables filled in, and once with an expression
+      // the eval throws on. SELECT and SET fill the collections and the delta of an operation, and
+      // the last one writes to a variable the engine puts into every routine by itself.
+      clickRoutine: [
+        'var roll = randInt 5 5',
+        'var calc = (1 + 2) * 3',
+        'var withVars = (${roll} + 2) * 3',
+        'var broken = ${roll} / (1 - 1) *',
+        { func: 'SELECT', property: 'id', value: 'button' },
+        { func: 'SET', property: 'text', value: 'rolled' },
+        'var thisID = 42'
+      ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft' } });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+
+  const emptyNote = Selector('.jeLogEmptyNote');
+  const operation = Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation');
+  // the header of a logged operation is its own expander, the details are in its nested block
+  const headerOf = op => op.child('div').nth(0);
+  const detailsOf = (op, name) => op.child('div').nth(1).child('.jeLogDetails').withText(name);
+
+  // a panel with nothing in it says how to fill it instead of showing an empty box
+  await t.expect(emptyNote.visible).ok();
+
+  await ClientFunction(() => {
+    // awaited so the assertions below see the finished log, but not returned: the result of a
+    // routine holds widget objects as soon as one fills the result collection
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  })();
+
+  await t
+    .expect(emptyNote.visible).notOk()
+    // the routine a log belongs to is named as "<widget> › <property>", and its expander turns red
+    // because one of its operations failed
+    .expect(Selector('#jeLog > .jeLog').child('div').nth(0).innerText).contains('button › clickRoutine')
+    .expect(Selector('#jeLog > .jeLog').child('div.jeRedExpander').exists).ok();
+
+  // the summary of a var operation is the operation with its leading "var " cut off, and the
+  // result is the value the variable ended up with
+  await t
+    .expect(Selector('#jeLog .jeLogSummary').nth(0).innerText).eql('roll = randInt 5 5')
+    .expect(Selector('#jeLog .jeLogResult').nth(0).innerText).eql('5')
+    .expect(Selector('#jeLog .jeLogSummary').nth(1).innerText).eql('calc = (1 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(1).innerText).eql('9')
+    .expect(Selector('#jeLog .jeLogSummary').nth(2).innerText).eql('withVars = (${roll} + 2) * 3 => (5 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(2).innerText).eql('21');
+
+  // an operation that threw says so next to its result, so "null" does not read as the answer
+  await t
+    .expect(operation.nth(3).find('.jeLogFailed').innerText).eql('failed')
+    .expect(operation.nth(3).find('.jeLogResult').innerText).eql('null')
+    .expect(operation.nth(0).find('.jeLogFailed').exists).notOk();
+
+  // its problem is one readable sentence rather than a JSON array of escaped strings - the wording
+  // of the SyntaxError itself differs between browsers, so only the sentence around it is checked
+  await t
+    .click(headerOf(operation.nth(3)))
+    .click(detailsOf(operation.nth(3), 'Problems').child('div').nth(0))
+    .expect(operation.nth(3).find('.jeLogProblems').innerText)
+      .match(/^The expression "5 \/ \(1 - 1\) \*" threw an exception: SyntaxError: .+\.$/);
+
+  // the variables the engine puts into every routine are behind their own expander, so the pane
+  // opens on the variables the routine itself works with
+  const rollState = detailsOf(operation.nth(0), 'Variables, collections and delta afterwards');
+  const builtInVariables = rollState.child('div').nth(1).child('.jeLogDetails').withText('Built-in variables');
+  await t
+    .click(headerOf(operation.nth(0)))
+    .click(rollState.child('div').nth(0))
+    .expect(rollState.child('div').nth(1).child('.jeLogVariables').innerText).eql('Variables afterwards\n  "roll": 5')
+    .click(builtInVariables.child('div').nth(0))
+    .expect(builtInVariables.find('.jeLogVariables').innerText).contains('playerName');
+
+  // a block with nothing in it is left out instead of printing its heading over an empty pane: a
+  // var operation touches no widget, so it has no delta, while the SET that follows it has one
+  await t
+    .expect(rollState.find('h3').withExactText('Variables afterwards').exists).ok()
+    .expect(rollState.find('h3').withExactText('Delta afterwards').exists).notOk()
+    .expect(detailsOf(operation.nth(5), 'Variables, collections and delta afterwards')
+      .find('h3').withExactText('Delta afterwards').exists).ok();
+  // a variable of an engine name that the routine assigned itself is one of the routine's own, so
+  // it is in the block that opens rather than behind the Built-in variables expander
+  const overriddenState = detailsOf(operation.nth(6), 'Variables, collections and delta afterwards');
+  await t
+    .click(headerOf(operation.nth(6)))
+    .click(overriddenState.child('div').nth(0))
+    .expect(overriddenState.child('div').nth(1).child('.jeLogVariables').innerText).contains('"thisID": 42');
+
+  const emptyHeadings = await ClientFunction(() => {
+    let count = 0;
+    document.querySelectorAll('#jeLog h3').forEach(h=>{ if(h.textContent.trim() == '') ++count; });
+    return count;
+  })();
+  await t.expect(emptyHeadings).eql(0);
+
+  // the filter marks the operations whose summary contains what was typed and dims the rest
+  await t
+    .typeText('#jeLogFilter', 'withVars')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).ok()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).ok()
+    .selectText('#jeLogFilter')
+    .pressKey('delete')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).notOk()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).notOk();
+
+  // the Clear button is disabled as long as the log clears itself, and says which of the two it is
+  await t
+    .expect(Selector('#clearLogButton').hasAttribute('disabled')).ok()
+    .expect(Selector('#clearLogButton').getAttribute('title')).contains('cleared automatically')
+    .click('#autoClearLog')
+    .expect(Selector('#clearLogButton').hasAttribute('disabled')).notOk()
+    .expect(Selector('#clearLogButton').getAttribute('title')).contains('Empty the log now')
+    // emptying the log brings the note back - it is a sibling of the log, shown while that is empty
+    .click('#clearLogButton')
+    .expect(emptyNote.visible).ok();
+
+  await setEditorState(null);
+});
+
 // drags a selection rectangle around the given widgets - the events go to the
 // window, where the editor listens for them, so they need no element to start
 // from. A rectangle around a single widget is treated like a click on it, which
