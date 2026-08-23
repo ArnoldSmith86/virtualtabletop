@@ -64,6 +64,7 @@ beforeAll(() => {
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine', 'aiChangedOperations',
     'aiRecordResult', 'aiForgetResult', 'aiForgetAllResults', 'aiMergeProblems', 'aiWithoutInlineData', 'AI_POLL_INTERVAL',
+    'aiRoutineDeltaReceived',
     'AI_PROMPT_EXAMPLES'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
@@ -4397,6 +4398,21 @@ describe('AI routine assistant', () => {
     editor.render();
     expect(editor.domElement.querySelector('.ai-routine-note-undo')).toBe(null);
     expect(editor.domElement.querySelector('.ai-routine-note')).not.toBe(null); // the marks stay
+  });
+
+  test('a change elsewhere in the room takes the undo offer back where it stands', () => {
+    const { editor } = withResult();
+    document.getElementById('editor').append(editor.domElement); // the panel, on screen
+    try {
+      // a change to another widget does not re-render this panel, so the offer has
+      // to be taken back by the delta itself
+      window.undoProtocol.push({ delta: { s: {} } });
+      aiRoutineDeltaReceived();
+      expect(editor.domElement.querySelector('.ai-routine-note-undo')).toBe(null);
+      expect(editor.domElement.querySelector('.ai-routine-note')).not.toBe(null);
+    } finally {
+      editor.domElement.remove();
+    }
   });
 
   test('undo pressed after the room moved on takes nothing back', () => {

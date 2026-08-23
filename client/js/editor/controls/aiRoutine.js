@@ -383,12 +383,13 @@ function aiShowResultNote(container, routineEditor) {
   // one press of undo only puts back what the assistant wrote for as long as
   // nothing has been changed since - and the note is where the offer belongs,
   // rather than sending the reader to look for the toolbar
-  if(aiUndoStillAvailable(record, routine)) {
+  note.aiUndoStillAvailable = _=>aiUndoStillAvailable(record, routineEditor.routine);
+  if(note.aiUndoStillAvailable()) {
     const actions = div(note, 'ai-routine-note-actions');
     const undo = button(actions, 'Undo - put the routine back', _=>{
       // the panel is not re-rendered for every change in the room, so what was
       // true when this was drawn is checked again before it is acted on
-      if(!aiUndoStillAvailable(record, routineEditor.routine)) {
+      if(!note.aiUndoStillAvailable()) {
         actions.textContent = 'Something else has been changed since, so undo would take that back instead of this routine.';
         actions.className = 'ai-routine-note-warning';
         return;
@@ -421,6 +422,17 @@ function aiShowResultNote(container, routineEditor) {
   note.append(dismiss);
   container.insertBefore(note, routineEditor.domElement);
   return note;
+}
+
+// The properties panel is only rebuilt for changes to the widget it is showing,
+// so an offer that stops being true because something else was changed has to be
+// taken back where it stands.
+function aiRoutineDeltaReceived() {
+  for(const note of document.querySelectorAll('.ai-routine-note')) {
+    const actions = note.querySelector('.ai-routine-note-actions');
+    if(actions && note.aiUndoStillAvailable && !note.aiUndoStillAvailable())
+      actions.remove();
+  }
 }
 
 // Bring what was just written on screen. The routine can be rendered far below

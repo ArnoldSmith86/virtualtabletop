@@ -335,6 +335,9 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  // what the assistant wrote is only one press of undo away for as long as it is
+  // the room's latest change, and this is a change
+  aiRoutineDeltaReceived();
 }
 
 function receiveStateFromServer(state) {
