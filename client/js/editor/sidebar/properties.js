@@ -1325,6 +1325,7 @@ const editorPropertyHints = {
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
+  scoreEntry: 'How a player enters a score after clicking a cell. Automatic gives a keypad to a touch device and typing in the cell to a keyboard, and lets each player switch.',
   scoreProperty: 'The seat property recorded as the score for each round.',
   playersInColumns: 'Put players in columns instead of rows.',
   showTotals: 'Add a total across all recorded rounds.',
@@ -8649,6 +8650,11 @@ class PropertiesModule extends SidebarModule {
     // --- Score: where scores come from and how they total up ---
     this.addAppearanceSubTitle('Score');
     new TextInput(this, widget, 'Score property', { property: 'scoreProperty', hint: editorPropertyHints.scoreProperty }).render(this.moduleDOM);
+    new SelectInput(this, widget, 'Score entry', {
+      property: 'scoreEntry',
+      hint: editorPropertyHints.scoreEntry,
+      choices: [ { value: 'auto', text: 'Automatic' }, { value: 'type', text: 'Type in the cell' }, { value: 'keypad', text: 'Keypad' }, { value: 'cell', text: 'Edit pane' } ]
+    }).render(this.moduleDOM);
 
     // show totals, with the totals label revealed only when they are shown
     const totalsRow = div(this.moduleDOM, 'propertyInlineRow');
@@ -8705,7 +8711,7 @@ class PropertiesModule extends SidebarModule {
 
     // 'seats' is curated by the Seats section in all three of its shapes
     this.renderOtherPropertiesSection(widget, [
-      'seats', 'scoreProperty', 'showTotals', 'totalsLabel', 'currentRound',
+      'seats', 'scoreProperty', 'scoreEntry', 'showTotals', 'totalsLabel', 'currentRound',
       'roundLabel', 'rounds', 'showAllRounds',
       'playersInColumns', 'sortField', 'sortAscending', 'showPlayerColors', 'verticalHeader',
       'showAllSeats', 'autosizeColumns', 'firstColWidth', 'editPaneTitle'

@@ -83,3 +83,130 @@
     bottom: unset;
   }
 }
+
+/* A cell a score can be entered into. Cells are addressed with data-seat and
+   data-round (data-total for the totals column) whether or not they can be
+   entered, so a game can style a single player or round from its own CSS. */
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell {
+  cursor: pointer;
+}
+
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell:hover,
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell.entering {
+  box-shadow: inset 0 0 0 2px var(--VTTblue);
+}
+
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell > input.scoreCellInput {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: -1px;
+  padding: 0;
+  border: none;
+  outline: 2px solid var(--VTTblue);
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  text-align: right;
+}
+
+/* The keypad and the button that switches surfaces are children of #roomArea
+   rather than of the table: they stay thumb-sized whatever the board is scaled
+   to, and they are not clipped by the scrolling table. */
+.scoreboardKeypad, .scoreEntrySwitchBar {
+  position: absolute;
+  z-index: 3;
+}
+
+.scoreboardKeypad {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--modalBackgroundColor);
+  border: 1px solid var(--modalBorderColor);
+  box-shadow: 0 4px 16px #00000066;
+  color: var(--overlayFontColor);
+}
+
+.scoreboardKeypadHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.scoreboardKeypadValue {
+  min-height: 28px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 22px;
+  line-height: 28px;
+  text-align: right;
+}
+
+/* an empty entry shows what the cell holds now, so the keypad says what it is
+   about to replace */
+.scoreboardKeypadValue:empty::before {
+  content: attr(data-current);
+  opacity: 0.4;
+}
+
+.scoreboardKeypadKeys {
+  display: grid;
+  grid-template-columns: repeat(4, 48px);
+  gap: 4px;
+}
+
+.scoreboardKeypadKeys > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  background-color: var(--VTTblue);
+}
+
+.scoreboardKeypadKeys > button[icon] {
+  padding-right: 0;
+}
+
+.scoreboardKeypadKeys > button[icon]::before {
+  margin: 0;
+}
+
+.scoreboardKeypadKeys > button.enter {
+  background-color: var(--positiveInput);
+}
+
+.scoreboardKeypadKeys > button.cancel {
+  background-color: var(--neutralInput);
+}
+
+button.scoreEntrySwitch {
+  padding: 3px;
+  margin: 0;
+  opacity: 0.75;
+}
+
+button.scoreEntrySwitch:hover {
+  opacity: 1;
+}
+
+button.scoreEntrySwitch::before {
+  margin: 0;
+  font-size: 18px;
+  width: 18px;
+}
+
+/* an overlay is the top thing on screen: the keypad steps aside for it rather
+   than staying in front of it */
+body.overlayActive .scoreboardKeypad, body.overlayActive .scoreEntrySwitchBar {
+  display: none;
+}
