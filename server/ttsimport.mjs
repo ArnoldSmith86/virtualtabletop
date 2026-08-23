@@ -1,9 +1,8 @@
-import fs from 'fs';
-
 import CRC32 from 'crc-32';
 import { BSON } from 'bson';
 
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
 import Zip from './zip.mjs';
 
@@ -1093,7 +1092,7 @@ async function storeThumbnail(url) {
     const content = await fetchBuffer(request, { signal: AbortSignal.timeout(15000) }, 20000000);
     const asset = `${CRC32.buf(content)}_${content.length}`;
     if(!Config.resolveAsset(asset))
-      fs.writeFileSync(`${Config.directory('assets')}/${asset}`, content);
+      FileWriter.writeFileSync(`${Config.directory('assets')}/${asset}`, content);
     return `/assets/${asset}`;
   } catch(e) {
     Logging.log(`TTS import: could not store the workshop thumbnail ${url}: ${e.toString()}`);

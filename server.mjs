@@ -9,6 +9,7 @@ import CRC32 from 'crc-32';
 import WebSocket  from './server/websocket.mjs';
 import FileLoader from './server/fileloader.mjs';
 import FileUpdater from './server/fileupdater.mjs';
+import FileWriter from './server/filewriter.mjs';
 import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
@@ -353,7 +354,7 @@ MinifyHTML().then(function(result) {
       customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
       customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
     }
-    fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
+    FileWriter.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
   });
 
@@ -442,7 +443,7 @@ MinifyHTML().then(function(result) {
 
       const newLink = `/s/${Math.random().toString(36).substring(3, 11)}`;
       sharedLinks[newLink] = target;
-      fs.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
+      FileWriter.writeFileSync(savedir + '/shares.json', JSON.stringify(sharedLinks));
       res.send(Config.get('urlPrefix') + newLink.replace(/^\/s\//, '/game/'));
     }).catch(next);
   });
@@ -547,7 +548,7 @@ MinifyHTML().then(function(result) {
       const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
       const filename = `/${CRC32.buf(content)}_${content.length}`;
       if(!Config.resolveAsset(filename.substr(1)))
-        fs.writeFileSync(assetsdir + filename, content);
+        FileWriter.writeFileSync(assetsdir + filename, content);
       res.send(`/assets${filename}`);
     } catch(e) {
       res.status(404).send('Downloading external asset failed.');
@@ -557,7 +558,7 @@ MinifyHTML().then(function(result) {
   router.put('/asset', express.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!Config.resolveAsset(filename.substr(1)))
-      fs.writeFileSync(assetsdir + filename, req.body);
+      FileWriter.writeFileSync(assetsdir + filename, req.body);
     res.send(`/assets${filename}`);
   });
 
