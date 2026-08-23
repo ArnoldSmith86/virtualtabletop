@@ -127,7 +127,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1783909631869,
+      "lastUpdate": 1787464636966,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -305,7 +305,7 @@
     "movable": false,
     "movableInEdit": false,
     "width": 950,
-    "html": "<b>choose</b>: Using a <i>choose</i> field adds additional complexity since each player may be presented different options and each selection may result in a collection of different widgets. Player specific properties can be keyed by a numeric index in the player array. This works for both the options the player sees and the collection returned from the player's selections. In the button above, note the use of objects with numbered keys for the <i>source</i> and <i>collection</i> parameters. The numbers correspond to the position in the <i>${activePlayers}</i> array and not the seat index. Sit in the first 2 seats above and watch how each player selectes from their own cards to have one card swap between them. To move entire hands around, use the <b>SWAPHANDS</b> function.",
+    "html": "<b>choose</b>: Using a <i>choose</i> field adds additional complexity since each player may be presented different options and each selection may result in a collection of different widgets. Player specific properties can be keyed by a numeric index in the player array. This works for both the options the player sees and the collection returned from the player's selections. In the button above, note the use of objects with numbered keys for the <i>source</i> and <i>collection</i> parameters. The numbers correspond to the position in the <i>${activePlayers}</i> array and not the seat index. Sit in the first 2 seats above and watch how each player selectes from their own cards to have one card swap between them. To move entire hands around, use the <b>SHIFT</b> function.",
     "x": -100
   },
   "75g0P": {
