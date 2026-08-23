@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 23,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Functions - SCORE",
       "image": "/assets/-982898800_4351",
@@ -18,12 +24,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1749068709593,
+      "lastUpdate": 1787512878790,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "seat1": {
@@ -119,7 +126,7 @@
     "layer": -3,
     "z": 126,
     "css": "font-size: 22px; ",
-    "text": "SCORE works in conjunction with the scoreboard widget. Clicking on a scoreboard allows manual entry of scores.  SCORE is a function to automate the setting, increasing, or decreasing scores. The function works on individual seats, arrays of seats, and with teams. The buttons in this room work with the label below to change the score by an amount you choose. For the sake of simplicity, the value in the label will be the amount the first player changes.  Each player after that will be changed by an amount equal to the label value plus the player's seat number."
+    "html": "SCORE works in conjunction with the <a href='https://virtualtabletop.io/tutorial/types-scoreboard'>scoreboard widget</a>. Clicking on a scoreboard allows manual entry of scores, but that is disabled in this tutorial.  SCORE is a function to automate the setting, increasing, or decreasing scores. The function works on individual seats, arrays of seats, and with teams. The buttons in this room work with the label below to change the score by an amount you choose. For the sake of simplicity, the value in the label will be the amount the first player changes.  Each player after that will be changed by an amount equal to the label value plus the player's seat number."
   },
   "header": {
     "id": "header",
@@ -165,7 +172,8 @@
       "Score"
     ],
     "showTotals": false,
-    "showAllRounds": true
+    "showAllRounds": true,
+    "clickable": false
   },
   "comment3": {
     "id": "comment3",
@@ -426,7 +434,8 @@
       ]
     },
     "scoreProperty": "scoreDemo3",
-    "movable": false
+    "movable": false,
+    "clickable": false
   },
   "scoreboard2": {
     "type": "scoreboard",
@@ -443,7 +452,8 @@
       "seat4"
     ],
     "currentRound": 3,
-    "movable": false
+    "movable": false,
+    "clickable": false
   },
   "button7": {
     "type": "button",
@@ -980,7 +990,8 @@
     "seats": [
       "seat9",
       "seat10"
-    ]
+    ],
+    "clickable": false
   },
   "button17": {
     "type": "button",

@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 20,
+    "version": 23,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -18,15 +21,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1768669357838,
+      "lastUpdate": 1787513918368,
       "similarDesigner": "",
-      "players": "1",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "Totals and Teams",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "seat1": {
@@ -182,7 +183,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard sets up 2 teams with 4 players each. Each round displays the sum of the scores for the seats in that team and the total of all rounds is displayed at the bottom.",
+    "text": "This scoreboard sets up 2 teams with 4 players each. Each round displays the sum of the scores for the seats in that team and the total of all rounds is displayed at the bottom. When using team scoring, clicking an individual cell is not available since there is no direct link to a specific seat.",
     "layer": -2
   },
   "comment6": {

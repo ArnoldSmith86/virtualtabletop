@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 23,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -18,15 +21,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1787461200000,
+      "lastUpdate": 1787513918360,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Basic",
       "language": "en-US",
-      "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "seat1": {
@@ -154,13 +155,12 @@
   "overview": {
     "id": "overview",
     "x": 108,
-    "y": 114,
+    "y": 74,
     "width": 1400,
     "height": 150,
     "layer": -3,
     "z": 125,
     "css": "font-size: 25px; ",
-    "text": "Scoreboard uses a property in seats to display numerical information in table form and total those numbers. Working in conjunction with routines and the SCORE function (shown in a different tutorial), the property on the seat can be updated and cause real-time changes to the scoreboard data. This room shows most of the options available when using scoreboards. The seats along the left side are pre-filled with player and score information to populate the data on the scoreboards in this room. Use the JSON Editor (ctrl-J) to look in the seats and scoreboards to see how missing or non-numeric data is handled.",
     "movable": false,
     "movableInEdit": false,
     "clickRoutine": [
@@ -172,7 +172,8 @@
           "dummy2": "${PROPERTY bids}"
         }
       }
-    ]
+    ],
+    "html": "Scoreboard uses a property in seats to display numerical information in table form and total those numbers. Working in conjunction with routines and the <a href='https://virtualtabletop.io/tutorial/functions-score'>SCORE function</a> tutorial, the property on the seat can be updated and cause real-time changes to the scoreboard data. This room shows most of the options available when using scoreboards. The seats along the left side are pre-filled with player and score information to populate the data on the scoreboards in this room. Use the JSON Editor (ctrl-J) to look in the seats and scoreboards to see how missing or non-numeric data is handled. Depending on the configuration, some scoreboards will have a &quot+ Round&quot button added to allow players to add another round row or column."
   },
   "header": {
     "id": "header",
