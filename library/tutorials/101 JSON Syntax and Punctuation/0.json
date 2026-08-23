@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1787509626505,
+      "lastUpdate": 1787511031276,
       "showName": false,
       "skill": "",
       "description": "",
@@ -184,7 +184,7 @@
   "text1": {
     "id": "text1",
     "x": 4,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -207,7 +207,7 @@
   "text2": {
     "id": "text2",
     "x": 325,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 121,
     "movable": false,
@@ -221,7 +221,7 @@
   "text3": {
     "id": "text3",
     "x": 651,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -234,7 +234,7 @@
   "text4": {
     "id": "text4",
     "x": 964,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -248,7 +248,7 @@
   "text5": {
     "id": "text5",
     "x": 1294,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 9732,
     "movable": false,

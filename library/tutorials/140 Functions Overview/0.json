@@ -27,7 +27,7 @@
   "text1": {
     "id": "text1",
     "x": 4,
-    "y": 552,
+    "y": 536,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -35,13 +35,13 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the button above in the JSON Editor menu. Each type of routine is there with a brief comment about how to trigger it. The button itself does nothing. Routines are listed in alphabetical order in the list of widget properties; the Edit Widgets menu groups them in Automations instead. See the <a href='https://virtualtabletop.io/tutorial/operations-routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here.",
+    "html": "Look at the button above in the JSON Editor menu. Each type of routine is there with a brief comment about how to trigger it. The button itself does nothing. Routines are listed in alphabetical order in the list of widget properties. The Edit Widgets menu groups them in Automations instead. See the <a href='https://virtualtabletop.io/tutorial/operations-routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here.",
     "height": 445
   },
   "text2": {
     "id": "text2",
     "x": 325,
-    "y": 552,
+    "y": 536,
     "width": 300,
     "z": 121,
     "movable": false,
@@ -55,7 +55,7 @@
   "text3": {
     "id": "text3",
     "x": 651,
-    "y": 552,
+    "y": 536,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -69,7 +69,7 @@
   "text4": {
     "id": "text4",
     "x": 964,
-    "y": 552,
+    "y": 536,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -83,7 +83,7 @@
   "text5": {
     "id": "text5",
     "x": 1294,
-    "y": 552,
+    "y": 536,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -95,7 +95,7 @@
     "height": 445
   },
   "_meta": {
-    "version": 21,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -108,7 +108,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1787509626505,
+      "lastUpdate": 1787511685404,
       "showName": false,
       "skill": "",
       "description": "",

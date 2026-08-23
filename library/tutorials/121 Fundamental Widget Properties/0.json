@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1787509626505,
+      "lastUpdate": 1787512070700,
       "showName": false,
       "skill": "",
       "description": "",
@@ -104,7 +104,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above is at 95 (x) and 402 (y). It does not have a parent so those positions are relative to the room 0,0. The coordinates can be changed in the <b>X</b> and <b>Y</b> fields under Position in the Edit Widgets menu, in the JSON Editor menu, or using automation. Trying changing the number in the <b>x</b> or <b>y</b> properties. Then click the button to change its position by 10 pixels per click in both the x and y directions.",
+    "html": "The button above is at 95 (x) and 402 (y). It does not have a parent so those positions are relative to the room 0,0. The coordinates can be changed in the <b>X</b> and <b>Y</b> fields under Position in the Edit Widgets menu, in the JSON Editor menu, or using automation. Try changing the number in the <b>x</b> or <b>y</b> properties. Then click the button to change its position by 10 pixels per click in both the x and y directions.",
     "layer": -2
   },
   "button1": {

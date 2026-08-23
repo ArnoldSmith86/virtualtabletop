@@ -27,7 +27,7 @@
   "text1": {
     "id": "text1",
     "x": 4,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -40,7 +40,7 @@
   "text2": {
     "id": "text2",
     "x": 325,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 121,
     "movable": false,
@@ -53,7 +53,7 @@
   "text3": {
     "id": "text3",
     "x": 651,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -61,12 +61,12 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the basic widget above in the JSON Editor menu. Colors are important indicators. Gray shows the property value is the default for that widget type. Yellow is used for property names (and object keys). Orange is used for custom properties. Those store data added by designer or by automation for routines; they do not directly affect widgets. The Edit Widgets menu has no colors; custom properties are under <b>Other properties</b>. For more about the colors, see (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#editing-widgets'>Editing widgets</a>)."
+    "html": "Look at the basic widget above in the JSON Editor menu. Colors are important indicators. Gray shows the property value is the default for that widget type. Yellow is used for property names (and object keys). Orange is used for custom properties. Those store data added by designer or by automation for routines; they do not directly affect widgets. For more about the colors, see (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#editing-widgets'>Editing widgets</a>). The Edit Widgets menu has no colors; custom properties are under <b>Other properties</b>. "
   },
   "text4": {
     "id": "text4",
     "x": 964,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -79,7 +79,7 @@
   "text5": {
     "id": "text5",
     "x": 1294,
-    "y": 552,
+    "y": 502,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -87,10 +87,10 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the seat's JSON in the JSON Editor menu. Put the cursor on the <b>id</b> line. On the right below `seat` is a list of properties in clickable buttons. Those are seat properties not yet on the widget. Click some: they are added with default values and the buttons disappear. Delete a property in the JSON and the button reappears. Lower on the right, any-widget properties work the same way. The Edit Widgets menu instead has curated fields plus an <b>Other properties</b> box for any property name."
+    "html": "Look at the seat's JSON in the JSON Editor menu. Put the cursor on the <b>id</b> line. On the right side below `seat` is a list of properties in clickable buttons. Those are seat properties not yet on the widget. Click some: they are added with default values and the buttons disappear. Delete a property in the JSON and the button reappears. Lower on the right, any-widget properties work the same way. The Edit Widgets menu instead has curated fields plus an <b>Other properties</b> box for any property name."
   },
   "_meta": {
-    "version": 19,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -103,7 +103,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1787509626505,
+      "lastUpdate": 1787511576508,
       "showName": false,
       "skill": "",
       "description": "",
@@ -116,13 +116,14 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "basic3": {
     "id": "basic3",
     "x": 738,
-    "y": 435,
+    "y": 385,
     "text": "Basic widget",
     "movable": false,
     "customNumber": -10.8,
@@ -155,7 +156,7 @@
     "type": "button",
     "id": "button1",
     "x": 95,
-    "y": 402,
+    "y": 352,
     "z": 22841,
     "clickRoutine": [],
     "text": "DEAL"
@@ -164,7 +165,7 @@
     "type": "dice",
     "id": "dice1",
     "x": 427,
-    "y": 423,
+    "y": 373,
     "z": 1,
     "faces": [
       1,
@@ -180,7 +181,7 @@
     "type": "button",
     "id": "button4",
     "x": 1062,
-    "y": 402,
+    "y": 352,
     "z": 22840,
     "text": "Read\nOnly",
     "clickRoutine": [
@@ -232,6 +233,6 @@
     "type": "seat",
     "id": "seat1",
     "x": 1347,
-    "y": 410
+    "y": 360
   }
 }
