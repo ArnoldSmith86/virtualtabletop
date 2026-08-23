@@ -26,6 +26,27 @@
   display: inline-flex;
 }
 
+/* The Debug module's controls act on the log right below them, which starts at the left edge of the
+   panel, so they are laid out as a row that starts there rather than inheriting the right-aligned
+   default - that would leave the filter field most of a screen away from the tree it filters. The
+   label is a flex item, so a narrow panel wraps it as a block instead of orphaning its last word. */
+.editorModule.pest_control .buttonBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  text-align: left;
+}
+
+.editorModule.pest_control .buttonBar #jeLogFilter {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.editorModule.pest_control .buttonBar #clearLogButton {
+  margin-left: auto;
+}
+
 /* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
    explanation of why it is disabled - sits next to it instead of somewhere further up the panel. It wraps
    because that explanation is a sentence: in a narrow panel it was squeezed into a 40px wide column of
