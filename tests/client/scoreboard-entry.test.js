@@ -141,6 +141,39 @@ describe('the cell a press landed on', () => {
     press(board.domElement);
     expect(board.pressedCell()).toBe(null);
   });
+
+  // committing a cell that was typed into rebuilds the table, which happens
+  // between the press and the click when the commit is a click on another cell
+  test('survives the table being rebuilt under it', () => {
+    seat('seat1', 1, [ 12 ]);
+    seat('seat2', 2, []);
+    const board = scoreboard();
+    const cell = board.cellFor('seat2', 1);
+    press(cell);
+    board.updateTable();
+    const found = board.pressedCell();
+    expect(found).not.toBe(cell);
+    expect(board.cellAddress(found)).toEqual({ seat: widgets.get('seat2'), round: 1 });
+  });
+
+  test('survives it for a computed total as well', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard();
+    press(cells(board).find(td=>td.dataset.seat == 'seat1' && td.dataset.total !== undefined));
+    board.updateTable();
+    const found = board.pressedCell();
+    expect(found.dataset.seat).toBe('seat1');
+    expect(found.dataset.total).toBe('');
+  });
+
+  test('is gone when the rebuilt table no longer has it', () => {
+    seat('seat1', 1, [ 12 ]);
+    seat('seat2', 2, [ 7 ]);
+    const board = scoreboard();
+    press(board.cellFor('seat2', 1));
+    board.applyDelta({ seats: [ 'seat1' ] });
+    expect(board.pressedCell()).toBe(null);
+  });
 });
 
 describe('entering a score', () => {

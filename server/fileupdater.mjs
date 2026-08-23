@@ -1,6 +1,6 @@
 import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
 
-export const VERSION = 22;
+export const VERSION = 23;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -135,6 +135,7 @@ function updateProperties(properties, v, globalProperties) {
   v<17 && v17MaterialSymbols(properties);
   v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
   v<22 && v22DragLimitNullSides(properties);
+  v<23 && v23ScoreboardEntryPane(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -616,4 +617,14 @@ function v22DragLimitNullSides(properties) {
   for(const key of [ 'minX', 'maxX', 'minY', 'maxY' ])
     if(limit[key] === null)
       limit[key] = 0;
+}
+
+// A click on a scoreboard always opened the edit pane, and the table only ever
+// showed the rounds that had been scored. Both are what scoreEntry 'pane' asks
+// for, while the new default 'auto' types into the clicked cell or opens the
+// keypad and carries a row for the round about to be played - so a board
+// written before the property existed says what it always did.
+function v23ScoreboardEntryPane(properties) {
+  if(properties.type == 'scoreboard' && properties.scoreEntry === undefined)
+    properties.scoreEntry = 'pane';
 }

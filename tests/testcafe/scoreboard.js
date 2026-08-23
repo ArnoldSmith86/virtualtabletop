@@ -6,8 +6,8 @@ setupTestEnvironment();
 
 // A board of two seats over two named rounds, so that every cell is in the
 // table from the start and can be addressed by the seat and round it holds.
-async function roomWithBoard(t, board={}, scores={ seat1: [ 12, 7 ], seat2: [ 9, 11 ] }) {
-  const version = (await getMeta()).version;
+async function roomWithBoard(t, board={}, scores={ seat1: [ 12, 7 ], seat2: [ 9, 11 ] }, savedAt) {
+  const version = savedAt || (await getMeta()).version;
   await setRoomState({
     _meta: { version },
     seat1: { id: 'seat1', type: 'seat', index: 1, player: 'Alice', score: scores.seat1 },
@@ -59,6 +59,24 @@ test('An entry left empty erases the score again', async t => {
     .expect(Selector('#w_board input.scoreCellInput').value).eql('')
     .pressKey('enter');
   await t.expect((await scores()).seat1).eql([ '', 7 ]);
+});
+
+test('Clicking straight from a changed cell into another one enters that cell', async t => {
+  await t.resizeWindow(1280, 800);
+  await roomWithBoard(t);
+  // leaving the first cell commits it, which rebuilds the table - and that
+  // happens between the press on the second cell and the click it becomes
+  await t
+    .click(cell('seat1', 1))
+    .typeText('#w_board input.scoreCellInput', '99', { replace: true })
+    .click(cell('seat2', 1))
+    .expect(Selector('#w_board td.scoreCell[data-seat="seat2"][data-round="1"] input').exists).ok()
+    .expect(Selector('#buttonInputOverlay').visible).notOk();
+  await t.expect((await scores()).seat1).eql([ 99, 7 ]);
+  await t
+    .typeText('#w_board input.scoreCellInput', '3', { replace: true })
+    .pressKey('enter');
+  await t.expect((await scores()).seat2).eql([ 3, 11 ]);
 });
 
 test('Escape leaves the score the cell had', async t => {
@@ -160,6 +178,23 @@ test('The wheel scrolls a scoreboard that has a scrollbar instead of zooming the
   // default says - over the scrolling table it leaves it to the browser
   await t.expect(await wheelOver('#w_board .scoreboardIntermediate')).notOk();
   await t.expect(await wheelOver('#roomArea')).ok();
+});
+
+// The version a scoreboard was last saved at without the scoreEntry property,
+// which is what every existing game is.
+const beforeScoreEntry = 22;
+
+test('A board saved before scoreEntry existed keeps the edit pane it was written for', async t => {
+  await t.resizeWindow(1280, 800);
+  await roomWithBoard(t, {}, undefined, beforeScoreEntry);
+  // the file updater writes 'pane' into a board that predates the property, so
+  // a click on a cell opens what it always opened
+  await t
+    .click(cell('seat1', 1))
+    .expect(Selector('#buttonInputOverlay').visible).ok()
+    .expect(Selector('#w_board input.scoreCellInput').exists).notOk()
+    .click('#buttonInputCancel');
+  await t.expect((await getStateObject()).board.scoreEntry).eql('pane');
 });
 
 test('The total of a player opens the pane on that player, and an empty value erases', async t => {

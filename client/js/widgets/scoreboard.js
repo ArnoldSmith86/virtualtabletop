@@ -67,7 +67,7 @@ export class Scoreboard extends Widget {
     // misses the table notes nothing, so it falls back to the edit pane instead
     // of reopening the cell that was pressed before it.
     for(const event of [ 'mousedown', 'touchstart' ])
-      this.domElement.addEventListener(event, e=>this.pressedCellDOM = e.target.closest('td'));
+      this.domElement.addEventListener(event, e=>this.notePressedCell(e.target.closest('td')));
   }
 
   applyRemove() {
@@ -244,14 +244,36 @@ export class Scoreboard extends Widget {
     }
   }
 
+  // A press notes the cell it landed on, both as the node and as the seat and
+  // round that node showed. The node alone is not enough: committing a cell
+  // that was typed into rebuilds the table, and clicking straight from it into
+  // another cell does exactly that between the press and the click.
+  notePressedCell(cell) {
+    this.pressedCellDOM = cell;
+    this.pressedCellKey = cell && cell.dataset.seat ? { seat: cell.dataset.seat, round: cell.dataset.round, total: cell.dataset.total !== undefined } : null;
+  }
+
   // The cell the press that led to this click landed on, read once: the press
   // noted it on the way down, and a click no press of ours preceded - a hotkey,
-  // a CLICK operation - finds nothing here. A cell of a table that has been
-  // rebuilt since is not one of ours any more either.
+  // a CLICK operation - finds nothing here. A cell whose table has been rebuilt
+  // since is looked up again on the new one.
   pressedCell() {
     const cell = this.pressedCellDOM;
-    this.pressedCellDOM = null;
-    return cell && this.tableDOM && this.tableDOM.contains(cell) ? cell : null;
+    const key = this.pressedCellKey;
+    this.pressedCellDOM = this.pressedCellKey = null;
+    if(!this.tableDOM)
+      return null;
+    if(cell && this.tableDOM.contains(cell))
+      return cell;
+    return key ? this.cellShowing(key) : null;
+  }
+
+  // The cell of the table as it stands now that shows what the given one showed.
+  cellShowing(key) {
+    for(const cell of $a('td', this.tableDOM))
+      if(cell.dataset.seat == key.seat && cell.dataset.round == key.round && (cell.dataset.total !== undefined) == key.total)
+        return cell;
+    return null;
   }
 
   // The seat and the round a cell holds the score of. Round 0 is the single

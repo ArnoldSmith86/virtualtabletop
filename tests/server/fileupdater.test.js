@@ -208,28 +208,63 @@ describe('idempotence', () => {
 // so that a change to what a property means never changes what an existing game
 // does. This covers the dragLimit sides, which used to be clamped with
 // Math.max(null, x) - i.e. at 0 - where they are now read as "no limit".
-function migrated(widget, version = VERSION - 1) {
+function migrated(widget, version) {
   const state = { _meta: { version }, w: Object.assign({ id: 'w', type: 'basic' }, widget) };
   return FileUpdater(state).w;
 }
 
+// The version a migration was written for, so that a later one added below does
+// not silently stop these from running.
+const beforeDragLimitSides = 21;
+const beforeScoreboardEntry = 22;
+
 describe('the dragLimit sides written as null', () => {
+  const dragLimit = limit => migrated({ dragLimit: limit }, beforeDragLimitSides).dragLimit;
+
   test('become the 0 they always clamped to', () => {
-    expect(migrated({ dragLimit: { minX: null, maxY: 10 } }).dragLimit).toEqual({ minX: 0, maxY: 10 });
-    expect(migrated({ dragLimit: { minX: null, maxX: null, minY: null, maxY: null } }).dragLimit)
+    expect(dragLimit({ minX: null, maxY: 10 })).toEqual({ minX: 0, maxY: 10 });
+    expect(dragLimit({ minX: null, maxX: null, minY: null, maxY: null }))
       .toEqual({ minX: 0, maxX: 0, minY: 0, maxY: 0 });
   });
 
   test('leave every other limit as it was written', () => {
-    expect(migrated({ dragLimit: { minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' } }).dragLimit)
+    expect(dragLimit({ minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' }))
       .toEqual({ minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' });
-    expect(migrated({ dragLimit: {} }).dragLimit).toEqual({});
-    expect(migrated({ dragLimit: 'nonsense' }).dragLimit).toBe('nonsense');
-    expect(migrated({}).dragLimit).toBe(undefined);
+    expect(dragLimit({})).toEqual({});
+    expect(dragLimit('nonsense')).toBe('nonsense');
+    expect(migrated({}, beforeDragLimitSides).dragLimit).toBe(undefined);
   });
 
   test('are left alone in a file that was written with the new meaning', () => {
     const state = { _meta: { version: VERSION }, w: { id: 'w', type: 'basic', dragLimit: { minX: null } } };
     expect(FileUpdater(state).w.dragLimit).toEqual({ minX: null });
+  });
+});
+
+// A scoreboard used to open the edit pane whatever cell was clicked and to show
+// only the rounds that had been scored. scoreEntry 'pane' is that behaviour, so
+// a board saved before the property existed is given it and a new board gets
+// the 'auto' default instead.
+describe('a scoreboard saved before scoreEntry existed', () => {
+  const scoreboard = (widget, version = beforeScoreboardEntry) =>
+    FileUpdater({ _meta: { version }, s: Object.assign({ id: 's', type: 'scoreboard' }, widget) }).s;
+
+  test('asks for the edit pane', () => {
+    expect(scoreboard({}).scoreEntry).toBe('pane');
+    expect(scoreboard({ clickable: false }).scoreEntry).toBe('pane');
+  });
+
+  test('keeps a value it was written with', () => {
+    expect(scoreboard({ scoreEntry: 'keypad' }).scoreEntry).toBe('keypad');
+    expect(scoreboard({ scoreEntry: 'auto' }).scoreEntry).toBe('auto');
+  });
+
+  test('leaves every other widget type alone', () => {
+    const state = { _meta: { version: beforeScoreboardEntry }, l: { id: 'l', type: 'label' } };
+    expect(FileUpdater(state).l.scoreEntry).toBe(undefined);
+  });
+
+  test('is not touched in a file written with the property', () => {
+    expect(scoreboard({}, VERSION).scoreEntry).toBe(undefined);
   });
 });
