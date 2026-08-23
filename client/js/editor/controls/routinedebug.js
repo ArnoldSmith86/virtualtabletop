@@ -26,7 +26,10 @@ const routineDebugExpanded = new Set();    // operation keys that were asked to 
 // which reports the end of nothing at all. So a routine that starts drops the frames its own
 // nesting depth says cannot be running any more, and a routine that ends drops the operations of
 // its own that were left behind: a routine that dies half way cannot wedge the cards on stale
-// results until the page is reloaded.
+// results until the page is reloaded. Two routines that interleave across an await - a delta from
+// another player running a changeRoutine while a local routine waits for an INPUT - file their
+// operations under whichever of them started last; that is a wrong line on a card, never a wrong
+// stack.
 const routineDebugRoutineStack = [];    // { path, operationDepth }
 const routineDebugOperationStack = [];
 
