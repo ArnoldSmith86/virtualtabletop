@@ -144,10 +144,10 @@ export class Scoreboard extends Widget {
     return !!this.get('clickable') && !Array.isArray(this.get('clickRoutine'));
   }
 
-  // Whether the table offers the round being scored now as an extra row. Only a
-  // board whose cells are entered into needs one - the edit pane picks the round
-  // it writes itself, so a board that asks for it keeps the table it has always
-  // had.
+  // Whether the table offers the round after the last one that has been scored
+  // as an extra row. Only a board whose cells are entered into needs one - the
+  // edit pane offers that round in its round list, so a board that asks for it
+  // keeps the table it has always had.
   nextRoundOffered() {
     return this.cellEntryEnabled() && this.get('scoreEntry') != 'cell';
   }
@@ -699,14 +699,6 @@ export class Scoreboard extends Widget {
     return rounds;
   }
 
-  // Whether every seat has a score for every round the table shows, which is
-  // what makes the next round the one being scored now.
-  roundIsComplete(seats, numRounds) {
-    const scoreProperty = this.get('scoreProperty');
-    const seatList = Array.isArray(seats) ? seats : Object.keys(seats).reduce((union,key) => union.concat(seats[key]), []);
-    return seatList.every(s => (Array.isArray(s.get(scoreProperty)) ? s.get(scoreProperty) : []).length >= numRounds);
-  }
-
   getTotal(x) {
     return asArray(x).reduce((partialSum, a) => partialSum + (parseFloat(a) || 0), 0)
   }
@@ -787,13 +779,12 @@ export class Scoreboard extends Widget {
     const scoreProperty = this.get('scoreProperty');
     let sortField = this.get('sortField');
 
-    // Compute number of scoring rounds to show and create round names table
-    let rounds = this.getRounds(seats, scoreProperty);
-    // a board that scores are entered into shows the next round as soon as the
-    // current one is complete - otherwise there is no cell to click for it
+    // Compute number of scoring rounds to show and create round names table.
+    // A board that scores are entered into carries one round more than has been
+    // scored, the same round the edit pane offers - otherwise there would be no
+    // cell to click for the round about to be played.
     const enterable = this.cellEntryEnabled();
-    if(this.nextRoundOffered() && this.roundIsComplete(seats, rounds.length))
-      rounds = this.getRounds(seats, scoreProperty, 1);
+    const rounds = this.getRounds(seats, scoreProperty, this.nextRoundOffered() ? 1 : 0);
     let numRounds = rounds.length;
     this.displayedRounds = [...rounds];
     if(showTotals)

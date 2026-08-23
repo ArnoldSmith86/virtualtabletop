@@ -121,3 +121,43 @@ test('The keypad writes and erases the score of the cell it opened on', async t 
     .pressKey('enter');
   await t.expect((await scores()).seat1).eql([ 12, 15 ]);
 });
+
+// The sandbox browser draws overlay scrollbars, which take no room in the layout
+// and swallow the press themselves, so the gesture is dispatched at the place a
+// classic scrollbar sits: past the client box of the scrolling element.
+const pressScrollbar = ClientFunction(() => {
+  const scroller = document.querySelector('#w_board .scoreboardIntermediate');
+  const box = scroller.getBoundingClientRect();
+  const fire = type => scroller.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, clientX: box.right-1, clientY: box.top + box.height/2, buttons: 1 }));
+  fire('mousedown');
+  fire('mousemove');
+  fire('mouseup');
+});
+
+const wheelOver = ClientFunction(selector => {
+  const element = document.querySelector(selector);
+  const box = element.getBoundingClientRect();
+  const event = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 100, clientX: box.left + box.width/2, clientY: box.top + box.height/2 });
+  element.dispatchEvent(event);
+  return event.defaultPrevented;
+});
+
+test('Dragging the scrollbar of a scoreboard scrolls it and nothing else', async t => {
+  await t.resizeWindow(1280, 800);
+  // more rounds than the board is tall, so the table scrolls
+  await roomWithBoard(t, { height: 120, rounds: [ 'R1', 'R2' ], showAllRounds: true }, { seat1: [ 12, 7, 4, 8, 3, 9 ], seat2: [ 9, 11, 5, 2, 6, 1 ] });
+  await pressScrollbar();
+  await t
+    .expect(Selector('#buttonInputOverlay').visible).notOk()
+    .expect(Selector('#w_board input.scoreCellInput').exists).notOk()
+    .expect(Selector('.scoreboardKeypad').exists).notOk();
+});
+
+test('The wheel scrolls a scoreboard that has a scrollbar instead of zooming the room', async t => {
+  await t.resizeWindow(1280, 800);
+  await roomWithBoard(t, { height: 120, rounds: [ 'R1', 'R2' ], showAllRounds: true }, { seat1: [ 12, 7, 4, 8, 3, 9 ], seat2: [ 9, 11, 5, 2, 6, 1 ] });
+  // the room zoom takes the wheel everywhere else, which is what preventing the
+  // default says - over the scrolling table it leaves it to the browser
+  await t.expect(await wheelOver('#w_board .scoreboardIntermediate')).notOk();
+  await t.expect(await wheelOver('#roomArea')).ok();
+});

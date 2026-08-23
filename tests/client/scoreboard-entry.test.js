@@ -91,15 +91,16 @@ describe('the cells of the table', () => {
     expect(enterable(board)).toEqual([]);
   });
 
-  test('gain the next round as soon as every seat has scored the current one', async () => {
+  test('carry the round after the last one that has been scored', async () => {
     const seat1 = seat('seat1', 1, [ 12 ]);
     seat('seat2', 2, [ 9 ]);
     const board = scoreboard();
     expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1', 'seat1/2', 'seat2/2' ]);
+    // the round grows with the seat that is furthest ahead, so a seat the others
+    // are waiting for never keeps the table from reaching the next round
     await seat1.set('score', [ 12, 5 ]);
     board.updateTable();
-    // seat2 is still on round 2, so no round 3 is offered yet
-    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1', 'seat1/2', 'seat2/2' ]);
+    expect(enterable(board)).toEqual([ 'seat1/1', 'seat2/1', 'seat1/2', 'seat2/2', 'seat1/3', 'seat2/3' ]);
   });
 
   test('are a single score per seat on a board no round has been scored on', () => {

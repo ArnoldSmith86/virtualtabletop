@@ -3,7 +3,19 @@ import { viewportConfig } from './calculateLayout.js';
 let usedTouch = false;
 let mouseTarget = null;
 let doubleClickTimeout = null;
+let scrollbarDrag = false;
 const mouseStatus = {};
+
+// Whether a press landed on the scrollbar of an element that scrolls its own overflow - the body
+// of a scoreboard with more rounds than fit. offsetX/offsetY are measured from the padding box,
+// which is the client box plus the scrollbars, so a coordinate outside the client box is on one.
+function pressedScrollbar(e) {
+  const el = e.target;
+  if(!el || !el.clientWidth && !el.clientHeight)
+    return false;
+  return e.offsetX > el.clientWidth && el.scrollHeight > el.clientHeight
+      || e.offsetY > el.clientHeight && el.scrollWidth > el.clientWidth;
+}
 
 function eventCoords(name, e) {
   let coords;
@@ -70,6 +82,16 @@ async function inputHandler(name, e) {
 }
 
 async function handleInput(name, e, dragTarget) {
+  // Dragging a scrollbar scrolls and does nothing else: the press is neither a click on the widget
+  // behind it nor the start of a drag, and neither are the moves and the release that follow it.
+  if(name == 'mousedown')
+    scrollbarDrag = pressedScrollbar(e);
+  if(scrollbarDrag) {
+    if(name == 'mouseup')
+      scrollbarDrag = false;
+    return;
+  }
+
   const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;

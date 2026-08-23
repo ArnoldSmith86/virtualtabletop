@@ -18,7 +18,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1768190453826,
+      "lastUpdate": 1787461200000,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Basic",
@@ -346,7 +346,7 @@
       "seat4"
     ],
     "currentRound": 3,
-    "clickable": false
+    "scoreEntry": "keypad"
   },
   "scoreboard8": {
     "type": "scoreboard",
@@ -368,7 +368,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard sets the 'seats' property to only display data for seats 2, 3, and 4. it also sets the 'currentRound' property to 3.",
+    "text": "This scoreboard sets the 'seats' property to only display data for seats 2, 3, and 4. it also sets the 'currentRound' property to 3. It uses the 'scoreEntry' property to choose what a click on a cell opens: 'keypad' here, so a keypad appears next to the cell you clicked. The default is 'auto', which types in the cell on a device with a keyboard and shows the keypad on a touchscreen.",
     "layer": -2
   },
   "comment8": {
@@ -569,6 +569,19 @@
     "width": 110,
     "height": 20,
     "z": 90,
+    "movable": false,
+    "css": {
+      "background": "#f668b580"
+    },
+    "layer": -2
+  },
+  "highlight16": {
+    "id": "highlight16",
+    "x": 825,
+    "y": 866,
+    "width": 84,
+    "height": 20,
+    "z": 103,
     "movable": false,
     "css": {
       "background": "#f668b580"
