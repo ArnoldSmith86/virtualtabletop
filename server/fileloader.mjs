@@ -6,6 +6,7 @@ import PCIO from './pcioimport.mjs';
 import TTS from './ttsimport.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
 import Zip from './zip.mjs';
 
 const dirname = Config.directory('save') + '/links';
@@ -48,11 +49,11 @@ async function downloadLink(link) {
     } else {
       states = await readStatesFromBuffer(content, true);
     }
-    fs.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
+    FileWriter.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
   }
 
   linkStatus[link] = currentLinkStatus;
-  fs.writeFileSync(filename, JSON.stringify(linkStatus));
+  FileWriter.writeFileSync(filename, JSON.stringify(linkStatus));
 }
 
 async function readStatesFromBuffer(buffer, includeVariantNameList) {
@@ -194,7 +195,7 @@ async function readVariantsFromBuffer(buffer) {
         const content = (await Zip.read(buffer, [ filename ]))[filename];
         const targetFile = CRC32.buf(content) + '_' + content.length;
         if(!Config.resolveAsset(targetFile))
-          fs.writeFileSync(Config.directory('assets') + '/' + targetFile, content);
+          FileWriter.writeFileSync(Config.directory('assets') + '/' + targetFile, content);
       }
 
     }

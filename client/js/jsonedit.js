@@ -1469,9 +1469,9 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###', random: false});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+  jeAddRoutineOperationCommands('SHIFT', { holders: null, widgets: 'all', interval: 1, direction: 'forward', wrap: true, keepOrder: true });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
@@ -1575,7 +1575,10 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(SHUFFLE\\) ↦ mode', [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ]);
-  jeAddEnumCommands('^.*\\(SWAPHANDS\\) ↦ direction', [ 'forward', 'backward', 'random']);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ widgets', [ 'all', 'top' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ direction', [ 'forward', 'backward', 'random' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ wrap', [ true, false ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ keepOrder', [ true, false ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
@@ -3156,7 +3159,45 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
+// The built-in variables of the routines that are currently running, one entry per routine on the
+// stack - the innermost one belongs to the routine the operation being logged is part of. They
+// hold the value the routine started with, so they are identical in every operation of it and are
+// shown behind their own expander while the variables the routine actually works with stay at the
+// top of the pane. A routine that assigns a built-in name keeps that variable among its own,
+// because its value then differs from the one the routine started with.
+let jeLoggingEngineVariableStack = [];
+
+function jeLoggingEngineVariables(variables) {
+  const fromEngine = {};
+  for(const name in predefinedVariableDescriptions)
+    if(name in variables)
+      fromEngine[name] = variables[name];
+  return fromEngine;
+}
+
+function jeLoggingVariables(variables) {
+  const fromEngine = jeLoggingEngineVariableStack[0] || {};
+  const own = {};
+  const engine = {};
+  for(const name in variables) {
+    const untouched = name in fromEngine && JSON.stringify(variables[name]) === JSON.stringify(fromEngine[name]);
+    (untouched ? engine : own)[name] = variables[name];
+  }
+  const ownBlock = Object.keys(own).length ?
+        `<div class="jeLogVariables"><h3>Variables afterwards</h3>${jeLoggingJSON(own)}</div>` : '';
+  const engineBlock = Object.keys(engine).length ?
+        `<div class="jeLogDetails">
+            <div class="jeExpander">
+              <span class="jeLogName">Built-in variables</span>
+            </div>
+            <div class="jeLogNested">
+              <div class="jeLogVariables">${jeLoggingJSON(engine)}</div>
+            </div>
+          </div>` : '';
+  return ownBlock + engineBlock;
+}
+
+export function jeLoggingRoutineStart(widget, property, variables, byReference) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -3165,12 +3206,18 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
     jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-          <span class="jeLogWidget">${widget.get('id')}</span>
-          <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+          <span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo;
+          <span class="jeLogProperty">${html(typeof property == 'string' ? property : '--custom--')}</span>
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
   }
+  // a routine that runs by reference works on the variables of the routine that started it, which
+  // may have changed a built-in one by now - the enclosing routine's set still says what it started
+  // with, so it is what applies here as well
+  jeLoggingEngineVariableStack.unshift(byReference
+    ? jeLoggingEngineVariableStack[0] || {}
+    : jeLoggingEngineVariables(variables));
   ++jeLoggingDepth;
 }
 
@@ -3178,6 +3225,7 @@ export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
     return; // defensive: unmatched End, should not happen since #2672
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  jeLoggingEngineVariableStack.shift();
   --jeLoggingDepth;
   if(!jeLoggingDepth)
     jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
@@ -3232,7 +3280,7 @@ export function jeLoggingRoutineNotLogged(widget, property) {
     jeRoutineResetOnNextLog = false;
   }
   const routine = typeof property == 'string'
-    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> <span class="jeLogProperty">${html(property)}</span>`
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo; <span class="jeLogProperty">${html(property)}</span>`
     : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
   jeLoggingHTML += `
     <div class="jeLog jeLogNote">
@@ -3281,7 +3329,7 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
             <span class="jeLogName">Problems</span>
           </div>
           <div class="jeLogNested">
-            <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
+            <div class="jeLogProblems">${problems.map(p=>html(typeof p == 'string' ? p : JSON.stringify(p))).join('\n')}</div>
           </div>
         </div>` : '';
   const originalOp = originalText.length ?
@@ -3296,31 +3344,36 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
            <div class="jeLogNested">
              ${originalOp}
              ${appliedOp}
-             <h3></h3>
            </div>
          </div>` : '';
+
+  const deltaText = jeLoggingJSON(getDelta().s);
+  const collectionsBlock = Object.keys(collDisplay).length ?
+        `<div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>` : '';
+  const deltaBlock = deltaText.length ?
+        `<div class="jeLogVariables"><h3>Delta afterwards</h3>${deltaText}</div>` : '';
+  const opState = `${jeLoggingVariables(variables)}${collectionsBlock}${deltaBlock}`;
+  const opStateBlock = opState.length ?
+        `<div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Variables, collections and delta afterwards</span>
+          </div>
+          <div class="jeLogNested">
+            ${opState}
+          </div>
+        </div>` : '';
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
-        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} ${problems.length ? '<span class="jeLogFailed">failed</span>' : ''} <span class="jeLogTime" title="how long this operation took">(${+new Date() - startTime}ms)</span>
       </div>
       <div class="jeLogNested">
         ${opProblems}
         ${opOperation}
         ${jeLoggingHTML}
-        <div class="jeLogDetails">
-          <div class="jeExpander">
-            <span class="jeLogName">Variables, collections and delta afterwards</span>
-          </div>
-          <div class="jeLogNested">
-            <div class="jeLogVariables"    ><h3>Variables afterwards</h3>${jeLoggingJSON(variables   )}</div>
-            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay )}</div>
-            <div class="jeLogVariables"        ><h3>Delta afterwards</h3>${jeLoggingJSON(getDelta().s)}</div>
-            <h3></h3>
-          </div>
-        </div>
+        ${opStateBlock}
       </div>
     </div>
   `;
