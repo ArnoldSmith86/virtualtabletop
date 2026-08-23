@@ -1294,44 +1294,31 @@ export class Widget extends StateManaged {
 
     let variables = initialVariables;
     let collections = initialCollections;
-    let engineVariables = null;
     if(!byReference) {
       const playerSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
       const activeSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')!='');
-      const engineDefaults = {
+      variables = Object.assign({
         activeColors,
         mouseCoords,
         seatIndex: playerSeats.length ? playerSeats[0].get('index') : null,
         seatID: playerSeats.length ? playerSeats[0].get('id') : null,
         activeSeats: activeSeats.length ? activeSeats.map(seat=>seat.get('id')) : null
-      };
-      const engineOverrides = {
+      }, initialVariables, {
         playerName,
         playerColor,
         activePlayers,
         thisID : this.get('id')
-      };
-      variables = Object.assign({}, engineDefaults, initialVariables, engineOverrides);
+      });
       collections = Object.assign({
         playerSeats,
         activeSeats
       }, initialCollections, {
         thisButton : [this]
       });
-      if(routineLogging) {
-        // what the engine contributed and the routine did not: the defaults that survived the
-        // caller's own variables, plus the ones the engine sets regardless. The debug log tells
-        // the two apart by this, so a routine that works with a variable of an engine name still
-        // finds it among its own.
-        engineVariables = Object.assign({}, engineOverrides);
-        for(const name in engineDefaults)
-          if(variables[name] === engineDefaults[name])
-            engineVariables[name] = engineDefaults[name];
-      }
     }
 
     if(routineLogging)
-      jeLoggingRoutineStart(this, property, engineVariables);
+      jeLoggingRoutineStart(this, property, variables, byReference);
 
     const routine = this.get(property) !== null ? this.get(property) : property;
 
