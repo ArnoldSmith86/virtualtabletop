@@ -898,13 +898,20 @@
 
 /* undo */
 
+/* every row is a control: a comfortable target, and a hanging indent so the second line of a
+   wrapped row sits under its text instead of where the text of the next row starts */
 .undo.editorModule > .undoEntry {
-  padding: 2px;
-  color: var(--textDimColor1);
+  padding: 6px 4px 6px 1.8em;
+  text-indent: -1.4em;
+  color: var(--textHelpColor);
   cursor: pointer;
 }
 
-.undo.editorModule > .active.undoEntry {
+.undo.editorModule > .undoEntry:hover {
+  background: var(--backgroundHighlightColor2);
+}
+
+.undo.editorModule > .active.undoEntry, .undo.editorModule > .active.undoEntry:hover {
   color: var(--textColor);
   background: var(--backgroundHighlightColor1);
   cursor: unset;
