@@ -1291,8 +1291,6 @@ export class Widget extends StateManaged {
     // already running when logging got enabled can not be logged retroactively - it adds a note
     // to the log instead (see jeLoggingRoutineNotLogged at the end of this function).
     const routineLogging = jeRoutineLogging;
-    if(routineLogging)
-      jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
 
     let variables = initialVariables;
     let collections = initialCollections;
@@ -1318,6 +1316,9 @@ export class Widget extends StateManaged {
         thisButton : [this]
       });
     }
+
+    if(routineLogging)
+      jeLoggingRoutineStart(this, property, variables, byReference);
 
     const routine = this.get(property) !== null ? this.get(property) : property;
 
@@ -1442,7 +1443,15 @@ export class Widget extends StateManaged {
                 variables[variable][index] = result;
               else
                 variables[variable] = result;
-              if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+              if(routineLogging) {
+                // the evaluated expression is only worth showing next to the original when the two
+                // differ - otherwise it is a verbatim repeat of the right hand side the user
+                // already sees. withoutVars can not answer that: it also rewrites true/false/null,
+                // and it does so on the whole operation, so a variable whose name contains one of
+                // those words would make every one of its operations look substituted.
+                const writtenExpression = a.replace(new RegExp(`^${left} += +`), '').replace(/ +\/\/.*$/, '');
+                jeLoggingRoutineOperationSummary(a.substr(4) + (writtenExpression == mathExpression[5] ? '' : ' => ' + mathExpression[5]), JSON.stringify(result));
+              }
             } else {
               problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
             }

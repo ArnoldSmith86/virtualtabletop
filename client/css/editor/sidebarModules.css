@@ -26,6 +26,27 @@
   display: inline-flex;
 }
 
+/* The Debug module's controls act on the log right below them, which starts at the left edge of the
+   panel, so they are laid out as a row that starts there rather than inheriting the right-aligned
+   default - that would leave the filter field most of a screen away from the tree it filters. The
+   label is a flex item, so a narrow panel wraps it as a block instead of orphaning its last word. */
+.editorModule.pest_control .buttonBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  text-align: left;
+}
+
+.editorModule.pest_control .buttonBar #jeLogFilter {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.editorModule.pest_control .buttonBar #clearLogButton {
+  margin-left: auto;
+}
+
 /* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
    explanation of why it is disabled - sits next to it instead of somewhere further up the panel. It wraps
    because that explanation is a sentence: in a narrow panel it was squeezed into a 40px wide column of
@@ -1569,6 +1590,14 @@
   fill: red;
 }
 
+.widgets.editorModule .widget-grid-item .widget-name svg {
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0 0 0 3px;
+}
+
 .widgets.editorModule li .actions {
   display: flex;
   align-items: center;
@@ -1927,9 +1956,9 @@ div.widget-name {
   background-color: #f0f0f0;
 }
 
-/* The tiles in the Game Settings module. The legacy mode and cursor tiles used to repeat
-   this as inline styles on every tile; it lives here now so every tile in the module is
-   framed the same way and follows theme changes. */
+/* The framed tiles of the editor modules - the Game Settings ones and the Toolbox's legacy
+   mode advisory. The legacy mode and cursor tiles used to repeat this as inline styles on every
+   tile; it lives here now so every tile is framed the same way and follows theme changes. */
 .settings-tile {
   border: 1px solid var(--modalBorderColor);
   border-radius: 4px;
@@ -2088,7 +2117,9 @@ div.widget-name {
   color: var(--negativeInput);
 }
 
-.boardSizeSetting .boardSizeMessage.warning {
+.boardSizeSetting .boardSizeMessage.warning,
+.editorModule .legacyModeWarning,
+.editorModule .legacyModeMismatch {
   color: #8a5300;
 }
 
@@ -2100,7 +2131,9 @@ body.darkMode .boardSizeSetting .boardSizeMessage.error {
   color: #ff8f8f;
 }
 
-body.darkMode .boardSizeSetting .boardSizeMessage.warning {
+body.darkMode .boardSizeSetting .boardSizeMessage.warning,
+body.darkMode .editorModule .legacyModeWarning,
+body.darkMode .editorModule .legacyModeMismatch {
   color: #f0be5a;
 }
 
@@ -2111,4 +2144,34 @@ body.darkMode .boardSizeSetting .boardSizeMessage.success {
 .boardSizeSetting .boardSizeMessage button {
   margin: 4px 0 0 0;
   font-size: 1em;
+}
+
+/* widgets are saved in one game and added in another, so the toolbox says so when the two run
+   with different legacy modes - it shares the amber of the advisories above, since adding them
+   is still allowed. It is a framed tile like the ones in Game Settings so it does not read as a
+   footnote to the widget list it follows. */
+.editorModule .legacyModeWarning ul {
+  margin: 6px 0;
+}
+
+.editorModule .legacyModeWarning p {
+  margin: 0;
+}
+
+.editorModule .legacyModeWarningHeader {
+  font-weight: bold;
+}
+
+.editorModule .legacyModeWarningHeader::before {
+  content: 'warning';
+  font-family: "Material Symbols";
+  font-weight: normal;
+  font-size: 1.3em;
+  line-height: 0;
+  vertical-align: -3px;
+  margin-right: 6px;
+}
+
+.editorModule .widgetBufferLabel {
+  margin: 0;
 }
