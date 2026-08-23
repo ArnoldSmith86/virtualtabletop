@@ -16,6 +16,9 @@ class ToolbarButton {
     batchEnd();
   }
 
+  onDeltaReceived(delta) {
+  }
+
   onEditorClose() {
   }
 
@@ -34,6 +37,20 @@ class ToolbarButton {
     this.setMinimumSelection(this.minimumSelection);
   }
 
+  onUndoProtocolChanged() {
+  }
+
+  // a button is unavailable while doing what it does is impossible - by default that means
+  // too little selected, buttons that depend on something else override this
+  isDisabled() {
+    return selectedWidgets.length < this.minimumSelection;
+  }
+
+  updateEnabled() {
+    if(this.domElement && $('button', this.domElement))
+      $('button', this.domElement).disabled = this.isDisabled();
+  }
+
   render(target) {
     this.domElement = div(target, 'editorToolbarButton', `
       <button icon=${this.icon}><span>${this.tooltip}${this.hotkey ? '<br><br>Hotkey: '+this.hotkey : ''}</span>
@@ -45,8 +62,7 @@ class ToolbarButton {
 
   setMinimumSelection(count) {
     this.minimumSelection = count;
-    if(this.domElement && $('button', this.domElement))
-      $('button', this.domElement).disabled = selectedWidgets.length < count;
+    this.updateEnabled();
   }
 }
 

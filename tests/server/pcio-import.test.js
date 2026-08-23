@@ -1,3 +1,4 @@
+import { expectNoLegacyModes } from './fileupdater-util.js';
 import convertPCIO from '../../server/pcioimport.mjs';
 import Zip from '../../server/zip.mjs';
 
@@ -8,7 +9,9 @@ async function importWidgets(widgets, schemaVersion, files={}) {
   // a null content means a folder entry, which is stored as an empty entry ending in a slash
   for(const [ name, content ] of Object.entries(files))
     entries[content === null ? `${name}/` : name] = content === null ? new Uint8Array(0) : content;
-  return await convertPCIO(await Zip.create(entries));
+  const state = await convertPCIO(await Zip.create(entries));
+  expectNoLegacyModes(state);
+  return state;
 }
 
 const deck = {
@@ -598,9 +601,10 @@ describe('PCIO importer', () => {
         mainTextStyle: { size: 26, mainFill: { type: 'color', color: '#1b5e20' } } }
     ], 8);
 
+    // PCIO draws a value shorter than four characters a quarter larger than its style
     expect(state.counter.css).toEqual({
       default: 'background: #dcedc8',
-      ' > textarea': { 'font-size': '26px', color: '#1b5e20' }
+      ' > textarea': { 'font-size': '33px', 'line-height': '33px', color: '#1b5e20' }
     });
     expect(state.counter_label.css).toBeUndefined();
     expect(state.counter_incrementButton.css).toBeUndefined();
@@ -623,7 +627,7 @@ describe('PCIO importer', () => {
     };
     expect(state.label.css[' textarea']).toEqual(Object.assign({ 'letter-spacing': '-1px' }, gradientCSS));
     expect(state.label.css.default.color).toBeUndefined();
-    expect(state.counter.css[' > textarea']).toEqual(Object.assign({ 'font-size': '26px' }, gradientCSS));
+    expect(state.counter.css[' > textarea']).toEqual(Object.assign({ 'font-size': '33px', 'line-height': '33px' }, gradientCSS));
     // the button paints its own background, which clipping the text would eat
     expect(state.button.css).toBe('font-size: 20px');
     expect(state._meta.info.importerWarnings).toEqual([
@@ -697,6 +701,73 @@ describe('PCIO importer', () => {
     expect(state.long.height).toBeGreaterThan(60);
   });
 
+  it('puts a classic game piece into the box its pawn shape fills', async () => {
+    const state = await importWidgets([
+      { id: 'pawn',   type: 'gamePiece', pieceType: 'classic', color: 'red',  x: 300, y: 300 },
+      { id: 'origin', type: 'gamePiece', pieceType: 'classic', color: 'blue' }
+    ], 8);
+
+    // PCIO gives the piece a 90x90 box while the pawn only fills 56x84 of it, at 17,3
+    expect(state.pawn).toMatchObject({ x: 317, y: 303, width: 56, height: 84, classes: 'classicPiece' });
+    expect(state.origin).toMatchObject({ x: 17, y: 3, width: 56, height: 84 });
+  });
+
+  it('grows a label whose box is shorter than one line of its own text', async () => {
+    const state = await importWidgets([
+      { id: 'unknown', type: 'videoPlayer', x: 0, y: 200, height:  5 }
+    ], 8);
+
+    // the striped placeholder is written in the default 16px
+    expect(state.unknown.height).toBe(18);
+  });
+
+  it('lays a counter out the way PCIO does instead of from the size in the file', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 100, width: 40, height: 10, counterValue: 3 },
+      { id: 'plain',   type: 'counter', x: 0, y: 200, counterValue: 3 },
+      { id: 'bounded', type: 'counter', x: 0, y: 300, counterValue: 3, counterMin: 0, counterMax: 10 },
+      { id: 'bare',    type: 'counter', x: 0, y: 400, counterValue: 3, counterShowButtons: false }
+    ], 8);
+
+    // PCIO ignores the width and height of a counter: its box is as wide as the
+    // widest value its bounds allow, at least 52px, plus 44px per button, and one
+    // line of the value tall, at least as tall as the buttons
+    expect(state.counter).toMatchObject({ width: state.plain.width, height: 44 });
+    expect(state.plain.width).toBeCloseTo(4.5*0.62*21 + 88);
+    // -9999..9999 needs room for 4.5 characters, 0..10 only for two, so the 52px win
+    expect(state.bounded.width).toBe(140);
+    expect(state.bare).toMatchObject({ width: state.plain.width - 88, height: 28 });
+    expect(state.bare_decrementButton).toBeUndefined();
+  });
+
+  it('puts a 32px button into each end of a counter the way PCIO draws them', async () => {
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 100, width: 40, height: 10, counterValue: 3 },
+      { id: 'tall',    type: 'counter', x: 0, y: 200, counterValue: 3, mainTextStyle: { size: 40, lineHeight: 1.6 } }
+    ], 8);
+
+    // 44px of the box belong to each button, of which PCIO paints the middle 32px
+    expect(state.counter_decrementButton).toMatchObject({ x: 6, y: 6, width: 32, height: 32 });
+    expect(state.counter_incrementButton).toMatchObject({ x: state.counter.width - 38, y: 6, width: 32, height: 32 });
+    // a value that needs a taller box keeps its buttons in the middle of it
+    expect(state.tall.height).toBe(82);
+    expect(state.tall_decrementButton).toMatchObject({ x: 6, y: 25, width: 32, height: 32 });
+  });
+
+  it('writes the value of a counter in the size PCIO draws it at', async () => {
+    const state = await importWidgets([
+      { id: 'short', type: 'counter', x: 0, y: 100, counterValue: 3 },
+      { id: 'long',  type: 'counter', x: 0, y: 200, counterValue: 1234 },
+      { id: 'flat',  type: 'counter', x: 0, y: 300, counterValue: 3, counterBoostFontSize: false }
+    ], 8);
+
+    // PCIO writes a counter in 21px and enlarges it by a quarter while its value
+    // is shorter than four characters
+    expect(state.short.css[' > textarea']['font-size']).toBe('26px');
+    expect(state.long.css[' > textarea']['font-size']).toBe('21px');
+    expect(state.flat.css[' > textarea']['font-size']).toBe('21px');
+  });
+
   it('imports a turn button at the size PCIO gives it', async () => {
     const state = await importWidgets([
       { id: 'turn', type: 'turnButton', x: 0, y: 0, label: 'End Turn', clickRoutine: { steps: [] } }
@@ -757,6 +828,101 @@ describe('PCIO importer', () => {
     ], 8);
 
     expect(state.button.clickRoutine).toEqual([ { func: 'MOVE', from: 'source', to: 'target', count: 'all' } ]);
+  });
+
+  it('moves objects into the hand and hands recalled ones back to everyone', async () => {
+    const state = await importWidgets([
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 800 },
+      { id: 'deck', type: 'cardDeck', x: 100, y: 0, cardTypes: { a: { label: 'A' } }, faceTemplate: { objects: [] } },
+      {
+        id: 'button', type: 'automationButton', label: 'Hand', x: 0, y: 300,
+        clickRoutine: { steps: [
+          { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+            from:       { type: 'literal', value: [ 'source' ] },
+            to:         { type: 'literal', value: [ 'hand' ] },
+            quantity:   { type: 'literal', value: 1 },
+            moveMethod: { type: 'literal', value: 'all' }
+          } } ] },
+          { id: 'b', branches: [ { func: 'RECALL_CARDS', args: {
+            decks: { type: 'literal', value: [ 'deck' ] }
+          } } ] }
+        ] }
+      }
+    ], 8);
+
+    // objects moved to a hand become the private property of whoever pressed the
+    // button, which is what a hand is on PlayingCards.io
+    expect(state.button.clickRoutine[0]).toEqual({ func: 'MOVE', from: 'source', to: 'hand' });
+    // a deck without a holder is recalled onto its own position, and a recall takes
+    // the objects back from their owner
+    const recall = state.button.clickRoutine.find(operation=>operation.func == 'MOVEXY');
+    expect(recall.resetOwner).toBeUndefined();
+  });
+
+  it('leaves out a move to a hand that PlayingCards.io does not show', async () => {
+    const state = await importWidgets([
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 800, enabled: false },
+      {
+        id: 'button', type: 'automationButton', label: 'Hand', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+          from:     { type: 'literal', value: [ 'source' ] },
+          to:       { type: 'literal', value: [ 'hand' ] },
+          quantity: { type: 'literal', value: 1 }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(state.button.clickRoutine).toEqual([]);
+  });
+
+  it('moves as many objects as the counter says and none at all when it says zero', async () => {
+    const dealing = args=>[
+      { id: 'source', type: 'holder', x: 0, y: 0 },
+      { id: 'target', type: 'holder', x: 200, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 800 },
+      { id: 'counter', type: 'counter', x: 400, y: 0, counterValue: 2 },
+      {
+        id: 'button', type: 'automationButton', label: 'Deal', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'a', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: Object.assign({
+          from:     { type: 'literal', value: [ 'source' ] },
+          quantity: { counterId: 'counter' }
+        }, args) } ] } ] }
+      }
+    ];
+
+    // the count is the counter itself. A file old enough for the count migration has the
+    // operation wrapped in an IF that moves *everything* when the count comes out as 0,
+    // while PlayingCards.io moves nothing then - which is what the plain operation does
+    const toHand = await importWidgets(dealing({
+      to:         { type: 'literal', value: [ 'hand' ] },
+      moveMethod: { type: 'literal', value: 'all' }
+    }), 8);
+    expect(toHand.button.clickRoutine).toEqual([
+      { func: 'MOVE', count: '${PROPERTY text OF counter}', from: 'source', to: 'hand' }
+    ]);
+
+    // moving the objects in one go rather than one at a time, and turning them afterwards
+    const wholePile = await importWidgets(dealing({
+      to:             { type: 'literal', value: [ 'target' ] },
+      moveMethod:     { type: 'literal', value: 'all' },
+      changeRotation: { type: 'literal', value: 'cw' }
+    }), 8);
+    expect(wholePile.button.clickRoutine).toEqual([
+      { func: 'MOVE',   count: '${PROPERTY text OF counter}', from: 'source', to: 'target' },
+      { func: 'ROTATE', count: '${PROPERTY text OF counter}', holder: 'target', angle: 90 }
+    ]);
+
+    // the same case with the zero spelled out in the file
+    const nothing = await importWidgets(dealing({
+      to:         { type: 'literal', value: [ 'target' ] },
+      moveMethod: { type: 'literal', value: 'all' },
+      quantity:   { type: 'literal', value: 0 }
+    }), 8);
+    expect(nothing.button.clickRoutine).toEqual([
+      { func: 'MOVE', count: 0, from: 'source', to: 'target' }
+    ]);
   });
 
   it('puts objects under the ones a pile already holds, starting at the given destination', async () => {
@@ -944,6 +1110,49 @@ describe('PCIO importer', () => {
     expect(state._meta.info.importerWarnings).toEqual([
       'Asset userassets/huge.png is bigger than 10 MiB and was not imported.'
     ]);
+  });
+
+  it('writes face objects that follow a card type property as dynamic properties', async () => {
+    const state = await importWidgets([ deck, { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 0, y: 0 } ], 8);
+
+    expect(state.deck.faceTemplates[0].objects[1]).toEqual({
+      type: 'image', x: 0, y: 0, width: 103, height: 160, dynamicProperties: { value: 'image' }
+    });
+  });
+
+  it('gives a hand the drop shadow, the hidden cursors and the caption of a VirtualTabletop hand', async () => {
+    const state = await importWidgets([ { id: 'hand', type: 'hand', x: 0, y: 800 } ], 8);
+
+    expect(state.hand.childrenPerOwner).toBe(true);
+    expect(state.hand.dropShadow).toBe(true);
+    expect(state.hand.hidePlayerCursors).toBe(true);
+    expect(state.hand.text).toBe('Your hand');
+  });
+
+  it('captions a hand with the name it was given in PlayingCards.io', async () => {
+    const state = await importWidgets([
+      { id: 'hand',    type: 'hand', x: 0, y: 800, label: 'Your cards' },
+      { id: 'hand2',   type: 'hand', x: 0, y: 600, label: 'Tricks you won' },
+      { id: 'hand3',   type: 'hand', x: 0, y: 400 }
+    ], 8);
+
+    expect(state.hand.text).toBe('Your cards');
+    expect(state.hand2.text).toBe('Tricks you won');
+    // only the main hand is the player's hand - the other private zones say what they are
+    expect(state.hand3.text).toBe('Private');
+  });
+
+  it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
+    // importWidgets checks the version and the round trip through FileUpdater for every
+    // import of this suite - this one holds the widgets the legacy modes look for
+    const state = await importWidgets([
+      { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 1, counterMin: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 800 }
+    ], 8);
+
+    // the var expressions of the counter buttons are what the legacy modes for the old var
+    // semantics look for in an old file
+    expect(JSON.stringify(state)).toContain('var pcioCounter');
   });
 
   it('imports a file whose schema version is missing or unreadable', async () => {
