@@ -22,7 +22,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "Widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>wiki</a>) are the visual representation of objects you need for playing a game. Widget properties are the JSON code that control the widget's position, appearance, and functionality. Some properties are on every widget and some are specific to certain widget types. Every property has a default which usually can be changed. The game designer can change the property using Edit Mode, or functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) can be used to change properties. In some cases, the changes are handled automatically behind the scenes by the VTT game engine. The same property may have different defaults for different widget types. The properties, the default values, and a brief description of what each one does is available on the Widgets wiki page. Some of the more advanced or potentially confusing properties have their own tutorials. See the list in <a href='https://virtualtabletop.io/tutorial/tutorials-overview'>100 Tutorials Overview</a>."
+    "html": "Widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>wiki</a>) are the visual representation of objects you need for playing a game. Widget properties are the JSON code that control the widget's position, appearance, and functionality. Some properties are on every widget and some are specific to certain widget types. Every property has a default which usually can be changed. The game designer can change the property in the Edit Widgets menu or the JSON Editor menu of Edit Mode, or functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) can be used to change properties. In some cases, the changes are handled automatically behind the scenes by the VTT game engine. The same property may have different defaults for different widget types. The properties, the default values, and a brief description of what each one does is available on the Widgets wiki page. Some of the more advanced or potentially confusing properties have their own tutorials. See the list in <a href='https://virtualtabletop.io/tutorial/tutorials-overview'>100 Tutorials Overview</a>."
   },
   "text1": {
     "id": "text1",
@@ -35,7 +35,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the JSON of the button above in Edit Mode. The properties appear between the first and last curly bracket. The property name is first inside quotation marks, then a colon, then the property value inside either quotes or brackets, then a comma (except for the last property). All VTT JSON has this structure and every entry is a property. A few common or important properties are always at the top. After that, they are alphabetical. "
+    "html": "Select the button above in Edit Mode. The Edit Widgets menu lists its properties as labeled fields; the JSON Editor menu shows the same properties as JSON, between the first and last curly bracket. The property name is first inside quotation marks, then a colon, then the property value inside either quotes or brackets, then a comma (except for the last property). Every entry is a property. A few common or important properties are always at the top. After that, they are alphabetical. "
   },
   "text2": {
     "id": "text2",
@@ -61,7 +61,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the basic widget above. Colors are important indicators. Gray shows the property value is the default for that widget type. Yellow is used for property names (and object keys). Orange is used for custom properties. Those are properties added by designer or by automation to store some type of data. They can be used by routines, but do not directly affect widgets. For more about the colors, see (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#editing-widgets'>Editing widgets</a>)."
+    "html": "Look at the basic widget above in the JSON Editor menu. Colors are important indicators. Gray shows the property value is the default for that widget type. Yellow is used for property names (and object keys). Orange is used for custom properties. Those store data added by designer or by automation for routines; they do not directly affect widgets. The Edit Widgets menu has no colors; custom properties are under <b>Other properties</b>. For more about the colors, see (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#editing-widgets'>Editing widgets</a>)."
   },
   "text4": {
     "id": "text4",
@@ -87,7 +87,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the seat's JSON in Edit Mode. Put the cursor on the <b>id</b> line. On the right below `seat` is a list of properties in clickable buttons. That shows properties unique to seats that have not yet been added to the widget. Click on some of the buttons. Properties with default values are added and the buttons disappear. In the JSON delete a property and the button reappears. Lower on the right are properties available for any widget type that work the same way."
+    "html": "Look at the seat's JSON in the JSON Editor menu. Put the cursor on the <b>id</b> line. On the right below `seat` is a list of properties in clickable buttons. Those are seat properties not yet on the widget. Click some: they are added with default values and the buttons disappear. Delete a property in the JSON and the button reappears. Lower on the right, any-widget properties work the same way. The Edit Widgets menu instead has curated fields plus an <b>Other properties</b> box for any property name."
   },
   "_meta": {
     "version": 19,
@@ -103,7 +103,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1763354677977,
+      "lastUpdate": 1787509626505,
       "showName": false,
       "skill": "",
       "description": "",

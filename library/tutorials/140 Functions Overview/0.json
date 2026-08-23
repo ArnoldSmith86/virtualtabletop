@@ -35,7 +35,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Look at the JSON of the button above in Edit Mode. Each type of routine is presented there with a brief comment about how to trigger the routine. The button itself actually does nothing. It just contains routines with comments. Routines are listed in alphabetical order in the list of widget properties. See the <a href='https://virtualtabletop.io/tutorial/operations-routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here.",
+    "html": "Look at the button above in the JSON Editor menu. Each type of routine is there with a brief comment about how to trigger it. The button itself does nothing. Routines are listed in alphabetical order in the list of widget properties; the Edit Widgets menu groups them in Automations instead. See the <a href='https://virtualtabletop.io/tutorial/operations-routines'>Routines tutorial</a> for more. Special purpose routines that are part of FOREACH and IF functions are not covered here.",
     "height": 445
   },
   "text2": {
@@ -49,7 +49,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "To add a function, in Edit Mode place the cursor inside a routine. The Editor will display a list of functions. In the button above, add COUNT. The Editor changes to display a list of parameters available for that function: <b>collection</b>, <b>comment</b>, <b>holder</b>, <b>owner</b>, and <b>variable</b>. Clicking those adds them to the JSON for that function. <u>Important</u>: the function uses the default values whether shown in the JSON or not unless the default is changed.",
+    "html": "In the JSON Editor menu, place the cursor inside a routine and it lists the functions. In the button above, add COUNT. It then lists the parameters available for that function: <b>collection</b>, <b>comment</b>, <b>holder</b>, <b>owner</b>, and <b>variable</b>. Clicking those adds them to the JSON. In the Edit Widgets menu, use add operation inside a routine, then add option per parameter. <u>Important</u>: the function uses the defaults whether shown or not unless the default is changed.",
     "height": 445
   },
   "text3": {
@@ -108,7 +108,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1763355837690,
+      "lastUpdate": 1787509626505,
       "showName": false,
       "skill": "",
       "description": "",

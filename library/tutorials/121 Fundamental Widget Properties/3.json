@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1764462779921,
+      "lastUpdate": 1787509626505,
       "showName": false,
       "skill": "",
       "description": "",
@@ -93,7 +93,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The pig and the hexagon above are both basic widgets. They both have the default <b>layer</b> of 1 and they do not have a parent. That means that whichever widget has the higher <b>z</b> value will be on top. Look at the pig and its <b>z</b> in the Editor. Start dragging it and notice how <b>z</b> increases by 1. Drag it over the hexagon and then look at the hexagon and drag it over the pig."
+    "html": "The pig and the hexagon above are both basic widgets. They both have the default <b>layer</b> of 1 and they do not have a parent. That means that whichever widget has the higher <b>z</b> value will be on top. VTT manages <b>z</b> itself, so the Edit Widgets menu does not offer it; look at the pig and its <b>z</b> in the JSON Editor menu. Start dragging it and notice how <b>z</b> increases by 1. Drag it over the hexagon and then look at the hexagon and drag it over the pig."
   },
   "text2": {
     "id": "text2",

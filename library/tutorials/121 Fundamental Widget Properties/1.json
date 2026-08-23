@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1764462779921,
+      "lastUpdate": 1787509626505,
       "showName": false,
       "skill": "",
       "description": "",
@@ -53,7 +53,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The <b>width</b> and <b>height</b> properties define the size of the (usually invisible) box that surrounds widgets and thus, the size of the visible part of the widget as well. The unit size is in pixels. When you add a new widget, it gets the default <b>width</b> and <b>height</b> for that widget type so the property is greyed out in the Editor. Like with <b>x,y</b> coordinates, you can change <b>width</b> and <b>height</b> in the Editor or using routines.\n\nThe <b>scale</b> property is a way to change the size the widget appears on the screen. It is useful in some situations to make widgets fit within the space allowed. However, use caution as <b>scale</b> is a CSS transformation of the widget in the browser. This means that things such as <b>x.y</b> coordinates for the widget and its children, as well as rotation and some other properties, may not directly correspond with the properties you see in the Editor. To reduce the size the widget appears use <b>scale</b> values between 0 and 1. To increase the size, use values larger than 1. Fractional values are allowed."
+    "html": "The <b>width</b> and <b>height</b> properties define the size of the (usually invisible) box that surrounds widgets and thus, the size of the visible part of the widget as well. The unit size is in pixels. When you add a new widget, it gets the default <b>width</b> and <b>height</b> for that widget type so the property is greyed out in the JSON Editor menu. In the Edit Widgets menu they are the <b>W</b> and <b>H</b> fields under Size, which show the default as an ordinary value. You can change them in either menu or using routines.\n\nThe <b>scale</b> property is a way to change the size the widget appears on the screen. It is useful in some situations to make widgets fit within the space allowed. However, use caution as <b>scale</b> is a CSS transformation of the widget in the browser. This means that things such as <b>x.y</b> coordinates for the widget and its children, as well as rotation and some other properties, may not directly correspond with the properties you see in either menu. To reduce the size the widget appears use <b>scale</b> values between 0 and 1. To increase the size, use values larger than 1. Fractional values are allowed."
   },
   "button3": {
     "type": "button",
@@ -85,7 +85,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above is the default <b>width</b> and <b>height</b> for a button. Click it to increase the <b>height</b> by 10 pixels per click. Notice how the the <b>x,y</b> position is the same and the widget gets larger down and to the right. After increasing the <b>height</b> several times, erase the <b>height</b> line in the editor. Notice how it goes back to the default value.",
+    "html": "The button above is the default <b>width</b> and <b>height</b> for a button. Click it to increase the <b>height</b> by 10 pixels per click. Notice how the the <b>x,y</b> position is the same and the widget gets larger down and to the right. After increasing it several times, erase the <b>height</b> line in the JSON Editor menu and it goes back to the default. The <b>H</b> field under Size in the Edit Widgets menu always writes a number, so removing the property is a JSON Editor menu job.",
     "layer": -2
   },
   "button1": {
