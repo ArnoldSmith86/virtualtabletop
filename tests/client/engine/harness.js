@@ -56,6 +56,22 @@ globalThis.DOMMatrix = globalThis.DOMMatrix || HarnessDOMMatrix;
 // anyway. Behaviour that lives in a subclass belongs in a TestCafe fixture.
 const widgetClasses = { widget: Widget, label: Label };
 
+// Cards and decks are bundle scripts rather than modules: they reach Widget and the widget map as
+// globals, so they can only be loaded once those are in place - which a static import would not
+// wait for. A test that needs them says so with 'await loadDeckWidgets()' before it builds a state.
+let deckWidgetsLoading = null;
+export function loadDeckWidgets() {
+  if(!deckWidgetsLoading)
+    deckWidgetsLoading = (async _=>{
+      globalThis.Widget = Widget;
+      const { Card } = await import('../../../client/js/widgets/card.js');
+      const { Deck } = await import('../../../client/js/widgets/deck.js');
+      globalThis.Deck = Deck; // a card checks what it was dropped on against it
+      Object.assign(widgetClasses, { card: Card, deck: Deck });
+    })();
+  return deckWidgetsLoading;
+}
+
 export function setLegacyModes(modes) {
   for(const [ name, value ] of Object.entries(fullLegacyCombination(modes)))
     legacyMode(name, value);

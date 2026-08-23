@@ -5,7 +5,7 @@
 // operation what that operation did (client/js/editor/controls/routinedebug.js). What is recorded
 // is the log the Debug module already collects - these cases pin down the addresses that go with
 // it, because a wrong one silently shows a run on the wrong card.
-import { runRoutine, routineState } from './harness.js';
+import { loadDeckWidgets, runRoutine, routineState } from './harness.js';
 
 // the calls evaluateRoutine makes into the editor bundle, in the order it makes them. Outside the
 // browser those functions are globals of the bundle that is not there, so the test is the bundle.
@@ -106,5 +106,47 @@ describe('where a running operation says it sits', () => {
       trigger: { type: 'button', clickRoutine: [ 'var a = 1' ] }
     }), 'clickRoutine');
     expect(calls).toEqual([]);
+  });
+});
+
+// A card mostly runs routines that are not written on the card: they belong to the deck, which
+// hands them to every card it made. The editor shows them there, so that is where their runs have
+// to be filed - the deck knows nothing about the card that ran them.
+describe('a card runs a routine of its deck', () => {
+  beforeAll(loadDeckWidgets);
+
+  const deckState = (deck, card)=>routineState({
+    deck1: Object.assign({ type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { properties: {} } ] }, deck),
+    card1: Object.assign({ type: 'card', deck: 'deck1', cardType: 'a' }, card)
+  });
+  const runOnCard = state=>runRoutine(state, 'clickRoutine', { trigger: 'card1' });
+
+  test('a routine the deck defines for its cards is addressed in the card defaults of the deck', async () => {
+    await runOnCard(deckState({ cardDefaults: { clickRoutine: [ 'var fromDeck = 1' ] } }));
+    expect(operationKeys()).toEqual([ 'deck1/cardDefaults.clickRoutine/0' ]);
+  });
+
+  test('a block nested in such a routine is addressed there too', async () => {
+    await runOnCard(deckState({ cardDefaults: { clickRoutine: [
+      { func: 'FOREACH', range: [ 1, 2 ], loopRoutine: [ 'var seen = ${value}' ] }
+    ] } }));
+    expect(operationKeys()).toEqual([
+      'deck1/cardDefaults.clickRoutine/0',
+      'deck1/cardDefaults.clickRoutine/0/loopRoutine/0',
+      'deck1/cardDefaults.clickRoutine/0/loopRoutine/0'
+    ]);
+  });
+
+  test('a routine the card has itself is addressed on the card', async () => {
+    await runOnCard(deckState({ cardDefaults: { clickRoutine: [ 'var fromDeck = 1' ] } }, { clickRoutine: [ 'var own = 1' ] }));
+    expect(operationKeys()).toEqual([ 'card1/clickRoutine/0' ]);
+  });
+
+  test('a card type that overrides the routine is not addressed in the card defaults', async () => {
+    await runOnCard(deckState({
+      cardDefaults: { clickRoutine: [ 'var fromDeck = 1' ] },
+      cardTypes: { a: { clickRoutine: [ 'var fromType = 1' ] } }
+    }));
+    expect(operationKeys()).toEqual([ 'card1/clickRoutine/0' ]);
   });
 });

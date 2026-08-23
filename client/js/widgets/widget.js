@@ -1295,7 +1295,7 @@ export class Widget extends StateManaged {
     // in, and for a nested block the path its parent operation passed down
     const routinePath = typeof property == 'string' ? this.routineDebugPath(property) : debugPath;
     if(routineLogging)
-      jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference, routinePath);
+      jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference, routinePath, depth || 0);
 
     let variables = initialVariables;
     let collections = initialCollections;
@@ -1324,7 +1324,10 @@ export class Widget extends StateManaged {
 
     const routine = this.get(property) !== null ? this.get(property) : property;
 
-    for(const [ operationIndex, original ] of routine.entries()) {
+    // indexed rather than iterated: a game file can put something that is not an array here, and a
+    // routine reading nonsense has always run to its end instead of taking the client down with it
+    for(let operationIndex = 0; operationIndex < routine.length; ++operationIndex) {
+      const original = routine[operationIndex];
       var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
@@ -1496,9 +1499,9 @@ export class Widget extends StateManaged {
             if(routineLogging) {
               const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
-                let returnCollection = result.collection.map(w=>w.get('id')).join(',');
-                if(!result.collection.length || result.collection.length >= 5)
-                  returnCollection = `(${result.collection.length} widgets)`;
+                const returnCollection = result.collection.length && result.collection.length < 5
+                  ? result.collection.map(w=>w.get('id')).join(',')
+                  : `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
                   `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
                   `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
@@ -2292,9 +2295,8 @@ export class Widget extends StateManaged {
             await sortWidgets(collections[a.collection], a.sortBy);
 
           if(routineLogging) {
-            let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
-            if(!collections[a.collection].length || collections[a.collection].length >= 5)
-              selectedWidgets = `(${collections[a.collection].length} widgets)`;
+            const selected = collections[a.collection];
+            const selectedWidgets = selected.length && selected.length < 5 ? selected.map(w=>w.get('id')).join(',') : `(${selected.length} widgets)`;
             jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
           }
         }
@@ -2649,7 +2651,7 @@ export class Widget extends StateManaged {
 
       if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
-      if(!routineLogging && problems.length)
+      if(!jeRoutineLogging && problems.length)
         console.log(problems);
 
       if(abortRoutine)

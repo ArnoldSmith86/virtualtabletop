@@ -11,7 +11,7 @@
 // Runs that read the same are counted instead of kept twice, so a loop that does the same thing a
 // hundred times is one line saying so rather than a hundred. Everything is dropped when the next
 // user interaction runs a routine, so what a card shows always belongs to one interaction - the
-// same rule the Debug module's log follows.
+// same rule the Debug module's log follows, down to the "auto clear" setting that turns it off.
 
 const ROUTINE_DEBUG_MAX_RUNS = 40;      // runs kept per operation; further ones are only counted
 const ROUTINE_DEBUG_COLLAPSED_RUNS = 3; // runs a card shows until it is asked for all of them
@@ -21,9 +21,13 @@ const routineDebugOmitted = new Map();     // operation key -> runs that no long
 const routineDebugRoutineRuns = new Map(); // routine path -> how often the routine itself ran
 const routineDebugExpanded = new Set();    // operation keys that were asked to show every run
 
-// the routines and operations currently running, innermost first. Both are kept in step by the
-// logging calls of evaluateRoutine, which come in matched pairs for the whole routine.
-const routineDebugRoutineStack = [];
+// The routines and operations currently running, outermost first. Both are kept in step by the
+// logging calls of evaluateRoutine, which come in matched pairs - except when an operation throws,
+// which reports the end of nothing at all. So a routine that starts drops the frames its own
+// nesting depth says cannot be running any more, and a routine that ends drops the operations of
+// its own that were left behind: a routine that dies half way cannot wedge the cards on stale
+// results until the page is reloaded.
+const routineDebugRoutineStack = [];    // { path, operationDepth }
 const routineDebugOperationStack = [];
 
 let routineDebugResetOnNextRun = true;
@@ -42,18 +46,25 @@ function routineDebugClear() {
   routineDebugResetOnNextRun = false;
 }
 
-function routineDebugRoutineStart(path) {
+// depth is how many routines evaluateRoutine is already inside, so anything below that on the
+// stacks belongs to a routine that never came back
+function routineDebugRoutineStart(path, depth) {
+  if(routineDebugRoutineStack.length > depth) {
+    routineDebugOperationStack.length = routineDebugRoutineStack[depth].operationDepth;
+    routineDebugRoutineStack.length = depth;
+  }
   if(!routineDebugRoutineStack.length && routineDebugResetOnNextRun)
     routineDebugClear();
-  routineDebugRoutineStack.unshift(path || null);
+  routineDebugRoutineStack.push({ path: path || null, operationDepth: routineDebugOperationStack.length });
   if(path)
     routineDebugRoutineRuns.set(path, (routineDebugRoutineRuns.get(path) || 0) + 1);
 }
 
 function routineDebugRoutineEnd() {
-  if(!routineDebugRoutineStack.length)
+  const routine = routineDebugRoutineStack.pop();
+  if(!routine)
     return;
-  routineDebugRoutineStack.shift();
+  routineDebugOperationStack.length = routine.operationDepth;
   if(!routineDebugRoutineStack.length)
     routineDebugRefresh();
 }
@@ -61,12 +72,13 @@ function routineDebugRoutineEnd() {
 // index is missing for the pseudo operations the log wraps a loop body in - those stand for no
 // card, so they only keep the stack in step
 function routineDebugOperationStart(index) {
-  const path = routineDebugRoutineStack[0];
-  routineDebugOperationStack.unshift(path && typeof index == 'number' ? { key: `${path}/${index}` } : null);
+  const routine = routineDebugRoutineStack[routineDebugRoutineStack.length-1];
+  const path = routine && routine.path;
+  routineDebugOperationStack.push(path && typeof index == 'number' ? { key: `${path}/${index}` } : null);
 }
 
 function routineDebugOperationSummary(definition, result) {
-  const running = routineDebugOperationStack[0];
+  const running = routineDebugOperationStack[routineDebugOperationStack.length-1];
   if(running) {
     running.definition = definition;
     running.result = result;
@@ -74,7 +86,7 @@ function routineDebugOperationSummary(definition, result) {
 }
 
 function routineDebugOperationEnd(problems, skipped) {
-  const running = routineDebugOperationStack.shift();
+  const running = routineDebugOperationStack.pop();
   if(!running)
     return;
   routineDebugAddRun(running.key, {
@@ -137,7 +149,7 @@ function routineDebugRunsHTML(key) {
   if(expanded && omitted)
     html += `<span class="routine-editor-debug-idle">${omitted} further ${omitted == 1 ? 'run' : 'runs'} were not kept</span>`;
   if(runs.length > ROUTINE_DEBUG_COLLAPSED_RUNS)
-    html += `<span class="routine-editor-debug-more" data-debug-toggle="${escapeHTML(key)}">${expanded ? 'show less' : `+ ${hidden} more ${hidden == 1 ? 'run' : 'runs'}`}</span>`;
+    html += `<span class="routine-editor-debug-more">${expanded ? 'show less' : `+ ${hidden} more ${hidden == 1 ? 'run' : 'runs'}`}</span>`;
   return html;
 }
 
@@ -164,7 +176,7 @@ function routineDebugRunHTML(run) {
 function routineDebugRender(dom) {
   const key = dom.dataset.debugKey;
   dom.innerHTML = routineDebugRunsHTML(key);
-  for(const toggle of $a('[data-debug-toggle]', dom)) {
+  for(const toggle of $a('.routine-editor-debug-more', dom)) {
     focusable(toggle, _=>{
       if(routineDebugExpanded.has(key))
         routineDebugExpanded.delete(key);

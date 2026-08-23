@@ -139,3 +139,23 @@ forEachLegacy(({ name, legacy }) => {
     });
   });
 });
+
+// A game file can put anything into a property a routine is read from. Reading a string as a
+// routine has always run to the end of it rather than taking the client down with it, and neither
+// case may throw: an exception escapes before the delta batch the routine opened is closed again,
+// after which the client stops sending its state at all.
+describe('a routine property that holds no routine', () => {
+  test('a string runs to its end instead of throwing', async () => {
+    const result = await runRoutine(routineState({
+      trigger: { type: 'button', clickRoutine: 'var broken = 1' }
+    }), 'clickRoutine');
+    expect(result.variable).toBe(null);
+  });
+
+  test('an object runs no operation instead of throwing', async () => {
+    const result = await runRoutine(routineState({
+      trigger: { type: 'button', clickRoutine: { func: 'SET', property: 'broken', value: 1 } }
+    }), 'clickRoutine');
+    expect(result.state.trigger.broken).toBe(undefined);
+  });
+});

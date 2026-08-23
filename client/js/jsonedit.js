@@ -3112,12 +3112,12 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference, path) {
+export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference, path, depth) {
   if(!jeLoggingDepth) {
     jeLoggingHTMLEnabled = jeRoutineLogging;
     jeLoggingOutermostRoutine = { widget, property };
   }
-  routineDebugRoutineStart(path);
+  routineDebugRoutineStart(path, depth || 0);
   if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -4056,7 +4056,8 @@ function jeInitEventListeners() {
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
   window.addEventListener('mouseup', async function(e) {
     jeRoutineResetOnNextLog = jeRoutineAutoReset;
-    routineDebugResetAfterInteraction();
+    if(jeRoutineAutoReset)
+      routineDebugResetAfterInteraction();
     if(!jeEnabled)
       return;
     jeMouseButtonIsDown = false;
