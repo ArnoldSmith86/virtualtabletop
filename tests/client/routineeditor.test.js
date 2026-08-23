@@ -57,7 +57,8 @@ beforeAll(() => {
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML',
     'routineDebugRoutineStart', 'routineDebugRoutineEnd', 'routineDebugOperationStart', 'routineDebugOperationSummary',
-    'routineDebugOperationEnd', 'routineDebugRefreshNow', 'routineDebugResetAfterInteraction', 'routineDebugClear'
+    'routineDebugOperationEnd', 'routineDebugRefreshNow', 'routineDebugResetAfterInteraction', 'routineDebugClear',
+    'routineDebugSetEnabled'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -3945,16 +3946,18 @@ describe('working out a value with var', () => {
 describe('what an operation did last time', () => {
   const buttonWidget = { state: { id: 'button1', type: 'button' } };
 
-  // one run of a routine: every operation in order, each with what it did
-  function runRoutine(path, operations) {
-    routineDebugRoutineStart(path);
+  // one run of a routine: every operation in order, each with what it did. depth is what
+  // evaluateRoutine passes for a nested block, and with it the recorder drops frames of routines
+  // that never reported their end.
+  function runRoutine(path, operations, depth = 0) {
+    routineDebugRoutineStart(path, depth);
     for (const [ index, operation ] of operations.entries()) {
       routineDebugOperationStart(index);
       if (operation.definition !== undefined)
         routineDebugOperationSummary(operation.definition, operation.result);
       if (operation.blocks)
         for (const [ block, blockOperations ] of Object.entries(operation.blocks))
-          runRoutine(`${path}/${index}/${block}`, blockOperations);
+          runRoutine(`${path}/${index}/${block}`, blockOperations, depth + 1);
       routineDebugOperationEnd(operation.problems || [], operation.skipped);
     }
     routineDebugRoutineEnd();
@@ -4029,6 +4032,33 @@ describe('what an operation did last time', () => {
     routineDebugResetAfterInteraction();
     runRoutine('button1/clickRoutine', [ { definition: 'second' } ]);
     expect(strips(editorFor([ { func: 'SHUFFLE' } ]))).toEqual([ 'second' ]);
+  });
+
+  test('a routine that never reported its end leaves nothing behind for the next interaction', () => {
+    // an operation that throws takes the end of its routine with it, so that routine stays on the
+    // stack of the recorder - where it used to keep the next interaction from starting clean
+    routineDebugRoutineStart('button1/clickRoutine', 0);
+    routineDebugOperationStart(0);
+    routineDebugOperationSummary('half way', '');
+    routineDebugOperationEnd([], false);
+
+    routineDebugResetAfterInteraction();
+    runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+    expect(strips(editorFor([ { func: 'SHUFFLE' } ]))).toEqual([ 'the deck' ]);
+  });
+
+  test('switching the results off takes what is on the cards with it', () => {
+    const editor = editorFor([ { func: 'SHUFFLE' } ]);
+    document.body.append(editor.domElement);
+    try {
+      runRoutine('button1/clickRoutine', [ { definition: 'the deck' } ]);
+      routineDebugRefreshNow();
+      expect(strips(editor)).toEqual([ 'the deck' ]);
+      routineDebugSetEnabled(false);
+      expect(strips(editor)).toEqual([ '' ]);
+    } finally {
+      editor.domElement.remove();
+    }
   });
 
   test('the list of routines says which of them ran', () => {

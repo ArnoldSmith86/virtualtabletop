@@ -3093,10 +3093,12 @@ let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 // The log below is built while the Debug module is open, but a routine is recorded for the
-// routine editor's cards whenever the editor is loaded (see jeRoutineDebug in main.js). Which of
-// the two applies is decided when the outermost routine starts, so opening or closing the module
-// while a routine waits - for an INPUT, say - can never leave the log half built.
+// routine editor's cards whenever the editor is loaded and the cards are switched on (see
+// jeRoutineDebug in main.js). Which of the two applies is decided when the outermost routine
+// starts, so opening or closing the module - or flipping that switch - while a routine waits for
+// an INPUT can never leave the log or the stacks of the recorder half built.
 let jeLoggingHTMLEnabled = false;
+let jeLoggingCardsEnabled = false;
 let jeLoggingOutermostRoutine = null;
 
 // Empty the log. Operations of a routine that is currently running have the log so far saved on
@@ -3115,9 +3117,11 @@ function jeLoggingJSON(obj) {
 export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference, path, depth) {
   if(!jeLoggingDepth) {
     jeLoggingHTMLEnabled = jeRoutineLogging;
+    jeLoggingCardsEnabled = getJEroutineDebug();
     jeLoggingOutermostRoutine = { widget, property };
   }
-  routineDebugRoutineStart(path, depth || 0);
+  if(jeLoggingCardsEnabled)
+    routineDebugRoutineStart(path, depth || 0);
   if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -3138,7 +3142,8 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
 export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
     return; // defensive: unmatched End, should not happen since #2672
-  routineDebugRoutineEnd();
+  if(jeLoggingCardsEnabled)
+    routineDebugRoutineEnd();
   if( jeLoggingHTMLEnabled && (jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1) ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
@@ -3209,7 +3214,8 @@ function jeLoggingRoutineNotLogged(widget, property) {
 }
 
 export function jeLoggingRoutineOperationStart(original, applied, index) {
-  routineDebugOperationStart(index);
+  if(jeLoggingCardsEnabled)
+    routineDebugOperationStart(index);
   if(!jeLoggingHTMLEnabled)
     return;
   let fcn;
@@ -3227,7 +3233,8 @@ export function jeLoggingRoutineOperationStart(original, applied, index) {
 }
 
 export function jeLoggingRoutineOperationEnd(problems, variables, collections, skipped) {
-  routineDebugOperationEnd(problems, skipped);
+  if(jeLoggingCardsEnabled)
+    routineDebugOperationEnd(problems, skipped);
   if(!jeLoggingHTMLEnabled) {
     jeRoutineResult = '';
     return;
@@ -3303,7 +3310,8 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
 }
 
 export function jeLoggingRoutineOperationSummary(definition, result) {
-  routineDebugOperationSummary(definition, result);
+  if(jeLoggingCardsEnabled)
+    routineDebugOperationSummary(definition, result);
   if(!jeLoggingHTMLEnabled)
     return;
   jeRoutineResult = `<span class="jeLogSummary">${html(definition)}</span>

@@ -39,6 +39,14 @@ function routineDebugResetAfterInteraction() {
   routineDebugResetOnNextRun = true;
 }
 
+// Switching the results off takes what is on the cards with them: a strip left standing after the
+// switch was flipped would read as what the routine that runs next did.
+function routineDebugSetEnabled(enabled) {
+  if(!enabled)
+    routineDebugClear();
+  routineDebugRefreshNow();
+}
+
 function routineDebugClear() {
   routineDebugRuns.clear();
   routineDebugOmitted.clear();
