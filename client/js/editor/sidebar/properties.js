@@ -2093,7 +2093,7 @@ class PropertiesModule extends SidebarModule {
           continue;
         const button = document.createElement('button');
         button.setAttribute('icon', icon);
-        button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
+        button.disabled = toolbarButton.isDisabled();
         // explain a disabled distribute button (needs 3+ widgets) rather than
         // just leaving it gray with no hint why
         button.title = (toolbarButton.tooltip || '') + (button.disabled && toolbarButton.minimumSelection > 1 ?

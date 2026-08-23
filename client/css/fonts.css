@@ -488,8 +488,12 @@
   align-content: flex-start;
   row-gap: 4px;
 }
-/* icons the search matched by name come before the ones it only matched by their tags: same ranking as in the
-   sidebar's icon picker, so "dragon" leads with the dragons in both instead of with the fish scales here */
+/* icons the search matched by name come before the ones it only matched by their tags, and the one that is called
+   exactly what was typed comes before those: same ranking as in the sidebar's icon picker, so "dragon" leads with
+   the dragons in both instead of with the fish scales here, and "soul" with the soul rather than the soul vessel */
+#symbolList .exactMatch {
+  order: -2;
+}
 #symbolList .nameMatch {
   order: -1;
 }
@@ -566,7 +570,7 @@
 
 #symbolPickerOverlay .gameicons {
   --spritesheetX: 60;
-  --spritesheetY: 69;
+  --spritesheetY: 70;
 
   display: inline-block;
   background: url(i/game-icons.net/overview24.png);

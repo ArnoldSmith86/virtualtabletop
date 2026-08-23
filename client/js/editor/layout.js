@@ -50,8 +50,9 @@ function initializeEditor(currentMetaData) {
     new ToolbarDivider(),
 
     new TutorialsButton(),
-    new WikiButton()
-    
+    new WikiButton(),
+    new FeedbackButton()
+
   ]);
 
   renderDragToolbar(dragToolbarButtons = [
@@ -83,6 +84,15 @@ function initializeEditor(currentMetaData) {
   metaReceived(currentMetaData);
 
   openEditor();
+}
+
+// restoring an earlier state replaces the undo protocol, which invalidates what the
+// modules have rendered from it and what the toolbar buttons made of its length
+function undoProtocolChanged() {
+  for(const module of sidebarModules)
+    module.onUndoProtocolChanged();
+  for(const button of toolbarButtons)
+    button.onUndoProtocolChanged();
 }
 
 function metaReceived(data) {
