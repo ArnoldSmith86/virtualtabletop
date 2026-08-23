@@ -19,6 +19,8 @@ beforeAll(() => {
   };
   window.html = string => String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   window.widgets = new Map();
+  window.config = { aiRoutineEndpoint: 'https://agent.virtualtabletop.io/routine-assist' }; // inlined into room.html by the server
+  window.validateGameFile = validateGameFile; // the editor bundle carries the validator
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
@@ -57,7 +59,7 @@ beforeAll(() => {
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine', 'aiChangedOperations',
-    'aiRecordResult', 'aiForgetResult'
+    'aiRecordResult', 'aiForgetResult', 'aiForgetAllResults', 'aiMergeProblems', 'aiWithoutInlineData', 'AI_POLL_INTERVAL'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -3940,10 +3942,21 @@ describe('working out a value with var', () => {
 
 describe('AI routine assistant', () => {
   let counter = 0;
+  const inRoom = [];
   function makeEditor(state, onChange = () => {}) {
     const widget = { state: { id: `ai${counter++}`, ...state }, get(p) { return this.state[p]; } };
+    // the popup reads the room the way the running editor does - through widgets
+    widget.unalteredState = widget.state;
+    widgets.set(widget.state.id, widget);
+    inRoom.push(widget.state.id);
     return { widget, editor: new EventsEditor(widget, onChange) };
   }
+
+  afterEach(() => {
+    for(const id of inRoom.splice(0))
+      widgets.delete(id);
+    aiForgetAllResults();
+  });
 
   test('every routine card offers the AI button', () => {
     const { editor } = makeEditor({ type: 'button', clickRoutine: [ { func: 'FLIP' } ] });
@@ -3957,8 +3970,7 @@ describe('AI routine assistant', () => {
     const { editor } = makeEditor({ type: 'button', clickRoutine: [] }, (property, value) => written.push([ property, value ]));
     // the popup hands the routine to the callback the button was built with
     const routine = [ { func: 'SHUFFLE', holder: 'deck' } ];
-    editor.domElement.querySelector('.events-editor-ai').dispatchEvent(new Event('click'));
-    const popup = openPopups.find(p => p instanceof AiRoutinePopup);
+    const popup = openAiPopup(editor);
     expect(popup).toBeDefined();
     popup.apply(routine);
     expect(written).toContainEqual([ 'clickRoutine', routine ]);
@@ -3976,14 +3988,33 @@ describe('AI routine assistant', () => {
     popup.hide();
   });
 
+  const isStart = options => !!options && options.method == 'POST';
+
   // a job the service never finishes, so the popup is still waiting on it
   function runningService() {
     const previous = globalThis.fetch;
     globalThis.fetch = async (url, options) => ({
       ok: true,
-      json: async () => options ? { jobId: 'job1' } : { status: 'running', step: 'Reading widgets…' }
+      json: async () => isStart(options) ? { jobId: 'job1' } : { status: 'running', step: 'Reading widgets…' }
     });
     return () => { globalThis.fetch = previous; };
+  }
+
+  // a job that answers on the first poll, with what it asked for kept for reading
+  function answeringService(answer) {
+    const previous = globalThis.fetch;
+    const requests = [];
+    globalThis.fetch = async (url, options) => {
+      if(isStart(options))
+        requests.push(JSON.parse(options.body));
+      return { ok: true, json: async () => isStart(options) ? { jobId: 'job1' } : { status: 'done', ...answer } };
+    };
+    return { requests, restore: () => { globalThis.fetch = previous; } };
+  }
+
+  function openAiPopup(editor, index = 0) {
+    [ ...editor.domElement.querySelectorAll('.events-editor-ai') ][index].dispatchEvent(new Event('click'));
+    return openPopups.filter(p => p instanceof AiRoutinePopup).pop();
   }
 
   test('closing the popup gives up on the answer instead of writing it later', async () => {
@@ -4097,7 +4128,6 @@ describe('AI routine assistant', () => {
       board: { id: 'board', type: 'holder', clickRoutine: [ { func: 'NOPE' } ] },
       b1: { id: 'b1', type: 'button' }
     };
-    globalThis.validateGameFile = validateGameFile;
     globalThis.widgets = new Map(Object.entries(state).map(([ id, s ]) => [ id, { unalteredState: s } ]));
     try {
       const clean = aiValidateRoutine('b1', 'clickRoutine', [ { func: 'SHUFFLE', holder: 'board' } ]);
@@ -4108,5 +4138,125 @@ describe('AI routine assistant', () => {
     } finally {
       globalThis.widgets = before;
     }
+  });
+
+  test('a server with no service configured has no button to press', () => {
+    const configured = config.aiRoutineEndpoint;
+    config.aiRoutineEndpoint = '';
+    try {
+      const { editor } = makeEditor({ type: 'button', clickRoutine: [ { func: 'FLIP' } ] });
+      expect(editor.domElement.querySelectorAll('.events-editor-ai').length).toBe(0);
+    } finally {
+      config.aiRoutineEndpoint = configured;
+    }
+  });
+
+  test("a routine a deck hands to its cards is asked for as the cards' routine", async () => {
+    const service = answeringService({ routine: [ { func: 'FLIP' } ] });
+    const { editor } = makeEditor({ type: 'deck', clickRoutine: [], cardDefaults: { clickRoutine: [] } });
+    // cardDefaults is listed first: a routine written on a deck is nearly always for its cards
+    const cards = openAiPopup(editor, 0);
+    cards.input.value = 'flip the card over';
+    await cards.generate();
+    const deck = openAiPopup(editor, 1);
+    // what was asked of the cards is not what was asked of the deck itself
+    expect(deck.input.value).toBe('');
+    deck.input.value = 'shuffle yourself';
+    await deck.generate();
+    expect(service.requests.map(r => r.routineTarget)).toEqual([ 'cardDefaults', 'widget' ]);
+    service.restore();
+  });
+
+  test("a card routine is validated where it lands, not in the deck's own slot", () => {
+    const room = globalThis.widgets;
+    globalThis.widgets = new Map(Object.entries({
+      d: { id: 'd', type: 'deck', cardTypes: { a: {} }, faceTemplates: [], clickRoutine: [ { func: 'FLIP' } ] }
+    }).map(([ id, state ]) => [ id, { unalteredState: state } ]));
+    try {
+      const broken = [ { func: 'SHUFFLE', holder: 'ghost' } ];
+      // on the deck itself the missing holder is this routine's problem...
+      expect(JSON.stringify(aiValidateRoutine('d', 'clickRoutine', broken))).toContain('ghost');
+      // ...while in cardDefaults it must not stand in for the deck's own routine
+      expect(aiValidateRoutine('d', 'clickRoutine', broken, 'cardDefaults')).toEqual([]);
+    } finally {
+      globalThis.widgets = room;
+    }
+  });
+
+  test('an answer is written onto the widget with both lists of problems', async () => {
+    const written = [];
+    const service = answeringService({
+      routine: [ { func: 'SHUFFLE', holder: 'ghost' } ],
+      explanation: 'It shuffles the deck.',
+      problems: [ { message: 'I could not find a deck to shuffle.' } ]
+    });
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] }, (property, value) => written.push([ property, value ]));
+    const popup = openAiPopup(editor);
+    popup.input.value = 'shuffle the deck';
+    await popup.generate();
+    expect(written).toEqual([ [ 'clickRoutine', [ { func: 'SHUFFLE', holder: 'ghost' } ] ] ]);
+    const note = editor.domElement.querySelector('.ai-routine-note').textContent;
+    expect(note).toContain('It shuffles the deck.');
+    expect(note).toContain('I could not find a deck to shuffle.'); // what the service reported
+    expect(note).toContain('ghost'); // ...and what the editor's own validator found on top of it
+    service.restore();
+  });
+
+  test('an answer that lands after the popup was closed is not written', async () => {
+    const previous = globalThis.fetch;
+    let pollStarted, releasePoll;
+    const polling = new Promise(resolve => pollStarted = resolve);
+    const answer = new Promise(resolve => releasePoll = resolve);
+    globalThis.fetch = async (url, options) => {
+      if(isStart(options))
+        return { ok: true, json: async () => ({ jobId: 'job1' }) };
+      pollStarted();
+      await answer; // the answer is on its way while the popup is being closed
+      return { ok: true, json: async () => ({ status: 'done', routine: [ { func: 'FLIP' } ] }) };
+    };
+    const written = [];
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] }, (property, value) => written.push([ property, value ]));
+    const popup = openAiPopup(editor);
+    popup.input.value = 'flip the card';
+    const running = popup.generate();
+    await polling;
+    popup.hide();
+    releasePoll();
+    await running;
+    expect(written).toEqual([]);
+    globalThis.fetch = previous;
+  });
+
+  test('inline image data does not go along with the request', async () => {
+    const service = answeringService({ routine: [ { func: 'FLIP' } ] });
+    const { widget, editor } = makeEditor({
+      type: 'button',
+      clickRoutine: [],
+      image: `data:image/png;base64,${'A'.repeat(5000)}`
+    });
+    const popup = openAiPopup(editor);
+    popup.input.value = 'flip the card';
+    await popup.generate();
+    const sent = service.requests[0].widgets[widget.get('id')];
+    expect(sent.image).toContain('characters of inline data');
+    expect(JSON.stringify(service.requests[0])).not.toContain('AAAA');
+    service.restore();
+  });
+
+  test('the same problem said by both sides is only said once', () => {
+    expect(aiMergeProblems([ { message: 'a' } ], [ { message: 'a' }, { message: 'b' } ]))
+      .toEqual([ { message: 'a' }, { message: 'b' } ]);
+    expect(aiMergeProblems([ 'said as a plain string' ], [])).toEqual([ { message: 'said as a plain string' } ]);
+  });
+
+  test('what the assistant wrote is forgotten when the room is replaced', () => {
+    const { widget, editor } = withResult();
+    expect(editor.domElement.querySelector('.ai-routine-note')).not.toBe(null);
+    // a new state replaces every widget and the editors built on them, and widget
+    // ids repeat across games - the next room's "deck" must not inherit this note
+    aiForgetAllResults();
+    const next = new EventsEditor(widget, () => {});
+    expect(next.domElement.querySelector('.ai-routine-note')).toBe(null);
+    expect(marksOf(next)).toEqual([ false, false ]);
   });
 });

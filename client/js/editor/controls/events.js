@@ -448,7 +448,7 @@ class EventsEditor {
       });
       headerDOM.append(jsonButton);
 
-      aiRoutineButton(headerDOM, this.widget, property, _=>this.routineSource(target)[property], (routine, result)=>{
+      aiRoutineButton(headerDOM, this.widget, entry, _=>this.routineSource(target)[property], (routine, result)=>{
         const before = this.routineSource(target)[property];
         delete this.routineEditors[key]; // it keeps its own copy of the old one
         this.expandedEvents[key] = true; // land on the result rather than a closed card

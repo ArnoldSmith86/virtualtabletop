@@ -345,6 +345,9 @@ function receiveStateFromServer(state) {
   // one of them and follows its dangling links (a card looks up its deck).
   // The selection survives leaving edit mode, so this happens while playing too.
   deckEditorStateReplaced();
+  // widget ids repeat across games, so what the AI assistant wrote for one room's
+  // "deck" must not be shown as a note on the next room's
+  aiForgetAllResults();
   endDrill();
   setSelection([]);
   for(const module of sidebarModules)

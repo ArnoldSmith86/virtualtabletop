@@ -17,14 +17,17 @@
 // The room is sent along with the request, because a routine is about this room:
 // which widgets exist, what they are called, what the game already does. Without
 // it the answers are generic ones full of invented ids - which is what the first
-// version of this did. The generating happens on the bot at
-// agent.virtualtabletop.io (nothing is sent anywhere else and nothing is stored);
-// point it elsewhere with localStorage editor.aiRoutineEndpoint.
+// version of this did. The generating happens wherever the server's
+// aiRoutineEndpoint setting points, which on virtualtabletop.io is the bot at
+// agent.virtualtabletop.io (nothing is sent anywhere else and nothing is stored).
+// A server running its own copy points that at its own service, or empties it to
+// leave the button out altogether; a single browser overrides it for itself with
+// localStorage editor.aiRoutineEndpoint.
 
-const AI_ROUTINE_ENDPOINT = 'https://agent.virtualtabletop.io/routine-assist';
 const AI_DONATE_URL = 'https://www.patreon.com/virtualtabletop/about';
 const AI_POLL_INTERVAL = 1200;
 const AI_POLL_TIMEOUT = 5 * 60 * 1000;
+const AI_MAX_REQUEST_SIZE = 8 * 1024 * 1024;
 
 const AI_PROMPT_EXAMPLES = [
   'shuffle the deck and deal five cards to every player',
@@ -45,11 +48,12 @@ const AI_QUALITY_STEPS = [
 const AI_DEFAULT_QUALITY = 3;
 
 function aiRoutineEndpoint() {
+  let ownChoice = null;
   try {
-    return localStorage.getItem('editor.aiRoutineEndpoint') || AI_ROUTINE_ENDPOINT;
+    ownChoice = localStorage.getItem('editor.aiRoutineEndpoint');
   } catch(e) {
-    return AI_ROUTINE_ENDPOINT;
   }
+  return ownChoice || config.aiRoutineEndpoint || '';
 }
 
 // Where the request goes, for the line in the popup that says so.
@@ -81,10 +85,52 @@ function aiRoomState() {
   return Object.fromEntries([ ...widgets ].map(([ id, w ])=>[ id, w.unalteredState ]));
 }
 
+// Inline images do not go along with the request: a data: URI is a few hundred kB
+// of base64 that says nothing about what the widget is, and every widget of the
+// room is sent. What is left of it still reads as an image property.
+function aiWithoutInlineData(value) {
+  if(typeof value == 'string')
+    return value.match(/^data:[^,]*,./) ? `data: (${value.length} characters of inline data)` : value;
+  if(Array.isArray(value))
+    return value.map(aiWithoutInlineData);
+  if(value && typeof value == 'object')
+    return Object.fromEntries(Object.entries(value).map(([ key, entry ])=>[ key, aiWithoutInlineData(entry) ]));
+  return value;
+}
+
+// Where a candidate routine lands in the widget's state: a routine of the widget
+// is a property of its own, one a deck hands to its cards an entry of
+// cardDefaults. Checking the wrong one of the two checks the wrong routine and
+// stands in for whatever the other one holds.
+function aiRoutineInState(state, property, target, routine) {
+  if(target != 'cardDefaults')
+    return { ...state, [property]: routine };
+  const defaults = state && state.cardDefaults;
+  const cardDefaults = defaults && typeof defaults == 'object' && !Array.isArray(defaults) ? defaults : {};
+  return { ...state, cardDefaults: { ...cardDefaults, [property]: routine } };
+}
+
+// Both the service and the copy of the validator the editor carries have looked
+// at the routine, and they do not see the same things - the service checked it
+// against the room while writing it, the bundled one is the version this editor
+// actually runs. Neither list is allowed to swallow the other.
+function aiMergeProblems(reported, found) {
+  const problems = [];
+  const seen = new Set();
+  for(const problem of [ ...(Array.isArray(reported) ? reported : []), ...found ]) {
+    const entry = typeof problem == 'string' ? { message: problem } : problem;
+    if(!entry || !entry.message || seen.has(entry.message))
+      continue;
+    seen.add(entry.message);
+    problems.push(entry);
+  }
+  return problems;
+}
+
 // What this routine would ADD to the room's problems. Rooms in the middle of
 // being built are rarely clean, so the ones that were already there are not
 // this routine's fault and would only bury the ones that are.
-function aiValidateRoutine(widgetID, property, routine) {
+function aiValidateRoutine(widgetID, property, routine, target) {
   const room = aiRoomState();
   let before = [];
   try {
@@ -92,7 +138,7 @@ function aiValidateRoutine(widgetID, property, routine) {
   } catch(e) {
   }
   try {
-    const after = validateGameFile({ ...room, [widgetID]: { ...room[widgetID], [property]: routine } }, false);
+    const after = validateGameFile({ ...room, [widgetID]: aiRoutineInState(room[widgetID], property, target, routine) }, false);
     const known = new Set(before.map(p=>JSON.stringify(p)));
     return after.filter(p=>!known.has(JSON.stringify(p)));
   } catch(e) {
@@ -240,17 +286,33 @@ function aiShowResultNote(container, routineEditor) {
 // starts from what was said the first time rather than from an empty box.
 const aiLastPrompts = new Map();
 
+// A new state replaces every widget in the room, and widget ids repeat across
+// games - "deck" and "holder1" are in half of them. Kept records would then put
+// "the assistant rewrote 2 of these 5 operations" on a routine it has never
+// seen, diffed against a routine from another game. The editor's own state
+// handler (selection.js) calls this.
+function aiForgetAllResults() {
+  aiRoutineResults.clear();
+  aiLastPrompts.clear();
+}
+
 class AiRoutinePopup extends Popup {
+  // entry is the routine card this belongs to: { property, target, key }.
   // apply(routine, result) writes the result; the popup never touches the widget
-  constructor(source, widget, property, currentRoutine, apply) {
+  constructor(source, widget, entry, currentRoutine, apply) {
     super(source);
     this.widget = widget;
-    this.property = property;
+    this.widgetID = widget.get('id');
+    this.property = entry.property;
+    // 'widget' or, for a routine a deck hands to its cards, 'cardDefaults' - the
+    // two are separate routines that run on different widgets
+    this.target = entry.target || 'widget';
     this.currentRoutine = currentRoutine;
     this.apply = apply;
     this.busy = false;
     this.cancelled = false;
-    this.promptKey = aiResultKey(widget.get('id'), property);
+    this.abort = null;
+    this.promptKey = aiResultKey(this.widgetID, entry.key || entry.property);
     this.domElement.classList.add('ai-routine-popup');
   }
 
@@ -259,10 +321,19 @@ class AiRoutinePopup extends Popup {
     // closing the popup gives up on the job: writing a routine takes long enough
     // that the answer can land after the editor has moved on, and one that writes
     // itself onto a widget nobody is looking at any more is worse than none
-    this.registerCancelListener(_=>this.cancelled = true);
-    this.setTitle(`Write ${describeEventProperty(this.property).label} with AI`);
+    this.registerCancelListener(_=>this.giveUp());
+    const label = describeEventProperty(this.property).label;
+    this.setTitle(`Write ${label}${this.target == 'cardDefaults' ? ' of every card' : ''} with AI`);
     this.renderBody();
     this.moveIntoView();
+  }
+
+  // Nothing that is still in flight is waited for any more, and the requests
+  // themselves are dropped rather than left running to completion.
+  giveUp() {
+    this.cancelled = true;
+    if(this.abort)
+      this.abort.abort();
   }
 
   renderBody() {
@@ -274,6 +345,11 @@ class AiRoutinePopup extends Popup {
     div(this.bodyDOM, 'ai-routine-intro').textContent = has
       ? 'Say what this routine should do instead, or what to change about it. It is rewritten as a whole and applied right away - undo takes it back.'
       : 'Say what should happen, in your own words. Name the things you see on the board - the widgets are looked up for you.';
+    // the one thing the name of the routine cannot say, and the thing the answer
+    // is wrong about if it is not said: which widget this ends up running on
+    if(this.target == 'cardDefaults')
+      div(this.bodyDOM, 'ai-routine-intro').textContent
+        = 'It runs on every card this deck hands out, not on the deck - so "this widget" is a card.';
     // a routine is written out of this room, so this room is what the request
     // carries - worth saying next to the box it is typed into rather than only
     // in the source of the thing sending it
@@ -352,12 +428,20 @@ class AiRoutinePopup extends Popup {
 
     try {
       const result = await this.request(prompt, Number(this.qualityInput.value));
-      // Straight onto the widget: the highlighted operations in the editor are
-      // a better preview than any popup could be, and undo is one press away.
-      result.problems = aiValidateRoutine(this.widget.get('id'), this.property, result.routine);
-      this.apply(result.routine, result);
-      this.hide();
-      return;
+      // the answer can arrive after the popup was closed or after the widget it
+      // was asked about was deleted - writing a routine takes up to a minute
+      if(this.cancelled)
+        return;
+      if(!widgets.has(this.widgetID)) {
+        this.setStatus('The widget this routine belongs to is not in the room any more.', 'error');
+      } else {
+        // Straight onto the widget: the highlighted operations in the editor are
+        // a better preview than any popup could be, and undo is one press away.
+        result.problems = aiMergeProblems(result.problems, aiValidateRoutine(this.widgetID, this.property, result.routine, this.target));
+        this.apply(result.routine, result);
+        this.hide();
+        return;
+      }
     } catch(e) {
       if(this.cancelled)
         return;
@@ -373,19 +457,30 @@ class AiRoutinePopup extends Popup {
   // single request would look like it had hung.
   async request(prompt, quality) {
     const endpoint = aiRoutineEndpoint();
+    this.abort = typeof AbortController == 'function' ? new AbortController() : null;
+    const signal = this.abort ? this.abort.signal : undefined;
+    const body = JSON.stringify({
+      async: true,
+      quality,
+      prompt,
+      widgetId: this.widgetID,
+      widgetType: this.widget.get('type'),
+      routineProperty: this.property,
+      // which of a deck's two kinds of routine this is: the one the deck runs,
+      // or the one every card it hands out runs
+      routineTarget: this.target,
+      currentRoutine: Array.isArray(this.currentRoutine) ? this.currentRoutine : undefined,
+      widgets: aiWithoutInlineData(aiRoomState())
+    });
+    // every attempt sends the whole room again, so a room that is too big to send
+    // is worth saying before a minute is spent finding out
+    if(body.length > AI_MAX_REQUEST_SIZE)
+      throw new Error(`This room is too big to send (${Math.round(body.length / 1024 / 1024)} MB). Ask in a room with fewer widgets, or with less image data in them.`);
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        async: true,
-        quality,
-        prompt,
-        widgetId: this.widget.get('id'),
-        widgetType: this.widget.get('type'),
-        routineProperty: this.property,
-        currentRoutine: Array.isArray(this.currentRoutine) ? this.currentRoutine : undefined,
-        widgets: aiRoomState()
-      })
+      body,
+      signal
     });
     const started = await response.json().catch(_=>({}));
     if(!response.ok || started.error)
@@ -398,8 +493,10 @@ class AiRoutinePopup extends Popup {
       await new Promise(resolve=>setTimeout(resolve, AI_POLL_INTERVAL));
       if(this.cancelled)
         break;
-      const poll = await fetch(`${endpoint}?job=${encodeURIComponent(started.jobId)}`);
+      const poll = await fetch(`${endpoint}?job=${encodeURIComponent(started.jobId)}`, { signal });
       const state = await poll.json().catch(_=>({}));
+      if(this.cancelled)
+        break;
       if(state.status == 'running') {
         this.setStatus(state.step || 'Working…');
         continue;
@@ -416,14 +513,18 @@ class AiRoutinePopup extends Popup {
 }
 
 // The button that opens it, for one routine card of the Automations section.
-function aiRoutineButton(headerDOM, widget, property, getRoutine, apply) {
+function aiRoutineButton(headerDOM, widget, entry, getRoutine, apply) {
+  // a server with no service configured has no button to press
+  if(!aiRoutineEndpoint())
+    return null;
+
   const aiButton = document.createElement('span');
   aiButton.className = 'material-symbols events-editor-ai';
   aiButton.textContent = 'auto_awesome';
   aiButton.title = 'Describe this routine in plain English and have it written';
   aiButton.addEventListener('click', e=>{
     e.stopPropagation();
-    new AiRoutinePopup(aiButton, widget, property, getRoutine(), apply).show();
+    new AiRoutinePopup(aiButton, widget, entry, getRoutine(), apply).show();
   });
   headerDOM.append(aiButton);
   return aiButton;
