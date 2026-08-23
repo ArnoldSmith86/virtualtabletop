@@ -140,16 +140,27 @@ test('The keypad writes and erases the score of the cell it opened on', async t 
   await t.expect((await scores()).seat1).eql([ 12, 15 ]);
 });
 
-// The sandbox browser draws overlay scrollbars, which take no room in the layout
-// and swallow the press themselves, so the gesture is dispatched at the place a
-// classic scrollbar sits: past the client box of the scrolling element.
-const pressScrollbar = ClientFunction(() => {
+// A press on a scrollbar is one between the client box of the scrolling element and
+// the room it reserves for the bar; anything past that is its border. Headless
+// browsers draw overlay scrollbars, which reserve nothing and swallow the press
+// themselves, so the room a classic bar sits in is asked for with a stable gutter
+// and the gesture is dispatched into it - or, for the border, just past it.
+const pressPastClientBox = ClientFunction(pixelsPastTheBar => {
   const scroller = document.querySelector('#w_board .scoreboardIntermediate');
+  scroller.style.scrollbarGutter = 'stable';
+  const style = getComputedStyle(scroller);
+  const borderLeft = parseFloat(style.borderLeftWidth);
+  const bar = scroller.offsetWidth - scroller.clientWidth - borderLeft - parseFloat(style.borderRightWidth);
   const box = scroller.getBoundingClientRect();
-  const fire = type => scroller.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, clientX: box.right-1, clientY: box.top + box.height/2, buttons: 1 }));
+  // the room is scaled, and the offset a press reports is measured in the units of
+  // the element itself: the place to hit is worked out there and scaled back up
+  const scale = box.width / scroller.offsetWidth;
+  const x = borderLeft + scroller.clientWidth + (pixelsPastTheBar ? bar + pixelsPastTheBar : bar/2);
+  const fire = type => scroller.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, clientX: box.left + x*scale, clientY: box.top + box.height/2, buttons: 1 }));
   fire('mousedown');
   fire('mousemove');
   fire('mouseup');
+  return bar;
 });
 
 const wheelOver = ClientFunction(selector => {
@@ -164,11 +175,20 @@ test('Dragging the scrollbar of a scoreboard scrolls it and nothing else', async
   await t.resizeWindow(1280, 800);
   // more rounds than the board is tall, so the table scrolls
   await roomWithBoard(t, { height: 120, rounds: [ 'R1', 'R2' ], showAllRounds: true }, { seat1: [ 12, 7, 4, 8, 3, 9 ], seat2: [ 9, 11, 5, 2, 6, 1 ] });
-  await pressScrollbar();
+  await t.expect(await pressPastClientBox(0)).gt(0);
   await t
     .expect(Selector('#buttonInputOverlay').visible).notOk()
     .expect(Selector('#w_board input.scoreCellInput').exists).notOk()
     .expect(Selector('.scoreboardKeypad').exists).notOk();
+});
+
+test('The border of a scrolling board is part of it, not a scrollbar to be swallowed', async t => {
+  await t.resizeWindow(1280, 800);
+  await roomWithBoard(t, { height: 120, rounds: [ 'R1', 'R2' ], showAllRounds: true }, { seat1: [ 12, 7, 4, 8, 3, 9 ], seat2: [ 9, 11, 5, 2, 6, 1 ] });
+  // the press is past the client box like the one above, but past the scrollbar as
+  // well: it lands on the widget, which has no cell there and opens the pane
+  await pressPastClientBox(1);
+  await t.expect(Selector('#buttonInputOverlay').visible).ok();
 });
 
 test('The wheel scrolls a scoreboard that has a scrollbar instead of zooming the room', async t => {

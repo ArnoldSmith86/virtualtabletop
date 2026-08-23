@@ -31,6 +31,16 @@ function keypadKeyFor(key) {
   return { Enter: 'enter', Escape: 'cancel', Backspace: 'delete', Delete: 'clear', c: 'clear', C: 'clear' }[key] || null;
 }
 
+// Whether a key press belongs to something other than the open keypad: an
+// overlay on top of it - which the CSS hides the pad for - or a field being
+// typed into. The pad has no field of its own, so a key aimed at one is never
+// meant for it.
+function keyboardTakenFromKeypad(e) {
+  const target = e.target || {};
+  return document.body.classList.contains('overlayActive')
+      || [ 'INPUT', 'TEXTAREA' ].indexOf(target.tagName) != -1 || !!target.isContentEditable;
+}
+
 export class Scoreboard extends Widget {
   constructor(object, surface) {
     super(object, surface);
@@ -363,7 +373,7 @@ export class Scoreboard extends Widget {
 
   // --- the surfaces a score is entered on ----------------------------------
 
-  openEntrySurface(mode, cell, text) {
+  openEntrySurface(mode, cell, text, selection) {
     const address = cell && this.cellAddress(cell);
     if(!address)
       return;
@@ -371,7 +381,7 @@ export class Scoreboard extends Widget {
     if(mode == 'keypad')
       this.openKeypad(cell, address, text || '');
     else
-      this.openCellInput(cell, address, text !== undefined ? text : this.cellText(address));
+      this.openCellInput(cell, address, text !== undefined ? text : this.cellText(address), selection);
   }
 
   closeEntrySurface() {
@@ -385,6 +395,8 @@ export class Scoreboard extends Widget {
       removeFromDOM(surface.dom);
     surface.cell.classList.remove('entering');
     if(surface.input && surface.cell.contains(surface.input)) {
+      // where the caret was, for the surface a rebuild of the table puts back
+      surface.selection = [ surface.input.selectionStart, surface.input.selectionEnd ];
       removeFromDOM(surface.input);
       surface.cell.innerText = surface.shown;
     }
@@ -396,7 +408,7 @@ export class Scoreboard extends Widget {
   reopenEntrySurface(surface) {
     const cell = this.cellFor(surface.seatID, surface.round);
     if(cell)
-      this.openEntrySurface(surface.mode, cell, surface.text);
+      this.openEntrySurface(surface.mode, cell, surface.text, surface.selection);
   }
 
   // A fixed-size overlay beside the board rather than inside the table, positioned
@@ -524,7 +536,7 @@ export class Scoreboard extends Widget {
     // a key the keypad answers to is consumed here, so that it types into the
     // pad instead of reaching the hotkeys of the room behind it
     const typed = e=>{
-      const key = this.entrySurface === surface && !e.ctrlKey && !e.metaKey && !e.altKey && keypadKeyFor(e.key);
+      const key = this.entrySurface === surface && !keyboardTakenFromKeypad(e) && !e.ctrlKey && !e.metaKey && !e.altKey && keypadKeyFor(e.key);
       if(!key)
         return;
       e.preventDefault();
@@ -549,20 +561,33 @@ export class Scoreboard extends Widget {
       return this.closeEntrySurface();
     if(key == 'enter') {
       const value = this.parseScore(surface.text);
+      if(value === null)
+        return this.rejectEntry(surface);
       const seat = widgets.get(surface.seatID);
       const address = seat && { seat, round: surface.round };
       this.closeEntrySurface();
-      if(value !== null && address && String(value) !== this.cellText(address))
+      if(address && String(value) !== this.cellText(address))
         await this.setCellScore(address, value);
       return;
     }
     surface.text = this.keypadText(surface.text, key);
     surface.display.textContent = surface.text;
+    surface.display.classList.remove('rejected');
   }
 
-  // What a key does to what has been typed so far. Operators do not stack, and
-  // only the minus sign opens an entry - that is a negative score - so the pad
-  // cannot produce anything expressionNumber refuses to read.
+  // An entry that is not a score at all is neither written nor thrown away: the
+  // surface stays open with what was typed still on it, marked, so that it can
+  // be corrected. Dropping it silently would look exactly like erasing a cell,
+  // which is what an entry left empty does.
+  rejectEntry(surface) {
+    const shown = surface.input || surface.display;
+    if(shown)
+      shown.classList.add('rejected');
+  }
+
+  // What a key does to what has been typed so far. Operators do not stack and a
+  // plus does not open an entry, but a trailing operator and a lone decimal
+  // point are entries in the making that no score can be read from yet.
   keypadText(text, key) {
     if(key == 'clear')
       return '';
@@ -579,7 +604,7 @@ export class Scoreboard extends Widget {
     return text + key;
   }
 
-  openCellInput(cell, address, text) {
+  openCellInput(cell, address, text, selection) {
     const input = document.createElement('input');
     input.className = 'scoreCellInput';
     input.type = 'text';
@@ -599,7 +624,10 @@ export class Scoreboard extends Widget {
       this.keepAnchoredToCell(surface, switchBar, cell);
     }
 
-    input.addEventListener('input', _=>surface.text = input.value);
+    input.addEventListener('input', _=>{
+      surface.text = input.value;
+      input.classList.remove('rejected');
+    });
     input.addEventListener('blur', _=>this.commitCellInput(surface, null));
     input.addEventListener('keydown', e=>{
       if(e.key == 'Enter')
@@ -614,7 +642,13 @@ export class Scoreboard extends Widget {
     });
 
     input.focus();
-    input.select();
+    // a score of another seat rebuilds the table under an open entry, which puts
+    // it back: the caret goes back where it was rather than selecting what has
+    // been typed so far, which the next key would replace
+    if(selection)
+      input.setSelectionRange(selection[0], selection[1]);
+    else
+      input.select();
   }
 
   // Enter goes on to the next player in the same round, Tab to the next round
@@ -627,9 +661,11 @@ export class Scoreboard extends Widget {
       return this.closeEntrySurface();
     const address = { seat, round: surface.round };
     const value = this.parseScore(surface.text);
+    if(value === null)
+      return this.rejectEntry(surface);
     const next = move && this.neighbourCell(surface, move);
     this.closeEntrySurface();
-    if(value !== null && String(value) !== this.cellText(address))
+    if(String(value) !== this.cellText(address))
       await this.setCellScore(address, value);
     if(next) {
       const cell = this.cellFor(next.seatID, next.round);

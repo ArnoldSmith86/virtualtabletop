@@ -8,13 +8,21 @@ const mouseStatus = {};
 
 // Whether a press landed on the scrollbar of an element that scrolls its own overflow - the body
 // of a scoreboard with more rounds than fit. offsetX/offsetY are measured from the padding box,
-// which is the client box plus the scrollbars, so a coordinate outside the client box is on one.
+// which is the client box plus the scrollbars, so a coordinate between the client box and the
+// scrollbar the element actually reserves room for is on that scrollbar. The room it reserves is
+// what is left of the border box once the client box and the borders are taken off it: an element
+// with an overlay scrollbar, or none at all, reserves nothing and has no strip to hit - the same
+// coordinate is inside its border there, which is part of the widget like any other pixel of it.
 function pressedScrollbar(e) {
   const el = e.target;
   if(!el || !el.clientWidth && !el.clientHeight)
     return false;
-  return e.offsetX > el.clientWidth && el.scrollHeight > el.clientHeight
-      || e.offsetY > el.clientHeight && el.scrollWidth > el.clientWidth;
+  const style = getComputedStyle(el);
+  const border = side => parseFloat(style.getPropertyValue(`border-${side}-width`)) || 0;
+  const barWidth = el.offsetWidth - el.clientWidth - border('left') - border('right');
+  const barHeight = el.offsetHeight - el.clientHeight - border('top') - border('bottom');
+  return barWidth > 0 && e.offsetX > el.clientWidth && e.offsetX <= el.clientWidth + barWidth
+      || barHeight > 0 && e.offsetY > el.clientHeight && e.offsetY <= el.clientHeight + barHeight;
 }
 
 function eventCoords(name, e) {
@@ -84,8 +92,12 @@ async function inputHandler(name, e) {
 async function handleInput(name, e, dragTarget) {
   // Dragging a scrollbar scrolls and does nothing else: the press is neither a click on the widget
   // behind it nor the start of a drag, and neither are the moves and the release that follow it.
+  // The release can happen outside the window, where no mouseup reaches us - so a move with no
+  // button held ends the drag as well, rather than leaving it latched until the next press.
   if(name == 'mousedown')
     scrollbarDrag = pressedScrollbar(e);
+  else if(name == 'mousemove' && !e.buttons)
+    scrollbarDrag = false;
   if(scrollbarDrag) {
     if(name == 'mouseup')
       scrollbarDrag = false;

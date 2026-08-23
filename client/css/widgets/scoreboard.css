@@ -112,6 +112,14 @@
   text-align: right;
 }
 
+/* an entry that is not a score is kept on its surface rather than written, so it
+   is marked as the thing standing between the player and a finished entry */
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell > input.scoreCellInput.rejected,
+.scoreboardKeypadValue.rejected {
+  outline: 2px solid darkred;
+  color: darkred;
+}
+
 /* The keypad and the button that switches surfaces hang off <body> rather than off
    the table: they stay thumb-sized whatever the board is scaled to, and a room area
    shorter than the pad - a phone in portrait - does not clip them. */

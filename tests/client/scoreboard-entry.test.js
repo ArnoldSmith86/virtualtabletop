@@ -40,6 +40,7 @@ afterEach(() => {
   for(const id of [ ...widgets.keys() ])
     removeWidget(id);
   localStorage.removeItem('scoreEntry');
+  document.body.classList.remove('overlayActive');
   delete globalThis.matchMedia;
 });
 
@@ -261,6 +262,45 @@ describe('entering a score', () => {
     expect(reaches('5')).toBe(false);
   });
 
+  test('leaves the keyboard to an overlay opened on top of it', () => {
+    seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ scoreEntry: 'keypad' });
+    board.openEntrySurface('keypad', board.cellFor('seat1', 1));
+    // an overlay hides the pad and has fields of its own: the digits, the Enter
+    // and the Escape it is typing belong to it
+    document.body.classList.add('overlayActive');
+    const event = new KeyboardEvent('keydown', { key: '7', bubbles: true, cancelable: true });
+    document.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(false);
+    expect(document.querySelector('.scoreboardKeypadValue').textContent).toBe('');
+    // and so does a key aimed at a field, wherever that field is
+    const field = document.body.appendChild(document.createElement('input'));
+    document.body.classList.remove('overlayActive');
+    field.dispatchEvent(new KeyboardEvent('keydown', { key: '7', bubbles: true, cancelable: true }));
+    expect(document.querySelector('.scoreboardKeypadValue').textContent).toBe('');
+    field.remove();
+  });
+
+  test('keeps an entry it cannot read as a score, instead of dropping it', async () => {
+    const seat1 = seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ scoreEntry: 'keypad' });
+    board.openEntrySurface('keypad', board.cellFor('seat1', 1));
+    for(const key of [ '4', '2', '+' ])
+      await board.keypadPress(key);
+    const display = document.querySelector('.scoreboardKeypadValue');
+    await board.keypadPress('enter');
+    // the entry is not finished, so nothing is written and the pad stays open
+    // with what was typed on it, marked as the reason nothing happened
+    expect(seat1.get('score')).toEqual([ 12 ]);
+    expect(document.querySelector('.scoreboardKeypad')).not.toBe(null);
+    expect(display.textContent).toBe('42+');
+    expect(display.classList.contains('rejected')).toBe(true);
+    await board.keypadPress('3');
+    expect(display.classList.contains('rejected')).toBe(false);
+    await board.keypadPress('enter');
+    expect(seat1.get('score')).toEqual([ 45 ]);
+  });
+
   test('names the value the cell holds now beside its entry, not inside it', () => {
     seat('seat1', 1, [ 12 ]);
     const board = scoreboard({ scoreEntry: 'keypad' });
@@ -283,6 +323,38 @@ describe('entering a score', () => {
     expect(document.querySelector('.scoreboardKeypadValue').textContent).toBe('10+7');
     document.querySelector('.scoreboardKeypadHeader button.scoreEntrySwitch').click();
     expect(document.querySelector('input.scoreCellInput').value).toBe('10+7');
+  });
+
+  test('keeps a typed entry that is not a score on the cell it was typed into', async () => {
+    const seat1 = seat('seat1', 1, [ 12 ]);
+    const board = scoreboard({ scoreEntry: 'type' });
+    board.openEntrySurface('type', board.cellFor('seat1', 1));
+    const input = document.querySelector('input.scoreCellInput');
+    input.value = '5+';
+    input.dispatchEvent(new Event('input'));
+    await board.commitCellInput(board.entrySurface, 'nextSeat');
+    expect(seat1.get('score')).toEqual([ 12 ]);
+    expect(document.querySelector('input.scoreCellInput').value).toBe('5+');
+    expect(input.classList.contains('rejected')).toBe(true);
+    input.value = '5+3';
+    input.dispatchEvent(new Event('input'));
+    expect(input.classList.contains('rejected')).toBe(false);
+    await board.commitCellInput(board.entrySurface, null);
+    expect(seat1.get('score')).toEqual([ 8 ]);
+  });
+
+  test('puts the caret back where it was when the table is rebuilt under it', () => {
+    seat('seat1', 1, [ 12 ]);
+    seat('seat2', 2, [ 9 ]);
+    const board = scoreboard({ scoreEntry: 'type' });
+    board.openEntrySurface('type', board.cellFor('seat1', 1), '123');
+    const input = document.querySelector('input.scoreCellInput');
+    input.setSelectionRange(2, 2);
+    // the score of another seat rebuilds the table while this one is being typed
+    board.updateTable();
+    const reopened = document.querySelector('input.scoreCellInput');
+    expect(reopened.value).toBe('123');
+    expect([ reopened.selectionStart, reopened.selectionEnd ]).toEqual([ 2, 2 ]);
   });
 
   test('takes its surface down with the board it belongs to', () => {
