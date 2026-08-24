@@ -8,7 +8,7 @@
   "simulateServerLag": 0,
   "customTab": null,
 
-  "aiRoutineEndpoint": "https://agent.virtualtabletop.io/routine-assist",
+  "aiRoutineEndpoint": null,
   "roomNamesCaseSensitive": true,
   "allowPublicLibraryEdits": false,
   "adminURL": null,

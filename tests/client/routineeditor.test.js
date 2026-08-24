@@ -4184,17 +4184,90 @@ describe('AI routine assistant', () => {
   test("a card routine is validated where it lands, not in the deck's own slot", () => {
     const room = globalThis.widgets;
     globalThis.widgets = new Map(Object.entries({
-      d: { id: 'd', type: 'deck', cardTypes: { a: {} }, faceTemplates: [], clickRoutine: [ { func: 'FLIP' } ] }
+      d: { id: 'd', type: 'deck', cardTypes: { a: {} }, faceTemplates: [], clickRoutine: [ { func: 'FLIP' } ] },
+      table: { id: 'table', type: 'holder' }
     }).map(([ id, state ]) => [ id, { unalteredState: state } ]));
     try {
       const broken = [ { func: 'SHUFFLE', holder: 'ghost' } ];
       // on the deck itself the missing holder is this routine's problem...
       expect(JSON.stringify(aiValidateRoutine('d', 'clickRoutine', broken))).toContain('ghost');
-      // ...while in cardDefaults it must not stand in for the deck's own routine
-      expect(aiValidateRoutine('d', 'clickRoutine', broken, 'cardDefaults')).toEqual([]);
+      // ...and in cardDefaults it is just as much of one, even though the
+      // validator never looks inside cardDefaults: it is checked on a card of
+      // that deck, which is the widget the routine will really run on
+      const onCards = aiValidateRoutine('d', 'clickRoutine', broken, 'cardDefaults');
+      expect(JSON.stringify(onCards)).toContain('ghost');
+      // the path starts with the routine's property, so the badge finds its card
+      expect(onCards[0].property.slice(0, 2)).toEqual([ 'clickRoutine', 0 ]);
+      // the made-up card is not itself reported as something the answer added
+      expect(aiValidateRoutine('d', 'clickRoutine', [ { func: 'SHUFFLE', holder: 'table' } ], 'cardDefaults')).toEqual([]);
+      // and the deck's own routine is not what gets checked in its place
+      expect(aiValidateRoutine('d', 'clickRoutine', [], 'cardDefaults')).toEqual([]);
     } finally {
       globalThis.widgets = room;
     }
+  });
+
+  test('the poll asks for the job on an endpoint that has parameters of its own', async () => {
+    const configured = config.aiRoutineEndpoint;
+    config.aiRoutineEndpoint = 'https://tools.example/api?fn=routine';
+    const previous = globalThis.fetch;
+    const polled = [];
+    globalThis.fetch = async (url, options) => {
+      if(!options || options.method != 'POST')
+        polled.push(url);
+      return { ok: true, json: async () => (options && options.method == 'POST')
+        ? { jobId: 'job 1' }
+        : { status: 'done', routine: [ { func: 'FLIP' } ] } };
+    };
+    try {
+      const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+      const popup = openAiPopup(editor);
+      popup.input.value = 'flip it';
+      await popup.generate();
+      // a second "?" would make the job part of the previous parameter's value
+      expect(polled).toEqual([ 'https://tools.example/api?fn=routine&job=job%201' ]);
+    } finally {
+      globalThis.fetch = previous;
+      config.aiRoutineEndpoint = configured;
+    }
+  });
+
+  test('an endpoint on this server is named as this server, not as a stranger', () => {
+    const configured = config.aiRoutineEndpoint;
+    config.aiRoutineEndpoint = '/routine-assist';
+    try {
+      const { editor } = makeEditor({ type: 'button', clickRoutine: [] });
+      const popup = openAiPopup(editor);
+      const said = popup.domElement.querySelector('.ai-routine-privacy').textContent;
+      expect(said).toContain(location.host);
+      expect(said).toContain('the server this room is already on');
+      expect(said).not.toContain('whoever runs that service');
+      popup.hide();
+    } finally {
+      config.aiRoutineEndpoint = configured;
+    }
+  });
+
+  test('a note is dropped when the widget it belongs to leaves the room', () => {
+    const { widget, editor } = withResult();
+    expect(editor.domElement.querySelector('.ai-routine-note')).not.toBe(null);
+    // the id can be taken again by a new widget, whose routine the assistant
+    // never saw - the note would then be about somebody else's work
+    widgets.delete(widget.get('id'));
+    aiRoutineDeltaReceived();
+    widgets.set(widget.get('id'), widget);
+    editor.render();
+    expect(editor.domElement.querySelector('.ai-routine-note')).toBe(null);
+  });
+
+  test('an answer that changed nothing says so instead of counting to zero', () => {
+    const { editor } = withResult();
+    editor.routineEditors.clickRoutine.routine.pop(); // back to what it was before
+    editor.routineEditors.clickRoutine.routineChanged();
+    editor.render();
+    const note = editor.domElement.querySelector('.ai-routine-note');
+    expect(note.textContent).toContain('gave the routine back unchanged');
+    expect(note.textContent).not.toContain('0 of 1');
   });
 
   test('an answer is written onto the widget with both lists of problems', async () => {

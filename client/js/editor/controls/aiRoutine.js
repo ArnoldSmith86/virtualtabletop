@@ -20,17 +20,24 @@
 // which widgets exist, what they are called, what the game already does. Without
 // it the answers are generic ones full of invented ids - which is what the first
 // version of this did. The generating happens wherever the server's
-// aiRoutineEndpoint setting points, which on virtualtabletop.io is the bot at
+// aiRoutineEndpoint setting points - on virtualtabletop.io the bot at
 // agent.virtualtabletop.io (nothing is sent anywhere else and nothing is stored).
-// A server running its own copy points that at its own service, or empties it to
-// leave the button out altogether; a single browser overrides it for itself with
+// It has no default, so a server nobody has pointed at a service has no button
+// either: sending the rooms it hosts to somebody else's machine is its admin's
+// decision and not an upgrade's. A single browser overrides it for itself with
 // localStorage editor.aiRoutineEndpoint.
 
 const AI_DONATE_URL = 'https://www.patreon.com/virtualtabletop/about';
 // The one service whose handling of a request this can speak for. Any other
 // endpoint is somebody else's, and what it keeps is theirs to say.
 const AI_FIRST_PARTY_HOST = 'agent.virtualtabletop.io';
+// The first polls are close together because the cheap end of the slider really
+// does answer in about ten seconds; after that they widen out, because the
+// expensive end takes a minute or more and asking sixty times a minute for
+// something that cannot be ready yet is traffic somebody pays for.
 const AI_POLL_INTERVAL = 1200;
+const AI_POLL_MAX_INTERVAL = 5000;
+const AI_POLL_BACKOFF = 1.3;
 const AI_POLL_TIMEOUT = 5 * 60 * 1000;
 const AI_MAX_REQUEST_SIZE = 8 * 1024 * 1024;
 
@@ -63,11 +70,30 @@ function aiRoutineEndpoint() {
   return ownChoice || config.aiRoutineEndpoint || '';
 }
 
+// An endpoint without a scheme ("/routine-assist") is on the server this editor
+// was loaded from - which is a different promise from a third party's, and the
+// one self-hosting setup that needs no CORS at all.
+function aiRoutineIsSameOrigin() {
+  const endpoint = aiRoutineEndpoint();
+  return !!endpoint && !endpoint.match(/^[a-z]+:\/\//i);
+}
+
 // Where the request goes, for the line in the popup that says so.
 function aiRoutineHost() {
   const endpoint = aiRoutineEndpoint();
   const host = endpoint.match(/^[a-z]+:\/\/([^/?#]+)/i);
-  return host ? host[1] : endpoint;
+  if(host)
+    return host[1];
+  if(aiRoutineIsSameOrigin() && typeof location == 'object' && location.host)
+    return location.host;
+  return endpoint;
+}
+
+// The job id is added as another parameter rather than as the first one: an
+// endpoint is allowed a query string of its own, and a second "?" turns the job
+// into part of the previous parameter's value, so every poll misses.
+function aiPollURL(endpoint, jobId) {
+  return `${endpoint}${endpoint.includes('?') ? '&' : '?'}job=${encodeURIComponent(jobId)}`;
 }
 
 function aiRoutineQuality() {
@@ -105,16 +131,37 @@ function aiWithoutInlineData(value) {
   return value;
 }
 
-// Where a candidate routine lands in the widget's state: a routine of the widget
-// is a property of its own, one a deck hands to its cards an entry of
-// cardDefaults. Checking the wrong one of the two checks the wrong routine and
-// stands in for whatever the other one holds.
-function aiRoutineInState(state, property, target, routine) {
+// The card the validator is given a deck's card routine on. cardDefaults is the
+// one place it does not look inside ('any'), so a card routine checked on the
+// deck is not checked at all - it is checked on a card of that deck instead,
+// made up for the check, which is where it will really run. The suffix is on an
+// id that already has to be unique in the room.
+const AI_PROBE_CARD_SUFFIX = ' ai-routine-probe-card';
+
+// The room with a candidate routine in it: a routine of the widget is a property
+// of the widget, one a deck hands to its cards an entry of the deck's
+// cardDefaults - plus the made-up card that carries it, because that is the
+// widget the problems have to be about.
+function aiRoomWithRoutine(room, widgetID, property, target, routine) {
+  const state = room[widgetID];
   if(target != 'cardDefaults')
-    return { ...state, [property]: routine };
+    return { ...room, [widgetID]: { ...state, [property]: routine } };
   const defaults = state && state.cardDefaults;
   const cardDefaults = defaults && typeof defaults == 'object' && !Array.isArray(defaults) ? defaults : {};
-  return { ...state, cardDefaults: { ...cardDefaults, [property]: routine } };
+  const probe = widgetID + AI_PROBE_CARD_SUFFIX;
+  return {
+    ...room,
+    [widgetID]: { ...state, cardDefaults: { ...cardDefaults, [property]: routine } },
+    [probe]: { id: probe, type: 'card', deck: widgetID, [property]: routine }
+  };
+}
+
+// The routine that is in that slot right now, which is what the candidate is
+// compared against.
+function aiRoutineFromState(state, property, target) {
+  const source = target == 'cardDefaults' ? state && state.cardDefaults : state;
+  const routine = source && typeof source == 'object' ? source[property] : undefined;
+  return Array.isArray(routine) ? routine : [];
 }
 
 // Both the service and the copy of the validator the editor carries have looked
@@ -139,13 +186,16 @@ function aiMergeProblems(reported, found) {
 // this routine's fault and would only bury the ones that are.
 function aiValidateRoutine(widgetID, property, routine, target) {
   const room = aiRoomState();
+  const current = aiRoutineFromState(room[widgetID], property, target);
   let before = [];
   try {
-    before = validateGameFile(room, false);
+    // the same room with the routine that is there now, made-up card included, so
+    // that card is not itself read as something the answer brought along
+    before = validateGameFile(aiRoomWithRoutine(room, widgetID, property, target, current), false);
   } catch(e) {
   }
   try {
-    const after = validateGameFile({ ...room, [widgetID]: aiRoutineInState(room[widgetID], property, target, routine) }, false);
+    const after = validateGameFile(aiRoomWithRoutine(room, widgetID, property, target, routine), false);
     const known = new Set(before.map(p=>JSON.stringify(p)));
     return after.filter(p=>!known.has(JSON.stringify(p)));
   } catch(e) {
@@ -289,7 +339,6 @@ function aiMarkChangedOperations(routineEditor) {
     record.observer.disconnect();
   if(!record.flashed && marked.length)
     record.observer = aiFlashWhenVisible(marked, _=>record.flashed = true);
-  return changed;
 }
 
 // A mark in the operation's own header line, next to the name of the operation.
@@ -339,9 +388,13 @@ function aiShowResultNote(container, routineEditor) {
   const routine = Array.isArray(routineEditor.routine) ? routineEditor.routine : [];
   const changed = aiChangedOperations(record.before, routine);
   const kept = routine.length - changed.size;
-  const summary = record.hadRoutine
-    ? `Rewritten - ${changed.size} of ${routine.length} operations are new or changed${kept ? `, ${kept} kept` : ''}.`
-    : `Written - ${routine.length} operation${routine.length == 1 ? '' : 's'}.`;
+  // "0 of 5 changed" with nothing marked and nothing to undo is an empty result
+  // dressed up as one: the answer was the routine that was already there
+  const summary = !record.hadRoutine
+    ? `Written - ${routine.length} operation${routine.length == 1 ? '' : 's'}.`
+    : changed.size
+      ? `Rewritten - ${changed.size} of ${routine.length} operations are new or changed${kept ? `, ${kept} kept` : ''}.`
+      : 'It gave the routine back unchanged - try describing what should be different about it.';
 
   const note = document.createElement('div');
   note.className = 'ai-routine-note';
@@ -428,6 +481,12 @@ function aiShowResultNote(container, routineEditor) {
 // so an offer that stops being true because something else was changed has to be
 // taken back where it stands.
 function aiRoutineDeltaReceived() {
+  // a widget can be deleted while its note is up, and its id can be taken again
+  // by a new one - which would then carry a note about a routine the assistant
+  // never wrote, diffed against the routine of the widget that is gone
+  for(const key of [ ...aiRoutineResults.keys() ])
+    if(!widgets.has(JSON.parse(key)[0]))
+      aiRoutineResults.delete(key);
   for(const note of document.querySelectorAll('.ai-routine-note')) {
     const actions = note.querySelector('.ai-routine-note-actions');
     if(actions && note.aiUndoStillAvailable && !note.aiUndoStillAvailable())
@@ -561,7 +620,9 @@ class AiRoutinePopup extends Popup {
       `What you write and the widgets in this room are sent to ${host}, so the routine can use the widgets you actually have. `
       + (host == AI_FIRST_PARTY_HOST
         ? 'They are not stored there.'
-        : 'What is kept of them there is up to whoever runs that service.')));
+        : aiRoutineIsSameOrigin()
+          ? 'That is the server this room is already on.'
+          : 'What is kept of them there is up to whoever runs that service.')));
 
     this.renderQuality();
 
@@ -721,11 +782,13 @@ class AiRoutinePopup extends Popup {
       throw new Error('The AI service did not start a job.');
 
     const until = Date.now() + AI_POLL_TIMEOUT;
+    let interval = AI_POLL_INTERVAL;
     while(!this.cancelled && Date.now() < until) {
-      await new Promise(resolve=>setTimeout(resolve, AI_POLL_INTERVAL));
+      await new Promise(resolve=>setTimeout(resolve, interval));
+      interval = Math.min(AI_POLL_MAX_INTERVAL, Math.round(interval * AI_POLL_BACKOFF));
       if(this.cancelled)
         break;
-      const poll = await fetch(`${endpoint}?job=${encodeURIComponent(started.jobId)}`, { signal });
+      const poll = await fetch(aiPollURL(endpoint, started.jobId), { signal });
       const state = await poll.json().catch(_=>({}));
       if(this.cancelled)
         break;
