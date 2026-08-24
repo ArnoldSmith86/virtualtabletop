@@ -95,11 +95,20 @@ export class Holder extends ImageWidget {
   // The optional parameter lets a property change ask what another layout
   // value would mean.
   effectiveLayout(layoutValue) {
+    // the derived properties go through this on every get(), so the answer is
+    // cached until any state the derivation could depend on changes
+    const cacheable = layoutValue === undefined && typeof arrangementStateVersion == 'function';
+    if(cacheable && this.cachedLayoutVersion === arrangementStateVersion())
+      return this.cachedLayout;
     let layout = layoutValue !== undefined ? layoutValue : super.get('layout');
     if(layout === null || layout === undefined)
       layout = 'custom';
     if(layout == 'auto' && autoDeferProperties.some(p=>(this.state[p] !== undefined ? this.state[p] : super.getDefaultValue(p)) !== this.defaults[p]))
-      return 'custom';
+      layout = 'custom';
+    if(cacheable) {
+      this.cachedLayoutVersion = arrangementStateVersion();
+      this.cachedLayout = layout;
+    }
     return layout;
   }
 
@@ -351,8 +360,11 @@ export class Holder extends ImageWidget {
         return await this.snapPileToGrid(child, oldParentID);
       }
       if(child.movedByButton)
-        // MOVE fills the grid sequentially
-        return await this.updateAfterShuffle();
+        // MOVE fills the grid sequentially. Only the arriving card's lane is
+        // laid out: the card has no owner yet - that is assigned after this
+        // alignment - so a pass over the other lanes would count it into every
+        // one of them and shift their cards off the first cell.
+        return await this.updateAfterShuffle(new Set([ this.childOwner(child) ]));
       // an interactive drop is inserted at the grid cell under the cursor and
       // the other cards reflow around it
       return await this.snapToGridCell(child, oldParentID);
@@ -510,30 +522,32 @@ export class Holder extends ImageWidget {
 
     // while neither the slot nor the shadow's place in the pile changes, the
     // fan already looks exactly like this preview - a drag re-previews on
-    // every pointer move, so the no-op has to be cheap
-    if(shadow.fanPreviewPile == target && target.previewGap === fanIndex && shadow.get('parent') == target.get('id'))
-      return;
-
-    shadow.fanPreviewPile = target;
-    if(target.previewGap !== fanIndex) {
-      target.previewGap = fanIndex;
-      // laying the fan out around the gap also shifts the following groups
-      await target.arrangeChildren();
+    // every pointer move, so laying it out again has to be skipped. The
+    // shadow's own position is still restored below: the drag writes its
+    // global pointer coordinates into it before every preview, and left in
+    // place they would put a child of the pile far outside the fan.
+    if(shadow.fanPreviewPile != target || target.previewGap !== fanIndex || shadow.get('parent') != target.get('id')) {
+      shadow.fanPreviewPile = target;
+      if(target.previewGap !== fanIndex) {
+        target.previewGap = fanIndex;
+        // laying the fan out around the gap also shifts the following groups
+        await target.arrangeChildren();
+      }
+      // every widget is its own stacking context, so as a sibling of the pile
+      // the shadow could only cover the whole fan or hide behind it. Slotting
+      // in above the cards below its slot and below the ones above it - the
+      // way the inserted card will - means joining the pile itself: the cards'
+      // z values open up around the slot so it gets a z of its own
+      if(shadow.get('parent') != target.get('id'))
+        await this.reparentShadow(shadow, target.get('id'));
+      let z = 1;
+      for(const card of [ ...target.children() ].sort((a, b)=>a.get('z') - b.get('z'))) {
+        if(z == fanIndex + 1)
+          ++z;
+        await card.set('z', z++);
+      }
     }
     const slot = target.previewGapOffset || [ 0, 0 ];
-    // every widget is its own stacking context, so as a sibling of the pile the
-    // shadow could only cover the whole fan or hide behind it. Slotting in above
-    // the cards below its slot and below the ones above it - the way the
-    // inserted card will - means joining the pile itself: the cards' z values
-    // open up around the slot so it gets a z of its own
-    if(shadow.get('parent') != target.get('id'))
-      await this.reparentShadow(shadow, target.get('id'));
-    let z = 1;
-    for(const card of [ ...target.children() ].sort((a, b)=>a.get('z') - b.get('z'))) {
-      if(z == fanIndex + 1)
-        ++z;
-      await card.set('z', z++);
-    }
     await shadow.setPosition(target.get('dropOffsetX') + slot[0], target.get('dropOffsetY') + slot[1], fanIndex + 1);
   }
 
@@ -764,14 +778,22 @@ export class Holder extends ImageWidget {
   // 'allowPiles') derives from this measurement, so going through children()
   // would recurse.
   autoCardSize() {
+    // measured through every get() of a derived property, so the scan over
+    // the children is cached until any state it could depend on changes
+    const cacheable = typeof arrangementStateVersion == 'function';
+    if(cacheable && this.cachedCardSizeVersion === arrangementStateVersion())
+      return this.cachedCardSize;
     const cards = this.childrenFilter(super.children(), true)
       .flatMap(c=>c.get('type') == 'pile' ? this.childrenFilter(c.children(), false) : [ c ]);
-    if(!cards.length)
-      return null;
-    return {
+    const size = !cards.length ? null : {
       width:  Math.max(...cards.map(c=>c.get('width'))),
       height: Math.max(...cards.map(c=>c.get('height')))
     };
+    if(cacheable) {
+      this.cachedCardSizeVersion = arrangementStateVersion();
+      this.cachedCardSize = size;
+    }
+    return size;
   }
 
   // Whether the auto layout has room to line its children up instead of letting
@@ -1398,18 +1420,25 @@ export class Holder extends ImageWidget {
 
   // SORT with groupBy: sort all of a lane's cards by `key` and re-partition
   // them into one group per distinct value of the groupBy property - one group
-  // per suit, for example - per owner lane. Single cards stay loose.
-  async regroupBy(property, key, reverse, locales, options) {
+  // per suit, for example - per owner lane. Single cards stay loose. Handed a
+  // subset of the cards (SORT on a collection), only those are pulled out of
+  // their groups and regrouped; the rest of the lane keeps its groups and
+  // stays ahead of the new ones.
+  async regroupBy(property, key, reverse, locales, options, only=null) {
     const all = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
     const owners = new Set(all.map(c=>c.get('owner') || null));
+    const touched = new Set();
     this.preventRearrangeDuringPileDrop = true;
     for(const owner of owners) {
       const lane = all.filter(c=>!c.get('owner') || c.get('owner') === owner);
-      const cards = [];
+      let cards = [];
       for(const g of lane)
         cards.push(...(g.get('type') == 'pile' ? g.children() : [ g ]));
+      if(only)
+        cards = cards.filter(c=>only.indexOf(c) != -1);
       if(!cards.length)
         continue;
+      touched.add(owner);
 
       await sortWidgets(cards, key || property, reverse, locales, options, true);
 
@@ -1431,7 +1460,7 @@ export class Holder extends ImageWidget {
         runByValue.get(valueKey).push(c);
       }
 
-      let z = 1;
+      const regrouped = [];
       for(const run of runs) {
         if(run.length == 1) {
           const c = run[0];
@@ -1445,15 +1474,24 @@ export class Holder extends ImageWidget {
           delete c.targetPlayer;
           delete c.movedByButton;
           delete c.currentParent;
-          await c.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), z++);
+          await c.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), c.get('z'));
+          regrouped.push(c);
         } else {
-          const pile = await this.makeGroup(run);
-          await pile.set('z', z++);
+          regrouped.push(await this.makeGroup(run));
         }
       }
+      // taking cards out may have dissolved groups or promoted their last
+      // card, so what the lane still holds is re-read: the untouched entries
+      // keep their order and the new groups follow them
+      const kept = this.childrenFilter(super.children(), true)
+        .filter(w=>!w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner) && regrouped.indexOf(w) == -1)
+        .sort((a, b)=>a.get('z') - b.get('z'));
+      let z = 1;
+      for(const g of kept.concat(regrouped))
+        await g.set('z', z++);
     }
     delete this.preventRearrangeDuringPileDrop;
-    await this.updateAfterShuffle();
+    await this.updateAfterShuffle(touched);
   }
 
   supportsPiles() {

@@ -1,5 +1,5 @@
 import { dropTargets, exceedsDropLimit } from '../../client/js/main.js';
-import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
+import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta, arrangementStateVersion } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
 import { createWidget, removeWidget } from './client-util.js';
@@ -23,6 +23,7 @@ beforeAll(async () => {
   globalThis.batchStart = batchStart;
   globalThis.batchEnd = batchEnd;
   globalThis.flushDelta = flushDelta;
+  globalThis.arrangementStateVersion = arrangementStateVersion;
   globalThis.legacyMode = () => false;
   globalThis.compareDropTarget = w => w.get('type') == 'card' || w.get('type') == 'pile';
   globalThis.asArray = v => Array.isArray(v) ? v : [ v ];

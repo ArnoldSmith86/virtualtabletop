@@ -1279,10 +1279,6 @@ const routineOperationMetadata = {
       // sorting a holder always rearranges its children
       if(v('holder') != null)
         ignored.rearrange = 'ignored because sorting a holder always rearranges it';
-      // the groups are what a holder arranging piles lines up, so there are
-      // none to build when the sort works on picked widgets instead
-      else if(v('groupBy'))
-        ignored.groupBy = 'ignored because only the widgets in a holder can be sorted into groups';
       return ignored;
     }
   },

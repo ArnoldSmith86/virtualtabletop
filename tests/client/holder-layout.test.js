@@ -1,5 +1,5 @@
 import { dropTargets, exceedsDropLimit } from '../../client/js/main.js';
-import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
+import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta, arrangementStateVersion } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 import { sortWidgets } from '../../client/js/main.js';
 
@@ -33,6 +33,7 @@ beforeAll(async () => {
   globalThis.batchStart = batchStart;
   globalThis.batchEnd = batchEnd;
   globalThis.flushDelta = flushDelta;
+  globalThis.arrangementStateVersion = arrangementStateVersion;
   globalThis.legacyMode = () => false;
   globalThis.compareDropTarget = w => w.get('type') == 'card' || w.get('type') == 'pile';
   globalThis.asArray = v => Array.isArray(v) ? v : [ v ];
@@ -504,6 +505,32 @@ describe('the grid layout', () => {
     expect(positionsByZ(holder)).toEqual([ [ 10, 20 ], [ 120, 20 ] ]);
   });
 
+  test('a deal to one seat leaves the other lanes on their first cell', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 5, childrenPerOwner: true, width: 560, height: 320 });
+    // deal the way MOVE to a seat does: per card targetPlayer + parent +
+    // bringToFront, one batch pass over the receiving lane at the end
+    const deal = async (player, ids) => {
+      for(const id of ids) {
+        const c = createCard(id, { z: 1 });
+        c.movedByButton = true;
+        c.targetPlayer = player;
+        await c.set('parent', 'h');
+        await c.bringToFront();
+        delete c.targetPlayer;
+        delete c.movedByButton;
+      }
+      await holder.updateAfterShuffle(new Set([ player ]));
+    };
+    await deal('P1', [ 'a0', 'a1', 'a2' ]);
+    await deal('P2', [ 'b0', 'b1', 'b2' ]);
+    const lane = player=>holder.children().filter(c=>c.get('owner') == player)
+      .sort((a, b)=>a.get('z') - b.get('z')).map(c=>[ c.get('x'), c.get('y') ]);
+    // the second deal's cards have no owner while they arrive - P1's lane must
+    // not count them and shift off its first cell
+    expect(lane('P1')).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ] ]);
+    expect(lane('P2')).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ] ]);
+  });
+
   test('a fractional gridColumns below one still means a single column', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 0.5, width: 320, height: 320 });
     for(let i=0; i<2; ++i)
@@ -825,6 +852,48 @@ describe('SORT with groupBy', () => {
     expect(cards.every(c=>holder.children().includes(c))).toBe(true);
   });
 
+  test('handed a subset it regroups only those cards and keeps the rest ahead', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
+    const mine = [
+      [ 'S', 2 ], [ 'H', 1 ], [ 'S', 1 ], [ 'H', 2 ]
+    ].map(([ suit, rank ], i)=>createCard(`m${suit}${rank}`, { parent: 'h', z: i+1, suit, rank, owner: 'jestPlayer' }));
+    createCard('aS1', { parent: 'h', z: 5, suit: 'S', rank: 1, owner: 'alice' });
+    createCard('aH1', { parent: 'h', z: 6, suit: 'H', rank: 1, owner: 'alice' });
+    await holder.updateAfterShuffle();
+    const alicePositions = [ 'aS1', 'aH1' ].map(id=>[ widgets.get(id).get('x'), widgets.get(id).get('z') ]);
+
+    // what SORT with a collection does: only the SELECTed cards regroup
+    await holder.regroupBy('suit', 'rank', false, undefined, undefined, mine);
+
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(2);
+    for(const pile of piles) {
+      expect(pile.get('owner')).toBe('jestPlayer');
+      expect(pile.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('rank'))).toEqual([ 1, 2 ]);
+    }
+    // alice's loose cards stayed out of it
+    expect([ 'aS1', 'aH1' ].map(id=>[ widgets.get(id).get('x'), widgets.get(id).get('z') ])).toEqual(alicePositions);
+    expect([ 'aS1', 'aH1' ].every(id=>widgets.get(id).get('parent') == 'h')).toBe(true);
+  });
+
+  test('a subset from inside a group is pulled out and the rest keeps its place', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120 });
+    const fan = await createPile('fan', holder, 4, 4, 3);
+    for(const [ i, suit ] of [ 'S', 'H', 'S' ].entries())
+      await widgets.get(`fan-card-${i}`).set('suit', suit);
+    await holder.updateAfterShuffle();
+
+    const picked = [ widgets.get('fan-card-0'), widgets.get('fan-card-2') ];
+    await holder.regroupBy('suit', 'suit', false, undefined, undefined, picked);
+
+    // the two spades formed a new group after the one they left
+    expect(widgets.get('fan-card-1').get('parent')).toBe('h');
+    const newPile = widgets.get('fan-card-0').get('parent');
+    expect(newPile).not.toBe('h');
+    expect(widgets.get(newPile).children().length).toBe(2);
+    expect(widgets.get('fan-card-1').get('z')).toBeLessThan(widgets.get(newPile).get('z'));
+  });
+
   test('a value only one card has stays a loose card', async () => {
     const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
     createCard('a1', { parent: 'h', z: 1, suit: 'S' });
@@ -972,6 +1041,22 @@ describe('the drop shadow previewing an insertion into a fan', () => {
     expect(one.spreadExtent('X')).toBe(220);
     const two = widgets.get('two');
     expect(two.get('x')).toBe(4 + 220 + 8);
+  });
+
+  test('a repeated preview of the same slot puts the shadow back into it', async () => {
+    const { holder, shadow } = await previewRoom();
+    const one = widgets.get('one');
+    await holder.previewShadowDrop(shadow, one, 60 - CARD_WIDTH/2 + one.get('x'), 4);
+    // the drag writes its global pointer coordinates into the shadow before
+    // every preview - a pointer move within the same slot must not leave them
+    await shadow.setPosition(325, 703, 0);
+    await holder.previewShadowDrop(shadow, one, 60 - CARD_WIDTH/2 + one.get('x'), 4);
+    expect(one.previewGap).toBe(1);
+    expect(shadow.get('parent')).toBe('one');
+    expect(shadow.get('x')).toBe(40);
+    expect(shadow.get('y')).toBe(0);
+    expect(shadow.get('z')).toBeGreaterThan(widgets.get('one-card-0').get('z'));
+    expect(shadow.get('z')).toBeLessThan(widgets.get('one-card-1').get('z'));
   });
 
   test('pointing into the open gap keeps the same slot instead of flickering', async () => {

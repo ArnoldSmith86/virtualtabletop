@@ -2794,7 +2794,7 @@ function commonInfoTopic(topicName) {
       holder: holderID (or an array) - the holder containing the widgets to sort (optional).
       collection: collection - the collection of widgets to sort if holder is not given (defaults to DEFAULT collection).
       key: property name, key object ({key, order, reverse}), or an array of either - what to sort by; an array is applied left to right until values differ.
-      groupBy: property name - only used on a holder that arranges piles (layout multipleSpread): the sorted widgets are partitioned into one group per distinct value of this property, e.g. one group per suit (defaults to null, which sorts the widgets within the existing groups instead).
+      groupBy: property name - only used for widgets in a holder that arranges piles (layout multipleSpread): the sorted widgets are partitioned into one group per distinct value of this property, e.g. one group per suit (defaults to null, which sorts the widgets within the existing groups instead). With a collection, only the collected widgets regroup - each within its own holder and owner lane - so a button can SELECT one player's cards and group just those.
       reverse: true/false - reverses the order after sorting by key (defaults to false).
       rearrange: true/false - if false, only the order within the collection changes, without moving widgets in the room (only applies to collections, defaults to true).
       locales: locale string (or an array of them) - the locale used when comparing text values, e.g. "de" (defaults to the locale of the player's browser).

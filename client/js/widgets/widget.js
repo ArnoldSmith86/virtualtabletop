@@ -2627,14 +2627,38 @@ export class Widget extends StateManaged {
           if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
-          if(a.groupBy)
-            problems.push(`groupBy is ignored because only the widgets in a holder can be sorted into groups.`);
           if(collections[collection].length) {
-            await sortWidgets(collections[collection], a.key, a.reverse, a.locales, a.options, a.rearrange);
-            await w(collections[collection].map(i=>i.get('parent')), async holder=>{
-              if(typeof holder.updateAfterShuffle == 'function')
-                await holder.updateAfterShuffle();
-            });
+            // widgets sitting in a holder that arranges piles are sorted and
+            // regrouped inside their own lane, the way SORT with a holder is -
+            // so a sort button can SELECT one player's cards and group them
+            let loose = collections[collection];
+            if(a.groupBy) {
+              const byHolder = new Map();
+              loose = [];
+              for(const c of collections[collection]) {
+                let holder = widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null;
+                if(holder && holder.get('type') == 'pile')
+                  holder = widgets.has(holder.get('parent')) ? widgets.get(holder.get('parent')) : null;
+                if(holder && typeof holder.arrangesPiles == 'function' && holder.arrangesPiles()) {
+                  if(!byHolder.has(holder))
+                    byHolder.set(holder, []);
+                  byHolder.get(holder).push(c);
+                } else {
+                  loose.push(c);
+                }
+              }
+              for(const [ holder, cards ] of byHolder)
+                await holder.regroupBy(a.groupBy, a.key, a.reverse, a.locales, a.options, cards);
+              if(loose.length)
+                problems.push(`groupBy is ignored for widgets that are not in a holder that arranges piles.`);
+            }
+            if(loose.length) {
+              await sortWidgets(loose, a.key, a.reverse, a.locales, a.options, a.rearrange);
+              await w(loose.map(i=>i.get('parent')), async holder=>{
+                if(typeof holder.updateAfterShuffle == 'function')
+                  await holder.updateAfterShuffle();
+              });
+            }
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
