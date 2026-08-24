@@ -7,6 +7,7 @@ const layoutDerivedProperties = {
   singleSpread:   { alignChildren: true,  allowPiles: false, preventPiles: false },
   multipleSpread: { alignChildren: true,  allowPiles: true,  preventPiles: false, dropShadow: true },
   grid:           { alignChildren: true,  allowPiles: false, preventPiles: true },
+  random:         { alignChildren: true,  allowPiles: false, preventPiles: true },
   freeform:       { alignChildren: false },
   // allowPiles is derived from the holder's size - see Holder.get
   auto:           { alignChildren: true,  preventPiles: false }
@@ -27,6 +28,9 @@ const autoDeferProperties = [ 'alignChildren', 'preventPiles', 'allowPiles', 'st
 
 // The padding the auto layout keeps between its children and to the border.
 const autoLayoutPadding = 4;
+
+// How far the random layout tilts its pieces, in degrees to either side.
+const randomLayoutMaxTilt = 15;
 
 export class Holder extends ImageWidget {
   constructor(object, surface) {
@@ -280,6 +284,10 @@ export class Holder extends ImageWidget {
       toProcess = card.children();
     if(!stillInside) {
       for(const w of toProcess) {
+        // the tilt of the random layout belongs to the tray: a piece taken out
+        // straightens up again (an onLeave below can still rotate it itself)
+        if(this.get('layout') == 'random')
+          await w.set('rotation', w.getDefaultValue('rotation'));
         if(!w.get('ignoreOnLeave')) {
           for(const property in this.get('onLeave')) {
             if(tracingEnabled)
@@ -363,7 +371,9 @@ export class Holder extends ImageWidget {
         await w.set('parent', this.get('id'));
         ++i;
         if(this.get('preventPiles')) {
-          if(this.get('alignChildren') && !this.get('stackOffsetX') && !this.get('stackOffsetY')) {
+          // the random layout scatters from where the pile was dropped, so the
+          // cards keep that spot instead of gathering on the drop offset
+          if(this.get('alignChildren') && !this.get('stackOffsetX') && !this.get('stackOffsetY') && this.get('layout') != 'random') {
             await w.set('x', this.get('dropOffsetX'));
             await w.set('y', this.get('dropOffsetY'));
           }
@@ -371,7 +381,7 @@ export class Holder extends ImageWidget {
         }
       }
       delete this.preventRearrangeDuringPileDrop;
-      if(!this.get('preventPiles'))
+      if(!this.get('preventPiles') || this.get('layout') == 'random')
         await this.receiveCard();
       return true;
     }
@@ -592,16 +602,24 @@ export class Holder extends ImageWidget {
         else
           await pile.arrangeChildren(false, true);
     }
+    // the tilt of the random layout belongs to it: a switch away straightens
+    // the pieces before the new layout lines them up
+    if(property == 'layout' && oldValue == 'random' && this.get('layout') != 'random')
+      for(const entry of this.childrenFilter(super.children(), true))
+        for(const w of entry.get('type') == 'pile' ? entry.children() : [ entry ])
+          await w.set('rotation', w.getDefaultValue('rotation'));
     if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle();
     // the layouts that decide the arrangement from the holder's size react to it changing
-    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || this.get('layout') == 'grid'))
+    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random' ].indexOf(this.get('layout')) != -1))
       await this.updateAfterShuffle();
   }
 
   async receiveCard(card, pos) {
     if(this.usesAutoLayout())
       return await this.receiveCardAuto(card, pos);
+    if(this.get('layout') == 'random')
+      return await this.receiveCardRandom(card, pos);
 
     // get children sorted by their position along the axis this holder spreads along
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
@@ -636,6 +654,29 @@ export class Holder extends ImageWidget {
     await this.rearrangeChildren(sorted, card);
   }
 
+  // The random layout: the pieces lie scattered across the holder the way dice
+  // thrown into a tray come to rest. A dropped piece keeps the spot it was
+  // aimed at while that spot is free - nudged inside the margin - and lands on
+  // a random free one otherwise; either way it settles with a fresh small
+  // tilt. Everything already lying in the holder stays where it is.
+  async receiveCardRandom(card, pos) {
+    // the drop shadow only previews where a piece put down right here would
+    // land: it is pinned under the pointer, without consuming the shared
+    // randomness the game state depends on
+    if(card && card.get('dropShadowOwner')) {
+      const metrics = this.randomPieceMetrics(card, card.get('rotation'));
+      const aimed = pos || [ card.get('x'), card.get('y') ];
+      const at = this.randomClampPiece({ x: aimed[0], y: aimed[1] }, metrics);
+      return await card.setPosition(at.x, at.y, this.arrangedChildrenOwned().length + 1);
+    }
+    const children = this.arrangedChildrenOwned().sort((a, b)=>a.get('z') - b.get('z'));
+    // the piece being placed goes last: it never pushes the others off their
+    // spots, and it ends up on top
+    if(card && children.indexOf(card) != -1)
+      children.push(children.splice(children.indexOf(card), 1)[0]);
+    await this.rearrangeChildrenRandom(children, card, card && card.movedByButton ? null : pos);
+  }
+
   async rearrangeChildren(children, card) {
     if(this.preventRearrangeDuringPileDrop)
       return;
@@ -644,6 +685,8 @@ export class Holder extends ImageWidget {
       return await this.rearrangeChildrenAuto(children);
     if(this.get('layout') == 'grid')
       return await this.rearrangeChildrenGrid(children);
+    if(this.get('layout') == 'random')
+      return await this.rearrangeChildrenRandom(children);
 
     // a drop shadow previewing an insertion into one of the fans sits inside
     // that fan, so the row is laid out as if it were not there
@@ -809,6 +852,93 @@ export class Holder extends ImageWidget {
         x += steps[i];
       }
       y += stepsY[row];
+    }
+  }
+
+  // The axis-aligned box a piece covers once it is tilted: its own box grown
+  // by the rotation around its center. The random layout places these boxes,
+  // so a tilted corner never pokes past the border or covers a neighbor.
+  randomPieceMetrics(child, rotation) {
+    const width = child.spreadExtent('X');
+    const height = child.spreadExtent('Y');
+    const radians = (rotation || 0) * Math.PI / 180;
+    const cos = Math.abs(Math.cos(radians));
+    const sin = Math.abs(Math.sin(radians));
+    const w = width * cos + height * sin;
+    const h = height * cos + width * sin;
+    return { w, h, shiftX: (w - width) / 2, shiftY: (h - height) / 2 };
+  }
+
+  // Keeps a piece's covered box inside the holder, the drop offset away from
+  // the borders; a piece bigger than that room is centered instead. Works on
+  // the piece's own coordinates, so a spot that already lies inside comes back
+  // unchanged, bit for bit.
+  randomClampPiece(at, metrics) {
+    const clampAxis = (low, high, value)=>high < low ? (low + high) / 2 : Math.min(high, Math.max(low, value));
+    return {
+      x: clampAxis(this.get('dropOffsetX') + metrics.shiftX, this.get('width')  - this.get('dropOffsetX') - metrics.w + metrics.shiftX, at.x),
+      y: clampAxis(this.get('dropOffsetY') + metrics.shiftY, this.get('height') - this.get('dropOffsetY') - metrics.h + metrics.shiftY, at.y)
+    };
+  }
+
+  // The scatter pass of the random layout. Every piece keeps its spot while it
+  // lies inside the margins and clear of the pieces placed before it, so laying
+  // the holder out again moves nothing that does not have to move - and
+  // consumes no randomness. What cannot stay - the piece that was just dropped
+  // onto an occupied spot, or one a shrunken holder no longer has room for -
+  // is thrown onto a random spot with a fresh tilt instead. Of the spots
+  // tried, the one covering the least of the other pieces wins, so a holder
+  // too full for free spots overlaps its pieces instead of spilling them out.
+  async rearrangeChildrenRandom(children, dropped=null, pos=null) {
+    if(this.preventRearrangeDuringPileDrop)
+      return;
+    children = children.filter(c=>!c.get('dropShadowOwner'));
+    if(!children.length)
+      return;
+
+    const placed = [];
+    const boxAt = (at, metrics)=>({ x: at.x - metrics.shiftX, y: at.y - metrics.shiftY, w: metrics.w, h: metrics.h });
+    const coveredArea = box=>placed.reduce((sum, p)=>sum +
+      Math.max(0, Math.min(box.x + box.w, p.x + p.w) - Math.max(box.x, p.x)) *
+      Math.max(0, Math.min(box.y + box.h, p.y + p.h) - Math.max(box.y, p.y)), 0);
+    const freshTilt = child=>(+child.getDefaultValue('rotation') || 0) + Math.round((rand() * 2 - 1) * randomLayoutMaxTilt);
+
+    let z = 1;
+    for(const child of children) {
+      let rotation = child.get('rotation');
+      let metrics = this.randomPieceMetrics(child, rotation);
+      let at = null;
+      if(child == dropped) {
+        // the piece being put down settles with a fresh tilt, decided before
+        // the aimed spot is checked so the tilted box is what has to fit there
+        rotation = freshTilt(child);
+        metrics = this.randomPieceMetrics(child, rotation);
+        if(pos)
+          at = this.randomClampPiece({ x: pos[0], y: pos[1] }, metrics);
+      } else {
+        at = this.randomClampPiece({ x: child.get('x'), y: child.get('y') }, metrics);
+      }
+
+      if(!at || coveredArea(boxAt(at, metrics))) {
+        if(child != dropped) {
+          rotation = freshTilt(child);
+          metrics = this.randomPieceMetrics(child, rotation);
+        }
+        const roomW = Math.max(0, this.get('width')  - 2 * this.get('dropOffsetX') - metrics.w);
+        const roomH = Math.max(0, this.get('height') - 2 * this.get('dropOffsetY') - metrics.h);
+        let best = null;
+        for(let attempt = 0; attempt < 20 && (!best || best.covered); ++attempt) {
+          const candidate = this.randomClampPiece({ x: this.get('dropOffsetX') + metrics.shiftX + rand() * roomW, y: this.get('dropOffsetY') + metrics.shiftY + rand() * roomH }, metrics);
+          const covered = coveredArea(boxAt(candidate, metrics));
+          if(!best || covered < best.covered)
+            best = { at: candidate, covered };
+        }
+        at = best.at;
+      }
+
+      placed.push(boxAt(at, metrics));
+      await child.setPosition(at.x, at.y, z++);
+      await child.set('rotation', rotation);
     }
   }
 
@@ -1035,6 +1165,8 @@ export class Holder extends ImageWidget {
   spreadsChildren() {
     if(this.usesAutoLayout())
       return this.autoSpreads();
+    if(this.get('layout') == 'random')
+      return true;
     return !!(this.get('stackOffsetX') || this.get('stackOffsetY') || this.get('allowPiles') && this.pilesSpacingSet());
   }
 

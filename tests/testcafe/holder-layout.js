@@ -81,6 +81,51 @@ test('The classicHolderLayout legacy mode keeps drops at the drop offset', async
   await t.expect(state.loose.y).eql(4);
 });
 
+// The box a tilted piece of a random holder covers - what the layout keeps
+// inside the margins and clear of the other pieces.
+function coveredBox(widget) {
+  const width = widget.width ?? CARD_WIDTH;
+  const height = widget.height ?? CARD_HEIGHT;
+  const radians = (widget.rotation || 0) * Math.PI / 180;
+  const cos = Math.abs(Math.cos(radians));
+  const sin = Math.abs(Math.sin(radians));
+  const w = width * cos + height * sin;
+  const h = height * cos + width * sin;
+  return { x: (widget.x ?? 4) - (w - width) / 2, y: (widget.y ?? 4) - (h - height) / 2, w, h };
+}
+
+test('A random holder keeps a drop on its aimed free spot and relocates a covered one', async t => {
+  await openRoom(t, 'modern', baseState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 400, dropTarget: { type: 'card' }, layout: 'random' },
+    loose: card('loose', { x: 1200, y: 700, z: 9 }),
+    loose2: card('loose2', { x: 1200, y: 500, z: 10 })
+  }));
+
+  // dropped onto the middle of the empty holder, the card keeps that spot -
+  // up to the drag's own client-pixel rounding - and settles with a small tilt
+  await dragPath(t, 'loose', [ { onto: 'holder' } ]);
+  let state = await stateWhen(s=>s.loose.parent == 'holder');
+  await t.expect(Math.abs(state.loose.x - 248.5) <= 3).ok('kept the aimed spot');
+  await t.expect(Math.abs(state.loose.y - 120) <= 3).ok('kept the aimed spot vertically');
+  await t.expect(Math.abs(state.loose.rotation || 0) <= 15).ok('tilted at most 15 degrees');
+  const settled = { x: state.loose.x, y: state.loose.y };
+
+  // a second card aimed at the same spot hops to a free one; the first stays
+  // put and nothing pokes past the drop offset margin
+  await dragPath(t, 'loose2', [ { onto: 'holder' } ]);
+  state = await stateWhen(s=>s.loose2.parent == 'holder');
+  await t.expect(state.loose.x).eql(settled.x, 'the first card stayed put');
+  await t.expect(state.loose.y).eql(settled.y);
+  const boxes = [ coveredBox(state.loose), coveredBox(state.loose2) ];
+  for(const box of boxes) {
+    await t.expect(box.x >= 4 && box.y >= 4).ok('inside the top left margin');
+    await t.expect(box.x + box.w <= 596 && box.y + box.h <= 396).ok('inside the bottom right margin');
+  }
+  const overlap = Math.max(0, Math.min(boxes[0].x + boxes[0].w, boxes[1].x + boxes[1].w) - Math.max(boxes[0].x, boxes[1].x))
+                * Math.max(0, Math.min(boxes[0].y + boxes[0].h, boxes[1].y + boxes[1].h) - Math.max(boxes[0].y, boxes[1].y));
+  await t.expect(overlap).eql(0, 'the two cards do not overlap');
+});
+
 test('A pile dropped into an auto holder with room to spread is emptied into the row', async t => {
   await openRoom(t, 'modern', baseState({
     holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },

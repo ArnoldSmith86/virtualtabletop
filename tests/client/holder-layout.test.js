@@ -12,7 +12,16 @@ import { createWidget, removeWidget } from './client-util.js';
 // identifiers it references before importing it.
 let Holder, Pile;
 let pileCounter = 0;
+// the random layout draws from the shared rand(); a seeded stand-in keeps the
+// scatter deterministic and lets tests assert how much randomness a pass used
+let randState = 1;
+let randCalls = 0;
 beforeAll(async () => {
+  globalThis.rand = () => {
+    ++randCalls;
+    randState = (randState * 1103515245 + 12345) % 2147483648;
+    return randState / 2147483648;
+  };
   globalThis.Widget = Widget;
   globalThis.ImageWidget = class ImageWidget extends Widget {
     getImage() { return ''; }
@@ -92,6 +101,8 @@ afterEach(() => {
   for(const id of [ ...widgets.keys() ])
     removeWidget(id);
   globalThis.legacyMode = () => false;
+  randState = 1;
+  randCalls = 0;
 });
 
 describe('what each layout derives for the holder', () => {
@@ -506,6 +517,176 @@ describe('the grid layout', () => {
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ] ]);
+  });
+});
+
+describe('the random layout', () => {
+  // the axis-aligned box a piece covers with its tilt, the same measure the
+  // layout places - the assertions below check these boxes against the
+  // holder's room and against each other
+  function coveredBox(c) {
+    const radians = (c.get('rotation') || 0) * Math.PI / 180;
+    const cos = Math.abs(Math.cos(radians));
+    const sin = Math.abs(Math.sin(radians));
+    const w = c.get('width') * cos + c.get('height') * sin;
+    const h = c.get('height') * cos + c.get('width') * sin;
+    return { x: c.get('x') - (w - c.get('width')) / 2, y: c.get('y') - (h - c.get('height')) / 2, w, h };
+  }
+
+  function expectInsideHolder(holder, margin = 4) {
+    for(const c of holder.arrangedChildren()) {
+      const box = coveredBox(c);
+      expect(box.x).toBeGreaterThanOrEqual(margin - 1e-9);
+      expect(box.y).toBeGreaterThanOrEqual(margin - 1e-9);
+      expect(box.x + box.w).toBeLessThanOrEqual(holder.get('width') - margin + 1e-9);
+      expect(box.y + box.h).toBeLessThanOrEqual(holder.get('height') - margin + 1e-9);
+    }
+  }
+
+  function expectNoOverlap(holder) {
+    const boxes = holder.arrangedChildren().map(coveredBox);
+    for(let i = 0; i < boxes.length; ++i)
+      for(let j = i + 1; j < boxes.length; ++j) {
+        const a = boxes[i], b = boxes[j];
+        const area = Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x))
+                   * Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
+        expect(area).toBeLessThanOrEqual(1e-9);
+      }
+  }
+
+  test('random prevents piles and counts as a spreading arrangement', () => {
+    const holder = createHolder({ id: 'h', layout: 'random' });
+    expect(holder.get('preventPiles')).toBe(true);
+    expect(holder.get('allowPiles')).toBe(false);
+    expect(holder.get('alignChildren')).toBe(true);
+    expect(holder.spreadsChildren()).toBe(true);
+    expect(holder.supportsPiles()).toBe(false);
+    expect(holder.arrangesPiles()).toBe(false);
+  });
+
+  test('a piece keeps the free spot it was dropped on and settles with a small tilt', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 400, height: 400 });
+    const dropped = createCard('dropped', { parent: 'h', z: 1 });
+    await holder.receiveCard(dropped, [ 150, 150 ]);
+    expect(dropped.get('x')).toBe(150);
+    expect(dropped.get('y')).toBe(150);
+    expect(Math.abs(dropped.get('rotation'))).toBeLessThanOrEqual(15);
+    expectInsideHolder(holder);
+  });
+
+  test('a piece aimed past the border is nudged back inside the margin', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 400, height: 400 });
+    const dropped = createCard('dropped', { parent: 'h', z: 1 });
+    await holder.receiveCard(dropped, [ 390, -50 ]);
+    expectInsideHolder(holder);
+  });
+
+  test('a piece dropped onto an occupied spot lands on a free one instead', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 500, height: 500 });
+    const first = createCard('first', { parent: 'h', z: 1 });
+    await holder.receiveCard(first, [ 200, 200 ]);
+    const second = createCard('second', { parent: 'h', z: 2 });
+    await holder.receiveCard(second, [ 210, 190 ]);
+    expectInsideHolder(holder);
+    expectNoOverlap(holder);
+  });
+
+  test('the pieces already lying in the holder stay where they are when another lands', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 500, height: 500 });
+    const first = createCard('first', { parent: 'h', z: 1 });
+    await holder.receiveCard(first, [ 200, 200 ]);
+    const before = [ first.get('x'), first.get('y'), first.get('rotation') ];
+    const second = createCard('second', { parent: 'h', z: 2 });
+    await holder.receiveCard(second, [ 210, 190 ]);
+    expect([ first.get('x'), first.get('y'), first.get('rotation') ]).toEqual(before);
+    // the piece that just landed lies on top
+    expect(second.get('z')).toBeGreaterThan(first.get('z'));
+  });
+
+  test('a MOVE in ignores the sentinel drop spot and lands on a random one', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 400, height: 400 });
+    const moved = createCard('moved', { parent: 'h', z: 1 });
+    moved.movedByButton = true;
+    randCalls = 0;
+    await holder.receiveCard(moved, [ 999999, 0 ]);
+    delete moved.movedByButton;
+    // a fresh tilt plus a thrown spot - not the sentinel clamped to the border
+    expect(randCalls).toBeGreaterThanOrEqual(3);
+    expectInsideHolder(holder);
+  });
+
+  test('laying the holder out again moves nothing and consumes no randomness', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 500, height: 500 });
+    for(let i = 0; i < 4; ++i)
+      await holder.receiveCard(createCard(`c${i}`, { parent: 'h', z: i + 1 }), null);
+    const before = positionsByZ(holder);
+    randCalls = 0;
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual(before);
+    expect(randCalls).toBe(0);
+  });
+
+  test('the drop shadow is pinned under the pointer without consuming randomness', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 400, height: 400 });
+    const shadow = createCard('shadow', { parent: 'h', z: 1, dropShadowOwner: 'someone' });
+    randCalls = 0;
+    await holder.receiveCard(shadow, [ 120, 130 ]);
+    expect([ shadow.get('x'), shadow.get('y') ]).toEqual([ 120, 130 ]);
+    await holder.receiveCard(shadow, [ 9999, 9999 ]);
+    expect(shadow.get('x') + shadow.get('width')).toBeLessThanOrEqual(396);
+    expect(randCalls).toBe(0);
+  });
+
+  test('a holder too full for free spots keeps everything inside instead of spilling out', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 230, height: 230 });
+    for(let i = 0; i < 6; ++i)
+      await holder.receiveCard(createCard(`c${i}`, { parent: 'h', z: i + 1 }), null);
+    expectInsideHolder(holder);
+  });
+
+  test('a pile dropped in is emptied out and its cards scatter', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 500, height: 500 });
+    const pile = await createPile('group', holder, 150, 150, 3);
+    await holder.onChildAddAlign(pile, null);
+    expect(widgetFilter(w => w.get('type') == 'pile').length).toBe(0);
+    expect(holder.children().length).toBe(3);
+    expectInsideHolder(holder);
+    expectNoOverlap(holder);
+  });
+
+  test('a piece taken out of the holder straightens up again', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 400, height: 400 });
+    const card = createCard('c', { parent: 'h', z: 1 });
+    await holder.receiveCard(card, null);
+    await holder.dispenseCard(card, true);
+    expect(card.get('rotation')).toBe(0);
+  });
+
+  test('switching the layout away straightens every piece', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 500, height: 500 });
+    for(let i = 0; i < 3; ++i)
+      await holder.receiveCard(createCard(`c${i}`, { parent: 'h', z: i + 1 }), null);
+    await holder.set('layout', 'grid');
+    for(const c of holder.arrangedChildren())
+      expect(c.get('rotation')).toBe(0);
+  });
+
+  test('switching to random scatters what the old layout had stacked', async () => {
+    const holder = createHolder({ id: 'h', layout: 'pile', width: 500, height: 500 });
+    for(let i = 0; i < 3; ++i)
+      createCard(`c${i}`, { parent: 'h', x: 4, y: 4, z: i + 1 });
+    await holder.set('layout', 'random');
+    expectInsideHolder(holder);
+    expectNoOverlap(holder);
+  });
+
+  test('shrinking the holder pulls the pieces that no longer fit back inside', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 600, height: 600 });
+    for(let i = 0; i < 3; ++i)
+      await holder.receiveCard(createCard(`c${i}`, { parent: 'h', z: i + 1 }), null);
+    await holder.set('width', 300);
+    await holder.set('height', 300);
+    expectInsideHolder(holder);
   });
 });
 

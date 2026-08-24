@@ -633,6 +633,16 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(align.visible).ok()
     .expect(arrangePiles.visible).ok();
 
+  // random scatters inside the drop offset margin: that pair is its only knob
+  const dropOffset = Selector('#editorModules .numberPairRow').withText('Drop offset');
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"random"'))
+    .expect(stateOf('layout')).eql('"random"')
+    .expect(dropOffset.visible).ok()
+    .expect(gridColumns.visible).notOk()
+    .expect(align.visible).notOk();
+
   // back to auto: it clears the arrangement properties it steps aside for
   await t
     .click(layout.find('select'))

@@ -178,6 +178,11 @@ class Dice extends Widget {
     if(!await super.click(mode)) {
       await this.set('activeFace', Math.floor(rand()*this.faces().length));
       await this.set('rollCount', this.get('rollCount',{ignoreFaceProperties:true})+1);
+      // rolling inside a holder that scatters its pieces throws the die onto a
+      // fresh spot of the tray
+      const parent = widgets.has(this.get('parent')) ? widgets.get(this.get('parent')) : null;
+      if(parent && parent.get('type') == 'holder' && parent.get('layout') == 'random')
+        await parent.receiveCard(this, null);
     }
   }
 

@@ -1322,7 +1322,7 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder fits just one card; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMultiple spread lines up several groups (piles) side by side.\nGrid fills rows and columns.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
+  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder fits just one card; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMultiple spread lines up several groups (piles) side by side.\nGrid fills rows and columns.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
   allowPiles: 'Keep piles that are dropped in as piles and line them up as groups, instead of emptying them out one card per slot.',
   pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds.',
   pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds.',
@@ -10103,6 +10103,7 @@ class PropertiesModule extends SidebarModule {
         { value: 'singleSpread',   text: 'Single spread' },
         { value: 'multipleSpread', text: 'Multiple spread (groups)' },
         { value: 'grid',           text: 'Grid' },
+        { value: 'random',         text: 'Random (scatter)' },
         { value: 'freeform',       text: 'Freeform' }
       ]
     }).render(this.moduleDOM);
@@ -10129,7 +10130,7 @@ class PropertiesModule extends SidebarModule {
       rows.push({ row: input.dom, layouts, properties: [ property ] });
     };
 
-    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'multipleSpread', 'grid' ]);
+    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'multipleSpread', 'grid', 'random' ]);
     addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'multipleSpread', 'grid' ]);
     addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multipleSpread' ]);
     addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multipleSpread' ]);
