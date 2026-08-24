@@ -37,6 +37,43 @@ describe('PCIO importer', () => {
     expect(state._meta.info.importerWarnings).toBeUndefined();
   });
 
+  it('replaces the PlayingCards.io IDs everywhere in the file', async () => {
+    const state = await importWidgets([
+      { id: 'wDgT', type: 'holder', x: 0, y: 0, allowedDecks: [ 'kR2m' ] },
+      { id: 'kR2m', type: 'cardDeck', parent: 'wDgT', x: 0, y: 0, cardTypes: { xY7q: { label: 'A' } } },
+      { id: 'q7Ka', type: 'card', deck: 'kR2m', cardType: 'xY7q', parent: 'wDgT', x: 0, y: 0 },
+      { id: 'zP4v', type: 'seat', seatIndex: 0, x: 400, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 400, linkedSeat: 'zP4v' },
+      { id: 'tN9d', type: 'turnButton', label: 'Next', x: 200, y: 300, currentTurn: 'zP4v' },
+      {
+        id: 'bT8n', type: 'automationButton', label: 'Deal', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'aQ2w', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+          from:     { type: 'literal', value: [ 'wDgT' ] },
+          to:       { type: 'literal', value: [ 'hand' ] },
+          quantity: { type: 'literal', value: 1 }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(JSON.stringify(state)).not.toMatch(/wDgT|kR2m|q7Ka|zP4v|tN9d|bT8n|aQ2w/);
+    expect(state.card1.deck).toBe('deck1');
+    expect(state.holder1.dropTarget).toEqual([ { deck: 'deck1' } ]);
+    expect(state.hand.linkedToSeat).toBe('seat1');
+    expect(state.button2.clickRoutine).toEqual([ { func: 'MOVE', from: 'holder1', to: 'hand' } ]);
+  });
+
+  it('leaves a card type alone that is named like a widget', async () => {
+    const state = await importWidgets([
+      { id: 'holder', type: 'holder', x: 0, y: 0 },
+      { id: 'q7Ka', type: 'holder', x: 200, y: 0 },
+      { id: 'deck', type: 'cardDeck', parent: 'holder', x: 0, y: 0, cardTypes: { q7Ka: { label: 'A' } } },
+      { id: 'card', type: 'card', deck: 'deck', cardType: 'q7Ka', parent: 'holder', x: 0, y: 0 }
+    ], 8);
+
+    expect(Object.keys(state.deck1.cardTypes)).toEqual([ 'q7Ka' ]);
+    expect(state.card1.cardType).toBe('q7Ka');
+  });
+
   it('still imports the old cardPile type', async () => {
     const state = await importWidgets([
       { id: 'holder', type: 'cardPile', x: 10, y: 20, layoutType: 'spread', spreadDirection: 'down' }

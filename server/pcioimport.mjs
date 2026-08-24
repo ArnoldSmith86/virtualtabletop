@@ -503,36 +503,32 @@ export default async function convertPCIO(content) {
     if(idMap[widget.id] === undefined && !isDropped(widget))
       idMap[widget.id] = uniqueID(idPrefix(widget));
 
-  const mapID = id=>idMap[id] !== undefined ? idMap[id] : id;
-  const mapIDs = ids=>Array.isArray(ids) ? ids.map(mapID) : mapID(ids);
-
-  // Every string in a routine that names a PCIO widget is replaced, wherever it
-  // sits: the operations name their targets under different keys, nest them
-  // differently per schema version, and a step this importer does not translate
-  // is copied into the output as it was, so mapping only known keys would leave
-  // some of them pointing at IDs that no longer exist. Only "func" is left
-  // alone - an operation name is not a widget.
-  function mapRoutineIDs(value) {
+  // A PCIO ID is a random string, so a string that equals one names that widget.
+  // The whole file is therefore walked instead of the properties that are known
+  // to point at a widget: those differ per schema version, an operation names
+  // its targets under different keys and nests them differently per version, and
+  // a step this importer does not translate is copied into the output as it was
+  // - so mapping known keys only would leave some of them pointing at IDs that
+  // exist nowhere.
+  //
+  // Left alone are the keys that name something from another namespace: a widget
+  // or piece type, an operation, and a card type (the key of an entry in the
+  // deck's cardTypes, which is a random string just like an ID).
+  const otherNamespaces = [ 'type', 'pieceType', 'func', 'cardType', 'chooserChoice' ];
+  function mapIDs(value) {
     if(Array.isArray(value))
-      return value.map(mapRoutineIDs);
+      return value.map(mapIDs);
     if(value && typeof value == 'object') {
       for(const key in value)
-        if(key != 'func')
-          value[key] = mapRoutineIDs(value[key]);
+        if(otherNamespaces.indexOf(key) == -1)
+          value[key] = mapIDs(value[key]);
       return value;
     }
     return typeof value == 'string' && idMap[value] !== undefined ? idMap[value] : value;
   }
 
-  for(const widget of widgets) {
-    widget.id = mapID(widget.id);
-    for(const key of [ 'parent', 'deck', 'linkedSeat', 'currentTurn' ])
-      if(widget[key])
-        widget[key] = mapID(widget[key]);
-    if(widget.allowedDecks)
-      widget.allowedDecks = mapIDs(widget.allowedDecks);
-    mapRoutineIDs(widget.clickRoutine);
-  }
+  for(const widget of widgets)
+    mapIDs(widget);
 
   const pileHasDeck = {};
   const pileOverlaps = {};
