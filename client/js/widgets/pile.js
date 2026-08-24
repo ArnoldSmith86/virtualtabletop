@@ -439,6 +439,12 @@ export class Pile extends Widget {
       await c.set('parent', p);
 
       await removeWidgetLocal(this.get('id'));
+    } else if(!this.children().length && !this.isBeingRemoved) {
+      // the engine dissolves a pile before it gets this small, but a hand-written game
+      // file can start one off with a single card - taking that card leaves nothing to
+      // dissolve into, so the empty pile removes itself
+      this.isBeingRemoved = true;
+      await removeWidgetLocal(this.get('id'));
     }
 
     if(this.parent && this.parent.get('type') == 'holder')

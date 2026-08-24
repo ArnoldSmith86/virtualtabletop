@@ -480,7 +480,11 @@ export class Holder extends ImageWidget {
       await target.arrangeChildren();
     }
     const slot = target.previewGapOffset || [ 0, 0 ];
-    await shadow.setPosition(target.get('x') + target.get('dropOffsetX') + slot[0], target.get('y') + target.get('dropOffsetY') + slot[1], target.get('z'));
+    // the pile inherits its cards' z, so matching the pile's own z would leave the shadow
+    // behind the whole fan - sitting above it, the shadow covers the cards around its slot
+    // the way the inserted card will
+    const aboveFan = Math.max(target.get('z'), ...target.children().map(c=>c.get('z'))) + 1;
+    await shadow.setPosition(target.get('x') + target.get('dropOffsetX') + slot[0], target.get('y') + target.get('dropOffsetY') + slot[1], aboveFan);
   }
 
   // Empties a pile of this holder out onto the row, one card per slot, the way a

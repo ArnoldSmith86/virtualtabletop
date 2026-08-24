@@ -95,6 +95,16 @@ describe('a holder deciding what a drop lands on', () => {
     expect(holder.arrangedChildAt(createCard('loose'), 400, 100)).toBe(null);
   });
 
+  test('lifts the preview shadow above the fan it opens a slot in', async () => {
+    const column = await createColumn('col1', holder, 4, 4, 3);
+    const shadow = createCard('shadow', { parent: 'tableau', dropShadowOwner: 'someone' });
+    await holder.previewShadowDrop(shadow, column, 10, 100);
+    // the pile inherits its cards' z, so anything at or below that would render
+    // behind the whole fan instead of covering the cards around its slot
+    const fanZ = Math.max(column.get('z'), ...column.children().map(c => c.get('z')));
+    expect(shadow.get('z')).toBeGreaterThan(fanZ);
+  });
+
   test('takes a long pile carried onto a short one into that pile', async () => {
     const short = await createColumn('short', holder, 4, 4, 1);
     const long = await createColumn('long', holder, 124, 4, 5);
@@ -203,6 +213,17 @@ describe('a holder that stops arranging piles', () => {
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);
     // it places its own cards no longer, so it collects them onto one spot
     expect(column.children().every(c=>c.get('x') == 0 && c.get('y') == 0)).toBe(true);
+  });
+});
+
+describe('a pile authored with a single card', () => {
+  // the engine dissolves a pile before it gets this small, but a hand-written game file
+  // can start one off like this - taking the card must not leave an empty pile behind
+  test('goes away when that card is taken out', async () => {
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 400, height: 300, allowPiles: true, stackOffsetY: 40 });
+    await createColumn('lonely', holder, 4, 4, 1);
+    await widgets.get('lonely-card-0').set('parent', null);
+    expect(widgets.has('lonely')).toBe(false);
   });
 });
 
