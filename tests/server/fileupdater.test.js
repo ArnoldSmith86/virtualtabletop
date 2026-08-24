@@ -78,12 +78,12 @@ describe('legacy mode detection', () => {
     expect(flagsFor(at(19, { h: { id: 'h', type: 'holder', color: 'red' } }))).toEqual({ disableHolderImageWidget: true, classicHolderLayout: true });
   });
 
-  test('a pre-v23 save with a holder gets classicHolderLayout', () => {
-    expect(flagsFor(at(22, { h: { id: 'h', type: 'holder' } })).classicHolderLayout).toBe(true);
+  test('a pre-v24 save with a holder gets classicHolderLayout', () => {
+    expect(flagsFor(at(23, { h: { id: 'h', type: 'holder' } })).classicHolderLayout).toBe(true);
   });
 
-  test('a pre-v23 save without a holder does not get classicHolderLayout', () => {
-    expect(flagsFor(at(22, { l: { id: 'l', type: 'label', text: 'hi' } })).classicHolderLayout).toBe(undefined);
+  test('a pre-v24 save without a holder does not get classicHolderLayout', () => {
+    expect(flagsFor(at(23, { l: { id: 'l', type: 'label', text: 'hi' } })).classicHolderLayout).toBe(undefined);
   });
 
   test('a current-version save is left exactly as it is', () => {
@@ -157,7 +157,8 @@ const CLASSIFICATION_FIXTURES = {
   'v20 holder with svgReplaces': [ at(20, { h: { id: 'h', type: 'holder', svgReplaces: { a: 'b' } } }), [ 'disableHolderImageWidget', 'classicHolderLayout' ] ],
   'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
   'v22 game with a holder': [ at(22, { h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
-  'v22 game without a holder': [ at(22, { l: { id: 'l', type: 'label', text: 'hi' } }), [] ]
+  'v22 game without a holder': [ at(22, { l: { id: 'l', type: 'label', text: 'hi' } }), [] ],
+  'v23 game with a holder': [ at(23, { h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ]
 };
 
 describe('classification stability', () => {
@@ -242,5 +243,69 @@ describe('the dragLimit sides written as null', () => {
   test('are left alone in a file that was written with the new meaning', () => {
     const state = { _meta: { version: VERSION }, w: { id: 'w', type: 'basic', dragLimit: { minX: null } } };
     expect(FileUpdater(state).w.dragLimit).toEqual({ minX: null });
+  });
+});
+
+// SWAPHANDS was the special case of SHIFT that passes the hands of the seats around
+// the table, so an existing game says it as the SHIFT it always was.
+function migratedRoutine(routine, version = 22) {
+  return migrated({ clickRoutine: routine }, version).clickRoutine;
+}
+
+describe('a SWAPHANDS operation', () => {
+  test('becomes a SHIFT that arrives in the order the widgets were created', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS' } ])).toEqual([ { func: 'SHIFT', keepOrder: false } ]);
+  });
+
+  test('keeps the order of each hand where it asked for it', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', keepOrder: true } ])).toEqual([ { func: 'SHIFT', keepOrder: true } ]);
+  });
+
+  test('leaves an order the routine works out to the routine', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', keepOrder: '${PROPERTY keepOrder OF button}' } ]))
+      .toEqual([ { func: 'SHIFT', keepOrder: '${PROPERTY keepOrder OF button}' } ]);
+  });
+
+  test('carries its interval and direction over unchanged', () => {
+    expect(migratedRoutine([ { note: 'pass on', func: 'SWAPHANDS', interval: 2, direction: 'backward' } ]))
+      .toEqual([ { note: 'pass on', func: 'SHIFT', interval: 2, direction: 'backward', keepOrder: false } ]);
+  });
+
+  test('drops a source of all, which is what SHIFT does without any holders', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', source: 'all' } ])).toEqual([ { func: 'SHIFT', keepOrder: false } ]);
+  });
+
+  test('passes a named collection of seats on as the holders', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', source: 'usedSeats' } ]))
+      .toEqual([ { func: 'SHIFT', holders: 'usedSeats', keepOrder: false } ]);
+  });
+
+  // a written-out list was a collection to SWAPHANDS, so its seats took part in seat
+  // index order rather than in the order they are written in
+  test('turns a written-out list of seats into a collection of them', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', source: [ 'seat3', 'seat1' ] } ])).toEqual([
+      {
+        note: 'This was added by the automatic file migration because SHIFT passes the widgets along a list of holders in the order it is written in.',
+        func: 'SELECT',
+        type: 'seat',
+        property: 'id',
+        relation: 'in',
+        value: [ 'seat3', 'seat1' ],
+        collection: 'internal_swapHandsMigration'
+      },
+      { func: 'SHIFT', holders: 'internal_swapHandsMigration', keepOrder: false }
+    ]);
+  });
+
+  test('is migrated inside the routines of an IF and a FOREACH too', () => {
+    expect(migratedRoutine([
+      { func: 'IF', condition: true, thenRoutine: [ { func: 'SWAPHANDS' } ], elseRoutine: [ { func: 'FOREACH', loopRoutine: [ { func: 'SWAPHANDS' } ] } ] }
+    ])).toEqual([
+      { func: 'IF', condition: true, thenRoutine: [ { func: 'SHIFT', keepOrder: false } ], elseRoutine: [ { func: 'FOREACH', loopRoutine: [ { func: 'SHIFT', keepOrder: false } ] } ] }
+    ]);
+  });
+
+  test('is left alone in a file that was written after SWAPHANDS was gone', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS' } ], VERSION)).toEqual([ { func: 'SWAPHANDS' } ]);
   });
 });

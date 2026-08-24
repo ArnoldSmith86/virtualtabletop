@@ -116,12 +116,14 @@ export const LEGACY_MODES = {
       `
   },
   classicHolderLayout: {
-    since: 23,
+    since: 24,
     pr: 3117,
     interactsWith: [],
     detect: function(state) {
+      // a holder that spells its layout out behaves the same with or without the mode,
+      // so only holders that would fall back to the default are affected
       for(const id in state)
-        if(state[id] && state[id].type == 'holder')
+        if(state[id] && state[id].type == 'holder' && state[id].layout === undefined)
           return true;
       return false;
     },

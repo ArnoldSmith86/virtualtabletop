@@ -51,6 +51,7 @@ const FACE_OBJECT_VALID_PROPS = {
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
     icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
     text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
+    write: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign', 'editable', 'placeholder', 'spellCheck', 'backgroundColor', 'borderColor'],
     html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
 };
 
@@ -309,7 +310,37 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        const objType = (obj.type && String(obj.type).toLowerCase()) || '';
+                        // A "write" object stores what the player types in the card property its value is
+                        // bound to - without that binding there is nowhere to keep the text. The conditions
+                        // below mirror Card.editableProperty(): anything it rejects renders as a plain,
+                        // read-only text object, so it has to be reported here.
+                        const objDynamic = obj.dynamicProperties && typeof obj.dynamicProperties === 'object' ? obj.dynamicProperties : {};
+                        if(obj.type === 'write') {
+                            if(obj.value !== undefined || typeof objDynamic.value != 'string') {
+                                problems.push({
+                                    widget: p.widgetId,
+                                    property: [...propertyPath, faceIndex, 'objects', objIndex, 'type'],
+                                    message: 'write objects need their value bound to a card property through dynamicProperties (and no static value, which would override it) so the text players type can be stored'
+                                });
+                            } else if(isReservedCardProperty(objDynamic.value)) {
+                                problems.push({
+                                    widget: p.widgetId,
+                                    property: [...propertyPath, faceIndex, 'objects', objIndex, 'dynamicProperties', 'value'],
+                                    message: `write objects can not be bound to '${objDynamic.value}' because the engine uses that property itself - bind it to a property of your own, e.g. 'note'`
+                                });
+                            }
+                        } else if(obj.type !== undefined && String(obj.type).toLowerCase() === 'write') {
+                            // nothing else would catch this: the properties of a "Write" object are looked up
+                            // case-insensitively below, but the engine only renders "write" as a writable object
+                            problems.push({
+                                widget: p.widgetId,
+                                property: [...propertyPath, faceIndex, 'objects', objIndex, 'type'],
+                                message: `a "${obj.type}" object can not be written on - the type is matched case-sensitively, so only "write" makes the object writable`
+                            });
+                        }
+
+                        // a face object without a type is rendered as text, so it gets the text properties
+                        const objType = (obj.type && String(obj.type).toLowerCase()) || 'text';
                         const validObjProps = FACE_OBJECT_VALID_PROPS[objType] || FACE_OBJECT_VALID_PROPS._common;
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
@@ -327,6 +358,19 @@ const WIDGET_PROPERTIES = {
         }
     }
 };
+
+// Properties the engine itself owns on a card, so a write object must not be bound to one of them:
+// every keystroke would overwrite it, e.g. a field bound to 'parent' makes the card vanish and one bound to
+// 'type' replaces the card with a different widget. Card.reservedProperties() (room bundle) builds the same
+// set from the widget defaults, which carry the one property this table does not list.
+const RESERVED_CARD_PROPERTIES = [ ...Object.keys(WIDGET_PROPERTIES.Card), 'typeClasses' ];
+
+// On top of those, the engine computes a handful of read-only properties (_ancestor, _absoluteX, ...) that
+// routines are refused as well. They are all named with a leading underscore, so reject that whole namespace
+// instead of a list that has to be kept in sync - Card.isReservedProperty() does the same on the engine side.
+function isReservedCardProperty(property) {
+    return property.charAt(0) === '_' || RESERVED_CARD_PROPERTIES.includes(property);
+}
 
 const SUPER_GLOBALS = {
     variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
@@ -672,6 +716,12 @@ function getWidgetTypeValidator(types, canBeArray = false) {
     }
 }
 
+// the holders SHIFT cycles through are either listed by id or named as a collection
+function getHoldersOrCollectionValidator(types) {
+    const listValidator = getWidgetTypeValidator(types, true);
+    return (v, context, propertyPath)=>typeof v === 'string' ? validators.inCollection(v, context, propertyPath) : listValidator(v, context);
+}
+
 function checkForDollarSign(value, context, propertyPath = []) {
     const problems = [];
     if (typeof value === 'string' && value.includes('$')) {
@@ -861,6 +911,14 @@ const operationProps = {
         'relation': 'string',
         'value': 'any'
     },
+    'SHIFT': {
+        'holders': getHoldersOrCollectionValidator(['holder', 'seat']),
+        'widgets': (v, context, propertyPath)=>v === 'all' || v === 'top' || validators.inCollection(v, context, propertyPath),
+        'interval': v=>typeof v === 'number' && Number.isInteger(v) || 'integer expected',
+        'direction': getEnumValidator(['forward','backward','random']),
+        'wrap': 'boolean',
+        'keepOrder': 'boolean'
+    },
     'SHUFFLE': {
         'holder': 'idArray',
         'collection': 'inCollection',
@@ -876,12 +934,6 @@ const operationProps = {
         'options': 'any',
         'rearrange': 'boolean',
         'groupBy': v=>v===null||typeof v==='string'||'groupBy must be null or a property name'
-    },
-    'SWAPHANDS': {
-        'interval': v=>typeof v === 'number' && Number.isInteger(v),
-        'direction': getEnumValidator(['forward','backward','random']),
-        'source': 'inCollection',
-        'keepOrder': 'boolean'
     },
     'TIMER': {
         'timer': 'idArray',
@@ -1479,4 +1531,4 @@ function validateGameFile(data, checkMeta) {
 }
 
 // ES6 export for use in ES modules
-export { validateGameFile, getWidgetType, validateRoutine, getCustomPropertyUsage }; 
+export { validateGameFile, getWidgetType, validateRoutine, getCustomPropertyUsage, RESERVED_CARD_PROPERTIES, isReservedCardProperty };

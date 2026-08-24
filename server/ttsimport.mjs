@@ -1,9 +1,9 @@
-import fs from 'fs';
-
 import CRC32 from 'crc-32';
 import { BSON } from 'bson';
 
 import Config from './config.mjs';
+import { VERSION } from './fileupdater.mjs';
+import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
 import Zip from './zip.mjs';
 
@@ -365,28 +365,9 @@ async function addDeck(o, imp, parent=null) {
       }
     },
     faceTemplates: [
-      {
-        objects: [{
-          type: 'image',
-          css: {
-            "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-            "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-          },
-          dynamicProperties: {
-            value: 'back',
-            width: 'width',
-            height: 'height'
-          }
-        },{
-          type: 'image',
-          color: 'transparent',
-          dynamicProperties: {
-            value: 'simpleBack',
-            width: 'width',
-            height: 'height'
-          }
-        }]
-      },
+      // The back face is filled in below: which of the two kinds of back image the deck uses is only known
+      // once its card types have been read.
+      { objects: [] },
       {
         objects: [{
           type: 'image',
@@ -435,6 +416,37 @@ async function addDeck(o, imp, parent=null) {
     if(!isFaceDown(o))
       widgets[`${id}-${cardID}-${i}`].activeFace = 1;
   }
+  // TTS stores a back image per CustomDeck entry, as a sheet of individual backs when UniqueBack is set and
+  // as a single image for the whole deck when it is not - so a card type carries either "back" or
+  // "simpleBack", never both. Adding an object for each of them regardless left every imported deck with a
+  // second, empty image object on its back face that no card type ever fills.
+  const usedByACardType = property=>Object.values(deck.cardTypes).some(cardType=>cardType[property]);
+  if(usedByACardType('back'))
+    deck.faceTemplates[0].objects.push({
+      type: 'image',
+      css: {
+        "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+        "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+      },
+      dynamicProperties: {
+        value: 'back',
+        width: 'width',
+        height: 'height'
+      }
+    });
+  // the fallback also covers a deck whose cards have no back image at all, which would otherwise end up with
+  // a back face without any object on it
+  if(usedByACardType('simpleBack') || !deck.faceTemplates[0].objects.length)
+    deck.faceTemplates[0].objects.push({
+      type: 'image',
+      color: 'transparent',
+      dynamicProperties: {
+        value: 'simpleBack',
+        width: 'width',
+        height: 'height'
+      }
+    });
+
   // widgets only holds the cards at this point - two of them still need a pile
   if(Object.keys(widgets).length > 1) {
     widgets[`${id}-pile`] = place(o, {
@@ -513,6 +525,8 @@ async function addBag(o, imp, parent) {
     id,
     parent: bagID,
     type: 'holder',
+    // the contents pile up in place like they do inside a TTS bag
+    layout: 'custom',
     // the button positions its children inside its 4px border, and a holder that is
     // wider than the button hangs over both of its sides evenly
     x: Math.round(-4 + (130-width)/2),
@@ -669,7 +683,8 @@ function addNotecard(o, imp, parent) {
     height: clamp(rows*15 + 16, 60, 500),
     movable: true,
     html: (title ? `<b>${escapeHTML(title)}</b><br>${body ? '<br>' : ''}` : '') + escapeHTML(body).replace(/\n/g, '<br>'),
-    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden'
+    // the text is escaped and joined with <br>, so the runs of spaces the author typed have to survive
+    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden; white-space: pre-wrap'
   };
 
   return { [widget.id]: place(o, widget) };
@@ -984,13 +999,17 @@ async function convertTTS(content, linkContent, workshop={}) {
     widgets.hand = {
       id: 'hand',
       type: 'holder',
+      // the classic hand fan the stack offset below describes
+      layout: 'custom',
       onEnter: { activeFace: 1 },
       onLeave: { activeFace: 0 },
       dropOffsetX: 10,
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
-      text: 'Hand', // an empty holder is a blank band otherwise
+      dropShadow: true,
+      hidePlayerCursors: true,
+      text: 'Your hand', // an empty holder is a blank band otherwise
       x: 50,
       y: 820,
       width: 1500,
@@ -1033,7 +1052,7 @@ async function convertTTS(content, linkContent, workshop={}) {
     Logging.log(`TTS import: ${warnings.length} import notes: ${warnings.join(' ')}`);
   }
 
-  widgets._meta = { info, version: 5 };
+  widgets._meta = { info, version: VERSION };
 
   return widgets;
 }
@@ -1081,7 +1100,7 @@ async function storeThumbnail(url) {
     const content = await fetchBuffer(request, { signal: AbortSignal.timeout(15000) }, 20000000);
     const asset = `${CRC32.buf(content)}_${content.length}`;
     if(!Config.resolveAsset(asset))
-      fs.writeFileSync(`${Config.directory('assets')}/${asset}`, content);
+      FileWriter.writeFileSync(`${Config.directory('assets')}/${asset}`, content);
     return `/assets/${asset}`;
   } catch(e) {
     Logging.log(`TTS import: could not store the workshop thumbnail ${url}: ${e.toString()}`);

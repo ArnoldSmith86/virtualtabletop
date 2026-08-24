@@ -88,6 +88,22 @@ function parseRankRange(rankRange) {
   return rankArray;
 }
 
+// The size a card gets from the picture it shows: the ratio of one image - or of one cell of the grid a sheet
+// is cut into - with its longer side scaled to 160, the height of a standard card. Keeping the ratio is what
+// stops the faces from being stretched, and the fixed longer side keeps the cards at a usable size on the
+// table. This is the same rule the Tabletop Simulator importer sizes its cards by (server/ttsimport.mjs).
+function cardSizeFromImage(imageWidth, imageHeight, columns=1, rows=1) {
+  // A picture the browser has not decoded yet - or cannot decode at all - has no size to take a ratio from,
+  // and dividing a placeholder by the grid would invent one out of the row and column numbers. Fall back to
+  // the standard card the wizard used before instead.
+  if(!imageWidth || !imageHeight)
+    return { width: 103, height: 160 };
+  const cellWidth  = imageWidth /(columns || 1);
+  const cellHeight = imageHeight/(rows    || 1);
+  const scale = 160/Math.max(cellWidth, cellHeight);
+  return { width: Math.max(1, Math.round(cellWidth*scale)), height: Math.max(1, Math.round(cellHeight*scale)) };
+}
+
 // The line above the card design gallery. A suit list without suits or without any rank is a normal state while
 // the deck is being typed, but it has no cards to show designs of - and a design tile renders a real card, which
 // throws without a card type. Say what is missing instead, so the gallery can be skipped.
@@ -252,36 +268,27 @@ function svgReplaceCandidates(svgText) {
 }
 
 const svgImageCandidatesCache = {};
-// isSvg is decided by sniffing the fetched content for an <svg> tag rather
-// than the image's file extension - an uploaded asset is served from
-// /assets/<hash>_<size> with no extension at all, so gating on ".svg" would
-// hide this editor for every uploaded SVG (only the built-in game-piece SVGs
-// have a real .svg URL).
+// isSvg is decided by fetchSVG() (main.js), which sniffs the file itself
+// instead of trusting its name - the same call the engine uses to decide
+// whether it can replace anything in that image, so this editor is shown for
+// exactly the images the replacements actually work on. status keeps the three
+// ways of having no candidates apart ('none' - no image at all, 'notSvg' - a
+// bitmap, in which no replacement can ever do anything, 'unreadable' - the file
+// didn't load, so nothing is known about it), which is what the section says
+// out loud instead of rendering the same blank space for all of them.
 async function fetchSvgReplaceCandidates(image) {
   if(typeof image != 'string' || !image)
-    return { isSvg: false, candidates: [] };
+    return { isSvg: false, candidates: [], status: 'none' };
   if(svgImageCandidatesCache[image])
     return svgImageCandidatesCache[image];
   // a file that can't be read says nothing about what it is, so fall back to
   // the file name rather than hiding the editor for an SVG that is offline
-  const guess = { isSvg: /\.svg(\?|#|$)/i.test(image), candidates: [] };
+  const guess = { isSvg: /\.svg(\?|#|$)/i.test(image), candidates: [], status: 'unreadable' };
   try {
-    const response = await fetch(mapAssetURLs(image));
-    if(!response.ok)
-      return guess;
-    // both /assets/<hash> and /i/**.svg answer with a content type, and a
-    // bitmap saying so is the common case - no reason to pull the whole file
-    // through the wire and stringify it just to find no <svg> in it
-    const contentType = response.headers.get('content-type') || '';
-    if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
-      if(response.body && response.body.cancel)
-        response.body.cancel();
-      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
-    }
-    const text = await response.text();
-    if(!/<svg/i.test(text))
-      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [] };
-    return svgImageCandidatesCache[image] = { isSvg: true, candidates: svgReplaceCandidates(text) };
+    const text = await fetchSVG(image);
+    if(text === null)
+      return svgImageCandidatesCache[image] = { isSvg: false, candidates: [], status: 'notSvg' };
+    return svgImageCandidatesCache[image] = { isSvg: true, candidates: svgReplaceCandidates(text), status: 'svg' };
   } catch(e) {
     return guess;
   }
@@ -1292,7 +1299,7 @@ const editorPropertyHints = {
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
   html: 'HTML content shown instead of the widget text, icon and image.',
-  svgReplaces: 'Maps a value found inside an uploaded SVG image (a color like #000, a stroke width, or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be restyled per widget.',
+  svgReplaces: 'Maps a value found inside an uploaded SVG image (a color like #000, a stroke width, or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be restyled per widget. An image that is not an SVG has nothing to replace and is simply displayed as it is.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
@@ -1906,7 +1913,10 @@ class PropertiesModule extends SidebarModule {
       updater(delta.s);
   }
 
-  onClose() {
+  // Everything this module put on top of the room rather than into its own panel.
+  // It goes both when the module is closed and when the editor is, so it is not
+  // part of onClose(): the panel survives the editor closing, its bar with it.
+  clearWidgetOverlays() {
     this.clearGridPreview();
     this.clearDragLimitPreview();
     this.clearFaceRowRefresh();
@@ -1917,13 +1927,22 @@ class PropertiesModule extends SidebarModule {
     closeEditorPopups();
   }
 
+  onClose() {
+    this.clearWidgetOverlays();
+    // hand back the room tree the bar borrowed before the panel goes away, the
+    // same way the JSON module does - a bar that is only dropped by the next
+    // selectionBarPrune() still holds it in its own (detached) container
+    removeSelectionBar(this.selectionBar);
+    delete this.selectionBar;
+  }
+
   onEditorClose() {
     super.onEditorClose();
     // Leaving edit mode is the most complete way of moving on, but it does not
     // go through onClose(): the editor is only display:none'd, so a popup left
     // open lives on inside it and an armed picker keeps the crosshair over the
     // whole page while playing.
-    this.onClose();
+    this.clearWidgetOverlays();
   }
 
   onMetaReceivedWhileActive(meta) {
@@ -1958,7 +1977,20 @@ class PropertiesModule extends SidebarModule {
     this.renderedBoardSize = `${viewportConfig.targetWidth}x${viewportConfig.targetHeight}`;
 
 
-    this.moduleDOM.innerHTML = '';
+    // Everything below the bar is rebuilt for the new selection - the bar itself
+    // is not: it is the control the selection is changed *with*, so throwing it
+    // away on every change would drop the scroll position of an open tree (and
+    // rebuild every row of it) each time a widget is picked from it. A bar that
+    // lost its panel behind our back is replaced, keeping the tree for the new one.
+    if(this.selectionBar && !this.selectionBar.dom.isConnected) {
+      removeSelectionBar(this.selectionBar, true);
+      delete this.selectionBar;
+    }
+    if(!this.selectionBar)
+      this.selectionBar = renderSelectionBar(this.moduleDOM, { key: this.title });
+    for(const node of [ ...this.moduleDOM.children ])
+      if(node !== this.selectionBar.dom)
+        node.remove();
     // put back by renderEvents; a selection without an Automations section (a
     // pile, several widgets at once, or nothing at all) must not hide what it
     // does show
@@ -2016,7 +2048,6 @@ class PropertiesModule extends SidebarModule {
     const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
 
     const header = div(this.moduleDOM, 'widgetHeader');
-    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
     // say which widgets, so a stray rubber-band/shift-click pickup is easy to
     // spot before editing - only the type header said "how many" before
@@ -2103,7 +2134,7 @@ class PropertiesModule extends SidebarModule {
           continue;
         const button = document.createElement('button');
         button.setAttribute('icon', icon);
-        button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
+        button.disabled = toolbarButton.isDisabled();
         // explain a disabled distribute button (needs 3+ widgets) rather than
         // just leaving it gray with no hint why
         button.title = (toolbarButton.tooltip || '') + (button.disabled && toolbarButton.minimumSelection > 1 ?
@@ -2559,10 +2590,37 @@ class PropertiesModule extends SidebarModule {
     updateDesignPreview();
   }
 
-  deckImages(target) {
-    this.addSubHeader('Card backs', target);
+  // Cards built from uploaded pictures, in two flavours: one image per card, or one image with a whole grid of
+  // cards on it that gets cut into single cards (sheetMode). Everything but the grid is shared - the same
+  // back picker, the same upload list, the same faces - so the row/column controls, the grid preview and the
+  // sheet of backs are the only parts that come and go with the mode.
+  deckImages(target, sheetMode=false) {
+    // The sheet mode leads with the picture it is about to cut up and asks about the backs afterwards; one
+    // image per card keeps the shared back first, the way it always was.
+    const frontsSection = div(null);
+    const backsSection = div(null);
+    target.append(...(sheetMode ? [ frontsSection, backsSection ] : [ backsSection, frontsSection ]));
+
+    this.addSubHeader(sheetMode ? 'The picture to cut up' : 'Card fronts', frontsSection);
+    const intro = document.createElement('p');
+    intro.innerText = sheetMode
+      ? 'Upload one picture with all the cards on it, then say how many cards it holds across and down. Every cell of that grid becomes a card, and the cards take the shape of a single cell so none of them come out stretched.'
+      : 'Upload one picture per card — several at once works. Every card gets the back picked above.';
+    frontsSection.append(intro);
+    const preview = div(frontsSection);
+
+    this.addSubHeader('Card backs', backsSection);
+    // A sheet of fronts usually comes with a sheet of backs in the same grid, so that is offered next to the
+    // one back the whole deck shares. Without a sheet there is nothing to cut a per-card back out of.
+    const backModes = sheetMode ? div(backsSection, 'deckImagesBackModes', `
+      <label><input type=radio name=deckImagesBackMode value=shared checked>The same back on every card</label>
+      <label><input type=radio name=deckImagesBackMode value=sheet>A second sheet with one back per card, cut with the same grid</label>
+    `) : null;
+    const backMode = _=>backModes && $('input[name=deckImagesBackMode]:checked', backModes).value == 'sheet' ? 'sheet' : 'shared';
+
+    const sharedBack = div(backsSection, 'deckImagesSharedBack');
     let backImageURL = '/i/cards-default/2B.svg';
-    const backButtons = div(target);
+    const backButtons = div(sharedBack);
 
     const addBackImageButton = image=>{
       this.renderWidgetButton(new BasicWidget(), { image }, backButtons).onclick = e=>{
@@ -2578,7 +2636,7 @@ class PropertiesModule extends SidebarModule {
     for(const image of [ '/i/cards-default/1B.svg', '/i/cards-default/2B.svg', '/i/cards-default/3B.svg', '/i/cards-plastic/1B.svg', '/i/cards-plastic/2B.svg' ])
       addBackImageButton(image);
 
-    div(target, 'buttonBar', `
+    div(sharedBack, 'buttonBar', `
       <button icon=upload id=backButton>Upload back...</button>
     `);
 
@@ -2587,83 +2645,296 @@ class PropertiesModule extends SidebarModule {
       $('.widgetSelectionButton:last-child', backButtons).click();
     });
 
-    this.addSubHeader('Card fronts', target);
-    const preview = div(target);
+    // The sheets of backs, in the order they were uploaded in - which is the order they are paired with the
+    // sheets of fronts in, one back sheet per front sheet.
+    const backSheets = [];
+    const backSheetSection = sheetMode ? div(backsSection, 'deckImagesBackSheets') : null;
+    if(backSheetSection) {
+      div(backSheetSection, 'deckImagesBackSheetHint');
+      div(backSheetSection, 'deckImagesBackSheetList');
+    }
 
-    div(target, 'goButton buttonBar', `
-      <button icon=upload id=frontsButton>Upload fronts...</button>
+    // Both uploads sit in the action bar, next to each other: as a lone button above it the sheet of backs
+    // was a few pixels away from the sheet of fronts with the same icon and colour, so the status line
+    // asking for a sheet of backs pointed straight at the wrong button.
+    const goBar = div(target, 'goButton buttonBar', `
+      <span class=imagePairStatus></span>
+      <button icon=upload id=frontsButton>${sheetMode ? 'Upload sheet of fronts...' : 'Upload fronts...'}</button>
+      ${backSheetSection ? '<button icon=upload id=backSheetButton class=deckImagesBackSheetButton>Upload sheet of backs...</button>' : ''}
       <button icon=add class=green disabled>Add to game</button>
     `);
+    const status = $('.imagePairStatus', target);
+    const addButton = $('.goButton [icon=add]', target);
 
-    $('#frontsButton').onclick = _=>uploadAsset(async function(imagePath, fileName) {
-      const dom = div(preview, 'cardFrontPreview', `
-        <img src="${mapAssetURLs(imagePath)}">
-        <div class=flexCenter>
-          <div>
-            <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <div class=cols>Cols (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <div class=cards>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+    if(backSheetSection)
+      $('#backSheetButton').onclick = _=>uploadAsset((imagePath, fileName)=>{
+        if(imagePath) {
+          backSheets.push({ imagePath, fileName });
+          renderBackSheets();
+        }
+      });
+
+    // The uploaded sheets of fronts with the grid each of them is cut by, in the order they were uploaded.
+    const frontSheets = _=>[ ...$a('.cardFrontPreview', preview) ].map(dom=>({ dom, ...this.imageSheetGrid(dom) }));
+
+    // How often each card of an upload is added: "Copies of every card" for a sheet, "Cards to add" for a
+    // single picture. Unlike the grid inputs this one may legitimately be 0 - a deck without cards yet - so
+    // it is not clamped to a minimum of one.
+    const cardCopies = dom=>Math.max(0, Math.round(+$('.cards [type=number]', dom).value) || 0);
+
+    // Every sheet of backs shows the grid of the sheet of fronts it is paired with, so a back sheet that does
+    // not line up with its fronts can be seen rather than only noticed on the finished cards.
+    const renderBackSheets = _=>{
+      if(!backSheetSection)
+        return;
+      const fronts = frontSheets();
+      const list = $('.deckImagesBackSheetList', backSheetSection);
+      list.innerHTML = '';
+      for(const [ index, backSheet ] of backSheets.entries()) {
+        const front = fronts[index];
+        const dom = div(list, 'cardFrontPreview cardBackSheetPreview', `
+          <div class=cardFrontPreviewImage>
+            <div class=cardFrontPreviewFrame>
+              <img src="${mapAssetURLs(backSheet.imagePath)}">
+              <div class=cardFrontPreviewGrid></div>
+            </div>
+          </div>
+          <div class=cardFrontPreviewSettings>
+            <b></b>
+            <div class=cardFrontPreviewSummary></div>
             <button icon=delete>Delete</button>
           </div>
+        `);
+        this.openPictureOnClick(dom);
+        $('b', dom).innerText = backSheet.fileName;
+        dom.style.setProperty('--sheetColumns', front ? front.columns : 1);
+        dom.style.setProperty('--sheetRows', front ? front.rows : 1);
+        dom.classList.add('cardFrontPreviewSheet'); // a sheet is framed from the start, cut up or not
+        const backImage = $('img', dom);
+        backImage.onload = _=>this.markTallPicture(dom, backImage);
+        this.markTallPicture(dom, backImage);
+        $('.cardFrontPreviewSummary', dom).textContent = front
+          ? `Backs for "${front.dom.dataset.fileName}", cut ${front.columns} × ${front.rows}`
+          : 'No sheet of fronts to pair this with yet';
+        $('[icon=delete]', dom).onclick = _=>{
+          backSheets.splice(index, 1);
+          renderBackSheets();
+        };
+      }
+      updateStatus();
+    };
+
+    // Says what will be created, and why "Add to game" is off when it is - everything the wizard cannot
+    // decide by itself (how a sheet is cut, how many copies, where the backs come from) is named here
+    // instead of quietly becoming a deck nobody asked for.
+    const updateStatus = _=>{
+      const fronts = frontSheets();
+      const paired = backMode() == 'sheet';
+      // what actually lands on the table: every cell of every sheet, as often as its copies field says
+      const cards = fronts.reduce((sum, front)=>sum + front.columns*front.rows*cardCopies(front.dom), 0);
+      // a sheet nobody has cut yet is a single stretched card, i.e. the other mode - so it is asked about
+      const uncut = sheetMode ? fronts.filter(front=>front.columns*front.rows < 2) : [];
+      goBar.classList.toggle('deckImagesBackSheetMode', paired);
+      if(backSheetSection)
+        // the pairing sentence only says something once there is more than one sheet to pair
+        $('.deckImagesBackSheetHint', backSheetSection).innerText = 'The sheet of backs is cut with the grid of the sheet of fronts it belongs to, so both need the same number of cards across and down.'
+          + (fronts.length > 1 ? ' With several sheets of fronts, upload one sheet of backs per sheet of fronts — they are paired in upload order.' : '');
+      if(!fronts.length)
+        status.innerText = sheetMode ? 'Upload the picture the cards are cut out of.' : 'Upload at least one card front.';
+      else if(uncut.length)
+        status.innerText = fronts.length == 1
+          ? 'Say how many cards this sheet holds across and down.'
+          : `Say how many cards "${uncut[0].dom.dataset.fileName}" holds across and down.`;
+      else if(paired && backSheets.length != fronts.length)
+        status.innerText = `${fronts.length} sheet${fronts.length == 1 ? '' : 's'} of fronts but ${backSheets.length} of backs — upload one sheet of backs per sheet of fronts.`;
+      else if(!cards)
+        status.innerText = sheetMode ? 'Every sheet is set to 0 copies — nothing would be added.' : 'Every upload is set to 0 cards — nothing would be added.';
+      else if(paired)
+        status.innerText = `${cards} card${cards == 1 ? '' : 's'}, each with its own back from the sheet in the same position.`;
+      else
+        status.innerText = `${cards} card${cards == 1 ? '' : 's'}, all sharing the back picked above.`;
+      const blocked = !!uncut.length || !cards || paired && backSheets.length != fronts.length;
+      status.classList.toggle('imagePairMismatch', !!fronts.length && blocked);
+      addButton.disabled = !fronts.length || blocked;
+    };
+
+    if(backModes)
+      for(const radio of $a('input[name=deckImagesBackMode]', backModes))
+        radio.onchange = _=>{
+          backsSection.classList.toggle('deckImagesBackSheetMode', backMode() == 'sheet');
+          updateStatus();
+        };
+
+    $('#frontsButton').onclick = _=>uploadAsset(async (imagePath, fileName)=>{
+      const dom = div(preview, 'cardFrontPreview', `
+        <div class=cardFrontPreviewImage>
+          <div class=cardFrontPreviewFrame>
+            <img src="${mapAssetURLs(imagePath)}">
+            <div class=cardFrontPreviewGrid></div>
+          </div>
+        </div>
+        <div class=cardFrontPreviewSettings>
+          ${sheetMode ? `
+            <div class=cols>Cards across (columns):<br><input type=range value=1 min=1 max=20> <input type=number value=1 min=1 max=100></div>
+            <div class=rows>Cards down (rows):<br><input type=range value=1 min=1 max=20> <input type=number value=1 min=1 max=100></div>
+          ` : ''}
+          <div class=cards>${sheetMode ? 'Copies of every card' : 'Cards to add'}:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+          <div class=cardFrontPreviewSummary></div>
+          <button icon=delete>Delete</button>
         </div>
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
+      this.openPictureOnClick(dom);
+      const image = $('img', dom);
+      const updateSummary = _=>{
+        const { columns, rows } = this.imageSheetGrid(dom);
+        // the overlay draws one line per cut, so the grid the cards are read out of can be checked against
+        // the picture instead of against the numbers
+        dom.style.setProperty('--sheetColumns', columns);
+        dom.style.setProperty('--sheetRows', rows);
+        // in the sheet mode the frame is drawn from the start, so an uncut sheet still looks like a sheet
+        dom.classList.toggle('cardFrontPreviewSheet', sheetMode || columns*rows > 1);
+        if(sheetMode)
+          this.markTallPicture(dom, image);
+        const cells = columns*rows;
+        const copies = cardCopies(dom);
+        const size = cardSizeFromImage(image.naturalWidth, image.naturalHeight, columns, rows);
+        // a sheet holds one card per cell and the copies field says how often each of them is added; a single
+        // picture is one card, added as often as that same field says
+        const cards = sheetMode ? cells : copies;
+        const total = sheetMode && copies != 1 ? `, ${copies} copies each — ${cells*copies} cards in total` : '';
+        $('.cardFrontPreviewSummary', dom).textContent = image.naturalWidth
+          ? `${cards} card${cards == 1 ? '' : 's'} of ${Math.round(image.naturalWidth/columns)} × ${Math.round(image.naturalHeight/rows)} pixels, ${size.width} × ${size.height} on the table${total}`
+          : '';
+        renderBackSheets(); // the backs are cut by this grid, and it is in their caption
+        updateStatus();
+      };
       for(const name of [ 'rows', 'cols', 'cards' ]) {
-        $(`.${name} [type=range]`, dom).oninput = e=>$(`.${name} [type=number]`, dom).value=e.target.value;
-        $(`.${name} [type=number]`, dom).oninput = e=>$(`.${name} [type=range]`, dom).value=e.target.value;
+        const range = $(`.${name} [type=range]`, dom);
+        if(!range) // no grid to set in "one image per card"
+          continue;
+        range.oninput = e=>{
+          $(`.${name} [type=number]`, dom).value = e.target.value;
+          updateSummary();
+        };
+        $(`.${name} [type=number]`, dom).oninput = e=>{
+          range.value = e.target.value;
+          updateSummary();
+        };
       }
-      $('[icon=delete]', dom).onclick = e=>dom.remove();
-      $('.goButton [icon=add]', target).disabled = false;
+      $('[icon=delete]', dom).onclick = e=>{
+        // fronts and backs are paired by position, so the sheet of backs belonging to this one goes with it -
+        // otherwise every later sheet of backs would silently move onto the wrong sheet of fronts
+        const index = frontSheets().findIndex(front=>front.dom == dom);
+        dom.remove();
+        if(index != -1 && index < backSheets.length)
+          backSheets.splice(index, 1);
+        renderBackSheets();
+        updateStatus();
+      };
+      // naturalWidth is 0 until the browser has the image, so the summary is written again once it is there
+      image.onload = updateSummary;
+      updateSummary();
     });
 
-    $('.goButton [icon=add]', target).onclick = async _=>{
+    updateStatus();
+
+    addButton.onclick = async _=>{
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       const counts = {};
-      const hasTiledImage = [...$a('.rows input, .cols input')].filter(d=>d.value>1).length > 0;
-      for(const previewDiv of $a('.cardFrontPreview', preview)) {
-        const rows = $('.rows input', previewDiv).value;
-        const cols = $('.cols input', previewDiv).value;
+      const sheets = frontSheets();
+      if(!sheets.length)
+        return;
+      const useBackSheets = backMode() == 'sheet' && backSheets.length == sheets.length;
+      const hasTiledImage = sheets.some(sheet=>sheet.columns*sheet.rows > 1);
+      // The cards are sized after the picture they show - the whole image, or one cell of the grid it is cut
+      // into. The face stretches that picture across the card, so a card that does not have the shape of its
+      // picture is squashed. Uploads can have different shapes, so the first one sets the card defaults of the
+      // deck and every card type from a differently shaped upload carries its own size on top of them (a card
+      // type wins over the deck defaults, see card.js).
+      const sizes = sheets.map(({ dom, columns, rows })=>{
+        const image = $('img', dom);
+        return cardSizeFromImage(image.naturalWidth, image.naturalHeight, columns, rows);
+      });
+      const ownSize = index=>sizes[index].width != sizes[0].width || sizes[index].height != sizes[0].height ? sizes[index] : null;
+      // Card type names start from the file name, and two uploads can carry the same one (the same file
+      // twice, or two files of that name from different folders) - so every upload gets a name of its own
+      // first, the same way deckImagePairs does, before the grid position is appended to it. Without that
+      // the second upload silently overwrites the card types of the first one.
+      const usedNames = new Set();
+      const uniqueName = name=>{
+        let unique = name;
+        for(let i=2; usedNames.has(unique); ++i)
+          unique = `${name} (${i})`;
+        usedNames.add(unique);
+        return unique;
+      };
+      for(const [ index, { dom, columns, rows } ] of sheets.entries()) {
+        const backSheet = useBackSheets ? backSheets[index] : null;
+        const size = ownSize(index);
+        const fileName = uniqueName(dom.dataset.fileName);
         if(hasTiledImage) {
           for(let i=0; i<rows; ++i) {
-            for(let j=0; j<cols; ++j) {
-              const cardType = `${previewDiv.dataset.fileName} ${i},${j}`;
+            for(let j=0; j<columns; ++j) {
+              // named the way the dialog asked for the grid: row and column, counted from one
+              const cardType = `${fileName} ${i+1},${j+1}`;
               cardTypes[cardType] = {
-                image: previewDiv.dataset.imagePath,
+                image: dom.dataset.imagePath,
                 offsetX: j,
                 offsetY: i,
-                deckWidth: cols,
+                deckWidth: columns,
                 deckHeight: rows
               };
-              counts[cardType] = $('.cards input', previewDiv).value;
+              // the back sits in the same cell of its own sheet, so it is read with the offsets of the front
+              if(backSheet)
+                cardTypes[cardType].backImage = backSheet.imagePath;
+              if(size)
+                Object.assign(cardTypes[cardType], size);
+              counts[cardType] = cardCopies(dom);
             }
           }
         } else {
-          cardTypes[previewDiv.dataset.fileName] = {
-            image: previewDiv.dataset.imagePath
+          cardTypes[fileName] = {
+            image: dom.dataset.imagePath
           };
-          counts[previewDiv.dataset.fileName] = $('.cards input', previewDiv).value;
+          if(backSheet)
+            cardTypes[fileName].backImage = backSheet.imagePath;
+          if(size)
+            Object.assign(cardTypes[fileName], size);
+          counts[fileName] = cardCopies(dom);
         }
       }
+
+      // The back face either shows the one image the whole deck shares, or the card's own back out of the
+      // sheet of backs - never both, so that no card ends up with an empty image object on its back.
+      const backObject = useBackSheets ? {
+        "type": "image",
+        "color": "transparent",
+        "dynamicProperties": {
+          "value": "backImage",
+          "height": "height",
+          "width": "width"
+        }
+      } : {
+        "type": "image",
+        "color": "transparent",
+        "value": backImageURL,
+        "dynamicProperties": {
+          "height": "height",
+          "width": "width"
+        }
+      };
 
       const deck = {
         id,
         type: 'deck',
         cardTypes,
+        cardDefaults: { ...sizes[0] },
         faceTemplates: [
           {
-            "objects": [
-              {
-                "type": "image",
-                "color": "transparent",
-                "value": backImageURL,
-                "dynamicProperties": {
-                  "height": "height",
-                  "width": "width"
-                }
-              }
-            ]
+            "objects": [ backObject ]
           },
           {
             "objects": [
@@ -2681,17 +2952,14 @@ class PropertiesModule extends SidebarModule {
         ]
       };
 
-      let cardWidth = Math.round($('.cardFrontPreview img', preview).width / $('.cardFrontPreview img', preview).height * 160);
-      if(hasTiledImage)
-        cardWidth *= $('.rows input', preview).value / $('.cols input', preview).value;
-      if(cardWidth != 103)
-        deck.cardDefaults = { width: cardWidth };
-
       if(hasTiledImage) {
-        deck.faceTemplates[1].objects[0].css = {
+        const tileCSS = {
           "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
           "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
         };
+        deck.faceTemplates[1].objects[0].css = tileCSS;
+        if(useBackSheets)
+          deck.faceTemplates[0].objects[0].css = { ...tileCSS };
         deck.cardDefaults.css = {
           '--offsetX':    '${PROPERTY offsetX}',
           '--offsetY':    '${PROPERTY offsetY}',
@@ -2704,6 +2972,42 @@ class PropertiesModule extends SidebarModule {
 
       await this.addDeckWithCards(deck, 'image', counts);
     };
+  }
+
+  // A sheet taller than it is wide gets the whole panel with its settings underneath instead of a column
+  // beside them: side by side an ordinary 2 x 10 print-and-play sheet came out as a sliver a few pixels
+  // wide, and checking the cut lines against the picture is the whole point of showing it. Only for sheets -
+  // in "one picture per card" every card front is portrait, and a list of full-width pictures is no help.
+  markTallPicture(dom, image) {
+    dom.classList.toggle('cardFrontPreviewTall', image.naturalHeight > image.naturalWidth);
+  }
+
+  openPictureOnClick(dom) {
+    const frame = $('.cardFrontPreviewFrame', dom);
+    frame.title = 'Click to see the picture at full size';
+    frame.onclick = _=>this.showPictureFullSize(dom);
+  }
+
+  // The picture at window size with the cut lines it has in the panel, so a grid can be checked against a
+  // sheet the panel is far too narrow to show one on. A click anywhere closes it again; Escape does too,
+  // through the handlers that already decide what Escape closes first (deckeditor.js, main.js).
+  showPictureFullSize(dom) {
+    const zoom = div($('#editor'), 'cardPictureZoom', `<div class=cardFrontPreviewFrame><img src="${$('img', dom).src}"><div class=cardFrontPreviewGrid></div></div>`);
+    for(const property of [ '--sheetColumns', '--sheetRows' ])
+      zoom.style.setProperty(property, dom.style.getPropertyValue(property) || 1);
+    zoom.classList.toggle('cardFrontPreviewSheet', dom.classList.contains('cardFrontPreviewSheet'));
+    zoom.onclick = _=>zoom.remove();
+  }
+
+  // How many cards an uploaded picture holds across and down. The value is read off the number input rather
+  // than the slider next to it: the slider only covers the usual grid sizes, so a sheet with more rows than
+  // that is typed in and leaves the slider sitting at its maximum. "One image per card" has no grid at all.
+  imageSheetGrid(dom) {
+    const value = name=>{
+      const input = $(`.${name} [type=number]`, dom);
+      return input ? this.numberFromInput(input) : 1;
+    };
+    return { columns: value('cols'), rows: value('rows') };
   }
 
   // "min"/"max" on a number input only constrain its spinner - a typed or pasted value is passed through
@@ -4911,7 +5215,6 @@ class PropertiesModule extends SidebarModule {
     // type in the header's accent color, id in the plain text color so the two
     // are easy to tell apart
     const header = div(this.moduleDOM, 'widgetHeader');
-    this.addCloseButton(header);
     div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
     const idArea = div(header, 'widgetHeaderId');
     idArea.append('Widget id: ');
@@ -6759,14 +7062,30 @@ class PropertiesModule extends SidebarModule {
     let refreshInputs = () => {};
     let renderSwatches = () => {};
     let updateVisibility = () => {};
+    let renderNotice = () => {};
+    let updateAddButton = () => {};
     let imageIsSvg = false;
+    // what the image turned out to be, see fetchSvgReplaceCandidates()
+    let imageStatus = '';
 
     // collapsed by default for widgets that don't use it yet, so first-time
     // users editing a plain widget aren't confronted with advanced SVG jargon
     const existingMap = widget.get('svgReplaces');
     const hasReplaces = isObjectLike(existingMap) && Object.keys(existingMap).length > 0;
     const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
-      div(body, 'svgReplacesHelp', 'Map a value in your SVG file - a color, a stroke width, an opacity - to a widget property that supplies it.');
+      div(body, 'svgReplacesHelp', 'Recolor this image: pick a value out of the SVG file - a color, a stroke width, an opacity - and choose the widget property that supplies it. That property\'s value is then set below.');
+
+      // a bitmap can't have anything replaced in it, and since the widget stays
+      // visible now (getSVG() uses such an image as it is) nothing else in the
+      // panel would say so: the rows, the swatch pickers and the inputs all
+      // look and behave exactly like they do on a working SVG
+      const notice = div(body, 'svgReplacesNotice');
+      renderNotice = () => {
+        notice.textContent = imageStatus == 'notSvg' ?
+          'This image is not an SVG, so these replacements have no effect. They apply again as soon as this widget points at an SVG file.' : '';
+        notice.style.display = notice.textContent ? '' : 'none';
+      };
+      renderNotice();
 
       const list = div(body, 'svgReplacesList');
 
@@ -6774,8 +7093,17 @@ class PropertiesModule extends SidebarModule {
         list.innerHTML = '';
         const map = widget.get('svgReplaces');
         const rows = isObjectLike(map) ? Object.entries(map) : [];
-        if(!rows.length)
+        if(!rows.length) {
           div(list, 'propertyPickerEmpty', 'No SVG replacements yet.');
+        } else {
+          // the two inputs of a row only tell themselves apart by their
+          // placeholders, which are gone as soon as they hold anything
+          const header = div(list, 'svgReplaceRow svgReplaceHeader');
+          div(header, 'svgReplaceHeaderLabel', 'in the SVG');
+          div(header, 'svgReplaceArrow').setAttribute('aria-hidden', 'true');
+          div(header, 'svgReplaceHeaderLabel', 'widget property');
+          div(header, 'svgReplaceHeaderSpacer');
+        }
         for(const [ selector, property ] of rows) {
           const row = div(list, 'svgReplaceRow');
 
@@ -6788,6 +7116,8 @@ class PropertiesModule extends SidebarModule {
           const arrow = document.createElement('span');
           arrow.className = 'svgReplaceArrow';
           arrow.textContent = '→';
+          // decoration between two inputs that are each labelled by their title
+          arrow.setAttribute('aria-hidden', 'true');
 
           const propertyInput = document.createElement('input');
           propertyInput.type = 'text';
@@ -6884,8 +7214,16 @@ class PropertiesModule extends SidebarModule {
         const map = widget.get('svgReplaces');
         const used = new Set(isObjectLike(map) ? Object.keys(map) : []);
         const suggestions = svgCandidates.filter(candidate => !used.has(candidate.value));
-        if(!suggestions.length)
+        if(!suggestions.length) {
+          // an empty list has several quite different reasons and used to
+          // render as the same blank space for all of them - a broken .svg URL
+          // most confusingly of all, since the section is shown for it
+          if(imageStatus == 'unreadable')
+            div(svgColorsHost, 'propertyPickerEmpty', 'This image could not be loaded, so the values it uses could not be listed.');
+          else if(imageStatus == 'svg')
+            div(svgColorsHost, 'propertyPickerEmpty', svgCandidates.length ? 'All values in this SVG are already mapped.' : 'No replaceable values found in this SVG.');
           return;
+        }
         div(svgColorsHost, 'svgColorsLabel', 'Values found in the SVG - click to add a replacement:');
         for(const candidate of suggestions) {
           const property = svgReplacePropertyForAttributes(candidate.attributes);
@@ -6915,7 +7253,7 @@ class PropertiesModule extends SidebarModule {
       };
       const loadSvgCandidates = () => {
         const requested = widget.get('image');
-        fetchSvgReplaceCandidates(requested).then(({ isSvg, candidates }) => {
+        fetchSvgReplaceCandidates(requested).then(({ isSvg, candidates, status }) => {
           // switching image A -> B fires two fetches and the slower one would
           // otherwise win, leaving the section showing (or hiding) what the
           // previous image said - a result for an image that is no longer set
@@ -6923,10 +7261,13 @@ class PropertiesModule extends SidebarModule {
           if(!svgColorsHost.isConnected || requested !== widget.get('image'))
             return;
           imageIsSvg = isSvg;
+          imageStatus = status;
           svgCandidates = candidates;
+          renderNotice();
           renderSwatches();
           refreshInputs();
           updateVisibility();
+          updateAddButton();
         });
       };
       loadSvgCandidates();
@@ -6950,6 +7291,14 @@ class PropertiesModule extends SidebarModule {
           selector = `#color${++i}`;
         addReplacementFor(selector, 'color');
       };
+      // on a bitmap this button used to invent one dead #000 -> color mapping
+      // per click, each with its own color picker that changes nothing
+      updateAddButton = () => {
+        addButton.disabled = imageStatus == 'notSvg';
+        addButton.title = addButton.disabled ?
+          'This image is not an SVG, so a replacement could not do anything.' : '';
+      };
+      updateAddButton();
       body.appendChild(addButton);
 
       // one input per property the map points at, using the input its value
@@ -9884,8 +10233,16 @@ class PropertiesModule extends SidebarModule {
     let entries = null;
     let searchTerm = '';
 
+    // Placing can decline to place anything - the widget asks before it is pasted across
+    // differing legacy modes - and then the picker stays open instead of reporting a stop that
+    // is not there.
     const place = async entry=>{
-      await lineEdit(`added stop from the library to line ${line.id}`, _=>placeSavedWidget(entry.id, entry.source, null, { line }));
+      let placed = [];
+      await lineEdit(`added stop from the library to line ${line.id}`, async _=>{
+        placed = await placeSavedWidget(entry.id, entry.source, null, { line });
+      });
+      if(!placed.length)
+        return;
       popout.style.display = 'none';
       onPlaced();
     };
@@ -11504,6 +11861,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderModule(target) {
-    target.innerText = 'Properties module not implemented yet.';
+    // the bar is built once, with the panel, and outlives the selections it is
+    // used to change; everything below it is built by
+    // onSelectionChangedWhileActive(), which openInTarget() calls right after this
+    this.selectionBar = renderSelectionBar(target, { key: this.title });
   }
 }
