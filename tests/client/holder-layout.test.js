@@ -780,7 +780,12 @@ describe('the drop shadow previewing an insertion into a fan', () => {
     await holder.previewShadowDrop(shadow, one, 60 - CARD_WIDTH/2 + one.get('x'), 4);
     expect(one.previewGap).toBe(1);
     expect(one.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('x'))).toEqual([ 0, 80, 120 ]);
-    expect(shadow.get('x')).toBe(one.get('x') + 40);
+    // the shadow joins the pile at the slot, covering the card below it and
+    // covered by the cards above it the way the inserted card will
+    expect(shadow.get('parent')).toBe('one');
+    expect(shadow.get('x')).toBe(40);
+    expect(shadow.get('z')).toBeGreaterThan(widgets.get('one-card-0').get('z'));
+    expect(shadow.get('z')).toBeLessThan(widgets.get('one-card-1').get('z'));
     // the fan grew by the open slot and the next group moved along
     expect(one.spreadExtent('X')).toBe(220);
     const two = widgets.get('two');
@@ -806,6 +811,7 @@ describe('the drop shadow previewing an insertion into a fan', () => {
     await holder.previewShadowDrop(shadow, null, 500, 4);
     expect(one.previewGap).toBe(undefined);
     expect(shadow.fanPreviewPile).toBe(undefined);
+    expect(shadow.get('parent')).toBe('h');
     expect(one.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('x'))).toEqual([ 0, 40, 80 ]);
     expect(one.spreadExtent('X')).toBe(180);
   });
@@ -841,7 +847,63 @@ describe('the drop shadow previewing an insertion into a fan', () => {
   });
 });
 
+describe('a shared hand (childrenPerOwner) keeps its lanes', () => {
+  // the local player is jestPlayer, so anything that wrongly hands cards to
+  // "whoever clicked" shows up as an owner flipping to jestPlayer
+  async function sharedHand() {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
+    await createPile('mine', holder, 4, 4, 2);
+    await createPile('theirs', holder, 300, 4, 2);
+    await widgets.get('mine').set('owner', 'jestPlayer');
+    await widgets.get('theirs').set('owner', 'alice');
+    return holder;
+  }
+
+  test('emptying the groups on a layout switch leaves every card in its lane', async () => {
+    const holder = await sharedHand();
+    await holder.set('layout', 'singleSpread');
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    expect(widgets.get('mine-card-0').get('owner')).toBe('jestPlayer');
+    expect(widgets.get('theirs-card-0').get('owner')).toBe('alice');
+    expect(widgets.get('theirs-card-1').get('owner')).toBe('alice');
+  });
+
+  test('SORT groupBy regroups every lane by itself and keeps the owners', async () => {
+    const holder = await sharedHand();
+    for(const [ id, suit ] of [ [ 'mine-card-0', 'S' ], [ 'mine-card-1', 'H' ], [ 'theirs-card-0', 'S' ], [ 'theirs-card-1', 'S' ] ])
+      await widgets.get(id).set('suit', suit);
+    await holder.regroupBy('suit', [ 'suit' ], false);
+    // alice's spades stay alice's, and the loose cards of the jestPlayer lane
+    // stay in the jestPlayer lane
+    expect(widgets.get('mine-card-0').get('owner')).toBe('jestPlayer');
+    expect(widgets.get('mine-card-1').get('owner')).toBe('jestPlayer');
+    expect(widgets.get('theirs-card-0').get('owner')).toBe('alice');
+    expect(widgets.get('theirs-card-1').get('owner')).toBe('alice');
+    // no group mixes owners
+    for(const pile of widgetFilter(w=>w.get('type') == 'pile'))
+      expect(new Set(pile.children().map(c=>c.get('owner'))).size).toBe(1);
+  });
+
+  test('the last card promoted out of a dissolving group keeps its lane', async () => {
+    await sharedHand();
+    await widgets.get('theirs-card-1').set('parent', null);
+    expect(widgets.get('theirs-card-0').get('parent')).toBe('h');
+    expect(widgets.get('theirs-card-0').get('owner')).toBe('alice');
+  });
+});
+
 describe('switching layouts with piles inside', () => {
+  test('switching to the pile layout collects the spread-out cards', async () => {
+    const holder = createHolder({ id: 'h', layout: 'singleSpread', stackOffsetX: 40, width: 900, height: 120 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', x: 4 + i*40, y: 4, z: i+1 });
+    await holder.set('layout', 'pile');
+    for(let i=0; i<3; ++i) {
+      expect(widgets.get(`c${i}`).get('x')).toBe(4);
+      expect(widgets.get(`c${i}`).get('y')).toBe(4);
+    }
+  });
+
   test('leaving multipleSpread for a spreading layout empties the groups onto the row', async () => {
     const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
     await createPile('group', holder, 4, 4, 3);

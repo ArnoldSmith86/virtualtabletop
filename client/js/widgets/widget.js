@@ -2490,7 +2490,10 @@ export class Widget extends StateManaged {
             // seats can share a single hand through childrenPerOwner, in which case
             // only the widgets owned by that seat's player belong to that seat
             const perOwner = source.seat && source.holder.get('childrenPerOwner');
-            let selected = source.holder.children().filter(c=>!perOwner || c.get('owner') == source.seat.get('player'));
+            // a holder that arranges piles hands its groups over as they are -
+            // collecting the cards one by one would dissolve the groups on the way
+            const grouped = a.widgets == 'all' && typeof source.holder.arrangesPiles == 'function' && source.holder.arrangesPiles();
+            let selected = (grouped ? source.holder.arrangedChildren() : source.holder.children()).filter(c=>!perOwner || c.get('owner') == source.seat.get('player'));
             if(a.widgets == 'top')
               selected = selected.slice(0, 1);
             else if(collectionSet)
@@ -3101,8 +3104,13 @@ export class Widget extends StateManaged {
 
         const globalPoint = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         const shadowParentId = shadowWidget.get('parent');
-        if (shadowParentId != this.hoverTarget.get('id')) {
-          shadowWidget.currentParent = widgets.get(shadowParentId);
+        const shadowParent = shadowParentId !== null && widgets.has(shadowParentId) ? widgets.get(shadowParentId) : null;
+        // a fan preview parents the shadow into one of the target's piles -
+        // that still counts as sitting in the target
+        const inTarget = shadowParent == this.hoverTarget ||
+          shadowParent && shadowParent.get('type') == 'pile' && shadowParent.get('parent') == this.hoverTarget.get('id');
+        if (!inTarget) {
+          shadowWidget.currentParent = shadowParent;
           await shadowWidget.set('parent', null);
           await shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
           await shadowWidget.checkParent(true);
@@ -3248,8 +3256,11 @@ export class Widget extends StateManaged {
       return;
     if (widgets.has(this.get('dropShadowWidget'))) {
       const shadowWidget = widgets.get(this.get('dropShadowWidget'));
-      const holder = widgets.get(shadowWidget.get('parent'));
-      const preventRearrange = shadowWidget.get('parent') == this.get('hoverTarget');
+      // a fan preview parents the shadow into one of the piles - the holder
+      // whose arrangement has to hold still during the drop is the pile's parent
+      const parent = widgets.has(shadowWidget.get('parent')) ? widgets.get(shadowWidget.get('parent')) : null;
+      const holder = parent && parent.get('type') == 'pile' && widgets.has(parent.get('parent')) ? widgets.get(parent.get('parent')) : parent;
+      const preventRearrange = holder && holder.get('id') == this.get('hoverTarget');
       shadowWidget.currentParent = holder;
       if (preventRearrange)
         holder.preventRearrangeDuringPileDrop = true;
@@ -3305,16 +3316,20 @@ export class Widget extends StateManaged {
       if(this.isBeingRemoved && !this.isBeingRenamed)
         for(const line of linesWithStop(this.id))
           await line.removeStop(this.id);
+      // a fan preview moves the drop shadow between a holder and its piles -
+      // those internal moves must not re-run the routines the shadow's entry
+      // into the holder already ran
+      const previewMove = this.previewReparenting;
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
-        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
+        if(this.get('type') != 'holder' && !previewMove && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
       if(newValue) {
         const newParent = widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
-        if(Array.isArray(newParent.get('enterRoutine')))
+        if(!previewMove && Array.isArray(newParent.get('enterRoutine')))
           await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
       }
       if(!this.disablePileUpdateAfterParentChange)

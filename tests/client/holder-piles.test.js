@@ -95,14 +95,19 @@ describe('a holder deciding what a drop lands on', () => {
     expect(holder.arrangedChildAt(createCard('loose'), 400, 100)).toBe(null);
   });
 
-  test('lifts the preview shadow above the fan it opens a slot in', async () => {
+  test('slots the preview shadow into the fan like the card it previews', async () => {
     const column = await createColumn('col1', holder, 4, 4, 3);
     const shadow = createCard('shadow', { parent: 'tableau', dropShadowOwner: 'someone' });
-    await holder.previewShadowDrop(shadow, column, 10, 100);
-    // the pile inherits its cards' z, so anything at or below that would render
-    // behind the whole fan instead of covering the cards around its slot
-    const fanZ = Math.max(column.get('z'), ...column.children().map(c => c.get('z')));
-    expect(shadow.get('z')).toBeGreaterThan(fanZ);
+    // aimed between the second and the third card of the fan
+    await holder.previewShadowDrop(shadow, column, 10, 40);
+    // as a sibling of the pile the shadow could only cover the whole fan or
+    // hide behind it, so it joins the pile: above the cards below its slot,
+    // below the cards above it
+    expect(shadow.get('parent')).toBe('col1');
+    expect(shadow.get('z')).toBeGreaterThan(widgets.get('col1-card-1').get('z'));
+    expect(shadow.get('z')).toBeLessThan(widgets.get('col1-card-2').get('z'));
+    // without counting as one of the cards
+    expect(column.children().length).toBe(3);
   });
 
   test('takes a long pile carried onto a short one into that pile', async () => {

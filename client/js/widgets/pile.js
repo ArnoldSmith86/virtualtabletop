@@ -44,14 +44,24 @@ export class Pile extends Widget {
 
   applyChildAdd(child) {
     super.applyChildAdd(child);
+    if(child.get('dropShadowOwner'))
+      return;
     ++this.childCount;
     this.updateText();
   }
 
   applyChildRemove(child) {
     super.applyChildRemove(child);
+    if(child.get('dropShadowOwner'))
+      return;
     --this.childCount;
     this.updateText();
+  }
+
+  // A drop shadow previewing an insertion joins the pile so it can slot into
+  // its stacking order, but it is not one of the cards.
+  children() {
+    return super.children().filter(c=>!c.get('dropShadowOwner'));
   }
 
   applyDeltaToDOM(delta) {
@@ -436,7 +446,11 @@ export class Pile extends Widget {
 
       await c.set('x', c.get('x') + x);
       await c.set('y', c.get('y') + y);
+      // promoting the last card must not move it to another lane of a shared hand
+      if(c.get('owner') !== null)
+        c.targetPlayer = c.get('owner');
       await c.set('parent', p);
+      delete c.targetPlayer;
 
       await removeWidgetLocal(this.get('id'));
     } else if(!this.children().length && !this.isBeingRemoved) {
