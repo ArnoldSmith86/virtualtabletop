@@ -2970,7 +2970,11 @@ export class Widget extends StateManaged {
     if(this.currentParent != holder)
       await this.checkParent(true);
 
-    await this.set('owner',  null);
+    // the lane a childrenPerOwner holder files the widget under decides how it
+    // piles up with what is already there, so it is settled before the holder
+    // aligns the drop - the holder would only assign the same lane afterwards
+    const lane = holder.get('childrenPerOwner') && this.get('type') != 'deck' ? this.targetPlayer || playerName : null;
+    await this.set('owner',  lane);
     await this.set('parent', holder.get('id'));
   }
 

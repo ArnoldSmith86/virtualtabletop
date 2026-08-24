@@ -890,18 +890,88 @@ describe('a shared hand (childrenPerOwner) keeps its lanes', () => {
     expect(widgets.get('theirs-card-0').get('parent')).toBe('h');
     expect(widgets.get('theirs-card-0').get('owner')).toBe('alice');
   });
+
+  test('switching a shared pile layout to grid breaks every lane pile into cells of its lane', async () => {
+    const holder = createHolder({ id: 'h', layout: 'pile', width: 900, height: 300, childrenPerOwner: true });
+    await createPile('mine', holder, 4, 4, 3);
+    await createPile('theirs', holder, 4, 4, 3);
+    await widgets.get('mine').set('owner', 'jestPlayer');
+    await widgets.get('theirs').set('owner', 'alice');
+    await holder.set('layout', 'grid');
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    for(const [ prefix, owner ] of [ [ 'mine', 'jestPlayer' ], [ 'theirs', 'alice' ] ]) {
+      const cards = [ 0, 1, 2 ].map(i=>widgets.get(`${prefix}-card-${i}`));
+      expect(cards.every(c=>c.get('owner') == owner)).toBe(true);
+      expect(new Set(cards.map(c=>`${c.get('x')}/${c.get('y')}`)).size).toBe(3);
+    }
+  });
+
+  test('switching a shared hand to the pile layout leaves one pile per lane', async () => {
+    const holder = await sharedHand();
+    await createPile('mine2', holder, 500, 4, 2);
+    await widgets.get('mine2').set('owner', 'jestPlayer');
+    await holder.set('layout', 'pile');
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(2);
+    const byOwner = Object.fromEntries(piles.map(p=>[ p.get('owner'), p ]));
+    expect(byOwner.jestPlayer.children().length).toBe(4);
+    expect(byOwner.alice.children().length).toBe(2);
+    expect(byOwner.jestPlayer.children().every(c=>c.get('owner') == 'jestPlayer')).toBe(true);
+    expect(byOwner.alice.children().every(c=>c.get('owner') == 'alice')).toBe(true);
+  });
+
+  test('a card dropped onto a lone card of its lane piles up with it', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
+    createCard('lone', { parent: 'h', x: 4, y: 4, z: 1 });
+    await widgets.get('lone').set('owner', 'jestPlayer');
+    const dropped = createCard('dropped', { x: 10, y: 10, z: 5 });
+    await dropped.moveToHolder(holder);
+    const pile = widgets.get(dropped.get('parent'));
+    expect(pile.get('type')).toBe('pile');
+    expect(pile.get('owner')).toBe('jestPlayer');
+    expect(pile.children().length).toBe(2);
+    expect(widgets.get('lone').get('parent')).toBe(pile.get('id'));
+  });
+
+  test('a card dropped onto a spread group of its lane joins that group', async () => {
+    const holder = await sharedHand();
+    const dropped = createCard('dropped', { x: 20, y: 10, z: 9 });
+    await dropped.moveToHolder(holder);
+    expect(dropped.get('owner')).toBe('jestPlayer');
+    expect(dropped.get('parent')).toBe('mine');
+    expect(widgets.get('mine').children().length).toBe(3);
+  });
 });
 
 describe('switching layouts with piles inside', () => {
-  test('switching to the pile layout collects the spread-out cards', async () => {
+  test('switching to the pile layout collects the spread-out cards into one pile', async () => {
     const holder = createHolder({ id: 'h', layout: 'singleSpread', stackOffsetX: 40, width: 900, height: 120 });
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', x: 4 + i*40, y: 4, z: i+1 });
     await holder.set('layout', 'pile');
-    for(let i=0; i<3; ++i) {
-      expect(widgets.get(`c${i}`).get('x')).toBe(4);
-      expect(widgets.get(`c${i}`).get('y')).toBe(4);
-    }
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(1);
+    expect(piles[0].get('x')).toBe(4);
+    expect(piles[0].get('y')).toBe(4);
+    expect(piles[0].children().length).toBe(3);
+  });
+
+  test('switching the pile layout to grid breaks its pile into cells', async () => {
+    const holder = createHolder({ id: 'h', layout: 'pile', width: 900, height: 300 });
+    await createPile('stack', holder, 4, 4, 3);
+    await holder.set('layout', 'grid');
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    const cards = [ 'stack-card-0', 'stack-card-1', 'stack-card-2' ].map(id=>widgets.get(id));
+    expect(cards.every(c=>c.get('parent') == 'h')).toBe(true);
+    expect(new Set(cards.map(c=>`${c.get('x')}/${c.get('y')}`)).size).toBe(3);
+  });
+
+  test('switching the pile layout to a spread empties its pile onto the row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'pile', width: 900, height: 120 });
+    await createPile('stack', holder, 4, 4, 3);
+    await holder.set('layout', 'singleSpread');
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    expect(holder.children().length).toBe(3);
   });
 
   test('leaving multipleSpread for a spreading layout empties the groups onto the row', async () => {

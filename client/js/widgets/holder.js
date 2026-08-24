@@ -542,15 +542,17 @@ export class Holder extends ImageWidget {
   // the auto layout allows piles again, so the entries gather back into one -
   // per owner and onPileCreation, the same groups dropping them one by one
   // would have formed. A resize that takes the room away then leaves one pile
-  // instead of a heap of loose cards that only looks like one.
-  async gatherIntoPiles() {
+  // instead of a heap of loose cards that only looks like one. The pile layout
+  // gathers everything a lane holds into a single pile instead, the way
+  // dropping the cards onto the stack one by one would have merged them.
+  async gatherIntoPiles(perPileCreation=true) {
     const entries = this.childrenFilter(super.children(), true)
       .filter(w=>[ 'card', 'pile' ].indexOf(w.get('type')) != -1 && !w.get('dropShadowOwner') && !w.get('dragging') && !w.isBeingRemoved)
       .sort((a, b)=>a.get('z') - b.get('z'));
 
     const groups = new Map();
     for(const entry of entries) {
-      const key = JSON.stringify([ entry.get('owner'), entry.get('onPileCreation') ]);
+      const key = JSON.stringify([ entry.get('owner'), perPileCreation ? entry.get('onPileCreation') : null ]);
       if(!groups.has(key))
         groups.set(key, []);
       groups.get(key).push(entry);
@@ -573,13 +575,19 @@ export class Holder extends ImageWidget {
     // out the same way rather than left behind in a state nothing else in here
     // expects, where children() would go on reporting them instead of the cards
     // they hold and COUNT, dropLimit and MOVE would silently count piles.
+    // A switch away from arranging piles is not the only one that leaves piles
+    // behind: the pile layout stacks dropped cards into one, so its piles have
+    // to be dissolved as well when the new layout cannot host piles at all - a
+    // grid, or a spread without allowPiles.
     const stoppedArrangingPiles =
       property == 'allowPiles' && oldValue && !this.get('allowPiles') ||
-      property == 'layout' && !this.get('allowPiles') && this.derivedAllowPiles(this.effectiveLayout(oldValue === undefined ? this.getDefaultValue('layout') : oldValue));
+      property == 'layout' && !this.get('allowPiles') && (!this.supportsPiles() || this.derivedAllowPiles(this.effectiveLayout(oldValue === undefined ? this.getDefaultValue('layout') : oldValue)));
     if(stoppedArrangingPiles) {
       const piles = this.childrenFilter(super.children(), true).filter(c=>c.get('type') == 'pile');
       for(const pile of piles)
-        if(this.get('alignChildren') && this.spreadsChildren())
+        if(this.get('layout') == 'grid')
+          await this.breakUpPile(pile);
+        else if(this.get('alignChildren') && this.spreadsChildren())
           await this.emptyPileIntoSlots(pile);
         else
           await pile.arrangeChildren(false, true);
@@ -925,7 +933,12 @@ export class Holder extends ImageWidget {
     for(const w of pile.children().reverse()) {
       await w.set('x', this.get('dropOffsetX'));
       await w.set('y', this.get('dropOffsetY'));
+      // in a shared hand the cards keep their lane instead of being handed to
+      // whoever triggered the break-up
+      if(w.get('owner') !== null)
+        w.targetPlayer = w.get('owner');
       await w.set('parent', this.get('id'));
+      delete w.targetPlayer;
       await w.bringToFront();
     }
     delete this.preventRearrangeDuringPileDrop;
@@ -1285,10 +1298,12 @@ export class Holder extends ImageWidget {
       } else if(this.effectiveLayout() == 'pile' && !this.preventRearrangeDuringPileDrop) {
         // the pile layout stacks everything on the drop offset, so a switch to
         // it collects what the previous layout had spread out - per lane, the
-        // way every other layout arranges
+        // way every other layout arranges - and each lane's entries then merge
+        // into the one pile dropping them onto the stack one by one would form
         const entries = this.arrangedChildren().filter(w=>!w.get('dropShadowOwner'));
         for(const owner of new Set(entries.map(c=>c.get('owner') || null)))
           await this.rearrangeChildren(entries.filter(c=>!c.get('owner') || c.get('owner') === owner).sort((a, b)=>a.get('z') - b.get('z')));
+        await this.gatherIntoPiles(false);
       }
       return;
     }
