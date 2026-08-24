@@ -2970,11 +2970,7 @@ export class Widget extends StateManaged {
     if(this.currentParent != holder)
       await this.checkParent(true);
 
-    // the lane a childrenPerOwner holder files the widget under decides how it
-    // piles up with what is already there, so it is settled before the holder
-    // aligns the drop - the holder would only assign the same lane afterwards
-    const lane = holder.get('childrenPerOwner') && this.get('type') != 'deck' ? this.targetPlayer || playerName : null;
-    await this.set('owner',  lane);
+    await this.set('owner',  null);
     await this.set('parent', holder.get('id'));
   }
 
@@ -3870,7 +3866,13 @@ export class Widget extends StateManaged {
 
     const thisX = this.get('x');
     const thisY = this.get('y');
-    const thisOwner = this.get('owner');
+    // a widget arriving in a childrenPerOwner holder is aligned before the
+    // holder files it under its lane (targetPlayer or the interacting player),
+    // so the pile-up decision here has to compare that lane - the owner it is
+    // about to get - rather than the null it still carries
+    let thisOwner = this.get('owner');
+    if(thisOwner === null && parentWidget && parentWidget.get('childrenPerOwner'))
+      thisOwner = this.targetPlayer || playerName;
     const thisOnPileCreation = this.get('onPileCreation');
     const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
 
