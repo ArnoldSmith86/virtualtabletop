@@ -282,18 +282,22 @@ export class Pile extends Widget {
   // collects them back onto the same spot.
   async arrangeChildren(notifyHolder=true, layOut=false) {
     if(layOut || this.laysOutCards()) {
+      // the squish is the same for every offset below, so it is computed once
+      // for the whole pass instead of once per lookup - recomputing it walks
+      // every group of the holder's row
+      const squish = this.holderSquish();
       // a copy: children() hands out the array it sorts, and everything below
       // reads it again
       const children = [ ...this.children() ].reverse();
-      const offsets = this.spreadOffsets();
+      const offsets = this.spreadOffsets(squish);
 
       for(let i=0; i<children.length; ++i)
         await children[i].setPosition(this.get('dropOffsetX') + offsets[i][0], this.get('dropOffsetY') + offsets[i][1], children[i].get('z'));
 
       const oldWidth = this.get('width');
       const oldHeight = this.get('height');
-      await this.set('width', this.spreadExtent('X'));
-      await this.set('height', this.spreadExtent('Y'));
+      await this.set('width', this.spreadExtent('X', squish));
+      await this.set('height', this.spreadExtent('Y', squish));
       // this can happen mid-drag - a pile picked out of the holder that spread it collects its
       // cards on the way - so whoever is carrying it keeps hold of the same place in its box
       if(this.get('width') != oldWidth || this.get('height') != oldHeight)
@@ -364,9 +368,9 @@ export class Pile extends Widget {
   // not fit side by side squishes the fans through fanSquish, and a drop
   // shadow previewing an insertion keeps one slot (previewGap) open - its
   // offset is remembered in previewGapOffset for whoever places the shadow.
-  spreadOffsets() {
-    const holder = this.holderArrangingPiles();
-    const squish = holder && holder.fanSquish ? holder.fanSquish(this.get('owner') || null) : null;
+  spreadOffsets(squish) {
+    if(squish == null)
+      squish = this.holderSquish();
     const gap = this.previewGap === undefined ? null : Math.max(0, Math.min(this.children().length, this.previewGap));
     const count = this.children().length + (gap === null ? 0 : 1);
     const offsets = [];
@@ -391,6 +395,14 @@ export class Pile extends Widget {
     return normalized;
   }
 
+  // The squish of the holder whose row this pile's fan is part of, or null
+  // outside of one. Recomputing it walks every group of the row, so callers
+  // that lay a whole fan out fetch it once and pass it down.
+  holderSquish() {
+    const holder = this.holderArrangingPiles();
+    return holder && holder.fanSquish ? holder.fanSquish(this.get('owner') || null) : null;
+  }
+
   // The length of the fan alone along one axis - how far the last slot sits
   // from the first one - before any squish is applied. What fanSquish measures
   // the groups by without asking for the squished layout it is about to decide.
@@ -412,13 +424,13 @@ export class Pile extends Widget {
     return spreadMin === null || count - i <= spreadMin ? 1 : compressedSpreadFactor;
   }
 
-  spreadExtent(axis) {
+  spreadExtent(axis, squish) {
     const children = this.children();
     if(!children.length || !this.get('alignChildren'))
       return super.spreadExtent(axis);
 
     const index = axis == 'X' ? 0 : 1;
-    const offsets = this.spreadOffsets();
+    const offsets = this.spreadOffsets(squish);
     // an open preview gap is part of the box even when it is the last slot
     if(this.previewGapOffset)
       offsets.push(this.previewGapOffset);
@@ -446,6 +458,10 @@ export class Pile extends Widget {
 
       await c.set('x', c.get('x') + x);
       await c.set('y', c.get('y') + y);
+      // a holder's row is sorted by z when it is laid out again, so the
+      // promoted card takes over the pile's place in it
+      if(this.holderArrangingPiles())
+        await c.set('z', this.get('z'));
       // promoting the last card must not move it to another lane of a shared hand
       if(c.get('owner') !== null)
         c.targetPlayer = c.get('owner');

@@ -473,9 +473,13 @@ export class Holder extends ImageWidget {
   // a fan, the drop inserts at the slot under the pointer - so the preview
   // opens a gap at exactly that slot (previewGap on the pile) and the shadow
   // sits in it, instead of pretending the drop would append a new group.
-  // Everywhere else the shadow lines up as the new group the drop would form.
+  // Pointed at a group the drop would simply join - a loose card or a compact
+  // pile, where there is no slot to point into - the shadow disappears, so the
+  // group itself reads as what the drop lands on. Everywhere else the shadow
+  // lines up as the new group the drop would form.
   async previewShadowDrop(shadow, target, x, y) {
     const fanIndex = target ? this.spreadFanIndexOf(target, shadow, x, y) : null;
+    const joins = target && fanIndex === null && !this.previewJoinBlocked(shadow, target);
     const previous = shadow.fanPreviewPile;
     if(previous && (previous != target || fanIndex === null)) {
       delete shadow.fanPreviewPile;
@@ -483,6 +487,19 @@ export class Holder extends ImageWidget {
       if(widgets.has(previous.get('id')))
         await previous.arrangeChildren();
     }
+    if(joins) {
+      if(shadow.get('parent') != this.get('id'))
+        await this.reparentShadow(shadow, this.get('id'));
+      if(shadow.get('display')) {
+        await shadow.set('display', false);
+        // the row closes the gap the shadow held open as its own group
+        await this.receiveCard(null);
+      }
+      // parked on the group it would join, so the drop right after aims there
+      return await shadow.setPosition(target.get('x'), target.get('y'), shadow.get('z'));
+    }
+    if(!shadow.get('display'))
+      await shadow.set('display', true);
     if(fanIndex === null) {
       // an earlier fan preview may have parented the shadow into the pile -
       // lining up as its own group happens as a child of the holder again
@@ -490,6 +507,12 @@ export class Holder extends ImageWidget {
         await this.reparentShadow(shadow, this.get('id'));
       return await this.receiveCard(shadow, [ x, y ]);
     }
+
+    // while neither the slot nor the shadow's place in the pile changes, the
+    // fan already looks exactly like this preview - a drag re-previews on
+    // every pointer move, so the no-op has to be cheap
+    if(shadow.fanPreviewPile == target && target.previewGap === fanIndex && shadow.get('parent') == target.get('id'))
+      return;
 
     shadow.fanPreviewPile = target;
     if(target.previewGap !== fanIndex) {
@@ -512,6 +535,19 @@ export class Holder extends ImageWidget {
       await card.set('z', z++);
     }
     await shadow.setPosition(target.get('dropOffsetX') + slot[0], target.get('dropOffsetY') + slot[1], fanIndex + 1);
+  }
+
+  // Whether the drop the preview would show as joining the target group would
+  // actually be refused - the same checks updatePiles applies when the real
+  // drop lands. A blocked drop puts the widget down as its own group, so the
+  // shadow keeps previewing that instead of disappearing.
+  previewJoinBlocked(shadow, target) {
+    if(JSON.stringify(shadow.get('onPileCreation')) !== JSON.stringify(target.get('onPileCreation')))
+      return true;
+    if(target.get('type') == 'pile')
+      return exceedsDropLimit(target, 1);
+    const dropLimit = shadow.get('onPileCreation') && shadow.get('onPileCreation').dropLimit;
+    return dropLimit > -1 && dropLimit < 2;
   }
 
   // Moves the drop shadow between this holder and one of its piles. The shadow
@@ -689,8 +725,9 @@ export class Holder extends ImageWidget {
       return await this.rearrangeChildrenRandom(children);
 
     // a drop shadow previewing an insertion into one of the fans sits inside
-    // that fan, so the row is laid out as if it were not there
-    children = children.filter(c=>!c.fanPreviewPile);
+    // that fan, and one previewing a join sits hidden on the group it would
+    // join - the row is laid out as if neither were there
+    children = children.filter(c=>!c.fanPreviewPile && (c.get('display') || !c.get('dropShadowOwner')));
 
     const owner = children.map(c=>c.get('owner')).find(o=>o) || null;
     const squish = this.fanSquish(owner);
@@ -1099,7 +1136,7 @@ export class Holder extends ImageWidget {
       const squished = squish && squish.axis == axis;
       const gap = squished ? squish.gap : this.get('pilesGap' + axis);
       if(gap !== null)
-        return child.spreadExtent(axis) * (squished ? squish.groups : 1) + gap;
+        return child.spreadExtent(axis, squish) * (squished ? squish.groups : 1) + gap;
       const offset = this.get('pilesOffset' + axis);
       if(offset !== null)
         return offset;
@@ -1110,7 +1147,7 @@ export class Holder extends ImageWidget {
         return 0;
       // a card put down on its own is a pile one card deep, so it gets exactly
       // the room such a pile would get and the row stays flush either way
-      return stackOffset ? child.spreadExtent(axis) : 0;
+      return stackOffset ? child.spreadExtent(axis, squish) : 0;
     }
 
     return !child.get('overlap') && stackOffset ? child.get(axis == 'X' ? 'width' : 'height') + 4 : stackOffset;
@@ -1215,7 +1252,6 @@ export class Holder extends ImageWidget {
       return;
 
     await this.makeGroup(dropped);
-    await this.receiveCard(null);
   }
 
   // Turn the given cards (children of this holder, in the order the bottom of
@@ -1234,11 +1270,19 @@ export class Holder extends ImageWidget {
       pile.owner = bottom.get('owner');
 
     const pileID = await addWidgetLocal(pile);
+    // every card entering the pile would lay the whole row out again - the row
+    // holds still until the group is complete and gets one pass at the end
+    const hadFlag = this.preventRearrangeDuringPileDrop;
+    this.preventRearrangeDuringPileDrop = true;
     for(const card of cards) {
       // z before parent: the pile lays its cards out by z, so it has to be the
       // final one - the order the routine moved the cards in - by then
       await card.bringToFront();
       await card.set('parent', pileID);
+    }
+    if(!hadFlag) {
+      delete this.preventRearrangeDuringPileDrop;
+      await widgets.get(pileID).arrangeChildren();
     }
     return widgets.get(pileID);
   }
@@ -1263,10 +1307,16 @@ export class Holder extends ImageWidget {
       pile = widgets.get(await addWidgetLocal(pileDef));
       await group.set('parent', pile.get('id'));
     }
+    // the row is laid out once by insertChildrenAt below instead of once per
+    // card entering the pile
+    const hadFlag = this.preventRearrangeDuringPileDrop;
+    this.preventRearrangeDuringPileDrop = true;
     for(const card of cards) {
       await card.bringToFront();
       await card.set('parent', pile.get('id'));
     }
+    if(!hadFlag)
+      delete this.preventRearrangeDuringPileDrop;
     // renumbering the fan explicitly keeps the order deterministic - null
     // means on top, the way MOVE has always stacked what it brings
     await pile.insertChildrenAt(cards, index === null ? pile.children().length : index);
@@ -1410,11 +1460,15 @@ export class Holder extends ImageWidget {
     return !this.get('preventPiles') && (this.get('allowPiles') || !this.get('alignChildren') || !this.spreadsChildren());
   }
 
-  async updateAfterShuffle() {
+  // owners limits the pass to the lanes that actually changed - a deal into a
+  // shared hand touches one lane per batch, not all of them. null arranges
+  // every lane.
+  async updateAfterShuffle(owners=null) {
     if(this.get('layout') == 'grid') {
       const entries = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
       for(const owner of new Set(entries.map(c=>c.get('owner') || null)))
-        await this.rearrangeChildrenGrid(entries.filter(c=>!c.get('owner') || c.get('owner') === owner).sort((a, b)=>a.get('z') - b.get('z')));
+        if(!owners || owners.has(owner))
+          await this.rearrangeChildrenGrid(entries.filter(c=>!c.get('owner') || c.get('owner') === owner).sort((a, b)=>a.get('z') - b.get('z')));
       return;
     }
 
@@ -1453,9 +1507,11 @@ export class Holder extends ImageWidget {
     // by z, so both a shuffle and a changed offset reach them first - how much
     // room they end up taking is what the arrangement below is measured against
     for(const child of children)
-      if(child.get('type') == 'pile')
+      if(child.get('type') == 'pile' && (!owners || owners.has(child.get('owner') || null)))
         await child.arrangeChildren(false);
     for(const owner of new Set(children.map(c=>c.get('owner')))) {
+      if(owners && !owners.has(owner || null))
+        continue;
       await this.rearrangeChildren(children.filter(c=>!c.get('owner') || c.get('owner')===owner).sort((a, b)=>{
         return a.get('z') - b.get('z');
       }));

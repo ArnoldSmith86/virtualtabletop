@@ -1,4 +1,4 @@
-import { dropTargets } from '../../client/js/main.js';
+import { dropTargets, exceedsDropLimit } from '../../client/js/main.js';
 import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
@@ -36,6 +36,7 @@ beforeAll(async () => {
   globalThis.mapAssetURLs = url => url;
   globalThis.setTextAndAdjustFontSize = () => {};
   globalThis.playerName = 'jestPlayer';
+  globalThis.exceedsDropLimit = exceedsDropLimit;
   globalThis.DOMPoint = globalThis.DOMPoint || class { constructor(x=0, y=0) { Object.assign(this, { x, y, z: 0, w: 1 }); } };
   globalThis.DOMMatrix = globalThis.DOMMatrix || class {
     constructor() { Object.assign(this, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0, is2D: true }); }

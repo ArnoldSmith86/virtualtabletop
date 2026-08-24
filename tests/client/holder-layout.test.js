@@ -1,4 +1,4 @@
-import { dropTargets } from '../../client/js/main.js';
+import { dropTargets, exceedsDropLimit } from '../../client/js/main.js';
 import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 import { sortWidgets } from '../../client/js/main.js';
@@ -50,6 +50,7 @@ beforeAll(async () => {
   globalThis.setTextAndAdjustFontSize = () => {};
   globalThis.playerName = 'jestPlayer';
   globalThis.sortWidgets = sortWidgets;
+  globalThis.exceedsDropLimit = exceedsDropLimit;
   globalThis.DOMPoint = globalThis.DOMPoint || class { constructor(x=0, y=0) { Object.assign(this, { x, y, z: 0, w: 1 }); } };
   globalThis.DOMMatrix = globalThis.DOMMatrix || class {
     constructor() { Object.assign(this, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0, is2D: true }); }
@@ -1025,6 +1026,40 @@ describe('the drop shadow previewing an insertion into a fan', () => {
     await holder.updateAfterShuffle();
     // the shadow kept its slot position instead of being arranged into the row
     expect(shadow.get('x')).toBe(shadowX);
+  });
+
+  test('disappears over a loose card the drop would pile up with, and comes back off it', async () => {
+    const { holder, shadow } = await previewRoom();
+    // a real card defaults onPileCreation to {}, and the join preview applies
+    // the same checks a real drop does
+    await shadow.set('onPileCreation', {});
+    const loose = createCard('loose', { parent: 'h', x: 500, y: 4, z: 30, onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    // row: one (fan of 3, 180 wide), two (fan of 2, 140 wide), loose - the
+    // shadow previews as its own group between two and loose
+    expect(loose.get('x')).toBe(340);
+    await holder.previewShadowDrop(shadow, null, 335, 4);
+    expect(shadow.get('display')).toBe(true);
+    expect(loose.get('x')).toBe(448);
+    // over the loose card there is no slot to preview - the drop would pile up
+    // with it - so the shadow disappears and the row closes its gap
+    await holder.previewShadowDrop(shadow, loose, 448, 4);
+    expect(shadow.get('display')).toBe(false);
+    expect(shadow.get('parent')).toBe('h');
+    expect(loose.get('x')).toBe(340);
+    // off the card it lines up as its own group again
+    await holder.previewShadowDrop(shadow, null, 500, 4);
+    expect(shadow.get('display')).toBe(true);
+  });
+
+  test('stays visible over a loose card the drop could not pile up with', async () => {
+    const { holder, shadow } = await previewRoom();
+    // a different onPileCreation means the real drop would refuse to join and
+    // land as its own group instead - which is what the shadow keeps showing
+    const loose = createCard('loose', { parent: 'h', x: 500, y: 4, z: 30, onPileCreation: { dropLimit: 5 } });
+    await holder.updateAfterShuffle();
+    await holder.previewShadowDrop(shadow, loose, loose.get('x'), 4);
+    expect(shadow.get('display')).toBe(true);
   });
 });
 

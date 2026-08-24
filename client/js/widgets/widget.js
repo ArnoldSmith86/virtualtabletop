@@ -2019,10 +2019,16 @@ export class Widget extends StateManaged {
         };
         const finishArrivals = async ()=>{
           for(const [ holder, batch ] of arrivals) {
-            if(a.position && holder.applyMovePosition)
+            if(a.position && holder.applyMovePosition) {
               await holder.applyMovePosition(batch.cards, a.position);
-            else if(holder.groupDroppedCards)
-              await holder.groupDroppedCards(batch.broughtIn);
+            } else {
+              if(holder.groupDroppedCards)
+                await holder.groupDroppedCards(batch.broughtIn);
+              // one arrangement pass per holder and MOVE, and only over the
+              // lanes the batch landed in: arranging every lane after every
+              // single card is what made dealing many cards slow
+              await holder.updateAfterShuffle(new Set(batch.cards.map(c=>c.get('owner') || null)));
+            }
           }
           arrivals.clear();
         };
@@ -2058,9 +2064,8 @@ export class Widget extends StateManaged {
                     delete c.targetPlayer;
                   }
                   await c.bringToFront();
+                  // finishArrivals arranges the cards in the new owner's hand
                   noteArrival(targetHand, c, targetHand != source);
-                  if(targetHand.get('type') == 'holder')
-                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                   ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
@@ -2099,8 +2104,6 @@ export class Widget extends StateManaged {
                 offset += await applyMove(source, target, c);
               }
               await finishArrivals();
-              if(target.get('type') == 'holder')
-                await target.updateAfterShuffle();
             });
           }
           if(routineLogging) {
@@ -2150,6 +2153,20 @@ export class Widget extends StateManaged {
 
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
+            // every card taken out of a holder lays that holder out again -
+            // recalling dozens used to run that full pass per card, so the
+            // sources hold still while they drain and get one pass at the end
+            const sources = new Set();
+            const holdSourceStill = c=>{
+              const parentID = c.get('parent');
+              let source = parentID && widgets.has(parentID) ? widgets.get(parentID) : null;
+              if(source && source.get('type') == 'pile')
+                source = widgets.has(source.get('parent')) ? widgets.get(source.get('parent')) : null;
+              if(source && source.get('type') == 'holder' && source.get('id') != holder && !source.preventRearrangeDuringPileDrop) {
+                source.preventRearrangeDuringPileDrop = true;
+                sources.add(source);
+              }
+            };
             const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
             if(decks.length) {
               for(const deck of decks) {
@@ -2177,12 +2194,19 @@ export class Widget extends StateManaged {
                 }
                 
                 for(const c of cards) {
-                  if(c.get('_ancestor') == holder && !c.get('owner'))
+                  if(c.get('_ancestor') == holder && !c.get('owner')) {
                     await c.bringToFront();
-                  else
+                  } else {
+                    holdSourceStill(c);
                     await c.moveToHolder(widgets.get(holder));
+                  }
                 }
               }
+              for(const source of sources) {
+                delete source.preventRearrangeDuringPileDrop;
+                await source.updateAfterShuffle();
+              }
+              sources.clear();
             } else {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
