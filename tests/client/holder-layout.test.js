@@ -1012,6 +1012,21 @@ describe('a multipleSpread with more groups than fit', () => {
     expect(holder.fanSquish(null).fans).toBe(1);
     expect(widgets.get('one').spreadExtent('X')).toBe(180);
   });
+
+  test('every group renders above the one before it, count handle included', async () => {
+    // a pile renders at the highest z among its own and its cards' values, so
+    // rows numbered with a plain z++ let two fans tie and stack in DOM order -
+    // which hid their count handles behind a neighbor at random
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 2);
+    createCard('loose', { parent: 'h', x: 600, y: 4, z: 50 });
+    await holder.updateAfterShuffle();
+    const renderedZ = w=>Math.max(w.get('z'), ...(w.get('type') == 'pile' ? w.children().map(c=>c.get('z')) : []));
+    const row = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
+    for(let i=1; i<row.length; ++i)
+      expect(renderedZ(row[i])).toBeGreaterThan(renderedZ(row[i-1]));
+  });
 });
 
 describe('the drop shadow previewing an insertion into a fan', () => {
@@ -1241,6 +1256,29 @@ describe('a shared hand (childrenPerOwner) keeps its lanes', () => {
     expect(dropped.get('owner')).toBe('jestPlayer');
     expect(dropped.get('parent')).toBe('mine');
     expect(widgets.get('mine').children().length).toBe(3);
+  });
+
+  test('a SHIFT between the seats leaves every lane at the start of the hand', async () => {
+    // handing a group to another seat of the same hand only changes its owner,
+    // so the lane it leaves has to be laid out again as much as the one it
+    // arrives in - otherwise the arriving group keeps the second-slot offset
+    // it got while the leaving one was still in front of it
+    globalThis.jeRoutineLogging = false;
+    const holder = await sharedHand();
+    await holder.updateAfterShuffle();
+    createWidget({ id: 'seatA', type: 'seat', player: 'jestPlayer', hand: 'h', index: 1 });
+    createWidget({ id: 'seatB', type: 'seat', player: 'alice', hand: 'h', index: 2 });
+    const button = createWidget({ id: 'shiftButton', clickRoutine: [ { func: 'SHIFT', holders: [ 'seatA', 'seatB' ], widgets: 'all', interval: 1 } ] });
+    await button.click();
+    const mine = widgets.get('mine');
+    const theirs = widgets.get('theirs');
+    expect(mine.get('owner')).toBe('alice');
+    expect(theirs.get('owner')).toBe('jestPlayer');
+    expect(mine.children().every(c=>c.get('owner') == 'alice')).toBe(true);
+    expect(theirs.children().every(c=>c.get('owner') == 'jestPlayer')).toBe(true);
+    // each lane holds one group again, sitting at the first slot
+    expect(mine.get('x')).toBe(4);
+    expect(theirs.get('x')).toBe(4);
   });
 });
 

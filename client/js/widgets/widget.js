@@ -2008,14 +2008,16 @@ export class Widget extends StateManaged {
         // move within one holder only reorders what is already there, so it
         // brings nothing in to be grouped - but position still applies to it.
         const arrivals = new Map();
-        const noteArrival = (holder, c, broughtIn)=>{
+        const noteArrival = (holder, c, broughtIn, leftLane)=>{
           if(!holder || holder.get('type') != 'holder')
             return;
           if(!arrivals.has(holder))
-            arrivals.set(holder, { cards: [], broughtIn: [] });
+            arrivals.set(holder, { cards: [], broughtIn: [], leftLanes: new Set() });
           arrivals.get(holder).cards.push(c);
           if(broughtIn)
             arrivals.get(holder).broughtIn.push(c);
+          if(leftLane !== undefined)
+            arrivals.get(holder).leftLanes.add(leftLane);
         };
         const finishArrivals = async ()=>{
           for(const [ holder, batch ] of arrivals) {
@@ -2026,8 +2028,12 @@ export class Widget extends StateManaged {
                 await holder.groupDroppedCards(batch.broughtIn);
               // one arrangement pass per holder and MOVE, and only over the
               // lanes the batch landed in: arranging every lane after every
-              // single card is what made dealing many cards slow
-              await holder.updateAfterShuffle(new Set(batch.cards.map(c=>c.get('owner') || null)));
+              // single card is what made dealing many cards slow. A handover
+              // to another seat of the same shared hand only changes owners,
+              // so the lane a card left needs the pass as much as the one it
+              // arrived in - without it the leaving card's old neighbors keep
+              // the offsets they had while it was still in front of them
+              await holder.updateAfterShuffle(new Set([ ...batch.cards.map(c=>c.get('owner') || null), ...batch.leftLanes ]));
             }
           }
           arrivals.clear();
@@ -2055,8 +2061,10 @@ export class Widget extends StateManaged {
                 if(widgets.has(target.get('hand'))) {
                   const targetHand = widgets.get(target.get('hand'));
                   await applyFlip();
+                  let leftLane;
                   if (targetHand == source) {
                     // cards are already in hand: only an owner update is needed
+                    leftLane = c.get('owner') || null;
                     await c.set('owner', target.get('player'));
                   } else {
                     c.targetPlayer = target.get('player');
@@ -2065,7 +2073,7 @@ export class Widget extends StateManaged {
                   }
                   await c.bringToFront();
                   // finishArrivals arranges the cards in the new owner's hand
-                  noteArrival(targetHand, c, targetHand != source);
+                  noteArrival(targetHand, c, targetHand != source, leftLane);
                   ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);

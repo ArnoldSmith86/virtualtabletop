@@ -762,9 +762,17 @@ export class Holder extends ImageWidget {
     for(const child of children) {
       const newX = this.get('dropOffsetX') + xOffset;
       const newY = this.get('dropOffsetY') + yOffset;
-      const newZ = z++;
+      const newZ = z;
 
       await child.setPosition(newX, newY, newZ);
+
+      // a pile renders at the highest z among its own value and its cards'
+      // pile-local ones, so the next entry starts above all of them - with a
+      // plain z++ two neighboring fans could tie and stack in DOM order,
+      // hiding their count handles behind each other at random. This keeps
+      // every group above the one before it, the way a fan of cards reads.
+      const childZ = child.get('type') == 'pile' ? child.children().map(c=>c.get('z')) : [];
+      z = Math.max(newZ, ...childZ) + 1;
 
       xOffset += this.childSpacing(child, 'X', squish);
       yOffset += this.childSpacing(child, 'Y', squish);
