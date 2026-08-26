@@ -1,0 +1,1523 @@
+{
+  "_meta": {
+    "version": 22,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - SHIFT",
+      "image": "/assets/-563421985_5175",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1787460981259,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "usesAIImagery": false,
+      "showName": "only similar"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: SHIFT",
+    "layer": -3
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 537,
+    "y": 215,
+    "z": 22839,
+    "clickRoutine": [
+      "var a = ${PROPERTY text} + 1",
+      "var b = ${a} % 5",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${b}"
+      }
+    ],
+    "height": 40,
+    "text": 1
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "SHIFT is used to move widgets between the holders and seats listed in <b>holders</b>. If <b>holders</b> is left out, every occupied seat takes part, in the order of the seat <b>index</b> property. For seats, the function uses the holder linked in the <b>hand</b> property of the seat. Empty seats are skipped.Click the oval buttons below to cycle through the options for the various parameters. Press the round SHIFT button at any time to move the widgets in the examples."
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 953,
+    "y": 215,
+    "z": 22840,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "forward",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "backward"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text}",
+            "operand2": "backward",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "random"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "forward"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "height": 40,
+    "text": "forward"
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 1359,
+    "y": 215,
+    "z": 22840,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "height": 40,
+    "text": true
+  },
+  "text1": {
+    "id": "text1",
+    "x": 14,
+    "y": 270,
+    "width": 350,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>widgets</b>: Specifies which widgets in each holder are moved. Defaults to &quotall&quot. If set to &quottop&quot it will just move the top widget. It can also be set to a named collection to move all widgets in that collection.",
+    "layer": -3
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 129,
+    "y": 215,
+    "z": 22841,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "all",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "top"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "all"
+          }
+        ]
+      }
+    ],
+    "height": 40,
+    "text": "all"
+  },
+  "text2": {
+    "id": "text2",
+    "x": 421,
+    "y": 270,
+    "width": 350,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>interval</b>: Specifies how many positions along <b>holders</b> the widget(s) move. Defaults to 1.",
+    "layer": -3
+  },
+  "text3": {
+    "id": "text3",
+    "x": 836,
+    "y": 270,
+    "width": 350,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>direction</b>: Specifies whether the widgets move forwards or backwards along <b>holders</b>, or to a random other entry. Defaults to &quotforward&quot.",
+    "layer": -3
+  },
+  "text4": {
+    "id": "text4",
+    "x": 1234,
+    "y": 270,
+    "width": 350,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>wrap</b>: Specifies whether the widgets that reach the end of <b>holders</b> wrap around or stay at the end. Defaults to true.",
+    "layer": -3
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 1359,
+    "y": 541,
+    "width": 81,
+    "height": 81,
+    "z": 238,
+    "text": "SHIFT",
+    "clickRoutine": [
+      "// This first SHIFT moves the club cards along the holders.",
+      {
+        "func": "SHIFT",
+        "direction": "${PROPERTY text OF button3}",
+        "holders": [
+          "holder1",
+          "holder2",
+          "holder3",
+          "holder4",
+          "holder5",
+          "holder6",
+          "holder7"
+        ],
+        "interval": "${PROPERTY text OF button2}",
+        "widgets": "${PROPERTY text OF button1}",
+        "wrap": "${PROPERTY text OF button4}"
+      },
+      "// This second SHIFT moves the marble around the score track.",
+      {
+        "func": "SHIFT",
+        "direction": "${PROPERTY text OF button3}",
+        "holders": [
+          "move0",
+          "move1",
+          "move2",
+          "move3",
+          "move4",
+          "move5",
+          "move6",
+          "move7",
+          "move8",
+          "move9",
+          "move10",
+          "move11",
+          "move12",
+          "move13",
+          "move14",
+          "move15",
+          "move16",
+          "move17",
+          "move18",
+          "move19",
+          "move20",
+          "move21",
+          "move22",
+          "move23",
+          "move24",
+          "move25",
+          "move26",
+          "move27",
+          "move28",
+          "move29",
+          "move30",
+          "move31",
+          "move32",
+          "move33",
+          "move34",
+          "move35",
+          "move36",
+          "move37",
+          "move38",
+          "move39",
+          "move40",
+          "move41",
+          "move42",
+          "move43",
+          "move44",
+          "move45",
+          "move46",
+          "move47",
+          "move48",
+          "move49",
+          "move50",
+          "move51",
+          "move52",
+          "move53"
+        ],
+        "interval": "${PROPERTY text OF button2}",
+        "widgets": "${PROPERTY text OF button1}",
+        "wrap": "${PROPERTY text OF button4}"
+      },
+      "// This third SHIFT leaves the 'holders' parameter empty. It moves the pawn along the holders which are in the 'hand' property of each seat. Empty seats are skipped.",
+      {
+        "func": "SHIFT",
+        "direction": "${PROPERTY text OF button3}",
+        "interval": "${PROPERTY text OF button2}",
+        "widgets": "${PROPERTY text OF button1}",
+        "wrap": "${PROPERTY text OF button4}"
+      }
+    ]
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 13,
+    "y": 508,
+    "z": 1455,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": -149,
+    "y": 431,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "recallButton": {
+    "type": "button",
+    "id": "recallButton",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck": {
+    "type": "deck",
+    "id": "deck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder2": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder2",
+    "x": 124,
+    "y": 508
+  },
+  "holder3": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder3",
+    "x": 235,
+    "y": 508
+  },
+  "holder4": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder4",
+    "x": 346,
+    "y": 508
+  },
+  "holder5": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder5",
+    "x": 457,
+    "y": 508
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "x": 568,
+    "y": 508
+  },
+  "holder7": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder7",
+    "x": 679,
+    "y": 508
+  },
+  "fdtm": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 01",
+    "id": "fdtm",
+    "z": 2452,
+    "activeFace": 1,
+    "parent": "qfv7"
+  },
+  "ik8p": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 02",
+    "id": "ik8p",
+    "z": 2441,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder2"
+  },
+  "ffzh": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 03",
+    "id": "ffzh",
+    "z": 2443,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder3"
+  },
+  "0m81": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 04",
+    "id": "0m81",
+    "z": 2445,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder4"
+  },
+  "pyww": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 05",
+    "id": "pyww",
+    "z": 2447,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder5"
+  },
+  "rg39": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 06",
+    "id": "rg39",
+    "z": 2449,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder6"
+  },
+  "7bfl": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 07",
+    "id": "7bfl",
+    "z": 2451,
+    "activeFace": 1,
+    "parent": "holder7",
+    "x": 4,
+    "y": 4
+  },
+  "move10": {
+    "type": "holder",
+    "id": "move10",
+    "x": 1075,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 405,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 10
+  },
+  "move11": {
+    "type": "holder",
+    "id": "move11",
+    "x": 1113,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 406,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 11
+  },
+  "move12": {
+    "type": "holder",
+    "id": "move12",
+    "x": 1151,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 407,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 12
+  },
+  "move13": {
+    "type": "holder",
+    "id": "move13",
+    "x": 1151,
+    "y": 471,
+    "width": 38,
+    "height": 38,
+    "z": 415,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 13
+  },
+  "move14": {
+    "type": "holder",
+    "id": "move14",
+    "x": 1151,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 423,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 14
+  },
+  "move15": {
+    "type": "holder",
+    "id": "move15",
+    "x": 1151,
+    "y": 547,
+    "width": 38,
+    "height": 38,
+    "z": 431,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 15
+  },
+  "move16": {
+    "type": "holder",
+    "id": "move16",
+    "x": 1151,
+    "y": 585,
+    "width": 38,
+    "height": 38,
+    "z": 439,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 16
+  },
+  "move17": {
+    "type": "holder",
+    "id": "move17",
+    "x": 1151,
+    "y": 623,
+    "width": 38,
+    "height": 38,
+    "z": 447,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 17
+  },
+  "move18": {
+    "type": "holder",
+    "id": "move18",
+    "x": 1151,
+    "y": 661,
+    "width": 38,
+    "height": 38,
+    "z": 455,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 18
+  },
+  "move19": {
+    "type": "holder",
+    "id": "move19",
+    "x": 1151,
+    "y": 699,
+    "width": 38,
+    "height": 38,
+    "z": 463,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 19
+  },
+  "move20": {
+    "type": "holder",
+    "id": "move20",
+    "x": 1075,
+    "y": 699,
+    "width": 72,
+    "height": 38,
+    "z": 461,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 20
+  },
+  "move21": {
+    "type": "holder",
+    "id": "move21",
+    "x": 1037,
+    "y": 699,
+    "width": 38,
+    "height": 38,
+    "z": 460,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 21
+  },
+  "move22": {
+    "type": "holder",
+    "id": "move22",
+    "x": 999,
+    "y": 699,
+    "width": 38,
+    "height": 38,
+    "z": 459,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 22
+  },
+  "move23": {
+    "type": "holder",
+    "id": "move23",
+    "x": 961,
+    "y": 699,
+    "width": 38,
+    "height": 38,
+    "z": 458,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 23
+  },
+  "move24": {
+    "type": "holder",
+    "id": "move24",
+    "x": 923,
+    "y": 699,
+    "width": 38,
+    "height": 38,
+    "z": 457,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 24
+  },
+  "move25": {
+    "type": "holder",
+    "id": "move25",
+    "x": 923,
+    "y": 623,
+    "width": 38,
+    "height": 76,
+    "z": 449,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 25
+  },
+  "move26": {
+    "type": "holder",
+    "id": "move26",
+    "x": 923,
+    "y": 585,
+    "width": 38,
+    "height": 38,
+    "z": 433,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 26
+  },
+  "move27": {
+    "type": "holder",
+    "id": "move27",
+    "x": 923,
+    "y": 547,
+    "width": 38,
+    "height": 38,
+    "z": 425,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 27
+  },
+  "move28": {
+    "type": "holder",
+    "id": "move28",
+    "x": 923,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 417,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 28
+  },
+  "move29": {
+    "type": "holder",
+    "id": "move29",
+    "x": 923,
+    "y": 471,
+    "width": 38,
+    "height": 38,
+    "z": 409,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 29
+  },
+  "move30": {
+    "type": "holder",
+    "id": "move30",
+    "x": 961,
+    "y": 471,
+    "width": 38,
+    "height": 38,
+    "z": 410,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 30
+  },
+  "move31": {
+    "type": "holder",
+    "id": "move31",
+    "x": 999,
+    "y": 471,
+    "width": 72,
+    "height": 38,
+    "z": 411,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 31
+  },
+  "move32": {
+    "type": "holder",
+    "id": "move32",
+    "x": 1075,
+    "y": 471,
+    "width": 38,
+    "height": 38,
+    "z": 413,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 32
+  },
+  "move33": {
+    "type": "holder",
+    "id": "move33",
+    "x": 1113,
+    "y": 471,
+    "width": 38,
+    "height": 38,
+    "z": 414,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 33
+  },
+  "move34": {
+    "type": "holder",
+    "id": "move34",
+    "x": 1113,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 422,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 34
+  },
+  "move35": {
+    "type": "holder",
+    "id": "move35",
+    "x": 1113,
+    "y": 547,
+    "width": 38,
+    "height": 38,
+    "z": 430,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 35
+  },
+  "move36": {
+    "type": "holder",
+    "id": "move36",
+    "x": 1113,
+    "y": 585,
+    "width": 38,
+    "height": 38,
+    "z": 438,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 36
+  },
+  "move37": {
+    "type": "holder",
+    "id": "move37",
+    "x": 1113,
+    "y": 623,
+    "width": 38,
+    "height": 38,
+    "z": 446,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 37
+  },
+  "move38": {
+    "type": "holder",
+    "id": "move38",
+    "x": 1113,
+    "y": 661,
+    "width": 38,
+    "height": 38,
+    "z": 454,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 38
+  },
+  "move39": {
+    "type": "holder",
+    "id": "move39",
+    "x": 1075,
+    "y": 661,
+    "width": 38,
+    "height": 38,
+    "z": 453,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 39
+  },
+  "move40": {
+    "type": "holder",
+    "id": "move40",
+    "x": 1037,
+    "y": 661,
+    "width": 38,
+    "height": 38,
+    "z": 452,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 40
+  },
+  "move41": {
+    "type": "holder",
+    "id": "move41",
+    "x": 999,
+    "y": 661,
+    "width": 38,
+    "height": 38,
+    "z": 451,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 41
+  },
+  "move42": {
+    "type": "holder",
+    "id": "move42",
+    "x": 961,
+    "y": 661,
+    "width": 38,
+    "height": 38,
+    "z": 450,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 42
+  },
+  "move43": {
+    "type": "holder",
+    "id": "move43",
+    "x": 961,
+    "y": 585,
+    "width": 38,
+    "height": 76,
+    "z": 442,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 43
+  },
+  "move44": {
+    "type": "holder",
+    "id": "move44",
+    "x": 961,
+    "y": 547,
+    "width": 38,
+    "height": 38,
+    "z": 426,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 44
+  },
+  "move45": {
+    "type": "holder",
+    "id": "move45",
+    "x": 961,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 418,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 45
+  },
+  "move46": {
+    "type": "holder",
+    "id": "move46",
+    "x": 999,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 419,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 46
+  },
+  "move47": {
+    "type": "holder",
+    "id": "move47",
+    "x": 1037,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 420,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 47
+  },
+  "move48": {
+    "type": "holder",
+    "id": "move48",
+    "x": 1075,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 421,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 48
+  },
+  "move49": {
+    "type": "holder",
+    "id": "move49",
+    "x": 1075,
+    "y": 547,
+    "width": 38,
+    "height": 72,
+    "z": 429,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 49
+  },
+  "move50": {
+    "type": "holder",
+    "id": "move50",
+    "x": 1075,
+    "y": 623,
+    "width": 38,
+    "height": 38,
+    "z": 445,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 50
+  },
+  "move51": {
+    "type": "holder",
+    "id": "move51",
+    "x": 1037,
+    "y": 623,
+    "width": 38,
+    "height": 38,
+    "z": 444,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 51
+  },
+  "move52": {
+    "type": "holder",
+    "id": "move52",
+    "x": 999,
+    "y": 623,
+    "width": 38,
+    "height": 38,
+    "z": 443,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 52
+  },
+  "move53": {
+    "type": "holder",
+    "id": "move53",
+    "x": 999,
+    "y": 547,
+    "width": 76,
+    "height": 76,
+    "z": 427,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 53
+  },
+  "move1": {
+    "type": "holder",
+    "id": "move1",
+    "x": 885,
+    "y": 585,
+    "width": 38,
+    "height": 38,
+    "z": 1450,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 1
+  },
+  "move2": {
+    "type": "holder",
+    "id": "move2",
+    "x": 885,
+    "y": 547,
+    "width": 38,
+    "height": 38,
+    "z": 424,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 2
+  },
+  "move3": {
+    "type": "holder",
+    "id": "move3",
+    "x": 885,
+    "y": 509,
+    "width": 38,
+    "height": 38,
+    "z": 416,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 3
+  },
+  "move4": {
+    "type": "holder",
+    "id": "move4",
+    "x": 885,
+    "y": 471,
+    "width": 38,
+    "height": 38,
+    "z": 408,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 4
+  },
+  "move5": {
+    "type": "holder",
+    "id": "move5",
+    "x": 885,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 400,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 5
+  },
+  "move6": {
+    "type": "holder",
+    "id": "move6",
+    "x": 923,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 401,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 6
+  },
+  "move7": {
+    "type": "holder",
+    "id": "move7",
+    "x": 961,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 402,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 7
+  },
+  "move8": {
+    "type": "holder",
+    "id": "move8",
+    "x": 999,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 403,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 8
+  },
+  "move9": {
+    "type": "holder",
+    "id": "move9",
+    "x": 1037,
+    "y": 433,
+    "width": 38,
+    "height": 38,
+    "z": 404,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "text": 9
+  },
+  "move0": {
+    "type": "holder",
+    "id": "move0",
+    "x": 885,
+    "y": 623,
+    "width": 38,
+    "height": 114,
+    "z": 440,
+    "movableInEdit": false,
+    "dropTarget": {
+      "marble": true
+    },
+    "stackOffsetY": 40,
+    "text": 0
+  },
+  "a7d3": {
+    "x": 4,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "color": "#1f5ca6",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "z": 1,
+    "id": "a7d3",
+    "marble": true,
+    "layer": 2,
+    "parent": "move0"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 68,
+    "y": 804,
+    "hand": "token1"
+  },
+  "fdtm1": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "C 01",
+    "id": "fdtm1",
+    "z": 2454,
+    "activeFace": 1,
+    "parent": "qfv7"
+  },
+  "token1": {
+    "type": "holder",
+    "id": "token1",
+    "x": 117,
+    "y": 877,
+    "z": 9733,
+    "dropTarget": {
+      "token": true
+    },
+    "width": 60,
+    "height": 100
+  },
+  "sy6j": {
+    "x": 4,
+    "y": 4,
+    "width": 50.4,
+    "height": 90,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "z": 80415,
+    "id": "sy6j",
+    "token": true,
+    "parent": "token1"
+  },
+  "token2": {
+    "inheritFrom": {
+      "token1": "*"
+    },
+    "type": "holder",
+    "id": "token2",
+    "dropTarget": {
+      "token": true
+    },
+    "x": 421,
+    "y": 877
+  },
+  "token3": {
+    "inheritFrom": {
+      "token1": "*"
+    },
+    "type": "holder",
+    "id": "token3",
+    "dropTarget": {
+      "token": true
+    },
+    "x": 715,
+    "y": 877
+  },
+  "token4": {
+    "inheritFrom": {
+      "token1": "*"
+    },
+    "type": "holder",
+    "id": "token4",
+    "dropTarget": {
+      "token": true
+    },
+    "x": 1020,
+    "y": 877
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 366,
+    "y": 804,
+    "hand": "token2",
+    "index": 2
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 665,
+    "y": 804,
+    "hand": "token3",
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 963,
+    "y": 804,
+    "hand": "token4",
+    "index": 4
+  },
+  "qfv7": {
+    "type": "pile",
+    "parent": "holder1",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "qfv7"
+  }
+}

@@ -3,6 +3,10 @@
   overflow-x: hidden;
 }
 
+.editorModule {
+  --propertyLabelWidth: 132px;
+}
+
 .editorModule .propertyInput {
   display: flex;
   align-items: center;
@@ -31,8 +35,8 @@
    reserved for the (i) hint (see below) so wrapped text never claims the
    full width and strands the hint alone on its own line. */
 .editorModule .propertyInput > label {
-  width: 132px;
-  min-width: 132px;
+  width: var(--propertyLabelWidth);
+  min-width: var(--propertyLabelWidth);
   overflow-wrap: anywhere;
   display: inline-block;
   position: relative;
@@ -1437,28 +1441,24 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   color: #444;
 }
 
-/* align / distribute / layer-order buttons shown above Position when several
-   widgets are selected */
+/* the arranging buttons shown above Position when several widgets are selected */
 .editorModule .arrangeButtons {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 14px;
+  gap: 4px 20px;
   justify-content: center;
   margin: 6px 0 10px;
 }
 
-/* align / distribute / order are separate operations: a wider gap and a
-   divider between the groups so nine icons don't read as one flat row */
+/* align, distribute, order and circle are separate operations: each group is
+   captioned and set apart by the wider column gap of the bar, so ten icons
+   don't read as one flat row. No divider between them - a rule drawn per group
+   dangles at the left edge of the second row as soon as the bar wraps. */
 .editorModule .arrangeGroupWrap {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-}
-
-.editorModule .arrangeGroupWrap + .arrangeGroupWrap {
-  border-left: 1px solid var(--backgroundHighlightColor1);
-  padding-left: 14px;
 }
 
 .editorModule .arrangeGroupLabel {
@@ -1472,6 +1472,35 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   flex-wrap: wrap;
   justify-content: center;
   gap: 4px;
+}
+
+/* radius and rotation of the circle align button, shown while an arrangement is
+   being adjusted: they belong to the button bar above them, so they sit closer
+   to it than to what follows and are boxed in as one tool. The blue outline is
+   the one the line editor's add-stop menu uses for the same thing - a box a
+   button in the panel has just opened. */
+.editorModule .arrangeButtons + .arrangeCircleOptions:not(:empty) {
+  /* the label column is narrowed by exactly the inset of the box (6px margin,
+     8px padding, 1px border) so its rows keep the panel's label grid */
+  --propertyLabelWidth: 117px;
+  margin: -6px 6px 10px;
+  padding: 4px 8px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+  background: var(--overlayBackgroundColor);
+}
+
+/* the button stays pressed while its settings are open, so which of the
+   look-alike glyphs the box below belongs to is visible without reading */
+.editorModule .arrangeGroup button.open {
+  background: var(--VTTblueDark);
+}
+
+/* the slider shares the row with the field while there is room left for a drag
+   worth doing, and wraps onto a line of its own when there is not - squeezed
+   into the rest of a narrow panel it is several radius units per pixel */
+.editorModule .arrangeCircleOptions .numberInput input[type=range] {
+  flex: 1 1 160px;
 }
 
 /* dice per-face editor */

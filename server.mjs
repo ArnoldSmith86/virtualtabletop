@@ -596,11 +596,26 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  const feedbackCooldowns = new Map();
   router.put('/clientError', express.json({ limit: '50mb' }), function(req, res, next) {
     if(typeof req.body == 'object') {
-      const errorID = Math.random().toString(36).substring(2, 10);
+      // the feedback button makes this endpoint one click away for every visitor, so
+      // rate limit those reports (crash reports stay unlimited - they can't be spammed
+      // without actually crashing the client)
+      if(req.body.type == 'feedback') {
+        if(feedbackCooldowns.size > 1000)
+          for(const [ ip, time ] of feedbackCooldowns)
+            if(Date.now() - time > 15000)
+              feedbackCooldowns.delete(ip);
+        if(Date.now() - (feedbackCooldowns.get(req.ip) || 0) < 15000) {
+          res.send('Please wait a few seconds before sending more feedback.');
+          return;
+        }
+        feedbackCooldowns.set(req.ip, Date.now());
+      }
+      const errorID = Math.random().toString(36).substring(2, 10).padEnd(8, '0');
       fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));
-      Logging.log(`ERROR: Client error ${errorID}: ${req.body.message}`);
+      Logging.log(`${req.body.type == 'feedback' ? 'Feedback' : 'ERROR: Client error'} ${errorID}: ${req.body.message}`);
       res.send(errorID);
     } else {
       res.send('not a valid JSON object');
@@ -611,8 +626,28 @@ MinifyHTML().then(function(result) {
 
   router.use(Logging.errorHandler);
 
+  server.on('error', function(e) {
+    if(server.listening) {
+      Logging.handleGenericException('HTTP server', e);
+      return;
+    }
+
+    const port = Config.get('port');
+    // Config.get prefers the environment variable, so pointing at config.json would be the wrong
+    // advice for a deployment that sets PORT - the documented way to configure the Docker image
+    const portSource = process.env.PORT !== undefined ? 'the PORT environment variable' : '"port" in config.json';
+    if(e.code == 'EADDRINUSE')
+      Logging.logFatal(`ERROR - Port ${port} is already in use. Stop the program listening on it or set a different port via ${portSource}. If you just restarted VirtualTabletop, wait a few seconds and try again.`);
+    else if(e.code == 'EACCES')
+      Logging.logFatal(`ERROR - Not allowed to listen on port ${port}. Ports below 1024 usually require root privileges. Run VirtualTabletop with sudo, put it behind a reverse proxy, or set a different port via ${portSource}.`);
+    else
+      Logging.handleFatalException(`listening on port ${port}`, e);
+    process.exit(1);
+  });
+
   server.listen(Config.get('port'), function() {
     Logging.log(`Listening on ${server.address().port}`);
+    autosaveRooms();
   });
 });
 
@@ -624,13 +659,15 @@ const ws = new WebSocket(server, serverStart, function(connection, { playerName,
   }).catch(e=>Logging.handleGenericException(`player ${playerName} connected to room ${roomID}`, e));
 });
 
-autosaveRooms();
-
 ['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
   process.on(eventType, function() {
-    for(const [ _, room ] of activeRooms)
-      room.unload();
-    Statistics.writeToFilesystem();
+    // a process that never took over the port shares its save directory with the instance that
+    // did, so it must not write anything back on the way out
+    if(server.listening) {
+      for(const [ _, room ] of activeRooms)
+        room.unload();
+      Statistics.writeToFilesystem();
+    }
     if(eventType != 'exit')
       process.exit();
   });
