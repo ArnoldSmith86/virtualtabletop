@@ -2,6 +2,8 @@ import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } fr
 import { Widget } from '../../client/js/widgets/widget.js';
 import { compareDropTarget, exceedsDropLimit } from '../../client/js/main.js';
 
+import { legacyMode } from '../../client/js/legacymodes.js';
+
 import { removeWidget } from './client-util.js';
 
 // line.js relies on the concatenated global scope of the shipped bundle rather than
@@ -20,6 +22,7 @@ beforeAll(async () => {
   globalThis.getMaxZ = () => 0;
   globalThis.updateMaxZ = () => {};
   globalThis.playerName = 'jestPlayer';
+  globalThis.legacyMode = legacyMode;
   ({ Line } = await import('../../client/js/widgets/line.js'));
 });
 

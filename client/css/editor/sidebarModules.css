@@ -1968,6 +1968,13 @@ div.widget-name {
   color: var(--textColor);
 }
 
+/* a bulleted list in a tile's description text - the browser default indents it far past
+   the 21px column the rest of the text sits in */
+.settings-tile ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
 .boardSizeSetting .boardSizeHeader {
   font-weight: bold;
   margin-bottom: 8px;

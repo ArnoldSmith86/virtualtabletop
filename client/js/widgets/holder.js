@@ -90,21 +90,76 @@ class Holder extends ImageWidget {
     return p;
   }
 
-  async dispenseCard(card) {
-    let toProcess = [ card ];
-    if(card.get('type') == 'pile')
-      toProcess = card.children();
+  // childrenPerOwner makes the holder a per-player hand, so what leaves it belongs to nobody
+  // again. The other half of that is in onChildAdd(), because becoming a child is what claims
+  // a widget, not the arrival event.
+  //
+  // Two exceptions. A drag detaches the card at the pickup, long before it is anywhere else,
+  // and a card without an owner is one every other player can see - so a hand holds on to a
+  // card that is still on the cursor until checkParent() decides it is really out of the box,
+  // which is why rearranging a hand never exposes a card. And MOVEXY has resetOwner, an
+  // explicit "put this on the table but keep it owned", which the leave must not override.
+  async applyLeave(child) {
+    if(child.get('type') != 'deck' && !child.isBeingRemoved && this.get('childrenPerOwner') && !child.get('dragging') && !child.keepOwner)
+      await child.set('owner', null);
+    // a widget on its way out of the room has no properties left to apply, but the gap it
+    // leaves in a stacked holder closes all the same
+    if(child.isBeingRemoved)
+      await this.closeStackGap();
+    await super.applyLeave(child);
+  }
+
+  // onEnter and onLeave hold properties to apply to what entered or left. A pile is one widget
+  // for the event and a stack of cards for the properties, so they reach the cards it holds
+  // rather than the pile itself.
+  async applyEnterProperties(child) {
+    if(child.get('type') == 'deck')
+      return;
+
+    const toProcess = child.get('type') == 'pile' ? child.children() : [ child ];
+    for(const property in this.get('onEnter')) {
+      for(const w of toProcess) {
+        if(tracingEnabled)
+          sendTraceEvent('onEnter', { w: w.get('id'), child: child.get('id'), property, value: this.get('onEnter')[property], toProcess: toProcess.map(w=>w.get('id')) });
+        await w.set(property, this.get('onEnter')[property]);
+      }
+    }
+  }
+
+  async applyLeaveProperties(child) {
+    const toProcess = child.get('type') == 'pile' ? child.children() : [ child ];
     for(const w of toProcess) {
       if(!w.get('ignoreOnLeave')) {
         for(const property in this.get('onLeave')) {
           if(tracingEnabled)
-            sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
+            sendTraceEvent('onLeave', { w: w.get('id'), child: child.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
           await w.set(property, this.get('onLeave')[property]);
         }
       }
     }
+    await this.closeStackGap();
+  }
+
+  // A drop shadow is a preview and raises no leave, but it does take a slot in a stacked holder
+  // while it is there, and that slot has to close again when the pointer moves on. The legacy
+  // pipeline closes it from dispenseCard() instead, along with the rest of the shadow's leave.
+  async onChildRemove(child) {
+    await super.onChildRemove(child);
+    if(child.get('dropShadowOwner') && !legacyMode('legacyHolderEnterLeaveEvents'))
+      await this.closeStackGap();
+  }
+
+  // a gap in a stacked holder closes as soon as the card that left it is gone
+  async closeStackGap() {
     if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
+  }
+
+  // The leave half as the legacy pipeline ran it: from checkParent() once the widget really is
+  // outside the holder, and from a pile that handed a card back while sitting in one. Nothing
+  // outside legacy mode calls this - applyLeave() is where a leave happens now.
+  async dispenseCard(card) {
+    await this.applyLeaveProperties(card);
     if(Array.isArray(this.get('leaveRoutine')))
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
   }
@@ -122,21 +177,19 @@ class Holder extends ImageWidget {
     if(child.get('type') == 'deck')
       return;
 
-    if(this.get('childrenPerOwner'))
+    // A per-player hand claims every widget that becomes a direct child of it, which is not the
+    // same thing as an arrival: a hand that unpacks a dropped pile hands the cards over one by
+    // one, and none of those is a move between containers. The pile the cards came from is gone
+    // by the time the last one is out, so it is not claimed along with them.
+    if(this.get('childrenPerOwner') && !child.isBeingRemoved)
       await child.set('owner', child.targetPlayer||playerName);
 
-    if(this != child.currentParent) { // FIXME: this isn't exactly pretty
-      let toProcess = [ child ];
-      if(child.get('type') == 'pile')
-        toProcess = child.children();
-      for(const property in this.get('onEnter')) {
-        for(const w of toProcess) {
-          if(tracingEnabled)
-            sendTraceEvent('onEnter', { w: w.get('id'), child: child.get('id'), property, value: this.get('onEnter')[property], toProcess: toProcess.map(w=>w.get('id')) });
-          await w.set(property, this.get('onEnter')[property]);
-        }
-      }
-    }
+    // the legacy pipeline runs the property half of the arrival from here too, which is why it
+    // applied onEnter to every parent change into the holder except one: a drop back into the
+    // holder the drag started in, which it recognised by the widget still remembering it as
+    // currentParent
+    if(legacyMode('legacyHolderEnterLeaveEvents') && this != child.currentParent)
+      await this.applyEnterProperties(child);
   }
 
   async onChildAddAlign(child, oldParentID) {

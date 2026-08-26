@@ -39,6 +39,17 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteY'
 ]);
 
+// The widget whose enter and leave events a child of `parent` belongs to. A pile inside
+// another widget is transparent: it is a stack of cards in that widget, not a container a card
+// can enter or leave on its own, so a card that joins or leaves it stays in whatever holds the
+// pile. A pile on the table has nothing behind it and is its own container. Returns null for a
+// widget that sits on the table itself.
+function enterLeaveContainer(parent) {
+  if(parent && parent.get('type') == 'pile' && widgets.has(parent.get('parent')))
+    return widgets.get(parent.get('parent'));
+  return parent || null;
+}
+
 function inputFieldValueForPlayer(value, player, playerIndex) {
   if(!value || typeof value != 'object' || Array.isArray(value))
     return value;
@@ -458,13 +469,18 @@ export class Widget extends StateManaged {
     return this.children().filter(c=>!c.get('owner') || c.get('owner')==playerName);
   }
 
+  // Detach a dragged widget from the container it was picked up in, once it no longer overlaps
+  // it (or right away when the caller forces it). Clearing the parent is what raises the leave
+  // event; this method only forgets where the drag came from - and hands a per-player hand the
+  // card back, which happens here rather than with the rest of the event because a card is only
+  // out of a hand once it is out of its box (see Holder.applyLeave).
   async checkParent(forceDetach) {
     if(this.currentParent && (forceDetach || !overlap(this.domElement, this.currentParent.domElement))) {
       await this.set('parent', null);
       await this.set('hoverParent', null);
       if(this.currentParent.get('childrenPerOwner'))
         await this.set('owner',  null);
-      if(this.currentParent.dispenseCard)
+      if(legacyMode('legacyHolderEnterLeaveEvents') && this.currentParent.dispenseCard)
         await this.currentParent.dispenseCard(this);
       delete this.currentParent;
     }
@@ -2090,9 +2106,12 @@ export class Widget extends StateManaged {
               await c.setPosition(a.x, a.y, a.z || c.get('z'));
               if(a.resetOwner)
                 await c.set('owner', null);
+              else
+                c.keepOwner = true;
               if(a.snapToGrid)
                 await c.snapToGrid();
               await c.set('parent', null);
+              delete c.keepOwner;
             }
           });
           if(routineLogging) {
@@ -3124,8 +3143,8 @@ export class Widget extends StateManaged {
       if(!this.get('fixedParent'))
         await this.moveToHolder(line);
     } else if(from && from.get('type') == 'line' && !this.get('fixedParent')) {
-      // dropping it off the line hands it back to the room, which lets the line
-      // dispense it: onLeave is applied and the stop comes off the list
+      // dropping it off the line hands it back to the room, which is the line's
+      // leave event: onLeave is applied and the stop comes off the list
       this.currentParent = from;
       await this.checkParent(true);
     }
@@ -3188,6 +3207,10 @@ export class Widget extends StateManaged {
 
     await this.updatePiles();
     delete this.pileUpdateFromDrag;
+    // currentParent only means "the container this drag started in". A drag that ends inside
+    // that container never gets to the branch in checkParent() that forgets it, so the drag has
+    // to drop it here - a leftover would tell the next move that a drag is still going on.
+    delete this.currentParent;
   }
 
   async hideShadowWidget() {
@@ -3234,6 +3257,82 @@ export class Widget extends StateManaged {
     this.applyZ();
   }
 
+  // One parent change, at most one leave and one enter. Every way of moving a widget - a drag,
+  // MOVE, MOVEXY, SET parent, CLONE, RECALL, the JSON editor - ends up writing `parent`, so
+  // this is the single place both halves of an event happen: first the properties the container
+  // applies (onLeave / onEnter, childrenPerOwner), then its routine, which therefore always
+  // reads the values the event has already written.
+  //
+  // Which container an event belongs to is decided by enterLeaveContainer(), so a parent change
+  // that keeps the widget in the same holder - joining, leaving or dissolving a pile inside it -
+  // raises no event at all.
+  async applyParentChange(oldValue, newValue) {
+    const oldParent = oldValue && widgets.has(oldValue) ? widgets.get(oldValue) : null;
+    const newParent = newValue && widgets.has(newValue) ? widgets.get(newValue) : null;
+    const leaveTarget = enterLeaveContainer(oldParent);
+    const enterTarget = enterLeaveContainer(newParent);
+    // a drop shadow is a preview of where the dragged widget would land: it is parented into the
+    // holder under the pointer and taken out again while the drag is still going on, so it takes
+    // part in the layout but enters and leaves nothing
+    const raisesEvents = leaveTarget !== enterTarget && !this.get('dropShadowOwner');
+
+    if(oldParent)
+      await oldParent.onChildRemove(this);
+    // a pile is created with its parent already set and destroyed once it holds one card, so
+    // neither end of its life is a widget entering or leaving the holder it forms in
+    if(leaveTarget && raisesEvents && !(this.isBeingRemoved && this.get('type') == 'pile'))
+      await leaveTarget.applyLeave(this);
+    if(newParent)
+      await newParent.onChildAdd(this, oldValue);
+    if(enterTarget && raisesEvents)
+      await enterTarget.applyEnter(this, oldValue);
+  }
+
+  // What a parent change did before the enter/leave pipeline was consolidated: leaveRoutine
+  // straight from here (and a second time from checkParent, through dispenseCard), onEnter and
+  // enterRoutine from the receiving side, and no onLeave for anything that did not go through
+  // a drag or moveToHolder.
+  async applyLegacyParentChange(oldValue, newValue) {
+    if(oldValue) {
+      const oldParent = widgets.get(oldValue);
+      await oldParent.onChildRemove(this);
+      if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
+        await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
+    }
+    if(newValue) {
+      const newParent = widgets.get(newValue);
+      await newParent.onChildAdd(this, oldValue);
+      if(Array.isArray(newParent.get('enterRoutine')))
+        await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+    }
+  }
+
+  // The two halves of an enter event, in the order a game can rely on: the properties this
+  // container applies to what it received, then its enterRoutine. Holders and lines add their
+  // property half by overriding applyEnterProperties().
+  async applyEnter(child, oldParentID) {
+    await this.applyEnterProperties(child);
+    if(Array.isArray(this.get('enterRoutine')))
+      await this.evaluateRoutine('enterRoutine', { oldParentID: oldParentID === undefined ? null : oldParentID }, { child: [ child ] });
+  }
+
+  async applyLeave(child) {
+    // a widget on its way out of the room has nothing left to apply properties to, but the
+    // holder still gets told that it left
+    if(!child.isBeingRemoved)
+      await this.applyLeaveProperties(child);
+    if(child.get('type') != 'holder' && Array.isArray(this.get('leaveRoutine')))
+      await this.evaluateRoutine('leaveRoutine', {}, { child: [ child ] });
+  }
+
+  // The property half of an event. A plain widget has none - holders and lines override these
+  // with their onEnter/onLeave handling.
+  async applyEnterProperties(child) {
+  }
+
+  async applyLeaveProperties(child) {
+  }
+
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
       // deleting a stop takes it off the lines that list it; a rename is a
@@ -3241,18 +3340,10 @@ export class Widget extends StateManaged {
       if(this.isBeingRemoved && !this.isBeingRenamed)
         for(const line of linesWithStop(this.id))
           await line.removeStop(this.id);
-      if(oldValue) {
-        const oldParent = widgets.get(oldValue);
-        await oldParent.onChildRemove(this);
-        if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
-          await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
-      }
-      if(newValue) {
-        const newParent = widgets.get(newValue);
-        await newParent.onChildAdd(this, oldValue);
-        if(Array.isArray(newParent.get('enterRoutine')))
-          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
-      }
+      if(legacyMode('legacyHolderEnterLeaveEvents'))
+        await this.applyLegacyParentChange(oldValue, newValue);
+      else
+        await this.applyParentChange(oldValue, newValue);
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
     }

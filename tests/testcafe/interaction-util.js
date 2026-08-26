@@ -25,7 +25,7 @@ export const surfaceGeometry = ClientFunction(_=>{
 // path work: mousedown has to land on the widget, and the later moves have to be accepted
 // wherever the pointer happens to be. The client listens on window, so the event only has to
 // bubble - and it reads clientX/clientY, so nothing else about it matters.
-const dispatchMouse = ClientFunction((type, clientX, clientY) => {
+export const dispatchMouse = ClientFunction((type, clientX, clientY) => {
   const element = document.elementFromPoint(clientX, clientY) || document.body;
   element.dispatchEvent(new MouseEvent(type, { clientX, clientY, bubbles: true, cancelable: true, button: 0, buttons: type == 'mouseup' ? 0 : 1 }));
 });
@@ -74,7 +74,10 @@ async function clientPoint(waypoint, start, geometry) {
 // testing the *rendered* position of the dragged widget, and a widget that is animating towards
 // a coordinate it was teleported to is still somewhere else when that test runs. A last
 // repeated move after the widget has caught up makes the answer independent of the animation.
-export async function dragPath(t, id, waypoints, { settle = 100, steps = 8 } = {}) {
+// `hold: true` stops after the last waypoint without releasing the button and returns the point
+// the pointer sits at, so a caller can look at the board while a widget still hangs on the
+// cursor - the only moment a second client sees a drag in progress. Finish it with releaseDrag().
+export async function dragPath(t, id, waypoints, { settle = 100, steps = 8, hold = false } = {}) {
   const geometry = await surfaceGeometry();
   const box = await Selector(`#w_${id}`).boundingClientRect;
   const start = { x: box.left + box.width/2, y: box.top + box.height/2 };
@@ -94,5 +97,11 @@ export async function dragPath(t, id, waypoints, { settle = 100, steps = 8 } = {
     await dispatchMouse('mousemove', last.x, last.y);
     await t.wait(settle);
   }
+  if(hold)
+    return last;
   await dispatchMouse('mouseup', last.x, last.y);
+}
+
+export async function releaseDrag(point) {
+  await dispatchMouse('mouseup', point.x, point.y);
 }
