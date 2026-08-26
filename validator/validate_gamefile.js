@@ -715,6 +715,12 @@ function getWidgetTypeValidator(types, canBeArray = false) {
     }
 }
 
+// the holders SHIFT cycles through are either listed by id or named as a collection
+function getHoldersOrCollectionValidator(types) {
+    const listValidator = getWidgetTypeValidator(types, true);
+    return (v, context, propertyPath)=>typeof v === 'string' ? validators.inCollection(v, context, propertyPath) : listValidator(v, context);
+}
+
 function checkForDollarSign(value, context, propertyPath = []) {
     const problems = [];
     if (typeof value === 'string' && value.includes('$')) {
@@ -903,6 +909,14 @@ const operationProps = {
         'relation': 'string',
         'value': 'any'
     },
+    'SHIFT': {
+        'holders': getHoldersOrCollectionValidator(['holder', 'seat']),
+        'widgets': (v, context, propertyPath)=>v === 'all' || v === 'top' || validators.inCollection(v, context, propertyPath),
+        'interval': v=>typeof v === 'number' && Number.isInteger(v) || 'integer expected',
+        'direction': getEnumValidator(['forward','backward','random']),
+        'wrap': 'boolean',
+        'keepOrder': 'boolean'
+    },
     'SHUFFLE': {
         'holder': 'idArray',
         'collection': 'inCollection',
@@ -917,12 +931,6 @@ const operationProps = {
         'locales': 'any',
         'options': 'any',
         'rearrange': 'boolean'
-    },
-    'SWAPHANDS': {
-        'interval': v=>typeof v === 'number' && Number.isInteger(v),
-        'direction': getEnumValidator(['forward','backward','random']),
-        'source': 'inCollection',
-        'keepOrder': 'boolean'
     },
     'TIMER': {
         'timer': 'idArray',

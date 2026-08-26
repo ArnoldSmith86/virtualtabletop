@@ -5,12 +5,21 @@
   "This file is deliberately NOT loaded by the application - assets/fonts/symbols.json is what the icon pickers read. Keep the two in sync.",
   "",
   "HOW TO ADD NEW ICONS FROM GAME-ICONS.NET (for a future AI run):",
-  "1. Drop the new SVGs into assets/game-icons.net/<artist>/<icon-name>.svg, keeping game-icons.net's own artist folder and file name.",
+  "1. Drop the new SVGs into assets/game-icons.net/<artist>/<icon-name>.svg, keeping game-icons.net's own artist folder and file name. game-icons.net ships them as white artwork on a black background rect - the copies here are the bare artwork, so drop the <path d=\"M0 0h512v512H0z\"/> background and turn fill=\"#fff\" into fill=\"#000\".",
+  "   Upstream's badges/ folder is not imported: those are small overlay badges of the other icons, a different visual family.",
+  "   An icon game-icons.net RENAMES keeps the file name it has here - renaming it breaks every game that references it by URL - so give it",
+  "   the name the site shows today as one multi-word tag instead: 'person in blizzard' has to find lorc/eskimo, and it only does because",
+  "   the whole phrase is a tag (a query matches every one of its words, including short ones like 'in' that no other tag carries).",
   "2. Rebuild the sprite sheets, because symbols.json addresses them by index:",
   "   raise the resource limits in /etc/ImageMagick-6/policy.xml to 8GiB, then run",
   "   montage -background none assets/game-icons.net/*/*.svg -geometry 48x48+0+0 -tile 60x assets/game-icons.net/overview48.png",
   "   (and the same with -geometry 24x24+0+0 for overview24.png). The montage order is the shell glob order of */*.svg,",
   "   so EVERY icon's index shifts when a name sorts before an existing one - always regenerate all indices, never patch a single entry.",
+  "   Any renderer that lays the same glob order out 60 per row in cells of that size does - ImageMagick is not required. When the number of rows changes, update --spritesheetY in client/css/fonts.css to match, or the whole picker shows the wrong artwork.",
+  "   The artwork is black on transparent, so write both sheets as PNG color type 4 (grayscale + alpha, -define png:color-type=4): an RGBA sheet",
+  "   stores the same gray in three channels and costs ~1.7 MB more on overview48.png alone. Both sheets are downloaded by a picker: the widget",
+  "   and deck-editor pickers draw their grid from overview48.png (client/css/fonts.css scales it down to the 24px cells), the rich text editor's",
+  "   icon picker from overview24.png.",
   "3. LOOK AT EACH NEW ICON as an image - render it, do not guess from the file name - and write, for each one:",
   "   - description: one sentence describing what is actually drawn.",
   "   - tags: up to 20 lowercase search terms for discoverability (synonyms, uses, materials, themes, related concepts).",
@@ -22,6 +31,11 @@
   "     search for beards and bearings, which is what a user typing them wants - a razor in a search for 'bear' is not. Write fewer",
   "     than 20 tags rather than padding with words that fit every icon of the family alike: the search shows the first 100 matches,",
   "     name matches first, so a word carried by a whole section buries the icons that are really about it.",
+  "     An icon that is part of a SET carries the name of the set as a tag, again as one phrase: the 22 tarot cards are looked",
+  "     for as 'major arcana' or 'tarot card' at least as often as by the name of a single card, and only a tag answers those.",
+  "     The words of that phrase are still tags of their own, so the name of the set may not smuggle in a broad word another family",
+  "     owns: tagging the 22 arcana 'deck' grows the query 'deck' from 102 icons to 124 and pushes 22 playing-card icons out of the",
+  "     100 the picker shows, to buy the one phrasing 'tarot deck' that 'tarot' and 'tarot card' already answer.",
   "     Tags are plain lowercase ASCII (no accents, no '&'): they are what a user types into the search box. Use US spelling -",
   "     'defense', 'armor', 'color' - because the match never bridges the two.",
   "   - categories: 5 broad category suggestions, most specific first, taken from the vocabulary in `categoryVocabulary` below.",
@@ -2240,6 +2254,37 @@
    ],
    "category": "Creatures & Monsters"
   },
+  "caro-asercion/armchair": {
+   "description": "A plush upholstered armchair seen from the front, with a rounded back and thick rolled arms.",
+   "tags": [
+    "chair",
+    "seat",
+    "sofa",
+    "lounge",
+    "furniture",
+    "comfort",
+    "living room",
+    "upholstery",
+    "cushion",
+    "recliner",
+    "fireside",
+    "sitting",
+    "relax",
+    "parlor",
+    "cozy",
+    "padded",
+    "wingback",
+    "den"
+   ],
+   "categories": [
+    "Furniture",
+    "Building",
+    "People",
+    "Material",
+    "Art"
+   ],
+   "category": "Furniture & Containers"
+  },
   "caro-asercion/artichoke": {
    "description": "A globe artichoke with overlapping scale-like leaves on a short stem.",
    "tags": [
@@ -2669,6 +2714,37 @@
    ],
    "category": "Farming & Food"
   },
+  "caro-asercion/bucket-wheel-excavator": {
+   "description": "A giant bucket-wheel excavator on a lattice boom, its toothed digging wheel biting into the ground.",
+   "tags": [
+    "mining",
+    "strip mine",
+    "digger",
+    "heavy machinery",
+    "open pit",
+    "earthmover",
+    "industrial",
+    "conveyor",
+    "quarry",
+    "coal",
+    "boom",
+    "crane",
+    "dig",
+    "lignite",
+    "construction",
+    "extraction",
+    "lattice",
+    "ore"
+   ],
+   "categories": [
+    "Machine",
+    "Vehicle",
+    "Technology",
+    "Building",
+    "Material"
+   ],
+   "category": "Machines & Technology"
+  },
   "caro-asercion/bunny-slippers": {
    "description": "A pair of fluffy slippers shaped like rabbit faces with long ears.",
    "tags": [
@@ -3095,6 +3171,37 @@
     "Landscape",
     "Creature",
     "Farming"
+   ],
+   "category": "Animals"
+  },
+  "caro-asercion/dodo": {
+   "description": "A plump flightless dodo standing on a small pedestal, seen in profile with its hooked beak.",
+   "tags": [
+    "extinct",
+    "flightless bird",
+    "mauritius",
+    "beak",
+    "plump",
+    "island",
+    "natural history",
+    "fossil",
+    "rare",
+    "avian",
+    "museum",
+    "feathers",
+    "waddle",
+    "curiosity",
+    "oddity",
+    "lost species",
+    "ornithology",
+    "pigeon"
+   ],
+   "categories": [
+    "Bird",
+    "Animal",
+    "Nature",
+    "Science",
+    "Fantasy"
    ],
    "category": "Animals"
   },
@@ -3691,6 +3798,37 @@
     "Furniture"
    ],
    "category": "Furniture & Containers"
+  },
+  "caro-asercion/medieval-village-01": {
+   "description": "A half-timbered medieval house standing beside a slim tower with a pointed roof.",
+   "tags": [
+    "house",
+    "half timbered",
+    "hamlet",
+    "town",
+    "cottage",
+    "tower",
+    "spire",
+    "settlement",
+    "dwelling",
+    "roof",
+    "chimney",
+    "old quarter",
+    "building",
+    "tudor",
+    "homestead",
+    "inn",
+    "street",
+    "rural"
+   ],
+   "categories": [
+    "Building",
+    "Landscape",
+    "People",
+    "Fantasy",
+    "Navigation"
+   ],
+   "category": "Buildings & Places"
   },
   "caro-asercion/mole": {
    "description": "A mole with broad digging claws and a pointed snout, seen from the front.",
@@ -4451,6 +4589,72 @@
    ],
    "category": "Creatures & Monsters"
   },
+  "caro-asercion/schrodingers-cat-alive": {
+   "description": "A cat sitting up wide awake inside an open box marked with a radioactive trefoil.",
+   "tags": [
+    "awake",
+    "live",
+    "quantum",
+    "thought experiment",
+    "physics",
+    "superposition",
+    "paradox",
+    "box",
+    "radioactive",
+    "kitten",
+    "uncertainty",
+    "observer",
+    "feline",
+    "science",
+    "trefoil",
+    "hazard",
+    "crate",
+    "whiskers",
+    "riddle",
+    "mechanics"
+   ],
+   "categories": [
+    "Physics",
+    "Science",
+    "Animal",
+    "Abstract",
+    "Container"
+   ],
+   "category": "Science & Space"
+  },
+  "caro-asercion/schrodingers-cat-dead": {
+   "description": "A cat with crossed-out eyes and a limp tail slumped over an open box marked with a radioactive trefoil.",
+   "tags": [
+    "limp",
+    "slumped",
+    "quantum",
+    "thought experiment",
+    "physics",
+    "superposition",
+    "paradox",
+    "box",
+    "radioactive",
+    "kitten",
+    "uncertainty",
+    "observer",
+    "feline",
+    "science",
+    "trefoil",
+    "hazard",
+    "crate",
+    "deceased",
+    "riddle",
+    "mechanics"
+   ],
+   "categories": [
+    "Physics",
+    "Science",
+    "Animal",
+    "Death",
+    "Abstract"
+   ],
+   "category": "Science & Space"
+  },
   "caro-asercion/sewing-machine": {
    "description": "A sewing machine with a needle arm, spool pin and flat bed.",
    "tags": [
@@ -4483,6 +4687,37 @@
     "Technology"
    ],
    "category": "Machines & Technology"
+  },
+  "caro-asercion/sink": {
+   "description": "A wash basin with a tall curved faucet and a single mixer handle.",
+   "tags": [
+    "faucet",
+    "tap",
+    "basin",
+    "washbasin",
+    "wash",
+    "plumbing",
+    "kitchen",
+    "bathroom",
+    "water",
+    "drain",
+    "spout",
+    "mixer",
+    "dishes",
+    "hygiene",
+    "fixture",
+    "countertop",
+    "utility",
+    "scrub"
+   ],
+   "categories": [
+    "Furniture",
+    "Water",
+    "Building",
+    "Tool",
+    "Body"
+   ],
+   "category": "Furniture & Containers"
   },
   "caro-asercion/skateboarding-01": {
    "description": "A skateboarder in mid-air performing a trick above the deck.",
@@ -4911,6 +5146,710 @@
     "Navigation"
    ],
    "category": "Vehicles & Transport"
+  },
+  "caro-asercion/tarot-00-the-fool": {
+   "description": "A wanderer striding off a ledge with a bundle slung from a staff over the shoulder.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "wanderer",
+    "beginning",
+    "innocence",
+    "leap of faith",
+    "journey",
+    "vagabond",
+    "cliff",
+    "knapsack",
+    "naivety",
+    "zero",
+    "jester",
+    "freedom",
+    "new start",
+    "traveler",
+    "bundle",
+    "risk",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "People",
+    "Symbol",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-01-the-magician": {
+   "description": "A robed magician at a table of tools, one hand raised with a wand beneath an infinity sign.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "wizard",
+    "conjurer",
+    "infinity",
+    "lemniscate",
+    "wand",
+    "altar",
+    "willpower",
+    "manifestation",
+    "sorcerer",
+    "spell",
+    "adept",
+    "ritual table",
+    "skill",
+    "creation",
+    "mage",
+    "one",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "People",
+    "Mythology",
+    "Symbol"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-02-the-high-priestess": {
+   "description": "A veiled woman in a horned crown seated between two tall pillars.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "veiled woman",
+    "pillars",
+    "intuition",
+    "crown",
+    "mystery",
+    "oracle",
+    "temple",
+    "secret knowledge",
+    "seated figure",
+    "hidden wisdom",
+    "initiate",
+    "isis",
+    "lunar horns",
+    "sanctuary",
+    "silence",
+    "robe",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "People",
+    "Mythology",
+    "Building"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-03-the-empress": {
+   "description": "A crowned empress seated with a scepter, a heart-shaped shield resting at her side.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "queen",
+    "throne",
+    "scepter",
+    "motherhood",
+    "abundance",
+    "fertility",
+    "venus",
+    "heart shield",
+    "crown",
+    "ruler",
+    "nurture",
+    "harvest",
+    "grace",
+    "matriarch",
+    "romance",
+    "garden",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "People",
+    "Mythology",
+    "Symbol"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-04-the-emperor": {
+   "description": "A crowned emperor on a blocky throne holding a cross-topped scepter.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "king",
+    "throne",
+    "scepter",
+    "authority",
+    "rulership",
+    "patriarch",
+    "sovereign",
+    "armor",
+    "order",
+    "law",
+    "monarch",
+    "seated ruler",
+    "discipline",
+    "empire",
+    "crown",
+    "father",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "People",
+    "Mythology",
+    "Symbol"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-05-the-hierophant": {
+   "description": "A mitred hierophant raising a hand in blessing and holding a triple-barred papal cross.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "pope",
+    "priest",
+    "blessing",
+    "papal cross",
+    "mitre",
+    "doctrine",
+    "tradition",
+    "clergy",
+    "church",
+    "teacher",
+    "ritual",
+    "sacrament",
+    "hierarchy",
+    "faith",
+    "spiritual guide",
+    "sermon",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Mythology",
+    "People",
+    "Magic",
+    "Building"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-06-the-lovers": {
+   "description": "Two figures standing apart beneath a winged angel with outstretched wings.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "couple",
+    "angel",
+    "wings",
+    "romance",
+    "union",
+    "choice",
+    "partnership",
+    "marriage",
+    "attraction",
+    "duality",
+    "cupid",
+    "blessing",
+    "relationship",
+    "temptation",
+    "pair",
+    "bond",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "People",
+    "Emotion",
+    "Magic",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-07-the-chariot": {
+   "description": "A crowned charioteer riding a chariot drawn by two crouching beasts.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "charioteer",
+    "sphinxes",
+    "victory",
+    "triumph",
+    "willpower",
+    "advance",
+    "war cart",
+    "momentum",
+    "conquest",
+    "drive",
+    "armored rider",
+    "control",
+    "steeds",
+    "procession",
+    "forward",
+    "determination",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Vehicle",
+    "Combat",
+    "Magic",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-08-strength": {
+   "description": "A figure calmly holding open the jaws of a maned lion.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "lion",
+    "courage",
+    "taming",
+    "fortitude",
+    "inner power",
+    "jaws",
+    "beast",
+    "patience",
+    "gentle force",
+    "mastery",
+    "bravery",
+    "calm",
+    "will",
+    "control",
+    "valor",
+    "wild animal",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Animal",
+    "People",
+    "Magic",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-09-the-hermit": {
+   "description": "A hooded hermit leaning on a staff and holding up a lantern.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "lantern",
+    "solitude",
+    "seeker",
+    "cloak",
+    "staff",
+    "wisdom",
+    "guidance",
+    "withdrawal",
+    "old man",
+    "pilgrim",
+    "light in darkness",
+    "introspection",
+    "monk",
+    "search",
+    "quiet",
+    "mountain path",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "People",
+    "Magic",
+    "Light",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-10-wheel-of-fortune": {
+   "description": "A spoked wheel ringed by four winged creatures at the corners.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "spokes",
+    "destiny",
+    "luck",
+    "cycle",
+    "turning point",
+    "chance",
+    "karma",
+    "four evangelists",
+    "rotation",
+    "change",
+    "fate",
+    "gamble",
+    "revolve",
+    "providence",
+    "ups and downs",
+    "wings",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "Symbol",
+    "Abstract",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-11-justice": {
+   "description": "A crowned figure holding an upright sword in one hand and a pair of scales in the other.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "scales",
+    "sword",
+    "balance",
+    "fairness",
+    "law",
+    "judgment",
+    "truth",
+    "verdict",
+    "equity",
+    "court",
+    "accountability",
+    "karma",
+    "impartial",
+    "ruling",
+    "crown",
+    "consequence",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Symbol",
+    "People",
+    "Magic",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-12-the-hanged-man": {
+   "description": "A figure suspended upside down by one foot, arms folded behind the back.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "upside down",
+    "suspended",
+    "sacrifice",
+    "surrender",
+    "inverted figure",
+    "pause",
+    "new perspective",
+    "martyr",
+    "rope",
+    "waiting",
+    "letting go",
+    "reversal",
+    "patience",
+    "odin",
+    "limbo",
+    "stillness",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "People",
+    "Magic",
+    "Mythology",
+    "Death"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-13-death": {
+   "description": "An armored reaper carrying a banner on a staff, striding over a fallen figure.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "reaper",
+    "skeleton",
+    "banner",
+    "ending",
+    "transformation",
+    "mortality",
+    "skull knight",
+    "black flag",
+    "rider",
+    "transition",
+    "finality",
+    "grave",
+    "rebirth",
+    "omen",
+    "passing",
+    "funeral",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Death",
+    "Magic",
+    "Mythology",
+    "People"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-14-temperance": {
+   "description": "A winged angel in a patterned robe pouring liquid from one vessel into another.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "angel",
+    "wings",
+    "blending",
+    "moderation",
+    "balance",
+    "cups",
+    "alchemy",
+    "patience",
+    "harmony",
+    "healing",
+    "mixing",
+    "flow",
+    "guardian spirit",
+    "restraint",
+    "synthesis",
+    "calm",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Mythology",
+    "Magic",
+    "People",
+    "Water"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-15-the-devil": {
+   "description": "A horned, bat-winged devil looming over two small captive figures.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "demon",
+    "horns",
+    "bat wings",
+    "temptation",
+    "bondage",
+    "chains",
+    "vice",
+    "satan",
+    "addiction",
+    "shadow",
+    "baphomet",
+    "captives",
+    "materialism",
+    "imp",
+    "fiend",
+    "hell",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Monster",
+    "Magic",
+    "Mythology",
+    "Death"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-16-the-tower": {
+   "description": "A tower struck by lightning, flames bursting from its window as a crowned figure falls.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "lightning",
+    "ruin",
+    "collapse",
+    "disaster",
+    "falling figure",
+    "flames",
+    "upheaval",
+    "catastrophe",
+    "sudden change",
+    "crumbling",
+    "struck",
+    "chaos",
+    "downfall",
+    "keep",
+    "revelation",
+    "crown",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Building",
+    "Magic",
+    "Fire",
+    "Death"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-17-the-star": {
+   "description": "A kneeling figure pouring water from two bowls beneath a four-pointed star in a circle.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "hope",
+    "pouring water",
+    "bowls",
+    "pond",
+    "renewal",
+    "guidance",
+    "inspiration",
+    "night sky",
+    "serenity",
+    "kneeling figure",
+    "healing",
+    "wish",
+    "calm",
+    "spring",
+    "faith",
+    "promise",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "Space",
+    "Water",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-18-the-moon": {
+   "description": "A crescent in a rayed circle above two howling beasts facing each other.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "crescent",
+    "wolves",
+    "howling",
+    "night",
+    "illusion",
+    "dreams",
+    "subconscious",
+    "towers",
+    "mystery",
+    "tide",
+    "instinct",
+    "lunar",
+    "fear",
+    "path",
+    "shadowy",
+    "hound",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "Space",
+    "Animal",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-19-the-sun": {
+   "description": "A radiant sun with a human face shining over a child riding a horse.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "radiant face",
+    "rays",
+    "child",
+    "horse",
+    "joy",
+    "vitality",
+    "daylight",
+    "warmth",
+    "success",
+    "solar",
+    "optimism",
+    "garden",
+    "rider",
+    "blessing",
+    "glow",
+    "clarity",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Light",
+    "Magic",
+    "Space",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-20-judgement": {
+   "description": "A winged figure blowing a long trumpet over a person rising from a tomb.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "judgment",
+    "trumpet",
+    "angel",
+    "resurrection",
+    "awakening",
+    "rising",
+    "herald",
+    "reckoning",
+    "rebirth",
+    "horn",
+    "revival",
+    "summons",
+    "salvation",
+    "verdict",
+    "wings",
+    "afterlife",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Death",
+    "Magic",
+    "Mythology",
+    "People"
+   ],
+   "category": "Magic & Occult"
+  },
+  "caro-asercion/tarot-21-the-world": {
+   "description": "A dancing figure framed by a thick wreath of leaves.",
+   "tags": [
+    "major arcana",
+    "divination",
+    "wreath",
+    "laurel",
+    "completion",
+    "dancer",
+    "wholeness",
+    "achievement",
+    "closed cycle",
+    "garland",
+    "fulfillment",
+    "cosmos",
+    "triumph",
+    "integration",
+    "leaves",
+    "finale",
+    "journey end",
+    "unity",
+    "card"
+   ],
+   "categories": [
+    "Occult",
+    "Magic",
+    "Symbol",
+    "Mythology",
+    "Plant"
+   ],
+   "category": "Magic & Occult"
   },
   "caro-asercion/tesla-coil": {
    "description": "A tesla coil discharging arcs of electricity from a coiled tower.",
@@ -7714,6 +8653,37 @@
    ],
    "category": "Music & Sound"
   },
+  "delapouite/aero-bike": {
+   "description": "A rider tucked low over a streamlined sport motorcycle, seen from the side.",
+   "tags": [
+    "motorcycle",
+    "motorbike",
+    "racer",
+    "speed",
+    "rider",
+    "superbike",
+    "biker",
+    "throttle",
+    "road race",
+    "engine",
+    "vehicle",
+    "sport",
+    "wheels",
+    "moto gp",
+    "streamlined",
+    "courier",
+    "ride",
+    "fast"
+   ],
+   "categories": [
+    "Vehicle",
+    "Transport",
+    "Sport",
+    "Machine",
+    "People"
+   ],
+   "category": "Vehicles & Transport"
+  },
   "delapouite/africa": {
    "description": "The outline of the African continent.",
    "tags": [
@@ -9491,6 +10461,37 @@
    ],
    "category": "Animals"
   },
+  "delapouite/armor-cuisses": {
+   "description": "A pair of plated cuisses, the thigh defenses of a suit of armor.",
+   "tags": [
+    "thigh guards",
+    "plate",
+    "greaves",
+    "knight",
+    "leg protection",
+    "medieval",
+    "harness",
+    "steel",
+    "equipment",
+    "tassets",
+    "jousting",
+    "defense",
+    "soldier",
+    "panoply",
+    "forged",
+    "suit of mail",
+    "cavalry",
+    "gambeson"
+   ],
+   "categories": [
+    "Armor",
+    "Combat",
+    "Body",
+    "Material",
+    "Weapon"
+   ],
+   "category": "Armor & Clothing"
+  },
   "delapouite/armor-downgrade": {
    "description": "A shield with a downward chevron, marking a loss of armour.",
    "tags": [
@@ -10017,6 +11018,37 @@
     "Fantasy"
    ],
    "category": "Armor & Clothing"
+  },
+  "delapouite/attack-gauge": {
+   "description": "A sword above a horizontal bar meter filled almost to the end.",
+   "tags": [
+    "power meter",
+    "damage bar",
+    "sword",
+    "strength",
+    "rpg",
+    "charge",
+    "hud",
+    "weapon rating",
+    "offense",
+    "blade",
+    "indicator",
+    "stat",
+    "progress",
+    "energy",
+    "readout",
+    "melee",
+    "buff",
+    "interface"
+   ],
+   "categories": [
+    "Combat",
+    "Weapon",
+    "Symbol",
+    "Technology",
+    "Game"
+   ],
+   "category": "Combat & Action"
   },
   "delapouite/audio-cassette": {
    "description": "An audio cassette tape with two spools and a label.",
@@ -12681,6 +13713,37 @@
     "Furniture"
    ],
    "category": "Animals"
+  },
+  "delapouite/bird-scepter": {
+   "description": "A scepter crowned with a bird spreading its wings.",
+   "tags": [
+    "staff",
+    "rod",
+    "eagle standard",
+    "royal mace",
+    "regalia",
+    "wings",
+    "totem",
+    "ceremonial",
+    "ruler",
+    "authority",
+    "emblem",
+    "aztec",
+    "shaman",
+    "feathered",
+    "sovereign",
+    "ornament",
+    "crest",
+    "power"
+   ],
+   "categories": [
+    "Magic",
+    "Treasure",
+    "Symbol",
+    "Bird",
+    "Mythology"
+   ],
+   "category": "Magic & Occult"
   },
   "delapouite/bison": {
    "description": "A bison standing in profile with a humped shoulder and shaggy mane.",
@@ -26342,6 +27405,37 @@
    ],
    "category": "Combat & Action"
   },
+  "delapouite/encrypted-channel": {
+   "description": "A closed padlock surrounded by streams of binary digits and dashes.",
+   "tags": [
+    "security",
+    "cipher",
+    "padlock",
+    "binary",
+    "privacy",
+    "https",
+    "secure line",
+    "data stream",
+    "cryptography",
+    "lock",
+    "vpn",
+    "code",
+    "transmission",
+    "confidential",
+    "key",
+    "digital",
+    "protection",
+    "network"
+   ],
+   "categories": [
+    "Technology",
+    "Communication",
+    "Symbol",
+    "Science",
+    "Machine"
+   ],
+   "category": "Machines & Technology"
+  },
   "delapouite/energy-tank": {
    "description": "A tank canister on a stand holding energy.",
    "tags": [
@@ -26862,6 +27956,37 @@
     "Energy"
    ],
    "category": "Time"
+  },
+  "delapouite/extra-vision": {
+   "description": "A wide open eye set in a dark disc, casting a fan of beams downward.",
+   "tags": [
+    "sight",
+    "perception",
+    "gaze",
+    "insight",
+    "beams",
+    "clairvoyance",
+    "awareness",
+    "scan",
+    "third eye",
+    "radar",
+    "foresight",
+    "watchful",
+    "sensor",
+    "detect",
+    "seeing",
+    "spotlight",
+    "psychic",
+    "view"
+   ],
+   "categories": [
+    "Occult",
+    "Body",
+    "Magic",
+    "Light",
+    "Symbol"
+   ],
+   "category": "Magic & Occult"
   },
   "delapouite/eye-of-horus": {
    "description": "The wedjat eye of Horus with its stylized brow and markings.",
@@ -35745,6 +36870,37 @@
    ],
    "category": "Armor & Clothing"
   },
+  "delapouite/hook-swords": {
+   "description": "Two Chinese hook swords crossed at their guards, their curved tips facing outward.",
+   "tags": [
+    "crossed blades",
+    "martial arts",
+    "wushu",
+    "kung fu",
+    "chinese weapon",
+    "dueling",
+    "twin",
+    "curved",
+    "steel",
+    "shaolin",
+    "melee",
+    "guard",
+    "hooked",
+    "sabre",
+    "warrior",
+    "weaponry",
+    "pair",
+    "fighting"
+   ],
+   "categories": [
+    "Weapon",
+    "Combat",
+    "Sport",
+    "Material",
+    "Symbol"
+   ],
+   "category": "Weapons"
+  },
   "delapouite/hook": {
    "description": "A curved hook with a barbed point and a ring.",
    "tags": [
@@ -39708,6 +40864,37 @@
    ],
    "category": "Animals"
   },
+  "delapouite/lambda": {
+   "description": "The Greek letter lambda drawn as a single bold stroke.",
+   "tags": [
+    "greek letter",
+    "alphabet",
+    "symbol",
+    "wavelength",
+    "physics",
+    "decay constant",
+    "sparta",
+    "insignia",
+    "math",
+    "function",
+    "science",
+    "notation",
+    "glyph",
+    "character",
+    "half life",
+    "resistance",
+    "eleven",
+    "typography"
+   ],
+   "categories": [
+    "Symbol",
+    "Writing",
+    "Science",
+    "Physics",
+    "Abstract"
+   ],
+   "category": "Symbols & Signs"
+  },
   "delapouite/laptop": {
    "description": "An open laptop computer.",
    "tags": [
@@ -42404,6 +43591,37 @@
    ],
    "category": "Tools"
   },
+  "delapouite/manual-water-pump": {
+   "description": "An old cast-iron hand pump with a curved lever and a drop falling from its spout.",
+   "tags": [
+    "hand pump",
+    "well",
+    "village",
+    "drinking",
+    "spout",
+    "drop",
+    "borehole",
+    "lever",
+    "irrigation",
+    "farmyard",
+    "cast iron",
+    "fetch",
+    "supply",
+    "rural",
+    "faucet",
+    "aid project",
+    "drought",
+    "handle"
+   ],
+   "categories": [
+    "Machine",
+    "Water",
+    "Tool",
+    "Farming",
+    "Building"
+   ],
+   "category": "Machines & Technology"
+  },
   "delapouite/maracas": {
    "description": "A pair of maracas shakers.",
    "tags": [
@@ -43836,6 +45054,37 @@
     "Tool"
    ],
    "category": "Music & Sound"
+  },
+  "delapouite/mid-summit": {
+   "description": "A jagged mountain peak with a small flag planted partway up the slope.",
+   "tags": [
+    "mountain",
+    "peak",
+    "flag",
+    "halfway",
+    "climbing",
+    "milestone",
+    "progress",
+    "ascent",
+    "ridge",
+    "expedition",
+    "goal",
+    "hiking",
+    "base camp",
+    "slope",
+    "alpine",
+    "checkpoint",
+    "achievement",
+    "marker"
+   ],
+   "categories": [
+    "Landscape",
+    "Nature",
+    "Sport",
+    "Symbol",
+    "Navigation"
+   ],
+   "category": "Landscape & Weather"
   },
   "delapouite/mighty-boosh": {
    "description": "A wide-eyed round creature face with a toothy grin.",
@@ -51221,6 +52470,37 @@
    ],
    "category": "Machines & Technology"
   },
+  "delapouite/plum": {
+   "description": "A round plum with a single leaf on its short stem.",
+   "tags": [
+    "stone fruit",
+    "orchard",
+    "produce",
+    "damson",
+    "harvest",
+    "sweet",
+    "ripe",
+    "food",
+    "snack",
+    "jam",
+    "tree",
+    "prune",
+    "market",
+    "purple",
+    "garden",
+    "healthy",
+    "dessert",
+    "greengage"
+   ],
+   "categories": [
+    "Food",
+    "Plant",
+    "Farming",
+    "Nature",
+    "Material"
+   ],
+   "category": "Farming & Food"
+  },
   "delapouite/plunger": {
    "description": "A rubber plunger with a wooden handle.",
    "tags": [
@@ -54360,6 +55640,37 @@
    ],
    "category": "Money & Treasure"
   },
+  "delapouite/ringed-tentacle": {
+   "description": "A thick tentacle curling back on itself, banded by two rings.",
+   "tags": [
+    "octopus",
+    "kraken",
+    "arm",
+    "suckers",
+    "sea monster",
+    "cephalopod",
+    "squid",
+    "coil",
+    "grasp",
+    "bands",
+    "eldritch",
+    "curl",
+    "limb",
+    "deep",
+    "alien",
+    "hooked",
+    "wrapped",
+    "lovecraft"
+   ],
+   "categories": [
+    "Creature",
+    "Sea",
+    "Monster",
+    "Animal",
+    "Fantasy"
+   ],
+   "category": "Creatures & Monsters"
+  },
   "delapouite/ringing-alarm": {
    "description": "An alarm bell ringing with sound lines.",
    "tags": [
@@ -57101,6 +58412,37 @@
     "Animal",
     "Water",
     "Nature"
+   ],
+   "category": "Sea & Water"
+  },
+  "delapouite/sea-urchin": {
+   "description": "A round sea urchin bristling with long sharp spines.",
+   "tags": [
+    "spines",
+    "echinoderm",
+    "tide pool",
+    "reef",
+    "marine",
+    "spiky ball",
+    "ocean floor",
+    "shell",
+    "sting",
+    "diving",
+    "coastal",
+    "hazard",
+    "uni",
+    "shore",
+    "prickly",
+    "invertebrate",
+    "snorkeling",
+    "seafood"
+   ],
+   "categories": [
+    "Sea",
+    "Animal",
+    "Water",
+    "Nature",
+    "Food"
    ],
    "category": "Sea & Water"
   },
@@ -60439,6 +61781,37 @@
     "Container",
     "Creature",
     "Death"
+   ],
+   "category": "Magic & Occult"
+  },
+  "delapouite/soul": {
+   "description": "A slender figure with folded arms rising between two curling wisps.",
+   "tags": [
+    "spirit",
+    "ghost",
+    "ethereal",
+    "afterlife",
+    "essence",
+    "wisps",
+    "ascension",
+    "phantom",
+    "aura",
+    "incense smoke",
+    "departed",
+    "apparition",
+    "seance",
+    "otherworldly",
+    "wraith",
+    "transcend",
+    "mist",
+    "being"
+   ],
+   "categories": [
+    "Occult",
+    "Death",
+    "Magic",
+    "Creature",
+    "People"
    ],
    "category": "Magic & Occult"
   },
@@ -70703,6 +72076,37 @@
    ],
    "category": "Weapons"
   },
+  "delapouite/warehouse": {
+   "description": "Storage racks stacked with crates and boxes beside a tall ladder.",
+   "tags": [
+    "storage",
+    "shelves",
+    "stock",
+    "inventory",
+    "depot",
+    "crates",
+    "logistics",
+    "racks",
+    "ladder",
+    "boxes",
+    "supply chain",
+    "stockroom",
+    "distribution",
+    "pallet",
+    "goods",
+    "industry",
+    "archive",
+    "storeroom"
+   ],
+   "categories": [
+    "Building",
+    "Container",
+    "Money",
+    "Machine",
+    "Farming"
+   ],
+   "category": "Buildings & Places"
+  },
   "delapouite/warhammer": {
    "description": "A war hammer with a heavy studded head.",
    "tags": [
@@ -71352,6 +72756,37 @@
     "Nature"
    ],
    "category": "Farming & Food"
+  },
+  "delapouite/waterskin": {
+   "description": "A stitched leather waterskin with a stopper, a drop falling beside it.",
+   "tags": [
+    "canteen",
+    "bota bag",
+    "flask",
+    "leather pouch",
+    "drink",
+    "hydration",
+    "adventure gear",
+    "provisions",
+    "wineskin",
+    "nomad",
+    "travel",
+    "thirst",
+    "container",
+    "drop",
+    "camping",
+    "satchel",
+    "gourd",
+    "supply"
+   ],
+   "categories": [
+    "Container",
+    "Water",
+    "Transport",
+    "Material",
+    "Food"
+   ],
+   "category": "Furniture & Containers"
   },
   "delapouite/wave-surfer": {
    "description": "A surfer riding inside a breaking wave.",
@@ -88271,6 +89706,7 @@
   "lorc/eskimo": {
    "description": "A figure in a fur parka with snowflakes around.",
    "tags": [
+    "person in blizzard",
     "inuit",
     "parka",
     "arctic",
@@ -88289,8 +89725,7 @@
     "apparel",
     "culture",
     "chill",
-    "traveler",
-    "people"
+    "traveler"
    ],
    "categories": [
     "Clothing",
@@ -124846,6 +126281,161 @@
     "Symbol"
    ],
    "category": "Tools"
+  },
+  "seregacthtuf/acid-shield": {
+   "description": "A heater shield with corrosive bubbles eating into its face.",
+   "tags": [
+    "defense",
+    "corrosion",
+    "bubbles",
+    "poison ward",
+    "protection",
+    "buff",
+    "resistance",
+    "slime",
+    "alchemy",
+    "guard",
+    "chemical",
+    "rpg",
+    "aegis",
+    "barrier",
+    "toxic",
+    "coating",
+    "blister",
+    "escutcheon"
+   ],
+   "categories": [
+    "Armor",
+    "Magic",
+    "Combat",
+    "Science",
+    "Symbol"
+   ],
+   "category": "Armor & Clothing"
+  },
+  "seregacthtuf/armor-blueprint": {
+   "description": "An unrolled plan sheet showing a shield and armor parts with measurement marks.",
+   "tags": [
+    "schematic",
+    "plan",
+    "crafting recipe",
+    "parchment",
+    "scroll",
+    "design",
+    "smithing",
+    "diagram",
+    "workshop",
+    "drawing",
+    "technical",
+    "pattern",
+    "forge",
+    "draft",
+    "layout",
+    "instructions",
+    "upgrade",
+    "chart"
+   ],
+   "categories": [
+    "Armor",
+    "Writing",
+    "Art",
+    "Tool",
+    "Technology"
+   ],
+   "category": "Armor & Clothing"
+  },
+  "seregacthtuf/pouch-with-beads": {
+   "description": "An open drawstring sack spilling over with round beads.",
+   "tags": [
+    "bag",
+    "sack",
+    "gems",
+    "marbles",
+    "loot",
+    "coins",
+    "treasure",
+    "satchel",
+    "spill",
+    "drawstring",
+    "jewels",
+    "pearls",
+    "currency",
+    "stash",
+    "purse",
+    "hoard",
+    "tokens",
+    "trinkets"
+   ],
+   "categories": [
+    "Treasure",
+    "Container",
+    "Money",
+    "Jewelry",
+    "Material"
+   ],
+   "category": "Money & Treasure"
+  },
+  "seregacthtuf/sake-bottle": {
+   "description": "A tall labelled sake flask standing next to a small drinking cup.",
+   "tags": [
+    "japanese",
+    "rice wine",
+    "tokkuri",
+    "ochoko",
+    "cup",
+    "drink",
+    "alcohol",
+    "izakaya",
+    "tavern",
+    "pour",
+    "liquor",
+    "beverage",
+    "nihonshu",
+    "ceramic",
+    "toast",
+    "brewing",
+    "label",
+    "spirits"
+   ],
+   "categories": [
+    "Food",
+    "Container",
+    "Material",
+    "People",
+    "Money"
+   ],
+   "category": "Farming & Food"
+  },
+  "seregacthtuf/thought-bubble": {
+   "description": "A cloud-shaped thought balloon with three dots inside and two small trailing puffs.",
+   "tags": [
+    "thinking",
+    "comic balloon",
+    "speech cloud",
+    "ellipsis",
+    "idea",
+    "daydream",
+    "pondering",
+    "dialogue",
+    "wondering",
+    "mind",
+    "three dots",
+    "cartoon",
+    "musing",
+    "imagination",
+    "silence",
+    "reflection",
+    "chat",
+    "contemplation"
+   ],
+   "categories": [
+    "Communication",
+    "Symbol",
+    "People",
+    "Emotion",
+    "Writing"
+   ],
+   "category": "Writing & Communication"
   },
   "skoll/achievement": {
    "description": "A rosette medal with a ribbon and a central gem.",

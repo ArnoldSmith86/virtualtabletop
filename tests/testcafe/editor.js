@@ -24,6 +24,22 @@ const propertiesModuleOpen = { modules: { 'Edit Widgets': 'editorModuleTopLeft' 
 // above restores is what tells "the editor is there" from "the click has not arrived yet"
 const propertiesModule = Selector('#editorModuleTopLeft.tune');
 
+// Where the board sits in the window, so a test can put the pointer on a board coordinate
+const boardGeometry = ClientFunction(() => {
+  const surface = document.getElementById('topSurface').getBoundingClientRect();
+  const room = document.getElementById('roomArea').getBoundingClientRect();
+  return { left: surface.left - room.left, top: surface.top - room.top, scale: surface.width/1600 };
+});
+
+// Selecting more than one widget means dragging a rubber band around them: a click in the room
+// always selects the single widget under it.
+async function bandSelect(t, x1, y1, x2, y2) {
+  const geometry = await boardGeometry();
+  const point = (x, y) => ({ x: Math.round(geometry.left + x*geometry.scale), y: Math.round(geometry.top + y*geometry.scale) });
+  const from = point(x1, y1), to = point(x2, y2);
+  await t.drag('#roomArea', to.x - from.x, to.y - from.y, { offsetX: from.x, offsetY: from.y, speed: 0.5 });
+}
+
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -133,6 +149,181 @@ test('A module is closed again through its sidebar button', async t => {
     .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
     .expect(Selector('#editor.moduleActive').exists).notOk()
     .expect(Selector('#editorSidebar button[icon=tune].active').exists).notOk();
+  await setEditorState(null);
+});
+
+// The toolbar's undo button cuts the undo protocol short behind the History module's back, so the
+// rows the module has rendered describe entries that are no longer in the protocol. They stay in
+// the list as the states the undo stepped over, which is what makes a toolbar undo redoable, and
+// the module must not write to a row that has no entry behind it - the next change of any kind,
+// and a second undo in a row, both land on exactly that row.
+test('Undoing from the toolbar keeps the History module in sync', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const undoButton = Selector('#editorToolbar [icon=undo]');
+  const widgetCount = ClientFunction(() => widgets.size);
+  const protocolLength = ClientFunction(() => getUndoProtocol().length);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  // the room states the client loaded with - one per state message it has seen so far
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5) // the widget of the room state, the line with its two stops, the holder
+    // an undo steps back through the list instead of dropping what it undid: the row stays and the
+    // one below it becomes the active one
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    .expect(widgetCount()).eql(4)
+    // so clicking the row again takes the undo back
+    .click(historyRows.nth(0))
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(widgetCount()).eql(5)
+    // the sequence the crash reports arrived from: one undo, and then a change of any kind - which
+    // is what makes the state the undo stepped over unreachable, so its row is replaced
+    .click(undoButton)
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(widgetCount()).eql(5)
+    // and the other one: two undos in a row
+    .click(undoButton)
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(2).hasClass('active')).ok()
+    .expect(widgetCount()).eql(1);
+
+  // the first entry is the room as it was loaded, so the button turns off once it is the
+  // only one left and clicking it would do nothing
+  for(let entries = await protocolLength(); entries > 1; --entries)
+    await t.expect(undoButton.hasAttribute('disabled')).notOk().click(undoButton);
+  await t
+    .expect(undoButton.hasAttribute('disabled')).ok()
+    // everything the button undid is still listed, so the newest row brings all of it back
+    .click(historyRows.nth(0))
+    .expect(widgetCount()).eql(5)
+    .expect(undoButton.hasAttribute('disabled')).notOk();
+  await setEditorState(null);
+});
+
+// A row click cuts the protocol short as well, but keeps the rows above it in the DOM so the user
+// can return to that future state - so those rows have to survive until the next change makes them
+// unreachable, and go when it arrives.
+test('Clicking a History row returns to that state and keeps the newer rows until a new change', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const widgetCount = ClientFunction(() => widgets.size);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5)
+    // the newest row is the first one in the panel, so the second one is the line
+    .click(historyRows.nth(1))
+    .expect(widgetCount()).eql(4)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    // the row of the holder is still there and returns the room to that future state
+    .click(historyRows.nth(0))
+    .expect(widgetCount()).eql(5)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    // going back once more and then adding a widget makes that state unreachable, so its row is
+    // replaced by the one of the new change
+    .click(historyRows.nth(1))
+    .expect(widgetCount()).eql(4)
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .click('#editorToolbar [icon=undo]')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    .expect(widgetCount()).eql(4);
+  await setEditorState(null);
+});
+
+// The panel only hears about a change while edit mode is open, and a complete room state does
+// not reach it at all - both leave the list describing an older protocol than the room is in. The
+// undo button steps back through that list, so it has to be caught up before it is used again.
+test('The History module catches up on changes it did not see', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const undoButton = Selector('#editorToolbar [icon=undo]');
+  const widgetX = ClientFunction(() => widgets.get('widget').get('x'));
+  const moveWidget = ClientFunction(() => widgets.get('widget').set('x', 400));
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+1)
+    // leave edit mode, change something while playing and come back: the change is listed and is
+    // the state the room is in, so undoing it takes the widget back instead of adding a row of
+    // its own for the undo
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk();
+  await moveWidget();
+  await t
+    .click('#editButton')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    .expect(widgetX()).eql(200);
+
+  // a complete room state is an entry of the protocol as well, so the list takes it the same way -
+  // it replaces the row of the state the undo above stepped over, which it just made unreachable
+  await setRoomState({
+    other: { id: 'other', type: 'basic', x: 100, y: 100 }
+  });
+  await t
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(historyRows.nth(0).innerText).contains('complete room state')
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok();
   await setEditorState(null);
 });
 
@@ -859,6 +1050,232 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     .click(seatsMode)
     .click(seatsMode.find('option').withExactText('All seats'))
     .expect(value('board', 'seats')).eql('null');
+});
+
+test('The arrange bar puts a multi-selection on a circle around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    c1: { id: 'c1', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
+    c2: { id: 'c2', type: 'basic', x: 400, y: 100, width: 100, height: 100, rotation: 45 },
+    c3: { id: 'c3', type: 'basic', x: 400, y: 400, width: 100, height: 100, rotation: -30, scale: 1.5 },
+    // a global update routine runs once per property change, and only for a
+    // change that has the room to itself - one dot per widget the tool moves
+    tally: { id: 'tally', type: 'basic', x: 1200, y: 800, width: 50, height: 50, moves: '',
+      xGlobalUpdateRoutine: [ { func: 'SET', collection: 'thisButton', property: 'moves', value: '${PROPERTY moves OF tally}.' } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // where a widget ended up, in board coordinates, and how far it was turned
+  const placement = ClientFunction(() => [ 'c1', 'c2', 'c3' ].map(id => {
+    const widget = widgets.get(id);
+    return `${id}: ${widget.get('x')},${widget.get('y')} @${Math.round(widget.get('rotation') || 0)}`;
+  }).join(' | '));
+  const dragRadiusSlider = ClientFunction(value => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = value === null ? slider.max : value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  // Done in the same breath as the last move of the slider, which is what
+  // letting go of it looks like: the arrangement it started is still on its way
+  const setRadiusAndPressDone = ClientFunction(value => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('.arrangeCircleOptions button[icon=check]').click();
+  });
+  // every widget of the arrangement is drawn inside the board - the box a
+  // turned or enlarged widget covers, not the width and height it stores
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'c1', 'c2', 'c3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  const clearTally = ClientFunction(() => widgets.get('tally').set('moves', ''));
+  const tallied = ClientFunction(() => widgets.get('tally').get('moves'));
+  const start = 'c1: 100,100 @0 | c2: 400,100 @45 | c3: 400,400 @-30';
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
+  const options = Selector('.arrangeCircleOptions');
+  const radius = options.find('input[type=number]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  // two widgets are not a circle - the button stays there and says why
+  await bandSelect(t, 40, 40, 560, 260);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('2 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).ok()
+    .expect(circleButton.getAttribute('title')).contains('needs 3+ widgets');
+
+  // the button arranges the selection right away, with the settings it comes
+  // with, and only then shows them: the circle is centered on what the
+  // selection covers - the turned and the enlarged widget with the box they
+  // are drawn in, not the one their width and height describe
+  await bandSelect(t, 40, 40, 560, 560);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).notOk()
+    // the radius a press would apply is named on the button, so a selection is
+    // not thrown across the board by a setting left behind an hour ago
+    .expect(circleButton.getAttribute('title')).contains('radius 200')
+    .expect(options.find('input').exists).notOk()
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    // the box below the bar belongs to this button, which stays pressed for it
+    .expect(circleButton.hasClass('open')).ok()
+    .expect(radius.value).eql('200')
+    .expect(placement()).eql('c1: 476,265 @0 | c2: 176,439 @45 | c3: 176,92 @-30')
+    // each of the three moves is a change of its own, so a routine listening for
+    // one runs three times rather than being swallowed by an overlapping move
+    .expect(tallied()).eql('...')
+    // a radius that is typed in arranges the selection again, from where it was
+    // before the tool ran - so the widgets do not walk outwards step by step
+    .typeText(radius, '250', { replace: true })
+    .pressKey('enter')
+    .expect(placement()).eql('c1: 526,265 @0 | c2: 151,482 @45 | c3: 151,49 @-30')
+    // the slider is the other half of the same setting: it takes over from the
+    // field once that is no longer the one being typed in
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'));
+
+  await dragRadiusSlider('150');
+  await t
+    .expect(radius.value).eql('150')
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30')
+    // rotation goes on and off again, which gives every widget the rotation it
+    // brought rather than leaving it turned away from the center
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 426,265 @90 | c2: 201,395 @210 | c3: 201,135 @330')
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30');
+
+  // the slider ends its travel at the largest circle that keeps the selection
+  // on the board, so dragging it all the way leaves everything in sight - the
+  // widget drawn half again its size included, which needs the room it is drawn
+  // in rather than the 100x100 it stores
+  await dragRadiusSlider(null);
+  await t
+    .expect(radius.value).eql('213')
+    // the ceiling the slider is given again on every step keeps the thumb where
+    // the drag left it rather than pulling it back
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('213')
+    .expect(options.find('input[type=range]').value).eql('213')
+    .expect(placement()).eql('c1: 489,265 @0 | c2: 169,450 @45 | c3: 169,81 @-30')
+    .expect(onBoard()).ok()
+    // an emptied field keeps the radius the arrangement is standing on, so it
+    // has to show that radius again rather than read as blank
+    .selectText(radius)
+    .pressKey('delete')
+    .expect(radius.value).eql('')
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'))
+    .expect(radius.value).eql('213')
+    // and a circle of radius 0, which would stack the selection on one point,
+    // is not one of the values the field takes
+    .typeText(radius, '0', { replace: true })
+    .expect(radius.value).eql('1')
+    // which is the radius the board ends up on as well
+    .expect(placement()).eql('c1: 277,265 @0 | c2: 275,266 @45 | c3: 275,265 @-30');
+
+  // undoing puts the whole selection back, rotations included, and closes the
+  // settings again
+  await clearTally();
+  await t
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start)
+    // and putting them back is three changes as well, not one
+    .expect(tallied()).eql('...')
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
+
+  // done is the other way out: it closes the settings and leaves the widgets on
+  // the circle rather than putting them back. The radius it is pressed on is
+  // still being applied at that moment, so it is the one that has to end up on
+  // the board - not the one before it
+  await t.click(circleButton);
+  await setRadiusAndPressDone('100');
+  await t
+    .expect(placement()).eql('c1: 376,265 @0 | c2: 226,352 @45 | c3: 226,179 @-30')
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
+});
+
+test('The arrange bar arranges a selection inside another widget on the board around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    // x, y and rotation of the three widgets are the box's, and the box shows
+    // them at half the size they are stored in: what the tool reads and the
+    // board the circle has to fit on are two different spaces
+    box: { id: 'box', type: 'basic', x: 600, y: 200, width: 400, height: 400, scale: 0.5 },
+    p1: { id: 'p1', type: 'basic', parent: 'box', x: 10, y: 10, width: 60, height: 60 },
+    p2: { id: 'p2', type: 'basic', parent: 'box', x: 200, y: 10, width: 60, height: 60 },
+    p3: { id: 'p3', type: 'basic', parent: 'box', x: 100, y: 200, width: 60, height: 60 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // the arrangement measured where it is drawn: around the middle of the three
+  // widgets on the board, each of them the radius away from it
+  const circleOnBoard = ClientFunction(expected => {
+    const centers = [ 'p1', 'p2', 'p3' ].map(id => ({
+      x: widgets.get(id).get('_centerAbsoluteX'),
+      y: widgets.get(id).get('_centerAbsoluteY')
+    }));
+    const middle = {
+      x: centers.reduce((sum, c) => sum + c.x, 0) / centers.length,
+      y: centers.reduce((sum, c) => sum + c.y, 0) / centers.length
+    };
+    const radii = centers.map(c => Math.hypot(c.x - middle.x, c.y - middle.y));
+    const off = Math.hypot(middle.x - expected.x, middle.y - expected.y);
+    return off <= 2 && radii.every(r => Math.abs(r - expected.radius) <= 2)
+      ? `on a circle of ${expected.radius} around ${expected.x},${expected.y}`
+      : `${Math.round(middle.x)},${Math.round(middle.y)} r${radii.map(r => Math.round(r)).join('/')}`;
+  });
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'p1', 'p2', 'p3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  // where the widgets sit in the box they belong to, which is what they store
+  const placement = ClientFunction(() => [ 'p1', 'p2', 'p3' ].map(id => `${id}: ${widgets.get(id).get('x')},${widgets.get(id).get('y')}`).join(' | '));
+  const dragRadiusSliderToMax = ClientFunction(() => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = slider.max;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const start = 'p1: 10,10 | p2: 200,10 | p3: 100,200';
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
+  const options = Selector('.arrangeCircleOptions');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  await bandSelect(t, 700, 300, 835, 435);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 200 })).eql('on a circle of 200 around 767.5,367.5')
+    // the space around the selection is measured on the board as well, so the
+    // slider keeps the travel the board has room for instead of ending at the
+    // radius that is already applied
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('352')
+    .expect(onBoard()).ok();
+
+  await dragRadiusSliderToMax();
+  await t
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 352 })).eql('on a circle of 352 around 767.5,367.5')
+    .expect(onBoard()).ok()
+    // and taking it back puts every widget where its own box had it
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start);
 });
 
 test('Create game using edit mode', async t => {
@@ -2897,6 +3314,147 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
 });
 
+// A "var" operation is the one kind of operation whose log entry is cut out of the string the
+// operation came from, so logging it is the only place in the routine engine that reads that
+// string again after the operation ran. This file is one of the two the production environment
+// workflow drives against a minified client, which is where that reference is at risk: a minified
+// name that shadows the operation string crashes the client instead of logging the wrong text.
+// The assertions after the summaries pin down the rest of what the panel renders - the empty state,
+// the failed marker, the problem text, the built-in variables and the Clear button.
+test('the Debug module logs each operation of a routine with its result', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: {
+      id: 'button',
+      type: 'button',
+      // randInt with a range of one, so the result is a fixed number. The three operations after it
+      // are arithmetic that the operation regex does not match, so they go through the other branch,
+      // which reads the operation string again next to the eval that evaluates the expression - once
+      // without and once with a variable in the expression, which is what decides whether the
+      // summary also shows the expression with the variables filled in, and once with an expression
+      // the eval throws on. SELECT and SET fill the collections and the delta of an operation, and
+      // the last one writes to a variable the engine puts into every routine by itself.
+      clickRoutine: [
+        'var roll = randInt 5 5',
+        'var calc = (1 + 2) * 3',
+        'var withVars = (${roll} + 2) * 3',
+        'var broken = ${roll} / (1 - 1) *',
+        { func: 'SELECT', property: 'id', value: 'button' },
+        { func: 'SET', property: 'text', value: 'rolled' },
+        'var thisID = 42'
+      ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft' } });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+
+  const emptyNote = Selector('.jeLogEmptyNote');
+  const operation = Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation');
+  // the header of a logged operation is its own expander, the details are in its nested block
+  const headerOf = op => op.child('div').nth(0);
+  const detailsOf = (op, name) => op.child('div').nth(1).child('.jeLogDetails').withText(name);
+
+  // a panel with nothing in it says how to fill it instead of showing an empty box
+  await t.expect(emptyNote.visible).ok();
+
+  await ClientFunction(() => {
+    // awaited so the assertions below see the finished log, but not returned: the result of a
+    // routine holds widget objects as soon as one fills the result collection
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  })();
+
+  await t
+    .expect(emptyNote.visible).notOk()
+    // the routine a log belongs to is named as "<widget> › <property>", and its expander turns red
+    // because one of its operations failed
+    .expect(Selector('#jeLog > .jeLog').child('div').nth(0).innerText).contains('button › clickRoutine')
+    .expect(Selector('#jeLog > .jeLog').child('div.jeRedExpander').exists).ok();
+
+  // the summary of a var operation is the operation with its leading "var " cut off, and the
+  // result is the value the variable ended up with
+  await t
+    .expect(Selector('#jeLog .jeLogSummary').nth(0).innerText).eql('roll = randInt 5 5')
+    .expect(Selector('#jeLog .jeLogResult').nth(0).innerText).eql('5')
+    .expect(Selector('#jeLog .jeLogSummary').nth(1).innerText).eql('calc = (1 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(1).innerText).eql('9')
+    .expect(Selector('#jeLog .jeLogSummary').nth(2).innerText).eql('withVars = (${roll} + 2) * 3 => (5 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(2).innerText).eql('21');
+
+  // an operation that threw says so next to its result, so "null" does not read as the answer
+  await t
+    .expect(operation.nth(3).find('.jeLogFailed').innerText).eql('failed')
+    .expect(operation.nth(3).find('.jeLogResult').innerText).eql('null')
+    .expect(operation.nth(0).find('.jeLogFailed').exists).notOk();
+
+  // its problem is one readable sentence rather than a JSON array of escaped strings - the wording
+  // of the SyntaxError itself differs between browsers, so only the sentence around it is checked
+  await t
+    .click(headerOf(operation.nth(3)))
+    .click(detailsOf(operation.nth(3), 'Problems').child('div').nth(0))
+    .expect(operation.nth(3).find('.jeLogProblems').innerText)
+      .match(/^The expression "5 \/ \(1 - 1\) \*" threw an exception: SyntaxError: .+\.$/);
+
+  // the variables the engine puts into every routine are behind their own expander, so the pane
+  // opens on the variables the routine itself works with
+  const rollState = detailsOf(operation.nth(0), 'Variables, collections and delta afterwards');
+  const builtInVariables = rollState.child('div').nth(1).child('.jeLogDetails').withText('Built-in variables');
+  await t
+    .click(headerOf(operation.nth(0)))
+    .click(rollState.child('div').nth(0))
+    .expect(rollState.child('div').nth(1).child('.jeLogVariables').innerText).eql('Variables afterwards\n  "roll": 5')
+    .click(builtInVariables.child('div').nth(0))
+    .expect(builtInVariables.find('.jeLogVariables').innerText).contains('playerName');
+
+  // a block with nothing in it is left out instead of printing its heading over an empty pane: a
+  // var operation touches no widget, so it has no delta, while the SET that follows it has one
+  await t
+    .expect(rollState.find('h3').withExactText('Variables afterwards').exists).ok()
+    .expect(rollState.find('h3').withExactText('Delta afterwards').exists).notOk()
+    .expect(detailsOf(operation.nth(5), 'Variables, collections and delta afterwards')
+      .find('h3').withExactText('Delta afterwards').exists).ok();
+  // a variable of an engine name that the routine assigned itself is one of the routine's own, so
+  // it is in the block that opens rather than behind the Built-in variables expander
+  const overriddenState = detailsOf(operation.nth(6), 'Variables, collections and delta afterwards');
+  await t
+    .click(headerOf(operation.nth(6)))
+    .click(overriddenState.child('div').nth(0))
+    .expect(overriddenState.child('div').nth(1).child('.jeLogVariables').innerText).contains('"thisID": 42');
+
+  const emptyHeadings = await ClientFunction(() => {
+    let count = 0;
+    document.querySelectorAll('#jeLog h3').forEach(h=>{ if(h.textContent.trim() == '') ++count; });
+    return count;
+  })();
+  await t.expect(emptyHeadings).eql(0);
+
+  // the filter marks the operations whose summary contains what was typed and dims the rest
+  await t
+    .typeText('#jeLogFilter', 'withVars')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).ok()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).ok()
+    .selectText('#jeLogFilter')
+    .pressKey('delete')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).notOk()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).notOk();
+
+  // the Clear button is disabled as long as the log clears itself, and says which of the two it is
+  await t
+    .expect(Selector('#clearLogButton').hasAttribute('disabled')).ok()
+    .expect(Selector('#clearLogButton').getAttribute('title')).contains('cleared automatically')
+    .click('#autoClearLog')
+    .expect(Selector('#clearLogButton').hasAttribute('disabled')).notOk()
+    .expect(Selector('#clearLogButton').getAttribute('title')).contains('Empty the log now')
+    // emptying the log brings the note back - it is a sibling of the log, shown while that is empty
+    .click('#clearLogButton')
+    .expect(emptyNote.visible).ok();
+
+  await setEditorState(null);
+});
+
 // drags a selection rectangle around the given widgets - the events go to the
 // window, where the editor listens for them, so they need no element to start
 // from. A rectangle around a single widget is treated like a click on it, which
@@ -4043,4 +4601,334 @@ test('Back and forward give the keyboard back to the JSON editor', async t => {
     .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
     .expect(activeElementID()).eql('jeText');
   await setEditorState(null);
+});
+
+// A command with options does not run on the click that opens it: it runs when its Go button is
+// clicked, by which time the selection lives in the button, not in the editor. The offsets
+// getSelection() reports then say nothing about the editor, so the command has to work on the line
+// the cursor was left on - otherwise it applies to whatever the top of the JSON happens to be.
+// TestCafe drives Chrome natively but Firefox through synthetic events, and a synthetic click
+// does not place the caret in a contenteditable - so the cursor goes onto the line through the
+// selection API, followed by the mouseup the editor picks its context up on.
+const putCursorBehind = ClientFunction(needle => {
+  const editor = document.querySelector('#jeText');
+  const position = editor.textContent.indexOf(needle) + needle.length;
+  editor.focus();
+  getSelection().setBaseAndExtent(editor.firstChild, position, editor.firstChild, position);
+  editor.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+});
+const widgetProperty = ClientFunction((id, property) => widgets.get(id).get(property));
+const jsonEditorText = ClientFunction(() => document.querySelector('#jeText').textContent);
+
+test('The shift command offsets the property the cursor was left on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    // both widgets share the x the command is about to shift, so the editor shows it as one value
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '50', { replace: true })
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
+
+test('The align command aligns the property the cursor was left on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 600, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    // the widgets differ in y, so the editor lists it per widget instead of showing a single value
+    .expect(jsonEditorText()).contains('"y": {');
+
+  await putCursorBehind('"y"');
+  await t
+    .click('#jeMultiAlign')
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'y')).eql(200)
+    .expect(widgetProperty('two', 'y')).eql(200)
+    // aligning y leaves x alone - picking the wrong property up would move these
+    .expect(widgetProperty('one', 'x')).eql(200)
+    .expect(widgetProperty('two', 'x')).eql(400);
+  await setEditorState(null);
+});
+
+// A selection that is dragged out of the editor reports its two ends in different nodes, so the
+// offsets it gives are not a position in the JSON and must not replace the one the editor is at.
+const selectOutOfEditor = ClientFunction(needle => {
+  const editor = document.querySelector('#jeText');
+  const position = editor.textContent.indexOf(needle) + needle.length;
+  editor.focus();
+  getSelection().setBaseAndExtent(editor.firstChild, position, document.querySelector('#jeCommands'), 0);
+});
+
+test('A command ignores a selection that reaches out of the editor', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await selectOutOfEditor('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '50', { replace: true })
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
+
+// Applying a command rewrites the line the cursor sits on, so the editor has nothing to match that
+// line by afterwards and used to drop the cursor - which sent the next command to the top of the
+// JSON although the panel still offered the commands of the property the cursor came from.
+test('A second command in a row still runs on the same line as the first', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  for(const expected of [ 250, 300 ])
+    await t
+      .click('#je_multiShift')
+      .typeText('#je_multiShift_Offset', '50', { replace: true })
+      .click(Selector('#jeCommandOptions button').withExactText('Go'))
+      .expect(widgetProperty('one', 'x')).eql(expected)
+      .expect(widgetProperty('two', 'x')).eql(expected);
+  await setEditorState(null);
+});
+
+// A widget one of the option-bearing commands is aimed at can change while its dialog is open -
+// another player moving it, a routine, a timer. The editor rebuilds its content for that, and
+// restoring the cursor afterwards must not take the keyboard away from the dialog: the next
+// keystroke would go into the JSON instead of into the field it was meant for.
+const changeSelectedWidgetElsewhere = ClientFunction(() => widgets.get('one').set('y', 250));
+const markedCommandLine = Selector('#jeTextHighlight .jeCommandLine');
+
+test('A change to a selected widget leaves the keyboard in the command options', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '5', { replace: true });
+
+  await changeSelectedWidgetElsewhere();
+  await t
+    .expect(activeElementID()).eql('je_multiShift_Offset')
+    // the marked line survives the recolorizing the change causes, so the dialog still shows what
+    // it is about to act on
+    .expect(markedCommandLine.textContent).contains('"x": 200')
+    // the keystroke completes the offset instead of being typed into the JSON
+    .pressKey('0')
+    .expect(jsonEditorText()).contains('"x": 200')
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
+
+// The list of commands scrolls, so options opening below a button near its bottom edge would have
+// their Go and Cancel buttons cut off with nothing scrolling them into view.
+const scrollCommandToBottom = ClientFunction(() => {
+  const list = document.querySelector('#jeContextButtons');
+  const button = document.querySelector('#je_multiShift');
+  list.scrollTop = button.offsetTop + button.offsetHeight - list.clientHeight;
+});
+const optionsFitInList = ClientFunction(() => {
+  const list = document.querySelector('#jeContextButtons').getBoundingClientRect();
+  const options = document.querySelector('#jeCommandOptions').getBoundingClientRect();
+  return options.top >= list.top - 1 && options.bottom <= list.bottom + 1;
+});
+
+test('The options of a command are visible even at the bottom of the command list', async t => {
+  await t.resizeWindow(1280, 500);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await scrollCommandToBottom();
+  await t
+    .click('#je_multiShift')
+    .expect(optionsFitInList()).ok();
+  await setEditorState(null);
+});
+
+// The options of a command open below the button that was clicked, so that the list of commands
+// does not move away from under the pointer, and the line they will act on is marked - it is the
+// remembered one, which shows no caret while the dialog holds the selection.
+test('A command shows which button and which line it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const shiftButton = Selector('#je_multiShift');
+  const buttonTop = ClientFunction(() => document.querySelector('#je_multiShift').getBoundingClientRect().top);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  const positionBeforeClick = await buttonTop();
+  await t
+    .click(shiftButton)
+    // the list of commands has to stay where it is, or the click that opens the options moves the
+    // next command under the pointer
+    .expect(buttonTop()).eql(positionBeforeClick)
+    .expect(shiftButton.nextSibling(0).id).eql('jeCommandOptions')
+    .expect(shiftButton.hasClass('jeCommandOwner')).ok()
+    .expect(Selector('#jeCommandOptions b').textContent).eql('shift options:')
+    .expect(Selector('#jeTextHighlight .jeCommandLine').textContent).contains('"x": 200');
+  await setEditorState(null);
+});
+
+// What is in the widget buffer is written by whichever game it was copied out of, so pasting it
+// into a game with different legacy modes asks first. The dialog it asks in hides every other
+// overlay - including the one a sidebar module is opened into with shift+click - so answering it
+// has to give that module back.
+const setWidgetBuffer = ClientFunction(buffer => {
+  if(buffer)
+    localStorage.setItem('widgetBuffer', JSON.stringify(buffer));
+  else
+    localStorage.removeItem('widgetBuffer');
+});
+
+test('Pasting the widget buffer across legacy modes asks, and keeps the module it asks from', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  // a holder that draws an image itself: what disableHolderImageWidget switches, so the mode can
+  // reach these widgets and the difference is worth telling the user about
+  await setWidgetBuffer({
+    legacyModes: { disableHolderImageWidget: true },
+    widgets: [ { id: 'legacyHolder', type: 'holder', image: '/i/box.svg', x: 100, y: 100 } ]
+  });
+  await setName(t);
+
+  const toolboxButton = Selector('#editorSidebar button[icon=home_repair_service]');
+  const moduleInOverlay = Selector('#editorModuleInOverlay');
+  const confirmDialog = Selector('#confirmOverlay');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click(toolboxButton, { modifiers: { shift: true } })
+    .expect(moduleInOverlay.hasClass('active')).ok()
+    .expect(moduleInOverlay.find('.legacyModeWarning').innerText).contains('Disable holder image support')
+    .click(moduleInOverlay.find('#loadWidgetsFromBuffer'))
+    .expect(confirmDialog.visible).ok()
+    .expect(confirmDialog.innerText).contains('These widgets were saved in a game with different legacy modes')
+    .click(confirmDialog.find('.buttons button').nth(1))
+    .expect(Selector('#w_legacyHolder').exists).ok()
+    // the panel the question was asked from is still open, and its sidebar button still says so
+    .expect(Selector('#editorModuleOverlay').visible).ok()
+    .expect(moduleInOverlay.hasClass('active')).ok()
+    .expect(toolboxButton.hasClass('active')).ok();
+
+  await setWidgetBuffer(null);
+  await setEditorState(null);
+});
+
+test('Send feedback', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#statesButton')
+    .click('#feedbackButton')
+    .expect(Selector('#feedbackOverlay').visible).ok()
+    .expect(Selector('#statesButton').hasClass('active')).notOk()
+    .typeText('#feedbackOverlay textarea', 'TestCafe feedback test', { replace: true })
+    .click('#feedbackOverlay button[icon=check]')
+    .expect(Selector('#feedbackOverlay .feedbackThanks').visible).ok()
+    // after the thanks message, the previously open overlay and its active tab come back
+    .expect(Selector('#statesOverlay').visible).ok({ timeout: 5000 })
+    .expect(Selector('#feedbackOverlay').visible).notOk()
+    .expect(Selector('#statesButton').hasClass('active')).ok();
 });
