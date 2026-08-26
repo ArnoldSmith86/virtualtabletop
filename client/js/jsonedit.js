@@ -253,9 +253,7 @@ const jeCommands = [
       
       // Get current indentation from the JSON structure
       // Find the line with the property key
-      const aO = getSelection().anchorOffset;
-      const fO = getSelection().focusOffset;
-      const s = Math.min(aO, fO);
+      const s = jeCursorOffsets()[0];
       const v = jeGetEditorContent();
       const lines = v.split('\n');
       
@@ -1175,8 +1173,7 @@ const jeCommands = [
       else
         delete pointer[jeContext[jeContext.length-1]];
 
-      const oldStart = getSelection().anchorOffset;
-      const oldEnd   = getSelection().focusOffset;
+      const [ oldStart, oldEnd ] = jeCursorOffsets();
       jeSet(JSON.stringify(jeStateNow, null, '  '));
       jeSelect(oldStart, oldEnd, true);
     },
@@ -1472,9 +1469,9 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###', random: false});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+  jeAddRoutineOperationCommands('SHIFT', { holders: null, widgets: 'all', interval: 1, direction: 'forward', wrap: true, keepOrder: true });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
@@ -1578,7 +1575,10 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(SHUFFLE\\) ↦ mode', [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ]);
-  jeAddEnumCommands('^.*\\(SWAPHANDS\\) ↦ direction', [ 'forward', 'backward', 'random']);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ widgets', [ 'all', 'top' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ direction', [ 'forward', 'backward', 'random' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ wrap', [ true, false ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ keepOrder', [ true, false ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
@@ -2138,8 +2138,19 @@ async function jeCallCommand(command) {
 function jeCommandOptions() {
   const div = document.createElement('div');
   div.id = 'jeCommandOptions';
-  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
-  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  const name = typeof jeCommandWithOptions.name == 'function' ? jeCommandWithOptions.name() : jeCommandWithOptions.name;
+  div.innerHTML = `<b>${html(String(name))} options:</b><div></div><button>Go</button><button class=cancel>Cancel</button>`;
+
+  // the options belong to the command button that was clicked, so they open right below it and that
+  // button is marked. Opening them above the list instead would push the whole list down, away
+  // from the pointer that just clicked into it.
+  const button = $(`#jeContextButtons > [id="${jeCommandWithOptions.id}"]`);
+  if(button) {
+    button.classList.add('jeCommandOwner');
+    button.parentElement.insertBefore(div, button.nextSibling);
+  } else {
+    $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  }
 
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
@@ -2148,6 +2159,10 @@ function jeCommandOptions() {
     if(firstInput)
       firstInput.focus();
   }
+
+  // the command list scrolls, so options opening near its bottom edge would have their buttons cut
+  // off. 'nearest' scrolls only in that case, which keeps the list still in the common one
+  div.scrollIntoView({ block: 'nearest' });
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
     const options = {};
@@ -2178,11 +2193,26 @@ export async function jeClick(widget, e) {
   }
 }
 
+// The offsets getSelection() reports are indices into whichever node holds the selection, so
+// they only describe the editor while the editor holds it. Clicking a command button - or
+// typing into the option fields of a command that has some - moves the selection out of
+// #jeText, so the position the editor was last at is remembered here and used instead. Every
+// read of the editor cursor goes through this, which keeps that memory up to date.
+let jeLastCursorOffsets = [ 0, 0 ];
+
+function jeCursorOffsets() {
+  const selection = getSelection();
+  // both ends have to sit in the text node #jeText holds: a selection dragged out of the editor
+  // reports its two ends in different nodes, and one anchored on #jeText itself counts child
+  // nodes rather than characters - neither pair says where the cursor is in the JSON
+  const text = $('#jeText').firstChild;
+  if(text && selection.anchorNode === text && selection.focusNode === text)
+    jeLastCursorOffsets = [ Math.min(selection.anchorOffset, selection.focusOffset), Math.max(selection.anchorOffset, selection.focusOffset) ];
+  return jeLastCursorOffsets;
+}
+
 function jeCursorStateGet() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
   const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
   const currentLine = linesUntilCursor.pop();
@@ -2195,6 +2225,7 @@ function jeCursorStateGet() {
   return {
     scroll: $('#jeText').scrollTop,
     currentLine,
+    lineNumber: linesUntilCursor.length,
     defaultValueToAdd,
     sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
     start: s-linesUntilCursor.join('\n').length,
@@ -2205,17 +2236,41 @@ function jeCursorStateGet() {
 function jeCursorStateSet(state) {
   const v = jeGetEditorContent();
   const lines = v.split('\n');
+  // moving the selection focuses the editor, which must not happen while a command's options are
+  // being typed into: a change arriving from another player would else pull the caret out of the
+  // option field and the next keystroke would land in the JSON. The position is only remembered
+  // then, which is where the commands read it from anyway.
+  const restore = function(start, end) {
+    const options = $('#jeCommandOptions');
+    if(options && options.contains(document.activeElement))
+      jeLastCursorOffsets = [ start, end ];
+    else
+      jeSelect(start, end);
+  };
   let offset = 0;
   let linesFound = 0;
+  let lineRestored = false;
   for(const line of lines) {
     if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
-      jeSelect(offset + state.start - 1, offset + state.end - 1);
+      restore(offset + state.start - 1, offset + state.end - 1);
+      lineRestored = true;
       break;
     } else {
       offset += line.length + 1;
     }
   }
+  // a command that rewrites the very line the cursor sits on - shift on "x" for example - leaves
+  // no line to match it by, so the cursor falls back to the same line number. Without that it ends
+  // up nowhere and the next command runs on the top of the JSON instead of on the property the
+  // panel still offers commands for.
+  if(!lineRestored && lines[state.lineNumber] !== undefined) {
+    const lineStart = lines.slice(0, state.lineNumber).reduce((total, line)=>total + line.length + 1, 0);
+    const lineEnd = lineStart + lines[state.lineNumber].length;
+    const inLine = offsetInLine=>Math.max(lineStart, Math.min(lineEnd, lineStart + offsetInLine - 1));
+    restore(inLine(state.start), inLine(state.end));
+  }
   $('#jeText').scrollTop = state.scroll;
+  jeMarkCommandLine();
 }
 
 const jeCursorStateStorage = {};
@@ -2515,6 +2570,7 @@ function jeColorize() {
   }
   $('#jeTextHighlight').innerHTML = out.join('');
   $('#editor').style.setProperty('--linenumbers-digits', Math.floor(Math.log10(nr)+1));
+  jeMarkCommandLine();
 }
 
 /* Displaying and controlling tree subpane of edit area */
@@ -2714,10 +2770,7 @@ function jeDisplayFilteredWidgets(e) {
 /* End of tree subpane control */
 
 function jeGetContext() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
@@ -3106,7 +3159,45 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
+// The built-in variables of the routines that are currently running, one entry per routine on the
+// stack - the innermost one belongs to the routine the operation being logged is part of. They
+// hold the value the routine started with, so they are identical in every operation of it and are
+// shown behind their own expander while the variables the routine actually works with stay at the
+// top of the pane. A routine that assigns a built-in name keeps that variable among its own,
+// because its value then differs from the one the routine started with.
+let jeLoggingEngineVariableStack = [];
+
+function jeLoggingEngineVariables(variables) {
+  const fromEngine = {};
+  for(const name in predefinedVariableDescriptions)
+    if(name in variables)
+      fromEngine[name] = variables[name];
+  return fromEngine;
+}
+
+function jeLoggingVariables(variables) {
+  const fromEngine = jeLoggingEngineVariableStack[0] || {};
+  const own = {};
+  const engine = {};
+  for(const name in variables) {
+    const untouched = name in fromEngine && JSON.stringify(variables[name]) === JSON.stringify(fromEngine[name]);
+    (untouched ? engine : own)[name] = variables[name];
+  }
+  const ownBlock = Object.keys(own).length ?
+        `<div class="jeLogVariables"><h3>Variables afterwards</h3>${jeLoggingJSON(own)}</div>` : '';
+  const engineBlock = Object.keys(engine).length ?
+        `<div class="jeLogDetails">
+            <div class="jeExpander">
+              <span class="jeLogName">Built-in variables</span>
+            </div>
+            <div class="jeLogNested">
+              <div class="jeLogVariables">${jeLoggingJSON(engine)}</div>
+            </div>
+          </div>` : '';
+  return ownBlock + engineBlock;
+}
+
+export function jeLoggingRoutineStart(widget, property, variables, byReference) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -3115,12 +3206,18 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
     jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-          <span class="jeLogWidget">${widget.get('id')}</span>
-          <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+          <span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo;
+          <span class="jeLogProperty">${html(typeof property == 'string' ? property : '--custom--')}</span>
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
   }
+  // a routine that runs by reference works on the variables of the routine that started it, which
+  // may have changed a built-in one by now - the enclosing routine's set still says what it started
+  // with, so it is what applies here as well
+  jeLoggingEngineVariableStack.unshift(byReference
+    ? jeLoggingEngineVariableStack[0] || {}
+    : jeLoggingEngineVariables(variables));
   ++jeLoggingDepth;
 }
 
@@ -3128,6 +3225,7 @@ export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
     return; // defensive: unmatched End, should not happen since #2672
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  jeLoggingEngineVariableStack.shift();
   --jeLoggingDepth;
   if(!jeLoggingDepth)
     jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
@@ -3182,7 +3280,7 @@ export function jeLoggingRoutineNotLogged(widget, property) {
     jeRoutineResetOnNextLog = false;
   }
   const routine = typeof property == 'string'
-    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> <span class="jeLogProperty">${html(property)}</span>`
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo; <span class="jeLogProperty">${html(property)}</span>`
     : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
   jeLoggingHTML += `
     <div class="jeLog jeLogNote">
@@ -3231,7 +3329,7 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
             <span class="jeLogName">Problems</span>
           </div>
           <div class="jeLogNested">
-            <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
+            <div class="jeLogProblems">${problems.map(p=>html(typeof p == 'string' ? p : JSON.stringify(p))).join('\n')}</div>
           </div>
         </div>` : '';
   const originalOp = originalText.length ?
@@ -3246,31 +3344,36 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
            <div class="jeLogNested">
              ${originalOp}
              ${appliedOp}
-             <h3></h3>
            </div>
          </div>` : '';
+
+  const deltaText = jeLoggingJSON(getDelta().s);
+  const collectionsBlock = Object.keys(collDisplay).length ?
+        `<div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>` : '';
+  const deltaBlock = deltaText.length ?
+        `<div class="jeLogVariables"><h3>Delta afterwards</h3>${deltaText}</div>` : '';
+  const opState = `${jeLoggingVariables(variables)}${collectionsBlock}${deltaBlock}`;
+  const opStateBlock = opState.length ?
+        `<div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Variables, collections and delta afterwards</span>
+          </div>
+          <div class="jeLogNested">
+            ${opState}
+          </div>
+        </div>` : '';
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
-        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} ${problems.length ? '<span class="jeLogFailed">failed</span>' : ''} <span class="jeLogTime" title="how long this operation took">(${+new Date() - startTime}ms)</span>
       </div>
       <div class="jeLogNested">
         ${opProblems}
         ${opOperation}
         ${jeLoggingHTML}
-        <div class="jeLogDetails">
-          <div class="jeExpander">
-            <span class="jeLogName">Variables, collections and delta afterwards</span>
-          </div>
-          <div class="jeLogNested">
-            <div class="jeLogVariables"    ><h3>Variables afterwards</h3>${jeLoggingJSON(variables   )}</div>
-            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay )}</div>
-            <div class="jeLogVariables"        ><h3>Delta afterwards</h3>${jeLoggingJSON(getDelta().s)}</div>
-            <h3></h3>
-          </div>
-        </div>
+        ${opStateBlock}
       </div>
     </div>
   `;
@@ -3316,16 +3419,13 @@ function jeLoggingFilterLog(filter) {
 // END routine logging
 
 function jeNewline() {
-  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const s = jeCursorOffsets()[0];
   const match = jeGetEditorContent().substr(0,s).match(/( *)[^\n]*$/);
   jePasteText('\n' + match[1], false);
 }
 
 function jePasteText(text, select) {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   jeSetEditorContent(v.substr(0, s) + text + v.substr(e));
@@ -3551,6 +3651,8 @@ function jeSetAndSelect(replaceBy, insideString) {
 }
 
 function jeSetEditorContent(content) {
+  // the remembered offsets index the text that is replaced here, so they say nothing afterwards
+  jeLastCursorOffsets = [ 0, 0 ];
   $('#jeText').textContent = content.replace(/\u00a0/g, ' ');
 }
 
@@ -3917,8 +4019,7 @@ function jeShowCommands() {
       }
     } else if (jeContext && jeContext[jeContext.length - 1] == '(var expression)') {
       const v = jeGetEditorContent();
-      const aO = getSelection().anchorOffset;
-      const s = Math.min(aO, getSelection().focusOffset);
+      const s = jeCursorOffsets()[0];
       const before = v.substr(0, s);
       const after = v.substr(s);
       const newContent = before + sample + after;
@@ -3942,6 +4043,20 @@ function jeShowCommands() {
 
   if(jeCommandWithOptions)
     jeCommandOptions();
+  jeMarkCommandLine();
+}
+
+// A command with options runs on the line the cursor was left on, which no longer shows a caret
+// once the dialog has taken the selection - so that line is marked while the dialog is open.
+function jeMarkCommandLine() {
+  for(const line of $a('#jeTextHighlight > .jeCommandLine'))
+    line.classList.remove('jeCommandLine');
+  if(!jeCommandWithOptions)
+    return;
+  const content = jeGetEditorContent();
+  const line = $a('#jeTextHighlight > .jeTextLine')[content.substr(0, jeCursorOffsets()[0]).split('\n').length - 1];
+  if(line)
+    line.classList.add('jeCommandLine');
 }
 
 let editPanel = null;

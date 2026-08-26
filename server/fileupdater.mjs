@@ -1,6 +1,6 @@
 import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
 
-export const VERSION = 22;
+export const VERSION = 23;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -160,6 +160,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<23 && v23SwapHandsToShift(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -524,6 +525,44 @@ function v16UpdateCountParameter(routine) {
         }
       }
     }
+  }
+}
+
+// SWAPHANDS passed the hands of the seats around the table; SHIFT does that and any
+// other cycle of holders, so the operation is written as the SHIFT it always was: its
+// seat filter becomes the list of entries and the order the widgets arrive in - which
+// SHIFT preserves by default - is spelled out the way SWAPHANDS left it.
+function v23SwapHandsToShift(routine) {
+  for(let i=routine.length-1; i>=0; --i) {
+    const operation = routine[i];
+    if(!operation || operation.func != 'SWAPHANDS')
+      continue;
+    operation.func = 'SHIFT';
+    // anything written down is read the same way by both operations, only leaving it
+    // out meant something else: SWAPHANDS handed the widgets over in the order they
+    // were created, SHIFT in the order of the holder they come from
+    if(operation.keepOrder === undefined)
+      operation.keepOrder = false;
+    const source = operation.source;
+    delete operation.source;
+    if(source === undefined || source === 'all')
+      continue;
+    if(typeof source == 'string') {
+      operation.holders = source;
+      continue;
+    }
+    // a written-out list used to be read as a collection, whose seats took part in
+    // seat index order - the order SHIFT gives a collection but not a written-out list
+    operation.holders = 'internal_swapHandsMigration';
+    routine.splice(i, 0, {
+      note: 'This was added by the automatic file migration because SHIFT passes the widgets along a list of holders in the order it is written in.',
+      func: 'SELECT',
+      type: 'seat',
+      property: 'id',
+      relation: 'in',
+      value: source,
+      collection: 'internal_swapHandsMigration'
+    });
   }
 }
 

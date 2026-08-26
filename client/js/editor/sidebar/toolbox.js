@@ -12,16 +12,19 @@ class ToolboxModule extends SidebarModule {
     const widgetBuffer = [];
     for(const widget of selectedWidgets)
       addRecursively(widget);
-    localStorage.setItem('widgetBuffer', JSON.stringify(widgetBuffer));
+    localStorage.setItem('widgetBuffer', JSON.stringify({ legacyModes: currentLegacyModes(), widgets: widgetBuffer }));
     this.renderWidgetBuffer();
   }
 
   async button_loadWidgetsFromBuffer() {
-    const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
+    const { widgets: widgetBuffer, legacyModes } = this.bufferContents();
+    if (!await confirmLegacyModeDifferences(legacyModeDifferences(legacyModes, widgetBuffer)))
+      return;
     const duplicates = widgetBuffer.filter(state=>widgets.has(state.id)).map(state=>state.id);
     if (duplicates.length) {
-      const duplicatesList = duplicates.join(', ');
-      const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
+      // the dialog takes plain text, where a leading indent is dropped but a bullet survives
+      const duplicatesList = duplicates.map(id=>`• ${id}`).join('\n');
+      const overwriteAll = await confirmInEditor('Widget IDs already exist', `These widget IDs are already in this game:\n\n${duplicatesList}\n\nAdding the buffer replaces those widgets.`, 'Overwrite', 'Cancel', 'content_paste', 'close');
       if (!overwriteAll) return;
     }
     batchStart();
@@ -79,6 +82,29 @@ class ToolboxModule extends SidebarModule {
     batchEnd();
   }
 
+  // The buffer keeps the widget states and the legacy modes of the game they were taken from in
+  // one stored value, so the two can never end up describing different games. A buffer written
+  // before the modes were recorded is a bare array and simply has no snapshot.
+  bufferContents() {
+    let stored = null;
+    try {
+      stored = JSON.parse(localStorage.getItem('widgetBuffer'));
+    } catch(e) {}
+    if(Array.isArray(stored))
+      return { widgets: stored, legacyModes: null };
+    if(stored && Array.isArray(stored.widgets))
+      return { widgets: stored.widgets, legacyModes: stored.legacyModes || null };
+    return { widgets: [], legacyModes: null };
+  }
+
+  onMetaReceivedWhileActive(meta) {
+    this.renderWidgetBuffer();
+  }
+
+  onStateReceivedWhileActive(state) {
+    this.renderWidgetBuffer();
+  }
+
   renderModule(target) {
     this.addHeader('Toolbox');
     this.widgetBuffer(target);
@@ -86,11 +112,21 @@ class ToolboxModule extends SidebarModule {
   }
 
   renderWidgetBuffer() {
-    const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    let list = '';
-    for(const state of widgetBuffer)
-      list += `<li>${html(state.id)}</li>`;
-    this.currentContents.innerHTML = `<ul>${list}</ul>`;
+    const { widgets: widgetBuffer, legacyModes } = this.bufferContents();
+    let contents = '';
+    if(widgetBuffer.length) {
+      let list = '';
+      for(const state of widgetBuffer)
+        list += `<li>${html(state.id)}</li>`;
+      contents = `<p class=widgetBufferLabel>In the buffer (${widgetBuffer.length} widget${widgetBuffer.length == 1 ? '' : 's'}):</p><ul>${list}</ul>`;
+    }
+    contents += legacyModeWarningHTML(legacyModeDifferences(legacyModes, widgetBuffer));
+    // every state the room receives re-renders the module, so an unchanged buffer keeps the DOM
+    // it has instead of losing the reader's text selection in it
+    if(contents == this.renderedWidgetBuffer)
+      return;
+    this.renderedWidgetBuffer = contents;
+    this.currentContents.innerHTML = contents;
   }
 
   searchAndReplace(target) {
@@ -113,19 +149,21 @@ class ToolboxModule extends SidebarModule {
 
   widgetBuffer(target) {
     this.addSubHeader('Widget buffer');
-    div(target, 'buttonBar', `
+    div(target, '', `
       <p>Here you can save the currently selected widgets (and their children) to a buffer so you can paste them later into a different game or room.</p>
+    `);
+
+    // the buffer contents and the legacy mode advisory sit above the buttons: they qualify what
+    // pressing them does, and below them they fall off a short viewport unseen
+    this.currentContents = div(target);
+    this.renderedWidgetBuffer = null;
+    this.renderWidgetBuffer();
+
+    div(target, 'buttonBar', `
       <button icon=content_copy id=saveWidgetsToBuffer>Save widgets to buffer</button>
       <button icon=content_paste id=loadWidgetsFromBuffer>Put widgets into the game</button>
     `);
     $('#saveWidgetsToBuffer').onclick = e=>this.button_saveWidgetsToBuffer();
     $('#loadWidgetsFromBuffer').onclick = e=>this.button_loadWidgetsFromBuffer();
-
-    const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    let list = '';
-    for(const state of widgetBuffer)
-      list += `<li>${html(state.id)}</li>`;
-    this.currentContents = div(target);
-    this.renderWidgetBuffer();
   }
 }
