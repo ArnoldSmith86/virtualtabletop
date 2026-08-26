@@ -277,10 +277,90 @@ body.jsonEdit #jsonEditor {
 
 body.jsonEdit #jeTopButtons {
   margin-bottom: 10px;
+  flex: none;
 }
 
 body.jsonEdit #jeContextButtons {
   overflow: hidden auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* The panel of the "Show colors in SVG image" button, between the icon row and the property
+   buttons. A card of its own so the sentence it shows is read as the answer to that button and not
+   as part of the property list, and it takes at most half the pane and scrolls inside it: a deck of
+   playing cards can have 30 colors and more, which used to push the property buttons and the
+   panel's own close button off the screen. */
+#jeSVGColors {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  max-height: 50%;
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--overlayBackgroundColor);
+  color: var(--textColor);
+}
+
+#jeSVGColors .jeSVGColorsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  margin-bottom: 4px;
+}
+
+#jeSVGColors .jeSVGColorsClose {
+  border: 0;
+  background: none;
+  color: var(--textColor);
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+#jeSVGColors .jeSVGColorsBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden auto;
+}
+
+#jeSVGColors .jeSVGColorsMessage {
+  font-size: 12px;
+  color: var(--textHelpColor);
+}
+
+#jeSVGColors .jeSVGColorsURL {
+  font-size: 11px;
+  color: var(--textHelpColor);
+  overflow-wrap: anywhere;
+  margin-top: 4px;
+}
+
+#jeSVGColors .jeSVGColorsBody > button {
+  margin-top: 6px;
+}
+
+/* two columns of swatches at the width of the pane: a palette is compared, not read line by line */
+#jeSVGColors .jeSVGColorList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 4px;
+}
+
+#jeSVGColors .jeSVGColorList > button {
+  border: 1px solid #808080;
+  padding: 5px 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#jeSVGColors .jeSVGColorList > button.jeSVGColorMapped::after {
+  content: " ✓";
 }
 
 body.jsonEdit #jeContextButtons > button {
