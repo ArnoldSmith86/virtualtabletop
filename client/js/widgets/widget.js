@@ -412,8 +412,11 @@ export class Widget extends StateManaged {
   applyRemove() {
     if(this.get('parent') && widgets.has(this.get('parent')))
       widgets.get(this.get('parent')).applyChildRemove(this);
-    if(this.get('deck') && widgets.has(this.get('deck')))
-      widgets.get(this.get('deck')).removeCard(this);
+    // only cards belong to a deck - any other widget may carry a property called "deck"
+    // without it referring to one, so use the deck the card registered with instead of
+    // resolving the property again
+    if(this.deck)
+      this.deck.removeCard(this);
     if($(`#STYLES_${this.cssScope}`))
       removeFromDOM($(`#STYLES_${this.cssScope}`));
     removeFromDOM(this.domElement);
