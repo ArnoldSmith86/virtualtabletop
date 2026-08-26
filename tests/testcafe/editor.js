@@ -4,6 +4,329 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 
 setupTestEnvironment();
 
+// Which modules edit mode comes up with depends on what the browser has stored and on whether the
+// window has room for a panel next to the board, and both survive a test. Every test that expects
+// the properties module to be open therefore states its own window size and editor state instead of
+// inheriting them from whichever test ran before it.
+const setEditorState = ClientFunction(state => {
+  if(state)
+    localStorage.setItem('editorState', JSON.stringify(state));
+  else
+    localStorage.removeItem('editorState');
+});
+
+const moduleWidth = ClientFunction(() => document.querySelector('#editorModules').getBoundingClientRect().width);
+
+// the editor state of a test that wants the properties module open the way the user opens it, rather
+// than as the panel edit mode opens on its own the very first time (which sizes itself to its content)
+const propertiesModuleOpen = { modules: { 'Edit Widgets': 'editorModuleTopLeft' } };
+// edit mode imports itself on the first click of the edit button, so waiting for the module the state
+// above restores is what tells "the editor is there" from "the click has not arrived yet"
+const propertiesModule = Selector('#editorModuleTopLeft.tune');
+
+// Where the board sits in the window, so a test can put the pointer on a board coordinate
+const boardGeometry = ClientFunction(() => {
+  const surface = document.getElementById('topSurface').getBoundingClientRect();
+  const room = document.getElementById('roomArea').getBoundingClientRect();
+  return { left: surface.left - room.left, top: surface.top - room.top, scale: surface.width/1600 };
+});
+
+// Selecting more than one widget means dragging a rubber band around them: a click in the room
+// always selects the single widget under it.
+async function bandSelect(t, x1, y1, x2, y2) {
+  const geometry = await boardGeometry();
+  const point = (x, y) => ({ x: Math.round(geometry.left + x*geometry.scale), y: Math.round(geometry.top + y*geometry.scale) });
+  const from = point(x1, y1), to = point(x2, y2);
+  await t.drag('#roomArea', to.x - from.x, to.y - from.y, { offsetX: from.x, offsetY: from.y, speed: 0.5 });
+}
+
+test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .expect(Selector('#editorSidebar button[icon=tune].active').exists).ok()
+    // sized to its content, not to the 50/50 split a module the user opens gets
+    .expect(Selector('body.defaultEditorModuleWidth').exists).ok()
+    .expect(moduleWidth()).lte(420)
+    // opening a module by hand hands the width back to the resizer
+    .click('#editorSidebar button[icon=data_object]')
+    .expect(Selector('body.defaultEditorModuleWidth').exists).notOk()
+    .expect(moduleWidth()).gt(420);
+  await setEditorState(null);
+});
+
+test('Edit mode restores the remembered module instead of the default one', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk();
+  await setEditorState(null);
+});
+
+// closing every module deletes the last entry, so only the flag tells "I closed
+// them all" apart from "I have never been here"
+test('Edit mode leaves the modules closed once the default has been opened before', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: {}, defaultModuleOpened: true });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// there the panel is a fullscreen overlay, so opening it by default would hide
+// the room the user just went to edit
+test('Edit mode skips the default module in the narrow-window layout', async t => {
+  await t.resizeWindow(900, 600);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// a portrait window showing a landscape board asks the user to rotate the device,
+// which is more useful than a properties panel covering that message
+test('Edit mode skips the default module in a portrait window', async t => {
+  await t.resizeWindow(410, 845);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorToolbar > div > [icon=add]').exists).ok() // edit mode has loaded
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk();
+  await setEditorState(null);
+});
+
+// the module that opens itself is closed the same way every other one is: with
+// the sidebar button that opened it. There is no close button in the panel.
+test('A module is closed again through its sidebar button', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .expect(Selector('#editorModuleTopLeft .moduleCloseButton').exists).notOk()
+    .click('#editorSidebar button[icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).notOk()
+    .expect(Selector('#editor.moduleActive').exists).notOk()
+    .expect(Selector('#editorSidebar button[icon=tune].active').exists).notOk();
+  await setEditorState(null);
+});
+
+// The toolbar's undo button cuts the undo protocol short behind the History module's back, so the
+// rows the module has rendered describe entries that are no longer in the protocol. They stay in
+// the list as the states the undo stepped over, which is what makes a toolbar undo redoable, and
+// the module must not write to a row that has no entry behind it - the next change of any kind,
+// and a second undo in a row, both land on exactly that row.
+test('Undoing from the toolbar keeps the History module in sync', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const undoButton = Selector('#editorToolbar [icon=undo]');
+  const widgetCount = ClientFunction(() => widgets.size);
+  const protocolLength = ClientFunction(() => getUndoProtocol().length);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  // the room states the client loaded with - one per state message it has seen so far
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5) // the widget of the room state, the line with its two stops, the holder
+    // an undo steps back through the list instead of dropping what it undid: the row stays and the
+    // one below it becomes the active one
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    .expect(widgetCount()).eql(4)
+    // so clicking the row again takes the undo back
+    .click(historyRows.nth(0))
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(widgetCount()).eql(5)
+    // the sequence the crash reports arrived from: one undo, and then a change of any kind - which
+    // is what makes the state the undo stepped over unreachable, so its row is replaced
+    .click(undoButton)
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(widgetCount()).eql(5)
+    // and the other one: two undos in a row
+    .click(undoButton)
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(2).hasClass('active')).ok()
+    .expect(widgetCount()).eql(1);
+
+  // the first entry is the room as it was loaded, so the button turns off once it is the
+  // only one left and clicking it would do nothing
+  for(let entries = await protocolLength(); entries > 1; --entries)
+    await t.expect(undoButton.hasAttribute('disabled')).notOk().click(undoButton);
+  await t
+    .expect(undoButton.hasAttribute('disabled')).ok()
+    // everything the button undid is still listed, so the newest row brings all of it back
+    .click(historyRows.nth(0))
+    .expect(widgetCount()).eql(5)
+    .expect(undoButton.hasAttribute('disabled')).notOk();
+  await setEditorState(null);
+});
+
+// A row click cuts the protocol short as well, but keeps the rows above it in the DOM so the user
+// can return to that future state - so those rows have to survive until the next change makes them
+// unreachable, and go when it arrives.
+test('Clicking a History row returns to that state and keeps the newer rows until a new change', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const widgetCount = ClientFunction(() => widgets.size);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5)
+    // the newest row is the first one in the panel, so the second one is the line
+    .click(historyRows.nth(1))
+    .expect(widgetCount()).eql(4)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    // the row of the holder is still there and returns the room to that future state
+    .click(historyRows.nth(0))
+    .expect(widgetCount()).eql(5)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    // going back once more and then adding a widget makes that state unreachable, so its row is
+    // replaced by the one of the new change
+    .click(historyRows.nth(1))
+    .expect(widgetCount()).eql(4)
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(widgetCount()).eql(5)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .click('#editorToolbar [icon=undo]')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    .expect(widgetCount()).eql(4);
+  await setEditorState(null);
+});
+
+// The panel only hears about a change while edit mode is open, and a complete room state does
+// not reach it at all - both leave the list describing an older protocol than the room is in. The
+// undo button steps back through that list, so it has to be caught up before it is used again.
+test('The History module catches up on changes it did not see', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { History: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const historyRows = Selector('.undoEntry');
+  const undoButton = Selector('#editorToolbar [icon=undo]');
+  const widgetX = ClientFunction(() => widgets.get('widget').get('x'));
+  const moveWidget = ClientFunction(() => widgets.get('widget').set('x', 400));
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+
+  const rowsBefore = await historyRows.count;
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-holder')
+    .expect(historyRows.count).eql(rowsBefore+1)
+    // leave edit mode, change something while playing and come back: the change is listed and is
+    // the state the room is in, so undoing it takes the widget back instead of adding a row of
+    // its own for the undo
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk();
+  await moveWidget();
+  await t
+    .click('#editButton')
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok()
+    .expect(widgetX()).eql(200);
+
+  // a complete room state is an entry of the protocol as well, so the list takes it the same way -
+  // it replaces the row of the state the undo above stepped over, which it just made unreachable
+  await setRoomState({
+    other: { id: 'other', type: 'basic', x: 100, y: 100 }
+  });
+  await t
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(0).hasClass('active')).ok()
+    .expect(historyRows.nth(0).innerText).contains('complete room state')
+    .click(undoButton)
+    .expect(historyRows.count).eql(rowsBefore+2)
+    .expect(historyRows.nth(1).hasClass('active')).ok();
+  await setEditorState(null);
+});
+
 test('Pan in edit mode while holding Space', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -43,10 +366,12 @@ test('Pan in edit mode while holding Space', async t => {
 });
 
 test('Renaming a widget keeps its color controls clear and it movable', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     old: { id: 'old', type: 'basic', x: 200, y: 200, movable: true, movableInEdit: true }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await ClientFunction(() => {
     window.renamedWidgetErrors = [];
@@ -54,7 +379,7 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   })();
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_old')
     // the icon color only paints something once there is an icon (or a class
     // or css reading --color), so its chip is not offered on a plain widget
@@ -113,6 +438,7 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
     }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const diceState = ClientFunction(() => JSON.stringify(widgets.get('die').state));
@@ -146,7 +472,9 @@ test('Dice faces have their own icon, image scale and CSS controls', async t => 
   const rows = Selector('#editorModules .diceFaceRow');
   await t
     .click('#editButton')
+    // portrait window, so this is one of the layouts where the module does not open by default
     .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_die')
     // Background, pips/icon and border no longer repeat generic color help.
     .expect(Selector('#editorModules .diceSharedColors .info-button').count).eql(0)
@@ -235,11 +563,13 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 });
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:   { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const dropTarget = ClientFunction(() => JSON.stringify(widgets.get('holder').get('dropTarget')));
@@ -247,7 +577,7 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
   // a holder takes cards until it is told otherwise - the match rows say so
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_holder')
     .expect(Selector('#editorModules .widgetHeaderType').innerText).contains('Holder')
     .expect(Selector('#editorModules .dropTargetType').value).eql('type:card');
@@ -273,12 +603,14 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
 });
 
 test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     // an SVG written for svgReplaces: it uses placeholders in fill, stroke and
     // stroke-width, plus an opacity of its own
     checker: { id: 'checker', type: 'basic', x: 100, y: 100, width: 91, height: 91, image: '/i/game-pieces/2D/Checkers-2D.svg' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const nestedSection = Selector('#editorModules .collapsibleBody > .collapsibleSection > .collapsibleHeader .collapsibleTitle');
@@ -290,24 +622,62 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
   // inside Position rather than beside it
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_checker')
     .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
     .expect(nestedSection.withExactText('Snap grid').exists).ok()
     .expect(nestedSection.withExactText('Drag limits').exists).ok();
 
   const dragLimitBody = Selector('#editorModules .collapsibleHeader').withText('Drag limits').sibling('.collapsibleBody');
+  const areaPreview = Selector('.dragLimitPreviewOverlay');
   await t
     .click(Selector('#editorModules .collapsibleHeader').withText('Drag limits'))
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
     // the whole table minus the widget's own box
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":1509,"maxY":909}')
-    .typeText(dragLimitBody.find('.gridLimits input[type=number]').nth(1), '800', { replace: true })
+    .typeText(dragLimitBody.find('.dragLimitRow input').nth(1), '800', { replace: true })
     .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":800,"maxY":909}')
+    // a side takes an expression instead of a number, and the area does not
+    // have to be a rectangle at all - one condition per line
+    .typeText(dragLimitBody.find('.dragLimitRow input').nth(1), '${PROPERTY width OF checker} * 10', { replace: true })
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909}')
+    .typeText(dragLimitBody.find('textarea'), 'y > x')
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":"y > x"}')
+    .typeText(dragLimitBody.find('textarea'), '\n2x^2 + y > 4')
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
+    // which point of the widget all of that holds - the same 3x3 picker a snap
+    // grid uses to say which point of it lands on a grid line
+    .click(dragLimitBody.find('.gridAnchorRow .gridAnchor').nth(4))
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"],"alignX":0.5,"alignY":0.5}')
+    // and the top left corner is what the engine uses anyway, so picking it
+    // drops the two keys again
+    .click(dragLimitBody.find('.gridAnchorRow .gridAnchor').nth(0))
+    .expect(dragLimit()).eql('{"minX":0,"minY":0,"maxX":"${PROPERTY width OF checker} * 10","maxY":909,"condition":["y > x","2x^2 + y > 4"]}')
+    // a condition that is not a comparison is a number, and a number is true
+    // wherever it is not 0 - so it is reported like one that cannot be read at
+    // all rather than left behind as a limit that limits nothing
+    .typeText(dragLimitBody.find('textarea'), 'x - 100', { replace: true })
+    .expect(dragLimitBody.find('.propertyInputProblem').withText('comparison').exists).ok()
+    // and conditions that hold nowhere at all are said out loud too: no single
+    // line of that is wrong, but together they describe no area, and an area
+    // nothing satisfies limits nothing
+    .typeText(dragLimitBody.find('textarea'), 'x < 200\nx > 800', { replace: true })
+    .expect(dragLimitBody.find('.dragLimitEmptyArea').innerText).contains('satisfies')
+    .typeText(dragLimitBody.find('textarea'), 'y > x', { replace: true })
+    .expect(dragLimitBody.find('.dragLimitEmptyArea').innerText).eql('')
+    // the area a condition describes is sampled onto the board while the
+    // section is open, and the switch next to it takes it away again
+    .expect(areaPreview.exists).ok()
+    .click(dragLimitBody.find('.dragLimitPreviewToggle label.switchbox'))
+    .expect(areaPreview.exists).notOk()
+    .click(dragLimitBody.find('.dragLimitPreviewToggle label.switchbox'))
+    .expect(areaPreview.exists).ok()
     // the four sides only mean something together, so the switch drops all of
     // them - and an empty rectangle is the default, i.e. no property at all
     .click(dragLimitBody.find('.gridLimitToggle label.switchbox'))
-    .expect(dragLimit()).eql('null');
+    .expect(dragLimit()).eql('null')
+    // and a widget that can be dragged anywhere has no area to draw
+    .expect(areaPreview.exists).notOk();
 
   // nothing tells the editor whether an image is a hexagon, let alone which way
   // up, so both orientations are offered and the user picks one
@@ -329,6 +699,47 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
     .click(gridButton.nth(1))
     .expect(grid()).eql('[{"x":136.5,"y":78.81,"offsetX":68.25,"offsetY":39.405},{"x":136.5,"y":78.81,"offsetX":0,"offsetY":0}]');
 
+  // the area one grid applies in: the rectangle, plus conditions for an area
+  // that is not one. The Conditions field sits right under the X/Y rows and
+  // stores what the engine reads - one condition as a string, several as a list
+  const conditionOutline = Selector('.gridConditionOutline');
+  // every dot of one grid is one zero-length subpath of one path, so the marked
+  // positions can be read back out of it and held against the conditions
+  const conditionDots = ClientFunction(() => {
+    const path = document.querySelector('.gridConditionDots .dotCore');
+    const dots = path ? path.getAttribute('d').split('M ').slice(1).map(dot => dot.split(' ').map(Number)) : [];
+    return { count: dots.length, outside: dots.filter(([ x, y ]) => !(y > x && x > 200)).length };
+  });
+  await t
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(1))
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0))
+    .click(gridButton.nth(0))
+    .click(gridBody.find('.gridEntry .collapsibleHeader').withText('More options'))
+    .expect(conditionOutline.exists).notOk()
+    .click(gridBody.find('.gridLimitToggle label.switchbox'))
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000}]')
+    .typeText(gridBody.find('.gridLimits textarea'), 'y > x')
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000,"condition":"y > x"}]')
+    .typeText(gridBody.find('.gridLimits textarea'), '\nx > 200')
+    .expect(grid()).eql('[{"x":91,"y":91,"minX":0,"minY":0,"maxX":1600,"maxY":1000,"condition":["y > x","x > 200"]}]')
+    // the boundary of that area is traced onto the board in the same dashed
+    // line the rectangle is outlined with
+    .expect(conditionOutline.exists).ok()
+    // and the dots are drawn one by one, so only the lattice points the widget
+    // can be put on are marked rather than the whole rectangle
+    .expect(Selector('.gridPreviewOverlay.ownDots').exists).ok()
+    .expect(conditionDots()).eql({ count: 28, outside: 0 })
+    // a line that is not a comparison is a number, and a number is true
+    // wherever it is not 0 - so it is reported rather than left behind
+    .typeText(gridBody.find('.gridLimits textarea'), 'x - 100', { replace: true })
+    .expect(gridBody.find('.propertyInputProblem').withText('comparison').exists).ok()
+    // and switching the area off drops the conditions with the four sides
+    .typeText(gridBody.find('.gridLimits textarea'), 'y > x', { replace: true })
+    .click(gridBody.find('.gridLimitToggle label.switchbox'))
+    .expect(grid()).eql('[{"x":91,"y":91}]')
+    .expect(conditionOutline.exists).notOk()
+    .click(gridBody.find('.gridEntry [icon=delete]').nth(0));
+
   // the replacements are read out of the SVG: its stroke-width placeholder is
   // offered as a replacement for a borderWidth, and gets a number input
   const swatch = text => Selector('#editorModules .svgColorSwatch').withText(text);
@@ -347,6 +758,7 @@ test('Position holds the grid and the drag limits, SVG replacements come from th
 });
 
 test('A pile is edited through its handle, css through declaration rows', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -354,6 +766,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
@@ -361,7 +774,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
   // the handle is the only part of a pile the cards do not cover
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(Selector('#w_pile .handle'))
     .expect(Selector('.widgetHeaderType').innerText).contains('Pile')
     // a pile is temporary, so the panel says up front that it edits the
@@ -429,6 +842,7 @@ test('A pile is edited through its handle, css through declaration rows', async 
 });
 
 test("A pile's drop limit is set on the pile and lands in its template", async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -436,6 +850,7 @@ test("A pile's drop limit is set on the pile and lands in its template", async t
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const pileTemplate = ClientFunction(() => JSON.stringify((widgets.get('deck').get('cardDefaults') || {}).onPileCreation || null));
@@ -448,7 +863,7 @@ test("A pile's drop limit is set on the pile and lands in its template", async t
   // limit for it to show
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(handle)
     .expect(dropLimit.visible).ok()
     .expect(showLimit.visible).notOk()
@@ -463,6 +878,7 @@ test("A pile's drop limit is set on the pile and lands in its template", async t
 });
 
 test('A deck that overrides the pile template says so while the pile mirrors into it', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:  { id: 'deck', type: 'deck', cardTypes: { a: { onPileCreation: { text: 'fixed' } } }, faceTemplates: [ { objects: [] } ] },
     pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
@@ -470,6 +886,7 @@ test('A deck that overrides the pile template says so while the pile mirrors int
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   // cardDefaults is the last place a card looks for onPileCreation, so a card
@@ -478,18 +895,20 @@ test('A deck that overrides the pile template says so while the pile mirrors int
   // also the default one
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click(Selector('#w_pile .handle'))
     .expect(Selector('.pileTemplateMode').innerText).contains('pile template')
     .expect(Selector('.pileTemplateMode .pileHelp.warning').innerText).contains('onPileCreation');
 });
 
 test('Loading another game with a widget still selected does not break the client', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
     card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 100, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await ClientFunction(() => {
     window.stateLoadErrors = [];
@@ -498,7 +917,7 @@ test('Loading another game with a widget still selected does not break the clien
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_card')
     .expect(Selector('.widgetHeaderType').innerText).contains('Card');
 
@@ -516,6 +935,7 @@ test('Loading another game with a widget still selected does not break the clien
 });
 
 test('Basic curates the stacking, scale and visibility switches, the scoreboard its seats', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState({
     block: { id: 'block', type: 'basic', x: 100, y: 100 },
     seat1: { id: 'seat1', type: 'seat', x: 100, y: 400, index: 1 },
@@ -523,6 +943,7 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     board: { id: 'board', type: 'scoreboard', x: 600, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const value = ClientFunction((id, property) => JSON.stringify(widgets.get(id).get(property)));
@@ -531,7 +952,7 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
   // factor it is drawn at to Size
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_block')
     .click(Selector('#editorModules .collapsibleHeader').withText('Position'))
     .click('#inheritChildZ_block')
@@ -631,6 +1052,232 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     .expect(value('board', 'seats')).eql('null');
 });
 
+test('The arrange bar puts a multi-selection on a circle around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    c1: { id: 'c1', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
+    c2: { id: 'c2', type: 'basic', x: 400, y: 100, width: 100, height: 100, rotation: 45 },
+    c3: { id: 'c3', type: 'basic', x: 400, y: 400, width: 100, height: 100, rotation: -30, scale: 1.5 },
+    // a global update routine runs once per property change, and only for a
+    // change that has the room to itself - one dot per widget the tool moves
+    tally: { id: 'tally', type: 'basic', x: 1200, y: 800, width: 50, height: 50, moves: '',
+      xGlobalUpdateRoutine: [ { func: 'SET', collection: 'thisButton', property: 'moves', value: '${PROPERTY moves OF tally}.' } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // where a widget ended up, in board coordinates, and how far it was turned
+  const placement = ClientFunction(() => [ 'c1', 'c2', 'c3' ].map(id => {
+    const widget = widgets.get(id);
+    return `${id}: ${widget.get('x')},${widget.get('y')} @${Math.round(widget.get('rotation') || 0)}`;
+  }).join(' | '));
+  const dragRadiusSlider = ClientFunction(value => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = value === null ? slider.max : value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  // Done in the same breath as the last move of the slider, which is what
+  // letting go of it looks like: the arrangement it started is still on its way
+  const setRadiusAndPressDone = ClientFunction(value => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('.arrangeCircleOptions button[icon=check]').click();
+  });
+  // every widget of the arrangement is drawn inside the board - the box a
+  // turned or enlarged widget covers, not the width and height it stores
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'c1', 'c2', 'c3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  const clearTally = ClientFunction(() => widgets.get('tally').set('moves', ''));
+  const tallied = ClientFunction(() => widgets.get('tally').get('moves'));
+  const start = 'c1: 100,100 @0 | c2: 400,100 @45 | c3: 400,400 @-30';
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
+  const options = Selector('.arrangeCircleOptions');
+  const radius = options.find('input[type=number]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  // two widgets are not a circle - the button stays there and says why
+  await bandSelect(t, 40, 40, 560, 260);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('2 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).ok()
+    .expect(circleButton.getAttribute('title')).contains('needs 3+ widgets');
+
+  // the button arranges the selection right away, with the settings it comes
+  // with, and only then shows them: the circle is centered on what the
+  // selection covers - the turned and the enlarged widget with the box they
+  // are drawn in, not the one their width and height describe
+  await bandSelect(t, 40, 40, 560, 560);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).notOk()
+    // the radius a press would apply is named on the button, so a selection is
+    // not thrown across the board by a setting left behind an hour ago
+    .expect(circleButton.getAttribute('title')).contains('radius 200')
+    .expect(options.find('input').exists).notOk()
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    // the box below the bar belongs to this button, which stays pressed for it
+    .expect(circleButton.hasClass('open')).ok()
+    .expect(radius.value).eql('200')
+    .expect(placement()).eql('c1: 476,265 @0 | c2: 176,439 @45 | c3: 176,92 @-30')
+    // each of the three moves is a change of its own, so a routine listening for
+    // one runs three times rather than being swallowed by an overlapping move
+    .expect(tallied()).eql('...')
+    // a radius that is typed in arranges the selection again, from where it was
+    // before the tool ran - so the widgets do not walk outwards step by step
+    .typeText(radius, '250', { replace: true })
+    .pressKey('enter')
+    .expect(placement()).eql('c1: 526,265 @0 | c2: 151,482 @45 | c3: 151,49 @-30')
+    // the slider is the other half of the same setting: it takes over from the
+    // field once that is no longer the one being typed in
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'));
+
+  await dragRadiusSlider('150');
+  await t
+    .expect(radius.value).eql('150')
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30')
+    // rotation goes on and off again, which gives every widget the rotation it
+    // brought rather than leaving it turned away from the center
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 426,265 @90 | c2: 201,395 @210 | c3: 201,135 @330')
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30');
+
+  // the slider ends its travel at the largest circle that keeps the selection
+  // on the board, so dragging it all the way leaves everything in sight - the
+  // widget drawn half again its size included, which needs the room it is drawn
+  // in rather than the 100x100 it stores
+  await dragRadiusSlider(null);
+  await t
+    .expect(radius.value).eql('213')
+    // the ceiling the slider is given again on every step keeps the thumb where
+    // the drag left it rather than pulling it back
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('213')
+    .expect(options.find('input[type=range]').value).eql('213')
+    .expect(placement()).eql('c1: 489,265 @0 | c2: 169,450 @45 | c3: 169,81 @-30')
+    .expect(onBoard()).ok()
+    // an emptied field keeps the radius the arrangement is standing on, so it
+    // has to show that radius again rather than read as blank
+    .selectText(radius)
+    .pressKey('delete')
+    .expect(radius.value).eql('')
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'))
+    .expect(radius.value).eql('213')
+    // and a circle of radius 0, which would stack the selection on one point,
+    // is not one of the values the field takes
+    .typeText(radius, '0', { replace: true })
+    .expect(radius.value).eql('1')
+    // which is the radius the board ends up on as well
+    .expect(placement()).eql('c1: 277,265 @0 | c2: 275,266 @45 | c3: 275,265 @-30');
+
+  // undoing puts the whole selection back, rotations included, and closes the
+  // settings again
+  await clearTally();
+  await t
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start)
+    // and putting them back is three changes as well, not one
+    .expect(tallied()).eql('...')
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
+
+  // done is the other way out: it closes the settings and leaves the widgets on
+  // the circle rather than putting them back. The radius it is pressed on is
+  // still being applied at that moment, so it is the one that has to end up on
+  // the board - not the one before it
+  await t.click(circleButton);
+  await setRadiusAndPressDone('100');
+  await t
+    .expect(placement()).eql('c1: 376,265 @0 | c2: 226,352 @45 | c3: 226,179 @-30')
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
+});
+
+test('The arrange bar arranges a selection inside another widget on the board around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    // x, y and rotation of the three widgets are the box's, and the box shows
+    // them at half the size they are stored in: what the tool reads and the
+    // board the circle has to fit on are two different spaces
+    box: { id: 'box', type: 'basic', x: 600, y: 200, width: 400, height: 400, scale: 0.5 },
+    p1: { id: 'p1', type: 'basic', parent: 'box', x: 10, y: 10, width: 60, height: 60 },
+    p2: { id: 'p2', type: 'basic', parent: 'box', x: 200, y: 10, width: 60, height: 60 },
+    p3: { id: 'p3', type: 'basic', parent: 'box', x: 100, y: 200, width: 60, height: 60 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // the arrangement measured where it is drawn: around the middle of the three
+  // widgets on the board, each of them the radius away from it
+  const circleOnBoard = ClientFunction(expected => {
+    const centers = [ 'p1', 'p2', 'p3' ].map(id => ({
+      x: widgets.get(id).get('_centerAbsoluteX'),
+      y: widgets.get(id).get('_centerAbsoluteY')
+    }));
+    const middle = {
+      x: centers.reduce((sum, c) => sum + c.x, 0) / centers.length,
+      y: centers.reduce((sum, c) => sum + c.y, 0) / centers.length
+    };
+    const radii = centers.map(c => Math.hypot(c.x - middle.x, c.y - middle.y));
+    const off = Math.hypot(middle.x - expected.x, middle.y - expected.y);
+    return off <= 2 && radii.every(r => Math.abs(r - expected.radius) <= 2)
+      ? `on a circle of ${expected.radius} around ${expected.x},${expected.y}`
+      : `${Math.round(middle.x)},${Math.round(middle.y)} r${radii.map(r => Math.round(r)).join('/')}`;
+  });
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'p1', 'p2', 'p3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  // where the widgets sit in the box they belong to, which is what they store
+  const placement = ClientFunction(() => [ 'p1', 'p2', 'p3' ].map(id => `${id}: ${widgets.get(id).get('x')},${widgets.get(id).get('y')}`).join(' | '));
+  const dragRadiusSliderToMax = ClientFunction(() => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = slider.max;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const start = 'p1: 10,10 | p2: 200,10 | p3: 100,200';
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
+  const options = Selector('.arrangeCircleOptions');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  await bandSelect(t, 700, 300, 835, 435);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 200 })).eql('on a circle of 200 around 767.5,367.5')
+    // the space around the selection is measured on the board as well, so the
+    // slider keeps the travel the board has room for instead of ending at the
+    // radius that is already applied
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('352')
+    .expect(onBoard()).ok();
+
+  await dragRadiusSliderToMax();
+  await t
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 352 })).eql('on a circle of 352 around 767.5,367.5')
+    .expect(onBoard()).ok()
+    // and taking it back puts every widget where its own box had it
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start);
+});
+
 test('Create game using edit mode', async t => {
   console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);
@@ -639,6 +1286,9 @@ test('Create game using edit mode', async t => {
   await setName(t);
   await t
     .click('#editButton')
+    // this one places widgets in the room, so it gets the whole room: close the
+    // Edit Widgets module edit mode opens on
+    .click('#editorSidebar [icon=tune]')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-spinner0')
     .typeText('#INPUT_\\;values', '8', { replace: true })
@@ -714,19 +1364,21 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_bldn')
     .click('#w_bldn');
-  await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
+  await compareState(t, '6924f0c5e2ca0fe7a0e976dafcacecb6');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -757,19 +1409,66 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#deckEditorTreeDelete')                   // delete the just-added (current) face
     .pressKey('esc') // closes the deck editor, since no face object is selected at this point
     .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
-  await compareState(t, '3e20074150f78219095df84abeeb74dc');
+  await compareState(t, '107a190b3e5bf5acb816e1655f165f88');
+});
+
+// Both the object form of the css property and the css of an html face object are put into a style element
+// and scoped to the widget's id. Every preview card the editor renders is created without one, so they used
+// to share that scope and the last preview rendered restyled all the others - a strip in which every card
+// type wore the last one's colors. The room card with a space in its id covers the other half: an id that is
+// not a valid class name made classList.add() throw, so that card rendered no html face objects at all.
+test('Deck editor: every card type preview keeps its own css', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 100, height: 150, css: { default: { 'border-color': '${PROPERTY tint}' } } },
+      cardTypes: { red: { tint: '#ff0000' }, green: { tint: '#008000' }, blue: { tint: '#0000ff' } },
+      faceTemplates: [ { objects: [] }, { objects: [ {
+        type: 'html', x: 0, y: 0, width: 100, height: 150,
+        value: '<div>tinted</div>', css: { body: { 'background-color': '${PROPERTY tint}' } }
+      } ] } ]
+    },
+    'my card': { id: 'my card', type: 'card', deck: 'deck', cardType: 'green', x: 300, y: 20, activeFace: 1 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+
+  const roomCardColor = ClientFunction(() => {
+    const object = document.querySelector('#w_my_x0020_card .cardFace.active .cardFaceObject');
+    return object && getComputedStyle(object).backgroundColor;
+  });
+  const stripColors = ClientFunction(() => {
+    const colors = [];
+    document.querySelectorAll('#deckEditorStrip .cardFace.active .cardFaceObject').forEach(o=>colors.push(getComputedStyle(o).backgroundColor));
+    return colors;
+  });
+  const stripBorderColors = ClientFunction(() => {
+    const colors = [];
+    document.querySelectorAll('#deckEditorStrip .card').forEach(c=>colors.push(getComputedStyle(c).borderTopColor));
+    return colors;
+  });
+  await t
+    .expect(roomCardColor()).eql('rgb(0, 128, 0)', 'a card whose id is not a valid class name renders its html face object')
+    .click('#editButton')
+    .click('#w_deck')
+    .click('#propertiesOpenDeckEditor')
+    .expect(stripColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own html face object tint')
+    .expect(stripBorderColors()).eql([ 'rgb(255, 0, 0)', 'rgb(0, 128, 0)', 'rgb(0, 0, 255)' ], 'each card type preview shows its own css property tint')
+    .pressKey('esc');
 });
 
 test('Deck editor: symbol pickers and JSON fallback', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -793,10 +1492,26 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#deckEditorTreeAdd')
     .click('#deckEditorAddImage')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
-    .click(Selector('#symbolList .gameicons').nth(0))
+    // this picker shows images only, so a search that only a font icon answers has to say so instead of
+    // showing the empty list ("10k" is a material symbol and matches nothing among the images)
+    .typeText('#symbolPickerOverlay input', '10k')
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolList').visible).notOk()
+    .selectText('#symbolPickerOverlay input')
+    .pressKey('delete')
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    // pin the icon instead of taking whichever comes first: that depends on the order of the
+    // game-icons sections in symbols.json, so recategorising them would change the state hash
+    .click(Selector('#symbolList .gameicons[data-symbol="viscious-speed/abstract-001"]'))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
     .click('#deckEditorAddIcon')
     .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // the same search in the unrestricted picker does find its one match
+    .typeText('#symbolPickerOverlay input', '10k')
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList i:not(.hidden)').count).eql(1)
+    .selectText('#symbolPickerOverlay input')
+    .pressKey('delete')
     .click(Selector('#symbolList .material-symbols').nth(0))
     .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 1 });
 
@@ -806,19 +1521,51 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
     .pressKey('esc');
-  await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
+  await compareState(t, '8fb79df2e3ed3c8d8ecfdea4f04fd31d');
+});
+
+test('The symbol picker says an image-only search found nothing', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    // the "Pick a symbol" button only shows up while the text is in symbol mode, which the class decides
+    w: { id: 'w', type: 'basic', x: 200, y: 200, text: 'home', classes: 'material-symbols' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  // that picker offers the font icons only, so a search that only an image answers ("abbot" is a
+  // game-icon) leaves the list empty and has to explain that rather than show a blank card
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_w')
+    .click(Selector('#editorModuleTopLeft button[icon=emoji_symbols]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .typeText('#symbolPickerOverlay input', 'abbot')
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolNoResults').innerText).contains('abbot')
+    .expect(Selector('#symbolList').visible).notOk()
+    .typeText('#symbolPickerOverlay input', '10k', { replace: true })
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList .material-symbols').filterVisible().count).eql(1)
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk();
+  await setEditorState(null);
 });
 
 test('Deck editor: breadcrumb undo and redo', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -863,19 +1610,21 @@ test('Deck editor: breadcrumb undo and redo', async t => {
     .click('#deckEditorRedo')                 // restore and then remove it again to exercise redo without changing the old final state
     .click('#deckEditorUndo')
     .pressKey('esc');
-  await compareState(t, '0fe0eb8554cd82ec74d0c2c99513dffa');
+  await compareState(t, '080564aa3d452a551711d5913083c057');
 });
 
 test('Deck editor: remote update preserves an unrelated pending edit', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -919,22 +1668,24 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   await t
     .expect(getEditedValues(deckID)).eql({ text: 'Pending local edit', receivedProperty: 'Remote value' })
     .pressKey('esc');
-  await compareState(t, 'a2c9165768e325ccd6c8452f2194d314');
+  await compareState(t, '5d0b5d0effa672e633b9d5eff677561a');
 });
 
 // Two different fields edited within one debounce window, then a structural action right after, must stay
 // three separate undo steps: undoing the added face must not revert the typed edits, and undoing once more
 // must revert only the second field.
 test('Deck editor: rapid cross-field edits stay separate undo steps', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -990,22 +1741,24 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
     .click('#deckEditorUndo') // reverts only the fontSize edit
     .expect(getTextObject(deckID)).eql({ value: 'RapidValue', fontSize: 20 })
     .pressKey('esc');
-  await compareState(t, '6e41185d918e1b8dfe69610ff6f74e77');
+  await compareState(t, '3b98bcdea7d0726315cb85533bdd870e');
 });
 
 // Regression test for the crash reported on switching games while a deck was being edited (the previously
 // selected deck/card no longer exists when the new state arrives). TestCafe fails the test on any uncaught
 // client error, so simply performing the switch guards against the crash coming back.
 test('Deck editor: switching games while editing does not crash', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-empty-deck')
-    .click('#editorSidebar [icon=tune]');
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
 
   const getDeckID = ClientFunction(() => {
     let deckID = null;
@@ -1033,8 +1786,10 @@ test('Deck editor: switching games while editing does not crash', async t => {
 // Also guards against Escape leaking to the room editor behind the deck editor (it used to toggle the
 // sidebar tab and could exit edit mode entirely).
 test('Deck editor: create deck from scratch with color box, face and defaults', async t => {
+  await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   // All sidebar sections share the same row markup; find a row by its section header and label text. Scan every
@@ -1101,7 +1856,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#editor .noSelectionButton[icon=style]') // "Open deck editor": opens the empty editor (no auto-created deck)
     .click('#deckEditorAddDeck')                     // Add New Deck submenu (defaults to the Empty deck option)
     .click('#deckEditorNewDeckPanel button')         // "Create empty deck" -> creates a starter deck and opens it
@@ -1570,6 +2325,499 @@ test('Deck editor: mismatched and shared card backs in the new deck wizard', asy
   })()).eql(Array(3).fill(asset('back1.png')));
 });
 
+// The public library's deck browser is opened from the "Add New Deck" dialog, which hides itself while the
+// browser is up. The browser is moved into #editor for that (see DeckEditor.initializeDOM), where it needs a
+// box and a stacking order of its own - without them the deck editor paints over it and not a single deck can
+// be seen or clicked.
+test('Deck editor: the public library deck browser opens above the deck editor', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupExisting .deckEditorNewDeckGroupHeader') // open the "Use an existing deck" section
+    .click('#deckEditorNewDeckOverlay input[value=library]')
+    .click('#deckEditorNewDeckPanel button[icon=style]') // "Browse the public library"
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  // a deck is only pickable when a click at its own position actually reaches it
+  const firstEntryIsOnTop = ClientFunction(() => {
+    const entry = document.querySelector('.libraryDeckEntry');
+    const rect = entry.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.x + rect.width/2, rect.y + rect.height/2);
+    return !!(hit && hit.closest('.libraryDeckEntry'));
+  });
+  await t.expect(firstEntryIsOnTop()).ok();
+
+  // and closing it without picking one comes back to the dialog it was opened from, still on that section
+  await t
+    .click('#libraryDecksClose')
+    .expect(Selector('#deckEditorNewDeckOverlay').visible).ok()
+    .expect(Selector('#libraryDecksOverlay').visible).notOk()
+    .expect(Selector('#deckEditorNewDeckGroupExisting').hasClass('deckEditorNewDeckGroupOpen')).ok();
+});
+
+// The same browser is opened from plain edit mode's add widget overlay, where it used to be scaled with the
+// board: on anything but a full size board that made the filter field, the sort control and every deck name
+// render at a fraction of their size. It gets the editor's box in both places now.
+test('Edit mode: the public library deck browser is not scaled with the board', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#browseLibraryDecks')
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  const overlay = await ClientFunction(() => {
+    const o = document.querySelector('#libraryDecksOverlay');
+    const box = o.getBoundingClientRect();
+    const entry = document.querySelector('.libraryDeckEntry').getBoundingClientRect();
+    const hit = document.elementFromPoint(entry.x + entry.width/2, entry.y + entry.height/2);
+    return {
+      transform: getComputedStyle(o).transform,
+      width: Math.round(box.width),
+      windowWidth: window.innerWidth,
+      clickable: !!(hit && hit.closest('.libraryDeckEntry'))
+    };
+  })();
+
+  await t.expect(overlay.transform).eql('none');
+  // the box is the window minus the edit sidebar, not the board scaled into it
+  await t.expect(overlay.width).gte(overlay.windowWidth - 140);
+  await t.expect(overlay.clickable).ok();
+});
+
+// Sorting the deck browser by stars or by play time can only do something on a server that has counted any:
+// both are per-server statistics, and a fresh server (a test server, a private installation - or this test)
+// has none at all, so every game ties at zero and the list stays in the order by name. Without a word about
+// that the sort control looks broken, which is exactly how it was reported.
+test('Edit mode: the deck browser says when a sort has nothing to sort by', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#browseLibraryDecks')
+    // the deck catalog is built on the server the first time it is asked for, which takes a moment
+    .expect(Selector('.libraryDeckEntry').exists).ok({ timeout: 120000 });
+
+  const sort = Selector('#libraryDecksSort');
+  const hint = Selector('#libraryDecksSortHint');
+  const pick = async value => t.click(sort).click(sort.find('option').withAttribute('value', value));
+
+  // sorting by name is the order the list is in anyway, so there is nothing to say
+  await t.expect(hint.innerText).eql('');
+  await pick('stars');
+  await t.expect(hint.innerText).contains('No game on this server has been starred yet');
+  await pick('popularity');
+  await t.expect(hint.innerText).contains('No game on this server has been played yet');
+  await pick('name');
+  await t.expect(hint.innerText).eql('');
+});
+
+// The tiled counterpart of the front/back pairs above: one picture holding a grid of fronts and a second one
+// holding the backs in the same grid, so every card gets the back sitting in its own cell.
+test('Deck editor: a sheet of fronts with a matching sheet of backs in the new deck wizard', async t => {
+  const asset = (fileName, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const fronts = asset('fronts.png', 1500, 400); // 5 x 2 cards of 300 x 200 each
+  const backs  = asset('backs.png', 750, 200);   // the same grid at half the resolution
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  // as in the tests above: the file picker can't be driven from a test, so uploadAsset hands the wizard the
+  // asset path the server would have returned
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setGrid = ClientFunction((columns, rows) => {
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = document.querySelector(`.cardFrontPreview ${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+  const addButton = Selector('#deckEditorNewDeckPanel .goButton [icon=add]');
+  const status = Selector('.imagePairStatus');
+
+  await stubUploadOf('fronts.png', fronts);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  // a sheet still set to its 1 x 1 default is not cut at all, which is the other mode - so the wizard asks
+  // for the grid instead of offering to make one stretched card out of the whole sheet
+  await t
+    .expect(status.innerText).contains('Say how many cards this sheet holds across and down')
+    .expect(addButton.hasAttribute('disabled')).ok();
+  await setGrid(5, 2);
+  await t.expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table');
+
+  // and a sheet every card of which is asked for zero times would add an empty deck
+  const setCopies = ClientFunction(copies => {
+    const input = document.querySelector('.cardFrontPreview .cards [type=number]');
+    input.value = copies;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await setCopies(0);
+  await t
+    .expect(status.innerText).contains('nothing would be added')
+    .expect(addButton.hasAttribute('disabled')).ok();
+  await setCopies(1);
+  await t.expect(addButton.hasAttribute('disabled')).notOk();
+
+  // asking for a sheet of backs blocks the import until that sheet is there
+  await t
+    .click('input[name=deckImagesBackMode][value=sheet]')
+    .expect(status.innerText).contains('1 sheet of fronts but 0 of backs')
+    .expect(addButton.hasAttribute('disabled')).ok();
+
+  await stubUploadOf('backs.png', backs);
+  await t
+    .click('#deckEditorNewDeckPanel #backSheetButton')
+    .expect(status.innerText).contains('each with its own back from the sheet in the same position')
+    .expect(addButton.hasAttribute('disabled')).notOk()
+    .click(addButton)
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(10); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return {
+      cardDefaults: deck.get('cardDefaults'),
+      backFace: deck.get('faceTemplates')[0].objects,
+      lastOfFirstRow: cardTypes[Object.keys(cardTypes)[4]]
+    };
+  })();
+
+  // the cards have the shape of one cell of the sheet, not the deck default
+  await t.expect(deck.cardDefaults.width).eql(160);
+  await t.expect(deck.cardDefaults.height).eql(107);
+  // both sheets are read with the same offsets, so a card's back is the cell its front came from
+  await t.expect(deck.lastOfFirstRow).eql({
+    image: fronts,
+    offsetX: 4,
+    offsetY: 0,
+    deckWidth: 5,
+    deckHeight: 2,
+    backImage: backs
+  });
+  // and the back face has exactly one object - the card's own back, cut out of the sheet of backs
+  await t.expect(deck.backFace.length).eql(1);
+  await t.expect(deck.backFace[0].dynamicProperties.value).eql('backImage');
+  await t.expect(deck.backFace[0].css['background-position']).contains('--offsetX');
+});
+
+// A sheet of fronts and a sheet of backs belong together by position, so deleting a sheet of fronts has to
+// take its sheet of backs with it. Without that, every later sheet of backs moves onto the wrong fronts and
+// the wizard happily builds a deck whose cards all show the back of a sheet the user deleted.
+test('Deck editor: deleting a sheet of fronts deletes the sheet of backs paired with it', async t => {
+  const asset = (title, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${title}</title></svg>`).toString('base64')}`;
+  const fronts1 = asset('fronts1', 400, 400); // two 2 x 2 sheets of fronts...
+  const fronts2 = asset('fronts2', 400, 400);
+  const backs1  = asset('backs1',  400, 400); // ...and a sheet of backs for each of them
+  const backs2  = asset('backs2',  400, 400);
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setSheet = ClientFunction((index, columns, rows) => {
+    const preview = document.querySelectorAll('.cardFrontPreview:not(.cardBackSheetPreview)')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+  const frontSheets = Selector('.cardFrontPreview:not(.cardBackSheetPreview)');
+  const backSheets = Selector('.cardBackSheetPreview');
+  const status = Selector('.imagePairStatus');
+
+  await stubUploadOf('fronts1.png', fronts1);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(0, 2, 2);
+  await stubUploadOf('fronts2.png', fronts2);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(1, 2, 2);
+
+  await t.click('input[name=deckImagesBackMode][value=sheet]');
+  await stubUploadOf('backs1.png', backs1);
+  await t.click('#deckEditorNewDeckPanel #backSheetButton');
+  await stubUploadOf('backs2.png', backs2);
+  await t.click('#deckEditorNewDeckPanel #backSheetButton');
+
+  await t
+    .expect(backSheets.count).eql(2)
+    .expect(backSheets.nth(0).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts1.png"')
+    .expect(backSheets.nth(1).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts2.png"')
+    .expect(status.innerText).contains('8 cards, each with its own back from the sheet in the same position');
+
+  // deleting the first sheet of fronts leaves the second one - with its own sheet of backs, not with the one
+  // that belonged to the deleted sheet
+  await t
+    .click(frontSheets.nth(0).find('[icon=delete]'))
+    .expect(frontSheets.count).eql(1)
+    .expect(backSheets.count).eql(1)
+    .expect(backSheets.nth(0).find('.cardFrontPreviewSummary').innerText).contains('Backs for "fronts2.png"')
+    .expect(status.innerText).contains('4 cards, each with its own back from the sheet in the same position')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(4); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return {
+      names: Object.keys(cardTypes),
+      images: Object.values(cardTypes).map(c=>c.image),
+      backImages: Object.values(cardTypes).map(c=>c.backImage)
+    };
+  })();
+
+  // the deck is made of the sheet that is left, and every card shows the back sitting in its own cell of the
+  // sheet of backs that came with it - not of the one the deleted sheet of fronts owned
+  await t.expect(deck.names).eql([ 'fronts2.png 1,1', 'fronts2.png 1,2', 'fronts2.png 2,1', 'fronts2.png 2,2' ]);
+  await t.expect(deck.images).eql(Array(4).fill(fronts2));
+  await t.expect(deck.backImages).eql(Array(4).fill(backs2));
+});
+
+// A card is sized after the picture it shows, and one import can hold pictures of different shapes: the first
+// upload sets the deck's card defaults and every card type from a differently shaped upload carries its own
+// size, so a portrait sheet uploaded after a landscape one is not squashed into the landscape shape.
+test('Deck editor: sheets of different card shapes each keep their own card size', async t => {
+  const asset = (fileName, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${fileName}</title></svg>`).toString('base64')}`;
+  const landscape = asset('landscape.png', 1500, 400); // 5 x 2 cards of 300 x 200 each
+  const portrait  = asset('portrait.png',   400, 1200); // 2 x 4 cards of 200 x 300 each
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setSheet = ClientFunction((index, columns, rows, copies) => {
+    const preview = document.querySelectorAll('.cardFrontPreview')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ], [ '.cards', copies ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
+  await stubUploadOf('landscape.png', landscape);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(0, 5, 2, 2);
+  await stubUploadOf('portrait.png', portrait);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setSheet(1, 2, 4, 1);
+
+  // each sheet says what its own cards will look like, and the status line counts the copies of both
+  await t
+    .expect(Selector('.cardFrontPreviewSummary').nth(0).innerText).contains('10 cards of 300 × 200 pixels, 160 × 107 on the table, 2 copies each — 20 cards in total')
+    .expect(Selector('.cardFrontPreviewSummary').nth(1).innerText).contains('8 cards of 200 × 300 pixels, 107 × 160 on the table')
+    .expect(Selector('.imagePairStatus').innerText).contains('28 cards')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(18); // the wizard's deck is now open
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    const sizeOfCardFrom = sheet => {
+      let card = null;
+      widgets.forEach(w => { if(w.get('type') == 'card' && !card && w.get('cardType').indexOf(sheet) == 0) card = w; });
+      return [ card.get('width'), card.get('height') ];
+    };
+    return {
+      cardDefaults: deck.get('cardDefaults'),
+      fromLandscape: cardTypes['landscape.png 1,1'],
+      fromPortrait: cardTypes['portrait.png 1,1'],
+      landscapeCard: sizeOfCardFrom('landscape.png'),
+      portraitCard: sizeOfCardFrom('portrait.png')
+    };
+  })();
+
+  // the first sheet sizes the deck, so its own card types say nothing about their size
+  await t.expect(deck.cardDefaults.width).eql(160);
+  await t.expect(deck.cardDefaults.height).eql(107);
+  await t.expect(deck.fromLandscape.width).eql(undefined);
+  await t.expect(deck.fromLandscape.height).eql(undefined);
+  // the second one is a different shape and carries it - all the way to the card on the table
+  await t.expect(deck.fromPortrait.width).eql(107);
+  await t.expect(deck.fromPortrait.height).eql(160);
+  await t.expect(deck.landscapeCard).eql([ 160, 107 ]);
+  await t.expect(deck.portraitCard).eql([ 107, 160 ]);
+});
+
+// Card type names start from the file name of the upload they come from, and one import can hold two files
+// of the same name (the same file twice, or two files of that name from different folders) - the second
+// upload must not overwrite the card types of the first one.
+test('Deck editor: two uploads with the same file name keep their own cards', async t => {
+  const asset = (title, width, height)=>`data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><title>${title}</title></svg>`).toString('base64')}`;
+  const first  = asset('first',  400, 400); // both are 2 x 2 sheets of 200 x 200 cards...
+  const second = asset('second', 400, 400); // ...uploaded under the same file name
+
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]') // opens the (empty) deck editor
+    .click('#deckEditorAddDeck')
+    .click('#deckEditorNewDeckGroupCustom .deckEditorNewDeckGroupHeader') // open the "Create a custom deck" section
+    .click('#deckEditorNewDeckOverlay input[value=imageSheet]');
+
+  const stubUploadOf = ClientFunction((fileName, imagePath) => {
+    window.uploadAsset = callback => callback(imagePath, fileName);
+  });
+  const setGrid = ClientFunction((index, columns, rows) => {
+    const preview = document.querySelectorAll('.cardFrontPreview')[index];
+    for(const [ selector, value ] of [ [ '.cols', columns ], [ '.rows', rows ] ]) {
+      const input = preview.querySelector(`${selector} [type=number]`);
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
+  await stubUploadOf('sheet.png', first);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setGrid(0, 2, 2);
+  await stubUploadOf('sheet.png', second);
+  await t.click('#deckEditorNewDeckPanel #frontsButton');
+  await setGrid(1, 2, 2);
+
+  await t
+    .expect(Selector('.imagePairStatus').innerText).contains('8 cards')
+    .click('#deckEditorNewDeckPanel .goButton [icon=add]')
+    // the status line promised eight cards, so eight of them have to be there
+    .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(8);
+
+  const deck = await ClientFunction(() => {
+    let deck = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deck = w; });
+    const cardTypes = deck.get('cardTypes');
+    return { names: Object.keys(cardTypes), images: Object.values(cardTypes).map(c => c.image) };
+  })();
+
+  // the second upload is named apart instead of writing over the card types of the first one
+  await t.expect(deck.names.length).eql(8);
+  await t.expect(deck.names).contains('sheet.png 1,1');
+  await t.expect(deck.names).contains('sheet.png (2) 1,1');
+  await t.expect(deck.images.filter(image => image == first).length).eql(4);
+  await t.expect(deck.images.filter(image => image == second).length).eql(4);
+});
+
+// A deck opens in the card-defaults view, which shows an explanation instead of a card - but the tree's object
+// previews are clones of the rendered card, so they came out empty there and only filled in once a face was
+// selected. They are cloned from an off-screen card now, and a card cut out of a sheet shows its own cell
+// rather than the whole sheet (the object's tiling CSS instead of a plain "contain" refit).
+test('Deck editor: the tree previews show the card art before a face is selected', async t => {
+  const sheet = `data:image/svg+xml;base64,${Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="107"><title>sheet</title></svg>').toString('base64')}`;
+  const tiling = {
+    'background-size': 'calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)',
+    'background-position': 'calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)'
+  };
+
+  await setRoomState({
+    deck: {
+      id: 'deck', type: 'deck',
+      cardDefaults: { width: 160, height: 107, css: {
+        '--offsetX': '${PROPERTY offsetX}', '--offsetY': '${PROPERTY offsetY}',
+        '--deckWidth': '${PROPERTY deckWidth}', '--deckHeight': '${PROPERTY deckHeight}',
+        '--width': '${PROPERTY width}', '--height': '${PROPERTY height}'
+      } },
+      cardTypes: {
+        'sheet.png 1,1': { image: sheet, offsetX: 0, offsetY: 0, deckWidth: 2, deckHeight: 1 },
+        'sheet.png 2,1': { image: sheet, offsetX: 1, offsetY: 0, deckWidth: 2, deckHeight: 1 }
+      },
+      faceTemplates: [
+        { objects: [ { type: 'image', color: 'transparent', value: '/i/cards-default/2B.svg', dynamicProperties: { height: 'height', width: 'width' } } ] },
+        { objects: [ { type: 'image', color: 'transparent', dynamicProperties: { value: 'image', height: 'height', width: 'width' }, css: tiling } ] }
+      ]
+    },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'sheet.png 2,1', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const treePreview = ClientFunction(() => {
+    const box = document.querySelector('#deckEditorTree .deckEditorObjectRow .deckEditorObjectPreview');
+    const node = box && box.querySelector('.cardFaceObject');
+    const style = node && getComputedStyle(node);
+    return {
+      cardRendered: !!document.querySelector('#deckEditorMain .cardFace'),
+      hasImage: !!style && style.backgroundImage.indexOf('data:image/svg') != -1,
+      backgroundSize: style ? style.backgroundSize : '',
+      backgroundPosition: style ? style.backgroundPosition : ''
+    };
+  });
+
+  await t.click('#editButton').click('#editorToolbar [icon=style]');
+
+  // No card on screen, but the front face's object still shows the picture, cut to the cell of the card type
+  // the deck opens on: the sheet is drawn at twice the card's width, with its first cell in view.
+  await t.expect(treePreview()).eql({
+    cardRendered: false,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '0px 0px'
+  });
+
+  // and selecting the face - which does render the card - shows exactly the same thing
+  await t.click(Selector('#deckEditorTree .deckEditorTreeFace').nth(1));
+  await t.expect(treePreview()).eql({
+    cardRendered: true,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '0px 0px'
+  });
+
+  // the second card type is the other half of the same sheet, so its preview is shifted by one card
+  await t.click(Selector('#deckEditorStrip .deckEditorStripCard').nth(1));
+  await t.expect(treePreview()).eql({
+    cardRendered: true,
+    hasImage: true,
+    backgroundSize: '320px 107px',
+    backgroundPosition: '-160px 0px'
+  });
+});
+
 // The "one image per card" section fills the copy counts straight from its number inputs, so they arrive as
 // strings - a handful of single-copy fronts must not be mistaken for a large deck by the shared confirmation.
 test('Deck editor: a few uploaded card fronts are added without a large-deck confirmation', async t => {
@@ -1666,6 +2914,7 @@ test('Deck editor: the custom deck wizard survives an empty rank list', async t 
 // buttons line them up. The properties themselves are grouped into the collapsible blocks the Edit Widget
 // sidebar uses, which is what the group/summary expectations below check.
 test('Deck editor: multi-selected face objects share property edits and alignment', async t => {
+  await t.resizeWindow(1280, 900);
   await setRoomState({
     multiDeck: {
       id: 'multiDeck', type: 'deck', x: 20, y: 20,
@@ -1680,6 +2929,7 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
     multiCard: { id: 'multiCard', type: 'card', deck: 'multiDeck', cardType: 'plain', x: 300, y: 100 }
   });
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
 
   const objectRow = Selector('#deckEditorTree .deckEditorObjectRow');
@@ -1728,7 +2978,7 @@ test('Deck editor: multi-selected face objects share property edits and alignmen
 
   await t
     .click('#editButton')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_multiDeck') // selects the deck, showing the abbreviated Basic/Other properties panel
     .click('#propertiesOpenDeckEditor') // opens the full deck editor on it
     .click(objectRow.nth(0));
@@ -1825,12 +3075,13 @@ test('Line widget in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();
   await ClientFunction(prepareClient)();
+  await setEditorState(null);
   await setName(t);
   await t
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-line')
-    .click('#editorSidebar [icon=tune]')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     // "Add stop" opens the menu of the three ways to add one; the first is a new
     // widget inheriting from an existing stop, which the Add button then creates
     .click('#editorModules .lineAddStop')
@@ -1902,7 +3153,7 @@ test('Line widget in edit mode', async t => {
     .click('#editorToolbar > div > [icon=delete_forever]');
   // the added stop's id is derived from the existing stops instead of being
   // random, so the compared state no longer depends on the seeded rand() stream
-  await compareState(t, 'd35bd7362c7e87ea9ecb29895cc8d0b9');
+  await compareState(t, 'f824693a7b67c17da3c862339274a48c');
 });
 
 // A stop does not have to be a child of the line, and one that is not gets
@@ -2061,4 +3312,1623 @@ test('Enabling the Debug module while a routine waits for INPUT does not abort t
   // the running routine can not be logged retroactively - the log explains the gap instead
   await t.expect(Selector('#jeLog .jeLogNote').innerText).contains('could not be recorded');
   await compareState(t, 'ae64bb637f9aff6df4fe20773602a8e0');
+});
+
+// A "var" operation is the one kind of operation whose log entry is cut out of the string the
+// operation came from, so logging it is the only place in the routine engine that reads that
+// string again after the operation ran. This file is one of the two the production environment
+// workflow drives against a minified client, which is where that reference is at risk: a minified
+// name that shadows the operation string crashes the client instead of logging the wrong text.
+// The assertions after the summaries pin down the rest of what the panel renders - the empty state,
+// the failed marker, the problem text, the built-in variables and the Clear button.
+test('the Debug module logs each operation of a routine with its result', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: {
+      id: 'button',
+      type: 'button',
+      // randInt with a range of one, so the result is a fixed number. The three operations after it
+      // are arithmetic that the operation regex does not match, so they go through the other branch,
+      // which reads the operation string again next to the eval that evaluates the expression - once
+      // without and once with a variable in the expression, which is what decides whether the
+      // summary also shows the expression with the variables filled in, and once with an expression
+      // the eval throws on. SELECT and SET fill the collections and the delta of an operation, and
+      // the last one writes to a variable the engine puts into every routine by itself.
+      clickRoutine: [
+        'var roll = randInt 5 5',
+        'var calc = (1 + 2) * 3',
+        'var withVars = (${roll} + 2) * 3',
+        'var broken = ${roll} / (1 - 1) *',
+        { func: 'SELECT', property: 'id', value: 'button' },
+        { func: 'SET', property: 'text', value: 'rolled' },
+        'var thisID = 42'
+      ]
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft' } });
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+
+  const emptyNote = Selector('.jeLogEmptyNote');
+  const operation = Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation');
+  // the header of a logged operation is its own expander, the details are in its nested block
+  const headerOf = op => op.child('div').nth(0);
+  const detailsOf = (op, name) => op.child('div').nth(1).child('.jeLogDetails').withText(name);
+
+  // a panel with nothing in it says how to fill it instead of showing an empty box
+  await t.expect(emptyNote.visible).ok();
+
+  await ClientFunction(() => {
+    // awaited so the assertions below see the finished log, but not returned: the result of a
+    // routine holds widget objects as soon as one fills the result collection
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  })();
+
+  await t
+    .expect(emptyNote.visible).notOk()
+    // the routine a log belongs to is named as "<widget> › <property>", and its expander turns red
+    // because one of its operations failed
+    .expect(Selector('#jeLog > .jeLog').child('div').nth(0).innerText).contains('button › clickRoutine')
+    .expect(Selector('#jeLog > .jeLog').child('div.jeRedExpander').exists).ok();
+
+  // the summary of a var operation is the operation with its leading "var " cut off, and the
+  // result is the value the variable ended up with
+  await t
+    .expect(Selector('#jeLog .jeLogSummary').nth(0).innerText).eql('roll = randInt 5 5')
+    .expect(Selector('#jeLog .jeLogResult').nth(0).innerText).eql('5')
+    .expect(Selector('#jeLog .jeLogSummary').nth(1).innerText).eql('calc = (1 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(1).innerText).eql('9')
+    .expect(Selector('#jeLog .jeLogSummary').nth(2).innerText).eql('withVars = (${roll} + 2) * 3 => (5 + 2) * 3')
+    .expect(Selector('#jeLog .jeLogResult').nth(2).innerText).eql('21');
+
+  // an operation that threw says so next to its result, so "null" does not read as the answer
+  await t
+    .expect(operation.nth(3).find('.jeLogFailed').innerText).eql('failed')
+    .expect(operation.nth(3).find('.jeLogResult').innerText).eql('null')
+    .expect(operation.nth(0).find('.jeLogFailed').exists).notOk();
+
+  // its problem is one readable sentence rather than a JSON array of escaped strings - the wording
+  // of the SyntaxError itself differs between browsers, so only the sentence around it is checked
+  await t
+    .click(headerOf(operation.nth(3)))
+    .click(detailsOf(operation.nth(3), 'Problems').child('div').nth(0))
+    .expect(operation.nth(3).find('.jeLogProblems').innerText)
+      .match(/^The expression "5 \/ \(1 - 1\) \*" threw an exception: SyntaxError: .+\.$/);
+
+  // the variables the engine puts into every routine are behind their own expander, so the pane
+  // opens on the variables the routine itself works with
+  const rollState = detailsOf(operation.nth(0), 'Variables, collections and delta afterwards');
+  const builtInVariables = rollState.child('div').nth(1).child('.jeLogDetails').withText('Built-in variables');
+  await t
+    .click(headerOf(operation.nth(0)))
+    .click(rollState.child('div').nth(0))
+    .expect(rollState.child('div').nth(1).child('.jeLogVariables').innerText).eql('Variables afterwards\n  "roll": 5')
+    .click(builtInVariables.child('div').nth(0))
+    .expect(builtInVariables.find('.jeLogVariables').innerText).contains('playerName');
+
+  // a block with nothing in it is left out instead of printing its heading over an empty pane: a
+  // var operation touches no widget, so it has no delta, while the SET that follows it has one
+  await t
+    .expect(rollState.find('h3').withExactText('Variables afterwards').exists).ok()
+    .expect(rollState.find('h3').withExactText('Delta afterwards').exists).notOk()
+    .expect(detailsOf(operation.nth(5), 'Variables, collections and delta afterwards')
+      .find('h3').withExactText('Delta afterwards').exists).ok();
+  // a variable of an engine name that the routine assigned itself is one of the routine's own, so
+  // it is in the block that opens rather than behind the Built-in variables expander
+  const overriddenState = detailsOf(operation.nth(6), 'Variables, collections and delta afterwards');
+  await t
+    .click(headerOf(operation.nth(6)))
+    .click(overriddenState.child('div').nth(0))
+    .expect(overriddenState.child('div').nth(1).child('.jeLogVariables').innerText).contains('"thisID": 42');
+
+  const emptyHeadings = await ClientFunction(() => {
+    let count = 0;
+    document.querySelectorAll('#jeLog h3').forEach(h=>{ if(h.textContent.trim() == '') ++count; });
+    return count;
+  })();
+  await t.expect(emptyHeadings).eql(0);
+
+  // the filter marks the operations whose summary contains what was typed and dims the rest
+  await t
+    .typeText('#jeLogFilter', 'withVars')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).ok()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).ok()
+    .selectText('#jeLogFilter')
+    .pressKey('delete')
+    .expect(headerOf(operation.nth(2)).hasClass('jeLogFilterMatch')).notOk()
+    .expect(headerOf(operation.nth(1)).hasClass('jeLogFilterNoMatch')).notOk();
+
+  // the Clear button is disabled as long as the log clears itself, and says which of the two it is
+  await t
+    .expect(Selector('#clearLogButton').hasAttribute('disabled')).ok()
+    .expect(Selector('#clearLogButton').getAttribute('title')).contains('cleared automatically')
+    .click('#autoClearLog')
+    .expect(Selector('#clearLogButton').hasAttribute('disabled')).notOk()
+    .expect(Selector('#clearLogButton').getAttribute('title')).contains('Empty the log now')
+    // emptying the log brings the note back - it is a sibling of the log, shown while that is empty
+    .click('#clearLogButton')
+    .expect(emptyNote.visible).ok();
+
+  await setEditorState(null);
+});
+
+// drags a selection rectangle around the given widgets - the events go to the
+// window, where the editor listens for them, so they need no element to start
+// from. A rectangle around a single widget is treated like a click on it, which
+// is why the callers put the widget being edited in the band as well.
+const rubberBandOver = ClientFunction(selector => {
+  const from = { x: Infinity, y: Infinity };
+  const to = { x: -Infinity, y: -Infinity };
+  document.querySelectorAll(selector).forEach(element=>{
+    const rect = element.getBoundingClientRect();
+    from.x = Math.min(from.x, rect.left - 20);
+    from.y = Math.min(from.y, rect.top - 20);
+    to.x = Math.max(to.x, rect.right + 20);
+    to.y = Math.max(to.y, rect.bottom + 20);
+  });
+  const at = (type, point)=>document.body.dispatchEvent(new MouseEvent(type, { bubbles: true, button: 0, clientX: point.x, clientY: point.y }));
+  at('mousedown', from);
+  at('mousemove', to);
+  at('mouseup', to);
+});
+
+test('A routine parameter popup goes away with the widget it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] },
+    holder1: { id: 'holder1', type: 'holder', x: 300, y: 100 },
+    holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const fromChip = Selector('.routine-editor-operation [data-parameter=from]');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+  const openFromPopup = async _=>{
+    await t.click('#w_button');
+    if(await routineHeader.getAttribute('aria-expanded') == 'false')
+      await t.click(routineHeader);
+    await t.click(fromChip).expect(popup.exists).ok();
+  };
+
+  await t.click('#editButton').expect(propertiesModule.exists).ok();
+  await openFromPopup();
+
+  // The popup hangs off a chip of the routine of the widget being edited, so a
+  // click that moves the editor on to another widget takes it along - without
+  // this it stays on screen over an editor for a widget it has nothing to do
+  // with. Its own "Pick in the room" is what makes a click in the room fill the
+  // parameter instead, which is why nothing else ever closed it.
+  await t
+    .click('#w_holder2')
+    .expect(popup.exists).notOk()
+    .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
+
+  // A rubber band is the other way to pick in the room, and the only one that
+  // goes through the selection: it selects what it caught, and the picker puts
+  // the widget it belongs to back afterwards - which is not the editor moving on
+  // either. The property builder picks a single widget, so its picker is already
+  // gone by the time that restore arrives.
+  await openFromPopup();
+  const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
+  await t
+    .click(propertySection.find('h3'))
+    .click(propertySection.find('.propertyExpandButton'))
+    .click(propertySection.find('button[icon=colorize]'));
+  await rubberBandOver('#w_button, #w_holder1');
+  await t
+    .expect(popup.exists).ok()
+    .expect(propertySection.find('.popup-property-widget').value).eql('holder1')
+    .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+
+  // with the picker armed the same click belongs to the popup, which stays open
+  await t.click(popup.find('.popup-close'));
+  await openFromPopup();
+  await t
+    .click(popup.find('button').withText('Pick in the room'))
+    .click('#w_holder2')
+    .expect(popup.exists).ok()
+    .expect(popup.find('.widgetPickerEntry.selected').withText('holder2').exists).ok()
+    .expect(Selector('#w_button').hasClass('selectedInEdit')).ok();
+
+  // The route that reads as a pick least of all: the JSON editor, which selects
+  // widgets in its own tree. Opening it also replaces the module the popup hangs
+  // off, which takes the popup along by itself - either way nothing of the
+  // editor for the other widget is left over the new one.
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  await t.click(popup.find('.popup-close'));
+  await openFromPopup();
+  await t
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok()
+    .click('#editorSidebar [icon=data_object]')
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk()
+    .click('.editorModule.data_object .selectionBar button[icon=account_tree]')
+    .click(Selector('#jeTree .jeTreeWidget').find('.key').withExactText('holder2'))
+    .expect(Selector('#w_holder2').hasClass('selectedInEdit')).ok();
+  await setEditorState(null);
+});
+
+// An armed picker only explains the selection changes it makes itself - a click
+// or a band in the room. Every other way to select another widget is the editor
+// moving on, waiting picker or not: without that, arming the picker would leave
+// the popup floating over whatever the editor moved on to, with the picker still
+// armed for a widget that is not on screen any more. The sidebar has such a
+// route of its own, so it does not even take another module: a widget attached
+// to a line offers a way back to the line it rides on.
+test('An armed picker does not keep a popup open when the sidebar moves the editor on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    route: {
+      id: 'route', type: 'line', lineStart: { x: 100, y: 300 }, lineEnd: { x: 600, y: 300 },
+      stops: [ { widget: 'stop1', position: 0.5 } ]
+    },
+    stop1: {
+      id: 'stop1', type: 'basic', parent: 'route', x: 340, y: 290, width: 40, height: 20,
+      clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ]
+    },
+    holder1: { id: 'holder1', type: 'holder', x: 300, y: 100 },
+    holder2: { id: 'holder2', type: 'holder', x: 500, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_stop1');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok();
+
+  // "Edit line route" in the widget header selects the line - a selection change
+  // that never touches the room, with the widget the picker belongs to still
+  // there. It is the editor moving on all the same.
+  await t
+    .click(Selector('.widgetHeaderLineButton'))
+    .expect(Selector('#w_route').hasClass('selectedInEdit')).ok()
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk();
+
+  // Leaving edit mode is the most complete way of moving on, and it goes past
+  // the module being closed: the editor is only hidden, so a popup left open
+  // lives on inside it and an armed picker keeps the crosshair over the whole
+  // page while playing. An armed picker also makes the popup ignore the click on
+  // the edit button itself, so nothing else takes it along.
+  await t.click('#w_stop1');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .click(popup.find('button').withText('Pick in the room'))
+    .expect(picking).ok()
+    .click('#editorToolbar button[icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk()
+    .expect(popup.exists).notOk()
+    .expect(picking).notOk();
+  await setEditorState(null);
+});
+
+test('An editor popup does not outlive the widget it belongs to without a click either', async t => {
+  await t.resizeWindow(1280, 800);
+  const roomState = {
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'CANVAS', mode: 'change', color: '#1f5ca6' } ] },
+    holder: { id: 'holder', type: 'holder', x: 500, y: 100 }
+  };
+  await setRoomState(roomState);
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const colorChip = Selector('.routine-editor-operation [data-parameter=color]');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+  const routineColor = ClientFunction(_=>widgets.get('button').get('clickRoutine')[0].color);
+  const picking = Selector('body').hasClass('editorWidgetPicking');
+  const notes = Selector('#editorNotes');
+  const openColorPopup = async _=>{
+    await t.click('#w_button');
+    if(await routineHeader.getAttribute('aria-expanded') == 'false')
+      await t.click(routineHeader);
+    await t.click(colorChip).expect(popup.exists).ok();
+  };
+  const armRoomPicker = async _=>{
+    const propertySection = popup.find('.accordion-section').withAttribute('data-kind', 'property');
+    await t
+      .click(propertySection.find('h3'))
+      .click(propertySection.find('.propertyExpandButton'))
+      .click(propertySection.find('button[icon=colorize]'))
+      .expect(picking).ok();
+  };
+
+  await t.click('#editButton').expect(propertiesModule.exists).ok();
+  await openColorPopup();
+
+  // The color, icon and sound pickers only write their parameter when the popup
+  // goes away, so closing it applies what was picked - to the widget the popup
+  // belongs to, exactly as a click outside the popup would. That widget is off
+  // screen by then, so the editor says what it wrote where: without that, having
+  // kept the pick and having thrown it away look exactly the same.
+  await t
+    .click(popup.find('.propertyColorChip[data-value="#3cb44b"]'))
+    .click('#w_holder')
+    .expect(popup.exists).notOk()
+    .expect(routineColor()).eql('#3cb44b')
+    .expect(notes.innerText).contains('CANVAS color set to #3cb44b on button');
+
+  // The routes without any click: the widget being edited is removed, which is
+  // what a delete, an undo and a dissolving pile all arrive as. An armed room
+  // picker keeps the popup through the selection changes it causes itself, but
+  // not through this one - the widget it would write to is gone.
+  await openColorPopup();
+  await armRoomPicker();
+  await ClientFunction(_=>removeWidgetLocal('button'))();
+  await t
+    .expect(popup.exists).notOk()
+    .expect(ClientFunction(_=>widgets.has('button'))()).notOk()
+    .expect(picking).notOk()
+    // the crosshair over the room is all there is to see of an armed picker, so
+    // it ending on its own is said out loud as well
+    .expect(notes.innerText).contains('picking in the room ended: button is gone');
+
+  // The other route without a click: a new state from the server, which replaces
+  // every widget in the room. It usually brings the same ids back (an undo, the
+  // same game loaded again), so the widget the popup belongs to can only be told
+  // apart from its replacement by identity - going by the id alone would leave
+  // the popup floating over an editor that has nothing selected at all.
+  await setRoomState(roomState);
+  await t.expect(ClientFunction(_=>widgets.has('button'))()).ok();
+  await openColorPopup();
+  await armRoomPicker();
+  await setRoomState(roomState);
+  await t
+    .expect(popup.exists).notOk()
+    .expect(ClientFunction(_=>widgets.has('button'))()).ok()
+    .expect(picking).notOk();
+  await setEditorState(null);
+});
+
+test('A property info tip goes away with the widget it explains', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    button: { id: 'button', type: 'button', x: 100, y: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const infoTip = Selector('#editor > .inline-popup');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_button')
+    .click(Selector('#editorModules .collapsibleHeader').withText('CSS').find('.info-button'))
+    .expect(infoTip.exists).ok();
+
+  // An info tip hangs off a sidebar control just like the popups do. Its own
+  // outside-click handler covers every route with a click in it, but not the
+  // selection changing on its own - here the widget it explains is removed.
+  await ClientFunction(_=>removeWidgetLocal('button'))();
+  await t.expect(infoTip.exists).notOk();
+  await setEditorState(null);
+});
+
+test('A long list of widget ids shrinks instead of pushing the apply button out of the popup', async t => {
+  await t.resizeWindow(1280, 500);
+  const roomState = {
+    button: { id: 'button', type: 'button', x: 100, y: 100, clickRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2' } ] }
+  };
+  // more holders than the list of ids can show, so it wants to be at its tallest
+  for(let i=1; i<=30; ++i)
+    roomState[`holder${i}`] = { id: `holder${i}`, type: 'holder', x: 300+i%6*60, y: 100+Math.floor(i/6)*60 };
+  await setRoomState(roomState);
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const popup = Selector('.inline-popup');
+  const routineHeader = Selector('.events-editor-event-header').withText('clickRoutine');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_button');
+  if(await routineHeader.getAttribute('aria-expanded') == 'false')
+    await t.click(routineHeader);
+  await t
+    .click(Selector('.routine-editor-operation [data-parameter=from]'))
+    .expect(popup.exists).ok()
+    .expect(popup.find('.widgetPickerList').exists).ok();
+
+  // The button that applies the picked widgets is the last thing in the section,
+  // so a list of ids that is taller than the popup has room for pushes it out of
+  // sight - and a popup that scrolls says nothing about there being more below
+  // it. The list scrolls anyway, so it is what gives way.
+  const fit = await ClientFunction(_=>{
+    const popup = document.querySelector('.inline-popup');
+    const apply = popup.querySelector('button.primary'); // "Use these widgets"
+    const popupRect = popup.getBoundingClientRect(), applyRect = apply.getBoundingClientRect();
+    const list = popup.querySelector('.widgetPickerList');
+    return {
+      popupScrollsBy: popup.scrollHeight - popup.clientHeight,
+      applyInPopup: applyRect.top >= popupRect.top && applyRect.bottom <= popupRect.bottom + 1,
+      listScrolls: list.scrollHeight > list.clientHeight
+    };
+  })();
+  await t.expect(fit).eql({ popupScrollsBy: 0, applyInPopup: true, listScrolls: true });
+  await setEditorState(null);
+});
+
+// Two widgets that cannot be clicked and look like any other from the outside:
+// one whose game switches pointer events off in its css, and one that is only
+// invisible because an ancestor is - the class that hides it sits on the parent,
+// so the widget itself carries no sign of why it cannot be seen.
+// testcafe cannot press a function key, so the very event the bar's handler takes
+// is dispatched by hand - what matters is whether it is taken at all
+const pressFunctionKey = ClientFunction(key => {
+  const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
+});
+
+test('The stack list reaches widgets with no pointer events and names the ancestor that hides one', async t => {
+  await t.resizeWindow(1280, 800);
+  // the marker is the one widget of the five that can be hovered at all: the
+  // testcafe cursor cannot be put on any of the others, which is the point
+  await setRoomState({
+    board:  { id: 'board',  type: 'basic', x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    hider:  { id: 'hider',  type: 'basic', x: 300, y: 200, width: 300,  height: 300, display: false },
+    chip:   { id: 'chip',   type: 'basic', x: 40,  y: 40,  width: 120,  height: 120, parent: 'hider' },
+    ghost:  { id: 'ghost',  type: 'basic', x: 300, y: 200, width: 300,  height: 300, z: 30, css: 'pointer-events: none' },
+    marker: { id: 'marker', type: 'basic', x: 380, y: 280, width: 40,   height: 40,  z: 40 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+  const coords = bar.find('.selectionBarCoords');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_marker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_marker')
+    .expect(stackRows.count).eql(5)
+    // the coordinates the panel this list replaces used to show are back in the
+    // bar, following the pointer itself rather than where it came to rest
+    .expect(coords.textContent).match(/^\d+, \d+$/)
+    // the widget that is invisible because its parent is says which parent
+    .expect(stackRows.withText('chip').textContent).contains('inside hider, hidden')
+    // a widget that takes no pointer events is in the list rather than nowhere,
+    // and clicking its row is the only way to select it at all
+    .expect(stackRows.withText('ghost').exists).ok()
+    // the keys jump from F3 to F6: F4 and F5 belong to the browser, and edit
+    // mode is where F5 has to go on reloading the page
+    .expect(stackRows.nth(2).find('.selectionBarStackKey').textContent).eql('F3')
+    .expect(stackRows.nth(3).find('.selectionBarStackKey').textContent).eql('F6')
+    .expect(pressFunctionKey('F5')).notOk()
+    .expect(pressFunctionKey('F6')).ok()
+    .expect(stackRows.nth(3).hasClass('selected')).ok()
+    .click(stackRows.withText('ghost'))
+    .expect(Selector('#w_ghost').hasClass('selectedInEdit')).ok()
+    // ... and the readout is empty while the pointer is not in the room at all
+    .expect(coords.textContent).eql('');
+  await setEditorState(null);
+});
+
+// The stack of widgets under the pointer used to be eleven function-key rows that
+// only existed while the JSON module was open. It is part of the selection bar
+// now, which Edit Widgets mounts too - so a widget that lies underneath another
+// one is reachable from the panel that edits widgets.
+test('The selection bar reaches a widget that is covered by another one', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    // the list follows the pointer while it is over the room and freezes once it
+    // is not, which is what makes its rows clickable at all
+    .hover('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3)
+    .expect(stackRows.nth(0).textContent).contains('checker')
+    .expect(stackRows.nth(1).textContent).contains('point')
+    .expect(stackRows.nth(2).textContent).contains('board')
+    // the way to a row leads across the room, so the list has to stand still
+    // while the pointer travels to it - one that followed every pixel would be
+    // down to the board, or to nothing at all, by the time it is clicked
+    .hover(bar.find('.selectionBarStackHeader'))
+    .expect(stackRows.count).eql(3)
+    .click(stackRows.nth(2))
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    // the breadcrumbs of the covered holder name the chain it hangs in
+    .click(stackRows.nth(0))
+    .expect(bar.find('.selectionBarCrumbs').textContent).contains('point')
+    .click(bar.find('button[icon=layers]'));
+
+  // The bar is built with the panel and outlives the selections it is used to
+  // change: an open tree keeps the DOM it is in - and with it its scroll
+  // position - instead of being thrown away and rebuilt on every pick.
+  const markTree = ClientFunction(() => {
+    const treeContainer = document.querySelector('#editorModuleTopLeft .selectionBarTree');
+    treeContainer.dataset.kept = 'yes';
+    return !!treeContainer.querySelector('#jeTree');
+  });
+  await t
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(markTree()).ok()
+    .click('#w_checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#editorModuleTopLeft .selectionBarTree[data-kept="yes"] #jeTree').exists).ok()
+    .click(bar.find('button[icon=account_tree]'));
+
+  // Alt+click drills down through the same stack without any panel at all, and
+  // Alt+Shift+click walks back up
+  await t
+    .click('#w_checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok()
+    .click('#w_checker', { modifiers: { alt: true } })
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .click('#w_checker', { modifiers: { alt: true } })
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .click('#w_checker', { modifiers: { alt: true, shift: true } })
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    // a plain click ends the drill and takes the topmost widget again
+    .click('#w_checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+
+  // back and forward walk the widgets that were selected, whichever way they were
+  await t
+    .click(bar.find('button[icon=arrow_back]'))
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .click(bar.find('button[icon=arrow_forward]'))
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+  await setEditorState(null);
+});
+
+// The bar's mousemove and F-key listeners are on the window and never come off,
+// and a module is not closed when the editor is - leaving edit mode only hides
+// the panel. So both have to go quiet by hand: otherwise the F keys go on moving
+// a selection nobody can see and a hit test of the whole document runs every
+// frame for someone who is only playing the game.
+test('The selection bar goes quiet while the game is played', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackCount = bar.find('.selectionBarStackCount');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_checker')
+    .expect(stackCount.textContent).eql('3')
+    .expect(pressFunctionKey('F3')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+
+    // closing the editor: no scan, and F keys belong to the browser again
+    .click('#editorToolbar button[icon=close]')
+    .hover('#w_checker')
+    .expect(stackCount.textContent).eql('')
+    .expect(pressFunctionKey('F3')).notOk()
+    .expect(pressFunctionKey('F1')).notOk()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+
+    // and both come back with the editor
+    .click('#editButton')
+    .hover('#w_checker')
+    .expect(stackCount.textContent).eql('3')
+    .expect(pressFunctionKey('F1')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+  await setEditorState(null);
+});
+
+// A dropdown covers the module it hangs in, so it needs a way out that is not
+// the mouse, and a way to walk it that is not the ten function keys the panel
+// this replaces was built around. Escape is what closes every other popup in the
+// editor - and main.js takes the same key to close the module, so an Escape that
+// closed a dropdown has to stop there.
+test('The keyboard walks an open dropdown and Escape closes it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3)
+    // off the room, so the list is frozen and no scan is pending
+    .hover(bar.find('.selectionBarStackHeader'))
+
+    // the arrow keys step through the list and wrap at its end, the way the
+    // Alt+click drill through the same stack does
+    .pressKey('down')
+    .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
+    // the row the keyboard is on is outlined in the room as well - the list
+    // alone does not say which of a stack of look-alikes it means
+    .expect(Selector('#w_checker').hasClass('selectionBarHover')).ok()
+    .pressKey('down')
+    .pressKey('down')
+    .expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok()
+    .pressKey('down')
+    .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
+    .pressKey('up')
+    .expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok()
+    // the pointer settling on the same spot scans it again - and a scan that
+    // finds the same stack must leave the row somebody stepped to alone
+    .hover('#w_checker')
+    .expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok()
+    // ... and Enter picks the row they are on
+    .pressKey('enter')
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+
+    // Escape closes the dropdown and nothing else, and takes the outline with it
+    .pressKey('esc')
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .expect(propertiesModule.exists).ok()
+    .expect(Selector('#w_checker').hasClass('selectionBarHover')).notOk()
+
+    // the same keys in the tree, which has branches to open and close as well.
+    // It opens on the widget the editor is on - the keyboard cursor of a leaf
+    // sits on its <li>, that of a branch on the expander inside it.
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(tree.exists).ok()
+    .expect(tree.find('li[data-id=board].selectionBarKeyRow').exists).ok()
+    .pressKey('down')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(tree.find('li[data-id=point] > .jeTreeExpander-down').exists).notOk()
+    .pressKey('right')
+    .expect(tree.find('li[data-id=point] > .jeTreeExpander-down').exists).ok()
+    // → steps into the branch it just opened, ← comes back out of it
+    .pressKey('right')
+    .expect(tree.find('li[data-id=checker].selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
+    .pressKey('enter')
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .pressKey('esc')
+    .expect(tree.exists).notOk()
+    .expect(propertiesModule.exists).ok()
+    // the tree goes back to the JSON editor it is borrowed from
+    .expect(Selector('#jeEditArea #jeTree').exists).ok()
+
+    // and with no dropdown left to close, Escape closes the module again
+    .pressKey('esc')
+    .expect(propertiesModule.exists).notOk();
+  await setEditorState(null);
+});
+
+// What the panel paints under an open dropdown. A widget preview is a real
+// widget, so it carries the widget's own z-index ((layer + 10) * 100000 + z) -
+// which, off the table, beats everything the module draws around it. The seat
+// style presets came out on top of the dropdown that was covering them.
+const coversDropdown = ClientFunction(selector => {
+  const dropdown = document.querySelector(`#editorModuleTopLeft ${selector}`);
+  const r = dropdown.getBoundingClientRect();
+  const hits = [];
+  for(let fy = 0.1; fy <= 0.91; fy += 0.1)
+    for(let fx = 0.1; fx <= 0.91; fx += 0.1) {
+      const top = document.elementFromPoint(r.left + r.width*fx, r.top + r.height*fy);
+      const name = top && !dropdown.contains(top) ? String(top.className || top.tagName) : null;
+      if(name && hits.indexOf(name) == -1)
+        hits.push(name);
+    }
+  return hits.join(', ');
+});
+
+// Scrolls the presets up under the open dropdown - the bar sticks to the top of
+// the panel while its content moves - and answers how much of them ends up
+// behind it, so the check below cannot pass on a panel that never overlapped.
+const presetsBehindDropdown = ClientFunction(selector => {
+  const presets = document.querySelector('#editorModuleTopLeft .seatPresetRow');
+  presets.scrollIntoView({ block: 'start' });
+  const dropdown = document.querySelector(`#editorModuleTopLeft ${selector}`).getBoundingClientRect();
+  const row = presets.getBoundingClientRect();
+  return Math.min(dropdown.bottom, row.bottom) - Math.max(dropdown.top, row.top);
+});
+
+test('Widget previews stay in their box instead of covering the selection bar', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board: { id: 'board', type: 'basic', x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    seat:  { id: 'seat',  type: 'seat',  x: 300, y: 200, width: 150,  height: 40, index: 1 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    // the seat, whose editor draws the three style presets as live seat widgets
+    .click('#w_seat')
+    .expect(Selector('#editorModuleTopLeft .seatPresetRow .widgetSelectionButton').count).eql(3)
+    // a stack under the pointer, so the list has rows to fill the dropdown with
+    .hover('#w_seat')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_seat')
+    .expect(bar.find('.selectionBarStackRow').count).eql(2)
+    // off the room, so the list stands still while the panel is scrolled
+    .hover(bar.find('.selectionBarStackHeader'))
+    .expect(presetsBehindDropdown('.selectionBarStackList')).gt(20)
+    .expect(coversDropdown('.selectionBarStackList')).eql('')
+
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(presetsBehindDropdown('.selectionBarTree')).gt(20)
+    .expect(coversDropdown('.selectionBarTree')).eql('')
+    .click(bar.find('button[icon=account_tree]'));
+  await setEditorState(null);
+});
+
+// Cards go to the end of the list however they are stacked in the room, so a
+// stack containing one is where paint order and the order the bar shows differ -
+// and the drill has to walk the list, not the paint order, or the badge counts
+// widgets in an order nothing on screen shows.
+test('Alt+click drills in the order the stack list shows', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck:  { id: 'deck',  type: 'deck',  cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    board: { id: 'board', type: 'basic', x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    card:  { id: 'card',  type: 'card',  deck: 'deck', cardType: 'a', x: 300, y: 200, z: 10 },
+    cover: { id: 'cover', type: 'basic', x: 300, y: 200, width: 100,  height: 100, z: 20, classes: 'transparent' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+  const drillBadge = Selector('#editorDrillBadge');
+  const drillReadout = bar.find('.selectionBarDrill');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_cover')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_cover')
+    // the card is under the cover in the room but last in the list
+    .expect(stackRows.count).eql(3)
+    .expect(stackRows.nth(0).textContent).contains('cover')
+    .expect(stackRows.nth(1).textContent).contains('board')
+    .expect(stackRows.nth(2).textContent).contains('card')
+
+    .click('#w_cover')
+    .expect(Selector('#w_cover').hasClass('selectedInEdit')).ok()
+    .click('#w_cover', { modifiers: { alt: true } })
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(drillBadge.textContent).contains('2/3')
+    // the badge fades, so the bar keeps saying where the drill is - on the one
+    // strip the dropdowns do not cover, and counting the same stack the open
+    // list does rather than one from another spot
+    .expect(drillReadout.textContent).eql('2/3')
+    .expect(bar.find('.selectionBarStackHeader').textContent).contains('3 under the pointer')
+    .click('#w_cover', { modifiers: { alt: true } })
+    .expect(Selector('#w_card').hasClass('selectedInEdit')).ok()
+    .expect(drillBadge.textContent).contains('3/3')
+    .expect(drillReadout.textContent).eql('3/3')
+    // a plain click is not a drill any more
+    .click('#w_cover')
+    .expect(drillReadout.textContent).eql('');
+  await setEditorState(null);
+});
+
+// A real tap, the way a tablet sends one. TestCafe's own actions are mouse
+// actions in a desktop browser, so the touch path has to be driven by hand.
+// Desktop Firefox has neither the Touch nor the TouchEvent constructor, so the
+// event is assembled from a plain one carrying the touch lists the handlers read
+// - none of them cares what the event was constructed as.
+const tapWidget = ClientFunction(id => {
+  const target = document.querySelector(id);
+  const rect = target.getBoundingClientRect();
+  const touch = { identifier: 1, target, clientX: rect.left + rect.width/2, clientY: rect.top + rect.height/2 };
+  const dispatch = (type, touches, changedTouches) => {
+    const event = new Event(type, { bubbles: true, cancelable: true });
+    Object.assign(event, { touches, targetTouches: touches, changedTouches });
+    target.dispatchEvent(event);
+  };
+  dispatch('touchstart', [ touch ], [ touch ]);
+  dispatch('touchend', [], [ touch ]);
+});
+
+// A finger never hovers, and the room's own input handler calls preventDefault()
+// on touchstart, so no mouse event follows a tap: the list this bar is built
+// around stayed empty on iOS Safari, which left a tablet no way at all to the
+// widget under the one it tapped - the Alt+click drill needs a mouse and a
+// modifier key. The tap has to fill the list itself.
+test('A tap fills the stack list, which is the only way to a covered widget on a tablet', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board: { id: 'board', type: 'basic',  x: 0,    y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    lid:   { id: 'lid',   type: 'holder', x: 300,  y: 200, width: 300,  height: 300, classes: 'transparent' },
+    chip:  { id: 'chip',  type: 'basic',  x: 60,   y: 60,  width: 120,  height: 120, parent: 'lid' },
+    far:   { id: 'far',   type: 'basic',  x: 1100, y: 700, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    // a stack the mouse took, so a list that never changes again would still
+    // have rows in it - the tap below has to replace them
+    .hover('#w_far')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_far')
+    .expect(stackRows.count).eql(2)
+    // and off the room, so nothing the mouse does can touch the list from here on
+    .hover(bar.find('.selectionBarStackHeader'));
+
+  await tapWidget('#w_chip');
+
+  await t
+    .expect(stackRows.count).eql(3)
+    .expect(stackRows.nth(0).textContent).contains('chip')
+    .expect(stackRows.nth(1).textContent).contains('lid')
+    .expect(stackRows.nth(2).textContent).contains('board')
+    .expect(bar.find('.selectionBarStackCount').textContent).eql('3')
+    // nothing is "under the pointer" on a device that has none, and the keys and
+    // modifiers the help line offers a mouse are not there either
+    .expect(bar.find('.selectionBarStackHeader').textContent).eql('3 where you tapped, topmost first')
+    .expect(bar.find('.selectionBarStackHelp').textContent).eql('Tap a row to select that widget.')
+    // and the row of the widget underneath is reachable, which is the point
+    .click(stackRows.nth(1))
+    .expect(Selector('#w_lid').hasClass('selectedInEdit')).ok()
+    // a laptop with a touchscreen is both, so the mouse taking the next stack
+    // takes the wording back with it
+    .hover('#w_far')
+    .expect(bar.find('.selectionBarStackHeader').textContent).eql('2 under the pointer, topmost first')
+    .click(bar.find('button[icon=layers]'));
+  await setEditorState(null);
+});
+
+// Which columns of the stack list fit into the panel they are in. scrollWidth is
+// no use for that: an ellipsized flex item reports it equal to clientWidth. What
+// the ellipsis really reacts to is the box being even a fraction of a pixel
+// narrower than the text - which is exactly what a proportional flex-shrink
+// leaves, and it costs three characters - so the text is measured on a clone that
+// may be as wide as it wants.
+const stackRowFit = ClientFunction(() => {
+  const isCut = el => {
+    const clone = el.cloneNode(true);
+    clone.style.cssText = 'position:absolute;visibility:hidden;left:-9999px;width:max-content;max-width:none;min-width:0;white-space:nowrap';
+    el.parentNode.appendChild(clone);
+    const need = clone.getBoundingClientRect().width;
+    clone.remove();
+    return need > el.getBoundingClientRect().width + 0.01;
+  };
+  const list = document.querySelector('#editorModuleTopLeft .selectionBarStackList');
+  const rowElements = list.querySelectorAll('.selectionBarStackRow');
+  const rows = [];
+  for(let i = 0; i < rowElements.length; i++)
+    rows.push({
+      id: rowElements[i].querySelector('.selectionBarStackId').textContent,
+      idCut: isCut(rowElements[i].querySelector('.selectionBarStackId')),
+      notesCut: isCut(rowElements[i].querySelector('.selectionBarStackNotes'))
+    });
+  return { rows, overflow: list.scrollWidth - list.clientWidth };
+});
+
+// A row is picked by its id, so a panel too narrow for the whole row has to take
+// the notes off it rather than the id: "ba..." names no widget at all, while a
+// cut note still reads as "there is something about this one" - and the row's
+// tooltip carries the whole note anyway. An id longer than the row itself is the
+// one that is cut, and even then it must not widen the list.
+test('A narrow panel cuts the notes of a stack row, never the widget id', async t => {
+  await t.resizeWindow(500, 900);
+  await setRoomState({
+    board:       { id: 'board', type: 'basic', x: 0, y: 0, width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    playerAid40: { id: 'playerAid40', type: 'holder', x: 300, y: 200, width: 300, height: 300, classes: 'transparent', layer: 6, movableInEdit: false },
+    scoreCardForPlayerFour: { id: 'scoreCardForPlayerFour', type: 'basic', parent: 'playerAid40', x: 40, y: 40, width: 200, height: 200, layer: 10, movableInEdit: false, classes: 'transparent' },
+    aVeryLongWidgetIdNoPanelWillEverShowInFull: { id: 'aVeryLongWidgetIdNoPanelWillEverShowInFull', type: 'basic', parent: 'playerAid40', x: 60, y: 60, width: 160, height: 160, layer: 11 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_aVeryLongWidgetIdNoPanelWillEverShowInFull')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_aVeryLongWidgetIdNoPanelWillEverShowInFull')
+    .expect(bar.find('.selectionBarStackRow').count).eql(4);
+
+  const fit = await stackRowFit();
+  // the panel has to be too narrow for these rows, or the test proves nothing
+  await t.expect(fit.rows.filter(row => row.notesCut).length).gt(0, 'the notes give way first');
+  await t.expect(fit.rows.filter(row => row.id.length < 30 && row.idCut).length).eql(0, 'no id that fits at all is cut');
+  await t.expect(fit.overflow).lte(1, 'the id that fits nowhere is cut instead of widening the list');
+  // and what a narrow row cannot show is still one hover away
+  await t
+    .expect(bar.find('.selectionBarStackRow').nth(3).getAttribute('title')).contains('board - on layer -4 · locked in edit mode')
+    .click(bar.find('button[icon=layers]'));
+  await setEditorState(null);
+});
+
+// Two modules that edit the selection are two bars, and the room tree is a single
+// DOM node they take turns holding - so it has to be handed over rather than
+// duplicated, and handed back when the module holding it is closed.
+test('Two docked modules each get a selection bar and take turns holding the tree', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { 'Edit Widgets': 'editorModuleTopLeft', JSON: 'editorModuleBottomLeft' } });
+  await setName(t);
+
+  const propertiesBar = Selector('#editorModuleTopLeft .selectionBar');
+  const jsonBar = Selector('#editorModuleBottomLeft .selectionBar');
+  const treeInProperties = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+  const treeInJson = Selector('#editorModuleBottomLeft .selectionBarTree #jeTree');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesBar.exists).ok()
+    .expect(jsonBar.exists).ok()
+    // the tree is where it was last opened, and opening it in the other bar takes
+    // it along instead of leaving an empty dropdown behind
+    .click(propertiesBar.find('button[icon=account_tree]'))
+    .expect(treeInProperties.exists).ok()
+    .click(jsonBar.find('button[icon=account_tree]'))
+    .expect(treeInJson.exists).ok()
+    .expect(treeInProperties.exists).notOk()
+    .expect(propertiesBar.find('button[icon=account_tree].active').exists).notOk()
+    // closing the module that holds it gives it back to the JSON editor it belongs to
+    .click('#editorSidebar button[icon=data_object]')
+    .expect(jsonBar.exists).notOk()
+    .expect(Selector('#jeEditArea #jeTree').exists).ok()
+    // and the bar of the module that stayed open still works
+    .click(propertiesBar.find('button[icon=account_tree]'))
+    .expect(treeInProperties.exists).ok()
+    // the tree works exactly like the list of widgets under the pointer: picking
+    // a widget in it selects that widget and leaves the dropdown standing, and
+    // only its own button closes it again. There is no pin.
+    .expect(propertiesBar.find('button.selectionBarPin').exists).notOk()
+    .click(treeInProperties.find('.jeTreeWidget').withText('widget'))
+    .expect(Selector('#w_widget').hasClass('selectedInEdit')).ok()
+    .expect(treeInProperties.exists).ok()
+    .click(propertiesBar.find('button[icon=account_tree]'))
+    .expect(treeInProperties.exists).notOk();
+  await setEditorState(null);
+});
+
+// Everything the tree does is worth nothing if a branch cannot be folded away,
+// and it could not: the filter marks every branch that holds a match so it stays
+// open whatever its collapsed state is - and an empty filter matches everything.
+// So a filter that had been typed and taken out again pinned the whole tree open
+// for the rest of the session, with the arrow and the keys still flipping the
+// glyph and nothing below it ever going away.
+test('A branch of the tree still folds away after the filter box has been used', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400 },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+  const checkerRow = tree.find('li[data-id=checker]');
+
+  await t
+    .click('#editButton')
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(checkerRow.visible).ok()
+
+    // type a filter and take it out again
+    .typeText(tree.find('#jeWidgetSearchBox'), 'checker')
+    .expect(tree.find('li[data-id=board]').visible).notOk()
+    .selectText(tree.find('#jeWidgetSearchBox')).pressKey('delete')
+    .expect(tree.find('li[data-id=board]').visible).ok()
+
+    // the keys still fold the branch away, and the arrow still does too. Nothing
+    // is selected here, so the keyboard starts above the first row.
+    .pressKey('down')
+    .pressKey('down')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(checkerRow.visible).notOk()
+    .pressKey('right')
+    .expect(checkerRow.visible).ok()
+    .click(tree.find('li[data-id=point] > .jeTreeExpander'), { offsetX: 5 })
+    .expect(checkerRow.visible).notOk();
+  await setEditorState(null);
+});
+
+// The filter opens the branches that hold a match, but that has to stay a
+// suggestion: a branch the user folds away has to go away, filter or no filter.
+test('A branch folds away while the filter box still holds text', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400 },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' },
+    stack:   { id: 'stack',   type: 'pile',   x: 700, y: 200 },
+    checkerB:{ id: 'checkerB',type: 'basic',  x: 700, y: 200, width: 100,  height: 100, parent: 'stack' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+  const checkerRow = tree.find('li[data-id=checker]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click(bar.find('button[icon=account_tree]'))
+    .typeText(tree.find('#jeWidgetSearchBox'), 'checker')
+    .expect(tree.find('li[data-id=board]').visible).notOk()
+    .expect(checkerRow.visible).ok()
+
+    // a pile starts out collapsed - the filter opens it, and says so with its arrow
+    .expect(tree.find('li[data-id=checkerB]').visible).ok()
+    .expect(tree.find('li[data-id=stack] > .jeTreeExpander-down').exists).ok()
+
+    // the arrow folds the branch away although the filter still stands
+    .click(tree.find('li[data-id=point] > .jeTreeExpander'), { offsetX: 5 })
+    .expect(checkerRow.visible).notOk()
+    .click(tree.find('li[data-id=point] > .jeTreeExpander'), { offsetX: 5 })
+    .expect(checkerRow.visible).ok()
+
+    // and so does the arrow key. Nothing is selected here, so the keyboard
+    // starts above the first row - which the filter has cut down to the branch.
+    .pressKey('down')
+    .expect(tree.find('li[data-id=point] > .selectionBarKeyRow').exists).ok()
+    .pressKey('left')
+    .expect(checkerRow.visible).notOk()
+    .pressKey('right')
+    .expect(checkerRow.visible).ok();
+  await setEditorState(null);
+});
+
+// A dropdown covers the panel it hangs in, so a click on that panel is a click on
+// something the dropdown is hiding. The room is the exception: the stack list is
+// filled from there, and picking a widget must not take the list of what lies
+// under it away.
+test('Clicking the sidebar next to a dropdown closes it, clicking the room does not', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4 },
+    checker: { id: 'checker', type: 'basic',  x: 300, y: 200, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+
+  await t
+    .click('#editButton')
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(tree.exists).ok()
+    // a click inside the dropdown is not a click next to it
+    .click(tree.find('#jeWidgetSearchBox'))
+    .expect(tree.exists).ok()
+    .click(propertiesModule, { offsetX: 100, offsetY: 500 })
+    .expect(tree.exists).notOk()
+
+    // the stack list goes the same way, but survives working in the room
+    .hover('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .expect(bar.hasClass('stackVisible')).ok()
+    .click('#w_checker')
+    .expect(bar.hasClass('stackVisible')).ok()
+    .click(propertiesModule, { offsetX: 100, offsetY: 500 })
+    .expect(bar.hasClass('stackVisible')).notOk();
+  await setEditorState(null);
+});
+
+// The outline the selected widgets wear is about the selection, so its switch
+// belongs on the bar that is about the selection - it used to be a button of the
+// JSON editor's command pane, out of reach of everyone who never opens that. It
+// also has to stay switched off when the editor moves on to another widget.
+test('The selection bar switches the outline of the selected widgets off and on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const highlight = bar.find('button[icon=flashlight_on]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_one')
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
+    .expect(highlight.hasClass('active')).ok()
+    .click(highlight)
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).notOk()
+    .expect(highlight.hasClass('active')).notOk()
+    // moving on to another widget must not switch it back on behind the user's back
+    .click('#w_two')
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).notOk()
+    .click(highlight)
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    .expect(highlight.hasClass('active')).ok();
+  await setEditorState(null);
+});
+
+// Holding a key that is not a modifier is not something pressKey() can do in
+// every browser: Chrome is driven through the browser's own automation and holds
+// the Tab down, Firefox is driven by events TestCafe builds itself and lets go of
+// it again before the next key. So the chord is built here, out of plain
+// KeyboardEvents - the window listener behind it sees no difference.
+const pressTabChord = ClientFunction(key => {
+  const send = (type, k) => document.body.dispatchEvent(new KeyboardEvent(type, { key: k, bubbles: true, cancelable: true }));
+  send('keydown', 'Tab');
+  send('keydown', key);
+  send('keyup', 'Tab');
+});
+
+// The two arrows name Tab+Left and Tab+Right in their tooltip, and the gesture
+// only ever existed inside the JSON text area - so in Edit Widgets, the module
+// edit mode opens by default, they promised a shortcut that did nothing.
+test('Tab and an arrow key walk the widget history outside the JSON editor', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const back = Selector('#editorModuleTopLeft .selectionBar button[icon=arrow_back]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_one')
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
+    .click('#w_two')
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    // two widgets in the history, so there is something to go back to
+    .expect(back.hasAttribute('disabled')).notOk();
+  await pressTabChord('ArrowLeft');
+  await t.expect(Selector('#w_one').hasClass('selectedInEdit')).ok();
+  await pressTabChord('ArrowRight');
+  await t.expect(Selector('#w_two').hasClass('selectedInEdit')).ok();
+  await setEditorState(null);
+});
+
+// Going back to a widget restores the scroll position and the cursor it was left
+// with, which is no use if the keyboard has been left somewhere else by then: the
+// JSON module blurs its text area on every selection change, so the arrows have
+// to hand it back to what the user was working in.
+const activeElementID = ClientFunction(() => document.activeElement && document.activeElement.id);
+
+test('Back and forward give the keyboard back to the JSON editor', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one')
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
+    .click('#w_two')
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    .expect(bar.find('button[icon=arrow_back]').hasAttribute('disabled')).notOk()
+    .click('#jeText')
+    .expect(activeElementID()).eql('jeText')
+    .click(bar.find('button[icon=arrow_back]'))
+    .expect(Selector('#w_one').hasClass('selectedInEdit')).ok()
+    .expect(activeElementID()).eql('jeText')
+    .click(bar.find('button[icon=arrow_forward]'))
+    .expect(Selector('#w_two').hasClass('selectedInEdit')).ok()
+    .expect(activeElementID()).eql('jeText');
+  await setEditorState(null);
+});
+
+// A command with options does not run on the click that opens it: it runs when its Go button is
+// clicked, by which time the selection lives in the button, not in the editor. The offsets
+// getSelection() reports then say nothing about the editor, so the command has to work on the line
+// the cursor was left on - otherwise it applies to whatever the top of the JSON happens to be.
+// TestCafe drives Chrome natively but Firefox through synthetic events, and a synthetic click
+// does not place the caret in a contenteditable - so the cursor goes onto the line through the
+// selection API, followed by the mouseup the editor picks its context up on.
+const putCursorBehind = ClientFunction(needle => {
+  const editor = document.querySelector('#jeText');
+  const position = editor.textContent.indexOf(needle) + needle.length;
+  editor.focus();
+  getSelection().setBaseAndExtent(editor.firstChild, position, editor.firstChild, position);
+  editor.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+});
+const widgetProperty = ClientFunction((id, property) => widgets.get(id).get(property));
+const jsonEditorText = ClientFunction(() => document.querySelector('#jeText').textContent);
+
+test('The shift command offsets the property the cursor was left on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    // both widgets share the x the command is about to shift, so the editor shows it as one value
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '50', { replace: true })
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
+
+test('The align command aligns the property the cursor was left on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 600, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    // the widgets differ in y, so the editor lists it per widget instead of showing a single value
+    .expect(jsonEditorText()).contains('"y": {');
+
+  await putCursorBehind('"y"');
+  await t
+    .click('#jeMultiAlign')
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'y')).eql(200)
+    .expect(widgetProperty('two', 'y')).eql(200)
+    // aligning y leaves x alone - picking the wrong property up would move these
+    .expect(widgetProperty('one', 'x')).eql(200)
+    .expect(widgetProperty('two', 'x')).eql(400);
+  await setEditorState(null);
+});
+
+// A selection that is dragged out of the editor reports its two ends in different nodes, so the
+// offsets it gives are not a position in the JSON and must not replace the one the editor is at.
+const selectOutOfEditor = ClientFunction(needle => {
+  const editor = document.querySelector('#jeText');
+  const position = editor.textContent.indexOf(needle) + needle.length;
+  editor.focus();
+  getSelection().setBaseAndExtent(editor.firstChild, position, document.querySelector('#jeCommands'), 0);
+});
+
+test('A command ignores a selection that reaches out of the editor', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await selectOutOfEditor('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '50', { replace: true })
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
+
+// Applying a command rewrites the line the cursor sits on, so the editor has nothing to match that
+// line by afterwards and used to drop the cursor - which sent the next command to the top of the
+// JSON although the panel still offered the commands of the property the cursor came from.
+test('A second command in a row still runs on the same line as the first', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  for(const expected of [ 250, 300 ])
+    await t
+      .click('#je_multiShift')
+      .typeText('#je_multiShift_Offset', '50', { replace: true })
+      .click(Selector('#jeCommandOptions button').withExactText('Go'))
+      .expect(widgetProperty('one', 'x')).eql(expected)
+      .expect(widgetProperty('two', 'x')).eql(expected);
+  await setEditorState(null);
+});
+
+// A widget one of the option-bearing commands is aimed at can change while its dialog is open -
+// another player moving it, a routine, a timer. The editor rebuilds its content for that, and
+// restoring the cursor afterwards must not take the keyboard away from the dialog: the next
+// keystroke would go into the JSON instead of into the field it was meant for.
+const changeSelectedWidgetElsewhere = ClientFunction(() => widgets.get('one').set('y', 250));
+const markedCommandLine = Selector('#jeTextHighlight .jeCommandLine');
+
+test('A change to a selected widget leaves the keyboard in the command options', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await t
+    .click('#je_multiShift')
+    .typeText('#je_multiShift_Offset', '5', { replace: true });
+
+  await changeSelectedWidgetElsewhere();
+  await t
+    .expect(activeElementID()).eql('je_multiShift_Offset')
+    // the marked line survives the recolorizing the change causes, so the dialog still shows what
+    // it is about to act on
+    .expect(markedCommandLine.textContent).contains('"x": 200')
+    // the keystroke completes the offset instead of being typed into the JSON
+    .pressKey('0')
+    .expect(jsonEditorText()).contains('"x": 200')
+    .click(Selector('#jeCommandOptions button').withExactText('Go'))
+    .expect(widgetProperty('one', 'x')).eql(250)
+    .expect(widgetProperty('two', 'x')).eql(250);
+  await setEditorState(null);
+});
+
+// The list of commands scrolls, so options opening below a button near its bottom edge would have
+// their Go and Cancel buttons cut off with nothing scrolling them into view.
+const scrollCommandToBottom = ClientFunction(() => {
+  const list = document.querySelector('#jeContextButtons');
+  const button = document.querySelector('#je_multiShift');
+  list.scrollTop = button.offsetTop + button.offsetHeight - list.clientHeight;
+});
+const optionsFitInList = ClientFunction(() => {
+  const list = document.querySelector('#jeContextButtons').getBoundingClientRect();
+  const options = document.querySelector('#jeCommandOptions').getBoundingClientRect();
+  return options.top >= list.top - 1 && options.bottom <= list.bottom + 1;
+});
+
+test('The options of a command are visible even at the bottom of the command list', async t => {
+  await t.resizeWindow(1280, 500);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  await scrollCommandToBottom();
+  await t
+    .click('#je_multiShift')
+    .expect(optionsFitInList()).ok();
+  await setEditorState(null);
+});
+
+// The options of a command open below the button that was clicked, so that the list of commands
+// does not move away from under the pointer, and the line they will act on is marked - it is the
+// remembered one, which shows no caret while the dialog holds the selection.
+test('A command shows which button and which line it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 200, y: 400, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const shiftButton = Selector('#je_multiShift');
+  const buttonTop = ClientFunction(() => document.querySelector('#je_multiShift').getBoundingClientRect().top);
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#w_two', { modifiers: { ctrl: true, shift: true } })
+    .expect(jsonEditorText()).contains('"x": 200');
+
+  await putCursorBehind('"x": 200');
+  const positionBeforeClick = await buttonTop();
+  await t
+    .click(shiftButton)
+    // the list of commands has to stay where it is, or the click that opens the options moves the
+    // next command under the pointer
+    .expect(buttonTop()).eql(positionBeforeClick)
+    .expect(shiftButton.nextSibling(0).id).eql('jeCommandOptions')
+    .expect(shiftButton.hasClass('jeCommandOwner')).ok()
+    .expect(Selector('#jeCommandOptions b').textContent).eql('shift options:')
+    .expect(Selector('#jeTextHighlight .jeCommandLine').textContent).contains('"x": 200');
+  await setEditorState(null);
+});
+
+// What is in the widget buffer is written by whichever game it was copied out of, so pasting it
+// into a game with different legacy modes asks first. The dialog it asks in hides every other
+// overlay - including the one a sidebar module is opened into with shift+click - so answering it
+// has to give that module back.
+const setWidgetBuffer = ClientFunction(buffer => {
+  if(buffer)
+    localStorage.setItem('widgetBuffer', JSON.stringify(buffer));
+  else
+    localStorage.removeItem('widgetBuffer');
+});
+
+test('Pasting the widget buffer across legacy modes asks, and keeps the module it asks from', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: { id: 'widget', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  // a holder that draws an image itself: what disableHolderImageWidget switches, so the mode can
+  // reach these widgets and the difference is worth telling the user about
+  await setWidgetBuffer({
+    legacyModes: { disableHolderImageWidget: true },
+    widgets: [ { id: 'legacyHolder', type: 'holder', image: '/i/box.svg', x: 100, y: 100 } ]
+  });
+  await setName(t);
+
+  const toolboxButton = Selector('#editorSidebar button[icon=home_repair_service]');
+  const moduleInOverlay = Selector('#editorModuleInOverlay');
+  const confirmDialog = Selector('#confirmOverlay');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click(toolboxButton, { modifiers: { shift: true } })
+    .expect(moduleInOverlay.hasClass('active')).ok()
+    .expect(moduleInOverlay.find('.legacyModeWarning').innerText).contains('Disable holder image support')
+    .click(moduleInOverlay.find('#loadWidgetsFromBuffer'))
+    .expect(confirmDialog.visible).ok()
+    .expect(confirmDialog.innerText).contains('These widgets were saved in a game with different legacy modes')
+    .click(confirmDialog.find('.buttons button').nth(1))
+    .expect(Selector('#w_legacyHolder').exists).ok()
+    // the panel the question was asked from is still open, and its sidebar button still says so
+    .expect(Selector('#editorModuleOverlay').visible).ok()
+    .expect(moduleInOverlay.hasClass('active')).ok()
+    .expect(toolboxButton.hasClass('active')).ok();
+
+  await setWidgetBuffer(null);
+  await setEditorState(null);
+});
+
+test('Send feedback', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#statesButton')
+    .click('#feedbackButton')
+    .expect(Selector('#feedbackOverlay').visible).ok()
+    .expect(Selector('#statesButton').hasClass('active')).notOk()
+    .typeText('#feedbackOverlay textarea', 'TestCafe feedback test', { replace: true })
+    .click('#feedbackOverlay button[icon=check]')
+    .expect(Selector('#feedbackOverlay .feedbackThanks').visible).ok()
+    // after the thanks message, the previously open overlay and its active tab come back
+    .expect(Selector('#statesOverlay').visible).ok({ timeout: 5000 })
+    .expect(Selector('#feedbackOverlay').visible).notOk()
+    .expect(Selector('#statesButton').hasClass('active')).ok();
 });

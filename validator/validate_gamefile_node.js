@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
 import path from 'path';
+
 import { validateGameFile } from './validate_gamefile.js';
+import { readUpdatedGameFile } from './updated_gamefile.js';
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -21,7 +22,7 @@ if (!filePath) {
 }
 
 // Read and validate file
-const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+const data = readUpdatedGameFile(filePath);
 
 const problems = validateGameFile(data, true);
 

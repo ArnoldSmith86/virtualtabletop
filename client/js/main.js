@@ -1,6 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
-import { calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -109,8 +109,7 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
-    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    style.display = !forced && style.display !== 'none' ? 'none' : 'flex';
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
@@ -213,6 +212,13 @@ function setScale() {
 
   document.documentElement.style.setProperty('--roomWidth', `${targetW}px`);
   document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
+
+  // the add widget overlay is laid out for the default board size, so it is scaled to fit into
+  // the room instead of being stretched to it - see #addOverlayContent in editmode.css. The header
+  // row is published from the same constant the widget positions are derived from; the value in
+  // layout.css is only what applies until this runs, like --roomWidth/--roomHeight next to it.
+  document.documentElement.style.setProperty('--addOverlayScale', addOverlayScale(viewportConfig));
+  document.documentElement.style.setProperty('--addOverlayHeaderHeight', `${ADD_OVERLAY_HEADER_HEIGHT}px`);
 
   const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
 
@@ -623,7 +629,9 @@ async function uploadAsset(multipleCallback, fileTypes) {
         alert(`Uploading failed: ${e.toString()}`);
         return null;
       });
-      multipleCallback(uploadPath, f.name)
+      // a file that failed to upload has no path to hand out - the callback would add an empty entry for it
+      if(uploadPath)
+        multipleCallback(uploadPath, f.name)
     }).catch(e=>{
       if(e.message !== 'File selection cancelled.')
         alert(`Error: ${e.toString()}`);
@@ -650,8 +658,11 @@ async function _uploadAsset(file) {
       body: file.content || file
     });
 
-    if(response.status == 413)
-      throw 'File is too big.';
+    if(response.status == 413) {
+      // the server answers with the actual size and the limit, but a proxy in between might not
+      const details = (await response.text().catch(_=>'')).trim();
+      throw `${/^[^<>]{1,200}$/.test(details) ? details : 'The file is too big.'} Scaling a picture down or saving it as a JPEG usually gets it under the limit.`;
+    }
     else if(!response.ok)
       throw `${response.status} - ${response.statusText}`;
 
@@ -675,7 +686,66 @@ function splitSVG(svg) {
 }
 
 const svgCache = {};
-function getSVG(url, replaces, callback) {
+// Images that turned out not to be SVGs once they were loaded. Their contents can't be
+// replaced, so they are used as they are instead of being wrapped into a broken data URL.
+const nonSVGCache = {};
+// Images that could not be read at all, and when that last happened. Unlike the two caches above
+// this is not an answer about the file - a server restart, a hiccup in the network or a CORS
+// rejection say nothing about what the file contains - so it expires and the next widget asking
+// for the image tries again. Remembering it permanently would cost a perfectly good SVG its
+// replacements for the rest of the session over a single missed request.
+const unreadableCache = {};
+// long enough not to refetch a CORS-blocked image on every CSS recomputation, short enough that
+// an image comes back on its own once whatever kept it from loading is over
+const UNREADABLE_RETRY_MS = 30000;
+// the one request per file every caller of fetchSVG() below waits for
+const svgFetchCache = {};
+
+// Loads an image and returns its text if it is an SVG whose contents can be replaced, null if it
+// is anything else. What decides that are the bytes of the file and not its name: an uploaded
+// asset is served from /assets/<hash>_<size> without any extension at all, so only the built-in
+// game pieces have a URL that says what they are. Rejects when the file can't be read - that says
+// nothing about what it is, so every caller decides for itself what to assume then. The SVG
+// replacement editor and the JSON editor ask the same question about the same file and go through
+// here too: one request answers all three, so they cannot end up disagreeing about a file.
+export function fetchSVG(url) {
+  // two spellings of the same path - '/i/x.svg' on a widget, 'i/x.svg' in the game piece picker -
+  // are one file, so what is asked for once is the mapped URL that is actually requested
+  const key = mapAssetURLs(url);
+  if(!svgFetchCache[key])
+    // a request that failed is not an answer worth keeping - drop it so the next caller retries
+    svgFetchCache[key] = loadSVG(url).catch(e=>{
+      delete svgFetchCache[key];
+      throw e;
+    });
+  return svgFetchCache[key];
+}
+
+async function loadSVG(url) {
+  const mappedURL = mapAssetURLs(url);
+  const response = await fetch(mappedURL);
+  if(!response.ok)
+    throw new Error(`Loading ${url} failed with status ${response.status}.`);
+  // /assets/<hash> and /i/** are served by vtt itself, so their content type can be trusted, and a
+  // bitmap saying so is the common case - no reason to pull a multi-megabyte PNG through the wire
+  // and decode it as text just to find no <svg> in it. Everywhere else the header is whatever a
+  // foreign host claims, and an SVG mislabeled as a bitmap used to work, so there the bytes decide.
+  const contentType = /^(assets|i)\//.test(mappedURL) ? response.headers.get('content-type') || '' : '';
+  if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
+    if(response.body && response.body.cancel)
+      response.body.cancel();
+    return null;
+  }
+  const text = await response.text();
+  return /<svg/i.test(text) ? text : null;
+}
+
+export function getSVG(url, replaces, callback) {
+  // like the cached SVG below this returns the finished value right away, so the callback - which
+  // exists to tell the widget that the file has arrived - isn't needed and isn't called
+  if(nonSVGCache[url])
+    return mapAssetURLs(url);
+
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
     if(svgCache[cacheKey])
@@ -696,37 +766,58 @@ function getSVG(url, replaces, callback) {
     return svgCache[cacheKey];
   }
 
-  if(!svgCache[url]) {
+  // an image that can't be loaded is used as it is, which is all a browser needs anyway - an
+  // external image is blocked from fetch() by CORS but still displays fine as a background-image.
+  // That verdict is only kept until the retry delay is over, see unreadableCache above.
+  const unreadable = unreadableCache[url] > Date.now() - UNREADABLE_RETRY_MS;
+
+  if(!svgCache[url] && !unreadable) {
     svgCache[url] = [];
-    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
+    // fetchSVG resolves with the file's text or null, and rejects if it could not be read at all -
+    // three outcomes, so an unread file arrives here as undefined rather than as another null
+    fetchSVG(url).then(t=>t, _=>undefined).then(t=>{
       const callbacks = svgCache[url];
-      svgCache[url] = t;
+      delete svgCache[url];
+      if(t === undefined) {
+        unreadableCache[url] = Date.now();
+      } else {
+        delete unreadableCache[url];
+        if(t === null)
+          nonSVGCache[url] = true;
+        else
+          svgCache[url] = t;
+      }
       for(const [ c, r ] of callbacks)
         c(getSVG(url, r, _=>{}));
     });
   }
 
-  svgCache[url].push([ callback, replaces ]);
-  return '';
+  // a file still within its retry delay has no request to wait for
+  if(svgCache[url])
+    svgCache[url].push([ callback, replaces ]);
+  // while a retry is in flight the widget keeps displaying the URL it already has rather than
+  // blinking to nothing, and is told through its callback once the file did arrive after all
+  return unreadableCache[url] ? mapAssetURLs(url) : '';
 }
 
 async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
+      $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, confirmOverlay, sleep, rand, shuffleArray,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadZipLibrary, waitForZipLibrary, zipBlob,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+      uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+      iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
-      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE,
+      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
-      asArray, compute_ops,
+      asArray, compute_ops, positionNames, expressionError, expressionNames,
       eventCoords,
       getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
     });
@@ -945,7 +1036,18 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if($('body.edit #editorSidebar button.active'))
+    // a picture opened at full size out of the deck wizard covers everything, so Escape takes it away first
+    if($('#editor > .cardPictureZoom'))
+      $('#editor > .cardPictureZoom').remove();
+    // the public library deck browser is opened on top of whatever opened it (the add widget overlay or the
+    // deck editor's Add New Deck dialog), so Escape closes the browser and not the thing behind it
+    else if($('#libraryDecksOverlay') && $('#libraryDecksOverlay').style.display != 'none')
+      $('#libraryDecksClose').click();
+    // the add widget overlay sits on top of the sidebar, so it goes next - without this the only
+    // way out of it was leaving edit mode altogether
+    else if($('#addOverlay') && $('#addOverlay').style.display != 'none')
+      showOverlay();
+    else if($('body.edit #editorSidebar button.active'))
       $('#editorSidebar button.active').click();
     else if(edit)
       $('#editorToolbar button[icon=close]').click();

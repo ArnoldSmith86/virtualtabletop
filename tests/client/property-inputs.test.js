@@ -2,19 +2,30 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { positionNames, expressionError, expressionNames } from '../../client/js/expression.js';
+import { asArray } from '../../client/js/domhelpers.js';
+
 // The editor files are plain scripts that get concatenated by server/minify.mjs,
 // so evaluate the sources and grab the pure helpers from their scope.
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const inputsSource = fs.readFileSync(path.join(dir, '../../client/js/editor/propertyInputs.js'), 'utf8');
+// the icon search itself lives in the room bundle (client/js/symbols.js, exported to edit mode by
+// main.js), so both pickers rank a query the same way - evaluate it in front of the editor source
+// the way the browser has it in scope, with the import/export lines the bundler drops
+const symbolsSource = fs.readFileSync(path.join(dir, '../../client/js/symbols.js'), 'utf8')
+  .replace(/^import\s+[^;]+;\r?\n/gm, '')
+  .replace(/^export\s+/gm, '');
 const propertiesSource = fs.readFileSync(path.join(dir, '../../client/js/editor/sidebar/properties.js'), 'utf8');
 
-const inputHelpers = new Function(inputsSource + `;
+const inputHelpers = new Function(symbolsSource + inputsSource + `;
   return {
     propertyInputNumberOrText,
     propertyInputValueSet,
     numericInputValue,
     searchIconIndex,
     searchImageIndex,
+    iconSearchEntry,
+    iconSearchScores,
     iconValueType,
     usedGameIconValue,
     setIconSearchIndex: index => { iconSearchIndex = index; },
@@ -51,7 +62,7 @@ const testWidgets = new Map();
 // buildDiceFace (properties.js) calls replaceExclusiveProperties (propertyInputs.js) -
 // both files are concatenated into one bundle in the browser, so evaluate them
 // together here too instead of propertiesSource alone
-const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + propertiesSource + `;
+const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'expressionError', 'expressionNames', 'asArray', inputsSource + propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
@@ -90,6 +101,10 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     svgReplacePropertyForAttributes,
     dragLimitIsSet,
     dragLimitValue,
+    conditionList,
+    conditionProblem,
+    dragLimitDependencies,
+    dependencyDeltaMatters,
     positionSummary: PropertiesModule.prototype.positionSummary,
     dicePreviewRotation,
     dicePreviewActiveFace,
@@ -97,6 +112,10 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     textValueFromSymbol,
     classesWithSymbolClass,
     gridEntryList,
+    conditionsOf,
+    conditionOutlinePath,
+    gridDotPositions,
+    gridConditionDotLimit,
     gridExtraProperties,
     gridExtraValue,
     gridExtraText,
@@ -120,7 +139,13 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     courtSuitLetter,
     deckGeneratorDesignHint
   };
-`)(class {}, testWidgets);
+`)(class {}, testWidgets, positionNames, expressionError, expressionNames, asArray);
+
+// what fetchSVG() (main.js) answered about the image, in its own scope so the
+// candidate cache starts empty
+const svgReplaceLookup = fetchSVG => new Function('SidebarModule', 'widgets', 'positionNames', 'expressionError', 'expressionNames', 'asArray', 'fetchSVG', inputsSource + propertiesSource + `;
+  return fetchSvgReplaceCandidates;
+`)(class {}, testWidgets, positionNames, expressionError, expressionNames, asArray, fetchSVG);
 
 describe('css declaration rows', () => {
   test('declarations are listed in order from both the string and the object form', () => {
@@ -332,6 +357,24 @@ describe('css helpers', () => {
     expect(cssHelpers.svgReplaceCandidates(svg).find(candidate => candidate.value == '#ff0000').ambiguous).toBe(false);
   });
 
+  test('the three ways of having no values to offer are told apart', async () => {
+    const svg = svgReplaceLookup(async _ => '<svg><rect fill="#ff0000"/></svg>');
+    expect(await svg('/i/thing.svg')).toMatchObject({ isSvg: true, status: 'svg' });
+    expect((await svg('/i/thing.svg')).candidates.map(c => c.value)).toEqual([ '#ff0000' ]);
+
+    // a bitmap: nothing can ever be listed and no replacement can ever apply
+    const bitmap = svgReplaceLookup(async _ => null);
+    expect(await bitmap('/assets/1_2')).toMatchObject({ isSvg: false, candidates: [], status: 'notSvg' });
+
+    // unreadable says nothing about what the file is, so the name still decides
+    // whether the editor is shown - but not silently, hence its own status
+    const broken = svgReplaceLookup(async _ => { throw new Error('404'); });
+    expect(await broken('/i/gone.svg')).toEqual({ isSvg: true, candidates: [], status: 'unreadable' });
+    expect(await broken('/i/gone.png')).toEqual({ isSvg: false, candidates: [], status: 'unreadable' });
+
+    expect(await svg('')).toEqual({ isSvg: false, candidates: [], status: 'none' });
+  });
+
   test('svg candidates propose the property their attribute is conventionally read from', () => {
     expect(cssHelpers.svgReplacePropertyForAttributes([ 'fill' ])).toBe('color');
     expect(cssHelpers.svgReplacePropertyForAttributes([ 'stroke' ])).toBe('borderColor');
@@ -346,6 +389,47 @@ describe('css helpers', () => {
     expect(cssHelpers.dragLimitIsSet({ maxY: 900 })).toBe(true);
     expect(cssHelpers.dragLimitValue({ minX: 0 }, 'minX')).toBe(0);
     expect(cssHelpers.dragLimitValue({ minX: 0 }, 'maxX')).toBe(null);
+  });
+
+  test('the condition field is one condition per line, and says which line does not parse', () => {
+    expect(cssHelpers.conditionList('y > x\n\n  2x^2 + y > 4  \n')).toEqual([ 'y > x', '2x^2 + y > 4' ]);
+    expect(cssHelpers.conditionList(null)).toEqual([]);
+    expect(cssHelpers.conditionProblem('y > x\n2x^2 + y > 4')).toBe(null);
+    expect(cssHelpers.conditionProblem('')).toBe(null);
+    // the message names the line it is about - the other lines are fine
+    expect(cssHelpers.conditionProblem('y > x\n0 < x < 500')).toMatch(/^"0 < x < 500": /);
+    // a property has to be written as one, so a bare word is reported as it is
+    // typed rather than read as nothing while dragging
+    expect(cssHelpers.conditionProblem('x + width < 500')).toMatch(/\$\{PROPERTY width\}/);
+    expect(cssHelpers.conditionProblem('x + ${PROPERTY width} < 500')).toBe(null);
+    // and so is a line that is a sum rather than an inequality: it reads as
+    // true wherever it is not 0, i.e. it limits nothing
+    expect(cssHelpers.conditionProblem('y > x\nx - 100')).toMatch(/^"x - 100": .*comparison/);
+  });
+
+  test('the drawing follows every property its expressions read', () => {
+    const widget = { id: 'piece', get: property=>({
+      dragLimit: { maxX: '${PROPERTY edge OF board} - ${PROPERTY limitWidth}', condition: 'y > ${PROPERTY top OF rail}' },
+      parent: 'holder'
+    })[property] };
+    const dependencies = cssHelpers.dragLimitDependencies(widget);
+    expect([ ...dependencies.board ]).toEqual([ 'edge' ]);
+    expect([ ...dependencies.rail ]).toEqual([ 'top' ]);
+    expect([ ...dependencies.piece ]).toEqual([ 'limitWidth' ]);
+    // the drawing is a canvas inside the parent, which empties itself when it
+    // renders its own content - so every property of the parent counts
+    expect(dependencies.holder).toBe(true);
+
+    // a button that moves the area redraws it, an unrelated change does not
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { board: { edge: 900 } })).toBe(true);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { piece: { limitWidth: 20 } })).toBe(true);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { holder: { text: 'hi' } })).toBe(true);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { board: { z: 5 } })).toBe(false);
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { other: { x: 5 } })).toBe(false);
+    // x and y are the position being tested, not a property any delta carries
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { piece: { x: 5 } })).toBe(false);
+    // a widget the limit reads being deleted changes the area as well
+    expect(cssHelpers.dependencyDeltaMatters(dependencies, { rail: null })).toBe(true);
   });
 
   test('cssTextFromValue renders all value shapes', () => {
@@ -479,9 +563,16 @@ describe('snap grid helpers', () => {
   });
 
   test('everything that is not grid geometry is a property applied on snapping', () => {
-    expect(cssHelpers.gridExtraProperties({ x: 1, y: 2, offsetX: 3, alignY: 1, minX: 0, maxY: 9, rotation: 90, image: 'a.svg' }))
+    expect(cssHelpers.gridExtraProperties({ x: 1, y: 2, offsetX: 3, alignY: 1, minX: 0, maxY: 9, condition: 'x > 0', rotation: 90, image: 'a.svg' }))
       .toEqual([ 'rotation', 'image' ]);
     expect(cssHelpers.gridExtraProperties(undefined)).toEqual([]);
+  });
+
+  test('a dragLimit or a grid entry takes one condition or a list of them', () => {
+    expect(cssHelpers.conditionsOf({ x: 10, y: 10 })).toEqual([]);
+    expect(cssHelpers.conditionsOf({ condition: null })).toEqual([]);
+    expect(cssHelpers.conditionsOf({ condition: 'y > x' })).toEqual([ 'y > x' ]);
+    expect(cssHelpers.conditionsOf({ condition: [ 'y > x', 'x > 100' ] })).toEqual([ 'y > x', 'x > 100' ]);
   });
 
   test('typed snap-point values become numbers/booleans when they look like JSON', () => {
@@ -514,6 +605,100 @@ describe('snap grid helpers', () => {
     // background-size: contain, so a 60x100 box draws the same hexagon as 60x60
     expect(cssHelpers.hexGridForSize(60, 100, 'flat')).toEqual(cssHelpers.hexGridForSize(60, 60, 'flat'));
     expect(cssHelpers.hexGridForSize(100, 60, 'point')).toEqual(cssHelpers.hexGridForSize(60, 60, 'point'));
+  });
+});
+
+// the dashed line the editor draws around the area a condition describes -
+// sampled and traced, because the shape itself is never computed
+describe('the outline of a condition', () => {
+  const box = { left: 0, top: 0, width: 400, height: 400 };
+  const points = path=>path.split(/M |L /).slice(1).map(pair=>pair.trim().split(' ').map(Number));
+
+  test('is empty where the whole box is on one side of it', () => {
+    expect(cssHelpers.conditionOutlinePath(box, 10, _=>true)).toBe('');
+    expect(cssHelpers.conditionOutlinePath(box, 10, _=>false)).toBe('');
+  });
+
+  test('follows a straight boundary between the two sides', () => {
+    const path = cssHelpers.conditionOutlinePath(box, 10, coord=>coord.x < 250);
+    // one line, every point of it on the boundary rather than on the lattice
+    expect(path.match(/M /g).length).toBe(1);
+    for(const [ x, y ] of points(path)) {
+      expect(x).toBeCloseTo(250, 0);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y).toBeLessThanOrEqual(400);
+    }
+  });
+
+  test('traces a circle as a closed line rather than a staircase of the sampling step', () => {
+    const path = cssHelpers.conditionOutlinePath(box, 10, coord=>(coord.x - 200) ** 2 + (coord.y - 200) ** 2 < 150 ** 2);
+    const line = points(path);
+    // joined end to end, so a dash pattern runs along the circle instead of
+    // starting over at every sample
+    expect(path.match(/M /g).length).toBe(1);
+    expect(line.length).toBeGreaterThan(50);
+    expect(line[0]).toEqual(line[line.length - 1]);
+    for(const [ x, y ] of line)
+      expect(Math.hypot(x - 200, y - 200)).toBeCloseTo(150, 0);
+  });
+
+  test('traces every part of an area that is in several pieces', () => {
+    const path = cssHelpers.conditionOutlinePath(box, 10, coord=>coord.x < 100 || coord.x > 300);
+    expect(path.match(/M /g).length).toBe(2);
+  });
+
+  test('is traced in the coordinates it is asked in, so it can be drawn where it holds', () => {
+    const path = cssHelpers.conditionOutlinePath({ left: 1000, top: 500, width: 400, height: 400 }, 10, coord=>coord.x < 1250);
+    for(const [ x, y ] of points(path)) {
+      expect(x).toBeCloseTo(1250, 0);
+      expect(y).toBeGreaterThanOrEqual(500);
+    }
+  });
+});
+
+// the dots of a grid a condition limits are drawn one by one, so that only the
+// positions the widget can be put on are marked
+describe('the dots of a limited grid', () => {
+  const box = { left: 0, top: 0, width: 400, height: 400 };
+  const noAlign = { x: 0, y: 0 };
+  const positions = (entry, applies, area = box, align = noAlign) =>
+    cssHelpers.gridDotPositions(entry, area, align, cssHelpers.gridConditionDotLimit, applies);
+
+  test('marks the lattice points the grid applies at and no others', () => {
+    const dots = positions({ x: 100, y: 100 }, coord=>coord.x < 250);
+    expect(dots).toEqual([
+      { x: 0, y: 0 }, { x: 0, y: 100 }, { x: 0, y: 200 }, { x: 0, y: 300 }, { x: 0, y: 400 },
+      { x: 100, y: 0 }, { x: 100, y: 100 }, { x: 100, y: 200 }, { x: 100, y: 300 }, { x: 100, y: 400 },
+      { x: 200, y: 0 }, { x: 200, y: 100 }, { x: 200, y: 200 }, { x: 200, y: 300 }, { x: 200, y: 400 }
+    ]);
+  });
+
+  test('stays on the lattice the widget lands on, offset and all', () => {
+    // a step of 150 from an offset of 20, and nothing past the box - which is
+    // the rectangle the grid is limited to
+    expect(positions({ x: 150, y: 500, offsetX: 20 }, _=>true).map(dot=>dot.x)).toEqual([ 20, 170, 320 ]);
+    // an offset outside the box is still the same lattice inside it
+    expect(positions({ x: 150, y: 500, offsetX: -280 }, _=>true).map(dot=>dot.x)).toEqual([ 20, 170, 320 ]);
+  });
+
+  test('asks about the corner rather than the point that lands on the lattice', () => {
+    const asked = [];
+    positions({ x: 200, y: 200 }, coord=>{ asked.push(coord.x); return true; }, box, { x: 25, y: 50 });
+    expect(asked).toEqual([ -25, -25, -25, 175, 175, 175, 375, 375, 375 ]);
+  });
+
+  test('is traced in the coordinates it is asked in, so it can be drawn where it holds', () => {
+    const dots = positions({ x: 200, y: 200 }, coord=>coord.x > 1100, { left: 1000, top: 500, width: 400, height: 400 });
+    expect(dots).toEqual([
+      { x: 1200, y: 600 }, { x: 1200, y: 800 }, { x: 1400, y: 600 }, { x: 1400, y: 800 }
+    ]);
+  });
+
+  test('leaves a lattice with more points than the limit to the background layer', () => {
+    expect(positions({ x: 1, y: 1 }, _=>true)).toBe(null);
+    expect(positions({ x: 0, y: 100 }, _=>true)).toBe(null);
+    // an area nothing satisfies is a list of no dots, not "draw them all"
+    expect(positions({ x: 100, y: 100 }, _=>false)).toEqual([]);
   });
 });
 
@@ -837,26 +1022,77 @@ describe('property input helpers', () => {
     expect(arrayChip.children[0].style.color).toBeUndefined();
   });
 
-  test('searchIconIndex preserves symbols.json order', () => {
+  test('searchIconIndex lists name matches first and keeps symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
-      { value: 'star',           keywords: 'star,favorite', image: false },
-      { value: 'grade',          keywords: 'star,grade',    image: false },
-      { value: 'lorc/star',      keywords: 'star,shiny',    image: true },
-      { value: 'delapouite/sun', keywords: 'sun,light',     image: true }
+      { value: 'grade',          ...inputHelpers.iconSearchEntry('grade', [ 'star' ]),  image: false },
+      { value: 'star',           ...inputHelpers.iconSearchEntry('star', [ 'favorite' ]), image: false },
+      { value: 'lorc/star',      ...inputHelpers.iconSearchEntry('star', [ 'shiny' ]),  image: true },
+      { value: 'delapouite/sun', ...inputHelpers.iconSearchEntry('sun', [ 'light' ]),   image: true }
     ]);
-    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'grade', 'lorc/star' ]);
-    expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
-    expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
+    // the two icons called "star" come before the one that is only tagged with it, both groups
+    // in the order of the index
+    expect(inputHelpers.searchIconIndex('star').values).toEqual([ 'star', 'lorc/star', 'grade' ]);
+    expect(inputHelpers.searchIconIndex('sun').values).toEqual([ 'delapouite/sun' ]);
+    expect(inputHelpers.searchIconIndex('nothing').values).toEqual([]);
+  });
+
+  test('searchIconIndex matches names by word but tags only as whole words', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'delapouite/bear-head',  ...inputHelpers.iconSearchEntry('bear-head', [ 'grizzly', 'brown bear' ]),  image: true },
+      { value: 'lorc/mantrap',          ...inputHelpers.iconSearchEntry('mantrap', [ 'bear trap', 'snare' ]),       image: true },
+      { value: 'delapouite/razor',      ...inputHelpers.iconSearchEntry('razor', [ 'beard', 'shaving' ]),           image: true },
+      { value: 'lorc/compass',          ...inputHelpers.iconSearchEntry('compass', [ 'bearing', 'navigation' ]),    image: true },
+      { value: 'delapouite/carabiner',  ...inputHelpers.iconSearchEntry('carabiner', [ 'load bearing', 'climbing' ]), image: true },
+      { value: 'lorc/tentacles-skull',  ...inputHelpers.iconSearchEntry('tentacles-skull', [ 'cthulhu', 'horror' ]), image: true }
+    ]);
+
+    // "beard", "bearing" and "load bearing" describe something else entirely
+    expect(inputHelpers.searchIconIndex('bear').values).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
+    // a word of the name still matches from its first letter, so the picker fills in while typing
+    expect(inputHelpers.searchIconIndex('bea').values).toEqual([ 'delapouite/bear-head' ]);
+    // every term has to match, hyphens in the query separate them like spaces do
+    expect(inputHelpers.searchIconIndex('bear trap').values).toEqual([ 'lorc/mantrap' ]);
+    expect(inputHelpers.searchIconIndex('bear-trap').values).toEqual([ 'lorc/mantrap' ]);
+    // a plural is not a different tag, and not a different name either
+    expect(inputHelpers.searchIconIndex('bears').values).toEqual([ 'delapouite/bear-head', 'lorc/mantrap' ]);
+    // nothing matches by word: fall back to matching anywhere so a half typed tag finds icons
+    expect(inputHelpers.searchIconIndex('cthulh').values).toEqual([ 'lorc/tentacles-skull' ]);
+    expect(inputHelpers.searchIconIndex('nonsense').values).toEqual([]);
+  });
+
+  test('searchIconIndex matches a name and a tag in either number', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'delapouite/horse-head',   ...inputHelpers.iconSearchEntry('horse-head', [ 'stallion' ]),   image: true },
+      { value: 'delapouite/horseshoe',    ...inputHelpers.iconSearchEntry('horseshoe', [ 'luck' ]),        image: true },
+      { value: 'lorc/kitchen-knives',     ...inputHelpers.iconSearchEntry('kitchen-knives', [ 'blade' ]),  image: true },
+      { value: 'delapouite/hell-crosses', ...inputHelpers.iconSearchEntry('hell-crosses', [ 'grave' ]),    image: true },
+      { value: 'lorc/new-shoot',          ...inputHelpers.iconSearchEntry('new-shoot', [ 'sprout' ]),      image: true },
+      { value: 'delapouite/newspaper',    ...inputHelpers.iconSearchEntry('newspaper', [ 'news', 'press' ]), image: true }
+    ]);
+
+    // the file name is written in one number only, and a tag may not repeat a word of it, so the
+    // singular of "horses" has to be matched against the name - stripping the whole "es" made it
+    // "hors", which matched nothing, and left only the horseshoe that begins with "horses"
+    expect(inputHelpers.searchIconIndex('horses').values).toEqual([ 'delapouite/horse-head', 'delapouite/horseshoe' ]);
+    expect(inputHelpers.searchIconIndex('horse').values).toEqual([ 'delapouite/horse-head', 'delapouite/horseshoe' ]);
+    // "es" is stripped both ways, because "crosses" is a cross and "horses" a horse
+    expect(inputHelpers.searchIconIndex('crosses').values).toEqual([ 'delapouite/hell-crosses' ]);
+    expect(inputHelpers.searchIconIndex('cross').values).toEqual([ 'delapouite/hell-crosses' ]);
+    // an "s" cannot make every plural
+    expect(inputHelpers.searchIconIndex('knife').values).toEqual([ 'lorc/kitchen-knives' ]);
+    // "news" is not the plural of "new", so it does not answer with sprouts
+    expect(inputHelpers.searchIconIndex('news').values).toEqual([ 'delapouite/newspaper' ]);
+    expect(inputHelpers.searchIconIndex('new').values).toEqual([ 'lorc/new-shoot', 'delapouite/newspaper' ]);
   });
 
   test('searchImageIndex returns image URLs for matching glyphs', () => {
     inputHelpers.setIconSearchIndex([
-      { value: 'lorc/dice-six-faces-six', keywords: 'dice six', image: true },
-      { value: '🎲', keywords: 'dice game', image: true },
-      { value: 'casino', keywords: 'dice casino', image: false }
+      { value: 'lorc/dice-six-faces-six', ...inputHelpers.iconSearchEntry('dice-six-faces-six', [ 'six' ]), image: true },
+      { value: '🎲', ...inputHelpers.iconSearchEntry('🎲', [ 'dice', 'game' ]), image: true },
+      { value: 'casino', ...inputHelpers.iconSearchEntry('casino', [ 'dice' ]), image: false }
     ]);
 
-    expect(inputHelpers.searchImageIndex('dice')).toEqual([
+    expect(inputHelpers.searchImageIndex('dice').values).toEqual([
       '/i/game-icons.net/lorc/dice-six-faces-six.svg',
       '/i/noto-emoji/emoji_u1f3b2.svg'
     ]);
@@ -871,21 +1107,78 @@ describe('property input helpers', () => {
     expect(inputHelpers.iconValueType('https://example.com/icon.svg')).toBe(null);
 
     inputHelpers.setIconSearchIndex([
-      { value: 'lorc/star', type: 'game-icons', keywords: 'star', image: true },
-      { value: 'star', type: 'material-symbols', keywords: 'star', image: false }
+      { value: 'lorc/star', type: 'game-icons', ...inputHelpers.iconSearchEntry('star', []), image: true },
+      { value: 'star', type: 'material-symbols', ...inputHelpers.iconSearchEntry('star', []), image: false }
     ]);
-    expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ]))).toEqual([ 'star' ]);
+    expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ])).values).toEqual([ 'star' ]);
   });
 
   test('picker searches show up to 100 results', () => {
     inputHelpers.setIconSearchIndex(Array.from({ length: 101 }, (_, index) => ({
       value: `icons/icon-${index}`,
-      keywords: 'icon',
+      ...inputHelpers.iconSearchEntry(`icon-${index}`, []),
       image: true
     })));
 
-    expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
-    expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
+    expect(inputHelpers.searchIconIndex('icon').values).toHaveLength(100);
+    expect(inputHelpers.searchImageIndex('icon').values).toHaveLength(100);
+    // ... and say how many were left out instead of truncating the list silently
+    expect(inputHelpers.searchIconIndex('icon').total).toBe(101);
+    expect(inputHelpers.searchImageIndex('icon').total).toBe(101);
+  });
+
+  test('icon search ranks whole words of the name above the words it only starts', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/dragonfly',    ...inputHelpers.iconSearchEntry('dragonfly', [ 'insect' ]), image: true },
+      { value: 'delapouite/scales', ...inputHelpers.iconSearchEntry('fish-scales', [ 'dragon' ]), image: true },
+      { value: 'lorc/dragon-head',  ...inputHelpers.iconSearchEntry('dragon-head', [ 'beast' ]),  image: true }
+    ]);
+    expect(inputHelpers.searchIconIndex('dragon').values).toEqual([ 'lorc/dragon-head', 'lorc/dragonfly', 'delapouite/scales' ]);
+  });
+
+  test('icon search leads with the icon that is called exactly what was typed', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/dragon-head',  ...inputHelpers.iconSearchEntry('dragon-head', [ 'beast' ]),   image: true },
+      { value: 'delapouite/scales', ...inputHelpers.iconSearchEntry('fish-scales', [ 'dragon' ]),  image: true },
+      { value: 'lorc/dragon',       ...inputHelpers.iconSearchEntry('dragon', [ 'wyrm' ]),         image: true }
+    ]);
+    // the whole name and nothing else: a name that only contains the word has more to it, however
+    // early it sits in the index
+    expect(inputHelpers.searchIconIndex('dragon').values).toEqual([ 'lorc/dragon', 'lorc/dragon-head', 'delapouite/scales' ]);
+    // the number of the query is as irrelevant here as it is to the rest of the search
+    expect(inputHelpers.searchIconIndex('dragons').values).toEqual([ 'lorc/dragon', 'lorc/dragon-head', 'delapouite/scales' ]);
+
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/crossed-sabres', ...inputHelpers.iconSearchEntry('crossed-sabres', [ 'cavalry' ]), image: true },
+      { value: 'lorc/sabre',          ...inputHelpers.iconSearchEntry('sabre', [ 'blade' ]),            image: true }
+    ]);
+    // and so is its spelling: the icon spelled the other way is still the one that is called this
+    expect(inputHelpers.searchIconIndex('saber').values).toEqual([ 'lorc/sabre', 'lorc/crossed-sabres' ]);
+  });
+
+  test('icon search understands accents and both English spellings', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'delapouite/fencer',    ...inputHelpers.iconSearchEntry('fencer', [ 'epee', 'fencing' ]), image: true },
+      { value: 'lorc/crossed-sabres',  ...inputHelpers.iconSearchEntry('crossed-sabres', [ 'cavalry' ]), image: true },
+      { value: 'lorc/shield',          ...inputHelpers.iconSearchEntry('shield', [ 'defense' ]),         image: true }
+    ]);
+    // an accented query used to split into the two prefixes "p" and "e" and match at random
+    expect(inputHelpers.searchIconIndex('épée').values).toEqual([ 'delapouite/fencer' ]);
+    // the tags are US English, a few of the file names are not - both spellings find both
+    expect(inputHelpers.searchIconIndex('defence').values).toEqual([ 'lorc/shield' ]);
+    expect(inputHelpers.searchIconIndex('saber').values).toEqual([ 'lorc/crossed-sabres' ]);
+  });
+
+  test('a query without a single searchable word matches nothing instead of everything', () => {
+    const entries = [
+      inputHelpers.iconSearchEntry('dragon-head', [ 'beast' ]),
+      inputHelpers.iconSearchEntry('shield', [ 'defense' ])
+    ];
+    // every entry matching every one of zero terms used to unhide the whole picker
+    expect(inputHelpers.iconSearchScores(entries, 'меч')).toEqual([ 0, 0 ]);
+    expect(inputHelpers.iconSearchScores(entries, '???')).toEqual([ 0, 0 ]);
+    // an empty search box is not a search: it shows everything, as it did before
+    expect(inputHelpers.iconSearchScores(entries, '   ')).toEqual([ 1, 1 ]);
   });
 
   test('icon basic-options scale field clamps to its advertised 0.1-5 range', () => {

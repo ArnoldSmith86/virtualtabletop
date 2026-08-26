@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
 
 const statisticsFilename = Config.directory('save') + '/statistics.json';
 
@@ -33,7 +34,7 @@ class Statistics {
   }
 
   writeToFilesystem() {
-    fs.writeFileSync(statisticsFilename, JSON.stringify(this.data, null, '  '));
+    FileWriter.writeFileSync(statisticsFilename, JSON.stringify(this.data, null, '  '));
   }
 }
 

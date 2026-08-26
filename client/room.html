@@ -31,6 +31,7 @@
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
     <div class="divider"></div>
+    <button id="feedbackButton" class="toolbarButton"><span class="tooltip">Feedback</span></button>
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
@@ -535,11 +536,12 @@
       </div>
       <div>
         <div icon="add_reaction">
-          <input placeholder="Search" />
-          <p icon="blur_on">For performance reasons, <span>game-icons are displayed in low resolution and </span>emoji are displayed in your browser font. Filter to less than 100 images or hover over an icon to show the actual image that will be used.</p>
+          <input />
+          <p icon="blur_on">Click an icon to pick it. Emoji use your browser font<span> and game-icons are previewed in low resolution</span>: hover one, or narrow the search below 100 results, to see the real image.</p>
           <div id="symbolList">
             Loading...
           </div>
+          <div id="symbolNoResults"></div>
         </div>
       </div>
     </div>
@@ -590,7 +592,7 @@
           <h3>Icons, Symbols, and Visual Assets</h3>
             <p>The VirtualTabletop.io logos and icons (consisting of "virtualtabletop.io" overlaid on a simulated screen and a stylized human figure popping out of a screen) are by various members of the VirtualTabletop.io community and are released under CC BY-NC-SA 4.0 (attribution to VirtualTabletop.io).</p>
             <p>The following pieces and symbols were created by Brandon Lewis (@mousewax) for VirtualTabletop.io and are released under the CC0 license: pawn, pin, marble, cube, checkers, poker chips, stylized human figures, pigs, house, village, and wood beam. The 3D dice were created by various members of the VirtualTabletop.io community and are also released under CC0.</p>
-            <p>Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from the following: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, John Colburnm, and other various artists.</p>
+            <p>Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from the following: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, SeregaCthtuf, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, John Colburnm, and other various artists.</p>
             <p>The custom cursors in the cursors folder are by RaphaelAlvez and are released under the CC0 license.</p>
         <hr>
           <h3>Fonts and Other Symbols</h3>
@@ -662,6 +664,27 @@
         <summary>Technical Details</summary>
         <pre id="clientErrorStack"></pre>
       </details>
+    </div>
+
+    <div id="feedbackOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Feedback</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="feedback">
+          <p>Found a bug or have a suggestion? Let us know!</p>
+          <p><textarea style="height: 150px; width: 100%"></textarea></p>
+          <p class="feedbackError" style="display: none"></p>
+          <p class="feedbackThanks" style="display: none">Thank you! Your feedback has been sent.</p>
+          <p><input type="checkbox" id="feedbackIncludeState" checked> <label for="feedbackIncludeState">Include a snapshot of this room (URL, full page contents, game state, and player names)</label></p>
+          <p class="feedbackPrivacyNote">Your message and your browser info are always sent to help us fix things. Uncheck the box above if you'd rather not also share the room snapshot.</p>
+          <div class="buttons">
+            <button icon="close"></button>
+            <button icon="check"></button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="connectionLostOverlay" class="overlay" style="display:none;">
