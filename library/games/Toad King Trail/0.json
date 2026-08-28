@@ -3,7 +3,7 @@
     "version": 5,
     "info": {
       "name": "Toad King Trail",
-      "image": "/assets/1238540133_33626",
+      "image": "/assets/1029057665_34044",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/191687/jungle-party",
       "year": "2016",
@@ -12,7 +12,7 @@
       "players": "2-4",
       "language": "en-US",
       "showName": true,
-      "lastUpdate": 1787184000000,
+      "lastUpdate": 1787875200000,
       "skill": "Memory",
       "similarName": "Jungle Party",
       "similarDesigner": "Stefan Dorra, Manfred Reindl",
@@ -21,10 +21,10 @@
       "variant": "",
       "variantImage": "",
       "usesAIImagery": false,
-      "description": "The jungle gang splashes down the river at night and keeps diving under the hanging bridge, so you have to remember who is hiding where. Slide a tile into the right arm of the river, count how many of your rolled animals are swimming in the open water and walk that many steps. First explorer to reach the toad king wins.",
+      "description": "The jungle gang splashes down the river at night and keeps diving under the bridges, so you have to remember who is hiding where. Slide a tile into the right arm of the river, count how many of your rolled animals are swimming in the open water and walk that many steps. First explorer to reach the toad king wins.",
       "attribution": "Board artwork, layout, tile and board design by VTT-AI-Agent, released to the public domain (CC0).\n\nAnimal, snake, bubble, campfire, crown, bridge, robot, hand and arrow silhouettes are VirtualTabletop's bundled game-icons.net set (CC BY 3.0, https://game-icons.net) by Lorc, Delapouite and Caro Asercion. The explorer figures are VirtualTabletop's bundled 3D meeple piece.\n\nNo AI-generated imagery is used.",
       "ruleText": "",
-      "helpText": "<div><b>Take a seat</b> - every seated player gets an explorer at the campfire and, unless you switch them off, a best-friend chip on the right (click a chip to pick another animal).</div><div><br></div><div><b>1 - Roll the die.</b> Click the big die. Rolling an animal turns the next tile face up next to it, so everybody sees which animal is about to go into the river. Rolling the snake sends the leading explorer one space back (never behind space 7) and you roll again; a second snake ends your turn.</div><div><b>2 - Push the tile in.</b> Click one of the four green arrows above the river. The tile slides under the hanging bridge and disappears, the tile that was there surfaces at the front water spot, everything else moves one place down and the last tile drops over the waterfall.</div><div><b>3 - Walk.</b> Click the orange paw. It counts how often the rolled animal is visible in the eight open water spots, adds the best-friend bonus when your explorer stands on a crossing right next to a tile showing your friend, moves your explorer and passes the die on.</div><div><br></div><div><b>Automated:</b> setup and reshuffling, the sliding of the river, drawing tiles and passing the turn.</div><div><b>Optional:</b> the rules are applied for you - the paw counts and walks, and the snake sends the leading explorer back the moment it is rolled. Click the green robot to switch that off: the paw then only shows the number it counted and you move your own explorer by dragging it. Explorers and tiles can be dragged by hand in either mode.</div><div><br></div><div>The red button starts a new game and lets you leave the best-friend chips in the box for the beginner version. The blue button passes the turn on manually.</div>"
+      "helpText": "<div><b>Take a seat</b> - every seated player gets an explorer at the campfire and, unless you switch them off, a best-friend chip on the right (click a chip to pick another animal).</div><div><br></div><div><b>The river</b> runs from top to bottom in four channels. Every channel has five places: under the hanging bridge, the front water spot, under the fallen log, the rear water spot and under the waterfall. Only the eight water spots are open - the three crossings the trail runs over keep their tile a secret.</div><div><br></div><div><b>1 - Roll the die.</b> Click the big die. Rolling an animal turns the next tile face up next to it, so everybody sees which animal is about to go into the river. Rolling the snake sends the leading explorer one space back (never behind space 7, where the snake lurks in the bushes) and you roll again; a second snake ends your turn.</div><div><b>2 - Push the tile in.</b> Click one of the four green arrows above the river. The whole channel slides on by one place: the tile under the hanging bridge surfaces in the front water, the front tile dives under the log, the tile under the log surfaces in the rear water, the rear tile slips under the waterfall and the tile that was there drops into the plunge pool.</div><div><b>3 - Walk.</b> Click the orange paw. It counts how often the rolled animal is visible in the eight open water spots, adds the best-friend bonus when your explorer stands on a crossing right next to a tile showing your friend, moves your explorer and passes the die on.</div><div><br></div><div><b>Automated:</b> setup and reshuffling, the sliding of the river, drawing tiles and passing the turn.</div><div><b>Optional:</b> the rules are applied for you - the paw counts and walks, and the snake sends the leading explorer back the moment it is rolled. Click the green robot to switch that off: the paw then only shows the number it counted and you move your own explorer by dragging it. Explorers and tiles can be dragged by hand in either mode.</div><div><br></div><div>The red button starts a new game and lets you leave the best-friend chips in the box for the beginner version. The blue button passes the turn on manually.</div>"
     }
   },
   "board": {
@@ -35,16 +35,58 @@
     "width": 1600,
     "height": 1000,
     "layer": -4,
-    "image": "/assets/1663796806_29355",
+    "image": "/assets/-1908815885_23543",
     "movable": false,
     "movableInEdit": false,
     "clickable": false
   },
+  "coverA": {
+    "type": "basic",
+    "id": "coverA",
+    "x": 330,
+    "y": 94,
+    "width": 620,
+    "height": 128,
+    "layer": 1,
+    "image": "/assets/-930948808_4127",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "pointer-events: none"
+  },
+  "coverC": {
+    "type": "basic",
+    "id": "coverC",
+    "x": 330,
+    "y": 338,
+    "width": 620,
+    "height": 128,
+    "layer": 1,
+    "image": "/assets/-159473509_2750",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "pointer-events: none"
+  },
+  "coverE": {
+    "type": "basic",
+    "id": "coverE",
+    "x": 330,
+    "y": 582,
+    "width": 620,
+    "height": 128,
+    "layer": 1,
+    "image": "/assets/288057074_7905",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "pointer-events: none"
+  },
   "campfire": {
     "type": "basic",
     "id": "campfire",
-    "x": 208,
-    "y": 176,
+    "x": 144,
+    "y": 192,
     "width": 92,
     "height": 92,
     "layer": -3,
@@ -60,11 +102,11 @@
   "toadKing": {
     "type": "basic",
     "id": "toadKing",
-    "x": 1032,
-    "y": 650,
+    "x": 1005,
+    "y": 596,
     "width": 100,
     "height": 100,
-    "layer": 2,
+    "layer": 1,
     "icon": {
       "name": "delapouite/frog-prince",
       "color": "#7fe0a8",
@@ -85,7 +127,15 @@
       "height": 100,
       "clickable": false,
       "borderRadius": 16,
-      "ink": "#fff8e7"
+      "ink": "#fff8e7",
+      "css": {
+        "default": {
+          "transition": "transform 900ms cubic-bezier(.33,.02,.28,1)"
+        },
+        ".dragging": {
+          "transition": "none"
+        }
+      }
     },
     "cardTypes": {
       "monkey": {
@@ -426,8 +476,8 @@
   "a1": {
     "type": "holder",
     "id": "a1",
-    "x": 481,
-    "y": 112,
+    "x": 376,
+    "y": 104,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -437,14 +487,14 @@
     "dropTarget": {
       "deck": "tiles"
     },
-    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "b1": {
     "type": "holder",
     "id": "b1",
-    "x": 481,
-    "y": 312,
+    "x": 376,
+    "y": 226,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -460,8 +510,25 @@
   "c1": {
     "type": "holder",
     "id": "c1",
-    "x": 481,
-    "y": 512,
+    "x": 376,
+    "y": 348,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
+    "layer": -3
+  },
+  "d1": {
+    "type": "holder",
+    "id": "d1",
+    "x": 376,
+    "y": 470,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -472,13 +539,30 @@
       "deck": "tiles"
     },
     "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "e1": {
+    "type": "holder",
+    "id": "e1",
+    "x": 376,
+    "y": 592,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "a2": {
     "type": "holder",
     "id": "a2",
-    "x": 626,
-    "y": 112,
+    "x": 516,
+    "y": 104,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -488,14 +572,14 @@
     "dropTarget": {
       "deck": "tiles"
     },
-    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "b2": {
     "type": "holder",
     "id": "b2",
-    "x": 626,
-    "y": 312,
+    "x": 516,
+    "y": 226,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -511,8 +595,25 @@
   "c2": {
     "type": "holder",
     "id": "c2",
-    "x": 626,
-    "y": 512,
+    "x": 516,
+    "y": 348,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
+    "layer": -3
+  },
+  "d2": {
+    "type": "holder",
+    "id": "d2",
+    "x": 516,
+    "y": 470,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -523,13 +624,30 @@
       "deck": "tiles"
     },
     "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "e2": {
+    "type": "holder",
+    "id": "e2",
+    "x": 516,
+    "y": 592,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "a3": {
     "type": "holder",
     "id": "a3",
-    "x": 771,
-    "y": 112,
+    "x": 656,
+    "y": 104,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -539,14 +657,14 @@
     "dropTarget": {
       "deck": "tiles"
     },
-    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "b3": {
     "type": "holder",
     "id": "b3",
-    "x": 771,
-    "y": 312,
+    "x": 656,
+    "y": 226,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -562,8 +680,25 @@
   "c3": {
     "type": "holder",
     "id": "c3",
-    "x": 771,
-    "y": 512,
+    "x": 656,
+    "y": 348,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
+    "layer": -3
+  },
+  "d3": {
+    "type": "holder",
+    "id": "d3",
+    "x": 656,
+    "y": 470,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -574,13 +709,30 @@
       "deck": "tiles"
     },
     "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "e3": {
+    "type": "holder",
+    "id": "e3",
+    "x": 656,
+    "y": 592,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "a4": {
     "type": "holder",
     "id": "a4",
-    "x": 916,
-    "y": 112,
+    "x": 796,
+    "y": 104,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -590,14 +742,14 @@
     "dropTarget": {
       "deck": "tiles"
     },
-    "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "b4": {
     "type": "holder",
     "id": "b4",
-    "x": 916,
-    "y": 312,
+    "x": 796,
+    "y": 226,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -613,8 +765,25 @@
   "c4": {
     "type": "holder",
     "id": "c4",
-    "x": 916,
-    "y": 512,
+    "x": 796,
+    "y": 348,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
+    "layer": -3
+  },
+  "d4": {
+    "type": "holder",
+    "id": "d4",
+    "x": 796,
+    "y": 470,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -625,6 +794,23 @@
       "deck": "tiles"
     },
     "css": "background: rgba(7,42,60,.45); border: 2px solid rgba(160,225,245,.55)",
+    "layer": -3
+  },
+  "e4": {
+    "type": "holder",
+    "id": "e4",
+    "x": 796,
+    "y": 592,
+    "width": 108,
+    "height": 108,
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "borderRadius": 18,
+    "preventPiles": true,
+    "dropTarget": {
+      "deck": "tiles"
+    },
+    "css": "background: rgba(10,34,20,.42); border: 2px solid rgba(255,226,164,.35)",
     "layer": -3
   },
   "drawPile": {
@@ -662,8 +848,8 @@
   "discardPile": {
     "type": "holder",
     "id": "discardPile",
-    "x": 771,
-    "y": 750,
+    "x": 586,
+    "y": 756,
     "width": 108,
     "height": 108,
     "dropOffsetX": 4,
@@ -678,36 +864,38 @@
   "sp0": {
     "type": "holder",
     "id": "sp0",
-    "x": 150,
-    "y": 109,
-    "width": 200,
-    "height": 62,
+    "x": 104,
+    "y": 126,
+    "width": 172,
+    "height": 64,
     "spaceIndex": 0,
     "nextTo": [],
-    "dropOffsetX": 12,
-    "dropOffsetY": 7,
-    "stackOffsetX": 46,
+    "dropOffsetX": 10,
+    "dropOffsetY": 8,
+    "stackOffsetX": 38,
     "stackOffsetY": 0,
     "dropTarget": {
       "pawn": true
     },
     "preventPiles": true,
     "alignChildren": true,
-    "borderRadius": "50%",
-    "layer": -3,
-    "css": "background: rgba(126,102,58,.65); border: 3px solid rgba(255,226,164,.75)"
+    "borderRadius": 26,
+    "layer": 2,
+    "css": "background: rgba(126,102,58,.8); border: 3px solid rgba(255,226,164,.75)"
   },
   "sp1": {
     "type": "holder",
     "id": "sp1",
-    "x": 301,
-    "y": 174,
-    "width": 62,
-    "height": 62,
+    "x": 400,
+    "y": 128,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 1,
-    "nextTo": [],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "nextTo": [
+      "b1"
+    ],
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -716,20 +904,22 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp2": {
     "type": "holder",
     "id": "sp2",
-    "x": 377,
-    "y": 231,
-    "width": 62,
-    "height": 62,
+    "x": 540,
+    "y": 128,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 2,
-    "nextTo": [],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "nextTo": [
+      "b2"
+    ],
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -738,22 +928,22 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp3": {
     "type": "holder",
     "id": "sp3",
-    "x": 504,
-    "y": 235,
-    "width": 62,
-    "height": 62,
+    "x": 680,
+    "y": 128,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 3,
     "nextTo": [
-      "b1"
+      "b3"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -762,22 +952,22 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp4": {
     "type": "holder",
     "id": "sp4",
-    "x": 649,
-    "y": 235,
-    "width": 62,
-    "height": 62,
+    "x": 820,
+    "y": 128,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 4,
     "nextTo": [
-      "b2"
+      "b4"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -786,22 +976,20 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp5": {
     "type": "holder",
     "id": "sp5",
-    "x": 794,
-    "y": 235,
-    "width": 62,
-    "height": 62,
+    "x": 1025,
+    "y": 196,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 5,
-    "nextTo": [
-      "b3"
-    ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "nextTo": [],
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -810,22 +998,20 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp6": {
     "type": "holder",
     "id": "sp6",
-    "x": 939,
-    "y": 235,
-    "width": 62,
-    "height": 62,
+    "x": 1025,
+    "y": 266,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 6,
-    "nextTo": [
-      "b4"
-    ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "nextTo": [],
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -834,20 +1020,20 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp7": {
     "type": "holder",
     "id": "sp7",
-    "x": 1054,
-    "y": 299,
-    "width": 62,
-    "height": 62,
+    "x": 1025,
+    "y": 336,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 7,
     "nextTo": [],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -856,20 +1042,23 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp8": {
     "type": "holder",
     "id": "sp8",
-    "x": 1077,
-    "y": 381,
-    "width": 62,
-    "height": 62,
+    "x": 820,
+    "y": 372,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 8,
-    "nextTo": [],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "nextTo": [
+      "b4",
+      "d4"
+    ],
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -878,23 +1067,23 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp9": {
     "type": "holder",
     "id": "sp9",
-    "x": 939,
-    "y": 435,
-    "width": 62,
-    "height": 62,
+    "x": 680,
+    "y": 372,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 9,
     "nextTo": [
-      "b4",
-      "c4"
+      "b3",
+      "d3"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -903,23 +1092,23 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp10": {
     "type": "holder",
     "id": "sp10",
-    "x": 794,
-    "y": 435,
-    "width": 62,
-    "height": 62,
+    "x": 540,
+    "y": 372,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 10,
     "nextTo": [
-      "b3",
-      "c3"
+      "b2",
+      "d2"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -928,23 +1117,23 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp11": {
     "type": "holder",
     "id": "sp11",
-    "x": 649,
-    "y": 435,
-    "width": 62,
-    "height": 62,
+    "x": 400,
+    "y": 372,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 11,
     "nextTo": [
-      "b2",
-      "c2"
+      "b1",
+      "d1"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -953,23 +1142,20 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp12": {
     "type": "holder",
     "id": "sp12",
-    "x": 504,
-    "y": 435,
-    "width": 62,
-    "height": 62,
+    "x": 160,
+    "y": 440,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 12,
-    "nextTo": [
-      "b1",
-      "c1"
-    ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "nextTo": [],
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -978,20 +1164,20 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp13": {
     "type": "holder",
     "id": "sp13",
-    "x": 385,
-    "y": 501,
-    "width": 62,
-    "height": 62,
+    "x": 160,
+    "y": 510,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 13,
     "nextTo": [],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -1000,20 +1186,20 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp14": {
     "type": "holder",
     "id": "sp14",
-    "x": 367,
-    "y": 583,
-    "width": 62,
-    "height": 62,
+    "x": 160,
+    "y": 580,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 14,
     "nextTo": [],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -1022,22 +1208,22 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp15": {
     "type": "holder",
     "id": "sp15",
-    "x": 504,
-    "y": 645,
-    "width": 62,
-    "height": 62,
+    "x": 400,
+    "y": 616,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 15,
     "nextTo": [
-      "c1"
+      "d1"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -1046,22 +1232,22 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp16": {
     "type": "holder",
     "id": "sp16",
-    "x": 649,
-    "y": 645,
-    "width": 62,
-    "height": 62,
+    "x": 540,
+    "y": 616,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 16,
     "nextTo": [
-      "c2"
+      "d2"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -1070,22 +1256,22 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp17": {
     "type": "holder",
     "id": "sp17",
-    "x": 794,
-    "y": 645,
-    "width": 62,
-    "height": 62,
+    "x": 680,
+    "y": 616,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 17,
     "nextTo": [
-      "c3"
+      "d3"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -1094,22 +1280,22 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp18": {
     "type": "holder",
     "id": "sp18",
-    "x": 939,
-    "y": 645,
-    "width": 62,
-    "height": 62,
+    "x": 820,
+    "y": 616,
+    "width": 60,
+    "height": 60,
     "spaceIndex": 18,
     "nextTo": [
-      "c4"
+      "d4"
     ],
-    "dropOffsetX": 8,
-    "dropOffsetY": 7,
+    "dropOffsetX": 7,
+    "dropOffsetY": 6,
     "stackOffsetX": 8,
     "stackOffsetY": 5,
     "dropTarget": {
@@ -1118,14 +1304,14 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
+    "layer": 2,
     "css": "background: radial-gradient(circle at 34% 28%, #efe9d2, #9aa08c 66%, #6a6f5f); border: 3px solid rgba(28,24,12,.6)"
   },
   "sp19": {
     "type": "holder",
     "id": "sp19",
-    "x": 1036,
-    "y": 740,
+    "x": 1009,
+    "y": 600,
     "width": 92,
     "height": 92,
     "spaceIndex": 19,
@@ -1140,8 +1326,8 @@
     "preventPiles": true,
     "alignChildren": true,
     "borderRadius": "50%",
-    "layer": -3,
-    "css": "background: radial-gradient(circle at 34% 28%, #fff3c8, #ffcf5e 62%, #d79b1c); border: 4px solid #7a4f0b"
+    "layer": 2,
+    "css": "background: radial-gradient(circle at 50% 50%, rgba(255,243,200,0) 46%, rgba(255,207,94,.85) 62%, #d79b1c); border: 4px solid #7a4f0b"
   },
   "pawn1": {
     "type": "basic",
@@ -1160,7 +1346,15 @@
     "color": "#d55e00",
     "borderColor": "#20130a",
     "borderWidth": 2,
-    "display": false
+    "display": false,
+    "css": {
+      "default": {
+        "transition": "transform 650ms cubic-bezier(.33,.02,.28,1)"
+      },
+      ".dragging": {
+        "transition": "none"
+      }
+    }
   },
   "pawn2": {
     "type": "basic",
@@ -1179,7 +1373,15 @@
     "color": "#f0e442",
     "borderColor": "#20130a",
     "borderWidth": 2,
-    "display": false
+    "display": false,
+    "css": {
+      "default": {
+        "transition": "transform 650ms cubic-bezier(.33,.02,.28,1)"
+      },
+      ".dragging": {
+        "transition": "none"
+      }
+    }
   },
   "pawn3": {
     "type": "basic",
@@ -1198,7 +1400,15 @@
     "color": "#009e73",
     "borderColor": "#20130a",
     "borderWidth": 2,
-    "display": false
+    "display": false,
+    "css": {
+      "default": {
+        "transition": "transform 650ms cubic-bezier(.33,.02,.28,1)"
+      },
+      ".dragging": {
+        "transition": "none"
+      }
+    }
   },
   "pawn4": {
     "type": "basic",
@@ -1217,7 +1427,15 @@
     "color": "#0072b2",
     "borderColor": "#20130a",
     "borderWidth": 2,
-    "display": false
+    "display": false,
+    "css": {
+      "default": {
+        "transition": "transform 650ms cubic-bezier(.33,.02,.28,1)"
+      },
+      ".dragging": {
+        "transition": "none"
+      }
+    }
   },
   "die": {
     "type": "dice",
@@ -1346,8 +1564,8 @@
   "arrow1": {
     "type": "button",
     "id": "arrow1",
-    "x": 499,
-    "y": 58,
+    "x": 394,
+    "y": 26,
     "width": 72,
     "height": 46,
     "borderRadius": 14,
@@ -1360,7 +1578,7 @@
       "scale": 1.15
     },
     "clickRoutine": [
-      "// push the revealed tile into this arm of the river, everything below it slides on",
+      "// push the revealed tile into this arm of the river - the whole channel slides on",
       {
         "func": "COUNT",
         "holder": [
@@ -1376,17 +1594,31 @@
         "thenRoutine": [
           {
             "func": "MOVE",
-            "from": "c1",
+            "from": "e1",
             "to": "discardPile",
             "count": 1,
             "face": 0
           },
           {
             "func": "MOVE",
+            "from": "d1",
+            "to": "e1",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "c1",
+            "to": "d1",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
             "from": "b1",
             "to": "c1",
             "count": 1,
-            "face": 1
+            "face": 0
           },
           {
             "func": "MOVE",
@@ -1401,6 +1633,11 @@
             "to": "a1",
             "count": 1,
             "face": 0
+          },
+          "// let the slide finish before anybody counts the open water",
+          {
+            "func": "DELAY",
+            "milliseconds": 950
           }
         ]
       }
@@ -1409,8 +1646,8 @@
   "arrow2": {
     "type": "button",
     "id": "arrow2",
-    "x": 644,
-    "y": 58,
+    "x": 534,
+    "y": 26,
     "width": 72,
     "height": 46,
     "borderRadius": 14,
@@ -1423,7 +1660,7 @@
       "scale": 1.15
     },
     "clickRoutine": [
-      "// push the revealed tile into this arm of the river, everything below it slides on",
+      "// push the revealed tile into this arm of the river - the whole channel slides on",
       {
         "func": "COUNT",
         "holder": [
@@ -1439,17 +1676,31 @@
         "thenRoutine": [
           {
             "func": "MOVE",
-            "from": "c2",
+            "from": "e2",
             "to": "discardPile",
             "count": 1,
             "face": 0
           },
           {
             "func": "MOVE",
+            "from": "d2",
+            "to": "e2",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "c2",
+            "to": "d2",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
             "from": "b2",
             "to": "c2",
             "count": 1,
-            "face": 1
+            "face": 0
           },
           {
             "func": "MOVE",
@@ -1464,6 +1715,11 @@
             "to": "a2",
             "count": 1,
             "face": 0
+          },
+          "// let the slide finish before anybody counts the open water",
+          {
+            "func": "DELAY",
+            "milliseconds": 950
           }
         ]
       }
@@ -1472,8 +1728,8 @@
   "arrow3": {
     "type": "button",
     "id": "arrow3",
-    "x": 789,
-    "y": 58,
+    "x": 674,
+    "y": 26,
     "width": 72,
     "height": 46,
     "borderRadius": 14,
@@ -1486,7 +1742,7 @@
       "scale": 1.15
     },
     "clickRoutine": [
-      "// push the revealed tile into this arm of the river, everything below it slides on",
+      "// push the revealed tile into this arm of the river - the whole channel slides on",
       {
         "func": "COUNT",
         "holder": [
@@ -1502,17 +1758,31 @@
         "thenRoutine": [
           {
             "func": "MOVE",
-            "from": "c3",
+            "from": "e3",
             "to": "discardPile",
             "count": 1,
             "face": 0
           },
           {
             "func": "MOVE",
+            "from": "d3",
+            "to": "e3",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "c3",
+            "to": "d3",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
             "from": "b3",
             "to": "c3",
             "count": 1,
-            "face": 1
+            "face": 0
           },
           {
             "func": "MOVE",
@@ -1527,6 +1797,11 @@
             "to": "a3",
             "count": 1,
             "face": 0
+          },
+          "// let the slide finish before anybody counts the open water",
+          {
+            "func": "DELAY",
+            "milliseconds": 950
           }
         ]
       }
@@ -1535,8 +1810,8 @@
   "arrow4": {
     "type": "button",
     "id": "arrow4",
-    "x": 934,
-    "y": 58,
+    "x": 814,
+    "y": 26,
     "width": 72,
     "height": 46,
     "borderRadius": 14,
@@ -1549,7 +1824,7 @@
       "scale": 1.15
     },
     "clickRoutine": [
-      "// push the revealed tile into this arm of the river, everything below it slides on",
+      "// push the revealed tile into this arm of the river - the whole channel slides on",
       {
         "func": "COUNT",
         "holder": [
@@ -1565,17 +1840,31 @@
         "thenRoutine": [
           {
             "func": "MOVE",
-            "from": "c4",
+            "from": "e4",
             "to": "discardPile",
             "count": 1,
             "face": 0
           },
           {
             "func": "MOVE",
+            "from": "d4",
+            "to": "e4",
+            "count": 1,
+            "face": 0
+          },
+          {
+            "func": "MOVE",
+            "from": "c4",
+            "to": "d4",
+            "count": 1,
+            "face": 1
+          },
+          {
+            "func": "MOVE",
             "from": "b4",
             "to": "c4",
             "count": 1,
-            "face": 1
+            "face": 0
           },
           {
             "func": "MOVE",
@@ -1590,6 +1879,11 @@
             "to": "a4",
             "count": 1,
             "face": 0
+          },
+          "// let the slide finish before anybody counts the open water",
+          {
+            "func": "DELAY",
+            "milliseconds": 950
           }
         ]
       }
@@ -1869,8 +2163,8 @@
   "badge2": {
     "type": "basic",
     "id": "badge2",
-    "x": 443,
-    "y": 63,
+    "x": 334,
+    "y": 31,
     "width": 36,
     "height": 36,
     "layer": 2,
@@ -1911,7 +2205,7 @@
       "scale": 0.95
     },
     "clickRoutine": [
-      "// count the rolled animal in the eight water spots and walk that many steps",
+      "// count the rolled animal in the eight open water spots and walk that many steps",
       {
         "func": "SELECT",
         "type": "seat",
@@ -1974,10 +2268,10 @@
               "b2",
               "b3",
               "b4",
-              "c1",
-              "c2",
-              "c3",
-              "c4"
+              "d1",
+              "d2",
+              "d3",
+              "d4"
             ],
             "collection": "seen"
           },
@@ -2067,6 +2361,10 @@
                 "relation": ">",
                 "operand2": 0,
                 "thenRoutine": [
+                  {
+                    "func": "DELAY",
+                    "milliseconds": 700
+                  },
                   "var target = ${target} + ${bonusB}",
                   "var target = min ${target} 19",
                   {
@@ -2269,7 +2567,7 @@
       }
     ],
     "setupRoutine": [
-      "// gather every tile, shuffle it face down and fill the river again",
+      "// gather every tile, shuffle it face down and start the river again",
       {
         "func": "SELECT",
         "type": "card",
@@ -2292,6 +2590,7 @@
         "func": "SHUFFLE",
         "holder": "drawPile"
       },
+      "// eight tiles go in: four end up under the hanging bridge, four in the front water",
       {
         "func": "FOREACH",
         "range": [
@@ -2299,12 +2598,12 @@
           4
         ],
         "loopRoutine": [
-          "var hidden = 'a' + ${value}",
+          "var covered = 'a' + ${value}",
           "var front = 'b' + ${value}",
           {
             "func": "MOVE",
             "from": "drawPile",
-            "to": "${hidden}",
+            "to": "${covered}",
             "count": 1,
             "face": 1
           },
@@ -2409,7 +2708,7 @@
         "turn": "first",
         "turnCycle": "position"
       },
-      "// the four tiles are shown to everybody before they dive under the hanging bridge",
+      "// the eight tiles are shown to everybody before four of them dive under the bridge",
       {
         "func": "DELAY",
         "milliseconds": 3200
@@ -2618,7 +2917,7 @@
       }
     ],
     "revealRoutine": [
-      "// turn the next tile face up; the waterfall pile is reshuffled when the stack runs dry",
+      "// turn the next tile face up; the plunge pool is reshuffled when the stack runs dry",
       {
         "func": "COUNT",
         "holder": [
