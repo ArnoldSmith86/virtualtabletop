@@ -3,7 +3,7 @@
     "version": 21,
     "info": {
       "name": "Rent Circuit",
-      "image": "/assets/1283561713_26486",
+      "image": "/assets/394776493_40428",
       "showName": true,
       "description": "Race a token around a city loop, snap up the streets you land on and squeeze the rent out of everyone else. Build houses and hotels on a colour you have cornered, dodge the tax office and stay out of jail - the last player with money wins.",
       "players": "2-6",
@@ -24,7 +24,7 @@
       "usesAIImagery": false,
       "variant": "",
       "variantImage": "",
-      "lastUpdate": 1785672000000
+      "lastUpdate": 1787918400000
     }
   },
   "board": {
@@ -36,7 +36,7 @@
     "layer": -6,
     "movable": false,
     "clickable": false,
-    "css": "background:#cfe3d0;border:3px solid #23412b;box-shadow:0 4px 16px #0004",
+    "css": "background:#cfe3d0;border:3px solid #23412b;box-shadow:0 0 0 5px #f3ead3, 0 0 0 7px #8d7a4e, 0 22px 48px #00000073",
     "borderRadius": 6
   },
   "center": {
@@ -48,7 +48,7 @@
     "layer": -5,
     "movable": false,
     "clickable": false,
-    "css": "background:linear-gradient(160deg,#e8f1e6,#cfe3d0)"
+    "css": "background:radial-gradient(circle at 50% 32%, #f3f8f0 0%, #e3ede0 46%, #c9dcc7 100%);box-shadow:inset 0 0 70px #23412b26"
   },
   "title": {
     "id": "title",
@@ -84,7 +84,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;background:#f7f4ea;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
+    "css": "box-sizing:border-box;border:1px solid #46503f;background:radial-gradient(circle at 50% 42%, #fbeec6 0%, #fdfbf4 74%);display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
     "text": "+200",
     "clickRoutine": [
       {
@@ -168,7 +168,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#8b5e3c 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#8b5e3c 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "60",
     "buyable": true,
     "pgroup": "br",
@@ -456,7 +456,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #e2eaf6 0%, #fdfbf4 74%)",
     "text": "",
     "clickRoutine": [
       {
@@ -540,7 +540,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#8b5e3c 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#8b5e3c 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "60",
     "buyable": true,
     "pgroup": "br",
@@ -828,7 +828,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #efeae2 0%, #fdfbf4 74%)",
     "text": "200",
     "clickRoutine": [
       {
@@ -912,7 +912,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "200",
     "buyable": true,
     "pgroup": "st",
@@ -1091,7 +1091,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#7fc7e8 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#7fc7e8 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "100",
     "buyable": true,
     "pgroup": "sk",
@@ -1379,7 +1379,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #fcedcf 0%, #fdfbf4 74%)",
     "text": "",
     "clickRoutine": [
       {
@@ -1463,7 +1463,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#7fc7e8 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#7fc7e8 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "100",
     "buyable": true,
     "pgroup": "sk",
@@ -1751,7 +1751,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#7fc7e8 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#7fc7e8 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "120",
     "buyable": true,
     "pgroup": "sk",
@@ -2039,7 +2039,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;background:#f7f4ea;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
+    "css": "box-sizing:border-box;border:1px solid #46503f;background:radial-gradient(circle at 50% 42%, #e4ebf1 0%, #fdfbf4 74%);display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
     "text": "",
     "clickRoutine": [
       {
@@ -2123,7 +2123,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#c2418e 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#c2418e 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "140",
     "buyable": true,
     "pgroup": "mg",
@@ -2411,7 +2411,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#6d6d6d 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#6d6d6d 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "150",
     "buyable": true,
     "pgroup": "ut",
@@ -2590,7 +2590,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#c2418e 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#c2418e 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "140",
     "buyable": true,
     "pgroup": "mg",
@@ -2878,7 +2878,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#c2418e 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#c2418e 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "160",
     "buyable": true,
     "pgroup": "mg",
@@ -3166,7 +3166,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "200",
     "buyable": true,
     "pgroup": "st",
@@ -3345,7 +3345,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f08a24 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f08a24 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "180",
     "buyable": true,
     "pgroup": "or",
@@ -3633,7 +3633,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #e2eaf6 0%, #fdfbf4 74%)",
     "text": "",
     "clickRoutine": [
       {
@@ -3717,7 +3717,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f08a24 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f08a24 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "180",
     "buyable": true,
     "pgroup": "or",
@@ -4005,7 +4005,7 @@
     "rotation": 90,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f08a24 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f08a24 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "200",
     "buyable": true,
     "pgroup": "or",
@@ -4293,7 +4293,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;background:#f7f4ea;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
+    "css": "box-sizing:border-box;border:1px solid #46503f;background:radial-gradient(circle at 50% 42%, #e2efe1 0%, #fdfbf4 74%);display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
     "text": "",
     "clickRoutine": [
       {
@@ -4377,7 +4377,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#d93a3a 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#d93a3a 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "220",
     "buyable": true,
     "pgroup": "rd",
@@ -4665,7 +4665,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #fcedcf 0%, #fdfbf4 74%)",
     "text": "",
     "clickRoutine": [
       {
@@ -4749,7 +4749,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#d93a3a 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#d93a3a 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "220",
     "buyable": true,
     "pgroup": "rd",
@@ -5037,7 +5037,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#d93a3a 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#d93a3a 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "240",
     "buyable": true,
     "pgroup": "rd",
@@ -5325,7 +5325,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "200",
     "buyable": true,
     "pgroup": "st",
@@ -5504,7 +5504,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f2c900 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f2c900 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "260",
     "buyable": true,
     "pgroup": "yl",
@@ -5792,7 +5792,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f2c900 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f2c900 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "260",
     "buyable": true,
     "pgroup": "yl",
@@ -6080,7 +6080,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#6d6d6d 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#6d6d6d 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "150",
     "buyable": true,
     "pgroup": "ut",
@@ -6259,7 +6259,7 @@
     "rotation": 180,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f2c900 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#f2c900 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "280",
     "buyable": true,
     "pgroup": "yl",
@@ -6547,7 +6547,7 @@
     "rotation": 0,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;background:#f7f4ea;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
+    "css": "box-sizing:border-box;border:1px solid #46503f;background:radial-gradient(circle at 50% 42%, #f6e2de 0%, #fdfbf4 74%);display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:4px",
     "text": "",
     "clickRoutine": [
       {
@@ -6631,7 +6631,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2fa85a 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2fa85a 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "300",
     "buyable": true,
     "pgroup": "gr",
@@ -6919,7 +6919,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2fa85a 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2fa85a 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "300",
     "buyable": true,
     "pgroup": "gr",
@@ -7207,7 +7207,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #e2eaf6 0%, #fdfbf4 74%)",
     "text": "",
     "clickRoutine": [
       {
@@ -7291,7 +7291,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2fa85a 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2fa85a 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "320",
     "buyable": true,
     "pgroup": "gr",
@@ -7579,7 +7579,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#3b3b3b 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "200",
     "buyable": true,
     "pgroup": "st",
@@ -7758,7 +7758,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #fcedcf 0%, #fdfbf4 74%)",
     "text": "",
     "clickRoutine": [
       {
@@ -7842,7 +7842,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2e5fbf 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2e5fbf 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "350",
     "buyable": true,
     "pgroup": "bl",
@@ -8130,7 +8130,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:#f7f4ea",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:radial-gradient(circle at 50% 42%, #efeae2 0%, #fdfbf4 74%)",
     "text": "100",
     "clickRoutine": [
       {
@@ -8214,7 +8214,7 @@
     "rotation": 270,
     "layer": -4,
     "movable": false,
-    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2e5fbf 0 21px,#f7f4ea 21px)",
+    "css": "box-sizing:border-box;border:1px solid #46503f;display:flex;align-items:flex-end;justify-content:center;font-size:13px;font-weight:700;color:#3b3b3b;padding-bottom:5px;background:linear-gradient(to bottom,#2e5fbf 0 21px,#fdfbf4 21px,#f1ece0 100%)",
     "text": "400",
     "buyable": true,
     "pgroup": "bl",
@@ -15464,5 +15464,451 @@
         ]
       }
     ]
+  },
+  "tableBg": {
+    "id": "tableBg",
+    "x": 0,
+    "y": 0,
+    "width": 1600,
+    "height": 1000,
+    "layer": -9,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background:radial-gradient(ellipse at 50% 2%, #44606c 0%, #2a414c 44%, #15222a 100%)"
+  },
+  "skyR1": {
+    "id": "skyR1",
+    "x": 1262,
+    "y": 908,
+    "width": 84,
+    "height": 78,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/church.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "skyR2": {
+    "id": "skyR2",
+    "x": 1332,
+    "y": 890,
+    "width": 96,
+    "height": 96,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/block-house.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "skyR3": {
+    "id": "skyR3",
+    "x": 1420,
+    "y": 898,
+    "width": 78,
+    "height": 88,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/factory.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "skyR4": {
+    "id": "skyR4",
+    "x": 1494,
+    "y": 876,
+    "width": 100,
+    "height": 110,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/caro-asercion/clock-tower.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "skyR5": {
+    "id": "skyR5",
+    "x": 1300,
+    "y": 596,
+    "width": 118,
+    "height": 118,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/caro-asercion/subway-train.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.07"
+  },
+  "skyR6": {
+    "id": "skyR6",
+    "x": 1462,
+    "y": 660,
+    "width": 84,
+    "height": 84,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/city-car.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.07"
+  },
+  "skyL1": {
+    "id": "skyL1",
+    "x": 16,
+    "y": 918,
+    "width": 72,
+    "height": 72,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/family-house.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "skyL2": {
+    "id": "skyL2",
+    "x": 82,
+    "y": 906,
+    "width": 84,
+    "height": 84,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/huts-village.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "skyL3": {
+    "id": "skyL3",
+    "x": 162,
+    "y": 924,
+    "width": 66,
+    "height": 66,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/greenhouse.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "skyL4": {
+    "id": "skyL4",
+    "x": 222,
+    "y": 914,
+    "width": 76,
+    "height": 76,
+    "layer": -8,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/barn.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#9ec4d4",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "leftPanel": {
+    "id": "leftPanel",
+    "x": 8,
+    "y": 12,
+    "width": 334,
+    "height": 864,
+    "layer": -7,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 12,
+    "css": "background:linear-gradient(180deg,#f8faf5 0%,#e7eee2 100%);border:1px solid #ffffff2e;box-shadow:0 14px 34px #00000059"
+  },
+  "rightPanel": {
+    "id": "rightPanel",
+    "x": 1254,
+    "y": 0,
+    "width": 342,
+    "height": 562,
+    "layer": -7,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": 12,
+    "css": "background:linear-gradient(180deg,#f8faf5 0%,#e7eee2 100%);border:1px solid #ffffff2e;box-shadow:0 14px 34px #00000059"
+  },
+  "ctSky1": {
+    "id": "ctSky1",
+    "parent": "center",
+    "x": 24,
+    "y": 142,
+    "width": 56,
+    "height": 56,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/lighthouse.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky2": {
+    "id": "ctSky2",
+    "parent": "center",
+    "x": 84,
+    "y": 150,
+    "width": 48,
+    "height": 48,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/huts-village.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky3": {
+    "id": "ctSky3",
+    "parent": "center",
+    "x": 140,
+    "y": 138,
+    "width": 60,
+    "height": 60,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/church.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky4": {
+    "id": "ctSky4",
+    "parent": "center",
+    "x": 206,
+    "y": 132,
+    "width": 66,
+    "height": 66,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/block-house.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky5": {
+    "id": "ctSky5",
+    "parent": "center",
+    "x": 278,
+    "y": 136,
+    "width": 62,
+    "height": 62,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/caro-asercion/clock-tower.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky6": {
+    "id": "ctSky6",
+    "parent": "center",
+    "x": 346,
+    "y": 140,
+    "width": 58,
+    "height": 58,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/bank.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky7": {
+    "id": "ctSky7",
+    "parent": "center",
+    "x": 410,
+    "y": 144,
+    "width": 54,
+    "height": 54,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/post-office.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky8": {
+    "id": "ctSky8",
+    "parent": "center",
+    "x": 470,
+    "y": 138,
+    "width": 60,
+    "height": 60,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/theater.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky9": {
+    "id": "ctSky9",
+    "parent": "center",
+    "x": 536,
+    "y": 134,
+    "width": 64,
+    "height": 64,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/factory.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctSky10": {
+    "id": "ctSky10",
+    "parent": "center",
+    "x": 606,
+    "y": 142,
+    "width": 56,
+    "height": 56,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/observatory.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.1"
+  },
+  "ctDeco1": {
+    "id": "ctDeco1",
+    "parent": "center",
+    "x": 30,
+    "y": 524,
+    "width": 158,
+    "height": 158,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/delapouite/arch-bridge.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.065"
+  },
+  "ctDeco2": {
+    "id": "ctDeco2",
+    "parent": "center",
+    "x": 514,
+    "y": 524,
+    "width": 158,
+    "height": 158,
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/caro-asercion/subway-train.svg",
+    "svgReplaces": {
+      "#000": "tint",
+      "currentColor": "tint"
+    },
+    "tint": "#2f4a37",
+    "css": "pointer-events:none;background-size:contain;background-repeat:no-repeat;background-position:center;opacity:0.065"
   }
 }
