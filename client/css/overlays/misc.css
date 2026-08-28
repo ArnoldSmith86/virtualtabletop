@@ -41,17 +41,17 @@
     }
   }
 
-.ai-imagery-notice {
+.ai-notice {
   margin-top: 12px;
   padding: 8px;
   background: rgba(33, 150, 243, 0.1);
   border-radius: 4px;
   border-left: 3px solid var(--VTTblue);
 }
-.ai-imagery-notice .material-symbols {
+.ai-notice .material-symbols {
   vertical-align: middle;
   color: var(--VTTblue);
 }
-.ai-imagery-notice > span {
+.ai-notice > span {
   margin-left: 4px;
 }

@@ -382,7 +382,7 @@ function updateLibraryFilter() {
         const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
         const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
         const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-        const aiMatch       = filters.ai       == 'Any' || (filters.ai === 'ai') === (dataset.usesaiimagery === '1');
+        const aiMatch       = filters.ai       == 'Any' || (filters.ai === 'ai') === (dataset.usesai === '1');
         callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch && aiMatch);
       }
     }
@@ -559,7 +559,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' linkedGame';
     if(state.savePlayers)
       entry.className += ' savedGame';
-    if(state.usesAIImagery)
+    if(usesAI(state))
       entry.className += ' has-ai-badge';
     if(Array.isArray(state.importerWarnings) && state.importerWarnings.length)
       entry.className += ' hasImportNotes';
@@ -574,7 +574,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     const aiBadge = $('.ai-badge', entry);
     if(aiBadge) {
-      toggleClass(aiBadge, 'hidden', !state.usesAIImagery);
+      toggleClass(aiBadge, 'hidden', !usesAI(state));
+      aiBadge.title = aiDisclosureText(state);
     }
 
     if(state.image) {
@@ -650,7 +651,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
-    entry.dataset.usesaiimagery = state.usesAIImagery ? '1' : '0';
+    entry.dataset.usesai = usesAI(state) ? '1' : '0';
 
     if(state.publicLibraryCategory)
       entry.dataset.type = state.publicLibraryCategory;
@@ -777,6 +778,21 @@ function fillImportNotes(warnings) {
   }
 }
 
+// Both AI disclosure flags share one badge and one library filter.
+function usesAI(state) {
+  return !!(state.usesAIImagery || state.usesAILayout);
+}
+
+// Tooltip of the shared AI badge - one line per disclosure that applies.
+function aiDisclosureText(state) {
+  const lines = [];
+  if(state.usesAIImagery)
+    lines.push('Uses AI generated imagery');
+  if(state.usesAILayout)
+    lines.push('Heavy use of AI for the layout');
+  return lines.join('\n');
+}
+
 function fillStateDetails(states, state, dom) {
   toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
   if(!detailsInSidebar)
@@ -795,7 +811,8 @@ function fillStateDetails(states, state, dom) {
   $('#showNameSimilar').checked = sn === true || sn === 'only similar';
   toggleClass($('#mainDetails'), 'noImage', !state.image);
   toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
-  toggleClass($('#mainDetails'), 'has-ai-badge', !!state.usesAIImagery);
+  toggleClass($('#mainDetails'), 'has-ai-badge', usesAI(state));
+  $('#mainImage .ai-badge').title = aiDisclosureText(state);
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);

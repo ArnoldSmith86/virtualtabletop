@@ -210,8 +210,8 @@
           <i class="material-symbols">auto_awesome</i>
           <select id="filterByAi">
             <option>Any</option>
-            <option value="no-ai">No AI imagery</option>
-            <option value="ai">Uses AI imagery</option>
+            <option value="no-ai">Made without AI</option>
+            <option value="ai">Made with AI</option>
           </select>
         </span>
         <span id="librarySortWrapper" data-priority="3">
@@ -231,7 +231,7 @@
           <button icon="star_rate" class="star"></button>
           <i class="material-symbols linked">link</i>
           <i class="material-symbols importNotes" title="This game was imported - the game details list what could not be translated">info</i>
-          <span class="ai-badge" title="Uses AI generated imagery">AI</span>
+          <span class="ai-badge" title="Uses AI generated content">AI</span>
           <div class="details">
             <h3>Name</h3>
             <h4>Similar Name</h4>
@@ -340,7 +340,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
-          <span class="ai-badge hideForEdit" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
+          <span class="ai-badge hideForEdit" data-showfor="usesAIImagery|usesAILayout" title="Uses AI generated content">AI</span>
           <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
@@ -412,7 +412,7 @@
         </div>
         <button class="prettyButton next"><i class="material-symbols">arrow_forward</i></button>
       </div>
-      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery|importerWarnings">
+      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery|usesAILayout|importerWarnings">
         <h3 data-showfor="importerWarnings" id="importNotesHeading">Import notes</h3>
         <ul data-showfor="importerWarnings" id="importNotes"></ul>
         <h3 data-showfor="ruleText">How to play the game</h3>
@@ -422,9 +422,14 @@
         <h3 data-showfor="attribution">Attribution</h3>
         <div data-field="attribution" data-html="true"></div>
         <div class="onlyForEdit" style="margin-top: 12px;"><input type="checkbox" id="usesAIImagery" data-field="usesAIImagery" data-target="checked"> <label for="usesAIImagery">Uses AI generated imagery</label></div>
-        <div class="hideForEdit ai-imagery-notice" data-showfor="usesAIImagery">
+        <div class="onlyForEdit"><input type="checkbox" id="usesAILayout" data-field="usesAILayout" data-target="checked"> <label for="usesAILayout">Heavy use of AI for the layout</label></div>
+        <div class="hideForEdit ai-notice" data-showfor="usesAIImagery">
           <i class="material-symbols">auto_awesome</i>
           <span>This game uses AI generated imagery.</span>
+        </div>
+        <div class="hideForEdit ai-notice" data-showfor="usesAILayout">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game was built with heavy use of AI for its layout.</span>
         </div>
       </div>
     </div>
@@ -494,7 +499,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
-          <span class="ai-badge" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
+          <span class="ai-badge" data-showfor="usesAIImagery|usesAILayout" title="Uses AI generated content">AI</span>
         </div>
         <div class="details">
           <h1 data-field="name"></h1>
@@ -521,9 +526,13 @@
           <button id="welcomePlayButton" icon="play_arrow">Create room</button>
         </div>
         <p id="welcomeUserGenerated" icon="warning">This game is <b>user-generated content</b> for which VirtualTabletop.io holds no responsibility or liability.</p>
-        <div class="ai-imagery-notice" data-showfor="usesAIImagery">
+        <div class="ai-notice" data-showfor="usesAIImagery">
           <i class="material-symbols">auto_awesome</i>
           <span>This game uses AI generated imagery.</span>
+        </div>
+        <div class="ai-notice" data-showfor="usesAILayout">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game was built with heavy use of AI for its layout.</span>
         </div>
       </div>
     </div>
