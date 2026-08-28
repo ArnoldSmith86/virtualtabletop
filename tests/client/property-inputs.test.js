@@ -588,11 +588,32 @@ describe('the background color input', () => {
     expect(widget.state.css).toEqual({ 'font-size': '20px', 'background-color': '#112233' });
   });
 
-  test('a shorthand that paints more than a color is left alone', () => {
+  test('a shorthand that paints more than a color stays the edited declaration', () => {
     const widget = widgetWith({ background: 'linear-gradient(red, blue)' });
-    expect(backgroundOptions(widget).getValue()).toBe(null);
+    const options = backgroundOptions(widget);
+    expect(options.getValue()).toBe(null);
+    expect(options.getEffective()).toBe('linear-gradient(red, blue)');
+    options.setValue('#112233');
+    expect(widget.state.css).toEqual({ background: '#112233' });
+  });
+
+  test('the color is read without its !important priority', () => {
+    const widget = widgetWith({ background: '#abcdef !important' });
+    expect(backgroundOptions(widget).getValue()).toBe('#abcdef');
+  });
+
+  test('a css string is converted and keeps its other declarations', () => {
+    const widget = widgetWith('background: #abcdef; font-size: 20px');
+    expect(backgroundOptions(widget).getValue()).toBe('#abcdef');
     backgroundOptions(widget).setValue('#112233');
-    expect(widget.state.css).toEqual({ background: 'linear-gradient(red, blue)', 'background-color': '#112233' });
+    expect(widget.state.css).toEqual({ 'font-size': '20px', 'background-color': '#112233' });
+  });
+
+  test('a state class without its own background reads the default one', () => {
+    const widget = widgetWith({ default: { background: '#abcdef' }, '.droppable': {} });
+    expect(backgroundOptions(widget, '.droppable').getValue()).toBe('#abcdef');
+    backgroundOptions(widget, '.droppable').setValue('#112233');
+    expect(widget.state.css).toEqual({ default: { background: '#abcdef' }, '.droppable': { 'background-color': '#112233' } });
   });
 
   test('clearing the color drops both declarations from the state class it was set on', () => {

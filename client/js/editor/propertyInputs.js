@@ -1718,9 +1718,18 @@ function computedCssValue(element, key) {
 // a widget shows (and the scaling the room css gives it). A game that keeps its
 // color in the shorthand still has it read from there, and moved to the longhand
 // as soon as the color is changed.
-function legacyBackgroundColor(css, cssClass) {
+function backgroundColorFromShorthand(css, cssClass) {
   const value = parsePropertyFromCSS(css, 'background', null, cssClass);
-  return value !== null && cssBackgroundIsPlainColor(value) ? value : null;
+  return value !== null && cssBackgroundIsPlainColor(value) ? cssValueWithoutImportant(value) : null;
+}
+
+// A shorthand that paints more than a color (a gradient, an image) stays the
+// declaration the color input writes to: it would cover anything set on
+// background-color, so writing the longhand would change nothing on screen -
+// and it has already reset the image properties the longhand exists to protect.
+function backgroundColorKey(css, cssClass) {
+  const value = parsePropertyFromCSS(css, 'background', null, cssClass);
+  return value !== null && !cssBackgroundIsPlainColor(value) ? 'background' : 'background-color';
 }
 
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
@@ -1752,7 +1761,7 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
   }
 
   let warned = false;
-  const legacyShorthand = key == 'background-color';
+  const isBackgroundColor = key == 'background-color';
   // element the declaration actually renders on, used to preview the effective
   // default when nothing is explicitly set
   const effectiveElement = _=>{
@@ -1763,18 +1772,20 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
   return Object.assign({
     getValue: _=>{
       const value = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
-      if(value === null && legacyShorthand)
-        return legacyBackgroundColor(widget.get(cssProperty), cssClass);
+      if(value === null && isBackgroundColor)
+        return backgroundColorFromShorthand(widget.get(cssProperty), cssClass);
       return value;
     },
     getEffective: _=>{
       const raw = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
       if(propertyInputValueSet(raw))
         return raw;
-      if(legacyShorthand) {
-        const legacy = legacyBackgroundColor(widget.get(cssProperty), cssClass);
-        if(propertyInputValueSet(legacy))
-          return legacy;
+      if(isBackgroundColor) {
+        // whatever the shorthand paints is what the widget shows, so the row
+        // names it instead of claiming the background is not set
+        const shorthand = parsePropertyFromCSS(widget.get(cssProperty), 'background', null, cssClass);
+        if(propertyInputValueSet(shorthand))
+          return cssValueWithoutImportant(shorthand);
       }
       return computedCssValue(effectiveElement(), key);
     },
@@ -1789,8 +1800,11 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
         }
         return;
       }
-      let merged = mergePropertyFromCSS(css, key, v, cssClass);
-      if(legacyShorthand && legacyBackgroundColor(css, cssClass) !== null)
+      const writeKey = isBackgroundColor ? backgroundColorKey(css, cssClass) : key;
+      let merged = mergePropertyFromCSS(css, writeKey, v, cssClass);
+      // the color moved out of the shorthand, which would otherwise keep
+      // overriding the longhand it was moved into
+      if(isBackgroundColor && backgroundColorFromShorthand(css, cssClass) !== null)
         merged = mergePropertyFromCSS(merged, 'background', null, cssClass);
       module.inputValueUpdated(widget, cssProperty, merged);
       if(widget.applyDeltaToDOM)

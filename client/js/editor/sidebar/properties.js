@@ -1130,11 +1130,20 @@ function cssValueIsColor(value) {
   return cssNamedColors.indexOf(text) != -1;
 }
 
+// A declaration value without its "!important" priority - the color inputs
+// cannot represent it and would show it as part of the color
+function cssValueWithoutImportant(value) {
+  return String(value === null || value === undefined ? '' : value).replace(/\s*!important\s*$/i, '').trim();
+}
+
 // Whether a "background" shorthand only paints a color, so the color inputs can
 // move it into the background-color longhand without losing anything. A
-// gradient, an image or a multi-part shorthand cannot be moved that way.
+// gradient, an image or a multi-part shorthand cannot be moved that way. A
+// var() is taken at its word: a custom property can hold an image just as well
+// (holder.css defines --bgImage), but telling the two apart needs the widget
+// rendered, which this helper does not have.
 function cssBackgroundIsPlainColor(value) {
-  const text = String(value === null || value === undefined ? '' : value).replace(/\s*!important\s*$/i, '').trim();
+  const text = cssValueWithoutImportant(value);
   if(text.match(/^var\(\s*--[^()]*\)$/))
     return true;
   return cssValueIsColor(text);
