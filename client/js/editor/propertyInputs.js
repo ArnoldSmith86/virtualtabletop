@@ -1713,6 +1713,16 @@ function computedCssValue(element, key) {
   return value || null;
 }
 
+// The color inputs edit the background-color longhand, because the background
+// shorthand also resets background-image/-size/-repeat and would drop the image
+// a widget shows (and the scaling the room css gives it). A game that keeps its
+// color in the shorthand still has it read from there, and moved to the longhand
+// as soon as the color is changed.
+function legacyBackgroundColor(css, cssClass) {
+  const value = parsePropertyFromCSS(css, 'background', null, cssClass);
+  return value !== null && cssBackgroundIsPlainColor(value) ? value : null;
+}
+
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
   // a css string/object is per-widget, so a multi-selection reads/writes
   // through each selected widget's own options instead of merging blobs
@@ -1742,6 +1752,7 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
   }
 
   let warned = false;
+  const legacyShorthand = key == 'background-color';
   // element the declaration actually renders on, used to preview the effective
   // default when nothing is explicitly set
   const effectiveElement = _=>{
@@ -1750,11 +1761,21 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
     return widget.domElement;
   };
   return Object.assign({
-    getValue: _=>parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass),
+    getValue: _=>{
+      const value = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
+      if(value === null && legacyShorthand)
+        return legacyBackgroundColor(widget.get(cssProperty), cssClass);
+      return value;
+    },
     getEffective: _=>{
       const raw = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
       if(propertyInputValueSet(raw))
         return raw;
+      if(legacyShorthand) {
+        const legacy = legacyBackgroundColor(widget.get(cssProperty), cssClass);
+        if(propertyInputValueSet(legacy))
+          return legacy;
+      }
       return computedCssValue(effectiveElement(), key);
     },
     setValue: v=>{
@@ -1768,7 +1789,10 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
         }
         return;
       }
-      module.inputValueUpdated(widget, cssProperty, mergePropertyFromCSS(css, key, v, cssClass));
+      let merged = mergePropertyFromCSS(css, key, v, cssClass);
+      if(legacyShorthand && legacyBackgroundColor(css, cssClass) !== null)
+        merged = mergePropertyFromCSS(merged, 'background', null, cssClass);
+      module.inputValueUpdated(widget, cssProperty, merged);
       if(widget.applyDeltaToDOM)
         widget.applyDeltaToDOM({ [cssProperty]: widget.get(cssProperty) });
     },

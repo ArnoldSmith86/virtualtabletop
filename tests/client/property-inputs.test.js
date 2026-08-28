@@ -74,6 +74,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'ex
     cssValueFromDeclarations,
     cssValueIsColor,
     cssColorHasAlpha,
+    cssBackgroundIsPlainColor,
+    cssValueOptions,
     cssDeclarationIsValid,
     cssValueSuggestions,
     cssPropertySuggestions: PropertiesModule.prototype.cssPropertySuggestions,
@@ -548,10 +550,55 @@ describe('css helpers', () => {
     expect(inputHelpers.soundName('https://example.com/sounds/My Sound.ogg')).toBe('My Sound');
   });
 
+  test('a background shorthand counts as a plain color only when it paints nothing else', () => {
+    expect(cssHelpers.cssBackgroundIsPlainColor('#ff0000')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('rgba(0, 0, 0, 0.5)')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('transparent')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('var(--color)')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('var(--color) !important')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('linear-gradient(red, blue)')).toBe(false);
+    expect(cssHelpers.cssBackgroundIsPlainColor('url("/assets/1_2") no-repeat')).toBe(false);
+    expect(cssHelpers.cssBackgroundIsPlainColor('red url("/assets/1_2")')).toBe(false);
+    expect(cssHelpers.cssBackgroundIsPlainColor('')).toBe(false);
+    expect(cssHelpers.cssBackgroundIsPlainColor(null)).toBe(false);
+  });
+
   test('the size-ratio lock stays local while honoring a legacy false value', () => {
     const module = { sizeRatioLocks: new WeakMap() };
     expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: {} })).toBe(true);
     expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: { lockSizeRatio: false } })).toBe(false);
+  });
+});
+
+describe('the background color input', () => {
+  const widgetWith = css => ({ state: { css }, get(key) { return this.state[key]; } });
+  const backgroundOptions = (widget, cssClass='default') => cssHelpers.cssValueOptions(
+    { inputValueUpdated: (w, property, value) => w.state[property] = value }, widget, 'background-color', 'css', cssClass);
+
+  test('the color goes into the longhand, so an image keeps its size and repeat', () => {
+    const widget = widgetWith({ 'background-size': '310px 480px' });
+    backgroundOptions(widget).setValue('#112233');
+    expect(widget.state.css).toEqual({ 'background-size': '310px 480px', 'background-color': '#112233' });
+  });
+
+  test('a color left in the shorthand is read from there and moved on the next edit', () => {
+    const widget = widgetWith({ background: '#abcdef', 'font-size': '20px' });
+    expect(backgroundOptions(widget).getValue()).toBe('#abcdef');
+    backgroundOptions(widget).setValue('#112233');
+    expect(widget.state.css).toEqual({ 'font-size': '20px', 'background-color': '#112233' });
+  });
+
+  test('a shorthand that paints more than a color is left alone', () => {
+    const widget = widgetWith({ background: 'linear-gradient(red, blue)' });
+    expect(backgroundOptions(widget).getValue()).toBe(null);
+    backgroundOptions(widget).setValue('#112233');
+    expect(widget.state.css).toEqual({ background: 'linear-gradient(red, blue)', 'background-color': '#112233' });
+  });
+
+  test('clearing the color drops both declarations from the state class it was set on', () => {
+    const widget = widgetWith({ default: {}, '.droptarget': { background: '#abcdef' } });
+    backgroundOptions(widget, '.droptarget').setValue(null);
+    expect(widget.state.css).toEqual({ default: {} });
   });
 });
 
