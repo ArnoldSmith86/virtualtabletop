@@ -2204,18 +2204,6 @@ class RoutineEditor {
     return activeRoutineOperation && activeRoutineOperation.routine === this.routine ? Math.min(activeRoutineOperation.index+1, this.routine.length) : this.routine.length;
   }
 
-  // The collections an operation added there could read: the ones the routine
-  // starts with plus the ones the operations before that point define. The
-  // recorder asks before offering an operation that works on "whatever an
-  // earlier operation picked" - one that reads a collection nothing filled is an
-  // error the moment it lands in the routine.
-  collectionsInScope() {
-    const collections = [ ...this.collections ];
-    for(const operation of this.operations.slice(0, this.insertionIndex()))
-      collections.push(...operation.getDefinedCollections());
-    return [ ...new Set(collections.filter(c=>typeof c == 'string')) ];
-  }
-
   addOperation(values) {
     const at = this.insertionIndex();
     this.routine.splice(at, 0, typeof values == 'string' ? values : JSON.parse(JSON.stringify(values)));
@@ -2262,34 +2250,31 @@ class RoutineEditor {
     doneButton.title = 'Stop recording';
 
     div(panel, 'routine-editor-recording-hint').textContent = recording.gestures.length
-      ? 'Click a suggestion to add it to this routine. Carry on in the room for the next step, or press done when the routine says what you meant.'
-      : 'Drag and click widgets in the room the way the routine should - clicking one records the click instead of selecting it. Each move becomes a list of operations to pick from, because the room does not know which reading you meant. Press done when the routine says what you meant.';
+      ? 'Click one of these to add it to the routine - that closes the card. Do the same thing again in the room to add another operation, or press done when the routine says what you meant.'
+      : 'Drag and click widgets in the room the way the routine should - clicking one records the click instead of selecting it. Each move becomes a short list of operations to pick from, because the room does not know which reading you meant. Press done when the routine says what you meant.';
 
     for(const gesture of recording.gestures)
-      this.renderRecordedGesture(panel, recording, gesture);
+      this.renderRecordedGesture(panel, gesture);
   }
 
-  renderRecordedGesture(panel, recording, gesture) {
+  renderRecordedGesture(panel, gesture) {
     const gestureDOM = div(panel, 'routine-editor-gesture');
     div(gestureDOM, 'routine-editor-gesture-what').textContent = gesture.label;
     // a gesture nobody meant is taken off the card rather than lived with: a
     // slip on the wrong holder otherwise stays in the list until the whole
     // recording is thrown away, good readings and all
-    const forget = button(gestureDOM, '×', _=>forgetRoutineGesture(gesture));
+    const forget = button(gestureDOM, '×', _=>closeRoutineGesture(gesture));
     forget.className = 'routine-editor-gesture-forget';
     forget.title = 'Forget this gesture';
 
-    for(const [ index, suggestion ] of gesture.suggestions.entries()) {
+    for(const suggestion of gesture.suggestions) {
       const editor = editorForOperation(suggestion.operation);
       editor.setOperationDetails(this.widget, suggestion.operation, this.variables, this.collections);
-      const key = `${gesture.key}/${index}`;
-      const added = recording.added.indexOf(key) != -1;
 
       const suggestionDOM = div(gestureDOM, 'routine-editor-suggestion');
-      suggestionDOM.classList.toggle('routine-editor-suggestion-added', added);
       const icon = document.createElement('span');
       icon.className = 'material-symbols';
-      icon.textContent = added ? 'check' : 'add';
+      icon.textContent = 'add';
       suggestionDOM.append(icon);
       // what the reading is FOR leads, the operation it would add follows: the
       // readings of one gesture nearly all start with the same words ("Move 1
@@ -2299,12 +2284,12 @@ class RoutineEditor {
       div(suggestionDOM, 'routine-editor-suggestion-sentence').textContent = editor.getSentenceText();
       suggestionDOM.title = `Add this operation to the routine (${suggestion.operation.func})`;
       focusable(suggestionDOM, _=>{
-        // the same suggestion twice is a routine that does the thing twice,
-        // which is a real thing to want - the tick only says it was used once
-        if(recording.added.indexOf(key) == -1)
-          recording.added.push(key);
+        // one gesture is one operation: the card is answered and closes, and a
+        // second reading of the same gesture is had by doing it again in the
+        // room. A card that stays open after a pick invites reading the whole
+        // list a second time to see whether anything else applies too.
+        closeRoutineGesture(gesture);
         this.addOperation(suggestion.operation);
-        scrollRoutineRecordingIntoView(this);
       });
     }
   }

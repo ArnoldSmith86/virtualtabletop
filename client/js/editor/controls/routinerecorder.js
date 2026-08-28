@@ -7,12 +7,19 @@
 // was just done, plus the ways a routine usually generalizes it - and picking
 // one adds it to the routine where "add operation" would have added it.
 //
-// One gesture is deliberately not one operation. Dragging a card from a hand
-// onto the discard pile is "move 1 card out of that hand", "move all of them",
-// "take one from every player" or "gather every card back into the deck",
-// depending on what the routine is for. The room cannot know which was meant,
-// but it knows the four - so it offers them and writes nothing until one is
-// picked. A gesture nobody picks anything from costs a card in the list.
+// One gesture is deliberately not one operation. Dragging a card out of the
+// deck into a hand is "move that card there", "deal one to that player", "deal
+// one to everybody" or "put the deck back together afterwards", depending on
+// what the routine is for. The room cannot know which was meant, but it knows
+// the handful worth offering - so it offers those and writes nothing until one
+// is picked. A gesture nobody picks anything from costs a card in the list.
+//
+// The card closes as soon as one of its readings is picked: one gesture is one
+// operation, and a second operation out of the same gesture is had by doing the
+// gesture again. Repeating a gesture does not repeat the card either - dealing
+// five cards out of the same holder into the same hand raises the count on the
+// card already standing there, so it stays one reading that says "move 5"
+// rather than five readings that say "move 1".
 //
 // While recording, the room answers the way it does for a player rather than
 // the way it does in edit mode (see selection.js): the selection band stays out
@@ -88,7 +95,7 @@ function routineRecordingState() {
 
 function startRoutineRecording(editor) {
   stopRoutineRecording();
-  activeRoutineRecording = { editor, widgetID: editor.widgetID, routineKey: editor.routineKey, gestures: [], added: [] };
+  activeRoutineRecording = { editor, widgetID: editor.widgetID, routineKey: editor.routineKey, gestures: [] };
   $('body').classList.add('editorRoutineRecording');
   drawRoutineRecordingLabel(editor);
   editor.render();
@@ -127,11 +134,12 @@ function removeRoutineRecordingLabel() {
     label.remove();
 }
 
-// A gesture nobody meant - a slip onto the wrong holder, a drag done only to put
-// the room back the way it was - can be taken off the card. Only the reading of
-// it goes: an operation already added from it stays in the routine, the way
-// anything else added to a routine stays until it is deleted there.
-export function forgetRoutineGesture(gesture) {
+// Taking a gesture off the list - because a reading of it was picked, or
+// because nobody meant it: a slip onto the wrong holder, a drag done only to
+// put the room back the way it was. Only the reading of it goes; an operation
+// already added from it stays in the routine, the way anything else added to a
+// routine stays until it is deleted there.
+export function closeRoutineGesture(gesture) {
   const recording = routineRecordingState();
   if(!recording)
     return;
@@ -216,10 +224,24 @@ export function routineRecorderPointerUp() {
   openRoutineGesture = null;
   if(!recording || !raw)
     return;
-  const gesture = describeRoutineGesture(raw, collectionsAroundRecording(recording));
+  const gesture = describeRoutineGesture(raw);
   if(!gesture || !gesture.suggestions.length)
     return;
-  recording.gestures.push(gesture);
+  // Doing the same thing again raises the count on the card that says it rather
+  // than writing a second card that says it once more: dealing five cards out of
+  // a holder into a hand is one operation that moves five, and five cards each
+  // offering the same four readings is a list nobody reads to the end of.
+  const repeated = gesture.repeatKey && recording.gestures.find(g=>g.repeatKey === gesture.repeatKey);
+  if(repeated) {
+    repeated.count += gesture.count;
+    // what the room did during the later gestures counts too - a holder that
+    // turns the first card face up turns the fifth one face up as well
+    for(const id in gesture.changes)
+      repeated.changes[id] = Object.assign(repeated.changes[id] || {}, gesture.changes[id]);
+    readRoutineGesture(repeated);
+  } else {
+    recording.gestures.push(gesture);
+  }
   recording.editor.render();
   scrollRoutineRecordingIntoView(recording.editor);
 }
@@ -235,18 +257,11 @@ function scrollRoutineRecordingIntoView(editor) {
     last.scrollIntoView({ block: 'nearest' });
 }
 
-// the collections an operation added by this recording could read - see
-// RoutineEditor.collectionsInScope()
-function collectionsAroundRecording(recording) {
-  const editor = recording.editor;
-  return editor && editor.collectionsInScope ? editor.collectionsInScope() : [];
-}
-
 // What the gesture did, in the terms the suggestions are built from. The widget
 // that moved is the first one up the chain whose place changed - a press on a
 // card pinned to a board drags the board - and a gesture that moved nothing at
 // all is a click on the widget the press landed on.
-function describeRoutineGesture(raw, collections=[]) {
+function describeRoutineGesture(raw) {
   const before = raw.before.filter(entry=>routineRecorderWidget(entry.id) === entry.widget);
   if(!before.length)
     return null;
@@ -270,23 +285,36 @@ function describeRoutineGesture(raw, collections=[]) {
   const subject = moved || before[0];
   const widget = subject.widget;
   const destination = routineRecorderDestination(widget);
+  const from = routineRecorderSource(raw.before, subject);
 
   const gesture = {
     key: ++routineGestureCounter,
     widget,
     widgetID: subject.id,
     type: widget.get('type') || 'basic',
-    from: subject.parent,
+    from,
     to: destination.to,
     x: destination.x,
     y: destination.y,
     dragged: Boolean(moved),
+    count: 1,
     changes
   };
   gesture.reparented = gesture.dragged && gesture.from !== gesture.to;
-  gesture.label = routineGestureWords(gesture);
-  gesture.suggestions = routineGestureSuggestions(gesture, collections);
+  // which gestures are the same gesture done again. Only a move from one holder
+  // into another is one: that is the operation with a count to raise, and it is
+  // the gesture that is really done over and over (dealing, discarding a hand).
+  gesture.repeatKey = gesture.reparented && isHolderLike(gesture.from) && isHolderLike(gesture.to)
+    ? `${gesture.from} > ${gesture.to}` : null;
+  readRoutineGesture(gesture);
   return gesture;
+}
+
+// how the gesture reads, from what it did and how often it was done - said again
+// whenever the count changes
+function readRoutineGesture(gesture) {
+  gesture.label = routineGestureWords(gesture);
+  gesture.suggestions = routineGestureSuggestions(gesture);
 }
 
 // Where the drag put the widget, in terms an operation can name. Dropping a card
@@ -312,6 +340,22 @@ function routineRecorderDestination(widget) {
   return { to: isHolderLike(place) ? place : null, x: Math.round(x), y: Math.round(y) };
 }
 
+// Where the drag started, read the same way. A card taken off a stack inside a
+// holder has that stack as its parent, and a pile is neither something MOVE
+// takes widgets out of nor something that is still there once it holds one
+// card - so what such a card came out of is the holder the pile stands in.
+// That is also what makes the fifth card dealt out of a holder the same gesture
+// as the first, rather than a gesture out of the stack the rest of them formed.
+//
+// The chain is the one taken at the press (see routineRecorderChain), because
+// by the release the pile can be gone.
+function routineRecorderSource(chain, subject) {
+  for(let i = chain.indexOf(subject)+1; i > 0 && i < chain.length; i++)
+    if(isHolderLike(chain[i].id))
+      return chain[i].id;
+  return isHolderLike(subject.parent) ? subject.parent : null;
+}
+
 // What to call a widget in the headline. The ids a game is built out of are
 // generated as often as they are chosen - a card is "pyn6" and the pile a
 // holder made around it is "o0ur", neither of which the author ever typed or
@@ -328,12 +372,24 @@ function routineRecorderPlace(id) {
   return id === null ? 'the table' : routineRecorderName(id);
 }
 
+// the same gesture done more than once is named by how many widgets went that
+// way rather than by the last of them: after five drags the id in the headline
+// is the one card that happened to be dragged last, which says nothing
+function routineGestureSubject(gesture) {
+  return gesture.count > 1 ? `${gesture.count} widgets` : routineRecorderName(gesture.widgetID);
+}
+
 function routineGestureWords(gesture) {
   if(gesture.reparented)
-    return `dragged ${routineRecorderName(gesture.widgetID)} from ${routineRecorderPlace(gesture.from)} to ${routineRecorderPlace(gesture.to)}`;
+    return `dragged ${routineGestureSubject(gesture)} from ${routineRecorderPlace(gesture.from)} to ${routineRecorderPlace(gesture.to)}`;
   if(gesture.dragged)
     return `dragged ${routineRecorderName(gesture.widgetID)} to ${gesture.x}, ${gesture.y}`;
   return `clicked ${routineRecorderName(gesture.widgetID)}`;
+}
+
+// how many, in a reading meant to be read out loud
+function routineGestureCount(gesture) {
+  return gesture.count > 1 ? String(gesture.count) : 'one';
 }
 
 // the seats whose hand this holder is: dropping a card into a hand is dealing to
@@ -349,10 +405,6 @@ function everySeatWithAHand() {
   return widgetFilter(w=>w.get('type') == 'seat' && w.get('hand') && widgets.has(w.get('hand'))).map(w=>w.get('id')).sort();
 }
 
-function everyHand() {
-  return [ ...new Set(widgetFilter(w=>w.get('type') == 'seat' && w.get('hand') && widgets.has(w.get('hand'))).map(w=>w.get('hand'))) ].sort();
-}
-
 // RECALL gathers the cards of the decks lying IN a holder, so it is only worth
 // offering for a holder that has one
 function holderWithDeck(holderID) {
@@ -364,35 +416,29 @@ function isHolderLike(id) {
   return Boolean(widget) && [ 'holder', 'seat' ].indexOf(widget.get('type')) != -1;
 }
 
-// the value a property ended up with during this gesture, or undefined when the
-// gesture did not touch it
-function changedDuringGesture(gesture, id, property) {
-  const changes = gesture.changes[id];
-  return changes && typeof changes == 'object' ? changes[property] : undefined;
-}
-
-// how many suggestions one gesture is worth reading through before the card
-// stops being a list and becomes a wall
-const routineSuggestionLimit = 8;
+// how many suggestions one gesture is worth reading through. A list of readings
+// is only useful while it can be read at a glance - past that the card asks the
+// author to compare a page of ways of saying nearly the same thing, which is
+// more work than writing the operation by hand would have been.
+const routineSuggestionLimit = 5;
 
 // Every reading of a gesture worth offering, in the order they are worth looking
-// at: what was literally just done first, then the ways a routine generalizes it
-// (all of them instead of one, every player instead of the one dropped on), then
-// what those two widgets are usually asked to do next.
+// at: what was literally just done first, then the two or three things a game
+// usually means by it - dealing to everybody rather than to the one seat that
+// was dropped on, putting the deck back together.
 //
 // The two kinds are collected apart so that the limit can prefer what the room
-// did on its own over the readings of the gesture: a room with seats in it makes
-// the ordinary dealing gesture produce more readings than fit, and the reading
-// that would fall off the end is the one watching the pointer could never
-// produce - "the hand turned the card face up as it went in". Half the list is
-// kept for those, and whatever they leave unused goes back to the gesture.
-function routineGestureSuggestions(gesture, collections=[]) {
+// did on its own over the readings of the gesture: the reading that would fall
+// off the end is the one watching the pointer could never produce - "the hand
+// turned the card face up as it went in". Two places are kept for those, and
+// whatever they leave unused goes back to the gesture.
+function routineGestureSuggestions(gesture) {
   const fromGesture = [];
   const fromRoom = [];
   const into = list=>((why, operation)=>list.push({ why, operation }));
 
   if(gesture.reparented)
-    reparentSuggestions(gesture, into(fromGesture), collections);
+    reparentSuggestions(gesture, into(fromGesture));
   else if(gesture.dragged)
     repositionSuggestions(gesture, into(fromGesture));
   else
@@ -413,85 +459,64 @@ function routineGestureSuggestions(gesture, collections=[]) {
     }
   };
 
-  const roomShare = Math.min(fromRoom.length, Math.floor(routineSuggestionLimit/2));
+  const roomShare = Math.min(fromRoom.length, 2);
   take(fromGesture, routineSuggestionLimit - roomShare);
   take(fromRoom, routineSuggestionLimit);
   take(fromGesture, routineSuggestionLimit);
   return suggestions;
 }
 
-function reparentSuggestions(gesture, add, collections=[]) {
-  const { from, to, widgetID } = gesture;
-  const face = changedDuringGesture(gesture, widgetID, 'activeFace');
+function reparentSuggestions(gesture, add) {
+  const { from, to, widgetID, count } = gesture;
+  const many = routineGestureCount(gesture);
 
   if(to === null) {
     // out of a holder onto the table: the only operation that puts a widget at a
     // spot of its own is MOVEXY, and it takes them out of a holder
     if(isHolderLike(from)) {
-      add('take one out onto the table', { func: 'MOVEXY', from, count: 1, x: gesture.x, y: gesture.y });
-      add('take all of them out', { func: 'MOVEXY', from, count: 'all', x: gesture.x, y: gesture.y });
+      add('do exactly this', { func: 'MOVEXY', from, count, x: gesture.x, y: gesture.y });
+      return;
     }
     // x and y are counted from whatever the widget is in, so taking it out on
     // its own drops it wherever its old coordinates land in the room. The two
     // that follow are what makes it stay where it was let go of - which is why
     // they say "and", the way the clauses of one gesture do.
-    add('just take it out of whatever it is in', { func: 'SET', property: 'parent', value: null, collection: [ widgetID ] });
+    add('do exactly this', { func: 'SET', property: 'parent', value: null, collection: [ widgetID ] });
     add('and put it exactly there', { func: 'SET', property: 'x', value: gesture.x, collection: [ widgetID ] });
     add('and at that height', { func: 'SET', property: 'y', value: gesture.y, collection: [ widgetID ] });
     return;
   }
 
-  if(from !== null && isHolderLike(from)) {
-    add('do exactly this', { func: 'MOVE', from, to, count: 1 });
-    add('move everything that is in there', { func: 'MOVE', from, to, count: 'all' });
-    if(typeof face == 'number')
-      add('and turn them over on the way', { func: 'MOVE', from, to, count: 1, face });
-  } else {
+  if(from !== null && isHolderLike(from))
+    add('do exactly this', { func: 'MOVE', from, to, count });
+  else
     add('do exactly this', { func: 'MOVE', collection: [ widgetID ], to });
-  }
 
   // dealing: dropping into a hand is dealing to the seat it belongs to, and a
   // routine nearly always deals to every seat rather than to one
   const seats = seatsWithHand(to);
   if(seats.length && from !== null && isHolderLike(from)) {
     const everySeat = everySeatWithAHand();
-    add(`deal one to ${seats.length > 1 ? 'those seats' : seats[0]}`, { func: 'MOVE', from, to: seats.length > 1 ? seats : seats[0], count: 1 });
+    add(`deal ${many} to ${seats.length > 1 ? 'those seats' : seats[0]}`, { func: 'MOVE', from, to: seats.length > 1 ? seats : seats[0], count });
     if(everySeat.length > seats.length)
-      add('deal one to every player', { func: 'MOVE', from, to: everySeat, count: 1 });
+      add(`deal ${many} to every player`, { func: 'MOVE', from, to: everySeat, count });
   }
 
-  // collecting: taking a card out of a hand is nearly always done for all of them
-  const hands = everyHand();
-  if(from !== null && hands.indexOf(from) != -1 && hands.length > 1)
-    add('take one from every player', { func: 'MOVE', from: hands, to, count: 1 });
-
-  if(holderWithDeck(to))
-    add('gather every card of its deck back in', { func: 'RECALL', holder: to });
-  if(holderWithDeck(from))
-    add('gather every card back where it came from', { func: 'RECALL', holder: from });
-  if(isHolderLike(to))
-    add('shuffle what is in there afterwards', { func: 'SHUFFLE', holder: to });
-  // "whatever an earlier operation picked" is the DEFAULT collection, which only
-  // exists once something in the routine before this point has filled it -
-  // offering it anywhere else writes an operation that is an error as soon as it
-  // is added ("no input given and collection DEFAULT is undefined")
-  if(collections.indexOf('DEFAULT') != -1)
-    add('move whatever an earlier operation picked', { func: 'MOVE', to });
+  // putting a deck back together: the one holder worth offering that for is the
+  // one the deck lies in, at whichever end of the drag it is
+  const deckHolder = [ to, from ].find(holderWithDeck);
+  if(deckHolder)
+    add(`put every card back into ${deckHolder}`, { func: 'RECALL', holder: deckHolder });
 }
 
 function repositionSuggestions(gesture, add) {
-  const { from, widgetID } = gesture;
-  const collection = [ widgetID ];
+  const collection = [ gesture.widgetID ];
   // x and y are measured against whatever the widget is in, which is exactly
   // what a SET writes as well. MOVEXY is not the same thing: it takes widgets
   // OUT of a holder and puts them at a spot in the room, which is not what a
   // drag that left the widget where it was did.
   add('put it exactly there', { func: 'SET', property: 'x', value: gesture.x, collection });
   add('and at that height', { func: 'SET', property: 'y', value: gesture.y, collection });
-  if(from !== null && isHolderLike(from)) {
-    add('re-order what is in there instead', { func: 'SORT', holder: from });
-    add('shuffle it instead', { func: 'SHUFFLE', holder: from });
-  }
 }
 
 // Rolling a die is the one thing a routine does by clicking rather than by an
@@ -515,6 +540,19 @@ function diceFaceValue(widget, face) {
   return value === undefined || value === null || typeof value == 'object' ? null : String(value);
 }
 
+// the same for a canvas: activeColor is a place in its color map, not a color,
+// so the reading says which color that place holds
+function canvasColorValue(widget, index) {
+  const colors = typeof widget.getColorMap == 'function' ? widget.getColorMap() : [];
+  const color = colors[index];
+  return typeof color == 'string' ? color : null;
+}
+
+function canvasNumber(widget, property, fallback) {
+  const value = Math.round(widget.get(property));
+  return Number.isFinite(value) ? value : fallback;
+}
+
 // a die that has no faces yet - one just added to the room, one whose faces are
 // still being typed - counts them modulo zero, which is not a face to put it on
 function diceActiveFace(widget) {
@@ -526,19 +564,31 @@ function clickSuggestions(gesture, add) {
   const { widgetID, type, widget } = gesture;
   const collection = [ widgetID ];
 
-  // Clicking a die rolls it and setting its face puts it on one on purpose, so
-  // both are offered in those words - and before the plain click below, which
-  // for a die is the same operation under a name that never says "roll".
+  // Clicking a die is rolling it, and the other thing a routine does to a die is
+  // put it on a face on purpose. Neither of them is a plain "click it": that is
+  // the same operation as the roll under a name that never says roll.
   if(type == 'dice') {
     add('roll it the way clicking it does', diceRollOperation(widget, collection));
     const face = diceActiveFace(widget);
     const shows = diceFaceValue(widget, face);
     add(`put it on a face instead of rolling it${shows === null ? '' : ` - it is showing ${shows}`}`, { func: 'SET', property: 'activeFace', value: face, collection });
+    return;
+  }
+
+  // A canvas is drawn on rather than clicked, so what a routine does to one is
+  // wipe it and set what the next stroke looks like. activeColor and lineWidth
+  // are offered at the values the canvas has now, to be changed to the wanted
+  // ones the way the die's face is.
+  if(type == 'canvas') {
+    add('wipe everything drawn on it', { func: 'CANVAS', collection, mode: 'reset' });
+    const activeColor = canvasNumber(widget, 'activeColor', 1);
+    const color = canvasColorValue(widget, activeColor);
+    add(`draw in another color${color === null ? '' : ` - it is drawing in ${color}`}`, { func: 'SET', property: 'activeColor', value: activeColor, collection });
+    add('draw with a thicker or thinner brush', { func: 'SET', property: 'lineWidth', value: canvasNumber(widget, 'lineWidth', 1), collection });
+    return;
   }
 
   add('click it the way a player would', { func: 'CLICK', collection });
-  if(Array.isArray(widget.get('clickRoutine')))
-    add('run its click routine and wait for it', { func: 'CALL', routine: 'clickRoutine', widget: widgetID });
 
   if(type == 'card') {
     add('turn it face up', { func: 'FLIP', collection, face: 1 });
@@ -546,10 +596,8 @@ function clickSuggestions(gesture, add) {
   }
   if(type == 'holder' || type == 'pile') {
     add('shuffle it', { func: 'SHUFFLE', holder: widgetID });
-    add('sort it', { func: 'SORT', holder: widgetID });
     if(holderWithDeck(widgetID))
-      add('gather every card of its deck back in', { func: 'RECALL', holder: widgetID });
-    add('move something out of it', { func: 'MOVE', from: widgetID, count: 1 });
+      add('put every card back into it', { func: 'RECALL', holder: widgetID });
   }
   if(type == 'seat')
     add('give the turn to it', { func: 'TURN', turnCycle: 'seat', turn: widgetID });

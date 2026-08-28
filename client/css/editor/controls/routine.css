@@ -533,6 +533,7 @@ body.edit.darkMode .routine-editor-parameter-missing {
 
 .routine-editor-record-operation.recording:hover {
   filter: brightness(0.85);
+  background: var(--routineRecordColor);
   border-color: var(--routineRecordColor);
   color: var(--backgroundColor);
 }
@@ -690,13 +691,6 @@ body.edit.darkMode .routine-editor-parameter-missing {
   font-style: italic;
   color: var(--textColor);
   opacity: 0.7;
-}
-
-/* a suggestion that was already added stays clickable (doing a thing twice is a
-   real thing to want), so it does not go grey the way a disabled control does -
-   the tick is what says it was used */
-.routine-editor-suggestion-added .material-symbols {
-  color: var(--routineCollectionColor);
 }
 
 /* While the room is being watched, the pointer says so - the same crosshair the

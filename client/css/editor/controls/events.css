@@ -199,12 +199,6 @@ body.edit.darkMode .events-editor-property-key {
   font-size: 12px;
 }
 
-.events-editor-property-add-button:hover:not(:disabled) {
-  border-color: var(--VTTblue);
-  color: var(--VTTblue);
-  opacity: 1;
-}
-
 /* nothing to add without a name: saying so beats a button that does nothing */
 .events-editor-property-add-button:disabled {
   opacity: 0.4;
@@ -235,12 +229,6 @@ body.edit.darkMode .events-editor-property-key {
   font-size: 14px;
 }
 
-.events-editor-property-buttons button:hover {
-  border-color: var(--VTTblue);
-  color: var(--VTTblue);
-  opacity: 1;
-}
-
 /* one shape for every "add something" in the panel: lowercase, dashed outline.
    "record" is one of them: it is the other way to get an operation into a
    routine, so it is the same button as "add operation" next to it and says
@@ -259,19 +247,42 @@ body.edit.darkMode .events-editor-property-key {
   font-size: 12px;
 }
 
+/* The hover of all of them, the property panel's two included: the outline and
+   the label turn blue and the fill stays off. Saying the fill stays off is what
+   keeps it off - a plain button hovers into a solid var(--VTTblueDark) (see
+   layout.css), which is all but the blue this writes the label in. */
 .events-editor-add:hover,
 .routine-editor-add-operation:hover,
-.routine-editor-record-operation:hover {
+.routine-editor-record-operation:not(.recording):hover,
+.events-editor-property-add-button:hover:not(:disabled),
+.events-editor-property-buttons button:hover {
+  background: none;
   border-color: var(--VTTblue);
   color: var(--VTTblue);
   opacity: 1;
 }
 
+/* that blue is a dark one, drawn on a page that is nearly black on the dark
+   theme - so there it is the teal the popup buttons hover in instead */
+body.edit.darkMode .events-editor-add:hover,
+body.edit.darkMode .routine-editor-add-operation:hover,
+body.edit.darkMode .routine-editor-record-operation:not(.recording):hover,
+body.edit.darkMode .events-editor-property-add-button:hover:not(:disabled),
+body.edit.darkMode .events-editor-property-buttons button:hover {
+  border-color: var(--textHighlightColor7);
+  color: var(--textHighlightColor7);
+}
+
 /* the only add button that sits on an operation card instead of on the page:
    the dashed outline of the others is the color of that card, so it takes the
-   page background the same way a nested routine is a hole carved into the card */
-.routine-editor-add-else {
+   page background the same way a nested routine is a hole carved into the card
+   - on hover as well, where the rule above turns every other one's fill off */
+.routine-editor-add-else,
+.routine-editor-add-else:hover {
   background: var(--backgroundColor);
+}
+
+.routine-editor-add-else {
   border-color: var(--backgroundColor);
   margin-left: 12px;
 }
