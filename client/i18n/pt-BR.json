@@ -902,7 +902,6 @@
   "Conditions (one per line)": "Condições (uma por linha)",
   "Connect at": "Conectar em",
   "Connect points": "Conectar pontos",
-  "connected (you)": "conectado (você)",
   "Connections": "Conexões",
   "Convert numeric var parameters to numbers": "Converter parâmetros var numéricos em números",
   "Copies of every card": "Cópias de cada carta",
@@ -2597,5 +2596,8 @@
   "Delete {face} from every card type of this deck?": "Excluir {face} de cada tipo de carta deste baralho?",
   "{face} of every card": "{face} de cada carta",
   "Copy the selected face": "Copiar a face selecionada",
-  "Delete the selected face": "Excluir a face selecionada"
+  "Delete the selected face": "Excluir a face selecionada",
+  "Connection {number}": "Conexão {number}",
+  "{connection} (you)": "{connection} (você)",
+  "connected": "conectado"
 }

@@ -902,7 +902,6 @@
   "Conditions (one per line)": "Bedingungen (eine pro Zeile)",
   "Connect at": "Verbinden bei",
   "Connect points": "Punkte verbinden",
-  "connected (you)": "verbunden (du)",
   "Connections": "Verbindungen",
   "Convert numeric var parameters to numbers": "Numerische var-Parameter in Zahlen umwandeln",
   "Copies of every card": "Kopien jeder Karte",
@@ -1541,7 +1540,7 @@
   "Set the variable x to the value 1": "Die Variable x auf den Wert 1 setzen",
   "Set variables": "Variablen setzen",
   "Sets to which seats can see this widget. Use this to create private play areas and content for players or teams.": "Legt fest, welche Sitzplätze dieses Widget sehen können. Damit lassen sich private Spielbereiche und Inhalte für Spieler oder Teams anlegen.",
-  "Several people share one device: add each of them with the": "Mehrere Personen teilen sich ein Gerät: Füge jede von ihnen über die Zeile",
+  "Several people share one device: add each of them with the": "Mehrere Personen teilen sich ein Gerät: Füge jede von ihnen über die",
   "Shades every position the limited point of this widget can be dragged to, drawn into the widget's parent. Only ever visible in edit mode.": "Färbt jede Position ein, an die der begrenzte Punkt dieses Widgets gezogen werden kann, gezeichnet im übergeordneten Widget. Nur im Bearbeitungsmodus sichtbar.",
   "Shallow curve": "Leichte Krümmung",
   "Share the room URL so other players can join": "Die Raum-URL teilen, damit andere Spieler beitreten können",
@@ -2597,5 +2596,8 @@
   "Delete {face} from every card type of this deck?": "{face} aus jedem Kartentyp dieses Decks löschen?",
   "{face} of every card": "{face} jeder Karte",
   "Copy the selected face": "Die ausgewählte Seite kopieren",
-  "Delete the selected face": "Die ausgewählte Seite löschen"
+  "Delete the selected face": "Die ausgewählte Seite löschen",
+  "Connection {number}": "Verbindung {number}",
+  "{connection} (you)": "{connection} (du)",
+  "connected": "verbunden"
 }

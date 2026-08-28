@@ -215,10 +215,10 @@ function fillPlayerList(players, active, sessions) {
       const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
       if(session) {
         // numbering the connections only carries information for players that actually have more than one
-        const label = playerSessions.length > 1 ? `Connection ${sessionIndex+1}` : 'connected';
-        $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `${label} (you)` : label;
+        const label = playerSessions.length > 1 ? translate('Connection {number}').replace('{number}', sessionIndex+1) : translate('connected');
+        $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? translate('{connection} (you)').replace('{connection}', label) : label;
       } else {
-        $('.sessionLabel', sessionCell).textContent = 'not connected';
+        $('.sessionLabel', sessionCell).textContent = translate('not connected');
       }
       row.appendChild(sessionCell);
 
