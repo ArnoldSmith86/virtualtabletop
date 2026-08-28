@@ -4,8 +4,8 @@ import { emojiToFilename } from "./symbols";
 // The icon list (i/fonts/symbols.json) holds one entry per emoji, but the noto-emoji artwork also
 // contains the skin tone forms of about 330 of them - roughly 1900 files no picker ever showed.
 // Adding them to the grid would make People & Body six times as long, so instead an emoji that has
-// them is marked with a corner triangle and hovering it (long-press on touch) opens a flyout with
-// its complete matrix: a row of five tones, or a 5x5 grid when two people can be toned separately.
+// them is marked with a corner triangle, and clicking it opens a flyout with its complete matrix:
+// a row of five tones, or a 5x5 grid when two people can be toned separately.
 
 // The short form is what the columns of the 5x5 matrix are headed with: five spelled-out names
 // above five 44px cells run into one another, and the row headers name them anyway.
@@ -159,8 +159,8 @@ function emojiSkinToneForms(emoji) {
     ({ emoji: form, description: emojiVariantDescription(variants, rowIndex, columnIndex) })));
 }
 
-// The one flyout that can be open, as { anchor, close, scheduleClose, cancelClose }: hovering
-// another marked icon replaces it, and everything that dismisses it goes through here.
+// The one flyout that can be open, as { anchor, close }: clicking another marked icon replaces it,
+// and everything that dismisses it goes through here.
 let activeEmojiVariantFlyout = null;
 
 export function closeEmojiVariantFlyout() {
@@ -168,7 +168,7 @@ export function closeEmojiVariantFlyout() {
     activeEmojiVariantFlyout.close();
 }
 
-// the open flyout if it belongs to this icon - what an icon may cancel, delay or leave alone
+// the open flyout if it belongs to this icon - a second click on that icon takes it back again
 function emojiVariantFlyoutOf(element) {
   return activeEmojiVariantFlyout && activeEmojiVariantFlyout.anchor == element ? activeEmojiVariantFlyout : null;
 }
@@ -238,10 +238,10 @@ function buildEmojiVariantFlyout(variants) {
   return { dom, title, cells: [ ...dom.querySelectorAll('.emojiVariantCell') ] };
 }
 
-// Hovering along a row of people emoji opens one flyout after the other, and building six to
-// twenty-six <img> cells every time is what made the picker crawl on slower machines (#3118). An
-// emoji's flyout is therefore built once and kept: reopening it only moves it back into the
-// document, which costs nothing and reuses the images the browser already has.
+// Going along a row of people emoji opens one flyout after the other, and building six to
+// twenty-six <img> cells every time costs more than a slower machine has to spare. An emoji's
+// flyout is therefore built once and kept: reopening it only moves it back into the document,
+// which costs nothing and reuses the images the browser already has.
 const emojiVariantFlyouts = new Map();
 
 function openEmojiVariantFlyout(element, variants, onPick, label) {
@@ -294,9 +294,7 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
   dom.style.left = `${clamp(left, box.width, window.innerWidth)}px`;
   dom.style.top  = `${clamp(top, box.height, window.innerHeight)}px`;
 
-  let closeTimer = null;
   const close = function() {
-    clearTimeout(closeTimer);
     document.removeEventListener('mousedown', onOutsideClick);
     window.removeEventListener('keydown', onKeyDown, true);
     window.removeEventListener('scroll', onScroll, true);
@@ -304,8 +302,11 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
     if(activeEmojiVariantFlyout && activeEmojiVariantFlyout.close == close)
       activeEmojiVariantFlyout = null;
   };
+  // The icon itself is left to the click handler that opened the flyout, which closes it again -
+  // closing on the mousedown of that same click would make every second click on the icon a
+  // no-op instead.
   const onOutsideClick = e=>{
-    if(!dom.contains(e.target) && e.target != element)
+    if(!dom.contains(e.target) && !element.contains(e.target))
       close();
   };
   const onKeyDown = e=>{
@@ -316,8 +317,8 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
     }
   };
   // The picker grid and the sidebar scroll, which would leave the flyout hanging next to nothing -
-  // but the reflex after a long press on touch is a small drag, and losing the flyout to that would
-  // make it unusable there, so a few pixels do not count as scrolling away.
+  // but a tap on a touchscreen nudges the list it is on by a pixel or two, and losing the flyout to
+  // that would make it unusable there, so a few pixels do not count as scrolling away.
   // Scrolling the flyout's own overflow is the one exception: a 5x5 matrix that does not fit gets
   // capped and scrollable (see fonts.css), and closing it as soon as its lower rows are scrolled
   // into view would put them out of reach on exactly the viewport that needs them.
@@ -340,41 +341,29 @@ function openEmojiVariantFlyout(element, variants, onPick, label) {
     if(Math.abs(position - scrolledFrom.get(scroller)) > 8)
       close();
   };
-  const cancelClose = _=>clearTimeout(closeTimer);
-  const scheduleClose = _=>{
-    clearTimeout(closeTimer);
-    closeTimer = setTimeout(close, closeDelay);
-  };
-  dom.onmouseenter = cancelClose;
-  dom.onmouseleave = scheduleClose;
   document.addEventListener('mousedown', onOutsideClick);
   // on window, because a capture listener there runs before the ones the picker has on document
   window.addEventListener('keydown', onKeyDown, true);
   window.addEventListener('scroll', onScroll, true);
-  activeEmojiVariantFlyout = { anchor: element, close, scheduleClose, cancelClose };
+  activeEmojiVariantFlyout = { anchor: element, close };
 }
 
-// Long enough that running the pointer along a row of icons on the way somewhere else does not
-// open a flyout behind it - only resting on one does.
-const hoverDelay = 450;
-const touchDelay = 500;
-// the pointer has to cross the gap between the icon and its flyout, so leaving either one gives
-// the other a moment to be reached
-const closeDelay = 300;
 // what a marked icon adds to its own tooltip - the same wording as the picker's help text
-const emojiVariantHint = 'Blue corner: hover or press and hold to choose a skin tone.';
+const emojiVariantHint = 'Blue corner: click to choose a skin tone.';
 
-// Marks the icons of a container that have skin tone forms and opens their flyout on hover
-// (long-press on touch). One set of handlers on the container, not six per icon: the symbol
-// picker's grid holds ~1600 emoji and hands itself to a new caller every time it is opened.
-// The handlers are assigned as properties, so enabling the same container again replaces them
-// instead of stacking another flyout on it.
+// One handler per container, replaced rather than stacked: the pickers hand the same container
+// over again every time they are opened.
+const emojiVariantClickHandlers = new WeakMap();
+
+// Marks the icons of a container that have skin tone forms and opens their flyout when one is
+// clicked. One handler on the container, not one per icon: the symbol picker's grid holds ~1600
+// emoji and hands itself to a new caller every time it is opened.
 //   selector - the elements that may carry an emoji, emoji(element) - the one it shows,
 //   onPick(element, variant) - what a picked form means, label(element, base) - the icon's name
 //   (from the untoned form, which is the only one the icon list knows a name for)
 export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, label }) {
-  container.onmousemove = container.onmouseleave = container.ontouchstart = null;
-  container.ontouchend = container.ontouchmove = container.ontouchcancel = null;
+  if(emojiVariantClickHandlers.has(container))
+    container.removeEventListener('click', emojiVariantClickHandlers.get(container), true);
 
   loadEmojiVariants().then(_=>{
     for(const element of container.querySelectorAll(selector))
@@ -382,85 +371,39 @@ export function enableEmojiVariantFlyouts(container, { selector, emoji, onPick, 
       // has nothing left to offer beyond what is next to it
       if(!element.matches('.hasEmojiVariants, .emojiVariantInline') && emojiVariants(emoji(element))) {
         element.classList.add('hasEmojiVariants');
-        // the corner triangle is the only sign that the icon has more to offer, and on touch there
-        // is no hover to stumble over it with - so the icon says what it means
+        // the corner triangle is the only sign that the icon has more to offer, so the icon says
+        // what it means as well
         element.title = `${element.title ? element.title + '\n' : ''}${emojiVariantHint}`;
       }
 
-    let hovered = null;
-    let openTimer = null;
-    let swallowTimer = null;
-    let swallowFor = null;
-
-    // A chip holds the glyph it shows, so the marked icon is what the pointer is over, not the
-    // element the event happens to have started on. A container that has put the forms into itself
-    // (expandEmojiVariants) opens nothing: the flyout would only cover what is already on screen.
+    // A chip holds the glyph it shows, so the marked icon is the one the click is inside of, not
+    // the element the event happens to have started on. A container that has put the forms into
+    // itself (expandEmojiVariants) opens nothing: the flyout would only cover what is already on
+    // screen, and those forms are picked like every other icon.
     const markedIcon = target => {
       const element = target && target.closest ? target.closest('.hasEmojiVariants') : null;
       return element && !element.closest('.emojiVariantsExpanded') ? element : null;
     };
 
-    const open = element=>{
-      const variants = element.isConnected && emojiVariants(emoji(element));
-      if(variants && !emojiVariantFlyoutOf(element))            // still open from before: the
-        openEmojiVariantFlyout(element, variants, variant=>onPick(element, variant), label(element, variants.base));
-    };                                                          // pointer only left it briefly
-    const leave = _=>{
-      clearTimeout(openTimer);
-      const flyout = hovered && emojiVariantFlyoutOf(hovered);
-      if(flyout)
-        flyout.scheduleClose();
-      hovered = null;
-    };
-
-    // The long press still ends in a click on the icon itself, which would pick the untoned form
-    // and close the picker right on top of the flyout that just opened - so that one click is
-    // swallowed. Only that one: a press that ends somewhere else (the finger slid off, the touch
-    // was cancelled, the grid scrolled away under it) must not eat an unrelated click later on,
-    // which is why the listener is a named one that is dropped again either way.
-    const disarmClickSwallow = _=>{
-      clearTimeout(swallowTimer);
-      document.removeEventListener('click', swallowClick, true);
-    };
-    const swallowClick = e=>{
-      if(swallowFor && swallowFor.contains(e.target)) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      disarmClickSwallow();
-    };
-
-    // What the pointer is on is taken from its own movement rather than from mouseover/mouseout,
-    // because the icons of the picker move: hovering one lifts it by 3px (fonts.css), so a pointer
-    // resting near its edge is left and entered again several times a second without moving at
-    // all. Reading that as hovering another icon every time is what turned the picker into a
-    // slideshow - a mousemove only arrives when the pointer really goes somewhere.
-    container.onmousemove = e=>{
+    // Clicking a marked icon opens its flyout and does nothing else - what the icon shows is the
+    // untoned form, which the flyout offers as its first cell. The click is taken in the capture
+    // phase because that is the only way to keep it from the picker underneath: the overlay grid
+    // picks in one delegated handler on the same container (symbols.js) and a sidebar chip in one
+    // of its own (propertyInputs.js), and both sit further along the event path than this one.
+    const onClick = e=>{
       const element = markedIcon(e.target);
-      if(element == hovered)                                   // still on the same icon
-        return;
-      leave();
-      hovered = element;
       if(!element)
         return;
-      const flyout = emojiVariantFlyoutOf(element);
-      if(flyout)
-        flyout.cancelClose();
-      openTimer = setTimeout(_=>open(element), hoverDelay);
+      e.preventDefault();
+      e.stopPropagation();
+      const variants = emojiVariants(emoji(element));
+      if(emojiVariantFlyoutOf(element) || !variants)  // a second click on the icon takes it back
+        closeEmojiVariantFlyout();
+      else
+        openEmojiVariantFlyout(element, variants, variant=>onPick(element, variant), label(element, variants.base));
     };
-    container.onmouseleave = leave;
-    container.ontouchstart = e=>{
-      const element = markedIcon(e.target);
-      clearTimeout(openTimer);
-      if(element)
-        openTimer = setTimeout(_=>{
-          open(element);
-          swallowFor = element;
-          document.addEventListener('click', swallowClick, true);
-          swallowTimer = setTimeout(disarmClickSwallow, 1000); // no click came: the press ended elsewhere
-        }, touchDelay);
-    };
-    container.ontouchend = container.ontouchmove = container.ontouchcancel = _=>clearTimeout(openTimer);
+    container.addEventListener('click', onClick, true);
+    emojiVariantClickHandlers.set(container, onClick);
   }).catch(_=>null);
 }
 
@@ -473,7 +416,7 @@ export function collapseEmojiVariants(container) {
 }
 
 // A flyout is what a grid of 13000 icons needs, but once a search has narrowed it down to a handful
-// the toned forms are better off in the grid itself than behind a hover of their own - so the
+// the toned forms are better off in the grid itself than behind a click of their own - so the
 // fullscreen picker puts them there (symbols.js) as long as the result still takes in at a glance.
 //   icons  - the icons that may carry an emoji, in the order they are shown
 //   emoji(icon)                       - the one it shows

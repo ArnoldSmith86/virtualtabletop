@@ -1169,7 +1169,7 @@ test('The skin tone flyout takes the colours of the picker it belongs to', async
   await t
     .click('#w_w')
     .click(Selector('.iconInput .propertyPreviewButton'))
-    .hover(Selector('.propertyValueChip.hasEmojiVariants').nth(0))
+    .click(Selector('.propertyValueChip.hasEmojiVariants').nth(0))
     .expect(Selector('.emojiVariantFlyout').exists).ok()
     .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(8, 9, 10)', onScreen: true })
     .click(Selector('.iconInput .propertyPreviewButton'))   // closes the picker, and the flyout with it
@@ -1190,7 +1190,7 @@ test('The skin tone flyout takes the colours of the picker it belongs to', async
     // wide enough for the forms to stay in the flyout: a search this one could show in the list
     // itself has no flyout to take the colours of (see the test below)
     .typeText('#symbolPickerOverlay input', 'hand')
-    .hover(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .click(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
     .expect(Selector('.emojiVariantFlyout').exists).ok()
     .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(255, 255, 255)', onScreen: true })
     .click('#symbolPickerOverlay [icon=close]');
@@ -1223,21 +1223,22 @@ test('A search narrow enough shows the skin tones in the icon list itself', asyn
     .click(Selector('.propertyPicker button[icon=apps]'))                  // "Show all"
     .expect(Selector('#symbolPickerOverlay').visible).ok()
 
-    // both thumbs and their five tones each, the corner marker gone because nothing is left for it
-    // to point at - and hovering one of them opens no flyout on top of what is already on screen
+    // both thumbs and their five tones each, and the corner marker gone because nothing is left
+    // for it to point at
     .typeText('#symbolPickerOverlay input', 'thumbs')
     .expect(inlineForms()).eql({ forms: 10, expanded: true, marker: 'none' })
-    .hover(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
-    .wait(900)
-    .expect(Selector('.emojiVariantFlyout').exists).notOk()
 
-    // a search that would fill the list with them keeps them out, and keeps the flyout
+    // a search that would fill the list with them keeps them out, and keeps the flyout - which a
+    // click on a marked icon opens instead of picking the icon, so the picker stays where it is
     .typeText('#symbolPickerOverlay input', 'hand', { replace: true })
     .expect(inlineForms()).eql({ forms: 0, expanded: false, marker: 'block' })
-    .hover(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .click(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
     .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .pressKey('esc')
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
 
-    // and a form in the list is picked like any other icon of it
+    // and a form in the list is picked with a single click, like any other icon of it
     .typeText('#symbolPickerOverlay input', 'victory', { replace: true })
     .expect(inlineForms()).eql({ forms: 5, expanded: true, marker: 'none' })
     .click(Selector('#symbolList .emojiVariantInline').nth(4))
@@ -1291,18 +1292,18 @@ test('A search narrow enough shows the skin tones in the sidebar icon picker its
     // both thumbs and their five tones each, and nothing left for the corner marker to point at
     .typeText(Selector('input[placeholder="Search icons..."]'), 'thumbs')
     .expect(inlineChips()).eql({ forms: 10, expanded: true, marker: 'none', offColumn: 0 })
-    .hover(markedResultChip)
-    .wait(900)
-    .expect(Selector('.emojiVariantFlyout').exists).notOk()
 
     // a search the picker already cuts off has more to show than its tones, so they stay behind
-    // the flyout there
+    // the flyout there - which a click on a marked chip opens instead of picking that chip
     .typeText(Selector('input[placeholder="Search icons..."]'), 'woman', { replace: true })
     .expect(inlineChips()).eql({ forms: 0, expanded: false, marker: 'block', offColumn: 0 })
-    .hover(markedResultChip)
+    .click(markedResultChip)
     .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(widgetIcon()).eql('"👍"')
+    .pressKey('esc')
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
 
-    // and a form in the list is picked like any other chip of it
+    // and a form in the list is picked with a single click, like any other chip of it
     .typeText(Selector('input[placeholder="Search icons..."]'), 'victory', { replace: true })
     .expect(inlineChips()).eql({ forms: 5, expanded: true, marker: 'none', offColumn: 0 })
     .click(Selector('.propertyPickerChips').nth(-1).find('.emojiVariantInline').nth(4))

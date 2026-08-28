@@ -65,7 +65,7 @@ function symbolName(icon) {
   return (icon.dataset.keywords.split(',')[1] || '').replace(/_/g, ' ');
 }
 
-// How long the list may get for the skin tones to be put into it instead of behind a hover of their
+// How long the list may get for the skin tones to be put into it instead of behind a click of their
 // own: a search this narrow is a handful of rows, and a flyout per icon is then more work to open
 // than the whole result is to read. It fits the largest set an icon has (a 5x5 matrix is 25 forms)
 // twice over, so the single icon a search is often meant to find always shows what it offers.

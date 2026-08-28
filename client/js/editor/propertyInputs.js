@@ -1324,7 +1324,7 @@ class IconInput extends PickerInput {
   }
 
   // the icon list has one entry per emoji, but most of the people ones also have skin tone forms:
-  // mark those chips and let their flyout pick one (client/js/emojivariants.js)
+  // mark those chips and let the flyout a click on one opens pick a tone (client/js/emojivariants.js)
   decorateChip(chip, value) {
     const icon = iconName(value);
     if(iconValueType(icon) == 'emoji-color')
@@ -1433,7 +1433,7 @@ class IconInput extends PickerInput {
         this.decorateChip(resultChip(iconValue, results), iconValue);
       this.decorateChipList(results);
       // A search that has already narrowed the picker down to a handful of icons should not make
-      // each of them be hovered again to find out what it offers, so the toned forms go into the
+      // each of them be opened again to find out what it offers, so the toned forms go into the
       // list itself, right behind the icon they belong to (the same as the "Pick icon" overlay
       // does, see symbols.js). They count towards the number of icons the search shows, so the
       // list never gets longer than it may be - and a search that is cut off at that number has
