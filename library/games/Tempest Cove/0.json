@@ -3,14 +3,14 @@
     "version": 21,
     "info": {
       "name": "Tempest Cove",
-      "image": "/assets/-432217213_47290",
+      "image": "/assets/-1614099583_48858",
       "rules": "https://spielgezeug.de/images/selecta_piratissimo.pdf",
       "bgg": "https://boardgamegeek.com/boardgame/20953/piratissimo",
       "year": "2005",
       "mode": "vs",
       "time": "45",
-      "attribution": "<div>Layout, design and the library preview image by VTT-AI-Agent, released to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Source of the layout: https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games/Tempest%20Cove</div>\n<div><br></div>\n<div>AI disclosure: this layout (the JSON file) and all of its texts were written by the AI agent Claude by Anthropic (https://claude.ai), from the instruction &quot;add a game to the VirtualTabletop public library that plays like Piratissimo&quot;. No AI generated imagery is used anywhere in this game: the board, the ships, the dice faces and the wind wheel are drawn with CSS gradients and with the icons listed below, and the library preview image is a screenshot of that board taken in a headless Chromium browser (Playwright, https://playwright.dev) and saved as .webp.</div>\n<div><br></div>\n<div>Board pieces, islands, sea creatures and symbols use icons that ship with VirtualTabletop and are available under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) from https://game-icons.net, as detailed on the About page:</div>\n<div><br></div>\n<div>Delapouite:</div>\n<div>&nbsp;&nbsp;Caravel - https://game-icons.net/1x1/delapouite/caravel.html</div>\n<div>&nbsp;&nbsp;Cave entrance - https://game-icons.net/1x1/delapouite/cave-entrance.html</div>\n<div>&nbsp;&nbsp;Chest - https://game-icons.net/1x1/delapouite/chest.html</div>\n<div>&nbsp;&nbsp;Coconuts - https://game-icons.net/1x1/delapouite/coconuts.html</div>\n<div>&nbsp;&nbsp;Coins - https://game-icons.net/1x1/delapouite/coins.html</div>\n<div>&nbsp;&nbsp;Dolphin - https://game-icons.net/1x1/delapouite/dolphin.html</div>\n<div>&nbsp;&nbsp;Harbor dock - https://game-icons.net/1x1/delapouite/harbor-dock.html</div>\n<div>&nbsp;&nbsp;Hut - https://game-icons.net/1x1/delapouite/hut.html</div>\n<div>&nbsp;&nbsp;Huts village - https://game-icons.net/1x1/delapouite/huts-village.html</div>\n<div>&nbsp;&nbsp;Island - https://game-icons.net/1x1/delapouite/island.html</div>\n<div>&nbsp;&nbsp;Jungle - https://game-icons.net/1x1/delapouite/jungle.html</div>\n<div>&nbsp;&nbsp;Kraken tentacle - https://game-icons.net/1x1/delapouite/kraken-tentacle.html</div>\n<div>&nbsp;&nbsp;Mermaid - https://game-icons.net/1x1/delapouite/mermaid.html</div>\n<div>&nbsp;&nbsp;Palm tree - https://game-icons.net/1x1/delapouite/palm-tree.html</div>\n<div>&nbsp;&nbsp;Rolling dices - https://game-icons.net/1x1/delapouite/rolling-dices.html</div>\n<div>&nbsp;&nbsp;Sailboat - https://game-icons.net/1x1/delapouite/sailboat.html</div>\n<div>&nbsp;&nbsp;Sea turtle - https://game-icons.net/1x1/delapouite/sea-turtle.html</div>\n<div>&nbsp;&nbsp;Shark fin - https://game-icons.net/1x1/delapouite/shark-fin.html</div>\n<div>&nbsp;&nbsp;Ship wreck - https://game-icons.net/1x1/delapouite/ship-wreck.html</div>\n<div>&nbsp;&nbsp;Sperm whale - https://game-icons.net/1x1/delapouite/sperm-whale.html</div>\n<div>&nbsp;&nbsp;Three friends - https://game-icons.net/1x1/delapouite/three-friends.html</div>\n<div>&nbsp;&nbsp;Tropical fish - https://game-icons.net/1x1/delapouite/tropical-fish.html</div>\n<div><br></div>\n<div>Lorc:</div>\n<div>&nbsp;&nbsp;Anchor - https://game-icons.net/1x1/lorc/anchor.html</div>\n<div>&nbsp;&nbsp;Compass - https://game-icons.net/1x1/lorc/compass.html</div>\n<div>&nbsp;&nbsp;Crab - https://game-icons.net/1x1/lorc/crab.html</div><div>&nbsp;&nbsp;Cycle - https://game-icons.net/1x1/lorc/cycle.html</div>\n<div>&nbsp;&nbsp;Galleon - https://game-icons.net/1x1/lorc/galleon.html</div>\n<div>&nbsp;&nbsp;Laurel crown - https://game-icons.net/1x1/lorc/laurel-crown.html</div><div>&nbsp;&nbsp;Monkey - https://game-icons.net/1x1/lorc/monkey.html</div>\n<div>&nbsp;&nbsp;Mountains - https://game-icons.net/1x1/lorc/mountains.html</div>\n<div>&nbsp;&nbsp;Octopus - https://game-icons.net/1x1/lorc/octopus.html</div>\n<div>&nbsp;&nbsp;Parrot head - https://game-icons.net/1x1/lorc/parrot-head.html</div>\n<div>&nbsp;&nbsp;Sea serpent - https://game-icons.net/1x1/lorc/sea-serpent.html</div>\n<div>&nbsp;&nbsp;Spyglass - https://game-icons.net/1x1/lorc/spyglass.html</div>\n<div>&nbsp;&nbsp;Tornado - https://game-icons.net/1x1/lorc/tornado.html</div>\n<div>&nbsp;&nbsp;Volcano - https://game-icons.net/1x1/lorc/volcano.html</div>\n<div>&nbsp;&nbsp;Water splash - https://game-icons.net/1x1/lorc/water-splash.html</div>\n<div>&nbsp;&nbsp;Waves - https://game-icons.net/1x1/lorc/waves.html</div>\n<div>&nbsp;&nbsp;Wind slap - https://game-icons.net/1x1/lorc/wind-slap.html</div>\n<div><br></div>\n<div>Skoll:</div>\n<div>&nbsp;&nbsp;Open treasure chest - https://game-icons.net/1x1/skoll/open-treasure-chest.html</div>\n<div><br></div>\n<div>The arrows that show the sailing route, the storm direction and the goal are /i/icons/arrow_right.svg, one of the user interface icons bundled with VirtualTabletop (https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/icons/arrow_right.svg). Per the About page of virtualtabletop.io, those bundled symbols are either Google Material Symbols under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or symbols made by the VirtualTabletop community and released under CC0.</div>\n<div><br></div>\n<div>The library preview image (assets/633675787_42484) is a screenshot of this board, made by VTT-AI-Agent and released under CC0 1.0. Everything visible on it is covered by the licenses above.</div>\n<div><br></div>\n<div>The game is inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005, https://boardgamegeek.com/boardgame/20953/piratissimo). No artwork, text or component of that game is used here; the rules were reimplemented from the publisher&#39;s rulebook.</div>",
-      "lastUpdate": 1786007110693,
+      "attribution": "<div>Layout, design and the library preview image by VTT-AI-Agent, released to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Source of the layout: https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games/Tempest%20Cove</div>\n<div><br></div>\n<div>AI disclosure: this layout (the JSON file) and all of its texts were written by the AI agent Claude by Anthropic (https://claude.ai), from the instruction &quot;add a game to the VirtualTabletop public library that plays like Piratissimo&quot;. No AI generated imagery is used anywhere in this game: the board, the ships, the gold treasure coins, the dice faces and the wind wheel are drawn with CSS gradients and with the icons listed below, and the library preview image is a screenshot of that board taken in a headless Chromium browser (Playwright, https://playwright.dev) and saved as .webp.</div>\n<div><br></div>\n<div>Board pieces, islands, sea creatures and symbols use icons that ship with VirtualTabletop and are available under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/) from https://game-icons.net, as detailed on the About page:</div>\n<div><br></div>\n<div>Delapouite:</div>\n<div>&nbsp;&nbsp;Caravel - https://game-icons.net/1x1/delapouite/caravel.html</div>\n<div>&nbsp;&nbsp;Cave entrance - https://game-icons.net/1x1/delapouite/cave-entrance.html</div>\n<div>&nbsp;&nbsp;Chest - https://game-icons.net/1x1/delapouite/chest.html</div>\n<div>&nbsp;&nbsp;Coconuts - https://game-icons.net/1x1/delapouite/coconuts.html</div>\n<div>&nbsp;&nbsp;Coins - https://game-icons.net/1x1/delapouite/coins.html</div>\n<div>&nbsp;&nbsp;Dolphin - https://game-icons.net/1x1/delapouite/dolphin.html</div>\n<div>&nbsp;&nbsp;Harbor dock - https://game-icons.net/1x1/delapouite/harbor-dock.html</div>\n<div>&nbsp;&nbsp;Hut - https://game-icons.net/1x1/delapouite/hut.html</div>\n<div>&nbsp;&nbsp;Huts village - https://game-icons.net/1x1/delapouite/huts-village.html</div>\n<div>&nbsp;&nbsp;Island - https://game-icons.net/1x1/delapouite/island.html</div>\n<div>&nbsp;&nbsp;Jungle - https://game-icons.net/1x1/delapouite/jungle.html</div>\n<div>&nbsp;&nbsp;Kraken tentacle - https://game-icons.net/1x1/delapouite/kraken-tentacle.html</div>\n<div>&nbsp;&nbsp;Mermaid - https://game-icons.net/1x1/delapouite/mermaid.html</div>\n<div>&nbsp;&nbsp;Palm tree - https://game-icons.net/1x1/delapouite/palm-tree.html</div>\n<div>&nbsp;&nbsp;Rolling dices - https://game-icons.net/1x1/delapouite/rolling-dices.html</div>\n<div>&nbsp;&nbsp;Sailboat - https://game-icons.net/1x1/delapouite/sailboat.html</div>\n<div>&nbsp;&nbsp;Sea turtle - https://game-icons.net/1x1/delapouite/sea-turtle.html</div>\n<div>&nbsp;&nbsp;Shark fin - https://game-icons.net/1x1/delapouite/shark-fin.html</div>\n<div>&nbsp;&nbsp;Ship wreck - https://game-icons.net/1x1/delapouite/ship-wreck.html</div>\n<div>&nbsp;&nbsp;Sperm whale - https://game-icons.net/1x1/delapouite/sperm-whale.html</div>\n<div>&nbsp;&nbsp;Three friends - https://game-icons.net/1x1/delapouite/three-friends.html</div>\n<div>&nbsp;&nbsp;Tropical fish - https://game-icons.net/1x1/delapouite/tropical-fish.html</div>\n<div><br></div>\n<div>Lorc:</div>\n<div>&nbsp;&nbsp;Anchor - https://game-icons.net/1x1/lorc/anchor.html</div>\n<div>&nbsp;&nbsp;Compass - https://game-icons.net/1x1/lorc/compass.html</div>\n<div>&nbsp;&nbsp;Crab - https://game-icons.net/1x1/lorc/crab.html</div><div>&nbsp;&nbsp;Cycle - https://game-icons.net/1x1/lorc/cycle.html</div>\n<div>&nbsp;&nbsp;Galleon - https://game-icons.net/1x1/lorc/galleon.html</div>\n<div>&nbsp;&nbsp;Laurel crown - https://game-icons.net/1x1/lorc/laurel-crown.html</div><div>&nbsp;&nbsp;Monkey - https://game-icons.net/1x1/lorc/monkey.html</div>\n<div>&nbsp;&nbsp;Mountains - https://game-icons.net/1x1/lorc/mountains.html</div>\n<div>&nbsp;&nbsp;Octopus - https://game-icons.net/1x1/lorc/octopus.html</div>\n<div>&nbsp;&nbsp;Parrot head - https://game-icons.net/1x1/lorc/parrot-head.html</div>\n<div>&nbsp;&nbsp;Sea serpent - https://game-icons.net/1x1/lorc/sea-serpent.html</div>\n<div>&nbsp;&nbsp;Spyglass - https://game-icons.net/1x1/lorc/spyglass.html</div>\n<div>&nbsp;&nbsp;Tornado - https://game-icons.net/1x1/lorc/tornado.html</div>\n<div>&nbsp;&nbsp;Volcano - https://game-icons.net/1x1/lorc/volcano.html</div>\n<div>&nbsp;&nbsp;Water splash - https://game-icons.net/1x1/lorc/water-splash.html</div>\n<div>&nbsp;&nbsp;Waves - https://game-icons.net/1x1/lorc/waves.html</div>\n<div>&nbsp;&nbsp;Wind slap - https://game-icons.net/1x1/lorc/wind-slap.html</div>\n<div><br></div>\n<div>Skoll:</div>\n<div>&nbsp;&nbsp;Open treasure chest - https://game-icons.net/1x1/skoll/open-treasure-chest.html</div>\n<div><br></div>\n<div>The arrows that show the sailing route, the storm direction and the goal are /i/icons/arrow_right.svg, one of the user interface icons bundled with VirtualTabletop (https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/icons/arrow_right.svg). Per the About page of virtualtabletop.io, those bundled symbols are either Google Material Symbols under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or symbols made by the VirtualTabletop community and released under CC0.</div>\n<div><br></div>\n<div>The library preview image (assets/633675787_42484) is a screenshot of this board, made by VTT-AI-Agent and released under CC0 1.0. Everything visible on it is covered by the licenses above.</div>\n<div><br></div>\n<div>The game is inspired by Piratissimo by Manfred Ludwig (Selecta Spielzeug, 2005, https://boardgamegeek.com/boardgame/20953/piratissimo). No artwork, text or component of that game is used here; the rules were reimplemented from the publisher&#39;s rulebook.</div>",
+      "lastUpdate": 1787914997575,
       "showName": true,
       "skill": "low",
       "language": "en-US",
@@ -20,7 +20,7 @@
       "similarDesigner": "Manfred Ludwig",
       "similarAwards": "",
       "ruleText": "<div>Several pirate ships cruise a ring of 28 lonely islands looking for buried treasure. Dig it up, load it on board and be the first to bring ten pieces safely into your own harbour - while a wandering storm, greedy rivals and your own overloaded hold do their best to stop you.</div>\n<div><br></div>\n<div>On your turn you roll one die. A number sails your ship that many islands onward, following the arrows; an island has room for two ships, a third one sails on to the next free island. Islands with an open chest let you take as much of the treasure as you like, up to the number on the chest - half of them hold at most one, the other half up to three; a closed red chest blinds you with greed and forces two on board; on an island without a chest the arriving captain may take up to two treasure from the ship moored there, or push up to two onto it. A hold takes seven treasure at most - one too many and the ship capsizes and the whole cargo sinks.</div>\n<div><br></div>\n<div>Each colour has a harbour beside its own entrance island. Only its owner may turn in, and the rest of the move is lost when they do; the treasure is unloaded there and the ship sets out again on the next turn.</div>\n<div><br></div>\n<div>The storm face of the die lets you sail one single island and then drift the storm against the sailing direction - up to five islands with two players, four with three, three with four. If the storm comes to rest on an island with ships, the wind wheel decides their fate: blown one island on, one treasure to every other captain, swept safely home, or two treasure washed into the sea.</div>",
-      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat - the coloured sailboat at the left of each seat row shows which ship that seat commands - then somebody presses the round brown <b>new voyage</b> button (the circling arrows) on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts. Until then a hint plate in the middle of the sea points at that button.</div>\n<h4>Your turn</h4>\n<div>Press the big gold <b>dice</b> button on the right (or click the die itself); its border is drawn in the colour of the captain whose turn it is. Everything that follows is worked out for you; you only answer the questions. The <b>?</b> button at the top of the panel repeats all of this at the table.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 1</b> - load as much treasure as you like, 0 or 1.</li>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. Half of the open chests are the small ones, half the big ones. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose <i>nothing</i> to leave both ships alone.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks and it sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two treasure per hit ship wash into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Ships and the storm can simply be dragged</b> from island to island, and the two counters next to your seat can be clicked to correct the cargo on board (⛵) and the treasure in your harbour (⚓) - useful for house rules, for taking a move back or for setting up a position. A piece that is not on a space glows red, so a ship left in open water is easy to spot and to drop onto an island. The dice button is only the comfortable way to play.</div>\n<h4>Winning</h4>\n<div>The winner is announced on a laurel banner in the middle of the sea; click the banner to push it aside. The hint plate underneath points back at the new-voyage button.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
+      "helpText": "<h4>Goal</h4>\n<div>Be the first captain to land <b>10 treasure</b> in your own harbour. The number on your harbour plate - and the anchor counter next to your seat - is what you have landed so far.</div>\n<h4>The treasure</h4>\n<div>Treasure is <b>real gold coins</b>. They wait in the sunken chest in the middle of the sea, they stack up on the deck of your ship while you sail - the taller the stack, the closer you are to capsizing - and they pile up in your harbour once you land them. Ten coins in your harbour win the game. The dice button carries them for you, but you can also pick any coin up and drag it wherever you want.</div>\n<h4>Setup</h4>\n<div>Everybody clicks a seat - the coloured sailboat at the left of each seat row shows which ship that seat commands - then somebody presses the round brown <b>new voyage</b> button (the circling arrows) on the right. All ships return to their harbours, the storm is placed on a random island and a random captain starts. Until then a hint plate in the middle of the sea points at that button.</div>\n<h4>Your turn</h4>\n<div>Press the big gold <b>dice</b> button on the right (or click the die itself); its border is drawn in the colour of the captain whose turn it is. Everything that follows is worked out for you; you only answer the questions. The <b>?</b> button at the top of the panel repeats all of this at the table.</div>\n<ul>\n<li><b>A number</b> - your ship sails that many islands clockwise, following the dark arrows. If your own harbour entrance is on the way you are asked whether you want to sail in, unload and start a new voyage; the rest of the move is then lost.</li>\n<li><b>The storm symbol</b> - you may first sail on one single island, then you drift the storm against the sailing direction (the white wind arrows): up to 5 islands with 2 players, 4 with 3 players, 3 with 4 players (0 = leave it where it is).</li>\n</ul>\n<h4>The 28 spaces</h4>\n<ul>\n<li><b>Open chest, green 1</b> - load as much treasure as you like, 0 or 1.</li>\n<li><b>Open chest, green 3</b> - load as much treasure as you like, 0 to 3. Half of the open chests are the small ones, half the big ones. The dialog suggests the largest amount your hold can take.</li>\n<li><b>Closed chest, red 2</b> - greed wins: you <i>must</i> load 2 treasure.</li>\n<li><b>Island without a chest</b> - if a rival ship is moored here you may steal up to 2 treasure from it, or push up to 2 of yours onto it to make it capsize. Choose <i>nothing</i> to leave both ships alone.</li>\n<li><b>Harbour entrance</b> - the anchor island in each corner. The harbour itself lies beside it and only its owner may sail in.</li>\n<li>An island has room for <b>two ships</b>; a third one sails on to the next island with a free berth.</li>\n<li>A ship carries <b>at most 7</b> treasure. Load more and it capsizes: the whole cargo sinks back into the chest in the sea and the ship sails on with an empty hold.</li>\n</ul>\n<h4>When the storm comes to rest on ships</h4>\n<div>The wind wheel in the middle of the sea is spun and shows what happens to every ship on that island:</div>\n<ul>\n<li><b>Wind</b> - the ships are blown one island onward and work that island as usual.</li>\n<li><b>Three figures</b> - each hit ship hands one treasure to every other captain, who has to take it aboard - a full hold capsizes. A captain lying in their harbour puts it straight into the harbour.</li>\n<li><b>Anchor</b> - lucky! The hit ships reach their own harbour and unload at once.</li>\n<li><b>Splash</b> - two coins per hit ship wash back into the sea.</li>\n</ul>\n<h4>Playing by hand</h4>\n<div>Nothing is ever blocked. <b>Every coin can simply be dragged</b> - out of the sunken chest, onto a ship, from one ship to another, into a harbour - and the two counters follow along on their own. <b>Ships and the storm can be dragged</b> from island to island in the same way, and the two counters next to your seat can still be clicked to set the cargo on board (⛵) and the treasure in your harbour (⚓) as a number, which moves the matching coins for you - useful for house rules, for taking a move back or for setting up a position. A piece that is not on a space glows red, so a ship left in open water is easy to spot and to drop onto an island. The dice button is only the comfortable way to play.</div>\n<h4>Winning</h4>\n<div>The winner is announced on a laurel banner in the middle of the sea; click the banner to push it aside. The hint plate underneath points back at the new-voyage button.</div>\n<h4>Shorter game</h4>\n<div>Agree on fewer than 10 treasure before you start and simply stop when somebody reaches that number - the anchor counter next to each seat shows the score.</div>",
       "players": "2-4",
       "usesAIImagery": false
     }
@@ -4316,7 +4316,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the cargo on board by hand."
+            "text": "Load or unload treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4330,13 +4330,43 @@
       },
       "var c = min ${c} 7",
       "var c = max ${c} 0",
+      "var diff = ${c} - ${cargo}",
       {
-        "func": "SET",
-        "collection": [
-          "ship1"
-        ],
-        "property": "cargo",
-        "value": "${c}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "hold1",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hold1",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -4375,7 +4405,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the treasure in the harbour by hand."
+            "text": "Add or remove landed treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4389,13 +4419,43 @@
       },
       "var l = min ${l} 99",
       "var l = max ${l} 0",
+      "var diff = ${l} - ${landed}",
       {
-        "func": "SET",
-        "collection": [
-          "dock1"
-        ],
-        "property": "landed",
-        "value": "${l}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "harb1",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "harb1",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -4484,7 +4544,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the cargo on board by hand."
+            "text": "Load or unload treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4498,13 +4558,43 @@
       },
       "var c = min ${c} 7",
       "var c = max ${c} 0",
+      "var diff = ${c} - ${cargo}",
       {
-        "func": "SET",
-        "collection": [
-          "ship2"
-        ],
-        "property": "cargo",
-        "value": "${c}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "hold2",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hold2",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -4543,7 +4633,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the treasure in the harbour by hand."
+            "text": "Add or remove landed treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4557,13 +4647,43 @@
       },
       "var l = min ${l} 99",
       "var l = max ${l} 0",
+      "var diff = ${l} - ${landed}",
       {
-        "func": "SET",
-        "collection": [
-          "dock2"
-        ],
-        "property": "landed",
-        "value": "${l}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "harb2",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "harb2",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -4652,7 +4772,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the cargo on board by hand."
+            "text": "Load or unload treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4666,13 +4786,43 @@
       },
       "var c = min ${c} 7",
       "var c = max ${c} 0",
+      "var diff = ${c} - ${cargo}",
       {
-        "func": "SET",
-        "collection": [
-          "ship3"
-        ],
-        "property": "cargo",
-        "value": "${c}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "hold3",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hold3",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -4711,7 +4861,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the treasure in the harbour by hand."
+            "text": "Add or remove landed treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4725,13 +4875,43 @@
       },
       "var l = min ${l} 99",
       "var l = max ${l} 0",
+      "var diff = ${l} - ${landed}",
       {
-        "func": "SET",
-        "collection": [
-          "dock3"
-        ],
-        "property": "landed",
-        "value": "${l}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "harb3",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "harb3",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -4820,7 +5000,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the cargo on board by hand."
+            "text": "Load or unload treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4834,13 +5014,43 @@
       },
       "var c = min ${c} 7",
       "var c = max ${c} 0",
+      "var diff = ${c} - ${cargo}",
       {
-        "func": "SET",
-        "collection": [
-          "ship4"
-        ],
-        "property": "cargo",
-        "value": "${c}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "hold4",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hold4",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -4879,7 +5089,7 @@
           },
           {
             "type": "subtitle",
-            "text": "Correct the treasure in the harbour by hand."
+            "text": "Add or remove landed treasure by hand. You can also just drag the coins."
           },
           {
             "type": "number",
@@ -4893,13 +5103,43 @@
       },
       "var l = min ${l} 99",
       "var l = max ${l} 0",
+      "var diff = ${l} - ${landed}",
       {
-        "func": "SET",
-        "collection": [
-          "dock4"
-        ],
-        "property": "landed",
-        "value": "${l}"
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "hoard",
+              "to": "harb4",
+              "n": "${diff}"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${diff}",
+        "relation": "<",
+        "operand2": 0,
+        "thenRoutine": [
+          "var back = 0 - ${diff}",
+          {
+            "func": "CALL",
+            "widget": "engine",
+            "routine": "goldRoutine",
+            "arguments": {
+              "from": "harb4",
+              "to": "hoard",
+              "n": "${back}"
+            }
+          }
+        ]
       }
     ]
   },
@@ -5625,56 +5865,24 @@
       }
     ],
     "loadRoutine": [
-      "var cargo = ${PROPERTY cargo OF $ship}",
-      "var cargo = ${cargo} + ${n}",
+      "var si = ${PROPERTY seatIdx OF $ship}",
+      "var hold = 'hold' + ${si}",
       {
-        "func": "IF",
-        "operand1": "${cargo}",
-        "relation": ">",
-        "operand2": 7,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "${ship}"
-            ],
-            "property": "cargo",
-            "value": 0
-          },
-          {
-            "func": "IF",
-            "operand1": "${quiet}",
-            "operand2": 0,
-            "thenRoutine": [
-              {
-                "func": "INPUT",
-                "cancelButtonText": null,
-                "cancelButtonIcon": null,
-                "confirmButtonText": "Oh no",
-                "fields": [
-                  {
-                    "type": "title",
-                    "text": "Overloaded!"
-                  },
-                  {
-                    "type": "subtitle",
-                    "text": "More than 7 treasure on board - the ship capsizes and the whole cargo sinks."
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": [
-              "${ship}"
-            ],
-            "property": "cargo",
-            "value": "${cargo}"
-          }
-        ]
+        "func": "CALL",
+        "routine": "goldRoutine",
+        "arguments": {
+          "from": "hoard",
+          "to": "${hold}",
+          "n": "${n}"
+        }
+      },
+      {
+        "func": "CALL",
+        "routine": "capsizeRoutine",
+        "arguments": {
+          "ship": "${ship}",
+          "quiet": "${quiet}"
+        }
       }
     ],
     "meetRoutine": [
@@ -5827,30 +6035,30 @@
                   "var amt = -2"
                 ]
               },
-              "var myCargo = ${PROPERTY cargo OF $ship}",
-              "var hisCargo = ${PROPERTY cargo OF $victim}",
+              "var mi = ${PROPERTY seatIdx OF $ship}",
+              "var vi = ${PROPERTY seatIdx OF $victim}",
+              "var myHold = 'hold' + ${mi}",
+              "var hisHold = 'hold' + ${vi}",
               {
                 "func": "IF",
                 "operand1": "${amt}",
                 "relation": ">",
                 "operand2": 0,
                 "thenRoutine": [
-                  "var n = min ${amt} ${hisCargo}",
-                  "var hisCargo = ${hisCargo} - ${n}",
                   {
-                    "func": "SET",
-                    "collection": [
-                      "${victim}"
-                    ],
-                    "property": "cargo",
-                    "value": "${hisCargo}"
+                    "func": "CALL",
+                    "routine": "goldRoutine",
+                    "arguments": {
+                      "from": "${hisHold}",
+                      "to": "${myHold}",
+                      "n": "${amt}"
+                    }
                   },
                   {
                     "func": "CALL",
-                    "routine": "loadRoutine",
+                    "routine": "capsizeRoutine",
                     "arguments": {
                       "ship": "${ship}",
-                      "n": "${n}",
                       "quiet": 0
                     }
                   }
@@ -5863,22 +6071,20 @@
                 "operand2": 0,
                 "thenRoutine": [
                   "var give = 0 - ${amt}",
-                  "var n = min ${give} ${myCargo}",
-                  "var myCargo = ${myCargo} - ${n}",
                   {
-                    "func": "SET",
-                    "collection": [
-                      "${ship}"
-                    ],
-                    "property": "cargo",
-                    "value": "${myCargo}"
+                    "func": "CALL",
+                    "routine": "goldRoutine",
+                    "arguments": {
+                      "from": "${myHold}",
+                      "to": "${hisHold}",
+                      "n": "${give}"
+                    }
                   },
                   {
                     "func": "CALL",
-                    "routine": "loadRoutine",
+                    "routine": "capsizeRoutine",
                     "arguments": {
                       "ship": "${victim}",
-                      "n": "${n}",
                       "quiet": 1
                     }
                   }
@@ -5890,23 +6096,33 @@
       }
     ],
     "unloadRoutine": [
-      "var sidx = ${PROPERTY seatIdx OF $ship}",
-      "var cargo = ${PROPERTY cargo OF $ship}",
+      "var si = ${PROPERTY seatIdx OF $ship}",
+      "var hold = 'hold' + ${si}",
+      "var harb = 'harb' + ${si}",
       {
-        "func": "SET",
-        "collection": [
-          "${ship}"
-        ],
-        "property": "cargo",
-        "value": 0
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${hold}",
+        "collection": "CARGO"
       },
       {
-        "func": "CALL",
-        "routine": "landRoutine",
-        "arguments": {
-          "sidx": "${sidx}",
-          "n": "${cargo}"
-        }
+        "func": "COUNT",
+        "collection": "CARGO",
+        "variable": "nCargo"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nCargo}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "collection": "CARGO",
+            "to": "${harb}",
+            "count": "all"
+          }
+        ]
       }
     ],
     "stormTurnRoutine": [
@@ -6142,30 +6358,13 @@
                         "relation": "!=",
                         "operand2": "${giver}",
                         "thenRoutine": [
-                          "var gc = ${PROPERTY cargo OF $giver}",
                           {
-                            "func": "IF",
-                            "operand1": "${gc}",
-                            "relation": ">",
-                            "operand2": 0,
-                            "thenRoutine": [
-                              "var gc = ${gc} - 1",
-                              {
-                                "func": "SET",
-                                "collection": [
-                                  "${giver}"
-                                ],
-                                "property": "cargo",
-                                "value": "${gc}"
-                              },
-                              {
-                                "func": "CALL",
-                                "routine": "giveRoutine",
-                                "arguments": {
-                                  "ship": "${taker}"
-                                }
-                              }
-                            ]
+                            "func": "CALL",
+                            "routine": "giveRoutine",
+                            "arguments": {
+                              "giver": "${giver}",
+                              "taker": "${taker}"
+                            }
                           }
                         ]
                       }
@@ -6229,16 +6428,16 @@
                 "collection": "HIT",
                 "loopRoutine": [
                   "var hitShip = ${widgetID}",
-                  "var c = ${PROPERTY cargo OF $hitShip}",
-                  "var c = ${c} - 2",
-                  "var c = max ${c} 0",
+                  "var hi = ${PROPERTY seatIdx OF $hitShip}",
+                  "var hh = 'hold' + ${hi}",
                   {
-                    "func": "SET",
-                    "collection": [
-                      "${hitShip}"
-                    ],
-                    "property": "cargo",
-                    "value": "${c}"
+                    "func": "CALL",
+                    "routine": "goldRoutine",
+                    "arguments": {
+                      "from": "${hh}",
+                      "to": "hoard",
+                      "n": 2
+                    }
                   }
                 ]
               }
@@ -6259,6 +6458,18 @@
         ],
         "property": "display",
         "value": false
+      },
+      {
+        "func": "SELECT",
+        "property": "isTreasure",
+        "value": true,
+        "collection": "ALLGOLD"
+      },
+      {
+        "func": "MOVE",
+        "collection": "ALLGOLD",
+        "to": "hoard",
+        "count": "all"
       },
       {
         "func": "FOREACH",
@@ -6446,86 +6657,37 @@
       },
       "var result = ${pos}"
     ],
-    "landRoutine": [
-      "var hs = 'dock' + ${sidx}",
-      "var landed = ${PROPERTY landed OF $hs}",
-      "var landed = ${landed} + ${n}",
+    "giveRoutine": [
+      "var gi = ${PROPERTY seatIdx OF $giver}",
+      "var ti = ${PROPERTY seatIdx OF $taker}",
+      "var gh = 'hold' + ${gi}",
+      "var td = 'dock' + ${ti}",
+      "var tp = ${PROPERTY parent OF $taker}",
+      "var tgt = 'hold' + ${ti}",
       {
-        "func": "SET",
-        "collection": [
-          "${hs}"
-        ],
-        "property": "landed",
-        "value": "${landed}"
+        "func": "IF",
+        "operand1": "${tp}",
+        "operand2": "${td}",
+        "thenRoutine": [
+          "var tgt = 'harb' + ${ti}"
+        ]
       },
       {
-        "func": "IF",
-        "operand1": "${landed}",
-        "relation": ">=",
-        "operand2": 10,
-        "thenRoutine": [
-          "var seatId = 'seat' + ${sidx}",
-          "var winner = ${PROPERTY player OF $seatId}",
-          {
-            "func": "SET",
-            "collection": [
-              "winBanner"
-            ],
-            "property": "text",
-            "value": "${winner}"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "hintText"
-            ],
-            "property": "text",
-            "value": "Press for a new voyage"
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "winBanner",
-              "winIcon",
-              "hintPlate",
-              "hintText",
-              "hintIcon"
-            ],
-            "property": "display",
-            "value": true
-          }
-        ]
-      }
-    ],
-    "giveRoutine": [
-      "var si = ${PROPERTY seatIdx OF $ship}",
-      "var hs = 'dock' + ${si}",
-      "var par = ${PROPERTY parent OF $ship}",
+        "func": "CALL",
+        "routine": "goldRoutine",
+        "arguments": {
+          "from": "${gh}",
+          "to": "${tgt}",
+          "n": 1
+        }
+      },
       {
-        "func": "IF",
-        "operand1": "${par}",
-        "operand2": "${hs}",
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "routine": "landRoutine",
-            "arguments": {
-              "sidx": "${si}",
-              "n": 1
-            }
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "CALL",
-            "routine": "loadRoutine",
-            "arguments": {
-              "ship": "${ship}",
-              "n": 1,
-              "quiet": 1
-            }
-          }
-        ]
+        "func": "CALL",
+        "routine": "capsizeRoutine",
+        "arguments": {
+          "ship": "${taker}",
+          "quiet": 1
+        }
       }
     ],
     "turnColorRoutine": [
@@ -6575,6 +6737,90 @@
           }
         ]
       }
+    ],
+    "goldRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${n}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${from}",
+            "max": "${n}",
+            "collection": "GOLD"
+          },
+          {
+            "func": "COUNT",
+            "collection": "GOLD",
+            "variable": "nMoved"
+          },
+          {
+            "func": "IF",
+            "operand1": "${nMoved}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "GOLD",
+                "to": "${to}",
+                "count": "all"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "capsizeRoutine": [
+      "var si = ${PROPERTY seatIdx OF $ship}",
+      "var hold = 'hold' + ${si}",
+      "var cargo = ${PROPERTY cargo OF $ship}",
+      {
+        "func": "IF",
+        "operand1": "${cargo}",
+        "relation": ">",
+        "operand2": 7,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${hold}",
+            "collection": "SUNK"
+          },
+          {
+            "func": "MOVE",
+            "collection": "SUNK",
+            "to": "hoard",
+            "count": "all"
+          },
+          {
+            "func": "IF",
+            "operand1": "${quiet}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "cancelButtonText": null,
+                "cancelButtonIcon": null,
+                "confirmButtonText": "Oh no",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Overloaded!"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "More than 7 treasure on board - the ship capsizes and the whole cargo sinks back into the sea."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ]
   },
   "dock1": {
@@ -6616,6 +6862,44 @@
         ],
         "property": "text",
         "value": "${value}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": ">=",
+        "operand2": 10,
+        "thenRoutine": [
+          "var seatId = 'seat' + ${si}",
+          "var winner = ${PROPERTY player OF $seatId}",
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner"
+            ],
+            "property": "text",
+            "value": "${winner}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "hintText"
+            ],
+            "property": "text",
+            "value": "Press for a new voyage"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner",
+              "winIcon",
+              "hintPlate",
+              "hintText",
+              "hintIcon"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
       }
     ],
     "enterRoutine": [
@@ -6676,6 +6960,44 @@
         ],
         "property": "text",
         "value": "${value}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": ">=",
+        "operand2": 10,
+        "thenRoutine": [
+          "var seatId = 'seat' + ${si}",
+          "var winner = ${PROPERTY player OF $seatId}",
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner"
+            ],
+            "property": "text",
+            "value": "${winner}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "hintText"
+            ],
+            "property": "text",
+            "value": "Press for a new voyage"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner",
+              "winIcon",
+              "hintPlate",
+              "hintText",
+              "hintIcon"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
       }
     ],
     "enterRoutine": [
@@ -6736,6 +7058,44 @@
         ],
         "property": "text",
         "value": "${value}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": ">=",
+        "operand2": 10,
+        "thenRoutine": [
+          "var seatId = 'seat' + ${si}",
+          "var winner = ${PROPERTY player OF $seatId}",
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner"
+            ],
+            "property": "text",
+            "value": "${winner}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "hintText"
+            ],
+            "property": "text",
+            "value": "Press for a new voyage"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner",
+              "winIcon",
+              "hintPlate",
+              "hintText",
+              "hintIcon"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
       }
     ],
     "enterRoutine": [
@@ -6796,6 +7156,44 @@
         ],
         "property": "text",
         "value": "${value}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "relation": ">=",
+        "operand2": 10,
+        "thenRoutine": [
+          "var seatId = 'seat' + ${si}",
+          "var winner = ${PROPERTY player OF $seatId}",
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner"
+            ],
+            "property": "text",
+            "value": "${winner}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "hintText"
+            ],
+            "property": "text",
+            "value": "Press for a new voyage"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "winBanner",
+              "winIcon",
+              "hintPlate",
+              "hintText",
+              "hintIcon"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
       }
     ],
     "enterRoutine": [
@@ -6965,7 +7363,7 @@
           },
           {
             "type": "text",
-            "text": "5. More than 7 treasure on board and your ship capsizes: the whole cargo sinks."
+            "text": "More than 7 treasure on board and your ship capsizes: the whole cargo sinks back into the hoard."
           },
           {
             "type": "text",
@@ -6985,11 +7383,19 @@
           },
           {
             "type": "subtitle",
+            "text": "The treasure"
+          },
+          {
+            "type": "text",
+            "text": "Treasure is real gold coins. They wait in the sunken hoard in the middle of the sea, stack up on the deck of your ship while you sail - the taller the stack, the closer you are to capsizing - and pile up in your harbour once you land them. Ten coins in your harbour win the game."
+          },
+          {
+            "type": "subtitle",
             "text": "Playing by hand"
           },
           {
             "type": "text",
-            "text": "Nothing is ever blocked: you can drag the ships and the storm anywhere yourself, and click the two round counters beside your name to correct the cargo on board and the treasure landed. A ship that is not on a space glows red."
+            "text": "Nothing is ever blocked. Drag the gold coins yourself - out of the sunken hoard, onto a ship, from one ship to another, into a harbour - and the counters follow. Ships and the storm can be dragged from island to island as well, and the two round counters beside your name still let you correct cargo and landed treasure with a number. A ship that is not on a space glows red."
           }
         ]
       }
@@ -7284,5 +7690,1701 @@
     "clickable": false,
     "text": "take what you like",
     "css": "color:#d9c295;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:flex-start"
+  },
+  "hoardGlow": {
+    "id": "hoardGlow",
+    "type": "basic",
+    "x": 242,
+    "y": 680,
+    "width": 132,
+    "height": 132,
+    "z": 0,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "borderRadius": "50%",
+    "css": "background:radial-gradient(circle, #ffffff66 0%, #ffffff2b 46%, #ffffff00 72%)"
+  },
+  "hoardArt": {
+    "id": "hoardArt",
+    "type": "basic",
+    "x": 260,
+    "y": 698,
+    "width": 96,
+    "height": 96,
+    "z": 0,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "image": "/i/game-icons.net/skoll/open-treasure-chest.svg",
+    "color": "#8a5a12",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "css": "background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 0 4px #ffffffcc) drop-shadow(0 3px 5px #00000066)"
+  },
+  "hoard": {
+    "id": "hoard",
+    "type": "holder",
+    "x": 299,
+    "y": 737,
+    "width": 18,
+    "height": 18,
+    "z": 0,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": 0
+  },
+  "g1": {
+    "id": "g1",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g2": {
+    "id": "g2",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 2,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g3": {
+    "id": "g3",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 3,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g4": {
+    "id": "g4",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 4,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g5": {
+    "id": "g5",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 5,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g6": {
+    "id": "g6",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 6,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g7": {
+    "id": "g7",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 7,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g8": {
+    "id": "g8",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 8,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g9": {
+    "id": "g9",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 9,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g10": {
+    "id": "g10",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 10,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g11": {
+    "id": "g11",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 11,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g12": {
+    "id": "g12",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 12,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g13": {
+    "id": "g13",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 13,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g14": {
+    "id": "g14",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 14,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g15": {
+    "id": "g15",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 15,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g16": {
+    "id": "g16",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 16,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g17": {
+    "id": "g17",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 17,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g18": {
+    "id": "g18",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 18,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g19": {
+    "id": "g19",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 19,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g20": {
+    "id": "g20",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 20,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g21": {
+    "id": "g21",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 21,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g22": {
+    "id": "g22",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 22,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g23": {
+    "id": "g23",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 23,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g24": {
+    "id": "g24",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 24,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g25": {
+    "id": "g25",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 25,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g26": {
+    "id": "g26",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 26,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g27": {
+    "id": "g27",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 27,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g28": {
+    "id": "g28",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 28,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g29": {
+    "id": "g29",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 29,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g30": {
+    "id": "g30",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 30,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g31": {
+    "id": "g31",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 31,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g32": {
+    "id": "g32",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 32,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g33": {
+    "id": "g33",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 33,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g34": {
+    "id": "g34",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 34,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g35": {
+    "id": "g35",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 35,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g36": {
+    "id": "g36",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 36,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g37": {
+    "id": "g37",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 37,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g38": {
+    "id": "g38",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 38,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g39": {
+    "id": "g39",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 39,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g40": {
+    "id": "g40",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 40,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g41": {
+    "id": "g41",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 41,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g42": {
+    "id": "g42",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 42,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g43": {
+    "id": "g43",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 43,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g44": {
+    "id": "g44",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 44,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g45": {
+    "id": "g45",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 45,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g46": {
+    "id": "g46",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 46,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g47": {
+    "id": "g47",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 47,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g48": {
+    "id": "g48",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 48,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g49": {
+    "id": "g49",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 49,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g50": {
+    "id": "g50",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 50,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g51": {
+    "id": "g51",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 51,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g52": {
+    "id": "g52",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 52,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g53": {
+    "id": "g53",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 53,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g54": {
+    "id": "g54",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 54,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g55": {
+    "id": "g55",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 55,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g56": {
+    "id": "g56",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 56,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g57": {
+    "id": "g57",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 57,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g58": {
+    "id": "g58",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 58,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g59": {
+    "id": "g59",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 59,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g60": {
+    "id": "g60",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 60,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g61": {
+    "id": "g61",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 61,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g62": {
+    "id": "g62",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 62,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g63": {
+    "id": "g63",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 63,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "g64": {
+    "id": "g64",
+    "type": "basic",
+    "parent": "hoard",
+    "x": 0,
+    "y": 0,
+    "z": 64,
+    "layer": 1,
+    "width": 18,
+    "height": 18,
+    "movable": true,
+    "clickable": false,
+    "overlap": true,
+    "isTreasure": true,
+    "borderRadius": "50%",
+    "css": "background-color:#f5c542;border:2px solid #6d4708;box-shadow:inset 0 0 0 2px #fff0b8, inset 0 -5px 6px -4px #a9760c, 0 1px 3px #00000088"
+  },
+  "hold1": {
+    "id": "hold1",
+    "type": "holder",
+    "parent": "ship1",
+    "x": 10,
+    "y": -14,
+    "width": 18,
+    "height": 18,
+    "z": 4,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold1",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship1"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold1",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship1"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ]
+  },
+  "harb1": {
+    "id": "harb1",
+    "type": "holder",
+    "x": 163,
+    "y": 199,
+    "width": 18,
+    "height": 18,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb1",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock1"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb1",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock1"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ]
+  },
+  "hold2": {
+    "id": "hold2",
+    "type": "holder",
+    "parent": "ship2",
+    "x": 10,
+    "y": -14,
+    "width": 18,
+    "height": 18,
+    "z": 4,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold2",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship2"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold2",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship2"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ]
+  },
+  "harb2": {
+    "id": "harb2",
+    "type": "holder",
+    "x": 795,
+    "y": 199,
+    "width": 18,
+    "height": 18,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb2",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock2"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb2",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock2"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ]
+  },
+  "hold3": {
+    "id": "hold3",
+    "type": "holder",
+    "parent": "ship3",
+    "x": 10,
+    "y": -14,
+    "width": 18,
+    "height": 18,
+    "z": 4,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold3",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship3"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold3",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship3"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ]
+  },
+  "harb3": {
+    "id": "harb3",
+    "type": "holder",
+    "x": 795,
+    "y": 831,
+    "width": 18,
+    "height": 18,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb3",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock3"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb3",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock3"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ]
+  },
+  "hold4": {
+    "id": "hold4",
+    "type": "holder",
+    "parent": "ship4",
+    "x": 10,
+    "y": -14,
+    "width": 18,
+    "height": 18,
+    "z": 4,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold4",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship4"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hold4",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ship4"
+        ],
+        "property": "cargo",
+        "value": "${nGold}"
+      }
+    ]
+  },
+  "harb4": {
+    "id": "harb4",
+    "type": "holder",
+    "x": 163,
+    "y": 831,
+    "width": 18,
+    "height": 18,
+    "z": 1,
+    "layer": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "classes": "transparent",
+    "dropTarget": [
+      {
+        "isTreasure": true
+      }
+    ],
+    "dropShadow": false,
+    "preventPiles": true,
+    "alignChildren": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 0,
+    "stackOffsetY": -5,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb4",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock4"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "harb4",
+        "collection": "GOLDHERE"
+      },
+      {
+        "func": "COUNT",
+        "collection": "GOLDHERE",
+        "variable": "nGold"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "dock4"
+        ],
+        "property": "landed",
+        "value": "${nGold}"
+      }
+    ]
   }
 }
