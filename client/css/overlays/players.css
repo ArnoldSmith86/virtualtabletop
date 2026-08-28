@@ -1,18 +1,88 @@
-#playerList {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+#playersTable {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 40rem;
+  margin: 1rem auto;
 }
 
-#playerList > div{
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 0.4em;
-  padding: 0;
-  line-height: 2em;
-  font-size: 1em;
-  margin: 0.25rem;
+#playerOverlay tr:nth-child(even) {
+  background: none; /* the default overlay striping breaks the merged player cells */
+}
+
+#playersTable th {
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  opacity: 0.7;
+  padding: 0.25rem 0.5rem;
+}
+
+#playersTable td {
+  padding: 0.25rem 0.5rem;
+  vertical-align: middle;
+  border-top: 1px solid var(--VTTblueLight);
+}
+
+/* the name column takes all the free width so the action buttons stay next to the sessions */
+#playersTable .playerNameCell {
+  width: 100%;
+}
+
+#playersTable tr.mySessionPlayer td:not(.playerSessionCell),
+#playersTable tr.mySessionEntry td.playerSessionCell {
+  background: #1f5ca633;
+}
+
+#playersTable tr.inactivePlayerEntry td {
+  opacity: 0.6;
+}
+
+#playersTable .playerActionsCell,
+#playersTable .playerSessionCell {
+  white-space: nowrap;
+}
+
+#playersTable .playerSessionCell {
+  font-size: 0.8rem;
+}
+
+/* on a narrow board the session labels are what pushes the table past the overlay, so let
+   them wrap there rather than making the whole overlay scroll sideways */
+@container roomArea (max-width: 530px) {
+  #playersTable .playerSessionCell {
+    white-space: normal;
+  }
+}
+
+#playersTable button[icon] {
+  display: inline-flex;
+  padding: 5px;
+}
+
+#playersTable button.unavailable,
+#playersTable button.unavailable:hover {
+  background-color: #808080;
+  color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+#playersTable button[icon]::before {
+  font-size: 18px;
+  width: 18px;
+  margin: 0;
+}
+
+#playersTable button.working[icon]::before {
+  animation: playersWorking 1.5s linear infinite;
+}
+
+@keyframes playersWorking {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.playerName.working {
+  opacity: 0.5;
 }
 
 .playerName {
@@ -22,11 +92,11 @@
   color: var(--VTTblue);
   background: none;
   height: 2em;
-  width: auto;
+  width: 100%;
+  min-width: 6rem;
   line-height: 2em;
   font-weight: bold;
-  flex-grow: 7;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-family: Roboto, sans-serif;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -79,58 +149,125 @@
   border-radius: 100%;
 }
 
-#playerList .myPlayerEntry input{
+#playersTable .myPlayerEntry .playerName{
   font-size: 1.2rem;
 }
-#playerList label.me{
-  order: 1;
+
+/* the rows that add a local player and invite remote ones: same layout as a player row, but no player of their own */
+/* they reuse the wrap of the color circle so their icon sits in a box of the same size */
+#playersTable tfoot .teamColorWrap .material-symbols {
+  font-size: 1.5em;
+  opacity: 0.6;
 }
-#playerList .myPlayerEntry{
-  order: 2;
-  width: 100%;
+/* an empty input has no value to read, so unlike the player names it needs to look like a field */
+#addPlayerRow .playerName {
+  font-weight: normal;
+  box-sizing: border-box;
+  min-width: 0;
+  border-bottom: 1px solid var(--VTTblueLight);
 }
-#playerList label.otherPlayers{
-  order: 3;
+#addPlayerRow .playerName:invalid {
+  border-bottom-color: darkred;
 }
-#playerList .nothingtoshow{
-  order: 4;
-  width: 100%;
-  text-align: center;
-  display: block;
-  line-height: 2em;
-  font-size: .8rem;
-  border: 2px solid transparent;
+/* the invite row is a hint of the same kind as the add-player placeholder, so it gets its color
+   (spelled out because browsers disagree on the default placeholder color) */
+#addPlayerRow .playerName::placeholder,
+#invitePlayerRow .playerNameCell {
+  color: #757575;
 }
-#playerList .activePlayerEntry{
-  order: 4;
+#invitePlayerRow .playerNameCell {
+  font-size: 0.9rem;
 }
-#playerList label.inactivePlayers{
-  order: 5;
-  height: 1px;
-  overflow: hidden;
-  opacity: 0.25;
+/* the room URL is text to read out or select, not a link - clicking it would only reload the room.
+   breaking it anywhere keeps it fully readable without widening the table on narrow screens */
+#playerInviteURL {
+  overflow-wrap: anywhere;
 }
-#playerList .inactivePlayerEntry{
-  order: 6;
-  opacity: 0.5;
+/* the share button lines up with the row action buttons and has no room for a label,
+   so the result of sharing replaces the invite text of the row */
+#playerInviteStatus,
+#invitePlayerRow.showStatus #playerInviteText {
+  display: none;
+}
+#invitePlayerRow.showStatus #playerInviteStatus {
+  display: inline;
+}
+#playerInviteStatus.error {
+  color: darkred;
 }
 
-label.ui-line{
-  border-top: 1px solid rgb(31, 92, 166);
+/* framed so that it is obvious where the collapsed section starts and what belongs to it */
+.playersHelp {
   width: 100%;
-  font-size: 0.8rem;
-  line-height: 1rem;
-  margin: 1rem 0 0.75rem 0;
-  padding: 0;
+  max-width: 40rem;
+  box-sizing: border-box;
+  margin: 0.5rem auto;
+  border: 1px solid var(--VTTblueLight);
+  border-radius: 4px;
 }
-label.ui-line::before{
-  background-color: rgb(31, 92, 166);
-  color: white;
-  display: inline-block;
-  content: attr(data-label);
-  padding: 0 0.5rem;
-  border-radius: 0 0 0.5rem;
+.playersHelp > summary {
+  cursor: pointer;
   font-weight: bold;
+  padding: 0.5rem;
+  background: #1f5ca61a;
+}
+.playersHelp[open] > summary {
+  border-bottom: 1px solid var(--VTTblueLight);
+}
+.playersHelp .helpContent {
+  padding: 0.5rem 0.75rem 0.75rem 0.75rem;
+}
+.playersHelp .helpTopic {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.playersHelp .helpTopic + .helpTopic {
+  margin-top: 1rem;
+}
+.playersHelp .helpTopic > .material-symbols {
+  font-size: 32px;
+  flex: 0 0 32px;
+  color: var(--VTTblue);
+}
+.playersHelp h2 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+}
+.playersHelp p {
+  margin: 0;
+}
+.playersHelp ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* the button list uses the icon column of the topics above so that both sections indent
+   their text by the same amount - only the icons themselves are smaller */
+.playersHelp li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.playersHelp li + li {
+  margin-top: 0.5rem;
+}
+.playersHelp li > .material-symbols {
+  font-size: 20px;
+  flex: 0 0 32px;
+  text-align: center;
+  color: var(--VTTblue);
+}
+/* an inline icon is placed by its own box instead of by text-bottom: with a fixed height and a
+   hidden overflow its baseline is the bottom edge of that box, so the offset below the text
+   baseline is a plain length and no longer depends on how a browser reads the font metrics */
+.playersHelp p .material-symbols {
+  font-size: 1em;
+  height: 1em;
+  line-height: 1em;
+  overflow: hidden;
+  vertical-align: -0.25em;
+  margin-right: 0.25rem;
 }
 
 #languageSettings select{
@@ -144,23 +281,13 @@ label.ui-line::before{
 }
 
 .overlay .heading{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;;
+  width: 100%;
+  max-width: 40rem; /* same width as the table and the help section below */
+  margin: 0 auto;
 }
 .overlay .heading h1{
-  margin: 0 0.5em 0 0;
-  padding: 0.25em 0.5em 0.25em 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  line-height: 1em;
+  margin: 0;
   text-align: left;
-  max-width: 45%;
-}
-.overlay .heading .instructionalText{
-  display: block;
-  font-size: 16px;
-  text-align: left;
-  padding: 0.9rem 0;
 }
 #playerCursors {
   position: absolute;

@@ -23,7 +23,7 @@
 
   <div id="toolbar">
     <img src="i/branding/logo.svg">
-    <div class="divider"></div>
+    <div class="divider logoDivider"></div>
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Game Shelf</span></button>
     <button id="activeGameButton" class="toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Players</span></button>
@@ -31,6 +31,7 @@
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
     <div class="divider"></div>
+    <button id="feedbackButton" class="toolbarButton"><span class="tooltip">Feedback</span></button>
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
@@ -39,6 +40,8 @@
     <button id="fullscreenButton" class="toolbarButton"><span class="tooltip">Fullscreen</span></button>
     <button id="hideToolbarButton" class="toolbarButton"><span class="tooltip">Hide Toolbar</span></button>
   </div>
+
+  <button id="showToolbarButton" icon="chevron_right" title="Show Toolbar" aria-label="Show Toolbar"></button>
 
   <div id="roomArea">
     <div id="room">
@@ -84,30 +87,91 @@
     <div id="playerOverlay" class="overlay">
       <div class="heading">
         <h1>Players</h1>
-        <div class="instructionalText">From here you can edit the name and color of any player.</div>
       </div>
       <div id="playerList">
-        <template id="template-playerlist-entry" type="text/template">
-          <span class="teamColorWrap">
-            <input type="color" class="teamColor">
-            <i class="material-symbols teamColorIcon">person</i>
-          </span>
-          <input class="playerName" />
+        <template id="template-playerlist-player" type="text/template">
+          <td class="playerColorCell">
+            <span class="teamColorWrap">
+              <input type="color" class="teamColor" title="Change player color">
+              <i class="material-symbols teamColorIcon">person</i>
+            </span>
+          </td>
+          <td class="playerNameCell">
+            <input class="playerName" />
+          </td>
+          <td class="playerActionsCell">
+            <button icon="edit" class="renamePlayer" title="Rename this player and update all references to it in the game"></button>
+            <button icon="visibility" class="viewPlayer" title="View the game as this player: only this browser tab switches over and the game stays unchanged"></button>
+            <button icon="delete" class="removePlayer" title="Remove this player"></button>
+          </td>
         </template>
-        <label class="me ui-line" data-label="Me »"> </label>
-        <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
-        <label class="inactivePlayers ui-line"> </label>
-      </div>
-      <div id="playerInvite">
-        <h1>Invite</h1>
-        <p>More players can join this game by visiting <span id="playerInviteURL"></span>.</p>
-        <button icon="share" id="playersShareButton">Share room URL</button>
+        <template id="template-playerlist-session" type="text/template">
+          <td class="playerSessionCell">
+            <span class="sessionLabel"></span>
+          </td>
+        </template>
+        <table id="playersTable">
+          <thead>
+            <tr><th></th><th>Player</th><th></th><th title="Every browser tab that has this room open is one connection of a player">Connections</th></tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr id="addPlayerRow">
+              <td class="playerColorCell"><span class="teamColorWrap"><i class="material-symbols">person_add</i></span></td>
+              <td class="playerNameCell"><input id="localPlayerName" class="playerName" placeholder="Add a player who shares this device" /></td>
+              <td class="playerActionsCell" colspan="2"><button icon="add" id="addLocalPlayerButton" title="Add a player who shares this device"></button></td>
+            </tr>
+            <tr id="invitePlayerRow">
+              <td class="playerColorCell"><span class="teamColorWrap"><i class="material-symbols">group_add</i></span></td>
+              <td class="playerNameCell"><span id="playerInviteText">Invite players to <span id="playerInviteURL"></span></span><span id="playerInviteStatus"></span></td>
+              <td class="playerActionsCell" colspan="2"><button icon="share" id="playersShareButton" title="Share the room URL so other players can join"></button></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
       <div id="languageSettings">
         <h1>Language</h1>
         <p>Select the display language for menus and dialogs. Game content is not translated. The page reloads to apply the change.</p>
         <select id="languageSelect" aria-label="Language"></select>
       </div>
+      <details id="playersHelp" class="playersHelp">
+        <summary>Help: playing together</summary>
+        <div class="helpContent">
+          <div class="helpTopic">
+            <i class="material-symbols">groups</i>
+            <div>
+              <h2>Players and connections</h2>
+              <p>Every browser tab that has this room open is one connection of a player. Edit the name and color of any player, view the game as another player or add a local player that shares this device. While you have this room open in more than one tab, adding a player switches the current tab to them, so every tab can be its own player.</p>
+            </div>
+          </div>
+          <div class="helpTopic">
+            <i class="material-symbols">share</i>
+            <div>
+              <h2>Remote play</h2>
+              <p>Everybody plays on their own device: send them the room URL with the <i class="material-symbols">share</i> button in the table above and they join this table as soon as they open it. Their browser tab shows up here as a connection and they can pick their name and color in the table.</p>
+            </div>
+          </div>
+          <div class="helpTopic">
+            <i class="material-symbols">swap_horizontal_circle</i>
+            <div>
+              <h2>Hotseat</h2>
+              <p>Several people share one device: add each of them with the <i class="material-symbols">person_add</i> row of the table, then use the <i class="material-symbols">visibility</i> button to switch this browser tab to whoever's turn it is. Only this browser tab switches over, the game itself stays untouched.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="playersButtonHelp" class="playersHelp">
+        <summary>Help: what the buttons do</summary>
+        <div class="helpContent">
+          <ul>
+            <li><i class="material-symbols">edit</i>Rename the player everywhere in the game</li>
+            <li><i class="material-symbols">visibility</i>View the game as this player - greyed out while they are connected and playing</li>
+            <li><i class="material-symbols">delete</i>Remove this player from the list - only shown while they are not connected, and asking first if parts of the game still belong to them</li>
+            <li><i class="material-symbols">add</i>Add a player who shares this device</li>
+            <li><i class="material-symbols">share</i>Share the room URL so other players can join</li>
+          </ul>
+        </div>
+      </details>
     </div>
 
     <div id="returnOverlay" class="overlay">
@@ -172,6 +236,7 @@
           <img>
           <button icon="star_rate" class="star"></button>
           <i class="material-symbols linked">link</i>
+          <i class="material-symbols importNotes" title="This game was imported - the game details list what could not be translated">info</i>
           <span class="ai-badge" title="Uses AI generated imagery">AI</span>
           <div class="details">
             <h3>Name</h3>
@@ -353,7 +418,9 @@
         </div>
         <button class="prettyButton next"><i class="material-symbols">arrow_forward</i></button>
       </div>
-      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery">
+      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery|importerWarnings">
+        <h3 data-showfor="importerWarnings" id="importNotesHeading">Import notes</h3>
+        <ul data-showfor="importerWarnings" id="importNotes"></ul>
         <h3 data-showfor="ruleText">How to play the game</h3>
         <div data-field="ruleText" data-html="true"></div>
         <h3 data-showfor="helpText">How to use this implementation</h3>
@@ -474,11 +541,26 @@
       </div>
       <div>
         <div icon="add_reaction">
-          <input placeholder="Search" />
-          <p icon="blur_on">For performance reasons, <span>game-icons are displayed in low resolution and </span>emoji are displayed in your browser font. Filter to less than 100 images or hover over an icon to show the actual image that will be used.</p>
+          <input />
+          <p icon="blur_on">Click an icon to pick it. Emoji use your browser font<span> and game-icons are previewed in low resolution</span>: hover one, or narrow the search below 100 results, to see the real image.</p>
           <div id="symbolList">
             Loading...
           </div>
+          <div id="symbolNoResults"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="audioPickerOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Pick sound</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <input placeholder="Search" />
+        <p>Sound effects by <a href="https://kenney.nl" class="external">Kenney</a>, released under CC0. Click the arrow to preview a sound, click its name to select it.</p>
+        <div id="audioList">
+          Loading...
         </div>
       </div>
     </div>
@@ -515,7 +597,7 @@
           <h3>Icons, Symbols, and Visual Assets</h3>
             <p>The VirtualTabletop.io logos and icons (consisting of "virtualtabletop.io" overlaid on a simulated screen and a stylized human figure popping out of a screen) are by various members of the VirtualTabletop.io community and are released under CC BY-NC-SA 4.0 (attribution to VirtualTabletop.io).</p>
             <p>The following pieces and symbols were created by Brandon Lewis (@mousewax) for VirtualTabletop.io and are released under the CC0 license: pawn, pin, marble, cube, checkers, poker chips, stylized human figures, pigs, house, village, and wood beam. The 3D dice were created by various members of the VirtualTabletop.io community and are also released under CC0.</p>
-            <p>Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from the following: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, John Colburnm, and other various artists.</p>
+            <p>Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from the following: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, SeregaCthtuf, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, John Colburnm, and other various artists.</p>
             <p>The custom cursors in the cursors folder are by RaphaelAlvez and are released under the CC0 license.</p>
         <hr>
           <h3>Fonts and Other Symbols</h3>
@@ -538,6 +620,9 @@
             <h4 style="margin-left: 1em;">• Tile Sets</h4>
               <p style="margin-left: 2em;"><strong>Mahjong tiles:</strong> The tile designs other than the joker are by 碧海风 and are available under CC BY-SA 4.0 at <a href="https://commons.wikimedia.org/wiki/Category:SVG_Planar_illustrations_of_Mahjong_tiles" class="external">Wikimedia Commons</a>. The joker tile design is a modified version of <a href="https://commons.wikimedia.org/wiki/File:MJj1v1-.svg" class="external">an image</a> by Cangjie6, available under CC BY-SA 4.0.</p>
               <p style="margin-left: 2em;"><strong>Dominoes:</strong> The tile design is by LawDawg96 and is released into the public domain under CC0.</p>
+        <hr>
+          <h3>Sound Effects</h3>
+            <p>The bundled sound effects offered by the in-editor sound picker (for the <code>AUDIO</code> operation and the <code>clickSound</code> property) were created by <a href="https://kenney.nl" class="external">Kenney</a> and are released into the public domain under CC0. They are the complete set of free audio packs from Kenney's <a href="https://kenney.nl/assets/category:Audio" class="external">Audio category</a>: <a href="https://kenney.nl/assets/casino-audio" class="external">Casino Audio</a>, <a href="https://kenney.nl/assets/interface-sounds" class="external">Interface Sounds</a>, <a href="https://kenney.nl/assets/ui-audio" class="external">UI Audio</a>, <a href="https://kenney.nl/assets/impact-sounds" class="external">Impact Sounds</a>, <a href="https://kenney.nl/assets/rpg-audio" class="external">RPG Audio</a>, <a href="https://kenney.nl/assets/sci-fi-sounds" class="external">Sci-fi Sounds</a>, <a href="https://kenney.nl/assets/digital-audio" class="external">Digital Audio</a>, <a href="https://kenney.nl/assets/music-jingles" class="external">Music Jingles</a>, <a href="https://kenney.nl/assets/voiceover-pack" class="external">Voiceover Pack</a> and <a href="https://kenney.nl/assets/voiceover-pack-fighter" class="external">Voiceover Pack (Fighter)</a>.</p>
         <hr>
           <h3>Creative Commons Licenses</h3>
             <p>Detailed information about the Creative Commons licenses referenced above can be found on the <a href="https://creativecommons.org/about/cclicenses/" class="external"> Creative Commons website</a> or at the following links:</p>
@@ -574,15 +659,37 @@
     </div>
 
     <div id="clientErrorOverlay" class="overlay">
-      <h1>Internal Error</h1>
+      <h1>Something went wrong in your browser</h1>
       <p>Your client just crashed. Sorry, this shouldn't happen.</p>
-      <p>How can we trigger the error ourselves so we can fix it?</p>
-      <p><textarea style="height: 150px; width: 100%"></textarea></p>
+      <p id="clientErrorQuestion"><label for="clientErrorDescription">How can we trigger the error ourselves so we can fix it?</label></p>
+      <p id="clientErrorInput"><textarea id="clientErrorDescription" placeholder="e.g. I dragged a card onto a deck and the screen froze" style="height: 150px; width: 100%"></textarea></p>
+      <p id="clientErrorStatus" style="display:none">The report could not be sent. Please copy the technical details below and report them on <a href="https://discord.gg/CEZz7wny9T">Discord</a> or <a href="https://github.com/ArnoldSmith86/virtualtabletop/issues">GitHub</a>.</p>
+      <p><button>Submit and Reload</button></p>
       <details>
         <summary>Technical Details</summary>
         <pre id="clientErrorStack"></pre>
       </details>
-      <p><button>Submit and Reload</button></p>
+    </div>
+
+    <div id="feedbackOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Feedback</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="feedback">
+          <p>Found a bug or have a suggestion? Let us know!</p>
+          <p><textarea style="height: 150px; width: 100%"></textarea></p>
+          <p class="feedbackError" style="display: none"></p>
+          <p class="feedbackThanks" style="display: none">Thank you! Your feedback has been sent.</p>
+          <p><input type="checkbox" id="feedbackIncludeState" checked> <label for="feedbackIncludeState">Include a snapshot of this room (URL, full page contents, game state, and player names)</label></p>
+          <p class="feedbackPrivacyNote">Your message and your browser info are always sent to help us fix things. Uncheck the box above if you'd rather not also share the room snapshot.</p>
+          <div class="buttons">
+            <button icon="close"></button>
+            <button icon="check"></button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="connectionLostOverlay" class="overlay" style="display:none;">

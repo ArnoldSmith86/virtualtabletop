@@ -1,0 +1,2031 @@
+/* horizontal scrolling is never wanted in the properties module */
+.tune.editorModule {
+  overflow-x: hidden;
+}
+
+.editorModule {
+  --propertyLabelWidth: 132px;
+}
+
+.editorModule .propertyInput {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0;
+  padding-right: 6px;
+}
+
+.editorModule input[type=range] {
+  accent-color: #4d88cb;
+}
+
+.editorModule .propertyInput > label .labelIcon {
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.editorModule .propertyInput *,
+.editorModule .propertyPicker * {
+  box-sizing: border-box;
+}
+
+/* fixed label column so the inputs line up across rows; the right edge is
+   reserved for the (i) hint (see below) so wrapped text never claims the
+   full width and strands the hint alone on its own line. */
+.editorModule .propertyInput > label {
+  width: var(--propertyLabelWidth);
+  min-width: var(--propertyLabelWidth);
+  overflow-wrap: anywhere;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  padding-right: 22px;
+}
+
+/* pinned to the label's bottom-right corner instead of flowing inline with
+   the text - an inline hint glued after the last word has nowhere to go but
+   a line of its own once that word already fills the label's width. The
+   icon-only label (colorFlexRow swatches below) lays its hint out itself via
+   flex order and keeps it out of this rule. */
+.editorModule .propertyInput > label:not(.iconOnly) .info-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.editorModule .propertyInput input[type=text],
+.editorModule .propertyInput input:not([type]) {
+  flex: 1 1 120px;
+  min-width: 80px;
+}
+
+/* Values such as border radii are usually short (e.g. 8px or 50%). */
+.editorModule .propertyInput.compactInput input[type=text],
+.editorModule .propertyInput.compactInput input:not([type]) {
+  flex: 0 0 calc(5ch + 12px);
+  min-width: calc(5ch + 12px);
+  width: calc(5ch + 12px);
+}
+
+.editorModule .propertyInput textarea {
+  flex: 1 1 200px;
+  min-height: 4em;
+}
+
+/* a tall multiline field dwarfs its label - top-align instead of centering
+   the label in the middle of a lot of empty vertical space */
+.editorModule .propertyInput.textInput.multiline {
+  align-items: flex-start;
+}
+
+.editorModule .numberInput input[type=number] {
+  width: 70px;
+}
+
+.editorModule .numberInput input[type=range] {
+  flex: 1 1 80px;
+  min-width: 60px;
+}
+
+.editorModule .propertyInputUnit {
+  color: var(--textDimColor1, #777);
+}
+
+.editorModule .checkboxInput > label {
+  cursor: pointer;
+}
+
+/* plain checkbox + label rows (renderCheckbox helper): the hint sits right
+   after the label text, same as the Content section's HTML toggle row -
+   pinning it to the row's far right edge instead left a few hundred pixels
+   of empty space between a hint and the label it explains on a full-width row. */
+.editorModule .checkboxRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.editorModule .checkboxRow label {
+  cursor: pointer;
+}
+
+/* checkbox rendered as a compact switch: 40x24 track with a 20px knob.
+   min/max-width guard against the 132px label column rule which also
+   matches this label. */
+.editorModule .switchInput label.switchbox {
+  height: 24px;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  flex: 0 0 40px;
+  margin: 2px;
+  padding: 0;
+  position: relative;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+.editorModule .switchInput label.switchbox::before {
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+.editorModule .switchInput input.switchbox:checked + label.switchbox::before {
+  margin-left: 18px;
+}
+.editorModule .switchInput input.switchbox {
+  /* keep the hidden checkbox at its DOM position: moving it far off-screen
+     makes the browser scroll it into view when the label click focuses it */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.editorModule .colorHexInput {
+  width: 90px;
+  font-family: monospace;
+}
+
+/* info buttons (design from the routine editor in PR #2439) */
+.info-button {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--VTTblue);
+  vertical-align: middle;
+}
+
+.info-button .material-symbols {
+  font-size: 18px;
+  line-height: 1;
+  user-select: none;
+}
+
+.inline-popup {
+  position: fixed;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  z-index: 9;
+  padding: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+  min-width: 220px;
+  max-width: 50vw;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--backgroundHighlightColor1);
+  font-size: 13px;
+}
+
+/* picker inputs (color, icon, image) */
+
+.editorModule .propertyPreviewButton {
+  padding: 2px;
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* color inputs: 36x36 preview that is also the only toggle (no arrow) */
+.editorModule .colorInput .propertyPreviewButton {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 2px;
+}
+
+.editorModule .colorInput .propertyPreviewButton .propertyValueChip {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+}
+
+/* image inputs: bigger, square preview */
+.editorModule .imageInput .propertyValueChip {
+  border-radius: 0;
+}
+
+.editorModule .imageInput .propertyPreviewButton {
+  min-width: 60px;
+  min-height: 60px;
+}
+
+.editorModule .imageInput .propertyPreviewButton .propertyValueChip {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+}
+
+.editorModule .propertyExpandButton {
+  padding: 2px;
+  min-width: 30px;
+  justify-content: center;
+}
+
+.editorModule .propertyExpandButton.open::before {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.editorModule .propertyValueChip {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(45deg, #0002 25%, transparent 25%, transparent 75%, #0002 75%, #0002 0), linear-gradient(45deg, #0002 25%, transparent 25%, transparent 75%, #0002 75%, #0002 0), white;
+  background-position: 0px 0, 4px 4px;
+  background-size: 8px 8px, 8px 8px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  font-size: 24px;
+  color: black;
+}
+
+.editorModule .propertyValueChip.selected, .editorModule .propertyValueChip:hover {
+  border-color: var(--VTTblue);
+}
+
+.editorModule .propertyValueChip img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.editorModule .propertyColorChip {
+  background: var(--chipColor, transparent);
+}
+
+/* sound chips: there is nothing to preview, so the chip is a speaker plus the
+   file name and grows with it instead of staying a square swatch */
+.editorModule .propertySoundChip {
+  width: auto;
+  padding: 0 8px;
+  gap: 4px;
+  font-size: 20px;
+  background: white;
+}
+
+.editorModule .propertySoundName {
+  font-size: 13px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editorModule .propertyColorChip[style*="--chipColor: transparent"] {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, #eee 4px, #eee 8px);
+}
+
+.editorModule .propertyEmptyChip::after {
+  content: 'close';
+  font-family: 'Material Symbols';
+  color: #999;
+}
+
+.editorModule .propertyEmptyChipLabel {
+  width: auto;
+  min-width: 0;
+  padding: 0 8px;
+  font-size: 13px;
+  color: var(--textColor);
+}
+
+.editorModule .propertyEmptyChipLabel::after {
+  content: none;
+}
+
+.editorModule .propertyPicker {
+  flex-basis: 100%;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+  padding: 6px;
+  margin-bottom: 6px;
+}
+
+.editorModule .propertyPickerSummary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editorModule .propertyPickerFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+/* color inputs of a subsection sit side by side; their pickers open below */
+.editorModule .colorFlexRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 4px 0;
+}
+
+.editorModule .colorFlexRow .propertyInput {
+  margin: 0;
+  padding-right: 0;
+  flex: 0 0 auto;
+}
+
+.editorModule .colorFlexRow .propertyInput > label {
+  width: auto;
+  min-width: 0;
+  padding-right: 0;
+}
+
+/* a plain-text (non icon-only) label in this row that does carry a hint still
+   needs the 22px the base rule above reserves for it - collapsing every label
+   to its text width regardless left the (i) drawn on top of the last
+   characters (e.g. "Col(i)r", "Border Col(i)r") */
+.editorModule .colorFlexRow .propertyInput > label.hasHint:not(.iconOnly) {
+  padding-right: 22px;
+}
+
+/* Color symbols are compact, but their names make the control clear to a
+   first-time editor. Keep an attached hint after the text rather than between
+   the icon and its swatch. */
+/* the hint slot is reserved (padding-bottom) on every swatch, whether or not
+   it actually has one, so a single hinted entry (e.g. "Icon/Symbol") doesn't
+   grow taller than its siblings and break the row's shared baseline */
+.editorModule .colorFlexRow .propertyInput > label.iconOnly {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 18px;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly::after {
+  content: attr(data-label);
+  font-size: 10px;
+  line-height: 1.1;
+  max-width: 72px;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly .labelIcon {
+  order: 1;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly .info-button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: 0;
+}
+
+/* mark the native color input as "opens a dialog" instead of looking like a
+   plain swatch of its current value */
+.editorModule .propertyPickerSummary input[type=color] {
+  width: 34px;
+  height: 34px;
+  padding: 1px;
+  border: 2px dashed var(--textDimColor1, #999);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.editorModule .propertyPickerValueText {
+  flex: 1 1 100px;
+  overflow-wrap: anywhere;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.editorModule .propertyPickerSection {
+  margin-top: 8px;
+}
+
+.editorModule .propertyPickerSection input {
+  width: calc(100% - 12px);
+  margin: 4px 0;
+}
+
+.editorModule .iconPickerFilterChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 2px 0 8px;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1, #ccc);
+}
+
+.editorModule .iconPickerFilterTitle {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.editorModule .iconPickerFilterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.editorModule .iconPickerFilterChip input {
+  width: auto;
+  margin: 0;
+}
+
+.editorModule .propertyPickerSectionTitle {
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--textColor, #333);
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.editorModule .propertyPickerChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .propertyPickerChips .symbols,
+.editorModule .propertyPickerChips .material-symbols,
+.editorModule .propertyPickerChips .material-symbols-nofill,
+.editorModule .propertyPickerChips .emoji-monochrome,
+.editorModule .propertyPickerChips .emojiColorChip {
+  font-size: 24px;
+  overflow: hidden;
+}
+
+/* icon search previews are shown ~50% bigger than other chips */
+.editorModule .iconInput .propertyPickerChips .propertyValueChip {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  font-size: 36px;
+}
+
+.editorModule .iconInput .propertyPickerChips .symbols,
+.editorModule .iconInput .propertyPickerChips .material-symbols,
+.editorModule .iconInput .propertyPickerChips .material-symbols-nofill,
+.editorModule .iconInput .propertyPickerChips .emoji-monochrome,
+.editorModule .iconInput .propertyPickerChips .emojiColorChip {
+  font-size: 36px;
+}
+
+.editorModule .propertyPickerEmpty {
+  color: var(--textHelpColor, #666);
+  font-style: italic;
+}
+
+/* the result list is capped at 100, which used to be invisible: "hand" matches 182 icons */
+.editorModule .propertyPickerCount {
+  color: var(--textHelpColor, #666);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.editorModule .propertyPickerCount:empty {
+  display: none;
+}
+
+.editorModule .iconBasicOptionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.editorModule .iconBasicOption {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .iconBasicOption label {
+  font-size: 12px;
+}
+
+.editorModule .iconBasicOption input[type=number] {
+  width: 60px;
+}
+
+/* dim the field while it's showing the default rather than an explicitly set
+   value, so the two states aren't visually identical */
+.editorModule .iconBasicOption.usingDefault input[type=number] {
+  opacity: 0.5;
+}
+
+/* the color chip lives inside the Icon block's contentMediaBlock, whose 200px
+   media-preview sizing (see .contentMediaBlock .propertyPreviewButton above)
+   would otherwise blow this up to the same size as the icon/image previews -
+   keep it the same small swatch the Colors subsection of Appearance uses.
+   Repeats .emptyValue explicitly (rather than relying on .propertyPreviewButton
+   alone) so this wins on specificity over .contentMediaBlock .propertyPreviewButton
+   .emptyValue too - without it, an unset color fell back to that rule's 79px
+   sizing, which read as a big empty (and, focused, blue) box. */
+.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton,
+.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton.emptyValue {
+  min-width: 36px;
+  min-height: 36px;
+  padding: 2px;
+}
+
+.editorModule .iconBasicOptionsRow .colorInput .propertyPreviewButton .propertyValueChip {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 4px;
+  font-size: inherit;
+}
+
+/* stay within the icon preview's width so the block reads as belonging to the
+   Icon column - a wider row pushed the Image block onto the next line, which
+   made it look like it applied to both */
+.editorModule .iconInlineOptions:not(:empty) {
+  margin-top: 4px;
+  max-width: 204px;
+}
+
+.editorModule .iconInlineOptions .appearanceSubTitle {
+  margin: 4px 0;
+}
+
+.editorModule .svgReplacesHelp {
+  color: var(--textHelpColor, #666);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+/* same warning colour the css and pile editors use for "this does nothing" */
+.editorModule .svgReplacesNotice {
+  color: #cc7722;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.editorModule .svgReplacesList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.editorModule .svgReplaceRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .svgReplaceRow input {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  /* same height as the button next to them and the one below the list */
+  box-sizing: border-box;
+  min-height: 34px;
+}
+
+/* one label per input, since their placeholders are gone once they are filled */
+.editorModule .svgReplaceHeader > .svgReplaceHeaderLabel {
+  flex: 1 1 0;
+  min-width: 0;
+  color: var(--textHelpColor, #666);
+  font-size: 12px;
+}
+
+/* the two slots that hold no label: the arrow and the delete button */
+.editorModule .svgReplaceHeader > .svgReplaceArrow::before {
+  content: '→';
+  visibility: hidden;
+}
+
+.editorModule .svgReplaceHeader > .svgReplaceHeaderSpacer {
+  min-width: 34px;
+}
+
+.editorModule .svgColorsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.editorModule .svgColorsLabel {
+  color: var(--textHelpColor, #666);
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.editorModule .svgColorSwatch {
+  width: 100%;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* a value that also occurs outside the attribute it was found in: the engine
+   replaces it as plain text, so it would be replaced there too */
+.editorModule .svgColorSwatch.ambiguous {
+  border-style: dashed;
+}
+
+/* a picker showing the applying default (no explicit value) is dimmed */
+.editorModule .propertyPreviewButton.usingDefault .propertyValueChip,
+.editorModule .propertyPickerValueText.usingDefault {
+  opacity: 0.55;
+}
+
+.editorModule .propertyPickerValueText.usingDefault {
+  font-style: italic;
+}
+
+/* widget selection popout (parent, seats, inheritFrom, ...) */
+.editorModule .widgetSelectPopout .propertyPickerSection select {
+  max-width: 100%;
+}
+
+/* the controls that belong together are one line each: "pick in the room" next
+   to the button that drops the selection, the type filter next to the search it
+   filters. They only wrap when the popout really is too narrow for both. */
+.editorModule .widgetPickerRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .widgetPickerRow button {
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
+.editorModule .widgetPickerRow select {
+  flex: 0 1 auto;
+  min-width: 90px;
+}
+
+.editorModule .widgetPickerRow input {
+  flex: 1 1 110px;
+  width: auto;
+  min-width: 90px;
+  margin: 0;
+}
+
+.editorModule .widgetPickerList {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.editorModule .widgetPickerEntry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.editorModule .widgetPickerEntry:hover, .editorModule .widgetPickerEntry.selected {
+  background: var(--backgroundHighlightColor1, #eee);
+}
+
+/* the type of a widget in the picker: the dim color is #ccc in light mode, which
+   is white-on-white in the list and invisible on a selected row (whose
+   background is #ccc), so the type is the text color turned down instead */
+.editorModule .widgetPickerEntry .widgetPickerType {
+  color: var(--textColor);
+  opacity: 0.65;
+  font-size: 11px;
+  margin-left: auto;
+}
+
+/* the widget the picker belongs to, pinned to the top of the list */
+.editorModule .widgetPickerEntry .widgetPickerSelf {
+  color: var(--VTTblue);
+  font-size: 11px;
+}
+
+.editorModule .widgetPickerEntry.selected::before {
+  content: 'check';
+  font-family: 'Material Symbols';
+  font-size: 14px;
+  color: var(--VTTblue);
+}
+
+/* collapsible blocks (Position, Size, Widget's links, CSS) */
+.editorModule .collapsibleSection {
+  margin: 6px 10px 6px 0;
+  border: 1px solid var(--backgroundHighlightColor1, #ddd);
+  border-radius: 5px;
+}
+
+.editorModule .collapsibleHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor1, #eee);
+  border-radius: 4px;
+  border: 0;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.editorModule .collapsibleHeader:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.editorModule .collapsibleTitle {
+  flex: 0 0 auto;
+}
+
+.editorModule .collapsibleSummary {
+  color: var(--textColor);
+  font-weight: normal;
+  /* a link or grid summary can get long - keep the header one line high */
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Every block in the editor that can be folded away draws the same arrow: an
+   empty <span class=collapseArrow> (collapseArrowHTML/renderCollapseArrow in
+   sidebarModule.js) that carries 'collapsed' while its block is folded. Keeping
+   the glyph out of the markup is what lets these few rules cover all of them -
+   the box is a fixed 1em square with the arrow centered in it, so a header
+   keeps its height and its layout when the arrow flips. */
+.editorModule .collapseArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 1em;
+  width: 1em;
+  font-family: 'Material Symbols';
+}
+
+.editorModule .collapseArrow::before {
+  content: 'expand_more';
+}
+
+.editorModule .collapseArrow.collapsed::before {
+  content: 'chevron_right';
+}
+
+.editorModule .collapsibleSection.collapsed .collapsibleBody {
+  display: none;
+}
+
+.editorModule .collapsibleBody {
+  padding: 4px 6px;
+}
+
+/* a block folded away inside another one (Snap grid and Drag limits sit inside
+   Position, More options inside those) - the body around it already keeps it
+   away from the edge. Every level below the top draws the same lighter
+   header (no fill, just a bottom rule), a slightly smaller/normal-weight
+   title, and a left inset with a rule running down its body, so nesting
+   reads as depth instead of every level drawing the identical grey pill. */
+.editorModule .collapsibleBody > .collapsibleSection {
+  margin-right: 0;
+  margin-left: 10px;
+  border: 0;
+  border-left: 2px solid var(--backgroundHighlightColor1, #ddd);
+  border-radius: 0;
+}
+
+.editorModule .collapsibleBody > .collapsibleSection > .collapsibleHeader {
+  background: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--backgroundHighlightColor1, #ddd);
+  font-weight: normal;
+  font-size: 0.95em;
+  padding-left: 8px;
+}
+
+.editorModule .collapsibleBody > .collapsibleSection > .collapsibleBody {
+  padding-left: 8px;
+}
+
+/* subsection titles inside the appearance section */
+.editorModule .appearanceSubTitle {
+  font-weight: bold;
+  color: var(--VTTblue);
+  margin: 8px 0 2px;
+}
+
+/* the declaration list of a css property that is edited as a text row (the
+   deck editor sidebar) opens below that row, the way a color property opens
+   its picker */
+.editorModule .cssRowPicker {
+  margin-top: 2px;
+}
+
+/* CSS editor: one collapsible section per class with a plain declaration input */
+.editorModule .cssEditor .cssClassSection {
+  margin: 4px 0;
+}
+
+.editorModule .cssEditor textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 4em;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* devtools style declaration rows: [x] property : value [delete] */
+.editorModule .cssDeclarationRow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: monospace;
+  font-size: 12px;
+  padding: 1px 0;
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationName,
+.editorModule .cssDeclarationRow input.cssDeclarationValue {
+  font-family: monospace;
+  font-size: 12px;
+  min-width: 0;
+  padding: 1px 3px;
+  height: 22px;
+  box-sizing: border-box;
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationName {
+  flex: 4 1 0;
+  color: var(--cssDeclarationNameColor);
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationValue {
+  flex: 5 1 0;
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationToggle {
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.editorModule .cssDeclarationRow .cssDeclarationColon {
+  opacity: 0.6;
+}
+
+.editorModule .cssDeclarationRow .cssDeclarationSwatch {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--backgroundHighlightColor1);
+  background: none;
+  box-sizing: border-box;
+}
+
+/* declarations without a colour still reserve the swatch's slot, invisibly,
+   so the value column lines up across every row */
+.editorModule .cssDeclarationRow .cssDeclarationSwatch.placeholder {
+  visibility: hidden;
+  border: 0;
+}
+
+/* a color with transparency: shown over white (the row sets the color itself
+   as a background image), but not editable through the color input, which
+   would drop its alpha channel */
+.editorModule .cssDeclarationRow .cssDeclarationSwatch.readOnly {
+  cursor: help;
+  background-color: #fff;
+}
+
+.editorModule .cssDeclarationRow button {
+  min-width: 22px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  flex: 0 0 auto;
+  justify-content: center;
+}
+
+.editorModule .cssDeclarationRow button::before {
+  margin: 0;
+  font-size: 14px;
+}
+
+.editorModule .cssDeclarationRow.disabled input.cssDeclarationName,
+.editorModule .cssDeclarationRow.disabled input.cssDeclarationValue {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+/* what the browser will not apply - the engine rewrites custom properties and
+   ${PROPERTY ...} values, those are never marked */
+.editorModule .cssDeclarationWarning {
+  flex: 0 0 auto;
+  font-size: 15px;
+  color: #cc7722;
+  cursor: help;
+}
+
+.editorModule .cssDeclarationRow.invalidDeclaration input.cssDeclarationName,
+.editorModule .cssDeclarationRow.invalidDeclaration input.cssDeclarationValue {
+  color: #cc7722;
+}
+
+.editorModule .cssDeclarationFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+
+.editorModule .cssDeclarationFooter button {
+  font-size: 11px;
+  padding: 1px 6px;
+  min-width: 0;
+}
+
+.editorModule .cssDeclarationNote {
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.8;
+  text-align: left;
+}
+
+.editorModule .cssEditor .cssAddClassRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* the "add a class/selector" field sits right below the "add a declaration"
+   one, which looks just like it - a line between them keeps the two apart */
+.editorModule .cssEditor .cssAddSelectorRow {
+  border-top: 1px solid var(--backgroundHighlightColor1);
+  padding-top: 6px;
+}
+
+.editorModule .cssEditor .cssAddClassRow input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* several labeled inputs sharing one line (timer rows, seat index/turn, ...) */
+.editorModule .propertyInlineRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 4px 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput {
+  flex: 0 1 auto;
+  margin: 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput > label:not(.switchbox) {
+  width: auto;
+  min-width: 0;
+  padding-right: 22px;
+}
+
+.editorModule .propertyInlineRow .propertyInput input[type=text],
+.editorModule .propertyInlineRow .propertyInput input:not([type]) {
+  flex: 0 1 80px;
+  min-width: 60px;
+}
+
+/* temporary game state (spinner angle/value): editable but visually muted */
+.editorModule .temporaryValues input {
+  opacity: 0.65;
+}
+
+.editorModule .temporaryValues input:focus {
+  opacity: 1;
+}
+
+.editorModule .canvasColorMapRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .canvasColorMapRow .propertyInput {
+  margin: 0;
+}
+
+.editorModule .canvasColorMapRow > button {
+  min-width: 34px;
+  justify-content: center;
+}
+
+.editorModule .propertyNote {
+  font-size: 12px;
+  color: var(--textColor, #333);
+  margin: 2px 0;
+}
+
+.editorModule .timerAlertEditor {
+  padding-left: 10px;
+  border-left: 2px solid var(--backgroundHighlightColor1, #ddd);
+}
+
+.editorModule .seatPlayerRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 4px 0;
+}
+
+.editorModule .playerColorDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #0006;
+  display: inline-block;
+}
+
+.editorModule .contentHtmlToggleRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.editorModule .contentHtmlToggleRow input {
+  width: auto;
+  margin: 0;
+}
+
+.editorModule .svgReplaceArrow {
+  opacity: 0.7;
+}
+
+/* basic widget content: icon and image as side by side blocks */
+.editorModule .contentMediaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 6px 0;
+}
+
+.editorModule .contentMediaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.editorModule .contentMediaBlock .contentMediaTitle {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .contentMediaBlock .propertyInput {
+  margin: 0;
+  padding-right: 0;
+}
+
+/* icon and image blocks look identical: 200x200 square previews */
+.editorModule .contentMediaBlock .propertyPreviewButton {
+  min-width: 204px;
+  min-height: 204px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip {
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  border-radius: 0;
+  font-size: 120px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .symbols,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols-nofill,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emoji-monochrome,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emojiColorChip {
+  font-size: 120px;
+}
+
+/* Unset media starts as a compact, clearly labelled checkerboard tile. Once
+   selected, the preview expands to the regular 200px tile above. */
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue {
+  min-width: 79px;
+  min-height: 79px;
+  padding: 4px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue .propertyEmptyChipLabel {
+  width: 75px;
+  height: 75px;
+  min-width: 75px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  background: linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), var(--backgroundColor);
+  background-position: 0 0, 8px 8px;
+  background-size: 16px 16px;
+}
+
+.editorModule .basicGeometryHint {
+  color: var(--textColor);
+  font-size: 12px;
+  margin: 2px 0 6px;
+}
+
+/* lock/unlock toggles for movable/editable style properties */
+.editorModule button.lockToggle {
+  min-width: 26px;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.editorModule button.lockToggle .material-symbols {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.editorModule button.lockToggle.locked .material-symbols {
+  color: #c43636;
+}
+
+.editorModule button.lockToggle.unlocked .material-symbols {
+  color: #2f8a3b;
+}
+
+/* compact one-line styled text input (seat texts) */
+.editorModule .compactStyledText input[type=text] {
+  flex: 1 1 120px;
+  min-width: 80px;
+}
+
+.editorModule .compactStyledText .propertyInput {
+  margin: 0;
+  padding-right: 0;
+}
+
+.editorModule .compactStyledText .placeholderChip {
+  font-family: monospace;
+  font-size: 11px;
+  padding: 0 6px;
+}
+
+/* comment-style list of classes currently triggered by widget properties */
+.editorModule .cssTriggeredClasses {
+  font-size: 12px;
+  color: var(--textHelpColor, #666);
+  font-style: italic;
+  margin: 4px 0;
+}
+
+.editorModule .cssTriggeredClasses code {
+  font-style: normal;
+  font-family: monospace;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 3px;
+  padding: 1px 5px;
+  cursor: help;
+}
+
+/* widget header: type in the accent color, id in the plain text color */
+.editorModule .widgetHeader {
+  text-align: center;
+  margin: 0.4em 0;
+}
+
+.editorModule .widgetHeader .widgetHeaderType {
+  color: var(--VTTblue);
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.editorModule .widgetHeader .widgetHeaderId {
+  color: var(--textColor);
+  font-size: 1em;
+  overflow-wrap: anywhere;
+}
+
+/* same text color as the single-widget id above, just a little smaller
+   because a selection can list several ids */
+.editorModule .widgetHeader .widgetHeaderMultiIds {
+  color: var(--textColor);
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+/* what "— multiple —" and the striped chips below mean - the one thing about
+   editing a selection that can't be inferred from the controls themselves */
+.editorModule .widgetHeader .multiSelectionHint {
+  color: var(--textHelpColor, #666);
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+
+/* Keep the ID in the header, but make its rename affordance discoverable
+   without making it look like a regular properties-row field. */
+.editorModule .widgetHeader .widgetHeaderIdInput {
+  color: inherit;
+  font: inherit;
+  max-width: 80%;
+  padding: 0 3px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+  text-align: left;
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
+
+/* shortcut back to the line a widget is attached to, centered below the id */
+.editorModule .widgetHeader .widgetHeaderLine {
+  margin-top: 5px;
+}
+
+.editorModule .widgetHeader button.widgetHeaderLineButton {
+  display: inline-flex;
+  align-items: center;
+  max-width: 90%;
+  overflow-wrap: anywhere;
+  /* the label carries a widget id and ids are case sensitive, so the shared
+     button uppercasing would show "TDO6" for the line called tdo6 */
+  text-transform: none;
+}
+
+/* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
+.editorModule .obscurePropertyContainer {
+  position: relative;
+}
+
+.editorModule button.onDemandRemove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 26px;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--textColor);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.editorModule button.onDemandRemove::before {
+  margin: 0;
+  font-size: 18px;
+}
+
+.editorModule button.onDemandRemove:hover {
+  color: #c43636;
+}
+
+body.editorWidgetPicking, body.editorWidgetPicking .widget {
+  cursor: crosshair !important;
+}
+
+/* labelled X/Y number pairs (holder drop/stack offsets) */
+.editorModule .numberPairRow .numberPairLabel {
+  flex: 0 0 auto;
+  min-width: 80px;
+}
+
+/* list editor (spinner wheel options) */
+.editorModule .listEditor {
+  margin: 6px 0;
+}
+
+.editorModule .propSetTitle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.editorModule .listEditorRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 3px 0;
+}
+
+.editorModule .listEditorRow input {
+  flex: 1 1 auto;
+  min-width: 60px;
+}
+
+.editorModule .listEditorRow button[icon] {
+  flex: 0 0 auto;
+}
+
+.editorModule .listEditorRow .faceOrderControls {
+  display: flex;
+  gap: 2px;
+}
+
+/* scoreboard teams: one row per team, its seat picker opening below it */
+.editorModule .scoreboardTeamsHelp {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.editorModule .scoreboardTeamRow {
+  flex-wrap: wrap;
+}
+
+.editorModule .scoreboardTeamRow input.scoreboardTeamName {
+  flex: 0 1 90px;
+  min-width: 50px;
+}
+
+/* seat style preset preview buttons */
+.editorModule .seatPresetRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* Multi-selection editing: inputs whose selected widgets disagree on a
+   property are dimmed with a dashed outline, matching the "using default"
+   treatment used elsewhere so the two muted states read consistently. */
+.editorModule .propertyInput.multiDiffers > label {
+  opacity: 0.7;
+}
+
+.editorModule .propertyInput.multiDiffers input,
+.editorModule .propertyInput.multiDiffers select,
+.editorModule .propertyInput.multiDiffers .propertyPreviewButton {
+  outline: 1px dashed var(--textDimColor1, #777);
+  outline-offset: 1px;
+}
+
+.editorModule .propertyInput.multiDiffers input:focus {
+  outline-style: solid;
+}
+
+.editorModule .propertyMultiChip {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: repeating-linear-gradient(45deg, #00000026 0 6px, transparent 6px 12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editorModule .propertyMultiChip::after {
+  content: 'mixed';
+  font-size: 9px;
+  line-height: 1;
+  padding: 1px 2px;
+  border-radius: 2px;
+  background: #ffffffcc;
+  color: #444;
+}
+
+/* the arranging buttons shown above Position when several widgets are selected */
+.editorModule .arrangeButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  justify-content: center;
+  margin: 6px 0 10px;
+}
+
+/* align, distribute, order and circle are separate operations: each group is
+   captioned and set apart by the wider column gap of the bar, so ten icons
+   don't read as one flat row. No divider between them - a rule drawn per group
+   dangles at the left edge of the second row as soon as the bar wraps. */
+.editorModule .arrangeGroupWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.editorModule .arrangeGroupLabel {
+  font-weight: bold;
+  font-size: 11px;
+  color: var(--VTTblue);
+}
+
+.editorModule .arrangeGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* radius and rotation of the circle align button, shown while an arrangement is
+   being adjusted: they belong to the button bar above them, so they sit closer
+   to it than to what follows and are boxed in as one tool. The blue outline is
+   the one the line editor's add-stop menu uses for the same thing - a box a
+   button in the panel has just opened. */
+.editorModule .arrangeButtons + .arrangeCircleOptions:not(:empty) {
+  /* the label column is narrowed by exactly the inset of the box (6px margin,
+     8px padding, 1px border) so its rows keep the panel's label grid */
+  --propertyLabelWidth: 117px;
+  margin: -6px 6px 10px;
+  padding: 4px 8px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+  background: var(--overlayBackgroundColor);
+}
+
+/* the button stays pressed while its settings are open, so which of the
+   look-alike glyphs the box below belongs to is visible without reading */
+.editorModule .arrangeGroup button.open {
+  background: var(--VTTblueDark);
+}
+
+/* the slider shares the row with the field while there is room left for a drag
+   worth doing, and wraps onto a line of its own when there is not - squeezed
+   into the rest of a narrow panel it is several radius units per pixel */
+.editorModule .arrangeCircleOptions .numberInput input[type=range] {
+  flex: 1 1 160px;
+}
+
+/* dice per-face editor */
+.editorModule .diceAddFace {
+  margin: 4px 0;
+}
+
+.editorModule .diceFacesEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.editorModule .diceFaceRow {
+  --diceFacePreviewSize: 44px;
+  padding: 4px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+}
+
+.editorModule .diceFaceMain {
+  display: grid;
+  grid-template-columns: var(--diceFacePreviewSize) minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+}
+
+.editorModule .diceFacePreview {
+  align-self: center;
+  flex: 0 0 auto;
+  width: var(--diceFacePreviewSize);
+  height: var(--diceFacePreviewSize);
+  position: relative;
+  overflow: hidden;
+}
+
+/* A widget without a background or border draws nothing, so an empty preview
+   box looked like a broken feature rather than "this face shows nothing yet".
+   Same checkerboard the unset icon/image chips use, in a smaller tile. */
+.editorModule .facePreview,
+.editorModule .diceFacePreview {
+  border-radius: 3px;
+  background: linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), var(--backgroundColor);
+  background-position: 0 0, 6px 6px;
+  background-size: 12px 12px;
+}
+
+.editorModule .diceFacePreview .widget {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.editorModule .diceFaceControls {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  align-items: center;
+}
+
+.editorModule .diceFaceControls .propertyInput > label {
+  width: auto;
+  min-width: auto;
+}
+
+/* Dice text is deliberately short: faces are labels, not paragraphs. */
+.editorModule .diceFaceControls .textInput input {
+  flex: 0 0 5.5ch;
+  min-width: 5.5ch;
+  width: 5.5ch;
+}
+
+/* The icon/image chooser and the face preview are peers in this row. Keep
+   their clickable tiles the same size instead of letting image inputs use the
+   larger picker preview intended for the main Content section. */
+.editorModule .diceFaceControls .iconInput .propertyPreviewButton,
+.editorModule .diceFaceControls .imageInput .propertyPreviewButton {
+  width: var(--diceFacePreviewSize);
+  height: var(--diceFacePreviewSize);
+  min-width: var(--diceFacePreviewSize);
+  min-height: var(--diceFacePreviewSize);
+}
+
+.editorModule .diceFaceControls .iconInput .propertyPreviewButton .propertyValueChip,
+.editorModule .diceFaceControls .imageInput .propertyPreviewButton .propertyValueChip {
+  width: calc(var(--diceFacePreviewSize) - 6px);
+  height: calc(var(--diceFacePreviewSize) - 6px);
+  min-width: calc(var(--diceFacePreviewSize) - 6px);
+}
+
+.editorModule .diceFaceCssToggle {
+  flex: 0 0 auto;
+  gap: 2px;
+  min-width: 0;
+  width: auto;
+  padding: 2px 5px;
+  text-transform: none;
+}
+
+.editorModule .diceFaceCSS {
+  margin-top: 4px;
+}
+
+.editorModule .diceFaceCSS textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editorModule .diceImageScale {
+  margin: 4px 0;
+}
+
+/* Face scales are usually 0.8 or 1.25; a full-width numeric field made the
+   compact row expand just to accommodate unnecessary decimal places. */
+.editorModule .diceFaceControls .numberInput input[type=number] {
+  width: 5.5ch;
+}
+
+/* per-face color pickers open below the row instead of inside it */
+.editorModule .diceFacePickers:not(:empty) {
+  margin-top: 4px;
+}
+
+.editorModule .faceRowActions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* up/down stacked so the row keeps its width for the values in the middle */
+.editorModule .diceFaceRow .faceOrderControls,
+.editorModule .faceRow .faceOrderControls {
+  flex-direction: column;
+}
+
+.editorModule .faceOrderControls {
+  display: flex;
+  gap: 2px;
+}
+
+/* the triangle pair of the line stop rows (.lineStopOrder in sidebarModules.css)
+   - small enough to stack inside one row height, and dimmed rather than hidden
+   at the ends of the list */
+.editorModule .faceOrderControls button {
+  width: 26px;
+  min-width: 26px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  font-size: 11px;
+  line-height: 22px;
+  justify-content: center;
+}
+
+.editorModule .faceOrderControls button:disabled {
+  opacity: .4;
+}
+
+.editorModule .diceSharedColors,
+.editorModule .diceColorLocks {
+  margin: 4px 0;
+}
+
+.editorModule .diceColorLockChecks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.editorModule .diceColorLockChecks .propertyInput {
+  margin: 2px 0;
+  padding-right: 0;
+  gap: 4px;
+}
+
+.editorModule .diceColorLockChecks .propertyInput > label {
+  width: auto;
+  min-width: 0;
+}
+
+.editorModule .diceFaceHint {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+@media (max-width: 360px) {
+  .editorModule .diceFaceRow {
+    --diceFacePreviewSize: 36px;
+  }
+
+  .editorModule .diceFaceMain {
+    gap: 4px;
+  }
+
+  .editorModule .diceFaceControls {
+    gap: 3px;
+  }
+
+  .editorModule .diceFaceRow .faceOrderControls button {
+    width: 22px;
+    min-width: 22px;
+  }
+}
+
+/* per-face editor of basic widgets */
+.editorModule .facesActiveNote {
+  font-size: 0.9em;
+  margin: 4px 10px 4px 0;
+  padding: 3px 6px;
+  border-left: 3px solid var(--VTTblue);
+  background: var(--backgroundHighlightColor1);
+}
+
+.editorModule .facesHint {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin: 4px 10px 4px 0;
+}
+
+.editorModule .facesEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 10px 6px 0;
+}
+
+.editorModule .facesAddFace {
+  margin: 4px 0;
+}
+
+.editorModule .faceRow {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+  border-left-width: 3px;
+}
+
+/* the face the widget currently shows on the table */
+.editorModule .faceRow.activeFace {
+  border-left-color: var(--VTTblue);
+}
+
+.editorModule .faceRowHead {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.editorModule .faceRowToggle {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.editorModule .faceRowToggle:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.editorModule .facePreview {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.editorModule .facePreview .widget {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.editorModule .faceRowInfo {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.editorModule .faceRowTitle {
+  font-weight: bold;
+}
+
+/* only the face the widget currently shows gets the tag. Outlined rather than
+   solid so it stays distinct from the bold face title right next to it */
+.editorModule .faceActiveTag {
+  display: none;
+  font-size: 0.75em;
+  font-weight: normal;
+  margin-left: 6px;
+  padding: 0 5px;
+  border: 1px solid var(--VTTblue);
+  border-radius: 8px;
+  color: var(--VTTblue);
+}
+
+.editorModule .faceRow.activeFace .faceActiveTag {
+  display: inline-block;
+}
+
+.editorModule .faceRowSummary {
+  font-size: 0.85em;
+  opacity: 0.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* scoped to .faceRow: the dice face rows share the .faceRowActions class */
+.editorModule .faceRow .faceRowActions {
+  gap: 2px;
+  padding: 4px 4px 4px 0;
+}
+
+.editorModule .faceRow .faceRowActions button[icon] {
+  padding: 2px 5px;
+  justify-content: center;
+}
+
+.editorModule .faceShowButton.active {
+  color: var(--VTTblue);
+}
+
+.editorModule .faceRowBody {
+  padding: 0 6px 6px;
+}
+
+.editorModule .faceDuplicate {
+  margin-bottom: 4px;
+}
+
+.editorModule .facePropertyRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* a textarea is taller than its remove button, so keep them top aligned */
+.editorModule .facePropertyRow.structured {
+  align-items: flex-start;
+}
+
+/* the property inputs share the row with their remove button */
+.editorModule .facePropertyRow > .propertyInput,
+.editorModule .facePropertyRow > .facePropertyStructured {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.editorModule .facePropertyStructured > label {
+  display: block;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+.editorModule .facePropertyStructured > textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: 0.85em;
+}
+
+.editorModule .facePropertyRemove {
+  flex: 0 0 auto;
+  padding: 2px 4px;
+}
+
+.editorModule .facePropertyRow.structured .facePropertyRemove {
+  margin-top: 18px;
+}
+
+/* separated from the property list (or the "changes nothing yet" hint) above
+   it, so it reads as an action rather than as more of that text */
+.editorModule .faceAddPropertyRow {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--backgroundHighlightColor1);
+}
+
+.editorModule .faceAddPropertyRow > input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* snap grid editor */
+.editorModule .gridHelp,
+.editorModule .pileHelp,
+.editorModule .gridSizeNote {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.editorModule .pileHelp.warning {
+  opacity: 1;
+  color: #cc7722;
+}
+
+/* says what every input below it writes to, so it sits above the first
+   section rather than reading as part of one */
+.editorModule .pileTemplateMode {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin: 4px 0 8px 0;
+}
+
+.editorModule .pileTemplateMode .pileHelp:last-child {
+  margin-bottom: 0;
+}
+
+.editorModule .gridEntry {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+  padding: 4px;
+  margin: 4px 0;
+}
+
+.editorModule .gridEntryHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editorModule .gridEntryTitle {
+  font-weight: bold;
+}
+
+.editorModule .gridActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* which point of the widget box lands on a grid line */
+.editorModule .gridAnchors {
+  display: grid;
+  grid-template-columns: repeat(3, 20px);
+  gap: 2px;
+}
+
+.editorModule .gridAnchor {
+  width: 20px;
+  height: 20px;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid var(--backgroundHighlightColor1);
+  background: var(--backgroundColor);
+}
+
+.editorModule .gridAnchor.active {
+  background: var(--VTTblue);
+}
+
+/* the pile handle position picker while "Fixed position" ignores it */
+.editorModule .gridAnchors.disabled {
+  opacity: 0.4;
+}
+
+/* the switch that adds the min/max limits sits between the X/Y rows of "More
+   options" - its label reads as a heading unless it takes their size */
+.editorModule .gridLimitToggle .propertyInput > label {
+  font-size: 13px;
+  width: auto;
+  min-width: 0;
+}
+
+/* a side of the drag limit takes a number or an expression that computes one:
+   the two sides of an axis stay side by side at the width a number needs, and
+   only a side actually holding an expression takes a line of its own */
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput.nonNumericValue {
+  flex: 1 1 100%;
+}
+
+.editorModule .propertyInlineRow.dragLimitRow .propertyInput.nonNumericValue input[type=text] {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* what is wrong with the value, under the input holding it */
+.editorModule .propertyInput .propertyInputProblem:not(:empty) {
+  flex: 1 1 100%;
+  margin-left: 132px;
+  color: #e05d5d;
+  font-size: 12px;
+}
+
+.editorModule .propertyInlineRow .propertyInput .propertyInputProblem:not(:empty) {
+  margin-left: 0;
+}
+
+.editorModule .propertyInput.hasProblem input,
+.editorModule .propertyInput.hasProblem textarea {
+  outline: 1px solid #e05d5d;
+}
+
+/* the sampling behind the drag limit preview found no position the conditions
+   allow. Not a red error - every line of it is written correctly, it is the
+   area they describe together that is not there - so it warns in its own
+   colour rather than in the one an unreadable expression uses. */
+.editorModule .dragLimitEmptyArea:not(:empty) {
+  color: #e0a15d;
+  font-size: 12px;
+  margin: 2px 0 4px;
+}
+
+.editorModule .gridExtraRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 3px 0;
+}
+
+.editorModule .gridExtraRow input {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+}

@@ -8,12 +8,13 @@ function parseGameURL() {
     };
   }
 
-  const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
+  const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)(?:\/ROOM:([A-Za-z0-9_-]+))?$/);
   if(gameURLmatch) {
     if(gameURLmatch[2]) {
       return {
         type: 'user',
-        id: gameURLmatch[2]
+        id: gameURLmatch[2],
+        roomID: gameURLmatch[4]
       };
     } else {
       const folderMap = { game: 'games', tutorial: 'tutorials' };
@@ -21,7 +22,8 @@ function parseGameURL() {
       return {
         type: 'public',
         category: gameURLmatch[1],
-        id: `PL:${folder}:${gameURLmatch[3]}`
+        id: `PL:${folder}:${gameURLmatch[3]}`,
+        roomID: gameURLmatch[4]
       };
     }
   }
@@ -34,7 +36,7 @@ function checkForGameURL() {
       const state = await r.json();
 
       applyValuesToDOM($('#linkDetailsOverlay'), state);
-      $('#welcomeJoinRoom').value = state.emptyRoomID;
+      $('#welcomeJoinRoom').value = gameDetails.roomID || state.emptyRoomID;
 
       if(state.name) {
         $('#welcomePlayerName').value = playerName;
@@ -53,6 +55,8 @@ function checkForGameURL() {
         document.title = `${state.name} - ${tabSuffix}`;
 
         showOverlay('linkDetailsOverlay');
+        if(gameDetails.roomID)
+          $('#welcomePlayButton').click();
       } else {
         checkForGameURL_showError(translate('Game not found!'));
       }
