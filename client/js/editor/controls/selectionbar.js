@@ -781,7 +781,7 @@ function selectionBarRenderStack(bar) {
     row.classList.toggle('selected', selectedWidgets.indexOf(widget) != -1);
     row.innerHTML = `<span class=selectionBarStackKey title="${keyTitle}">${hotkey}</span>`
                   + `<span class=selectionBarStackType>${html(widget.get('type') || 'basic')}</span>`
-                  + `<span class=selectionBarStackId>${html(widget.id)}</span>`
+                  + `<span class=selectionBarStackId translate="no">${html(widget.id)}</span>`
                   + `<span class=selectionBarStackNotes>${html(notes)}</span>`;
     // the notes are the first thing a narrow panel takes off the row, so the
     // tooltip carries them - together with the id, which can be cut off too once

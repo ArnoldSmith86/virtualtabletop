@@ -4986,7 +4986,7 @@ class PropertiesModule extends SidebarModule {
       icon.textContent = locked ? 'lock' : 'lock_open';
       button.classList.toggle('locked', locked);
       button.classList.toggle('unlocked', !locked);
-      button.title = label.title = locked ? `${labelText}: locked - click to unlock` : `${labelText}: unlocked - click to lock`;
+      button.title = label.title = translate(locked ? '{label}: locked - click to unlock' : '{label}: unlocked - click to lock').replace('{label}', translate(labelText));
     };
 
     button.onclick = label.onclick = () => onToggle(!isLocked());
@@ -5090,7 +5090,7 @@ class PropertiesModule extends SidebarModule {
     for(let i = baseMin; i <= baseMax; ++i) {
       const option = document.createElement('option');
       option.value = String(i);
-      option.textContent = typeof layerNotes[String(i)] === 'string' ? `${i} (${layerNotes[String(i)]})` : String(i);
+      option.textContent = typeof layerNotes[String(i)] === 'string' ? `${i} (${translate(layerNotes[String(i)])})` : String(i);
       select.appendChild(option);
     }
 
@@ -5532,7 +5532,7 @@ class PropertiesModule extends SidebarModule {
     // type in the header's accent color, id in the plain text color so the two
     // are easy to tell apart
     const header = div(this.moduleDOM, 'widgetHeader');
-    div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
+    div(header, 'widgetHeaderType', translate('Widget type: {type}').replace('{type}', html(translate(editorTypeNames[type] || type))));
     const idArea = div(header, 'widgetHeaderId');
     idArea.append('Widget id: ');
     const idInput = this.createWidgetIdInput(widget, {
@@ -5729,7 +5729,7 @@ class PropertiesModule extends SidebarModule {
       div(body, 'gridHelp', 'Dropping this widget moves it to the nearest point of the grids below. Distances are measured on the widget\'s box, which is often bigger than the shape you see.');
 
       const sizeNote = div(body, 'gridSizeNote');
-      const updateSizeNote = w=>sizeNote.textContent = `Widget box: ${w.get('width')} × ${w.get('height')} px`;
+      const updateSizeNote = w=>sizeNote.textContent = translate('Widget box: {width} × {height} px').replace('{width}', w.get('width')).replace('{height}', w.get('height'));
       this.addPropertyListener(widget, 'width', updateSizeNote);
       this.addPropertyListener(widget, 'height', updateSizeNote);
 
@@ -5858,13 +5858,13 @@ class PropertiesModule extends SidebarModule {
     }
     // the same starting points the JSON editor offers, but computed and named
     // from the widget's current box instead of typed by hand
-    add(`Square grid (${width} × ${height})`, 'One snap point per widget box, so widgets end up edge to edge.', _=>squareGridForSize(width, height));
+    add(translate('Square grid ({width} × {height})').replace('{width}', width).replace('{height}', height), 'One snap point per widget box, so widgets end up edge to edge.', _=>squareGridForSize(width, height));
     // both hexagon orientations are offered rather than picked from the
     // unofficial hexType only the add widget overlay writes: nothing tells the
     // editor that an image is a hexagon at all, so the widget knowing its own
     // orientation is the exception, and guessing is one click either way
     for(const hex of [ { type: 'flat', name: 'flat top', shape: 'flat topped' }, { type: 'point', name: 'pointy top', shape: 'pointy topped' } ])
-      add(`Hex grid (${hex.name})`, `Two staggered grids that place ${hex.shape} hexagons side by side, calculated from the widget box.`, _=>hexGridForSize(width, height, hex.type));
+      add(translate('Hex grid ({orientation})').replace('{orientation}', translate(hex.name)), translate('Two staggered grids that place {shape} hexagons side by side, calculated from the widget box.').replace('{shape}', translate(hex.shape)), _=>hexGridForSize(width, height, hex.type));
   }
 
   renderGridEntry(widget, index, count, target, rebuild) {

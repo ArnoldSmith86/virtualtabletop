@@ -113,7 +113,8 @@ async function getSavedWidgets(source) {
 // description. In grid view the name is all that is shown, so the tooltip is
 // the only place that can tell apart e.g. a line with stops from a plain one.
 function tooltipAttribute(state) {
-  const tooltip = [ state.name || state.id, state.description ].filter(t=>t).join('\n');
+  // the two lines are separate dictionary entries, so translate them before joining
+  const tooltip = [ state.name || state.id, state.description ].filter(t=>t).map(t=>translate(t)).join('\n');
   return ` title="${html(tooltip)}"`;
 }
 

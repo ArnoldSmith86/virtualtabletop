@@ -49,11 +49,15 @@ const translatedAttributes = [ 'placeholder', 'title', 'aria-label', 'data-label
 
 function skipTranslation(element) {
   // never touch game content: widgets in the room, game tiles and variants in the
-  // library, the JSON editor surfaces and routine log, elements that display game
-  // metadata (data-field) and anything marked with the standard translate="no"
+  // library, the JSON editor surfaces, the widget tree and the routine log,
+  // elements that display game metadata (data-field) and anything marked with
+  // the standard translate="no".
+  // Icon elements are skipped as well - their text is a font ligature name like
+  // "share" or "delete", which happens to collide with real UI wording.
   return element.id == 'room' || element.id == 'playerCursors'
-      || element.id == 'jeText' || element.id == 'jeTextHighlight' || element.id == 'jeLog'
+      || element.id == 'jeText' || element.id == 'jeTextHighlight' || element.id == 'jeLog' || element.id == 'jeTree'
       || element.classList.contains('roomState') || element.classList.contains('variant')
+      || element.classList.contains('material-symbols') || element.classList.contains('UIicon')
       || element.hasAttribute('data-field') || element.getAttribute('translate') == 'no'
       || element.tagName == 'SCRIPT' || element.tagName == 'STYLE';
 }

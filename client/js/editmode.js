@@ -1782,7 +1782,8 @@ export function initializeEditMode(currentMetaData) {
   style.appendChild(document.createTextNode(' //*** CSS ***// '));
   $('head').appendChild(style);
 
-  for(const overlay of $a('#editorOverlays > *'))
+  const editorOverlays = $a('#editorOverlays > *');
+  for(const overlay of editorOverlays)
     $('#roomArea').append(overlay);
 
   jeInitEventListeners();
@@ -1790,9 +1791,12 @@ export function initializeEditMode(currentMetaData) {
   initializeEditor(currentMetaData);
 
   // the editor DOM did not exist when the page was translated on load; the
-  // sidebar modules keep recreating their content, so keep translating those
+  // editor and its overlays keep recreating their content, so keep translating
+  // those - the overlays are observed individually because they now live next to
+  // the room, whose widgets must not be walked on every move
   translateSubtree($('body'));
-  translateOnChange($('#editor'));
+  for(const container of [ $('#editor'), ...editorOverlays ])
+    translateOnChange(container);
 
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
