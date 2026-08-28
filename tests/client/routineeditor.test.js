@@ -3966,7 +3966,7 @@ describe('recording a routine from the room', () => {
     dragged: true, reparented: false, count: 1, changes: {}
   }, properties, { widget: widgets.get(properties.widgetID || 'card1') });
 
-  const operations = suggestions => suggestions.map(s => s.operation);
+  const operations = suggestions => suggestions.flatMap(s => s.operations);
 
   let editor;
   beforeEach(() => {
@@ -4159,12 +4159,16 @@ describe('recording a routine from the room', () => {
     roomWidget({ id: 'card1', type: 'card', parent: 'pile1' });
     // x and y are counted from the parent, so dropping the parent alone would put
     // the widget wherever those coordinates land in the room instead
-    const suggested = operations(routineGestureSuggestions(gesture({
+    const suggestions = routineGestureSuggestions(gesture({
       widgetID: 'card1', from: 'pile1', to: null, reparented: true, x: 300, y: 200
-    })));
-    expect(suggested).toContainEqual({ func: 'SET', property: 'parent', value: null, collection: [ 'card1' ] });
-    expect(suggested).toContainEqual({ func: 'SET', property: 'x', value: 300, collection: [ 'card1' ] });
-    expect(suggested).toContainEqual({ func: 'SET', property: 'y', value: 200, collection: [ 'card1' ] });
+    }));
+    // and all three are one reading rather than three: half of them done is a
+    // widget somewhere nobody dropped it
+    expect(suggestions[0].operations).toEqual([
+      { func: 'SET', property: 'parent', value: null, collection: [ 'card1' ] },
+      { func: 'SET', property: 'x', value: 300, collection: [ 'card1' ] },
+      { func: 'SET', property: 'y', value: 200, collection: [ 'card1' ] }
+    ]);
   });
 
   test('a click offers the ways a routine does what a click does', () => {
@@ -4251,12 +4255,15 @@ describe('recording a routine from the room', () => {
     for(const g of gestures) {
       const suggestions = routineGestureSuggestions(g);
       expect(suggestions.length).toBeGreaterThan(0);
-      for(const { operation, why } of suggestions) {
-        const operationEditor = editorForOperation(operation);
-        operationEditor.setOperationDetails(null, operation, [], []);
-        const sentence = operationEditor.getSentenceText();
-        expect(sentence).not.toMatch(/\{[a-zA-Z,]+\}/);
-        expect(sentence).not.toContain('undefined');
+      for(const { operations, why } of suggestions) {
+        expect(operations.length).toBeGreaterThan(0);
+        for(const operation of operations) {
+          const operationEditor = editorForOperation(operation);
+          operationEditor.setOperationDetails(null, operation, [], []);
+          const sentence = operationEditor.getSentenceText();
+          expect(sentence).not.toMatch(/\{[a-zA-Z,]+\}/);
+          expect(sentence).not.toContain('undefined');
+        }
         expect(why.length).toBeGreaterThan(3);
       }
     }
@@ -4358,8 +4365,15 @@ describe('recording a routine from the room', () => {
     expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged the card card1 to 300, 200');
     const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
     expect(sentences.join(' ')).not.toContain('o0ur');
+    // where it was put is one row to pick, spelling out both operations it adds
+    expect(editor.domElement.querySelectorAll('.routine-editor-suggestion').length).toBe(1);
+    expect(sentences).toEqual([ 'Set x of card1 to 300', 'Set y of card1 to 200' ]);
+    // and picking it writes both
     editor.domElement.querySelector('.routine-editor-suggestion').click();
-    expect(editor.routine).toEqual([ { func: 'SET', property: 'x', value: 300, collection: [ 'card1' ] } ]);
+    expect(editor.routine).toEqual([
+      { func: 'SET', property: 'x', value: 300, collection: [ 'card1' ] },
+      { func: 'SET', property: 'y', value: 200, collection: [ 'card1' ] }
+    ]);
   });
 
   test('a release the engine calls a click is recorded as one, however far the widget slid', () => {

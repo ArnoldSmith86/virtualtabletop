@@ -2205,9 +2205,15 @@ class RoutineEditor {
   }
 
   addOperation(values) {
+    this.addOperations([ values ]);
+  }
+
+  // several operations added as one: they go in together, in the order given,
+  // and the last of them is where the next one follows
+  addOperations(list) {
     const at = this.insertionIndex();
-    this.routine.splice(at, 0, typeof values == 'string' ? values : JSON.parse(JSON.stringify(values)));
-    this.setActiveOperation(at); // the new operation is where the next one follows
+    this.routine.splice(at, 0, ...list.map(values=>typeof values == 'string' ? values : JSON.parse(JSON.stringify(values))));
+    this.setActiveOperation(at + list.length - 1);
     this.routineChanged();
   }
 
@@ -2268,28 +2274,34 @@ class RoutineEditor {
     forget.title = 'Forget this gesture';
 
     for(const suggestion of gesture.suggestions) {
-      const editor = editorForOperation(suggestion.operation);
-      editor.setOperationDetails(this.widget, suggestion.operation, this.variables, this.collections);
-
       const suggestionDOM = div(gestureDOM, 'routine-editor-suggestion');
       const icon = document.createElement('span');
       icon.className = 'material-symbols';
       icon.textContent = 'add';
       suggestionDOM.append(icon);
-      // what the reading is FOR leads, the operation it would add follows: the
+      // what the reading is FOR leads, the operations it would add follow: the
       // readings of one gesture nearly all start with the same words ("Move 1
       // widget from deckHolder to ..."), so a card of them is only scannable
       // by the thing that tells them apart
       div(suggestionDOM, 'routine-editor-suggestion-why').textContent = suggestion.why;
-      div(suggestionDOM, 'routine-editor-suggestion-sentence').textContent = editor.getSentenceText();
-      suggestionDOM.title = `Add this operation to the routine (${suggestion.operation.func})`;
+      // a reading that takes more than one operation to carry out is still one
+      // line to pick: every operation it would add is spelled out under it
+      for(const operation of suggestion.operations) {
+        const editor = editorForOperation(operation);
+        editor.setOperationDetails(this.widget, operation, this.variables, this.collections);
+        div(suggestionDOM, 'routine-editor-suggestion-sentence').textContent = editor.getSentenceText();
+      }
+      const funcs = suggestion.operations.map(operation=>operation.func).join(', ');
+      suggestionDOM.title = suggestion.operations.length > 1
+        ? `Add these operations to the routine (${funcs})`
+        : `Add this operation to the routine (${funcs})`;
       focusable(suggestionDOM, _=>{
-        // one gesture is one operation: the card is answered and closes, and a
+        // one gesture is one reading: the card is answered and closes, and a
         // second reading of the same gesture is had by doing it again in the
         // room. A card that stays open after a pick invites reading the whole
         // list a second time to see whether anything else applies too.
         closeRoutineGesture(gesture);
-        this.addOperation(suggestion.operation);
+        this.addOperations(suggestion.operations);
       });
     }
   }

@@ -427,6 +427,11 @@ const routineSuggestionLimit = 5;
 // usually means by it - dealing to everybody rather than to the one seat that
 // was dropped on, putting the deck back together.
 //
+// A reading is one line to pick, however many operations it takes to carry out:
+// putting a widget at a spot is a SET of x and a SET of y, and offering those
+// apart asks the author to notice that half a reading is half a gesture. So a
+// reading carries a list of operations, and picking it adds all of them.
+//
 // The two kinds are collected apart so that the limit can prefer what the room
 // did on its own over the readings of the gesture: the reading that would fall
 // off the end is the one watching the pointer could never produce - "the hand
@@ -435,7 +440,7 @@ const routineSuggestionLimit = 5;
 function routineGestureSuggestions(gesture) {
   const fromGesture = [];
   const fromRoom = [];
-  const into = list=>((why, operation)=>list.push({ why, operation }));
+  const into = list=>((why, ...operations)=>list.push({ why, operations }));
 
   if(gesture.reparented)
     reparentSuggestions(gesture, into(fromGesture));
@@ -451,7 +456,7 @@ function routineGestureSuggestions(gesture) {
     for(const suggestion of list) {
       if(suggestions.length >= limit)
         return;
-      const key = JSON.stringify(suggestion.operation);
+      const key = JSON.stringify(suggestion.operations);
       if(seen.indexOf(key) != -1)
         continue;
       seen.push(key);
@@ -479,11 +484,12 @@ function reparentSuggestions(gesture, add) {
     }
     // x and y are counted from whatever the widget is in, so taking it out on
     // its own drops it wherever its old coordinates land in the room. The two
-    // that follow are what makes it stay where it was let go of - which is why
-    // they say "and", the way the clauses of one gesture do.
-    add('do exactly this', { func: 'SET', property: 'parent', value: null, collection: [ widgetID ] });
-    add('and put it exactly there', { func: 'SET', property: 'x', value: gesture.x, collection: [ widgetID ] });
-    add('and at that height', { func: 'SET', property: 'y', value: gesture.y, collection: [ widgetID ] });
+    // SETs that follow it are what keeps it where it was let go of, so the three
+    // of them are the one reading.
+    add('do exactly this',
+      { func: 'SET', property: 'parent', value: null, collection: [ widgetID ] },
+      { func: 'SET', property: 'x', value: gesture.x, collection: [ widgetID ] },
+      { func: 'SET', property: 'y', value: gesture.y, collection: [ widgetID ] });
     return;
   }
 
@@ -515,8 +521,9 @@ function repositionSuggestions(gesture, add) {
   // what a SET writes as well. MOVEXY is not the same thing: it takes widgets
   // OUT of a holder and puts them at a spot in the room, which is not what a
   // drag that left the widget where it was did.
-  add('put it exactly there', { func: 'SET', property: 'x', value: gesture.x, collection });
-  add('and at that height', { func: 'SET', property: 'y', value: gesture.y, collection });
+  add('put it exactly there',
+    { func: 'SET', property: 'x', value: gesture.x, collection },
+    { func: 'SET', property: 'y', value: gesture.y, collection });
 }
 
 // Rolling a die is the one thing a routine does by clicking rather than by an
