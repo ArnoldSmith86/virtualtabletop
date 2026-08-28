@@ -1425,6 +1425,7 @@ class IconInput extends PickerInput {
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
+    showAll.className = 'propertyPickerBrowseMore';
     // not "Show all": the big picker opens with this picker's search and libraries, so it shows more of what
     // the user is looking for rather than everything there is
     showAll.textContent = 'Browse more...';
@@ -1489,6 +1490,7 @@ class ImageInput extends PickerInput {
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
+    showAll.className = 'propertyPickerBrowseMore';
     showAll.textContent = 'Browse more...';
     showAll.onclick = async _=>{
       const symbol = await pickSymbolKeepingOverlay(showAll, 'images', search.value.trim());

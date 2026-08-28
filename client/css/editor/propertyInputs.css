@@ -489,6 +489,12 @@
   font-size: 36px;
 }
 
+/* the button below the icon list keeps the same gap to it that the library
+   filter line above the list keeps to its first row */
+.editorModule button.propertyPickerBrowseMore {
+  margin-top: 8px;
+}
+
 .editorModule .propertyPickerEmpty {
   color: var(--textHelpColor, #666);
   font-style: italic;
