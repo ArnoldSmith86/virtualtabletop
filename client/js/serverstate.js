@@ -345,7 +345,7 @@ export function receiveDelta(delta) {
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined && widgets.has(widgetID))
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && !delta.s[widgetID].id && widgets.has(widgetID))
       widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)

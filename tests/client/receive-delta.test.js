@@ -36,4 +36,24 @@ describe("Scenarios: Receiving a delta", () => {
       expect(errors.length).toBe(1);
     });
   });
+
+  // an entry with an empty id does not create a widget either, so the widget it addresses has to go
+  // through limbo just like one addressed without an id at all
+  describe("Given a delta that re-parents a widget this client has and carries an empty id", () => {
+    const childID = `${testName}-child`;
+    let limboCalls;
+    beforeEach(() => {
+      const child = createWidget({ id: childID, type: 'widget' });
+      limboCalls = [];
+      child.setLimbo = isLimbo => limboCalls.push(isLimbo);
+    });
+    afterEach(() => {
+      removeWidget(childID);
+    });
+
+    test("Then the widget is moved to the top level before the new parent is applied", () => {
+      receiveDelta({ s: { [childID]: { id: null, parent: holderID } } });
+      expect(limboCalls[0]).toBe(true);
+    });
+  });
 });
