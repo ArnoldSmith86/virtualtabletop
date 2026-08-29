@@ -399,7 +399,9 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   )();
   await t.expect(colorControlTitles).eql([
     { label: null, swatch: null, info: false },
-    { label: null, swatch: null, info: false },
+    // the background names the declaration it writes, which is not the one a
+    // game may already keep its color in
+    { label: null, swatch: null, info: true },
     { label: null, swatch: null, info: false },
     // the icon color says what it paints, since it is the one chip that is
     // only there for some widgets
