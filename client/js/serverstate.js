@@ -497,8 +497,15 @@ function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   const topSurface = $('#topSurface');
-  for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
-    widget.applyRemoveRecursive();
+  // a widget that cannot be torn down must not keep the rest of the old room around:
+  // the new state is applied right after this and would be mixed into the old one
+  for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface)) {
+    try {
+      widget.applyRemoveRecursive();
+    } catch(e) {
+      console.error(`Could not remove widget!`, widget.id, e);
+    }
+  }
   widgets.clear();
   dropTargets.clear();
   maxZ = {};

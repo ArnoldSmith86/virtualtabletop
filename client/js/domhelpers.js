@@ -142,7 +142,9 @@ export function removeFromDOM(node) {
   if(typeof node == 'string') {
     for(const c of $a(node))
       removeFromDOM(c);
-  } else {
+  } else if(node && node.parentNode) {
+    // a node that is not in the dom is already as removed as it can get - a widget
+    // can outlive its element, so removing it twice has to stay harmless
     node.parentNode.removeChild(node);
   }
 }

@@ -47,3 +47,32 @@ describe('Removing a widget that carries a deck property', () => {
     expect(deck.removedCards).toEqual([ card ]);
   });
 });
+
+// A widget can outlive its dom element: the editor takes preview widgets out of the room again
+// and a game's html can replace the children of a widget it renders into. Removing such a widget
+// has to stay harmless - the room state load that follows removes every widget of the old room
+// and would otherwise leave it half torn down and mixed into the new state.
+describe('Removing a widget whose element already left the dom', () => {
+  afterEach(() => {
+    for(const id of [ ...widgets.keys() ])
+      removeWidget(id);
+  });
+
+  test('does not throw', () => {
+    const widget = createWidget({ id: 'detached', type: 'holder' });
+    widget.domElement.remove();
+
+    expect(() => removeWidget('detached')).not.toThrow();
+  });
+
+  test('does not stop its parent from removing its other children', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    const detached = createWidget({ id: 'detachedChild', type: 'holder', parent: 'aParent' });
+    const sibling = createWidget({ id: 'siblingChild', type: 'holder', parent: 'aParent' });
+    detached.domElement.remove();
+
+    expect(() => parent.applyRemoveRecursive()).not.toThrow();
+    expect(sibling.domElement.parentNode).toBe(null);
+    expect(parent.domElement.parentNode).toBe(null);
+  });
+});
