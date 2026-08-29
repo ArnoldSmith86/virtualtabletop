@@ -293,6 +293,8 @@ class Dice extends Widget {
     return Array.isArray(f) ? f : [];
   }
 
+  // The properties a face declares are applied where the face is rendered, through getFaceProperty().
+  // get() answers with the die's own value - except for value, which the value map picks by active face.
   get(property, options) {
     if(property !='faces' && property !='activeFace' && (typeof options != 'object' || options == null || !options.ignoreFaceProperties) ) {
       if(property == 'value') {
@@ -300,9 +302,6 @@ class Dice extends Widget {
         if(Array.isArray(o) && o.length > this.activeFace())
           return o[this.activeFace()];
       }
-      const faceProps = this.faces()[this.activeFace()];
-      if(typeof faceProps == 'object' && Object.hasOwnProperty(faceProps, property))
-        return faceProps[property];
     }
     return super.get(property);
   }
