@@ -3346,7 +3346,7 @@ export class Widget extends StateManaged {
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);
-    if(this instanceof Card)
+    if(this instanceof Card && this.deck)
       this.deck.removeCard(this);
     return this;
   }

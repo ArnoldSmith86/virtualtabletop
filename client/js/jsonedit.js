@@ -2414,25 +2414,37 @@ function jeMultiPropertyEntries(state, property) {
 // The properties of a multi-selection whose value has to name a widget in the room,
 // with the message for the first one that does not.
 function jeMultiWidgetReferenceError(state) {
+  // gathering the selection means running its search terms, so a state without either
+  // property is answered without doing that
+  let cardIDs = null;
+  const goesToACard = widgetID => {
+    if(cardIDs === null)
+      cardIDs = new Set(jeMultiSelectedWidgets().filter(w=>w.get('type') == 'card').map(w=>w.get('id')));
+    return widgetID === null ? cardIDs.size > 0 : cardIDs.has(widgetID);
+  };
   for(const [ property, label ] of [ [ 'parent', 'Parent' ], [ 'deck', 'Deck' ] ]) {
     if(state[property] === undefined)
       continue;
-    // deck names a widget on a card - on anything else it is an ordinary property
-    // that happens to be called deck
-    if(property == 'deck' && !jeMultiSelectedWidgets().some(w=>w.get('type') == 'card'))
-      continue;
-    const missing = jeMultiPropertyEntries(state, property).find(([ , value ])=>value !== undefined && value !== null && !widgets.has(value));
-    if(!missing)
-      continue;
-    const [ widgetID, value ] = missing;
-    if(typeof value != 'object')
-      return `${label} ${value} does not exist${widgetID === null ? '' : ` (widget "${widgetID}")`}.`;
-    // an object arrives here either as a value that is no ID at all, or as a
-    // per-widget object whose keys do not match the selection - which makes the whole
-    // object the one value the selection shares
-    return widgetID === null
-      ? `${label} has to be a widget ID, or an object with one entry per selected widget.`
-      : `${label} has to be a widget ID (widget "${widgetID}").`;
+    for(const [ widgetID, value ] of jeMultiPropertyEntries(state, property)) {
+      // deck names a deck on a card - on anything else it is an ordinary property
+      // that happens to be called deck
+      if(property == 'deck' && !goesToACard(widgetID))
+        continue;
+      if(value === undefined || value === null)
+        continue;
+      const forWidget = widgetID === null ? '' : ` (widget "${widgetID}")`;
+      // an object arrives here either as a value that is no ID at all, or as a
+      // per-widget object whose keys do not match the selection - which makes the
+      // whole object the one value the selection shares
+      if(typeof value == 'object')
+        return widgetID === null
+          ? `${label} has to be a widget ID, or an object with one entry per selected widget.`
+          : `${label} has to be a widget ID${forWidget}.`;
+      if(!widgets.has(value))
+        return `${label} ${value} does not exist${forWidget}.`;
+      if(property == 'deck' && !widgets.get(value).get('cardTypes'))
+        return `Given widget ${value} is not a deck or doesn't define cardTypes${forWidget}.`;
+    }
   }
   return null;
 }

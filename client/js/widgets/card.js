@@ -45,15 +45,17 @@ export class Card extends Widget {
         this.domElement.innerHTML = '';
         this.deck.removeCard(this);
       }
-      // a deck that does not exist in the room leaves the card without faces instead
-      // of throwing halfway through updating the DOM
-      this.deck = delta.deck && widgets.get(delta.deck) || null;
+      // a deck that is not in the room, or an id that names a widget which is no deck,
+      // leaves the card without faces instead of throwing halfway through updating the
+      // DOM - the same widgets a state load refuses to build a card for
+      const referenced = delta.deck && widgets.get(delta.deck) || null;
+      this.deck = referenced instanceof Deck ? referenced : null;
       if(this.deck) {
         this.deck.addCard(this);
         const faceTemplates = this.deck.get('faceTemplates');
         this.createFaces(Array.isArray(faceTemplates) ? faceTemplates : []);
       } else if(delta.deck) {
-        console.error(`Card ${this.get('id')} has no faces because its deck ${delta.deck} does not exist!`);
+        console.error(`Card ${this.get('id')} has no faces because ${referenced ? `widget ${delta.deck} is not a deck` : `its deck ${delta.deck} does not exist`}!`);
       }
       for(const child of childNodes)
         if(!child.className.match(/cardFace/))

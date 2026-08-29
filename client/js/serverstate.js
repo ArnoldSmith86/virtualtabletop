@@ -503,6 +503,10 @@ function receiveStateFromServer(args) {
   for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();
   widgets.clear();
+  // whatever an earlier delta deferred waits for a room that does not exist anymore:
+  // keeping it would add a second copy of a widget this state contains
+  deferredChildren = {};
+  deferredCards = {};
   dropTargets.clear();
   maxZ = {};
   StateManaged.globalUpdateListeners = {};
