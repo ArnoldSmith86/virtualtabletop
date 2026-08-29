@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 20,
+    "version": 24,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - MOVE",
       "image": "/assets/1128259959_3590",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1768620595810,
+      "lastUpdate": 1788034350227,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -22,11 +25,9 @@
       "helpText": "",
       "players": "1",
       "language": "en-US",
-      "variant": "",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "variant": "Basic",
+      "variantImage": "",
+      "usesAIImagery": false
     }
   },
   "8fr3": {
@@ -38,7 +39,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Functions: MOVE",
+    "text": "Functions: MOVE Basic",
     "x": 400
   },
   "406b": {
@@ -147,9 +148,6 @@
     "onLeave": {
       "activeFace": 0
     },
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "stackOffsetX": 40,
     "childrenPerOwner": true,
     "x": 400,
     "y": 820,
