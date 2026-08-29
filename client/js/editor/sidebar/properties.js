@@ -2537,7 +2537,7 @@ class PropertiesModule extends SidebarModule {
     }
 
     createButton.onclick = async e=>{
-      const deck = Object.assign({ id: generateUniqueWidgetID() }, selectedDeck.deck);
+      const deck = Object.assign({ id: generateUniqueWidgetID('deck') }, selectedDeck.deck);
       await this.addDeckWithCards(deck, 'traditional', selectedDeck.counts);
     };
     target.append(createButton);
@@ -2883,7 +2883,7 @@ class PropertiesModule extends SidebarModule {
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
       const design = designs[selectedDesign];
-      const deck = design.build({ type: 'deck', id: generateUniqueWidgetID(), cardTypes: getCardTypes(design) });
+      const deck = design.build({ type: 'deck', id: generateUniqueWidgetID('deck'), cardTypes: getCardTypes(design) });
       // Adding a card at a time takes a moment: say so, and make a second click impossible while it runs.
       createButton.disabled = true;
       createButton.innerText = 'Adding…';
@@ -3157,7 +3157,7 @@ class PropertiesModule extends SidebarModule {
     updateStatus();
 
     addButton.onclick = async _=>{
-      const id = generateUniqueWidgetID();
+      const id = generateUniqueWidgetID('deck');
       const cardTypes = {};
       const counts = {};
       const sheets = frontSheets();
@@ -3449,7 +3449,7 @@ class PropertiesModule extends SidebarModule {
       }
 
       const deck = {
-        id: generateUniqueWidgetID(),
+        id: generateUniqueWidgetID('deck'),
         type: 'deck',
         cardTypes,
         faceTemplates: [
@@ -3655,7 +3655,7 @@ class PropertiesModule extends SidebarModule {
       const texts = cardTexts();
       if(!texts.length)
         return;
-      const deck = deckDefinition(texts, generateUniqueWidgetID());
+      const deck = deckDefinition(texts, generateUniqueWidgetID('deck'));
       const copies = this.numberFromInput($('.textCardsCopies', design));
       const counts = {};
       for(const cardType in deck.cardTypes)
@@ -3735,7 +3735,7 @@ class PropertiesModule extends SidebarModule {
           delete newDeck.x;
           delete newDeck.y;
           delete newDeck.z;
-          newDeck.id = generateUniqueWidgetID();
+          newDeck.id = generateUniqueWidgetID('deck');
           await this.addDeckWithCards(newDeck, 'TTS', cardCounts, placement);
           button.classList.remove('selected');
         }
@@ -3776,12 +3776,8 @@ class PropertiesModule extends SidebarModule {
     const deckHeight = deck.height || cardHeight;
     const holderWidth  = cardWidth  + 8;
     const holderHeight = cardHeight + 11;
-    // generateUniqueWidgetID only guarantees the holder id itself is free, while the reset button and the pile
-    // are derived from it: check for those too, like the public-library flow does for all of its suffixes.
-    let holderID = null;
-    do {
-      holderID = generateUniqueWidgetID();
-    } while([ 'B', 'P' ].some(suffix=>widgets.has(holderID+suffix)));
+    // The reset button and the pile derive their ids from the holder id, so those have to be free too.
+    const holderID = generateUniqueWidgetID('holder', base=>[ base+'B', base+'P' ]);
     const pileID = holderID+'P';
 
     if(placement.holder) {

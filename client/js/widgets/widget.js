@@ -581,7 +581,7 @@ export class Widget extends StateManaged {
     }
     delete clone.parent;
     delete clone.inheritFrom;
-    const newID = await addWidgetLocal(clone);
+    const newID = await addWidgetLocal(clone, false); // runtime path: keep random IDs
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
 
@@ -3793,7 +3793,7 @@ export class Widget extends StateManaged {
           }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
-          const pileId = await addWidgetLocal(pile);
+          const pileId = await addWidgetLocal(pile, false); // runtime path: keep random IDs
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);

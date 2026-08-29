@@ -2793,7 +2793,10 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/)) {
+  const id = String(widget.get('id'));
+  // extras are only helpful on generated IDs (random four characters or a
+  // type/piece prefix plus a number), not on IDs an author chose
+  if(id.match(/^[0-9a-z]{4}$/) || (type ? id.startsWith(type) && id.substr(type.length).match(/^[0-9]+$/) : id.match(/^[a-z]+[0-9]+$/))) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))
