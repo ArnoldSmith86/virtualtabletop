@@ -1804,12 +1804,8 @@ export function initializeEditMode(currentMetaData) {
     const handMargin = Math.round(Math.min(50, viewportConfig.targetWidth/4));
     const hand = {
       type: 'holder',
-      layout: 'multipleSpread',
       onEnter: { activeFace: 1 },
       onLeave: { activeFace: 0 },
-      dropOffsetX: 10,
-      dropOffsetY: 14,
-      stackOffsetX: 40,
       childrenPerOwner: true,
       hidePlayerCursors: true,
       x: handMargin,
