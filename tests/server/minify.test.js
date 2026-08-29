@@ -1,15 +1,18 @@
 import fs from 'fs';
 import zlib from 'zlib';
 
-import minifyHTML from '../../server/minify.mjs';
+import { buildHTML } from '../../server/minify.mjs';
 
 // A readable build keeps multi-line function bodies and blank lines, a minified one has neither.
 const readableJS = /function \w+\([\w, ]*\) \{\n/;
 
+// the build itself, not the cached path in front of it: what these tests check is what the
+// minifiers produce, and reading it back from an entry an earlier run stored would only ever
+// confirm that the cache round trip works
 async function buildWith(minifyJavascript) {
   process.env.MINIFYJAVASCRIPT = minifyJavascript;
   try {
-    return await minifyHTML();
+    return await buildHTML();
   } finally {
     delete process.env.MINIFYJAVASCRIPT;
   }
@@ -51,7 +54,7 @@ describe('minifyHTML with minifyJavascript disabled', () => {
 
   beforeAll(async () => {
     build = await buildWith('false');  // an env override arrives as a string, not a boolean
-  }, 60000);
+  }, 180000);
 
   test('keeps the inline client JS readable', () => {
     const script = inlineClientJS(build);
@@ -80,7 +83,7 @@ describe('minifyHTML with minifyJavascript enabled', () => {
     // of what has to survive - or disappear from - the minified one come from
     readableBuild = await buildWith('false');
     build = await buildWith('true');
-  }, 60000);
+  }, 180000);
 
   test('minifies the inline client JS', () => {
     expect(inlineClientJS(build)).not.toMatch(readableJS);

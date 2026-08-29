@@ -2754,6 +2754,22 @@ function commonInfoTopic(topicName) {
       </pre>
     `, tutorial: 'functions-set' };
   }
+  if(topicName == 'SHIFT') {
+    return { info: `
+      <pre>
+      This function passes the contents of a circle of holders on: every entry hands its widgets to the next one and receives the widgets of the one before it. A seat hands on its hand, so the widgets end up owned by the seat they arrive at.
+
+      Parameters:
+
+      holders: holderID/seatID array or collection - the holders and seats the widgets travel along, in that order (defaults to the hands of all seats a player sits on, in seat index order). A collection takes part with its seats in seat index order and every other holder where the collection has it. A seat nobody sits on is skipped.
+      widgets: all/top/collection - which widgets of each entry are passed on: everything, the topmost widget only, or the widgets of a collection (defaults to all).
+      interval: number - how many places along each entry hands its widgets (defaults to 1).
+      direction: forward/backward/random - forward walks the holders in the given order, backward the other way round, random pairs them randomly (defaults to forward).
+      wrap: true/false - whether the last entry hands on to the first one; without it the widgets pile up in the last entry instead (defaults to true).
+      keepOrder: true/false - whether the widgets keep the order of the holder they come from, instead of arriving in the order they were created (defaults to true).
+      </pre>
+    `, tutorial: 'functions-shift' };
+  }
   if(topicName == 'SHUFFLE') {
     return { info: `
       <pre>
@@ -2786,20 +2802,6 @@ function commonInfoTopic(topicName) {
       Sorting compares values as strings unless they're numbers; pad numeric strings with zeros, or use {"numeric": true} in options, to sort them numerically.
       </pre>
     `, tutorial: 'functions-sort' };
-  }
-  if(topicName == 'SWAPHANDS') {
-    return { info: `
-      <pre>
-      This function swaps cards between the hands of the seats in a collection, avoiding the need to MOVE the cards manually. With more than two seats, it becomes a rotation, with each seat passing its hand to the next.
-
-      Parameters:
-
-      interval: integer - how many positions each hand is passed around the table (defaults to 1).
-      direction: forward/backward/random - how the "next" seat is chosen (defaults to forward). forward/backward step through seats in index order; random pairs seats randomly.
-      source: all or collection - the seats involved in the swap (defaults to all).
-      keepOrder: boolean - whether each hand keeps the order it had, instead of arriving in the order the widgets were created (defaults to false).
-      </pre>
-    `, tutorial: 'functions-swaphands' };
   }
   if(topicName == 'TIMER') {
     return { info: `

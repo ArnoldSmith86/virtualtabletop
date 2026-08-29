@@ -178,6 +178,7 @@
   "Scoreboard": {
     "type": "scoreboard",
     "id": "Scoreboard",
+    "scoreEntry": "auto",
     "x": 20,
     "y": 110,
     "width": 158,

@@ -4,6 +4,7 @@ import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
 import { randomHue } from '../client/js/color.js';
 import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js/calculateLayout.js';
 import Statistics from './statistics.mjs';
@@ -291,7 +292,7 @@ export default class Room {
 
     for(const state of Object.values(states))
       for(const [ i, variant ] of Object.entries(state))
-        fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
+        FileWriter.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
 
     return filenameSuffix;
   }
@@ -754,7 +755,9 @@ export default class Room {
   }
 
   moveFile(source, target) {
-    fs.copyFileSync(source, target, fs.constants.COPYFILE_FICLONE);
+    if(source == target)
+      return;
+    FileWriter.copyFileSync(source, target);
     fs.unlinkSync(source);
   }
 
@@ -899,8 +902,9 @@ export default class Room {
       this.state._meta.states[stateID].variants = [];
       this.writePublicLibraryAssetsToFilesystem(stateID);
 
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets'));
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''));
+      // removes the assets directory along with anything else left in the game directory, like a
+      // temporary file from a write that was interrupted
+      fs.rmSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''), { recursive: true, force: true });
     }
 
     delete this.state._meta.states[stateID];
@@ -1442,7 +1446,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
+        FileWriter.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
@@ -1458,7 +1462,7 @@ export default class Room {
 
       state._meta.info.lastUpdate = +new Date();
 
-      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
+      FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
     }
 
     this.writePublicLibraryAssetsToFilesystem(stateID);
@@ -1483,13 +1487,13 @@ export default class Room {
 
     copy._meta.info.lastUpdate = +new Date();
 
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
   writeStateToFilesystem(stateID, variantID, state) {
     const copy = {...state};
     copy._meta = { version: copy._meta.version, gameSettings: copy._meta.gameSettings };
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
   writeToFilesystem() {
@@ -1498,7 +1502,7 @@ export default class Room {
       if(id.match(/^PL:/))
         delete copy._meta.states[id];
     const json = JSON.stringify(copy);
-    fs.writeFileSync(this.roomFilename(), json);
+    FileWriter.writeFileSync(this.roomFilename(), json);
   }
 
   variantFilename(stateID, variantID) {

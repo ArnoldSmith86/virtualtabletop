@@ -162,3 +162,64 @@ export function isEditSidebarNarrow(windowWidth, windowHeight, viewport) {
     return true;
   return (windowWidth - EDIT_SIDEBAR_WIDTH)/viewport.targetWidth < (windowHeight - EDIT_TOOLBAR_HEIGHT)/viewport.targetHeight;
 }
+
+/**
+ * The height of the add widget overlay's header row, in the overlay's own coordinates. The
+ * header sits above the 1600x1000 layout the previews live in, so the overlay as a whole is
+ * 1600x(1000+this) - see #addOverlayHeader in editmode.css.
+ */
+export const ADD_OVERLAY_HEADER_HEIGHT = 90;
+
+/**
+ * The scale the add widget overlay is rendered at. Its contents are laid out for the default
+ * board because the widget previews in it are real widgets at coordinates hardcoded for that
+ * board, so the whole layout is scaled into the room and centered instead of being stretched
+ * to it - see #addOverlayContent in editmode.css. The header row makes the overlay taller than
+ * the default board, so it is scaled down a little even there.
+ *
+ * Deliberately not capped at 1: the board is itself scaled into the window, so an overlay kept
+ * at 1:1 on a board twice the default size would be drawn at half the on-screen size the same
+ * overlay has on the default board, its labels included. Filling the board keeps the palette the
+ * same size on screen whatever the board is, at the price of a preview on a large board being
+ * drawn bigger than the widget it adds - where it adds is faithful, how big it looks is not.
+ *
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @returns {number}
+ */
+export function addOverlayScale(viewport) {
+  return Math.min(viewport.targetWidth/DEFAULT_VIEWPORT.targetWidth, viewport.targetHeight/(DEFAULT_VIEWPORT.targetHeight + ADD_OVERLAY_HEADER_HEIGHT));
+}
+
+/**
+ * Where a widget ends up when it is added by clicking its preview in the add widget overlay:
+ * the preview is shown at the overlay's own coordinates, so those go through the same scale
+ * and centering the overlay itself gets. The widget keeps its full size while the overlay
+ * shrinks, so the result is then kept on the board - without that, a preview near the edge of
+ * a small board would add a widget hanging over it.
+ *
+ * @param {Object} viewport - { targetWidth, targetHeight }
+ * @param {number} x - the preview's x in the overlay's 1600x1000 layout
+ * @param {number} y - the preview's y in the overlay's 1600x1000 layout
+ * @param {Object} extents - how far the added widget reaches from the x/y it is added at:
+ *   { width, height }, plus { left, top } where it reaches back past that point - both 0 by
+ *   default. A composite reaches further than its root widget: the counter's minus button sits
+ *   38px left of the label, the deck's reset button below the holder, the ring's stops all
+ *   around the line. It is the whole thing that has to stay on the board, not just the root.
+ * @returns {number[]} [ x, y ] on the board
+ */
+export function addOverlayPosition(viewport, x, y, extents) {
+  const scale = addOverlayScale(viewport);
+  // the top left corner of the 1600x1000 layout on the board: the overlay is centered as a whole,
+  // and the header row above the layout pushes the layout itself half a header row further down
+  const layoutLeft = viewport.targetWidth/2  - DEFAULT_VIEWPORT.targetWidth*scale/2;
+  const layoutTop  = viewport.targetHeight/2 - (DEFAULT_VIEWPORT.targetHeight - ADD_OVERLAY_HEADER_HEIGHT)*scale/2;
+  function onBoard(coordinate, layoutStart, extentStart, extentSize, boardSize) {
+    const onOverlay = Math.round(layoutStart + coordinate*scale);
+    // + 0 so that clamping a widget that reaches nowhere past its own x/y to the edge gives 0, not -0
+    return Math.max(-extentStart, Math.min(onOverlay, boardSize - extentStart - extentSize)) + 0;
+  }
+  return [
+    onBoard(x, layoutLeft, extents.left || 0, extents.width,  viewport.targetWidth),
+    onBoard(y, layoutTop,  extents.top  || 0, extents.height, viewport.targetHeight)
+  ];
+}

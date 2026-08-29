@@ -480,6 +480,25 @@
   /* the list takes what is left over, but never less than about four rows: with min-height: 0 whatever sits
      above it could squeeze it to nothing, and since it is the only scroller that leaves no icon reachable */
   min-height: 120px;
+  /* wrapping flex rows instead of an inline text flow: the icons line up the same way, but a search can rank
+     its matches with order (see below) - the list is built once, so it cannot sort them in the DOM */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  row-gap: 4px;
+}
+/* icons the search matched by name come before the ones it only matched by their tags, and the one that is called
+   exactly what was typed comes before those: same ranking as in the sidebar's icon picker, so "dragon" leads with
+   the dragons in both instead of with the fish scales here, and "soul" with the soul rather than the soul vessel */
+#symbolList .exactMatch {
+  order: -2;
+}
+#symbolList .nameMatch {
+  order: -1;
+}
+#symbolList .tagMatch {
+  order: 1;
 }
 #symbolPickerOverlay.bigPreviews.fewResults #symbolList {
   --symbolSize: 64px;
@@ -505,10 +524,17 @@
   margin-top: 0;
 }
 
+/* a heading owns its row of the list and stays on screen while its category scrolls past, so that a list of
+   73 categories and 13000 icons always says which one is being looked at */
 #symbolPickerOverlay h2 {
   font-size: 16px;
   border-bottom: 1px solid black;
   padding-left: 4px;
+  flex: 0 0 100%;
+  position: sticky;
+  top: 0;
+  background: var(--roomColor);
+  z-index: 1;
 }
 
 #symbolPickerOverlay i {
@@ -527,15 +553,24 @@
   vertical-align: top;
 }
 
-#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
+#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiAsImage, #symbolPickerOverlay.fewResults .emoji-color {
   background: var(--url) center no-repeat;
   color: transparent;
   top: -3px;
 }
 
+/* An emoji drawn from its artwork gets the box of the game icons instead of the one its character has:
+   a character the browser's font does not know is a "not defined" box a third of an emoji's width, so
+   the artwork would end up tiny between the emoji the font can draw. */
+#symbolPickerOverlay .emojiAsImage {
+  display: inline-block;
+  width: var(--symbolSize);
+  height: var(--symbolSize);
+}
+
 #symbolPickerOverlay .gameicons {
   --spritesheetX: 60;
-  --spritesheetY: 69;
+  --spritesheetY: 70;
 
   display: inline-block;
   background: url(i/game-icons.net/overview24.png);
