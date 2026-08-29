@@ -1,6 +1,18 @@
-import { widgets } from '../../client/js/serverstate.js';
+import { setText } from '../../client/js/domhelpers.js';
+import { widgets, addWidget } from '../../client/js/serverstate.js';
+import { Widget } from '../../client/js/widgets/widget.js';
 
 import { createWidget, removeWidget } from './client-util.js';
+
+// timer.js relies on the concatenated global scope of the shipped bundle rather than
+// on imports, so expose the identifiers it references before importing it.
+let Timer;
+beforeAll(async () => {
+  globalThis.Widget = Widget;
+  globalThis.setText = setText;
+  globalThis.activePlayers = [];
+  ({ Timer } = await import('../../client/js/widgets/timer.js'));
+});
 
 // `deck` is a deck reference on cards only. Every other widget can carry a property of that
 // name without it meaning anything - routines and the JSON editor set arbitrary properties on
@@ -142,6 +154,24 @@ describe('Removing a tree of widgets', () => {
 
     expect(broken.domElement.parentNode).toBe(null);
     expect(document.getElementById(`STYLES_${broken.cssScope}`)).toBe(null);
+  });
+
+  // A timer keeps an interval that lives outside the widget tree. Once the room it belongs to
+  // is gone, a tick would write to an id the widget map no longer knows, so the interval has to
+  // be stopped even when the rest of the teardown fails.
+  test('a timer whose parent refuses the removal still stops ticking', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    parent.applyChildRemove = () => {
+      throw new Error('aParent refuses to let go of its children');
+    };
+    const timer = new Timer('aTimer');
+    addWidget({ id: 'aTimer', type: 'timer', parent: 'aParent' }, timer);
+    timer.startTimer();
+
+    parent.applyRemoveRecursive();
+
+    expect(timer.interval).toBe(undefined);
+    expect(timer.domElement.parentNode).toBe(null);
   });
 
   test('widgets that are each other\'s parent do not recurse forever', () => {
