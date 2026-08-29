@@ -76,3 +76,68 @@ describe('Removing a widget whose element already left the dom', () => {
     expect(parent.domElement.parentNode).toBe(null);
   });
 });
+
+// A room state load tears down the whole old room before the new state is applied, so a
+// widget the client cannot remove has to be the only thing that is left behind.
+describe('Removing a tree of widgets', () => {
+  afterEach(() => {
+    for(const id of [ ...widgets.keys() ]) {
+      delete widgets.get(id).applyRemove; // the stubs below would fail the cleanup itself
+      removeWidget(id);
+    }
+  });
+
+  function breakRemovalOf(widget) {
+    widget.applyRemove = () => {
+      throw new Error(`${widget.id} refuses to be removed`);
+    };
+  }
+
+  test('a child that throws leaves its siblings and its parent removed', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    const first = createWidget({ id: 'firstChild', type: 'holder', parent: 'aParent' });
+    const broken = createWidget({ id: 'brokenChild', type: 'holder', parent: 'aParent' });
+    const last = createWidget({ id: 'lastChild', type: 'holder', parent: 'aParent' });
+    breakRemovalOf(broken);
+
+    expect(() => parent.applyRemoveRecursive()).not.toThrow();
+
+    for(const widget of [ first, last, parent ])
+      expect(widget.domElement.parentNode).toBe(null);
+  });
+
+  test('a grandchild that throws leaves the widgets above it removed', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    const child = createWidget({ id: 'aChild', type: 'holder', parent: 'aParent' });
+    const broken = createWidget({ id: 'brokenGrandchild', type: 'holder', parent: 'aChild' });
+    breakRemovalOf(broken);
+
+    expect(() => parent.applyRemoveRecursive()).not.toThrow();
+
+    expect(child.domElement.parentNode).toBe(null);
+    expect(parent.domElement.parentNode).toBe(null);
+  });
+
+  test('a widget already removed as a child is not removed a second time', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    const child = createWidget({ id: 'aChild', type: 'holder', parent: 'aParent' });
+    let removals = 0;
+    child.applyRemove = () => ++removals;
+
+    const removed = new Set();
+    parent.applyRemoveRecursive(removed);
+    child.applyRemoveRecursive(removed);
+
+    expect(removals).toBe(1);
+  });
+
+  test('widgets that are each other\'s parent do not recurse forever', () => {
+    const first = createWidget({ id: 'firstOfCycle', type: 'holder', parent: 'secondOfCycle' });
+    const second = createWidget({ id: 'secondOfCycle', type: 'holder', parent: 'firstOfCycle' });
+
+    expect(() => first.applyRemoveRecursive()).not.toThrow();
+
+    expect(first.domElement.parentNode).toBe(null);
+    expect(second.domElement.parentNode).toBe(null);
+  });
+});

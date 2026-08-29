@@ -496,16 +496,17 @@ function receiveStateFromServer(args) {
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  const topSurface = $('#topSurface');
-  // a widget that cannot be torn down must not keep the rest of the old room around:
-  // the new state is applied right after this and would be mixed into the old one
-  for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface)) {
-    try {
-      widget.applyRemoveRecursive();
-    } catch(e) {
-      console.error(`Could not remove widget!`, widget.id, e);
-    }
-  }
+  const removedWidgets = new Set();
+  // the widgets of the new state are added right after this, so nothing of the old room may
+  // survive it: neither a widget that throws while being torn down, nor one whose removal is
+  // still in flight, nor one that is only reachable through a broken parent chain. A widget
+  // with a live parent is reached through that parent so a holder sees its children go before
+  // itself; the second pass takes what the first cannot reach, like a parent/child cycle.
+  for(const widget of Array.from(widgets.values()))
+    if(!widgets.has(widget.get('parent')))
+      widget.applyRemoveRecursive(removedWidgets);
+  for(const widget of Array.from(widgets.values()))
+    widget.applyRemoveRecursive(removedWidgets);
   widgets.clear();
   dropTargets.clear();
   maxZ = {};
