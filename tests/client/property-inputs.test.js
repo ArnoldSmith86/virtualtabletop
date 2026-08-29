@@ -75,6 +75,7 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'ex
     cssValueIsColor,
     cssColorHasAlpha,
     cssBackgroundIsPlainColor,
+    colorHexInputAccepts,
     cssValueOptions,
     cssDeclarationIsValid,
     cssValueSuggestions,
@@ -614,6 +615,21 @@ describe('the background color input', () => {
     expect(backgroundOptions(widget, '.droppable').getValue()).toBe('#abcdef');
     backgroundOptions(widget, '.droppable').setValue('#112233');
     expect(widget.state.css).toEqual({ default: { background: '#abcdef' }, '.droppable': { 'background-color': '#112233' } });
+  });
+
+  test('the row explains which declaration it writes', () => {
+    expect(backgroundOptions(widgetWith({})).hint).toMatch(/background-color/);
+    // only the background rows edit two different declarations
+    expect(cssHelpers.cssValueOptions({}, widgetWith({}), 'color').hint).toBe(undefined);
+  });
+
+  test('the color text field takes every color css takes, and nothing else', () => {
+    for(const value of [ '#abc', '#abcdef', '#abcdef80', 'transparent', 'red', 'rgb(1, 2, 3)', 'oklch(0.5 0.1 20)' ])
+      expect(cssHelpers.colorHexInputAccepts(value)).toBe(true);
+    // shown in the value text instead: typing in a field that rejects what it
+    // was given turns it red on the first keystroke
+    for(const value of [ 'var(--VTTblue)', 'linear-gradient(red, blue)', 'url("/assets/1_2") no-repeat', '#abcd', '#ghijkl', '', null ])
+      expect(cssHelpers.colorHexInputAccepts(value)).toBe(false);
   });
 
   test('clearing the color drops both declarations from the state class it was set on', () => {

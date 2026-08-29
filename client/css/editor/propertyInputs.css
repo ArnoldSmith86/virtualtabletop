@@ -417,6 +417,16 @@
   font-size: 12px;
 }
 
+/* A color row shows whatever the declaration holds, which for a background
+   shorthand can be a full image url: it is cut off rather than wrapped so the
+   close button keeps its place on the row - the tooltip has the whole value. */
+.editorModule .colorPicker .propertyPickerValueText {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .editorModule .propertyPickerSection {
   margin-top: 8px;
 }
