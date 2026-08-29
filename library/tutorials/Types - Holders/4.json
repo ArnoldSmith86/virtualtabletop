@@ -1,746 +1,181 @@
 {
-  "cube1": {
-    "id": "cube1",
-    "x": 473,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 854,
-    "color": "red",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "rank": 1,
-    "secondaryColor": "black",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "activeFace": 1
-  },
-  "cube2": {
-    "id": "cube2",
-    "x": 619,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 875,
-    "color": "orange",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 2,
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    }
-  },
-  "cube3": {
-    "id": "cube3",
-    "x": 728,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 862,
-    "color": "yellow",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 3,
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    }
-  },
-  "cube4": {
-    "id": "cube4",
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 878,
-    "color": "green",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 4,
-    "x": 874
-  },
-  "cube5": {
-    "id": "cube5",
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 880,
-    "color": "blue",
-    "css": {
-      "border-radius": "50%/35%"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 5,
-    "x": 983
-  },
-  "cube6": {
-    "id": "cube6",
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 881,
-    "color": "indigo",
-    "css": {
-      "border-radius": "50%/35%"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 6,
-    "x": 1092
-  },
-  "cube7": {
-    "id": "cube7",
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 855,
-    "color": "red",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "rank": 1,
-    "secondaryColor": "black",
-    "activeFace": 1,
-    "x": 509
-  },
-  "cube8": {
-    "id": "cube8",
-    "x": 546,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 856,
-    "color": "red",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "rank": 1,
-    "secondaryColor": "black",
-    "activeFace": 1
-  },
-  "cube9": {
-    "id": "cube9",
-    "x": 655,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 876,
-    "color": "orange",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 2,
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    }
-  },
-  "cube10": {
-    "id": "cube10",
-    "x": 582,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 857,
-    "color": "orange",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 2
-  },
-  "cube11": {
-    "id": "cube11",
-    "x": 691,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 861,
-    "color": "yellow",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 3,
-    "activeFace": 1
-  },
-  "cube12": {
-    "id": "cube12",
-    "x": 764,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 863,
-    "color": "yellow",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 3
-  },
-  "cube13": {
-    "id": "cube13",
-    "x": 801,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 864,
-    "color": "green",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 4
-  },
-  "cube14": {
-    "id": "cube14",
-    "x": 837,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 877,
-    "color": "green",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 4
-  },
-  "cube15": {
-    "id": "cube15",
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 869,
-    "color": "blue",
-    "css": {
-      "border-radius": "50%/35%"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 5,
-    "x": 910
-  },
-  "cube16": {
-    "id": "cube16",
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 879,
-    "color": "blue",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 5,
-    "activeFace": 1,
-    "x": 946
-  },
-  "cube17": {
-    "id": "cube17",
-    "x": 1019,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 882,
-    "color": "indigo",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 6,
-    "activeFace": 1
-  },
-  "cube18": {
-    "id": "cube18",
-    "x": 1056,
-    "y": 61,
-    "width": 36,
-    "height": 40,
-    "z": 873,
-    "color": "indigo",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 6
-  },
-  "demoHolder1": {
-    "type": "holder",
-    "id": "demoHolder1",
+  "title": {
+    "id": "title",
     "x": 100,
-    "y": 170,
-    "width": 230,
-    "height": 95,
-    "z": 785,
+    "y": -2,
+    "width": 1400,
+    "height": 60,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "layer": -3,
+    "text": "Holders: Layout - grid"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1330,
+    "height": 150,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px",
+    "html": "<b>layout</b> &quotgrid&quot arranges a holder's cards in a grid that always stays inside the holder. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin to the holder's edge and <b>stackOffsetX</b>/<b>stackOffsetY</b> the gap between the cells. The column count comes from whatever fits with the least overlap, or from <b>gridColumns</b>/<b>gridRows</b> if you use them. When the cards stop fitting at the requested spacing they overlap instead of spilling outside. A grid never keeps piles. Whatever you drop in is dealt out into the grid."
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 60,
+    "y": 240,
+    "width": 460,
+    "height": 380,
+    "layout": "grid",
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "stackOffsetX": 10,
+    "stackOffsetY": 10,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "text1": {
+    "id": "text1",
+    "x": 40,
+    "y": 650,
+    "width": 440,
+    "layer": -3,
+    "movable": false,
     "movableInEdit": false,
     "css": {
-      "default": {
-        "display": "flex",
-        "flex-wrap": "wrap",
-        "align-content": "center",
-        "justify-content": "center"
-      }
+      "font-size": "22px"
     },
-    "dropOffsetY": 2,
-    "dropTarget": {},
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = 'relative'",
-      "var css.order = '${PROPERTY z}'",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY id}",
-        "key": "rank"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = null",
-      "var css.order = null",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      }
-    ]
+    "html": "A 460 x 380 <i>grid</i> with a <b>dropOffset</b> of <i>10</i> and a <b>stackOffset</b> of <i>10</i>. Six cards become three columns with a real gap between them. Deal six more and the grid packs them closer together instead of growing past the edge."
   },
-  "demoHolder4": {
+  "holder2": {
     "type": "holder",
-    "id": "demoHolder4",
-    "x": 1150,
-    "y": 170,
-    "width": 230,
-    "height": 46,
-    "z": 785,
-    "movableInEdit": false,
-    "dropTarget": {},
-    "stackOffsetX": 37.2,
-    "enterRoutine": [
-      {
-        "func": "CALL",
-        "routine": "offSetRoutine"
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY id}",
-        "key": "rank"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "CALL",
-        "routine": "offSetRoutine"
-      }
-    ],
-    "offSetRoutine": [
-      "var cardWidth = 36",
-      "var normalOffset = 40",
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "COUNT"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "relation": "<=",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "stackOffsetX",
-            "value": "${normalOffset}"
-          }
-        ],
-        "elseRoutine": [
-          "var modCount = ${COUNT} - 1",
-          "var available = ${PROPERTY width} - ${cardWidth}",
-          "var dropOffset = ${PROPERTY dropOffsetX} * 2",
-          "var available = ${available} - ${dropOffset}",
-          "var perCard = ${available} / ${modCount}",
-          "var offset = ${perCard} min ${normalOffset}",
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "stackOffsetX",
-            "value": "${offset}"
-          }
-        ]
-      }
-    ]
+    "id": "holder2",
+    "x": 560,
+    "y": 240,
+    "width": 140,
+    "height": 380,
+    "layout": "grid",
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "gridColumns": 1
   },
-  "demoHolder3": {
-    "type": "holder",
-    "id": "demoHolder3",
-    "x": 800,
-    "y": 170,
+  "text2": {
+    "id": "text2",
+    "x": 530,
+    "y": 650,
     "width": 230,
-    "height": 46,
-    "z": 785,
+    "layer": -3,
+    "movable": false,
     "movableInEdit": false,
     "css": {
-      "default": {
-        "display": "flex",
-        "justify-content": "center"
-      }
+      "font-size": "22px"
     },
-    "dropOffsetY": 2,
-    "dropTarget": {},
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = 'relative'",
-      "var css.order = '${PROPERTY z}'",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY id}",
-        "key": "rank"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = null",
-      "var css.order = null",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      }
-    ]
+    "html": "Only one card wide, and <b>gridColumns</b> <i>1</i> pins the single column. Without it the automatic count would switch to two."
   },
-  "demoHolder2": {
+  "holder3": {
     "type": "holder",
-    "id": "demoHolder2",
-    "x": 450,
-    "y": 170,
-    "width": 230,
-    "height": 135,
-    "z": 785,
+    "id": "holder3",
+    "x": 790,
+    "y": 240,
+    "width": 400,
+    "height": 210,
+    "layout": "grid",
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "text3": {
+    "id": "text3",
+    "x": 770,
+    "y": 650,
+    "width": 380,
+    "layer": -3,
+    "movable": false,
     "movableInEdit": false,
     "css": {
-      "default": {
-        "display": "flex",
-        "flex-wrap": "wrap",
-        "align-content": "center",
-        "justify-content": "center"
-      }
+      "font-size": "22px"
     },
-    "dropOffsetY": 5,
-    "dropTarget": {},
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var newCSS = {}",
-      "var newProps = {}",
-      "var newProps = ${css}",
-      "var newProps = ${newProps.default}",
-      "var newProps.position = 'relative'",
-      "var newProps.order = '${PROPERTY z}'",
-      "var newCSS.default = ${newProps}",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${newCSS}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var newCSS = {}",
-      "var newProps = {}",
-      "var newProps = ${css}",
-      "var newProps = ${newProps.default}",
-      "var newProps.position = null",
-      "var newProps.order = null",
-      "var newCSS.default = ${newProps}",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${newCSS}"
-      }
-    ]
+    "html": "Barely taller than a card: the grid keeps one row and overlaps the cards sideways rather than starting a second row."
   },
-  "demoHolder5": {
-    "type": "holder",
-    "id": "demoHolder5",
-    "x": 1652,
-    "y": 454,
-    "width": 631,
-    "height": 225,
-    "layer": -4,
-    "z": 12,
-    "movableInEdit": false,
-    "enterRoutine": [
-      {
-        "func": "MOVE",
-        "collection": "child",
-        "to": "topHolder"
-      },
-      {
-        "func": "CALL",
-        "widget": "topHolder",
-        "routine": "sortRoutine"
-      }
-    ]
-  },
-  "ey13B": {
-    "id": "ey13B",
-    "parent": "deckHolder",
-    "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
+  "button1": {
+    "id": "button1",
     "type": "button",
-    "text": "Recall & Shuffle",
-    "movableInEdit": false,
+    "x": 60,
+    "y": 890,
+    "width": 150,
+    "height": 50,
+    "text": "Deal 6 to each",
     "clickRoutine": [
       {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder1",
+        "count": 6,
+        "face": 1
       },
       {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder2",
+        "count": 6,
+        "face": 1
       },
       {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder3",
+        "count": 6,
+        "face": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder4",
+        "count": 4,
+        "face": 1
       }
     ]
   },
-  "ey13D": {
-    "type": "deck",
-    "id": "ey13D",
-    "parent": "deckHolder",
-    "x": 12,
-    "y": 41,
+  "text4": {
+    "id": "text4",
+    "x": 230,
+    "y": 885,
+    "width": 1180,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Drag a card within a grid to insert it at the cell you point at and the other cards flow around it. A whole pile dropped into a grid breaks up into single cards, because a grid never keeps piles."
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1470,
+    "y": 18,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onLeave": {
+      "activeFace": 1
+    }
+  },
+  "mainDeck": {
     "cardTypes": {
       "C 01": {
         "image": "/i/cards-default/AC.svg",
@@ -1245,1872 +680,491 @@
         ]
       }
     ],
-    "cardDefaults": {
-      "css": {}
-    }
-  },
-  "ey13_A_C": {
-    "id": "ey13_A_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 01",
-    "z": 22060,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_2_C": {
-    "id": "ey13_2_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 02",
-    "z": 22084,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_3_C": {
-    "id": "ey13_3_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 03",
-    "z": 22043,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_4_C": {
-    "id": "ey13_4_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 04",
-    "z": 22069,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_5_C": {
-    "id": "ey13_5_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 05",
-    "z": 22053,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_6_C": {
-    "id": "ey13_6_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 06",
-    "z": 22086,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_7_C": {
-    "id": "ey13_7_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 07",
-    "z": 22050,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_8_C": {
-    "id": "ey13_8_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 08",
-    "z": 22087,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_9_C": {
-    "id": "ey13_9_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 09",
-    "z": 22074,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_T_C": {
-    "id": "ey13_T_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 10",
-    "z": 22056,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_J_C": {
-    "id": "ey13_J_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 2J",
-    "z": 22045,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_Q_C": {
-    "id": "ey13_Q_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 3Q",
-    "z": 22066,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_K_C": {
-    "id": "ey13_K_C",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "C 4K",
-    "z": 22062,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_A_D": {
-    "id": "ey13_A_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 01",
-    "z": 22092,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_2_D": {
-    "id": "ey13_2_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 02",
-    "z": 22071,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_3_D": {
-    "id": "ey13_3_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 03",
-    "z": 22068,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_4_D": {
-    "id": "ey13_4_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 04",
-    "z": 22055,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_5_D": {
-    "id": "ey13_5_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 05",
-    "z": 22059,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_6_D": {
-    "id": "ey13_6_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 06",
-    "z": 22083,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_7_D": {
-    "id": "ey13_7_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 07",
-    "z": 22078,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_8_D": {
-    "id": "ey13_8_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 08",
-    "z": 22047,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_9_D": {
-    "id": "ey13_9_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 09",
-    "z": 22058,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_T_D": {
-    "id": "ey13_T_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 10",
-    "z": 22079,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_J_D": {
-    "id": "ey13_J_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 2J",
-    "z": 22093,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_Q_D": {
-    "id": "ey13_Q_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 3Q",
-    "z": 22076,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_K_D": {
-    "id": "ey13_K_D",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "D 4K",
-    "z": 22091,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_A_H": {
-    "id": "ey13_A_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 01",
-    "z": 22046,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_2_H": {
-    "id": "ey13_2_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 02",
-    "z": 22052,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_3_H": {
-    "id": "ey13_3_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 03",
-    "z": 22081,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_4_H": {
-    "id": "ey13_4_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 04",
-    "z": 22085,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_5_H": {
-    "id": "ey13_5_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 05",
-    "z": 22063,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_6_H": {
-    "id": "ey13_6_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 06",
-    "z": 22054,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_7_H": {
-    "id": "ey13_7_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 07",
-    "z": 22082,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_8_H": {
-    "id": "ey13_8_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 08",
-    "z": 22070,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_9_H": {
-    "id": "ey13_9_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 09",
-    "z": 22089,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_T_H": {
-    "id": "ey13_T_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 10",
-    "z": 22042,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_J_H": {
-    "id": "ey13_J_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 2J",
-    "z": 22049,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_Q_H": {
-    "id": "ey13_Q_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 3Q",
-    "z": 22065,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_K_H": {
-    "id": "ey13_K_H",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "H 4K",
-    "z": 22061,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_A_S": {
-    "id": "ey13_A_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 01",
-    "z": 22077,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_2_S": {
-    "id": "ey13_2_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 02",
-    "z": 22048,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_3_S": {
-    "id": "ey13_3_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 03",
-    "z": 22090,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_4_S": {
-    "id": "ey13_4_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 04",
-    "z": 22073,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_5_S": {
-    "id": "ey13_5_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 05",
-    "z": 22075,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_6_S": {
-    "id": "ey13_6_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 06",
-    "z": 22064,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_7_S": {
-    "id": "ey13_7_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 07",
-    "z": 22044,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_8_S": {
-    "id": "ey13_8_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 08",
-    "z": 22088,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_9_S": {
-    "id": "ey13_9_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 09",
-    "z": 22057,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_T_S": {
-    "id": "ey13_T_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 10",
-    "z": 22072,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_J_S": {
-    "id": "ey13_J_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 2J",
-    "z": 22051,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_Q_S": {
-    "id": "ey13_Q_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 3Q",
-    "z": 22080,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "ey13_K_S": {
-    "id": "ey13_K_S",
-    "deck": "ey13D",
-    "type": "card",
-    "cardType": "S 4K",
-    "z": 22067,
-    "css": {
-      "position": null,
-      "order": null
-    },
-    "parent": "o2md"
-  },
-  "topHolder": {
-    "type": "holder",
-    "id": "topHolder",
-    "parent": "demoHolder5",
-    "width": 631,
-    "z": 12,
-    "movableInEdit": false,
-    "classes": "transparent",
-    "dropLimit": 0,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "stackOffsetX": 40,
-    "sortRoutine": [
-      {
-        "func": "MOVE",
-        "from": "${PROPERTY id}",
-        "to": "bottomHolder",
-        "count": "all"
-      },
-      {
-        "func": "SORT",
-        "key": "cardType",
-        "holder": "bottomHolder",
-        "reverse": true
-      },
-      {
-        "func": "FOREACH",
-        "range": [
-          14
-        ],
-        "loopRoutine": [
-          {
-            "func": "MOVE",
-            "from": "bottomHolder",
-            "to": "${PROPERTY id}"
-          }
-        ]
-      },
-      {
-        "func": "SORT",
-        "key": "cardType",
-        "holder": "bottomHolder",
-        "reverse": false
-      }
-    ],
-    "css": {
-      "border": "transparent"
-    },
-    "enterRoutine": [
-      {
-        "func": "SORT",
-        "key": "cardType",
-        "holder": "topHolder"
-      }
-    ]
-  },
-  "bottomHolder": {
-    "type": "holder",
-    "id": "bottomHolder",
-    "parent": "demoHolder5",
-    "z": 6,
-    "movableInEdit": false,
-    "dropLimit": 0,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "stackOffsetX": 40,
-    "layer": 2,
-    "classes": "transparent",
-    "dropOffsetY": 0,
-    "y": 64,
-    "enterRoutine": [
-      {
-        "func": "CALL",
-        "routine": "countRoutine"
-      },
-      {
-        "func": "CALL",
-        "routine": "widthRoutine"
-      },
-      {
-        "func": "SORT",
-        "key": "cardType",
-        "holder": "bottomHolder",
-        "reverse": false
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "CALL",
-        "routine": "countRoutine"
-      },
-      {
-        "func": "CALL",
-        "routine": "widthRoutine"
-      }
-    ],
-    "countRoutine": [
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY id}"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "operand2": 0,
-        "thenRoutine": [
-          "var css = ${PROPERTY css}",
-          "var css.pointer-events = 'none'",
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": "${css}"
-          }
-        ],
-        "elseRoutine": [
-          "var css = ${PROPERTY css}",
-          "var css.pointer-events = 'all'",
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": "${css}"
-          }
-        ]
-      }
-    ],
-    "hAnchorPos": "left",
-    "minWidth": 111,
-    "widthRoutine": [
-      "var rightX = ${PROPERTY x} + ${PROPERTY width}",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "rightX",
-        "value": "${rightX}"
-      },
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "COUNT"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "operand2": 0,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "width",
-            "value": "${PROPERTY minWidth}"
-          },
-          "var newWidth = ${PROPERTY minWidth}"
-        ],
-        "elseRoutine": [
-          "var revCount = ${COUNT} - 1",
-          "var revCount = ${revCount} * ${PROPERTY stackOffsetX}",
-          "var newWidth = ${revCount} + ${PROPERTY minWidth}"
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY hAnchorPos}",
-        "operand2": "left",
-        "thenRoutine": [
-          "var newX = ${PROPERTY x}"
-        ],
-        "elseRoutine": [
-          {
-            "func": "IF",
-            "operand1": "${PROPERTY hAnchorPos}",
-            "operand2": "right",
-            "thenRoutine": [
-              "var newX = ${PROPERTY rightX} - ${newWidth}"
-            ],
-            "elseRoutine": [
-              {
-                "func": "IF",
-                "operand1": "${PROPERTY hAnchorPos}",
-                "operand2": "center",
-                "thenRoutine": [
-                  "var halfWidth = ${newWidth} / 2",
-                  "var centerX = ${PROPERTY width} / 2",
-                  "var centerX = ${PROPERTY x} + ${centerX}",
-                  "var newX = ${centerX} - ${halfWidth}"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "x",
-        "value": "${newX}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "width",
-        "value": "${newWidth}"
-      }
-    ],
-    "rightX": 111,
-    "css": {
-      "border": "transparent",
-      "pointer-events": "none"
-    }
-  },
-  "demoHolder6": {
-    "type": "holder",
-    "id": "demoHolder6",
-    "x": 1735,
-    "width": 370,
-    "height": 270,
-    "z": 785,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "display": "flex",
-        "flex-wrap": "wrap",
-        "align-content": "center",
-        "justify-content": "center",
-        "padding-left": "27px",
-        "padding-right": "27px",
-        "padding-top": "${PROPERTY paddingT}"
-      },
-      " .widget": {
-        "position": "relative",
-        "order": "${PROPERTY z}",
-        "margin-left": "-60px",
-        "margin-top": "${PROPERTY marginT}"
-      }
-    },
-    "dropTarget": {},
-    "enterRoutine": [
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY id}"
-      },
-      {
-        "func": "IF",
-        "operand1": "${COUNT}",
-        "relation": ">",
-        "operand2": 14,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "marginT",
-            "value": "-108px"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "marginT",
-            "value": "-100px"
-          }
-        ]
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = 'relative'",
-      "var css.order = '${PROPERTY z}'",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY id}",
-        "key": "cardType"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = null",
-      "var css.order = null",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      }
-    ],
-    "preventPiles": true,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "dropOffsetX": 30,
-    "dropOffsetY": 50,
-    "marginT": "-100px",
-    "paddingT": "10px",
-    "y": 65
-  },
-  "demoHolder7": {
-    "type": "holder",
-    "id": "demoHolder7",
-    "x": 734,
-    "y": 582,
-    "width": 400,
-    "z": 785,
-    "movableInEdit": false,
-    "css": {
-      "default": {
-        "display": "flex",
-        "justify-content": "left",
-        "overflow": "visible",
-        "padding-left": "60px"
-      },
-      " .widget": {
-        "position": "relative",
-        "margin-left": "-60px"
-      }
-    },
-    "dropTarget": {},
-    "preventPiles": true,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = 'relative'",
-      "var css.order = '${PROPERTY z}'",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY id}",
-        "key": "cardType"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = null",
-      "var css.order = null",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      }
-    ]
-  },
-  "hand": {
-    "type": "holder",
-    "onEnter": {
-      "activeFace": 1
-    },
-    "dropOffsetX": 30,
-    "childrenPerOwner": true,
-    "y": 770,
-    "width": 1200,
-    "height": 230,
-    "id": "hand",
-    "css": {
-      "default": {
-        "display": "flex",
-        "flex-wrap": "wrap",
-        "align-content": "center",
-        "justify-content": "center",
-        "padding-left": "${PROPERTY paddingLR}",
-        "padding-right": "${PROPERTY paddingLR}",
-        "padding-top": "${PROPERTY paddingT}"
-      },
-      " .widget": {
-        "position": "relative",
-        "order": "${PROPERTY z}",
-        "margin-left": "${PROPERTY marginL}",
-        "margin-top": "${PROPERTY marginT}"
-      }
-    },
-    "preventPiles": true,
-    "marginT": "-100px",
-    "paddingT": "10px",
-    "enterRoutine": [
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY id}"
-      },
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = 'relative'",
-      "var css.order = '${PROPERTY z}'",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      },
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY id}",
-        "key": "cardType"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "css"
-      },
-      "var css.position = null",
-      "var css.order = null",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "css",
-        "value": "${css}"
-      }
-    ],
-    "x": 200,
-    "dropOffsetY": 47,
-    "dropTarget": {
-      "type": "card"
-    },
-    "paddingLR": "27px",
-    "marginL": "-60px"
-  },
-  "deckHolder": {
-    "type": "holder",
-    "id": "deckHolder",
-    "x": 1219,
-    "y": 553,
-    "z": 788,
-    "dropTarget": {
-      "type": "card"
-    }
-  },
-  "title": {
-    "id": "title",
-    "x": 400,
-    "y": -2,
-    "width": 800,
-    "height": 60,
-    "z": 74,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "font-size": "60px",
-      "text-align": "center",
-      "color": "black"
-    },
-    "text": "Holders: CSS Flex",
-    "layer": -5
-  },
-  "main": {
-    "id": "main",
-    "x": 100,
-    "y": 100,
-    "width": 1400,
-    "layer": -5,
-    "z": 15,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "font-size": "25px",
-      "color": "black"
-    },
-    "text": "By using CSS and/or some basic routines, you can modify how holders display their widgets. Use this to maximize the number of widgets while minimizing the space for the holder. Use the extra cubes, houses, or cards to see how it works."
-  },
-  "exampleText1": {
-    "id": "exampleText1",
-    "x": 75,
-    "y": 280,
-    "width": 300,
-    "z": 4,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "color": "black",
-      "font-size": "18px"
-    },
-    "layer": -5,
-    "html": "This holder uses CSS <i>&quotdisplay&quot:&quotflex&quot</i> and a simple <b>enterRoutine</b> and <b>leaveRoutine</b> to create multiple rows of centered cubes. In a regular holder, the cubes would continue adding on to the right edge, but the flex solves that issue. The routines are needed to add and remove two CSS properties on the widgets and in this example, also sorts the widgets by color. This example works for the simple object form of CSS.<br><br>The hand at the bottom is similar, but has more complicated CSS, so it works with cards. In this small area, you can display all 52 cards in a standard deck. If you change the size of the holder, you will need to manually adjust the <b>dropOffset</b>, as well as the custom margin and padding properties to get the desired look."
-  },
-  "exampleText2": {
-    "id": "exampleText2",
-    "x": 425,
-    "y": 315,
-    "width": 300,
-    "z": 4,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "color": "black",
-      "font-size": "18px"
-    },
-    "layer": -5,
-    "html": "This holder is identical to the one to the left except that it is designed to work with CSS on the widgets in the complex object form. Use houses in this holder because they are the only widgets in the room that use that CSS form. If you use the cubes in this holder it will break how they work in the other holders in the room."
-  },
-  "house1": {
-    "id": "house1",
-    "x": 4,
-    "y": 5,
-    "width": 60,
-    "height": 60,
-    "z": 903,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": "relative",
-        "order": "${PROPERTY z}"
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2,
-    "parent": "demoHolder2"
-  },
-  "house2": {
-    "id": "house2",
-    "x": 4,
-    "y": 5,
-    "width": 60,
-    "height": 60,
-    "z": 905,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": "relative",
-        "order": "${PROPERTY z}"
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2,
-    "parent": "demoHolder2"
-  },
-  "house3": {
-    "id": "house3",
-    "x": 4,
-    "y": 5,
-    "width": 60,
-    "height": 60,
-    "z": 907,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": "relative",
-        "order": "${PROPERTY z}"
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2,
-    "parent": "demoHolder2"
-  },
-  "house4": {
-    "id": "house4",
-    "x": 412,
-    "y": 528,
-    "width": 60,
-    "height": 60,
-    "z": 902,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": null,
-        "order": null
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2
-  },
-  "house5": {
-    "id": "house5",
-    "x": 472,
-    "y": 528,
-    "width": 60,
-    "height": 60,
-    "z": 902,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": null,
-        "order": null
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2
-  },
-  "house6": {
-    "id": "house6",
-    "x": 532,
-    "y": 528,
-    "width": 60,
-    "height": 60,
-    "z": 902,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": null,
-        "order": null
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2
-  },
-  "house7": {
-    "id": "house7",
-    "x": 592,
-    "y": 528,
-    "width": 60,
-    "height": 60,
-    "z": 902,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": null,
-        "order": null
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2
-  },
-  "house8": {
-    "id": "house8",
-    "x": 652,
-    "y": 528,
-    "width": 60,
-    "height": 60,
-    "z": 902,
-    "color": "#1f5ca6",
-    "css": {
-      "default": {
-        "border-radius": "26% 74% 46% 54%/ 50% 55% 45% 50%",
-        "position": null,
-        "order": null
-      }
-    },
-    "image": "/i/game-pieces/3D/House-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 2
-  },
-  "exampleText3": {
-    "id": "exampleText3",
-    "y": 280,
-    "width": 300,
-    "z": 4,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "color": "black",
-      "font-size": "18px"
-    },
-    "layer": -5,
-    "x": 775,
-    "html": "This holder uses the most simple of the CSS flex structures. Once the holder is full, it reduces the size of the cubes to make them fit within the available width.<br><br>The holder below does something similar for cards, but it does not reduce the size of the card. It only adjusts how closely the cards are spaced to make them fit within the available width"
-  },
-  "exampleText4": {
-    "id": "exampleText4",
-    "y": 280,
-    "width": 300,
-    "z": 4,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "color": "black",
-      "font-size": "18px"
-    },
-    "layer": -5,
-    "x": 1125,
-    "html": "This holder does not use CSS but instead relies on routines. The routine dynamically changes the offset so that the cubes are stacked closer and closer together to get them to fit within the width, but does not reduce their size like the holder to the left. To modify this holder for different widgets, adjust the cardWidth and normalOffset variables in the routine."
-  },
-  "cube19": {
-    "id": "cube19",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 2,
-    "color": "red",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "rank": 1,
-    "secondaryColor": "black",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "activeFace": 1,
-    "parent": "demoHolder1"
-  },
-  "cube20": {
-    "id": "cube20",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 3,
-    "color": "orange",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 2,
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "parent": "demoHolder3"
-  },
-  "cube21": {
-    "id": "cube21",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 4,
-    "color": "yellow",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 3,
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "parent": "demoHolder3"
-  },
-  "cube22": {
-    "id": "cube22",
-    "y": 4,
-    "width": 36,
-    "height": 40,
-    "z": 4,
-    "color": "green",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 4,
-    "x": 115.60000000000001,
-    "parent": "demoHolder4"
-  },
-  "cube23": {
-    "id": "cube23",
-    "y": 4,
-    "width": 36,
-    "height": 40,
-    "z": 5,
-    "color": "blue",
-    "css": {
-      "border-radius": "50%/35%"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 5,
-    "x": 152.8,
-    "parent": "demoHolder4"
-  },
-  "cube24": {
-    "id": "cube24",
-    "y": 4,
-    "width": 36,
-    "height": 40,
-    "z": 6,
-    "color": "indigo",
-    "css": {
-      "border-radius": "50%/35%"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 6,
-    "x": 190,
-    "parent": "demoHolder4"
-  },
-  "cube25": {
-    "id": "cube25",
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 2,
-    "color": "red",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "rank": 1,
-    "secondaryColor": "black",
-    "activeFace": 1,
-    "x": 4,
-    "parent": "demoHolder3"
-  },
-  "cube26": {
-    "id": "cube26",
-    "x": 4,
-    "y": 4,
-    "width": 36,
-    "height": 40,
-    "z": 1,
-    "color": "red",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "rank": 1,
-    "secondaryColor": "black",
-    "activeFace": 1,
-    "parent": "demoHolder4"
-  },
-  "cube27": {
-    "id": "cube27",
-    "x": 41.2,
-    "y": 4,
-    "width": 36,
-    "height": 40,
-    "z": 2,
-    "color": "orange",
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 2,
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "parent": "demoHolder4"
-  },
-  "cube28": {
-    "id": "cube28",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 3,
-    "color": "orange",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 2,
-    "parent": "demoHolder1"
-  },
-  "cube29": {
-    "id": "cube29",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 4,
-    "color": "yellow",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 3,
-    "activeFace": 1,
-    "parent": "demoHolder1"
-  },
-  "cube30": {
-    "id": "cube30",
-    "x": 78.4,
-    "y": 4,
-    "width": 36,
-    "height": 40,
-    "z": 3,
-    "color": "yellow",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": null,
-      "order": null
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 3,
-    "parent": "demoHolder4"
-  },
-  "cube31": {
-    "id": "cube31",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 5,
-    "color": "green",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 4,
-    "parent": "demoHolder1"
-  },
-  "cube32": {
-    "id": "cube32",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 5,
-    "color": "green",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 4,
-    "parent": "demoHolder3"
-  },
-  "cube33": {
-    "id": "cube33",
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 6,
-    "color": "blue",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 5,
-    "x": 4,
-    "parent": "demoHolder1"
-  },
-  "cube34": {
-    "id": "cube34",
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 6,
-    "color": "blue",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 5,
-    "activeFace": 1,
-    "x": 4,
-    "parent": "demoHolder3"
-  },
-  "cube35": {
-    "id": "cube35",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 7,
-    "color": "indigo",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 6,
-    "activeFace": 1,
-    "parent": "demoHolder1"
-  },
-  "cube36": {
-    "id": "cube36",
-    "x": 4,
-    "y": 2,
-    "width": 36,
-    "height": 40,
-    "z": 7,
-    "color": "indigo",
-    "css": {
-      "border-radius": "50%/35%",
-      "position": "relative",
-      "order": "${PROPERTY z}"
-    },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "white",
-    "borderWidth": 1,
-    "secondaryColor": "black",
-    "rank": 6,
-    "parent": "demoHolder3"
-  },
-  "o2md": {
-    "type": "pile",
+    "type": "deck",
+    "id": "mainDeck",
     "parent": "deckHolder",
-    "x": 4,
-    "y": 4,
+    "x": 12,
+    "y": 41
+  },
+  "deckHolderP": {
+    "type": "pile",
+    "id": "deckHolderP",
+    "parent": "deckHolder",
     "width": 103,
-    "height": 160,
-    "id": "o2md"
+    "height": 160
+  },
+  "deckHolderB": {
+    "id": "deckHolderB",
+    "type": "button",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "cardC01": {
+    "id": "cardC01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 01",
+    "parent": "deckHolderP",
+    "z": 1
+  },
+  "cardC02": {
+    "id": "cardC02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 02",
+    "parent": "deckHolderP",
+    "z": 2
+  },
+  "cardC03": {
+    "id": "cardC03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 03",
+    "parent": "deckHolderP",
+    "z": 3
+  },
+  "cardC04": {
+    "id": "cardC04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 04",
+    "parent": "deckHolderP",
+    "z": 4
+  },
+  "cardC05": {
+    "id": "cardC05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 05",
+    "parent": "deckHolderP",
+    "z": 5
+  },
+  "cardC06": {
+    "id": "cardC06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 06",
+    "parent": "deckHolderP",
+    "z": 6
+  },
+  "cardC07": {
+    "id": "cardC07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 07",
+    "parent": "deckHolderP",
+    "z": 7
+  },
+  "cardC08": {
+    "id": "cardC08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 08",
+    "parent": "deckHolderP",
+    "z": 8
+  },
+  "cardC09": {
+    "id": "cardC09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 09",
+    "parent": "deckHolderP",
+    "z": 9
+  },
+  "cardC10": {
+    "id": "cardC10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 10",
+    "parent": "deckHolderP",
+    "z": 10
+  },
+  "cardC2J": {
+    "id": "cardC2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 2J",
+    "parent": "deckHolderP",
+    "z": 11
+  },
+  "cardC3Q": {
+    "id": "cardC3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 3Q",
+    "parent": "deckHolderP",
+    "z": 12
+  },
+  "cardC4K": {
+    "id": "cardC4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 4K",
+    "parent": "deckHolderP",
+    "z": 13
+  },
+  "cardD01": {
+    "id": "cardD01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 01",
+    "parent": "deckHolderP",
+    "z": 14
+  },
+  "cardD02": {
+    "id": "cardD02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 02",
+    "parent": "deckHolderP",
+    "z": 15
+  },
+  "cardD03": {
+    "id": "cardD03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 03",
+    "parent": "deckHolderP",
+    "z": 16
+  },
+  "cardD04": {
+    "id": "cardD04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 04",
+    "parent": "deckHolderP",
+    "z": 17
+  },
+  "cardD05": {
+    "id": "cardD05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 05",
+    "parent": "deckHolderP",
+    "z": 18
+  },
+  "cardD06": {
+    "id": "cardD06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 06",
+    "parent": "deckHolderP",
+    "z": 19
+  },
+  "cardD07": {
+    "id": "cardD07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 07",
+    "parent": "deckHolderP",
+    "z": 20
+  },
+  "cardD08": {
+    "id": "cardD08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 08",
+    "parent": "deckHolderP",
+    "z": 21
+  },
+  "cardD09": {
+    "id": "cardD09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 09",
+    "parent": "deckHolderP",
+    "z": 22
+  },
+  "cardD10": {
+    "id": "cardD10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 10",
+    "parent": "deckHolderP",
+    "z": 23
+  },
+  "cardD2J": {
+    "id": "cardD2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 2J",
+    "parent": "deckHolderP",
+    "z": 24
+  },
+  "cardD3Q": {
+    "id": "cardD3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 3Q",
+    "parent": "deckHolderP",
+    "z": 25
+  },
+  "cardD4K": {
+    "id": "cardD4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 4K",
+    "parent": "deckHolderP",
+    "z": 26
+  },
+  "cardH01": {
+    "id": "cardH01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 01",
+    "parent": "deckHolderP",
+    "z": 27
+  },
+  "cardH02": {
+    "id": "cardH02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 02",
+    "parent": "deckHolderP",
+    "z": 28
+  },
+  "cardH03": {
+    "id": "cardH03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 03",
+    "parent": "deckHolderP",
+    "z": 29
+  },
+  "cardH04": {
+    "id": "cardH04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 04",
+    "parent": "deckHolderP",
+    "z": 30
+  },
+  "cardH05": {
+    "id": "cardH05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 05",
+    "parent": "deckHolderP",
+    "z": 31
+  },
+  "cardH06": {
+    "id": "cardH06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 06",
+    "parent": "deckHolderP",
+    "z": 32
+  },
+  "cardH07": {
+    "id": "cardH07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 07",
+    "parent": "deckHolderP",
+    "z": 33
+  },
+  "cardH08": {
+    "id": "cardH08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 08",
+    "parent": "deckHolderP",
+    "z": 34
+  },
+  "cardH09": {
+    "id": "cardH09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 09",
+    "parent": "deckHolderP",
+    "z": 35
+  },
+  "cardH10": {
+    "id": "cardH10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 10",
+    "parent": "deckHolderP",
+    "z": 36
+  },
+  "cardH2J": {
+    "id": "cardH2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 2J",
+    "parent": "deckHolderP",
+    "z": 37
+  },
+  "cardH3Q": {
+    "id": "cardH3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 3Q",
+    "parent": "deckHolderP",
+    "z": 38
+  },
+  "cardH4K": {
+    "id": "cardH4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 4K",
+    "parent": "deckHolderP",
+    "z": 39
+  },
+  "cardS01": {
+    "id": "cardS01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 01",
+    "parent": "deckHolderP",
+    "z": 40
+  },
+  "cardS02": {
+    "id": "cardS02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 02",
+    "parent": "deckHolderP",
+    "z": 41
+  },
+  "cardS03": {
+    "id": "cardS03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 03",
+    "parent": "deckHolderP",
+    "z": 42
+  },
+  "cardS04": {
+    "id": "cardS04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 04",
+    "parent": "deckHolderP",
+    "z": 43
+  },
+  "cardS05": {
+    "id": "cardS05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 05",
+    "parent": "deckHolderP",
+    "z": 44
+  },
+  "cardS06": {
+    "id": "cardS06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 06",
+    "parent": "deckHolderP",
+    "z": 45
+  },
+  "cardS07": {
+    "id": "cardS07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 07",
+    "parent": "deckHolderP",
+    "z": 46
+  },
+  "cardS08": {
+    "id": "cardS08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 08",
+    "parent": "deckHolderP",
+    "z": 47
+  },
+  "cardS09": {
+    "id": "cardS09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 09",
+    "parent": "deckHolderP",
+    "z": 48
+  },
+  "cardS10": {
+    "id": "cardS10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 10",
+    "parent": "deckHolderP",
+    "z": 49
+  },
+  "cardS2J": {
+    "id": "cardS2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 2J",
+    "parent": "deckHolderP",
+    "z": 50
+  },
+  "cardS3Q": {
+    "id": "cardS3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 3Q",
+    "parent": "deckHolderP",
+    "z": 51
+  },
+  "cardS4K": {
+    "id": "cardS4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 4K",
+    "parent": "deckHolderP",
+    "z": 52
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 1230,
+    "y": 240,
+    "width": 250,
+    "height": 380,
+    "layout": "grid",
+    "gridColumns": 2,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "text4b": {
+    "id": "text4b",
+    "x": 1215,
+    "y": 650,
+    "width": 260,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>gridColumns</b> <i>2</i> pins the column count however the holder is sized. <b>gridRows</b> does the same for the rows."
   },
   "_meta": {
-    "version": 21,
+    "version": 24,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -3124,7 +1178,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1770832868974,
+      "lastUpdate": 1788033060226,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -3135,7 +1189,7 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "CSS Flex",
+      "variant": "layout: grid",
       "language": "en-US",
       "players": "1"
     }
