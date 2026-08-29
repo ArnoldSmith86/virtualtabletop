@@ -41,6 +41,10 @@ export default [
     reason: 'thin or hidden scrollbars; without it the scrollbar keeps its normal width, which costs a few pixels and nothing else'
   },
   {
+    feature: 'css.properties.scrollbar-color',
+    reason: 'the colours of a scrollbar; without it the browser paints its own, which is what every other scrollbar in the client already looks like'
+  },
+  {
     feature: 'css.properties.overflow-anchor',
     reason: 'turns scroll anchoring off; a browser without scroll anchoring has nothing to turn off'
   },

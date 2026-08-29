@@ -875,6 +875,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   opacity: 0.55;
 }
 
+/* compat-fallback css.selectors.has: a browser without :has() leaves every icon at the dimmed style it has when nothing is picked - the radio button next to it still says which mode is selected */
 .deckEditorNewDeckModesIllustrated label:has(input:checked) .deckEditorNewDeckModeIcon {
   opacity: 1;
   color: var(--VTTblue);
