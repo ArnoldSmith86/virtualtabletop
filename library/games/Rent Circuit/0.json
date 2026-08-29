@@ -19,12 +19,12 @@
       "bgg": "https://boardgamegeek.com/boardgame/1406/monopoly",
       "rules": "https://www.hasbro.com/common/instruct/00009.pdf",
       "ruleText": "Move around a 40-space loop, buy the spaces you land on and collect rent from the other players. A space nobody buys is auctioned off to the highest bidder. Owning every space of one colour doubles the rent and lets you build houses and hotels out of the bank’s limited supply, which multiplies it further. Taxes, chance cards, community cards and jail get in the way. A player who cannot pay hands everything to the player who bankrupted them; the last one solvent wins.",
-      "helpText": "<div>Everyone takes a seat on the right, then somebody presses <b>NEW GAME</b>. Each player starts with 1500 and a token on START. The arrow on START shows which way the tokens travel.</div><div><br></div><div><b>ROLL</b> throws both dice and walks your token around the board for you, and the space you land on lights up. Passing START pays 200 automatically.</div><div><br></div><div>Landing on a free street, depot or works opens a Buy/Pass dialog that names the space and lists its rent. Pass on it - or land on it without the cash to pay - and it goes under the hammer: everybody still in the game is asked for a bid in seat order, a pass drops you out of the bidding, and the last bidder left buys the space at their own bid, which can be far below the printed price. Landing on a space somebody else owns pays the rent automatically - including the doubled rent for a complete colour, the depot ladder (25/50/100/200) and the 4x/10x dice multiplier for the works.</div><div><br></div><div>The bank owns <b>32 houses and 12 hotels</b> and not one more; the counter under the seat list shows what is still in the box. When the bank runs out of houses nobody can build another one until somebody sells, and a hotel only comes back down to 4 houses while 4 houses are free.</div><div><br></div><div><b>Click any space</b> to see what it is. Your own spaces open a dialog that shows the buildings, the mortgage state and the rent due, and lets you build a house or a hotel (you need the whole colour, and buildings have to go up and come down evenly), mortgage it, lift a mortgage, or hand it to another player.</div><div><br></div><div>The round plate in the outer corner of a space carries the owner’s own token symbol in the owner’s colour; a greyed-out plate with a red ring means the space is mortgaged. Each seat row shows how many spaces that player holds, their cash, and a key when they are holding a leave-jail-free card.</div><div><br></div><div>Rolling a double lets you roll again; three doubles in a row send you to jail. <b>LEAVE JAIL</b> spends a saved card or pays 50, and after three failed attempts the bail is paid for you.</div><div><br></div><div><b>PAY A PLAYER</b> settles trades and debts by hand. <b>RETIRE</b> is for when you cannot pay: it asks who broke you, sells your buildings back to the bank at half price and hands your cash and all of your property to that player - or back to the bank if nobody in particular bankrupted you. The last player still solvent wins.</div><div><br></div><div><b>RULES CHECK</b> turns the rule enforcement off and on. With it off there is no auction when somebody passes on a space, and nobody is stopped from rolling out of turn, building without the full colour, building past the bank’s supply or spending money they do not have - handy for house rules, for fixing a mistake or for setting up a position. Everything stays automated either way, and you can always pick up a token and drag it to another space by hand.</div>",
-      "attribution": "<div>Layout, board, cards, routines and all of the text of this game were written by the VirtualTabletop AI agent (GitHub account <b>VTT-AI-Agent</b>, an automated contributor run for this project) and are released to the Public Domain under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>.</div><div><br></div><div><b>AI disclosure.</b> This game is AI generated. The board layout, the routines, the card texts and the descriptive text in this metadata were produced by Anthropic’s Claude model <i>claude-opus-5</i> running as Claude Code (<a href=\"https://claude.com/claude-code\">https://claude.com/claude-code</a>), from the instruction “add a new game to the VirtualTabletop public library that plays like Monopoly – read the library guidelines, match the conventions of existing library games, automate setup, dealing, movement, rent and scoring, and keep the board text-free”, followed by several rounds of review and revision. No AI generated imagery is used anywhere in the game.</div><div><br></div><div><b>No uploaded artwork.</b> Every symbol on the board, on the tokens, on the buttons and on the cards comes from the icon sets that VirtualTabletop already ships, so the game contains no external references and no image files to compress.</div><div><br></div><div>10 symbols come from the VirtualTabletop symbol set (<code>/i/icons</code>) and 2 from the VirtualTabletop 3D game pieces (<code>/i/game-pieces</code>). Both are part of VirtualTabletop itself and are covered by its own licence (<a href=\"https://github.com/ArnoldSmith86/virtualtabletop/blob/main/LICENSE\">GPL-3.0</a>):</div><div><br></div><div><b>VirtualTabletop symbols</b></div><div>&nbsp;&nbsp;- arrow left <code>/i/icons/arrow_left.svg</code></div><div>&nbsp;&nbsp;- close circle <code>/i/icons/close_circle.svg</code></div><div>&nbsp;&nbsp;- coin 3d <code>/i/icons/coin_3d.svg</code></div><div>&nbsp;&nbsp;- die <code>/i/icons/die.svg</code></div><div>&nbsp;&nbsp;- house <code>/i/icons/house.svg</code></div><div>&nbsp;&nbsp;- locked <code>/i/icons/locked.svg</code></div><div>&nbsp;&nbsp;- property <code>/i/icons/property.svg</code></div><div>&nbsp;&nbsp;- restart <code>/i/icons/restart.svg</code></div><div>&nbsp;&nbsp;- skip next <code>/i/icons/skip_next.svg</code></div><div>&nbsp;&nbsp;- unlocked <code>/i/icons/unlocked.svg</code></div><div><br></div><div><b>VirtualTabletop 3D game pieces</b></div><div>&nbsp;&nbsp;- Building 3D <code>/i/game-pieces/3D/Building-3D.svg</code></div><div>&nbsp;&nbsp;- House 3D <code>/i/game-pieces/3D/House-3D.svg</code></div><div><br></div><div>The remaining 48 icons come from <a href=\"https://game-icons.net\">game-icons.net</a> and are available under <a href=\"https://creativecommons.org/licenses/by/3.0/\">CC BY 3.0</a>:</div><div><br></div><div><b>Caro Asercion</b></div><div>&nbsp;&nbsp;- Clock Tower <a href=\"https://game-icons.net/1x1/caro-asercion/clock-tower.html\">https://game-icons.net/1x1/caro-asercion/clock-tower.html</a></div><div>&nbsp;&nbsp;- Subway Train <a href=\"https://game-icons.net/1x1/caro-asercion/subway-train.html\">https://game-icons.net/1x1/caro-asercion/subway-train.html</a></div><div>&nbsp;&nbsp;- Water Mill <a href=\"https://game-icons.net/1x1/caro-asercion/water-mill.html\">https://game-icons.net/1x1/caro-asercion/water-mill.html</a></div><div><br></div><div><b>Delapouite</b></div><div>&nbsp;&nbsp;- Arch Bridge <a href=\"https://game-icons.net/1x1/delapouite/arch-bridge.html\">https://game-icons.net/1x1/delapouite/arch-bridge.html</a></div><div>&nbsp;&nbsp;- Bank <a href=\"https://game-icons.net/1x1/delapouite/bank.html\">https://game-icons.net/1x1/delapouite/bank.html</a></div><div>&nbsp;&nbsp;- Barn <a href=\"https://game-icons.net/1x1/delapouite/barn.html\">https://game-icons.net/1x1/delapouite/barn.html</a></div><div>&nbsp;&nbsp;- Block House <a href=\"https://game-icons.net/1x1/delapouite/block-house.html\">https://game-icons.net/1x1/delapouite/block-house.html</a></div><div>&nbsp;&nbsp;- Cargo Ship <a href=\"https://game-icons.net/1x1/delapouite/cargo-ship.html\">https://game-icons.net/1x1/delapouite/cargo-ship.html</a></div><div>&nbsp;&nbsp;- Castle <a href=\"https://game-icons.net/1x1/delapouite/castle.html\">https://game-icons.net/1x1/delapouite/castle.html</a></div><div>&nbsp;&nbsp;- Church <a href=\"https://game-icons.net/1x1/delapouite/church.html\">https://game-icons.net/1x1/delapouite/church.html</a></div><div>&nbsp;&nbsp;- City Car <a href=\"https://game-icons.net/1x1/delapouite/city-car.html\">https://game-icons.net/1x1/delapouite/city-car.html</a></div><div>&nbsp;&nbsp;- Control Tower <a href=\"https://game-icons.net/1x1/delapouite/control-tower.html\">https://game-icons.net/1x1/delapouite/control-tower.html</a></div><div>&nbsp;&nbsp;- Cowboy Boot <a href=\"https://game-icons.net/1x1/delapouite/cowboy-boot.html\">https://game-icons.net/1x1/delapouite/cowboy-boot.html</a></div><div>&nbsp;&nbsp;- Direction Signs <a href=\"https://game-icons.net/1x1/delapouite/direction-signs.html\">https://game-icons.net/1x1/delapouite/direction-signs.html</a></div><div>&nbsp;&nbsp;- Factory <a href=\"https://game-icons.net/1x1/delapouite/factory.html\">https://game-icons.net/1x1/delapouite/factory.html</a></div><div>&nbsp;&nbsp;- Family House <a href=\"https://game-icons.net/1x1/delapouite/family-house.html\">https://game-icons.net/1x1/delapouite/family-house.html</a></div><div>&nbsp;&nbsp;- Greenhouse <a href=\"https://game-icons.net/1x1/delapouite/greenhouse.html\">https://game-icons.net/1x1/delapouite/greenhouse.html</a></div><div>&nbsp;&nbsp;- Hospital <a href=\"https://game-icons.net/1x1/delapouite/hospital.html\">https://game-icons.net/1x1/delapouite/hospital.html</a></div><div>&nbsp;&nbsp;- Huts Village <a href=\"https://game-icons.net/1x1/delapouite/huts-village.html\">https://game-icons.net/1x1/delapouite/huts-village.html</a></div><div>&nbsp;&nbsp;- Lighthouse <a href=\"https://game-icons.net/1x1/delapouite/lighthouse.html\">https://game-icons.net/1x1/delapouite/lighthouse.html</a></div><div>&nbsp;&nbsp;- Louvre Pyramid <a href=\"https://game-icons.net/1x1/delapouite/louvre-pyramid.html\">https://game-icons.net/1x1/delapouite/louvre-pyramid.html</a></div><div>&nbsp;&nbsp;- Observatory <a href=\"https://game-icons.net/1x1/delapouite/observatory.html\">https://game-icons.net/1x1/delapouite/observatory.html</a></div><div>&nbsp;&nbsp;- Oil Pump <a href=\"https://game-icons.net/1x1/delapouite/oil-pump.html\">https://game-icons.net/1x1/delapouite/oil-pump.html</a></div><div>&nbsp;&nbsp;- Park Bench <a href=\"https://game-icons.net/1x1/delapouite/park-bench.html\">https://game-icons.net/1x1/delapouite/park-bench.html</a></div><div>&nbsp;&nbsp;- Party Popper <a href=\"https://game-icons.net/1x1/delapouite/party-popper.html\">https://game-icons.net/1x1/delapouite/party-popper.html</a></div><div>&nbsp;&nbsp;- Pay Money <a href=\"https://game-icons.net/1x1/delapouite/pay-money.html\">https://game-icons.net/1x1/delapouite/pay-money.html</a></div><div>&nbsp;&nbsp;- Post Office <a href=\"https://game-icons.net/1x1/delapouite/post-office.html\">https://game-icons.net/1x1/delapouite/post-office.html</a></div><div>&nbsp;&nbsp;- Prisoner <a href=\"https://game-icons.net/1x1/delapouite/prisoner.html\">https://game-icons.net/1x1/delapouite/prisoner.html</a></div><div>&nbsp;&nbsp;- Receive Money <a href=\"https://game-icons.net/1x1/delapouite/receive-money.html\">https://game-icons.net/1x1/delapouite/receive-money.html</a></div><div>&nbsp;&nbsp;- Sailboat <a href=\"https://game-icons.net/1x1/delapouite/sailboat.html\">https://game-icons.net/1x1/delapouite/sailboat.html</a></div><div>&nbsp;&nbsp;- Saloon <a href=\"https://game-icons.net/1x1/delapouite/saloon.html\">https://game-icons.net/1x1/delapouite/saloon.html</a></div><div>&nbsp;&nbsp;- Shop <a href=\"https://game-icons.net/1x1/delapouite/shop.html\">https://game-icons.net/1x1/delapouite/shop.html</a></div><div>&nbsp;&nbsp;- Sitting Dog <a href=\"https://game-icons.net/1x1/delapouite/sitting-dog.html\">https://game-icons.net/1x1/delapouite/sitting-dog.html</a></div><div>&nbsp;&nbsp;- Steam Locomotive <a href=\"https://game-icons.net/1x1/delapouite/steam-locomotive.html\">https://game-icons.net/1x1/delapouite/steam-locomotive.html</a></div><div>&nbsp;&nbsp;- Theater <a href=\"https://game-icons.net/1x1/delapouite/theater.html\">https://game-icons.net/1x1/delapouite/theater.html</a></div><div>&nbsp;&nbsp;- Two Coins <a href=\"https://game-icons.net/1x1/delapouite/two-coins.html\">https://game-icons.net/1x1/delapouite/two-coins.html</a></div><div><br></div><div><b>Lorc</b></div><div>&nbsp;&nbsp;- Cat <a href=\"https://game-icons.net/1x1/lorc/cat.html\">https://game-icons.net/1x1/lorc/cat.html</a></div><div>&nbsp;&nbsp;- Crown <a href=\"https://game-icons.net/1x1/lorc/crown.html\">https://game-icons.net/1x1/lorc/crown.html</a></div><div>&nbsp;&nbsp;- Cut Diamond <a href=\"https://game-icons.net/1x1/lorc/cut-diamond.html\">https://game-icons.net/1x1/lorc/cut-diamond.html</a></div><div>&nbsp;&nbsp;- Handcuffs <a href=\"https://game-icons.net/1x1/lorc/handcuffs.html\">https://game-icons.net/1x1/lorc/handcuffs.html</a></div><div>&nbsp;&nbsp;- Key <a href=\"https://game-icons.net/1x1/lorc/key.html\">https://game-icons.net/1x1/lorc/key.html</a></div><div>&nbsp;&nbsp;- Light Bulb <a href=\"https://game-icons.net/1x1/lorc/light-bulb.html\">https://game-icons.net/1x1/lorc/light-bulb.html</a></div><div>&nbsp;&nbsp;- Return Arrow <a href=\"https://game-icons.net/1x1/lorc/return-arrow.html\">https://game-icons.net/1x1/lorc/return-arrow.html</a></div><div>&nbsp;&nbsp;- Top Hat <a href=\"https://game-icons.net/1x1/lorc/top-hat.html\">https://game-icons.net/1x1/lorc/top-hat.html</a></div><div>&nbsp;&nbsp;- Uncertainty <a href=\"https://game-icons.net/1x1/lorc/uncertainty.html\">https://game-icons.net/1x1/lorc/uncertainty.html</a></div><div><br></div><div><b>Sbed</b></div><div>&nbsp;&nbsp;- Water Drop <a href=\"https://game-icons.net/1x1/sbed/water-drop.html\">https://game-icons.net/1x1/sbed/water-drop.html</a></div><div><br></div><div><b>Skoll</b></div><div>&nbsp;&nbsp;- Airplane <a href=\"https://game-icons.net/1x1/skoll/airplane.html\">https://game-icons.net/1x1/skoll/airplane.html</a></div><div>&nbsp;&nbsp;- Open Treasure Chest <a href=\"https://game-icons.net/1x1/skoll/open-treasure-chest.html\">https://game-icons.net/1x1/skoll/open-treasure-chest.html</a></div><div><br></div><div>The library preview image is a rendering of this game’s own board, made with a screenshot of the room, and is released to the Public Domain under CC0.</div>",
+      "helpText": "<div>Everyone takes a seat on the right, then somebody presses <b>NEW GAME</b>. Each player starts with 1500 and a token on START. The arrow on START shows which way the tokens travel.</div><div><br></div><div><b>ROLL</b> throws both dice and walks your token around the board for you, and the space you land on lights up. Passing START pays 200 automatically.</div><div><br></div><div>Landing on a free street, depot or works opens a Buy/Pass dialog that names the space and lists its rent. If the price is more than you are holding, the dialog offers to raise the money first: mortgage a property or sell buildings and you can still buy it. Pass on it - or stay short - and it goes under the hammer: everybody still in the game is asked for a bid in seat order, a bidder who runs out of cash can mortgage or sell in the middle of the auction and carry on bidding, a pass drops you out, and the last bidder left buys the space at their own bid, which can be far below the printed price. Landing on a space somebody else owns pays the rent automatically - including the doubled rent for a complete colour, the depot ladder (25/50/100/200) and the 4x/10x dice multiplier for the works.</div><div><br></div><div>The bank owns <b>32 houses and 12 hotels</b> and not one more; the counter under the seat list shows what is still in the box. When the bank runs out of houses nobody can build another one until somebody sells, and a hotel only comes back down to 4 houses while 4 houses are free.</div><div><br></div><div><b>Click any space</b> to see what it is. Your own spaces open a dialog that shows the buildings, the mortgage state and the rent due, and lets you build a house or a hotel (you need the whole colour, and buildings have to go up and come down evenly), mortgage it, lift a mortgage, or hand it to another player.</div><div><br></div><div>The round plate in the outer corner of a space carries the owner’s own token symbol in the owner’s colour; a greyed-out plate with a red ring means the space is mortgaged. Each seat row shows how many spaces that player holds, their cash, and a key when they are holding a leave-jail-free card.</div><div><br></div><div>Rolling a double lets you roll again; three doubles in a row send you to jail. <b>LEAVE JAIL</b> spends a saved card or pays 50, and after three failed attempts the bail is paid for you.</div><div><br></div><div><b>RAISE CASH</b> lists everything you own that the bank will pay for - each line says what it brings in - and lets you mortgage properties and sell buildings one after another until you have enough. It is there whenever you want it, and the same list opens by itself when a purchase or a bid is out of reach. <b>PAY A PLAYER</b> settles trades and debts by hand. <b>RETIRE</b> is for when you cannot pay: it asks who broke you, sells your buildings back to the bank at half price and hands your cash and all of your property to that player - or back to the bank if nobody in particular bankrupted you. The last player still solvent wins.</div><div><br></div><div><b>RULES CHECK</b> turns the rule enforcement off and on. With it off there is no auction when somebody passes on a space, and nobody is stopped from rolling out of turn, building without the full colour, building past the bank’s supply or spending money they do not have - handy for house rules, for fixing a mistake or for setting up a position. Everything stays automated either way, and you can always pick up a token and drag it to another space by hand.</div>",
+      "attribution": "<div>Layout, board, cards, routines and all of the text of this game were written by the VirtualTabletop AI agent (GitHub account <b>VTT-AI-Agent</b>, an automated contributor run for this project) and are released to the Public Domain under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>.</div><div><br></div><div><b>AI disclosure.</b> This game is AI generated. The board layout, the routines, the card texts and the descriptive text in this metadata were produced by Anthropic’s Claude model <i>claude-opus-5</i> running as Claude Code (<a href=\"https://claude.com/claude-code\">https://claude.com/claude-code</a>), from the instruction “add a new game to the VirtualTabletop public library that plays like Monopoly – read the library guidelines, match the conventions of existing library games, automate setup, dealing, movement, rent and scoring, and keep the board text-free”, followed by several rounds of review and revision. No AI generated imagery is used anywhere in the game.</div><div><br></div><div><b>No uploaded artwork.</b> Every symbol on the board, on the tokens, on the buttons and on the cards comes from the icon sets that VirtualTabletop already ships, so the game contains no external references and no image files to compress.</div><div><br></div><div>11 symbols come from the VirtualTabletop symbol set (<code>/i/icons</code>) and 2 from the VirtualTabletop 3D game pieces (<code>/i/game-pieces</code>). Both are part of VirtualTabletop itself and are covered by its own licence (<a href=\"https://github.com/ArnoldSmith86/virtualtabletop/blob/main/LICENSE\">GPL-3.0</a>):</div><div><br></div><div><b>VirtualTabletop symbols</b></div><div>&nbsp;&nbsp;- arrow left <code>/i/icons/arrow_left.svg</code></div><div>&nbsp;&nbsp;- close circle <code>/i/icons/close_circle.svg</code></div><div>&nbsp;&nbsp;- coin 3d <code>/i/icons/coin_3d.svg</code></div><div>&nbsp;&nbsp;- die <code>/i/icons/die.svg</code></div><div>&nbsp;&nbsp;- house <code>/i/icons/house.svg</code></div><div>&nbsp;&nbsp;- locked <code>/i/icons/locked.svg</code></div><div>&nbsp;&nbsp;- property <code>/i/icons/property.svg</code></div><div>&nbsp;&nbsp;- property off <code>/i/icons/property_off.svg</code></div><div>&nbsp;&nbsp;- restart <code>/i/icons/restart.svg</code></div><div>&nbsp;&nbsp;- skip next <code>/i/icons/skip_next.svg</code></div><div>&nbsp;&nbsp;- unlocked <code>/i/icons/unlocked.svg</code></div><div><br></div><div><b>VirtualTabletop 3D game pieces</b></div><div>&nbsp;&nbsp;- Building 3D <code>/i/game-pieces/3D/Building-3D.svg</code></div><div>&nbsp;&nbsp;- House 3D <code>/i/game-pieces/3D/House-3D.svg</code></div><div><br></div><div>The remaining 48 icons come from <a href=\"https://game-icons.net\">game-icons.net</a> and are available under <a href=\"https://creativecommons.org/licenses/by/3.0/\">CC BY 3.0</a>:</div><div><br></div><div><b>Caro Asercion</b></div><div>&nbsp;&nbsp;- Clock Tower <a href=\"https://game-icons.net/1x1/caro-asercion/clock-tower.html\">https://game-icons.net/1x1/caro-asercion/clock-tower.html</a></div><div>&nbsp;&nbsp;- Subway Train <a href=\"https://game-icons.net/1x1/caro-asercion/subway-train.html\">https://game-icons.net/1x1/caro-asercion/subway-train.html</a></div><div>&nbsp;&nbsp;- Water Mill <a href=\"https://game-icons.net/1x1/caro-asercion/water-mill.html\">https://game-icons.net/1x1/caro-asercion/water-mill.html</a></div><div><br></div><div><b>Delapouite</b></div><div>&nbsp;&nbsp;- Arch Bridge <a href=\"https://game-icons.net/1x1/delapouite/arch-bridge.html\">https://game-icons.net/1x1/delapouite/arch-bridge.html</a></div><div>&nbsp;&nbsp;- Bank <a href=\"https://game-icons.net/1x1/delapouite/bank.html\">https://game-icons.net/1x1/delapouite/bank.html</a></div><div>&nbsp;&nbsp;- Barn <a href=\"https://game-icons.net/1x1/delapouite/barn.html\">https://game-icons.net/1x1/delapouite/barn.html</a></div><div>&nbsp;&nbsp;- Block House <a href=\"https://game-icons.net/1x1/delapouite/block-house.html\">https://game-icons.net/1x1/delapouite/block-house.html</a></div><div>&nbsp;&nbsp;- Cargo Ship <a href=\"https://game-icons.net/1x1/delapouite/cargo-ship.html\">https://game-icons.net/1x1/delapouite/cargo-ship.html</a></div><div>&nbsp;&nbsp;- Castle <a href=\"https://game-icons.net/1x1/delapouite/castle.html\">https://game-icons.net/1x1/delapouite/castle.html</a></div><div>&nbsp;&nbsp;- Church <a href=\"https://game-icons.net/1x1/delapouite/church.html\">https://game-icons.net/1x1/delapouite/church.html</a></div><div>&nbsp;&nbsp;- City Car <a href=\"https://game-icons.net/1x1/delapouite/city-car.html\">https://game-icons.net/1x1/delapouite/city-car.html</a></div><div>&nbsp;&nbsp;- Control Tower <a href=\"https://game-icons.net/1x1/delapouite/control-tower.html\">https://game-icons.net/1x1/delapouite/control-tower.html</a></div><div>&nbsp;&nbsp;- Cowboy Boot <a href=\"https://game-icons.net/1x1/delapouite/cowboy-boot.html\">https://game-icons.net/1x1/delapouite/cowboy-boot.html</a></div><div>&nbsp;&nbsp;- Direction Signs <a href=\"https://game-icons.net/1x1/delapouite/direction-signs.html\">https://game-icons.net/1x1/delapouite/direction-signs.html</a></div><div>&nbsp;&nbsp;- Factory <a href=\"https://game-icons.net/1x1/delapouite/factory.html\">https://game-icons.net/1x1/delapouite/factory.html</a></div><div>&nbsp;&nbsp;- Family House <a href=\"https://game-icons.net/1x1/delapouite/family-house.html\">https://game-icons.net/1x1/delapouite/family-house.html</a></div><div>&nbsp;&nbsp;- Greenhouse <a href=\"https://game-icons.net/1x1/delapouite/greenhouse.html\">https://game-icons.net/1x1/delapouite/greenhouse.html</a></div><div>&nbsp;&nbsp;- Hospital <a href=\"https://game-icons.net/1x1/delapouite/hospital.html\">https://game-icons.net/1x1/delapouite/hospital.html</a></div><div>&nbsp;&nbsp;- Huts Village <a href=\"https://game-icons.net/1x1/delapouite/huts-village.html\">https://game-icons.net/1x1/delapouite/huts-village.html</a></div><div>&nbsp;&nbsp;- Lighthouse <a href=\"https://game-icons.net/1x1/delapouite/lighthouse.html\">https://game-icons.net/1x1/delapouite/lighthouse.html</a></div><div>&nbsp;&nbsp;- Louvre Pyramid <a href=\"https://game-icons.net/1x1/delapouite/louvre-pyramid.html\">https://game-icons.net/1x1/delapouite/louvre-pyramid.html</a></div><div>&nbsp;&nbsp;- Observatory <a href=\"https://game-icons.net/1x1/delapouite/observatory.html\">https://game-icons.net/1x1/delapouite/observatory.html</a></div><div>&nbsp;&nbsp;- Oil Pump <a href=\"https://game-icons.net/1x1/delapouite/oil-pump.html\">https://game-icons.net/1x1/delapouite/oil-pump.html</a></div><div>&nbsp;&nbsp;- Park Bench <a href=\"https://game-icons.net/1x1/delapouite/park-bench.html\">https://game-icons.net/1x1/delapouite/park-bench.html</a></div><div>&nbsp;&nbsp;- Party Popper <a href=\"https://game-icons.net/1x1/delapouite/party-popper.html\">https://game-icons.net/1x1/delapouite/party-popper.html</a></div><div>&nbsp;&nbsp;- Pay Money <a href=\"https://game-icons.net/1x1/delapouite/pay-money.html\">https://game-icons.net/1x1/delapouite/pay-money.html</a></div><div>&nbsp;&nbsp;- Post Office <a href=\"https://game-icons.net/1x1/delapouite/post-office.html\">https://game-icons.net/1x1/delapouite/post-office.html</a></div><div>&nbsp;&nbsp;- Prisoner <a href=\"https://game-icons.net/1x1/delapouite/prisoner.html\">https://game-icons.net/1x1/delapouite/prisoner.html</a></div><div>&nbsp;&nbsp;- Receive Money <a href=\"https://game-icons.net/1x1/delapouite/receive-money.html\">https://game-icons.net/1x1/delapouite/receive-money.html</a></div><div>&nbsp;&nbsp;- Sailboat <a href=\"https://game-icons.net/1x1/delapouite/sailboat.html\">https://game-icons.net/1x1/delapouite/sailboat.html</a></div><div>&nbsp;&nbsp;- Saloon <a href=\"https://game-icons.net/1x1/delapouite/saloon.html\">https://game-icons.net/1x1/delapouite/saloon.html</a></div><div>&nbsp;&nbsp;- Shop <a href=\"https://game-icons.net/1x1/delapouite/shop.html\">https://game-icons.net/1x1/delapouite/shop.html</a></div><div>&nbsp;&nbsp;- Sitting Dog <a href=\"https://game-icons.net/1x1/delapouite/sitting-dog.html\">https://game-icons.net/1x1/delapouite/sitting-dog.html</a></div><div>&nbsp;&nbsp;- Steam Locomotive <a href=\"https://game-icons.net/1x1/delapouite/steam-locomotive.html\">https://game-icons.net/1x1/delapouite/steam-locomotive.html</a></div><div>&nbsp;&nbsp;- Theater <a href=\"https://game-icons.net/1x1/delapouite/theater.html\">https://game-icons.net/1x1/delapouite/theater.html</a></div><div>&nbsp;&nbsp;- Two Coins <a href=\"https://game-icons.net/1x1/delapouite/two-coins.html\">https://game-icons.net/1x1/delapouite/two-coins.html</a></div><div><br></div><div><b>Lorc</b></div><div>&nbsp;&nbsp;- Cat <a href=\"https://game-icons.net/1x1/lorc/cat.html\">https://game-icons.net/1x1/lorc/cat.html</a></div><div>&nbsp;&nbsp;- Crown <a href=\"https://game-icons.net/1x1/lorc/crown.html\">https://game-icons.net/1x1/lorc/crown.html</a></div><div>&nbsp;&nbsp;- Cut Diamond <a href=\"https://game-icons.net/1x1/lorc/cut-diamond.html\">https://game-icons.net/1x1/lorc/cut-diamond.html</a></div><div>&nbsp;&nbsp;- Handcuffs <a href=\"https://game-icons.net/1x1/lorc/handcuffs.html\">https://game-icons.net/1x1/lorc/handcuffs.html</a></div><div>&nbsp;&nbsp;- Key <a href=\"https://game-icons.net/1x1/lorc/key.html\">https://game-icons.net/1x1/lorc/key.html</a></div><div>&nbsp;&nbsp;- Light Bulb <a href=\"https://game-icons.net/1x1/lorc/light-bulb.html\">https://game-icons.net/1x1/lorc/light-bulb.html</a></div><div>&nbsp;&nbsp;- Return Arrow <a href=\"https://game-icons.net/1x1/lorc/return-arrow.html\">https://game-icons.net/1x1/lorc/return-arrow.html</a></div><div>&nbsp;&nbsp;- Top Hat <a href=\"https://game-icons.net/1x1/lorc/top-hat.html\">https://game-icons.net/1x1/lorc/top-hat.html</a></div><div>&nbsp;&nbsp;- Uncertainty <a href=\"https://game-icons.net/1x1/lorc/uncertainty.html\">https://game-icons.net/1x1/lorc/uncertainty.html</a></div><div><br></div><div><b>Sbed</b></div><div>&nbsp;&nbsp;- Water Drop <a href=\"https://game-icons.net/1x1/sbed/water-drop.html\">https://game-icons.net/1x1/sbed/water-drop.html</a></div><div><br></div><div><b>Skoll</b></div><div>&nbsp;&nbsp;- Airplane <a href=\"https://game-icons.net/1x1/skoll/airplane.html\">https://game-icons.net/1x1/skoll/airplane.html</a></div><div>&nbsp;&nbsp;- Open Treasure Chest <a href=\"https://game-icons.net/1x1/skoll/open-treasure-chest.html\">https://game-icons.net/1x1/skoll/open-treasure-chest.html</a></div><div><br></div><div>The library preview image is a rendering of this game’s own board, made with a screenshot of the room, and is released to the Public Domain under CC0.</div>",
       "usesAIImagery": false,
       "variant": "",
       "variantImage": "",
-      "lastUpdate": 1787918400000
+      "lastUpdate": 1787961600000
     }
   },
   "board": {
@@ -9532,11 +9532,34 @@
     },
     "btnTint": "#ffffff"
   },
+  "raiseBtn": {
+    "id": "raiseBtn",
+    "type": "button",
+    "x": 18,
+    "y": 142,
+    "width": 314,
+    "height": 38,
+    "text": "RAISE CASH",
+    "image": "/i/icons/property_off.svg",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "eng",
+        "routine": "raiseCashRoutine"
+      }
+    ],
+    "css": "font-size:13px;background-size:20px;background-repeat:no-repeat;background-position:16px center;background-color:#e4ebe2;color:#2f4034;border:1px solid #9fb0a2;box-shadow:none",
+    "svgReplaces": {
+      "currentColor": "btnTint",
+      "#000": "btnTint"
+    },
+    "btnTint": "#2f4034"
+  },
   "retireBtn": {
     "id": "retireBtn",
     "type": "button",
     "x": 18,
-    "y": 144,
+    "y": 188,
     "width": 314,
     "height": 38,
     "text": "RETIRE (BANKRUPT)",
@@ -9558,9 +9581,9 @@
   "logFrame": {
     "id": "logFrame",
     "x": 18,
-    "y": 196,
+    "y": 238,
     "width": 314,
-    "height": 466,
+    "height": 424,
     "layer": -4,
     "movable": false,
     "clickable": false,
@@ -9570,9 +9593,9 @@
     "id": "log",
     "type": "label",
     "x": 26,
-    "y": 204,
+    "y": 246,
     "width": 298,
-    "height": 450,
+    "height": 408,
     "layer": -3,
     "text": "Take a seat, then press NEW GAME.",
     "css": "font-size:14px;line-height:18px;color:#3b3b3b;text-align:left;white-space:pre-wrap"
@@ -9603,7 +9626,7 @@
     "layer": -3,
     "movable": false,
     "clickable": false,
-    "text": "click a property you own to build, sell or mortgage",
+    "text": "click a property you own to build, sell, mortgage or redeem it",
     "css": "display:flex;align-items:center;font-size:12px;color:#4d6b52;text-align:left"
   },
   "legIcon1": {
@@ -11497,7 +11520,7 @@
       "var old = ${PROPERTY text OF log}",
       "var line = ${msg} + '\\u000a'",
       "var line = ${line} + ${old}",
-      "var line = ${line} substr 0 720",
+      "var line = ${line} substr 0 640",
       {
         "func": "LABEL",
         "label": "log",
@@ -12049,22 +12072,152 @@
                   "msg": "${nm} cannot afford ${sn} (${price})"
                 }
               },
+              "var again = true",
               {
-                "func": "INPUT",
-                "player": "${nm}",
-                "fields": [
-                  {
-                    "type": "title",
-                    "text": "${sn} costs ${price} and you only have ${cash}."
-                  },
-                  {
-                    "type": "text",
-                    "text": "It goes to auction instead."
-                  }
+                "func": "FOREACH",
+                "range": [
+                  1,
+                  4
                 ],
-                "confirmButtonText": "OK",
-                "cancelButtonText": null,
-                "cancelButtonIcon": null
+                "loopRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${again}",
+                    "thenRoutine": [
+                      "var again = false",
+                      "var cash = ${PROPERTY cash OF $seat}",
+                      "var missing = ${price} - ${cash}",
+                      {
+                        "func": "SELECT",
+                        "property": "ownedBy",
+                        "value": "${seat}",
+                        "collection": "pMine"
+                      },
+                      {
+                        "func": "COUNT",
+                        "collection": "pMine",
+                        "variable": "nMine"
+                      },
+                      {
+                        "func": "IF",
+                        "operand1": "${nMine}",
+                        "relation": "<",
+                        "operand2": 1,
+                        "thenRoutine": [
+                          {
+                            "func": "INPUT",
+                            "player": "${nm}",
+                            "fields": [
+                              {
+                                "type": "title",
+                                "text": "${sn} costs ${price} and you only have ${cash}."
+                              },
+                              {
+                                "type": "text",
+                                "text": "You own nothing you could turn into cash, so it goes to auction instead."
+                              }
+                            ],
+                            "confirmButtonText": "OK",
+                            "cancelButtonText": null,
+                            "cancelButtonIcon": null
+                          }
+                        ],
+                        "elseRoutine": [
+                          {
+                            "func": "INPUT",
+                            "player": "${nm}",
+                            "fields": [
+                              {
+                                "type": "title",
+                                "text": "${sn} costs ${price} and you only have ${cash}."
+                              },
+                              {
+                                "type": "subtitle",
+                                "text": "${gt}",
+                                "css": "${gc}"
+                              },
+                              {
+                                "type": "text",
+                                "text": "You are ${missing} short. Mortgage a property or sell buildings and you can still buy it."
+                              },
+                              {
+                                "type": "select",
+                                "label": "What now?",
+                                "variable": "act",
+                                "options": [
+                                  {
+                                    "value": "raise",
+                                    "text": "raise the money now",
+                                    "selected": true
+                                  },
+                                  {
+                                    "value": "pass",
+                                    "text": "let it go to auction"
+                                  }
+                                ]
+                              }
+                            ],
+                            "confirmButtonText": "OK",
+                            "cancelButtonText": null,
+                            "cancelButtonIcon": null
+                          },
+                          {
+                            "func": "IF",
+                            "operand1": "${act}",
+                            "relation": "==",
+                            "operand2": "raise",
+                            "thenRoutine": [
+                              "var before = ${PROPERTY cash OF $seat}",
+                              {
+                                "func": "CALL",
+                                "widget": "eng",
+                                "routine": "raiseRoutine",
+                                "arguments": {
+                                  "s": "${seat}",
+                                  "nm": "${nm}"
+                                }
+                              },
+                              "var cash = ${PROPERTY cash OF $seat}",
+                              "var afford = ${cash} >= ${price}",
+                              {
+                                "func": "IF",
+                                "condition": "${afford}",
+                                "thenRoutine": [
+                                  {
+                                    "func": "CALL",
+                                    "widget": "eng",
+                                    "routine": "buyRoutine",
+                                    "arguments": {
+                                      "nm": "${nm}",
+                                      "sn": "${sn}",
+                                      "gt": "${gt}",
+                                      "gc": "${gc}",
+                                      "rt": "${rt}",
+                                      "price": "${price}",
+                                      "cash": "${cash}",
+                                      "cell": "${cell}",
+                                      "seat": "${seat}"
+                                    }
+                                  }
+                                ],
+                                "elseRoutine": [
+                                  "var moved = ${cash} != ${before}",
+                                  {
+                                    "func": "IF",
+                                    "condition": "${moved}",
+                                    "thenRoutine": [
+                                      "var again = true"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -13402,7 +13555,8 @@
                       "s": "${s}",
                       "cell": "${cell}",
                       "price": "${price}",
-                      "sn": "${sn}"
+                      "sn": "${sn}",
+                      "quiet": false
                     }
                   }
                 ]
@@ -13674,7 +13828,7 @@
         "elseRoutine": [
           {
             "func": "INPUT",
-            "player": "${playerName}",
+            "player": "${nm}",
             "fields": [
               {
                 "type": "title",
@@ -13704,7 +13858,7 @@
             "elseRoutine": [
               {
                 "func": "INPUT",
-                "player": "${playerName}",
+                "player": "${nm}",
                 "fields": [
                   {
                     "type": "title",
@@ -13769,7 +13923,7 @@
         "thenRoutine": [
           {
             "func": "INPUT",
-            "player": "${playerName}",
+            "player": "${nm}",
             "fields": [
               {
                 "type": "title",
@@ -13811,17 +13965,23 @@
             }
           },
           {
-            "func": "INPUT",
-            "player": "${playerName}",
-            "fields": [
+            "func": "IF",
+            "condition": "${quiet}",
+            "elseRoutine": [
               {
-                "type": "title",
-                "text": "${sn} is mortgaged. The bank paid you ${amt}; it earns no rent until you lift the mortgage."
+                "func": "INPUT",
+                "player": "${nm}",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "${sn} is mortgaged. The bank paid you ${amt}; it earns no rent until you lift the mortgage."
+                  }
+                ],
+                "confirmButtonText": "OK",
+                "cancelButtonText": null,
+                "cancelButtonIcon": null
               }
-            ],
-            "confirmButtonText": "OK",
-            "cancelButtonText": null,
-            "cancelButtonIcon": null
+            ]
           }
         ]
       }
@@ -15193,6 +15353,14 @@
         "value": -1
       },
       {
+        "func": "SET",
+        "collection": [
+          "eng"
+        ],
+        "property": "aucAct",
+        "value": "bid"
+      },
+      {
         "func": "INPUT",
         "player": "${bn}",
         "fields": [
@@ -15224,6 +15392,22 @@
             "value": "${sugg}",
             "min": "${minBid}",
             "max": "${bcash}"
+          },
+          {
+            "type": "select",
+            "label": "before that",
+            "variable": "act",
+            "options": [
+              {
+                "value": "bid",
+                "text": "place this bid",
+                "selected": true
+              },
+              {
+                "value": "raise",
+                "text": "mortgage or sell first, then bid again"
+              }
+            ]
           }
         ],
         "confirmButtonText": "Bid",
@@ -15236,6 +15420,14 @@
         ],
         "property": "aucBid",
         "value": "${bid}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "eng"
+        ],
+        "property": "aucAct",
+        "value": "${act}"
       }
     ],
     "auctionRoutine": [
@@ -15343,37 +15535,166 @@
                               "var hline = ${hline} + ${winName}"
                             ]
                           },
-                          "var poor = ${bcash} < ${minBid}",
+                          "var ask = true",
                           {
-                            "func": "IF",
-                            "condition": "${poor}",
-                            "thenRoutine": [
-                              {
-                                "func": "SET",
-                                "collection": [
-                                  "eng"
-                                ],
-                                "property": "aucBid",
-                                "value": -1
-                              }
+                            "func": "FOREACH",
+                            "range": [
+                              1,
+                              4
                             ],
-                            "elseRoutine": [
+                            "loopRoutine": [
                               {
-                                "func": "CALL",
-                                "widget": "eng",
-                                "routine": "bidRoutine",
-                                "arguments": {
-                                  "bn": "${bn}",
-                                  "bcash": "${bcash}",
-                                  "sn": "${sn}",
-                                  "gt": "${gt}",
-                                  "gc": "${gc}",
-                                  "rt": "${rt}",
-                                  "price": "${price}",
-                                  "hline": "${hline}",
-                                  "minBid": "${minBid}",
-                                  "sugg": "${sugg}"
-                                }
+                                "func": "IF",
+                                "condition": "${ask}",
+                                "thenRoutine": [
+                                  "var ask = false",
+                                  "var bcash = ${PROPERTY cash OF $sid}",
+                                  "var poor = ${bcash} < ${minBid}",
+                                  {
+                                    "func": "IF",
+                                    "condition": "${poor}",
+                                    "thenRoutine": [
+                                      {
+                                        "func": "SET",
+                                        "collection": [
+                                          "eng"
+                                        ],
+                                        "property": "aucBid",
+                                        "value": -1
+                                      },
+                                      {
+                                        "func": "SELECT",
+                                        "property": "ownedBy",
+                                        "value": "${sid}",
+                                        "collection": "aMine"
+                                      },
+                                      {
+                                        "func": "COUNT",
+                                        "collection": "aMine",
+                                        "variable": "nMine"
+                                      },
+                                      {
+                                        "func": "IF",
+                                        "operand1": "${nMine}",
+                                        "relation": ">=",
+                                        "operand2": 1,
+                                        "thenRoutine": [
+                                          {
+                                            "func": "INPUT",
+                                            "player": "${bn}",
+                                            "fields": [
+                                              {
+                                                "type": "title",
+                                                "text": "You need ${minBid} to stay in for ${sn}."
+                                              },
+                                              {
+                                                "type": "subtitle",
+                                                "text": "${gt}  •  list price ${price}",
+                                                "css": "${gc}"
+                                              },
+                                              {
+                                                "type": "text",
+                                                "text": "your cash: ${bcash}"
+                                              },
+                                              {
+                                                "type": "select",
+                                                "label": "What now?",
+                                                "variable": "act",
+                                                "options": [
+                                                  {
+                                                    "value": "raise",
+                                                    "text": "mortgage or sell, then keep bidding",
+                                                    "selected": true
+                                                  },
+                                                  {
+                                                    "value": "out",
+                                                    "text": "drop out of the bidding"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "confirmButtonText": "OK",
+                                            "cancelButtonText": null,
+                                            "cancelButtonIcon": null
+                                          },
+                                          {
+                                            "func": "IF",
+                                            "operand1": "${act}",
+                                            "relation": "==",
+                                            "operand2": "raise",
+                                            "thenRoutine": [
+                                              "var before = ${PROPERTY cash OF $sid}",
+                                              {
+                                                "func": "CALL",
+                                                "widget": "eng",
+                                                "routine": "raiseRoutine",
+                                                "arguments": {
+                                                  "s": "${sid}",
+                                                  "nm": "${bn}"
+                                                }
+                                              },
+                                              "var after = ${PROPERTY cash OF $sid}",
+                                              "var moved = ${after} != ${before}",
+                                              {
+                                                "func": "IF",
+                                                "condition": "${moved}",
+                                                "thenRoutine": [
+                                                  "var ask = true"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "elseRoutine": [
+                                      {
+                                        "func": "CALL",
+                                        "widget": "eng",
+                                        "routine": "bidRoutine",
+                                        "arguments": {
+                                          "bn": "${bn}",
+                                          "bcash": "${bcash}",
+                                          "sn": "${sn}",
+                                          "gt": "${gt}",
+                                          "gc": "${gc}",
+                                          "rt": "${rt}",
+                                          "price": "${price}",
+                                          "hline": "${hline}",
+                                          "minBid": "${minBid}",
+                                          "sugg": "${sugg}"
+                                        }
+                                      },
+                                      "var aa = ${PROPERTY aucAct OF eng}",
+                                      {
+                                        "func": "IF",
+                                        "operand1": "${aa}",
+                                        "relation": "==",
+                                        "operand2": "raise",
+                                        "thenRoutine": [
+                                          {
+                                            "func": "SET",
+                                            "collection": [
+                                              "eng"
+                                            ],
+                                            "property": "aucBid",
+                                            "value": -1
+                                          },
+                                          {
+                                            "func": "CALL",
+                                            "widget": "eng",
+                                            "routine": "raiseRoutine",
+                                            "arguments": {
+                                              "s": "${sid}",
+                                              "nm": "${bn}"
+                                            }
+                                          },
+                                          "var ask = true"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           },
@@ -15463,7 +15784,260 @@
           }
         ]
       }
-    ]
+    ],
+    "raiseRoutine": [
+      "var strict = ${PROPERTY strict OF eng}",
+      "var lax = !${strict}",
+      "var goOn = true",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          24
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "condition": "${goOn}",
+            "thenRoutine": [
+              "var goOn = false",
+              "var cash = ${PROPERTY cash OF $s}",
+              {
+                "func": "SELECT",
+                "property": "ownedBy",
+                "value": "${s}",
+                "collection": "rMine"
+              },
+              "var opts = []",
+              "var n = 0",
+              {
+                "func": "FOREACH",
+                "collection": "rMine",
+                "loopRoutine": [
+                  "var cid = ${widgetID}",
+                  "var p = ${cid} substr 1",
+                  "var p = ${p} * 1",
+                  "var h = ${PROPERTY houses OF $cid}",
+                  "var mg = ${PROPERTY mortgaged OF $cid}",
+                  "var P = ${PROPERTY sPrice OF eng}",
+                  "var pr = ${P.$p}",
+                  "var HC = ${PROPERTY sHouse OF eng}",
+                  "var hc = ${HC.$p}",
+                  {
+                    "func": "CALL",
+                    "widget": "eng",
+                    "routine": "nameRoutine",
+                    "arguments": {
+                      "pos": "${p}"
+                    },
+                    "variable": "rn"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${h}",
+                    "relation": ">=",
+                    "operand2": 1,
+                    "thenRoutine": [
+                      "var G = ${PROPERTY sGroup OF eng}",
+                      "var g = ${G.$p}",
+                      {
+                        "func": "SELECT",
+                        "property": "pgroup",
+                        "value": "${g}",
+                        "collection": "rGrp"
+                      },
+                      {
+                        "func": "GET",
+                        "collection": "rGrp",
+                        "property": "houses",
+                        "aggregation": "max",
+                        "variable": "mx"
+                      },
+                      "var even = ${h} == ${mx}",
+                      "var even = ${even} || ${lax}",
+                      {
+                        "func": "IF",
+                        "condition": "${even}",
+                        "thenRoutine": [
+                          "var back = ${hc} / 2",
+                          "var back = round ${back}",
+                          "var t = 'sell a building on ' + ${rn}",
+                          "var t = ${t} + '   +'",
+                          "var t = ${t} + ${back}",
+                          "var o = {}",
+                          "var o.value = 'S' + ${p}",
+                          "var o.text = ${t}",
+                          "var opts.$n = ${o}",
+                          "var n = ${n} + 1"
+                        ]
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "condition": "${mg}",
+                        "elseRoutine": [
+                          "var amt = ${pr} / 2",
+                          "var amt = round ${amt}",
+                          "var t = 'mortgage ' + ${rn}",
+                          "var t = ${t} + '   +'",
+                          "var t = ${t} + ${amt}",
+                          "var o = {}",
+                          "var o.value = 'M' + ${p}",
+                          "var o.text = ${t}",
+                          "var opts.$n = ${o}",
+                          "var n = ${n} + 1"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${n}",
+                "relation": "<",
+                "operand2": 1,
+                "thenRoutine": [
+                  {
+                    "func": "INPUT",
+                    "player": "${nm}",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Nothing left to turn into cash"
+                      },
+                      {
+                        "type": "text",
+                        "text": "A property with buildings on it has to lose them evenly first, and one that is already mortgaged raises nothing more. Your cash: ${cash}"
+                      }
+                    ],
+                    "confirmButtonText": "OK",
+                    "cancelButtonText": null,
+                    "cancelButtonIcon": null
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "player": "${nm}",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Raise cash"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "your cash: ${cash}"
+                      },
+                      {
+                        "type": "text",
+                        "text": "The bank pays half the printed price for a mortgage and half the building cost for a building. A mortgaged property earns no rent until you lift the mortgage - click it on the board to do that."
+                      },
+                      {
+                        "type": "select",
+                        "label": "Turn into cash",
+                        "variable": "pick",
+                        "options": "${opts}"
+                      }
+                    ],
+                    "confirmButtonText": "Do it",
+                    "cancelButtonText": "Done"
+                  },
+                  "var goOn = true",
+                  "var kind = ${pick} substr 0 1",
+                  "var p = ${pick} substr 1",
+                  "var p = ${p} * 1",
+                  "var cell = 'b' + ${p}",
+                  "var P = ${PROPERTY sPrice OF eng}",
+                  "var pr = ${P.$p}",
+                  "var G = ${PROPERTY sGroup OF eng}",
+                  "var g = ${G.$p}",
+                  {
+                    "func": "CALL",
+                    "widget": "eng",
+                    "routine": "nameRoutine",
+                    "arguments": {
+                      "pos": "${p}"
+                    },
+                    "variable": "rn"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${kind}",
+                    "relation": "==",
+                    "operand2": "S",
+                    "thenRoutine": [
+                      {
+                        "func": "CALL",
+                        "widget": "eng",
+                        "routine": "sellRoutine",
+                        "arguments": {
+                          "s": "${s}",
+                          "cell": "${cell}",
+                          "g": "${g}",
+                          "pos": "${p}",
+                          "sn": "${rn}"
+                        }
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "CALL",
+                        "widget": "eng",
+                        "routine": "mortgageRoutine",
+                        "arguments": {
+                          "s": "${s}",
+                          "cell": "${cell}",
+                          "price": "${pr}",
+                          "sn": "${rn}",
+                          "quiet": true
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "raiseCashRoutine": [
+      "var s = ${seatID}",
+      {
+        "func": "IF",
+        "condition": "${s}",
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "player": "${playerName}",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Take a seat first."
+              }
+            ],
+            "confirmButtonText": "OK",
+            "cancelButtonText": null,
+            "cancelButtonIcon": null
+          }
+        ],
+        "thenRoutine": [
+          "var nm = ${PROPERTY player OF $s}",
+          {
+            "func": "CALL",
+            "widget": "eng",
+            "routine": "raiseRoutine",
+            "arguments": {
+              "s": "${s}",
+              "nm": "${nm}"
+            }
+          }
+        ]
+      }
+    ],
+    "aucAct": "bid"
   },
   "tableBg": {
     "id": "tableBg",
