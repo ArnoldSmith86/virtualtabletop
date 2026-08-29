@@ -1013,6 +1013,22 @@ describe('a multipleSpread with more groups than fit', () => {
     expect(widgets.get('one').spreadExtent('X')).toBe(180);
   });
 
+  test('resizing the holder re-runs the squish', async () => {
+    // bases 200, fans 160: plenty of room at width 700, half the fan spread at
+    // 288 (avail 280) - the squish follows the size in both directions
+    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 700, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 3);
+    await holder.updateAfterShuffle();
+    expect(widgets.get('one').spreadExtent('X')).toBe(180);
+    await holder.set('width', 288);
+    expect(widgets.get('one').spreadExtent('X')).toBe(140);
+    const xs = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x')).map(p=>p.get('x'));
+    expect(xs).toEqual([ 4, 144 ]);
+    await holder.set('width', 700);
+    expect(widgets.get('one').spreadExtent('X')).toBe(180);
+  });
+
   test('every group renders above the one before it, count handle included', async () => {
     // a pile renders at the highest z among its own and its cards' values, so
     // rows numbered with a plain z++ let two fans tie and stack in DOM order -

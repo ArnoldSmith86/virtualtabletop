@@ -661,7 +661,7 @@ export class Holder extends ImageWidget {
     if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle();
     // the layouts that decide the arrangement from the holder's size react to it changing
-    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random' ].indexOf(this.get('layout')) != -1))
+    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multipleSpread' ].indexOf(this.get('layout')) != -1))
       await this.updateAfterShuffle();
   }
 
