@@ -165,7 +165,10 @@
     "y": 4
   },
   "_meta": {
-    "version": 20,
+    "version": 24,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder (Hand)",
       "image": "/assets/701433125_6681",
@@ -176,7 +179,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1768189174638,
+      "lastUpdate": 1788033453858,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -185,13 +188,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "1",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "Seats",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "qaui": {
@@ -1173,15 +1174,12 @@
     "width": 1500,
     "height": 180,
     "childrenPerOwner": true,
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
     "onEnter": {
       "activeFace": 1
     },
     "onLeave": {
       "activeFace": 0
     },
-    "stackOffsetX": 40,
     "dropShadow": true,
     "hidePlayerCursors": true
   },

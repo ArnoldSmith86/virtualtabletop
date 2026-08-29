@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 20,
+    "version": 24,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder (Hand)",
       "image": "/assets/701433125_6681",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1768189154584,
+      "lastUpdate": 1788033453854,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -20,13 +23,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "1",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "Custom Visibility",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "w2ab": {
@@ -486,7 +487,7 @@
     "cardType": "JD",
     "z": 2,
     "activeFace": 1,
-    "x": 44,
+    "x": 98.5,
     "y": 4,
     "parent": "blue"
   },
@@ -533,8 +534,9 @@
     "cardType": "3H",
     "z": 3,
     "activeFace": 1,
-    "x": 84,
+    "x": 193,
     "y": 4,
+    "hoverParent": "blue",
     "parent": "blue"
   },
   "w2ab4H": {
@@ -553,7 +555,7 @@
     "cardType": "5H",
     "z": 2,
     "activeFace": 1,
-    "x": 44,
+    "x": 98.5,
     "y": 4,
     "parent": "red"
   },
@@ -627,8 +629,9 @@
     "cardType": "KH",
     "z": 3,
     "activeFace": 1,
-    "x": 84,
+    "x": 193,
     "y": 4,
+    "hoverParent": "red",
     "parent": "red"
   },
   "w2abAS": {
@@ -794,7 +797,6 @@
     "y": 775,
     "z": 5,
     "id": "blue",
-    "stackOffsetX": 40,
     "width": 300
   },
   "red": {
@@ -802,7 +804,6 @@
     "x": 1034,
     "y": 764,
     "z": 7,
-    "stackOffsetX": 40,
     "width": 300,
     "id": "red"
   },
