@@ -5461,6 +5461,7 @@
   "scoreboard": {
     "type": "scoreboard",
     "id": "scoreboard",
+    "scoreEntry": "auto",
     "x": 500,
     "y": 170,
     "width": 600,
