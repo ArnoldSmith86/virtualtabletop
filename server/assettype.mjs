@@ -56,11 +56,14 @@ const signatures = [
 // What XML allows to stand before the root element, each written as the whole run to skip: a
 // comment - which is where Illustrator writes its "Generator" line and where a licence header
 // usually goes - a processing instruction, the <?xml ...?> prolog among them, and a doctype
-// with or without an internal subset.
+// with or without an internal subset. Whoever uploads an asset writes these bytes and the
+// sniffer runs on every request for it, so no two parts of a pattern may be able to consume the
+// same run: an unterminated doctype has to fail in one pass over the 64KB below rather than
+// backtracking through it.
 const beforeRootElement = [
   /^<!--[\s\S]*?-->/,
   /^<\?[\s\S]*?\?>/,
-  /^<!doctype\s+svg[^[>]*(?:\[[\s\S]*?\])?[^>]*>/i
+  /^<!doctype\s+svg[^[>]*(?:\[[^\]]*\][^>]*)?>/i
 ];
 
 // Assets are served from the site's own origin and anyone can PUT one, so what we call an SVG

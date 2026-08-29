@@ -61,6 +61,18 @@ describe('server/assettype.mjs', function() {
     expect(AssetType.contentType(asset('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [\n<!ENTITY ns_svg "http://www.w3.org/2000/svg">\n]>\n<svg></svg>'))).toEqual('image/svg+xml');
   });
 
+  // the bytes in front of the tag are written by whoever uploaded the asset and read again on
+  // every request for it, so markup that makes a pattern backtrack over its own run costs the
+  // single threaded server that time on each one
+  test('gives up on markup meant to make it backtrack instead of chewing through it', function() {
+    const fillers = [ 'a'.repeat(65536), '[]'.repeat(32768), `${'a'.repeat(30000)}[x]${'b'.repeat(30000)}` ];
+    for(const filler of fillers) {
+      const started = Date.now();
+      expect(AssetType.contentType(asset(`<!doctype svg ${filler}`))).toEqual(null);
+      expect(Date.now()-started).toBeLessThan(1000);
+    }
+  });
+
   test('says nothing rather than guessing', function() {
     expect(AssetType.contentType(asset([ 0x00, 0x01, 0x02, 0x03 ]))).toEqual(null);
     expect(AssetType.contentType(asset([ 0, 0, 0, 0x20 ], 'ftyp', 'qt  '))).toEqual(null);
