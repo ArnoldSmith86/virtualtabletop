@@ -7,6 +7,7 @@ node_modules
 save
 screenshots
 *.tgz
+*.tmp
 *.heapsnapshot
 .DS_Store
 .appimage/temp/

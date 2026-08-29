@@ -18,6 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         testfile:
+          - card.js
           - editor.js
           - toolbar.js
           - boardsize.js
@@ -37,6 +38,10 @@ jobs:
           # the drop animation has only been measured in Chrome so far
           - holderevents.js
           - keyboardzoom.js
+          # the score entry surfaces are driven with synthetic mouse and wheel events -
+          # a scrollbar press, a wheel over the table - which have only been measured in
+          # Chrome so far
+          - scoreboard.js
           - canvas.js
           - inheritfrom.js
           # the DOM baselines record computed styles and rounded boxes, which are browser
