@@ -203,3 +203,132 @@ describe('idempotence', () => {
     expect(() => FileUpdater(at(VERSION + 1))).toThrow();
   });
 });
+
+// Every save carries the version it was written with and is migrated on load,
+// so that a change to what a property means never changes what an existing game
+// does. This covers the dragLimit sides, which used to be clamped with
+// Math.max(null, x) - i.e. at 0 - where they are now read as "no limit".
+function migrated(widget, version = 21) {
+  const state = { _meta: { version }, w: Object.assign({ id: 'w', type: 'basic' }, widget) };
+  return FileUpdater(state).w;
+}
+
+// The version a migration was written for, so that a later one added below does
+// not silently stop these from running.
+const beforeDragLimitSides = 21;
+const beforeScoreboardEntry = 23;
+
+describe('the dragLimit sides written as null', () => {
+  const dragLimit = limit => migrated({ dragLimit: limit }, beforeDragLimitSides).dragLimit;
+
+  test('become the 0 they always clamped to', () => {
+    expect(dragLimit({ minX: null, maxY: 10 })).toEqual({ minX: 0, maxY: 10 });
+    expect(dragLimit({ minX: null, maxX: null, minY: null, maxY: null }))
+      .toEqual({ minX: 0, maxX: 0, minY: 0, maxY: 0 });
+  });
+
+  test('leave every other limit as it was written', () => {
+    expect(dragLimit({ minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' }))
+      .toEqual({ minX: 0, maxX: '${PROPERTY width OF board}', condition: 'y > x' });
+    expect(dragLimit({})).toEqual({});
+    expect(dragLimit('nonsense')).toBe('nonsense');
+    expect(migrated({}, beforeDragLimitSides).dragLimit).toBe(undefined);
+  });
+
+  test('are left alone in a file that was written with the new meaning', () => {
+    const state = { _meta: { version: VERSION }, w: { id: 'w', type: 'basic', dragLimit: { minX: null } } };
+    expect(FileUpdater(state).w.dragLimit).toEqual({ minX: null });
+  });
+});
+
+// SWAPHANDS was the special case of SHIFT that passes the hands of the seats around
+// the table, so an existing game says it as the SHIFT it always was.
+function migratedRoutine(routine, version = 22) {
+  return migrated({ clickRoutine: routine }, version).clickRoutine;
+}
+
+describe('a SWAPHANDS operation', () => {
+  test('becomes a SHIFT that arrives in the order the widgets were created', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS' } ])).toEqual([ { func: 'SHIFT', keepOrder: false } ]);
+  });
+
+  test('keeps the order of each hand where it asked for it', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', keepOrder: true } ])).toEqual([ { func: 'SHIFT', keepOrder: true } ]);
+  });
+
+  test('leaves an order the routine works out to the routine', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', keepOrder: '${PROPERTY keepOrder OF button}' } ]))
+      .toEqual([ { func: 'SHIFT', keepOrder: '${PROPERTY keepOrder OF button}' } ]);
+  });
+
+  test('carries its interval and direction over unchanged', () => {
+    expect(migratedRoutine([ { note: 'pass on', func: 'SWAPHANDS', interval: 2, direction: 'backward' } ]))
+      .toEqual([ { note: 'pass on', func: 'SHIFT', interval: 2, direction: 'backward', keepOrder: false } ]);
+  });
+
+  test('drops a source of all, which is what SHIFT does without any holders', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', source: 'all' } ])).toEqual([ { func: 'SHIFT', keepOrder: false } ]);
+  });
+
+  test('passes a named collection of seats on as the holders', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', source: 'usedSeats' } ]))
+      .toEqual([ { func: 'SHIFT', holders: 'usedSeats', keepOrder: false } ]);
+  });
+
+  // a written-out list was a collection to SWAPHANDS, so its seats took part in seat
+  // index order rather than in the order they are written in
+  test('turns a written-out list of seats into a collection of them', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS', source: [ 'seat3', 'seat1' ] } ])).toEqual([
+      {
+        note: 'This was added by the automatic file migration because SHIFT passes the widgets along a list of holders in the order it is written in.',
+        func: 'SELECT',
+        type: 'seat',
+        property: 'id',
+        relation: 'in',
+        value: [ 'seat3', 'seat1' ],
+        collection: 'internal_swapHandsMigration'
+      },
+      { func: 'SHIFT', holders: 'internal_swapHandsMigration', keepOrder: false }
+    ]);
+  });
+
+  test('is migrated inside the routines of an IF and a FOREACH too', () => {
+    expect(migratedRoutine([
+      { func: 'IF', condition: true, thenRoutine: [ { func: 'SWAPHANDS' } ], elseRoutine: [ { func: 'FOREACH', loopRoutine: [ { func: 'SWAPHANDS' } ] } ] }
+    ])).toEqual([
+      { func: 'IF', condition: true, thenRoutine: [ { func: 'SHIFT', keepOrder: false } ], elseRoutine: [ { func: 'FOREACH', loopRoutine: [ { func: 'SHIFT', keepOrder: false } ] } ] }
+    ]);
+  });
+
+  test('is left alone in a file that was written after SWAPHANDS was gone', () => {
+    expect(migratedRoutine([ { func: 'SWAPHANDS' } ], VERSION)).toEqual([ { func: 'SWAPHANDS' } ]);
+  });
+});
+
+// A scoreboard used to open the edit pane whatever cell was clicked and to show
+// only the rounds that had been scored. scoreEntry 'pane' is that behaviour, so
+// a board saved before the property existed is given it and a new board gets
+// the 'auto' default instead.
+describe('a scoreboard saved before scoreEntry existed', () => {
+  const scoreboard = (widget, version = beforeScoreboardEntry) =>
+    FileUpdater({ _meta: { version }, s: Object.assign({ id: 's', type: 'scoreboard' }, widget) }).s;
+
+  test('asks for the edit pane', () => {
+    expect(scoreboard({}).scoreEntry).toBe('pane');
+    expect(scoreboard({ clickable: false }).scoreEntry).toBe('pane');
+  });
+
+  test('keeps a value it was written with', () => {
+    expect(scoreboard({ scoreEntry: 'keypad' }).scoreEntry).toBe('keypad');
+    expect(scoreboard({ scoreEntry: 'auto' }).scoreEntry).toBe('auto');
+  });
+
+  test('leaves every other widget type alone', () => {
+    const state = { _meta: { version: beforeScoreboardEntry }, l: { id: 'l', type: 'label' } };
+    expect(FileUpdater(state).l.scoreEntry).toBe(undefined);
+  });
+
+  test('is not touched in a file written with the property', () => {
+    expect(scoreboard({}, VERSION).scoreEntry).toBe(undefined);
+  });
+});

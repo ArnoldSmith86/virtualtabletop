@@ -420,6 +420,7 @@
   "score": {
     "type": "scoreboard",
     "id": "score",
+    "scoreEntry": "auto",
     "y": 400,
     "z": 232,
     "playersInColumns": false,

@@ -196,7 +196,7 @@ const iconPickerTypes = [
   { type: 'material-symbols', label: 'Material',    title: 'Include Google\'s Material Symbols' },
   { type: 'emoji-color',      label: 'Color Emoji', title: 'Include color emoji' },
   { type: 'emoji-monochrome', label: 'Mono Emoji',  title: 'Include monochrome emoji' },
-  { type: 'vtt-symbols',      label: 'VTT',         title: 'Include VTT symbols' }
+  { type: 'vtt-symbols',      label: 'VTT built-in', title: 'Include VTT symbols' }
 ];
 
 function iconValueType(value) {
@@ -223,10 +223,10 @@ function iconTypeEnabled(value, enabledTypes) {
 // The full symbol picker is an overlay of its own, so opening it from a picker that sits inside another overlay
 // (e.g. the deck editor's "Add New Deck" dialog) hides that one. Bring that overlay - the one the given element
 // lives in - back afterwards, instead of leaving the user without the dialog they were working in.
-async function pickSymbolKeepingOverlay(element, type='all') {
+async function pickSymbolKeepingOverlay(element, type='all', search='', libraries=null) {
   const hostOverlay = element.closest('.overlay');
   if(!hostOverlay)
-    return await pickSymbol(type);
+    return await pickSymbol(type, true, true, search, libraries);
 
   // The deck editor parks the symbol picker inside its card view (see DeckEditor.open), which is not where a
   // dialog floating above the editor wants it: show it where the dialog is and put it back afterwards.
@@ -243,7 +243,7 @@ async function pickSymbolKeepingOverlay(element, type='all') {
   let symbol = null;
   let error = null;
   try {
-    symbol = await pickSymbol(type, true, false);
+    symbol = await pickSymbol(type, true, false, search, libraries);
   } catch(e) {
     error = e;
   }
@@ -326,8 +326,23 @@ function renderColorChip(value, target) {
   return chip;
 }
 
+// Icon search matching. Both icon pickers search and rank the same way: client/js/symbols.js
+// defines the rule and its helpers (iconSearchEntry, iconSearchScores) and main.js exports them
+// into this bundle, so the symbol picker of the JSON editor and the picker below cannot drift
+// apart - they used to answer "dragon" with two different top rows.
+
+// Sorting is stable, so entries of the same score stay in symbols.json order and related icon
+// families stay together.
+function iconSearchMatches(query, entryFilter) {
+  const entries = (iconSearchIndex || []).filter(entryFilter);
+  const scores = iconSearchScores(entries, query);
+  return entries.map((entry, i) => ({ entry, score: scores[i] })).filter(match => match.score)
+    .sort((a, b) => b.score - a.score).map(match => match.entry);
+}
+
 // Flat searchable index over i/fonts/symbols.json, loaded on first use.
 let iconSearchIndex = null;
+let iconSearchIndexByValue = new Map(); // for the tooltip of a result chip
 let iconSearchIndexPromise = null;
 function loadIconSearchIndex() {
   if(!iconSearchIndexPromise) {
@@ -340,25 +355,28 @@ function loadIconSearchIndex() {
         for(let [ symbol, keywords ] of Object.entries(symbols)) {
           if(symbol.includes('/')) {
             keywords = keywords.slice(1); // first entry is the spritesheet index
-            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true, type: 'game-icons' });
+            // as in the symbol picker: the file name is searched word by word
+            const name = symbol.split('/')[1];
+            index.push({ value: symbol, ...iconSearchEntry(name, keywords), image: true, type: 'game-icons' });
           } else {
             const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
             symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
-            const allKeywords = `${symbol},${keywords.join()}`.toLowerCase();
+            const searchEntry = iconSearchEntry(symbol, keywords);
             if(symbol.match(/^\[/) || symbol.match(/^[a-z0-9_]+$/)) {
-              index.push({ value: symbol, keywords: allKeywords, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
+              index.push({ value: symbol, ...searchEntry, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
               if(hasNoFillVariant)
-                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false, type: 'material-symbols' });
+                index.push({ value: `${symbol}_NOFILL`, ...searchEntry, image: false, type: 'material-symbols' });
             } else {
               // emoji: offer both the color image and the monochrome font variant
-              index.push({ value: symbol, keywords: allKeywords, image: true, type: 'emoji-color' });
+              index.push({ value: symbol, ...searchEntry, image: true, type: 'emoji-color' });
               if(!skipForNotoMonochrome(symbol))
-                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false, type: 'emoji-monochrome' });
+                index.push({ value: `(${symbol})`, ...searchEntry, image: false, type: 'emoji-monochrome' });
             }
           }
         }
       }
       iconSearchIndex = index;
+      iconSearchIndexByValue = new Map(index.map(entry => [ entry.value, entry ]));
       return index;
     })();
     iconSearchIndexPromise.catch(_=>iconSearchIndexPromise = null); // allow retrying after a failed fetch
@@ -366,13 +384,24 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
-// Keep matches in symbols.json order so related icon families stay together.
+// How many icons the icon picker shows at once - both for a search and for the suggestions it
+// opens with. The skin tone forms put behind a searched emoji count towards it as well, so a
+// result that has them stays as long as one that has not.
+const iconPickerResultLimit = 100;
+
+// Both pickers only show the first `limit` results - "hand" matches almost twice as many - so
+// they also get the total to say so instead of truncating the list silently.
 function searchIconIndex(query, limit=100, enabledTypes=null) {
-  const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  return (iconSearchIndex || [])
-    .filter(entry => terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
-    .slice(0, limit)
-    .map(entry => entry.value);
+  const matches = iconSearchMatches(query, entry => !enabledTypes || enabledTypes.has(entry.type));
+  return { total: matches.length, values: matches.slice(0, limit).map(entry => entry.value) };
+}
+
+// The name an icon is listed under ("thumbs up"): the first of its keywords, which the search
+// entry keeps as the first tag of its text and which the symbol picker shows as well. Empty
+// until the index is loaded - it is only used as a label.
+function iconDisplayName(value) {
+  const listed = iconSearchIndexByValue.get(String(value));
+  return listed ? (listed.text.split(',')[2] || '').replace(/_/g, ' ') : '';
 }
 
 function imageURLFromSymbol(symbol) {
@@ -383,14 +412,21 @@ function imageURLFromSymbol(symbol) {
 }
 
 function searchImageIndex(query, limit=100) {
-  const terms = query.toLowerCase().split(/\s+/).filter(term => term);
-  return (iconSearchIndex || [])
-    .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
-    .slice(0, limit)
-    .map(entry => imageURLFromSymbol(entry.value));
+  const matches = iconSearchMatches(query, entry => entry.image);
+  return { total: matches.length, values: matches.slice(0, limit).map(entry => imageURLFromSymbol(entry.value)) };
 }
 
 let activePropertyInfoPopup = null;
+
+// An info tip hangs off a sidebar control that is thrown away whenever the
+// editor re-renders for another widget, so closeEditorPopups() takes it along
+// with the popups of controls/popup.js. Its own outside-click handler only
+// helps when there is a click - a deleted widget, an undo or a new state
+// arriving change the selection without one.
+function closePropertyInfoPopup() {
+  if(activePropertyInfoPopup)
+    activePropertyInfoPopup();
+}
 
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup
@@ -592,9 +628,22 @@ class PropertyInput {
       propertyInfoButton(this.dom, html(this.options.hint));
     }
     this.renderControl(this.dom);
+    // options.validate: a problem with what was typed belongs under the input
+    // it was typed into, not only in the validation table of another module
+    if(this.options.validate)
+      this.problemDOM = div(this.dom, 'propertyInputProblem');
     for(const property of this.listenProperties())
-      this.module.addPropertyListener(this.widget, property, _=>this.update(this.getValue()));
+      this.module.addPropertyListener(this.widget, property, _=>this.applyUpdate(this.getValue()));
     return this.dom;
+  }
+
+  applyUpdate(value) {
+    this.update(value);
+    if(this.problemDOM) {
+      const problem = value === null || propertyInputIsMulti(value) ? null : this.options.validate(value);
+      this.problemDOM.textContent = problem || '';
+      this.dom.classList.toggle('hasProblem', !!problem);
+    }
   }
 
   cssClass() {
@@ -617,6 +666,10 @@ class TextInput extends PropertyInput {
     this.input = document.createElement(this.options.multiline ? 'textarea' : 'input');
     if(this.options.placeholder)
       this.input.placeholder = this.options.placeholder;
+    // a field holding a list is unreadable at the two rows a textarea defaults
+    // to, so its height can be asked for in lines
+    if(this.options.multiline && this.options.rows)
+      this.input.rows = this.options.rows;
     this.input.oninput = _=>{
       const value = this.input.value;
       this.setValue(value === '' && this.options.nullIfEmpty ? null : value);
@@ -652,7 +705,9 @@ class NumberInput extends PropertyInput {
       this.slider = document.createElement('input');
       this.slider.type = 'range';
       this.slider.min = this.options.min !== undefined ? this.options.min : 0;
-      this.slider.max = this.options.max !== undefined ? this.options.max : 100;
+      // sliderMax ends the drag before max where the top of the range is only
+      // reasonable to type, not to drag through
+      this.slider.max = this.options.sliderMax !== undefined ? this.options.sliderMax : (this.options.max !== undefined ? this.options.max : 100);
       this.slider.step = this.options.step !== undefined ? this.options.step : 1;
       this.slider.oninput = _=>this.applyInput(this.slider.value);
       target.appendChild(this.slider);
@@ -709,6 +764,19 @@ class NumberOrTextInput extends PropertyInput {
     this.input.type = 'text';
     if(this.options.placeholder !== undefined) this.input.placeholder = this.options.placeholder;
     this.input.oninput = _=>this.setValue(propertyInputNumberOrText(this.input.value, this.options.nullIfEmpty));
+    // a text input has no arrow key stepping, which is the part of a number
+    // input that still applies while the value happens to be a plain number
+    this.input.onkeydown = e=>{
+      if(e.key != 'ArrowUp' && e.key != 'ArrowDown')
+        return;
+      const value = propertyInputNumberOrText(this.input.value, false);
+      if(typeof value != 'number')
+        return;
+      e.preventDefault();
+      const stepped = +(value + (e.key == 'ArrowUp' ? 1 : -1) * (e.shiftKey ? 10 : 1)).toFixed(6);
+      this.input.value = stepped;
+      this.setValue(stepped);
+    };
     target.appendChild(this.input);
   }
 
@@ -719,6 +787,12 @@ class NumberOrTextInput extends PropertyInput {
     // old "e.g. 8, 8px, 50%" placeholder down to "e.g. 8," - reading like a
     // typo rather than a hint
     this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || '8px');
+    // a plain number fits the compact width these inputs are laid out at,
+    // anything else usually does not - so the layout can tell the two apart,
+    // and what does not fit is at least readable as a tooltip
+    const text = (value === null || multi) ? '' : String(value);
+    this.dom.classList.toggle('nonNumericValue', text !== '' && typeof value != 'number');
+    this.input.title = typeof value == 'number' ? '' : text;
     if(document.activeElement !== this.input)
       this.input.value = (value === null || multi) ? '' : value;
   }
@@ -1071,7 +1145,17 @@ class PickerInput extends PropertyInput {
       chip.dataset.value = value;
       chip.classList.toggle('selected', String(value) == this.chipMatchValue(currentValue));
       chip.onclick = _=>this.setValue(this.valueForChip(value));
+      this.decorateChip(chip, value);
     }
+    this.decorateChipList(list);
+  }
+
+  // a chip that can offer more than the one value it shows (see IconInput)
+  decorateChip(chip, value) {
+  }
+
+  // and the list they sit in, once all of them are there
+  decorateChipList(list) {
   }
 }
 
@@ -1255,6 +1339,23 @@ class IconInput extends PickerInput {
     return iconValueForChip(this.getValue(), chipValue);
   }
 
+  // the icon list has one entry per emoji, but most of the people ones also have skin tone forms:
+  // mark those chips and let the flyout a click on one opens pick a tone (client/js/emojivariants.js)
+  decorateChip(chip, value) {
+    const icon = iconName(value);
+    if(iconValueType(icon) == 'emoji-color')
+      chip.dataset.emojiVariant = icon;
+  }
+
+  decorateChipList(list) {
+    enableEmojiVariantFlyouts(list, {
+      selector: '[data-emoji-variant]',
+      emoji: chip=>chip.dataset.emojiVariant,
+      onPick: (chip, variant)=>this.setValue(this.valueForChip(variant)),
+      label: (chip, base)=>iconDisplayName(base)
+    });
+  }
+
   emptyLabel() {
     return this.options.emptyLabel || 'Choose icon';
   }
@@ -1326,30 +1427,63 @@ class IconInput extends PickerInput {
 
     const searchSection = div(target, 'propertyPickerSection');
     const search = document.createElement('input');
-    search.placeholder = 'Search icons...';
+    // the same placeholder as the symbol picker of the JSON editor: both search the tags that say
+    // what an icon shows, which nothing told the user about while they named three file names
+    search.placeholder = iconSearchPlaceholder;
     searchSection.appendChild(search);
     const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
 
-    const showResults = values=>{
+    // one chip of the result list: a searched icon, or - behind it - one of its skin tone forms,
+    // which is a result of the list like any other and is picked the same way
+    const resultChip = (iconValue, target, description)=>{
+      const chip = renderIconChip(iconValue, target);
+      chip.dataset.value = iconValue;
+      // the tooltip was the bare "delapouite/first-aid-kit": a searched icon says what it is
+      // tagged with, which is the only place the words the search understands are visible (same
+      // in the symbol picker of the JSON editor, see client/js/symbols.js), a toned form which
+      // tone it stands for
+      const searchEntry = iconSearchIndexByValue.get(String(iconValue));
+      if(description)
+        chip.title = `${iconValue} (${description})`;
+      else if(searchEntry)
+        chip.title = `${chip.title}\n${iconSearchTagText(searchEntry)}`;
+      chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
+      chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
+      return chip;
+    };
+
+    const showResults = (values, total=values.length)=>{
       results.innerHTML = '';
-      for(const iconValue of values) {
-        const chip = renderIconChip(iconValue, results);
-        chip.dataset.value = iconValue;
-        chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
-        chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
-      }
+      resultCount.textContent = total > values.length ? `${total} icons match, showing the first ${values.length}` : '';
+      for(const iconValue of values)
+        this.decorateChip(resultChip(iconValue, results), iconValue);
+      this.decorateChipList(results);
+      // A search that has already narrowed the picker down to a handful of icons should not make
+      // each of them be opened again to find out what it offers, so the toned forms go into the
+      // list itself, right behind the icon they belong to (the same as the "Pick icon" overlay
+      // does, see symbols.js). They count towards the number of icons the search shows, so the
+      // list never gets longer than it may be - and a search that is cut off at that number has
+      // more to show anyway, which is not a result worth expanding.
+      expandEmojiVariants(results, search.value.trim() ? $a('[data-emoji-variant]', results) : [], {
+        emoji: chip=>chip.dataset.emojiVariant,
+        create: (chip, variant, description)=>resultChip(variant, null, description),
+        budget: iconPickerResultLimit - values.length
+      });
       if(!values.length)
-        div(results, 'propertyPickerEmpty', 'No results.');
+        div(results, 'propertyPickerEmpty', `No results. ${iconSearchNoResultsHint}`);
     };
 
     const frequentlyUsed = _=>[...new Set(usedGameIcons().concat(topUsedLibraryIcons))]
       .filter(icon => iconTypeEnabled(icon, enabledTypes))
-      .slice(0, 100);
+      .slice(0, iconPickerResultLimit);
     const updateResults = async _=>{
       const query = search.value.trim();
       if(query)
         await loadIconSearchIndex().catch(_=>null);
-      showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
+      if(!query)
+        return showResults(frequentlyUsed());
+      const { total, values } = searchIconIndex(query, iconPickerResultLimit, enabledTypes);
+      showResults(values, total);
     };
 
     const typeToggles = div(searchSection, 'iconPickerFilterChips');
@@ -1374,14 +1508,19 @@ class IconInput extends PickerInput {
       typeToggles.appendChild(toggle);
     }
 
+    const resultCount = div(searchSection, 'propertyPickerCount');
     const results = div(searchSection, 'propertyPickerChips');
     showResults(frequentlyUsed());
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
-    showAll.textContent = 'Show all';
+    showAll.className = 'propertyPickerBrowseMore';
+    // not "Show all": the big picker opens with this picker's search and libraries, so it shows more of what
+    // the user is looking for rather than everything there is
+    showAll.textContent = 'Browse more...';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbolKeepingOverlay(showAll);
+      // carry the search term and the chosen libraries over so the big picker keeps looking for the same thing
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'all', search.value.trim(), [ ...enabledTypes ]);
       if(symbol)
         this.setValue(this.valueForChip(symbol.symbol));
     };
@@ -1389,6 +1528,12 @@ class IconInput extends PickerInput {
 
     search.oninput = updateResults;
     loadIconSearchIndex().catch(_=>null);
+    // which emoji have toned forms comes from a list of its own, fetched next to the icon index -
+    // a search that ran before it arrived puts them in as soon as it does
+    loadEmojiVariants().then(_=>{
+      if(search.value.trim())
+        updateResults();
+    }, _=>null);
   }
 }
 
@@ -1417,12 +1562,14 @@ class ImageInput extends PickerInput {
 
     const searchSection = div(target, 'propertyPickerSection');
     const search = document.createElement('input');
-    search.placeholder = 'Search images...';
+    search.placeholder = 'Search images by name or by what they show...';
     searchSection.appendChild(search);
+    const resultCount = div(searchSection, 'propertyPickerCount');
     const results = div(searchSection, 'propertyPickerChips');
 
-    const showResults = values=>{
+    const showResults = (values, total=values.length)=>{
       results.innerHTML = '';
+      resultCount.textContent = total > values.length ? `${total} images match, showing the first ${values.length}` : '';
       for(const imageValue of values) {
         const chip = renderImageChip(imageValue, results);
         chip.dataset.value = imageValue;
@@ -1430,7 +1577,7 @@ class ImageInput extends PickerInput {
         chip.onclick = _=>this.setValue(imageValue);
       }
       if(!values.length)
-        div(results, 'propertyPickerEmpty', 'No results.');
+        div(results, 'propertyPickerEmpty', `No results. ${iconSearchNoResultsHint}`);
     };
 
     // default (empty-search) results: a sample of commonly used library images instead of repeating the
@@ -1440,9 +1587,10 @@ class ImageInput extends PickerInput {
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
-    showAll.textContent = 'Show all';
+    showAll.className = 'propertyPickerBrowseMore';
+    showAll.textContent = 'Browse more...';
     showAll.onclick = async _=>{
-      const symbol = await pickSymbolKeepingOverlay(showAll, 'images');
+      const symbol = await pickSymbolKeepingOverlay(showAll, 'images', search.value.trim());
       if(symbol)
         this.setValue(symbol.url);
     };
@@ -1450,7 +1598,11 @@ class ImageInput extends PickerInput {
 
     search.oninput = async _=>{
       await loadIconSearchIndex().catch(_=>null);
-      showResults(search.value.trim() ? searchImageIndex(search.value.trim()) : frequentlyUsed);
+      const query = search.value.trim();
+      if(!query)
+        return showResults(frequentlyUsed);
+      const { total, values } = searchImageIndex(query);
+      showResults(values, total);
     };
     loadIconSearchIndex().catch(_=>null);
 

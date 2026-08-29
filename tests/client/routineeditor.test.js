@@ -20,6 +20,8 @@ beforeAll(() => {
   window.widgets = new Map();
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
+  window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
+  window.closeEmojiVariantFlyout = () => {}; // the icon picker's skin tone flyout (emojivariants.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
   // the validator tables are part of the editor bundle; the property proposals read them
   window.WIDGET_PROPERTIES = {
@@ -51,7 +53,8 @@ beforeAll(() => {
     'EventsEditor', 'propertyAutomations', 'AddEventPopup', 'cardDefaultRoutines', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineSoundPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
-    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
+    'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
+    'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
     'structureInfoHTML'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
@@ -594,7 +597,10 @@ describe('operation rendering', () => {
     [ { func: 'SCORE', seats: 'seat1', mode: 'inc', round: 2, value: 1 }, 'Add 1 to score of seat1 in round 2' ],
     [ { func: 'AUDIO', source: 'click.mp3' }, 'Play the sound click.mp3' ],
     [ { func: 'AUDIO', source: 'click.mp3', maxVolume: 0.5 }, 'Play the sound click.mp3 at 50% volume' ],
-    [ { func: 'SWAPHANDS' }, 'Pass every hand on to the next seat' ],
+    [ { func: 'SHIFT' }, "Pass the contents of every occupied seat's hand on to the next one" ],
+    [ { func: 'SHIFT', holders: [ 'h1', 'h2', 'h3' ], widgets: 'top' }, 'Pass the contents of h1, h2 and h3 on to the next one, only the top widget' ],
+    [ { func: 'SHIFT', holders: [ 'h1', 'h2' ], interval: 2, direction: 'backward', wrap: false },
+      'Pass the contents of h1 and h2 on to the next one but 2 places along, the other way round, stopping at the last one' ],
     [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player "Choose a card" to fill in 3 fields' ],
     // a dialog with nothing to fill in is a question, and the sentence says so
     [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", canceling with "No"' ],
@@ -2540,6 +2546,13 @@ describe('the shared widget picker', () => {
     return id => widgets.get(id);
   }
 
+  // a band drawn in the room reaches the picker as a selection change, and that
+  // is the only selection it takes: one made anywhere else is the editor moving
+  // on to another widget, waiting picker or not
+  function selectInRoom(selection) {
+    return selectWidgetsInRoom(_=>handleWidgetPickerSelection(selection));
+  }
+
   // renders the popout the properties sidebar and the routine editor share and
   // starts its in-room pick mode
   function pickInRoom(options) {
@@ -2560,7 +2573,7 @@ describe('the shared widget picker', () => {
     let picked = null;
     pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
     // the card covers the holder, so a click on it means the holder underneath
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toBe('h1');
   });
 
@@ -2568,26 +2581,38 @@ describe('the shared widget picker', () => {
     const get = room([ 'target', 'button' ], [ 'l1', 'label' ]);
     let picked = null;
     pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
-    handleWidgetPickerSelection([ get('l1') ]);
+    selectInRoom([ get('l1') ]);
     expect(picked).toBeNull();
     expect(isWidgetPickerActive()).toBe(true); // still waiting for a matching click
+  });
+
+  test('a selection made anywhere but in the room is not a pick', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    // the editor selecting another widget on its own (the JSON editor's tree, a
+    // link in the sidebar) is it moving on: taking that as a pick would both
+    // write it into the parameter and put the editor back on the widget the
+    // picker belongs to, so the sidebar could not move on at all while one runs
+    expect(handleWidgetPickerSelection([ get('h1') ])).toBe(false);
+    expect(picked).toBeNull();
   });
 
   test('without a type filter only resolveCovering pickers look past cards and piles', () => {
     const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'p1', 'pile', 'h1' ], [ 'c1', 'card', 'p1' ], [ 'c2', 'card' ]);
     let picked = null;
     pickInRoom({ apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c1') ]); // the plain picker takes what was clicked
+    selectInRoom([ get('c1') ]); // the plain picker takes what was clicked
     expect(picked).toBe('c1');
 
     stopWidgetPicker();
     pickInRoom({ resolveCovering: true, apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toBe('h1');
 
     stopWidgetPicker();
     pickInRoom({ resolveCovering: true, apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c2') ]); // a card on the table stays itself
+    selectInRoom([ get('c2') ]); // a card on the table stays itself
     expect(picked).toBe('c2');
   });
 
@@ -2595,7 +2620,7 @@ describe('the shared widget picker', () => {
     const get = room([ 'target', 'button' ], [ 'c1', 'card', 'c2' ], [ 'c2', 'card', 'c1' ]);
     let picked = null;
     pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toBeNull();
   });
 
@@ -2603,9 +2628,9 @@ describe('the shared widget picker', () => {
     const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'h2', 'holder' ], [ 'c1', 'card', 'h2' ]);
     let picked = [];
     pickInRoom({ multiple: true, resolveCovering: true, getSelectedIDs: () => picked, apply: ids => picked = ids });
-    handleWidgetPickerSelection([ get('h1') ]);
+    selectInRoom([ get('h1') ]);
     expect(isWidgetPickerActive()).toBe(true);
-    handleWidgetPickerSelection([ get('c1') ]);
+    selectInRoom([ get('c1') ]);
     expect(picked).toEqual([ 'h1', 'h2' ]);
   });
 
@@ -2622,7 +2647,7 @@ describe('the shared widget picker', () => {
 
     // it stays selected while the picker runs, so a click on it never arrives as
     // a selection change - only as a click
-    handleWidgetPickerSelection([ widgets.get('target') ]);
+    selectInRoom([ widgets.get('target') ]);
     expect(picked).toBeNull();
     expect(handleWidgetPickerClick(widgets.get('target'))).toBe(true);
     expect(picked).toBe('target');
@@ -2684,6 +2709,78 @@ describe('the shared widget picker', () => {
     expect(value).toEqual({ from: [ 'h1', 'h2' ] });
     popup.hide();
   });
+
+  // the facade the properties sidebar renders a multi-selection through
+  // (MultiWidget): its id is the ids of all of them, so no widget in the room
+  // has it - the widgets behind it are what says whether it is still there
+  function multiSelection(...ids) {
+    return { id: ids.join(','), isMulti: true, widgets: ids.map(id => widgets.get(id)) };
+  }
+
+  test('the parent picker of a multi-selection picks in the room', () => {
+    const get = room([ 'h1', 'holder' ], [ 'h2', 'holder' ], [ 'h3', 'holder' ]);
+    let picked = null;
+    startWidgetPicker(multiSelection('h1', 'h2'), (target, pickedWidgets) => picked = pickedWidgets.map(w => w.id));
+    expect(handleWidgetPickerClick(get('h3'))).toBe(true);
+    expect(picked).toEqual([ 'h3' ]);
+  });
+
+  test('a picker of a multi-selection ends when one of its widgets is gone', () => {
+    room([ 'h1', 'holder' ], [ 'h2', 'holder' ]);
+    const facade = multiSelection('h1', 'h2');
+    startWidgetPicker(facade, () => {});
+    expect(widgetPickerTarget()).toBe(facade);
+    // it does not end while they are there - the note used to say "h1,h2 is
+    // gone" about widgets that are both in the room
+    endWidgetPickerWithoutTarget();
+    expect(isWidgetPickerActive()).toBe(true);
+
+    widgets.delete('h1');
+    expect(widgetPickerTarget()).toBeNull();
+    endWidgetPickerWithoutTarget();
+    expect(isWidgetPickerActive()).toBe(false);
+    expect(document.querySelector('#editorNotes').lastChild.textContent).toBe('picking in the room ended: h1 is gone');
+  });
+});
+
+describe('what the editor says about a write it made off screen', () => {
+  // a color is picked by dragging, so the parameter is only written when the
+  // popup closes - which is also what the editor moving on to another widget
+  // does to it
+  function colorPopupWithAPick(widget) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineColorPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'CANVAS', color: '#1f5ca6' }, [ 'color' ], widget, [], []);
+    popup.show();
+    popup.applyValueInput('#3cb44b');
+    return popup;
+  }
+
+  const lastNote = () => document.querySelector('#editorNotes').lastChild.textContent;
+
+  beforeEach(() => {
+    widgets.clear();
+    const state = { id: 'button', type: 'button' };
+    widgets.set('button', { id: 'button', state, get: p => state[p], set() {} });
+  });
+
+  test('the write is named with the widget it went to', () => {
+    colorPopupWithAPick(widgets.get('button'));
+    closeEditorPopups();
+    expect(lastNote()).toBe('CANVAS color set to #3cb44b on button');
+  });
+
+  test('a widget that is on its way out of the room does not get credit for the write', () => {
+    // a pile sets isBeingRemoved and then awaits three property changes before
+    // it removes itself, so it is still in widgets under its own id - and the
+    // sidebar drops writes to it for exactly that window (widgetStillExists)
+    widgets.get('button').isBeingRemoved = true;
+    colorPopupWithAPick(widgets.get('button'));
+    closeEditorPopups();
+    expect(lastNote()).toBe('CANVAS color was not set to #3cb44b: button is gone');
+  });
 });
 
 describe('widget type presets', () => {
@@ -2730,9 +2827,9 @@ describe('widget type presets', () => {
       'RECALL.holder': 'holder',
       'ROTATE.holder': 'holder',
       'SCORE.seats': 'seat',
+      'SHIFT.holders': 'holder',
       'SHUFFLE.holder': 'holder',
       'SORT.holder': 'holder',
-      'SWAPHANDS.source': 'seat',
       'TIMER.timer': 'timer', 'TIMER.collection': 'timer',
       'TURN.turn': 'seat', 'TURN.source': 'seat'
     });
@@ -3188,9 +3285,10 @@ describe('the words and the units of an operation', () => {
       'RECALL inHolder': 'only the cards on the table',
       'RECALL byDistance': 'nearest cards first',
       'SELECT random': 'in random order',
+      'SHIFT wrap': 'stopping at the last one',
+      'SHIFT keepOrder': 'in the order the widgets were created',
       'SORT reverse': 'biggest first',
-      'SORT rearrange': 'without moving them',
-      'SWAPHANDS keepOrder': 'keeping the order of each hand'
+      'SORT rearrange': 'without moving them'
     });
   });
 
