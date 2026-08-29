@@ -2002,6 +2002,11 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
 }
 
 async function jeApplyChanges() {
+  // while the state is only semantically wrong the commands keep editing the text, but the
+  // room is never handed a state it cannot load - including by the commands that apply their
+  // own change instead of going through the gated call in clickButton
+  if(jeJSONerror)
+    return;
   if(jeMode == 'multi')
     return await jeApplyChangesMulti();
 
@@ -2430,13 +2435,15 @@ function jeMultiWidgetReferenceError(state) {
       // that happens to be called deck
       if(property == 'deck' && !goesToACard(widgetID))
         continue;
-      if(value === undefined || value === null)
+      // null is applied by deleting the property: a widget without a parent belongs to the
+      // room, while a card without a deck is dropped on the next load like a missing one
+      if(value === undefined || (value === null && property != 'deck'))
         continue;
       const forWidget = widgetID === null ? '' : ` (widget "${widgetID}")`;
       // an object arrives here either as a value that is no ID at all, or as a
       // per-widget object whose keys do not match the selection - which makes the
       // whole object the one value the selection shares
-      if(typeof value == 'object')
+      if(value !== null && typeof value == 'object')
         return widgetID === null
           ? `${label} has to be a widget ID, or an object with one entry per selected widget.`
           : `${label} has to be a widget ID${forWidget}.`;

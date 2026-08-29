@@ -5540,6 +5540,30 @@ test('A multi-widget selection is not given a deck that does not exist', async t
     .expect(widgetProperty('two', 'deck')).eql('deck')
     .expect(ClientFunction(() => window.jsonEditErrors)()).eql([]);
 
+  // deleting the deck leaves the card without one, which the next load drops just the same
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { deck: null }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Deck null does not exist.')
+    .expect(widgetProperty('one', 'deck')).eql('deck')
+    .expect(widgetProperty('two', 'deck')).eql('deck');
+
+  // a command that applies its own change instead of leaving that to the editor does not
+  // get to hand the state over either
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { deck: 'nope', icon: { name: 'star' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Deck nope does not exist.');
+  await putCursorBehind('"star"');
+  await t
+    .click('#je_iconToString')
+    .expect(jsonEditorText()).contains('"icon": "star"')
+    .expect(jsonError()).eql('Deck nope does not exist.')
+    .expect(widgetProperty('one', 'deck')).eql('deck')
+    .expect(widgetProperty('two', 'deck')).eql('deck')
+    .expect(widgetProperty('one', 'icon')).notOk()
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([]);
+
   // a routine reaches the same property without going through the editor, so the card
   // has to survive it there too - without faces until it names a deck again
   await ClientFunction(() => widgets.get('one').set('deck', 'nope'))();
