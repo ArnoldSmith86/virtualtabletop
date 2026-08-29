@@ -300,12 +300,19 @@
   color: #999;
 }
 
+/* a labelled empty chip is a "pick something" affordance rather than a value
+   swatch, so it takes the theme's own colors - the checkerboard of a plain
+   value chip sits on hardcoded white, which leaves the label unreadable once
+   its text color follows a dark theme */
 .editorModule .propertyEmptyChipLabel {
   width: auto;
   min-width: 0;
   padding: 0 8px;
   font-size: 13px;
   color: var(--textColor);
+  background: linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), var(--backgroundColor);
+  background-position: 0 0, 4px 4px;
+  background-size: 8px 8px;
 }
 
 .editorModule .propertyEmptyChipLabel::after {
@@ -491,6 +498,12 @@
 .editorModule .iconInput .propertyPickerChips .emoji-monochrome,
 .editorModule .iconInput .propertyPickerChips .emojiColorChip {
   font-size: 36px;
+}
+
+/* the button below the icon list keeps the same gap to it that the library
+   filter line above the list keeps to its first row */
+.editorModule button.propertyPickerBrowseMore {
+  margin-top: 8px;
 }
 
 .editorModule .propertyPickerEmpty {
@@ -1162,7 +1175,6 @@
   line-height: 1.2;
   text-align: center;
   white-space: normal;
-  background: linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), var(--backgroundColor);
   background-position: 0 0, 8px 8px;
   background-size: 16px 16px;
 }

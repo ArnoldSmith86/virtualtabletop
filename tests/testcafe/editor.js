@@ -1735,6 +1735,189 @@ test('A search narrow enough shows the skin tones in the sidebar icon picker its
   await setEditorState(null);
 });
 
+test('The inline icon picker hands its search term to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, icon: 'casino' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+  const pickerSearch = picker.find('input:not([type])').nth(0);
+  // the transferred term is selected, so typing a different search replaces it instead of appending to it
+  const searchSelection = ClientFunction(() => {
+    const input = document.querySelector('#symbolPickerOverlay input');
+    return { start: input.selectionStart, end: input.selectionEnd, focused: document.activeElement == input };
+  });
+  // the search field is a type=search input, so the browser draws its own clear button in it - that button
+  // empties the field and fires input without ever firing a keystroke, exactly like paste, cut and drop do
+  const clearSearchNatively = ClientFunction(() => {
+    const input = document.querySelector('#symbolPickerOverlay input');
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    .typeText(pickerSearch, 'dragon')
+    // the button opens the picker with this search in it, so it offers more of what the user is
+    // looking for rather than everything there is
+    .expect(picker.find('button[icon=apps]').textContent).eql('Browse more...')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // the search the user already typed carries over, so the picker opens filtered instead of
+    // making them type it again in a list of thousands of icons
+    .expect(Selector('#symbolPickerOverlay input').value).eql('dragon')
+    .expect(searchSelection()).eql({ start: 0, end: 6, focused: true })
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i.hidden').count).gt(0)
+    // opening filtered is only helpful if the picker says so: how much of the list is left, and the
+    // way back to all of it - a short list otherwise reads as the whole catalogue
+    .expect(Selector('#symbolSearchStatus').visible).ok()
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons match "dragon"$/)
+    // both pickers rank the same way, so a term transferred from the inline one finds the same
+    // icons here - including the ones only a second term narrows down to
+    .typeText('#symbolPickerOverlay input', 'dragon head', { replace: true })
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0);
+
+  // emptying the field the way the browser's own clear button does has to filter again as well
+  await clearSearchNatively();
+
+  await t
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .typeText('#symbolPickerOverlay input', 'dragon', { replace: true })
+    .expect(Selector('#symbolSearchStatus').visible).ok()
+    // "Show all icons" empties the search field, which is the whole list back in one click
+    .click('#symbolSearchStatus button')
+    .expect(Selector('#symbolPickerOverlay input').value).eql('')
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .expect(Selector('#symbolList h2.hidden').count).eql(0)
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    // an icon whose name carries uppercase letters ([card_K]) has to be found on both sides of the
+    // handover, or the term the inline picker answered comes up empty in the one it opens
+    .typeText(pickerSearch, 'card_k', { replace: true })
+    .expect(picker.find('.propertyValueChip[data-value="[card_K]"]').exists).ok()
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolList i[data-symbol="[card_K]"]').hasClass('hidden')).notOk()
+    .expect(Selector('#symbolList i.exactMatch:not(.hidden)').getAttribute('data-symbol')).eql('[card_K]')
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+test('The inline icon picker hands its chosen libraries to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, icon: 'casino' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+  const pickerSearch = picker.find('input:not([type])').nth(0);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    // switching a library off and then being handed icons from it anyway contradicts the filter the
+    // user just set, so the "Libraries:" checkboxes travel with the search term
+    .click(picker.find('.iconPickerFilterChip').withText('Game Icons').find('input'))
+    .typeText(pickerSearch, 'flag')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i[data-type=game-icons]:not(.hidden)').count).eql(0)
+    // ...and every library left ticked has to arrive whole. The emoji drawn from their artwork - the
+    // 269 flags among them - are what notices first if the filter reads data-type as anything but
+    // the library the icon belongs to
+    .expect(Selector('#symbolList i.emojiAsImage:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i.emojiAsImage:not([data-type=emoji-color])').count).eql(0)
+    .expect(Selector('#symbolList i[data-type=emoji-color]:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i[data-type=material-symbols]:not(.hidden)').count).gt(0)
+    // the picker has no library checkboxes of its own, so it has to say which filter it is under
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons from 4 of 5 libraries match "flag"$/)
+    // ...and "Show all icons" is the way back from both filters at once
+    .click('#symbolSearchStatus button')
+    .expect(Selector('#symbolPickerOverlay input').value).eql('')
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .click('#symbolPickerOverlay [icon=close]')
+    // a library filter is only what this one picker was opened with: the next one is unfiltered again
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+test('The inline image picker hands its search term to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+  const pickerSearch = picker.find('input:not([type])').nth(0);
+  const imageProperty = ClientFunction(() => widgets.get('w').get('image'));
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .typeText(pickerSearch, 'dragon')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolPickerOverlay input').value).eql('dragon')
+    // this picker offers images only, so the transferred term is narrowed by the search and by the
+    // font family hidden in CSS - the result counters have to agree with both
+    .expect(Selector('#symbolPickerOverlay').hasClass('hideFonts')).ok()
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList i:not(.hidden)').filterVisible().count).gt(0)
+    // the same dialog is the image picker here, so it calls what it offers images - the field the term
+    // came from searched images - and its count leaves the hidden font family out
+    .expect(Selector('#symbolPickerOverlay h1').textContent).eql('Pick image')
+    .expect(Selector('#symbolPickerOverlay input').getAttribute('placeholder')).contains('what the image shows')
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ images match "dragon"$/)
+    .expect(Selector('#symbolSearchStatus button').textContent).eql('Show all images')
+    // ...so a term that only font icons answer ends up empty and has to say so
+    .typeText('#symbolPickerOverlay input', '10k', { replace: true })
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolNoResults').textContent).contains('No images match "10k".')
+    .expect(Selector('#symbolList').visible).notOk()
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    // ...and the next picker opened from an icon field is an icon picker again
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay h1').textContent).eql('Pick icon')
+    .click('#symbolPickerOverlay [icon=close]')
+    // a flag emoji is a color emoji like any other, so picking one has to hand back its image URL -
+    // an unrecognized type resolves to url: null, which clears the image instead of setting it
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .typeText(pickerSearch, 'flag', { replace: true })
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolList i.emojiAsImage:not(.hidden)').count).gt(0)
+    .click(Selector('#symbolList i.emojiAsImage:not(.hidden)').nth(0))
+    .expect(imageProperty()).match(/^\/i\/noto-emoji\/emoji_u[0-9a-f_]+\.svg$/);
+  await setEditorState(null);
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();
