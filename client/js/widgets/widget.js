@@ -436,6 +436,10 @@ export class Widget extends StateManaged {
       this.applyRemove();
     } catch(e) {
       console.error(`Could not remove widget!`, this.id, e);
+      // applyRemove can throw before it gets around to taking the widget off the board, so
+      // do that here: an object of a room that is gone must not stay painted on the next one
+      removeFromDOM($(`#STYLES_${this.cssScope}`));
+      removeFromDOM(this.domElement);
     }
   }
 

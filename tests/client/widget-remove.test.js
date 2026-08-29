@@ -131,6 +131,19 @@ describe('Removing a tree of widgets', () => {
     expect(removals).toBe(1);
   });
 
+  test('a widget that throws is still taken off the board with its stylesheet', () => {
+    const broken = createWidget({ id: 'brokenRoot', type: 'holder' });
+    const style = document.createElement('style');
+    style.id = `STYLES_${broken.cssScope}`;
+    document.head.appendChild(style);
+    breakRemovalOf(broken);
+
+    broken.applyRemoveRecursive();
+
+    expect(broken.domElement.parentNode).toBe(null);
+    expect(document.getElementById(`STYLES_${broken.cssScope}`)).toBe(null);
+  });
+
   test('widgets that are each other\'s parent do not recurse forever', () => {
     const first = createWidget({ id: 'firstOfCycle', type: 'holder', parent: 'secondOfCycle' });
     const second = createWidget({ id: 'secondOfCycle', type: 'holder', parent: 'firstOfCycle' });
