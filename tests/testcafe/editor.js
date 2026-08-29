@@ -1554,6 +1554,187 @@ test('The symbol picker says an image-only search found nothing', async t => {
   await setEditorState(null);
 });
 
+// Where the skin tone flyout (client/js/emojivariants.js) is put and which colours it takes are
+// decided against the real page, and that is where its bugs have been: a box that hung off the
+// viewport, and the editor's dark colours on top of the always-light "Pick icon" overlay. jsdom sees
+// neither, so the two live here. The flyout goes into #editor whenever its icon does - the deck
+// editor moves the overlay in there as well, which is what made the colours go wrong.
+const flyoutAppearance = ClientFunction(() => {
+  const flyout = document.querySelector('.emojiVariantFlyout');
+  const box = flyout.getBoundingClientRect();
+  return {
+    parent: flyout.parentNode.id,
+    background: getComputedStyle(flyout).backgroundColor,
+    onScreen: box.left >= 0 && box.top >= 0 && box.right <= window.innerWidth && box.bottom <= window.innerHeight
+  };
+});
+const overlayBackground = ClientFunction(() => getComputedStyle(document.querySelector('#symbolPickerOverlay')).backgroundColor);
+const setDarkMode = ClientFunction(() => document.querySelector('body').classList.add('darkMode'));
+
+test('The skin tone flyout takes the colours of the picker it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+  await setDarkMode();
+
+  // the sidebar's chips are part of the editor, so their flyout is dark along with it
+  await t
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+    .click(Selector('.propertyValueChip.hasEmojiVariants').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(8, 9, 10)', onScreen: true })
+    .click(Selector('.iconInput .propertyPreviewButton'))   // closes the picker, and the flyout with it
+    .expect(Selector('.emojiVariantFlyout').exists).notOk();
+
+  // the fullscreen picker is white wherever it is parented, and the deck editor parents it inside
+  // #editor - so the flyout of one of its icons has to stay white too
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#topSurface', { offsetX: 10, offsetY: 10 })
+    .click('#editorToolbar [icon=style]')
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorAddIcon')
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(overlayBackground()).eql('rgb(255, 255, 255)')
+    // wide enough for the forms to stay in the flyout: a search this one could show in the list
+    // itself has no flyout to take the colours of (see the test below)
+    .typeText('#symbolPickerOverlay input', 'hand')
+    .click(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(255, 255, 255)', onScreen: true })
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+// Which searches are narrow enough for their skin tones to go into the list itself is decided
+// against the real icon list - 13288 icons, none of which jsdom has.
+const widgetIcon = ClientFunction(() => JSON.stringify(widgets.get('w').get('icon')));
+const inlineForms = ClientFunction(() => ({
+  forms: document.querySelectorAll('#symbolList .emojiVariantInline:not(.hidden)').length,
+  expanded: document.querySelector('#symbolList').classList.contains('emojiVariantsExpanded'),
+  marker: getComputedStyle(document.querySelector('#symbolList i.hasEmojiVariants:not(.hidden)'), '::after').display
+}));
+
+test('A search narrow enough shows the skin tones in the icon list itself', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+    .click(Selector('.propertyPicker button[icon=apps]'))                  // "Show all"
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+
+    // the three thumb emoji and their five tones each, and the corner marker gone because nothing
+    // is left for it to point at
+    .typeText('#symbolPickerOverlay input', 'thumbs')
+    .expect(inlineForms()).eql({ forms: 15, expanded: true, marker: 'none' })
+
+    // a search that would fill the list with them keeps them out, and keeps the flyout - which a
+    // click on a marked icon opens instead of picking the icon, so the picker stays where it is
+    .typeText('#symbolPickerOverlay input', 'hand', { replace: true })
+    .expect(inlineForms()).eql({ forms: 0, expanded: false, marker: 'block' })
+    .click(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .pressKey('esc')
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
+
+    // and a form in the list is picked with a single click, like any other icon of it
+    .typeText('#symbolPickerOverlay input', 'victory', { replace: true })
+    .expect(inlineForms()).eql({ forms: 5, expanded: true, marker: 'none' })
+    .click(Selector('#symbolList .emojiVariantInline').nth(4))
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    .expect(widgetIcon()).contains('✌🏿');
+  await setEditorState(null);
+});
+
+// The same for the picker that sits in the sidebar itself, whose list is the chips of its search
+// (and, through the same control, the picker of a deck editor property row). Its limit is the
+// number of icons the search shows at all, so which searches fit is decided by the real index here
+// as well - "woman" has more matches than it can show, "thumbs" has thirty-five.
+// The forms sit in the list like every other chip, so a wrapped row of them keeps the columns of
+// the rows above it: anything the forms added between the chips would put every row after a group
+// out of those columns (offColumn counts the chips that are not on the pitch).
+const inlineChips = ClientFunction(() => {
+  const lists = document.querySelectorAll('.propertyPickerChips');
+  const results = lists[lists.length-1];
+  const marked = results.querySelector('.hasEmojiVariants');
+  const chips = results.querySelectorAll('.propertyValueChip');
+  const left = results.getBoundingClientRect().left;
+  const pitch = chips.length ? Math.round(chips[0].getBoundingClientRect().width) + 4 : 1;
+  let offColumn = 0;
+  for(let i = 0; i < chips.length; ++i)
+    if(Math.round(chips[i].getBoundingClientRect().left - left) % pitch)
+      ++offColumn;
+  return {
+    forms: results.querySelectorAll('.emojiVariantInline').length,
+    expanded: results.classList.contains('emojiVariantsExpanded'),
+    marker: marked ? getComputedStyle(marked, '::after').display : 'no marked chip',
+    offColumn
+  };
+});
+const markedResultChip = Selector('.propertyPickerChips').nth(-1).find('.propertyValueChip.hasEmojiVariants').nth(0);
+// the picker's search field, which is its only text input - the type toggles are checkboxes and
+// the icon scale is a number
+const iconPickerSearch = Selector('.propertyPicker input:not([type])');
+
+test('A search narrow enough shows the skin tones in the sidebar icon picker itself', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+
+    // the three thumb emoji and their five tones each, and nothing left for the corner marker to
+    // point at
+    .typeText(iconPickerSearch, 'thumbs')
+    .expect(inlineChips()).eql({ forms: 15, expanded: true, marker: 'none', offColumn: 0 })
+
+    // a search the picker already cuts off has more to show than its tones, so they stay behind
+    // the flyout there - which a click on a marked chip opens instead of picking that chip
+    .typeText(iconPickerSearch, 'woman', { replace: true })
+    .expect(inlineChips()).eql({ forms: 0, expanded: false, marker: 'block', offColumn: 0 })
+    .click(markedResultChip)
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(widgetIcon()).eql('"👍"')
+    .pressKey('esc')
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
+
+    // and a form in the list is picked with a single click, like any other chip of it
+    .typeText(iconPickerSearch, 'victory', { replace: true })
+    .expect(inlineChips()).eql({ forms: 5, expanded: true, marker: 'none', offColumn: 0 })
+    .click(Selector('.propertyPickerChips').nth(-1).find('.emojiVariantInline').nth(4))
+    .expect(widgetIcon()).contains('✌🏿');
+  await setEditorState(null);
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState();

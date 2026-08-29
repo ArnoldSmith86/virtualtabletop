@@ -21,6 +21,7 @@ beforeAll(() => {
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
+  window.closeEmojiVariantFlyout = () => {}; // the icon picker's skin tone flyout (emojivariants.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
   // the validator tables are part of the editor bundle; the property proposals read them
   window.WIDGET_PROPERTIES = {

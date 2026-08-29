@@ -812,6 +812,7 @@ async function loadEditMode() {
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
+      enableEmojiVariantFlyouts, closeEmojiVariantFlyout, expandEmojiVariants, loadEmojiVariants,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
       html, formField,
