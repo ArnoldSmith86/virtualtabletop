@@ -1158,15 +1158,15 @@ class PickerInput extends PropertyInput {
   }
 }
 
-// Values the color text field takes: a hex, a named color or a color function,
-// i.e. everything css itself would accept there. A value it does not take (a
-// var(), a gradient) is left out of the field rather than shown in it, because
-// typing a single character then turns the field red on a value it was given.
+// Values the color text field takes: everything css itself accepts as a color,
+// minus var(), which stands for a value the field cannot show. A value it does
+// not take is left out of the field rather than shown in it, because typing a
+// single character then turns the field red on a value it was given.
 function colorHexInputAccepts(value) {
   const text = String(value === null || value === undefined ? '' : value).trim();
-  if(text.startsWith('#'))
-    return !!text.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/);
-  return cssValueIsColor(text);
+  if(text.match(/^var\(/i))
+    return false;
+  return cssColorIsValid(text);
 }
 
 // The hex an <input type="color"> shows a value as, or null when it cannot show
@@ -1264,7 +1264,7 @@ class ColorInput extends PickerInput {
         hexInput.classList.remove('inputError');
         this.setValue(v);
         if(colorPicker)
-          colorPicker.value = toHex(v);
+          colorPicker.value = colorInputHexValue(v, this.colorHost()) || colorPicker.value;
       } else if(v === '') {
         hexInput.classList.remove('inputError');
         this.setValue(null);
@@ -1827,15 +1827,23 @@ function backgroundColorFromShorthand(css, cssClass) {
 
 // The row edits two different declarations depending on what the widget
 // carries, so it says which one and what that means for an image behind it.
-const backgroundColorHint = 'Sets background-color, so an image on the widget and the way it is scaled stay as they are. A color a game keeps in the background shorthand is read from there and moved here as soon as it is changed - which also ends any image that shorthand was hiding. A background that paints a gradient or an image keeps using the shorthand, and a color picked here replaces it.';
+const backgroundColorHint = 'Sets background-color, so an image on the widget and the way it is scaled stay as they are. A color a game keeps in the background shorthand is read from there and moved here as soon as it is changed - which also ends any image that shorthand was hiding. A background that paints a gradient or an image keeps using the shorthand, and a color picked here replaces it - unless a background-color of its own already sits behind it.';
 
-// A shorthand that paints more than a color (a gradient, an image) stays the
-// declaration the color input writes to: it would cover anything set on
-// background-color, so writing the longhand would change nothing on screen -
-// and it has already reset the image properties the longhand exists to protect.
+// The declaration the color row reads and writes: background-color, except
+// where a shorthand that paints more than a color (a gradient, an image) is the
+// one in effect. That shorthand would cover anything set on background-color,
+// so writing the longhand would change nothing on screen - and it has already
+// reset the image properties the longhand exists to protect. A background-color
+// the class declares itself does stay the edited declaration: it paints behind
+// the gradient rather than being covered by it, unless the shorthand follows it
+// in the same rule and resets it.
 function backgroundColorKey(css, cssClass) {
-  const value = parsePropertyFromCSS(css, 'background', null, cssClass);
-  return value !== null && !cssBackgroundIsPlainColor(value) ? 'background' : 'background-color';
+  const shorthand = parsePropertyFromCSS(css, 'background', null, cssClass);
+  if(shorthand === null || cssBackgroundIsPlainColor(shorthand))
+    return 'background-color';
+  const names = cssClassOwnDeclarations(css, cssClass).map(declaration=>String(declaration.name).trim());
+  const longhandIndex = names.indexOf('background-color');
+  return longhandIndex != -1 && longhandIndex > names.indexOf('background') ? 'background-color' : 'background';
 }
 
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
@@ -1877,21 +1885,31 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
   };
   return Object.assign({
     getValue: _=>{
-      const value = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
-      if(value === null && isBackgroundColor)
-        return backgroundColorFromShorthand(widget.get(cssProperty), cssClass);
-      return value;
+      const css = widget.get(cssProperty);
+      if(!isBackgroundColor)
+        return parsePropertyFromCSS(css, key, null, cssClass);
+      // a shorthand that paints more than a color is no color to offer as the
+      // set one - the row shows it as the effective value instead
+      if(backgroundColorKey(css, cssClass) == 'background')
+        return null;
+      const value = parsePropertyFromCSS(css, key, null, cssClass);
+      return value !== null ? value : backgroundColorFromShorthand(css, cssClass);
     },
     getEffective: _=>{
-      const raw = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
-      if(propertyInputValueSet(raw))
-        return raw;
+      const css = widget.get(cssProperty);
       if(isBackgroundColor) {
-        // whatever the shorthand paints is what the widget shows, so the row
-        // names it instead of claiming the background is not set
-        const shorthand = parsePropertyFromCSS(widget.get(cssProperty), 'background', null, cssClass);
+        // whatever the declaration in effect paints is what the widget shows,
+        // so the row names it instead of claiming the background is not set
+        const value = parsePropertyFromCSS(css, backgroundColorKey(css, cssClass), null, cssClass);
+        if(propertyInputValueSet(value))
+          return cssValueWithoutImportant(value);
+        const shorthand = parsePropertyFromCSS(css, 'background', null, cssClass);
         if(propertyInputValueSet(shorthand))
           return cssValueWithoutImportant(shorthand);
+      } else {
+        const raw = parsePropertyFromCSS(css, key, null, cssClass);
+        if(propertyInputValueSet(raw))
+          return raw;
       }
       return computedCssValue(effectiveElement(), key);
     },

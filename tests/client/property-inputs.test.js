@@ -624,12 +624,46 @@ describe('the background color input', () => {
   });
 
   test('the color text field takes every color css takes, and nothing else', () => {
-    for(const value of [ '#abc', '#abcdef', '#abcdef80', 'transparent', 'red', 'rgb(1, 2, 3)', 'oklch(0.5 0.1 20)' ])
+    for(const value of [ '#abc', '#abcd', '#abcdef', '#abcdef80', 'transparent', 'red', 'rebeccapurple', 'rgb(1, 2, 3)',
+                         'rgb(1 2 3 / 0.5)', 'hsl(120 50% 50%)', 'oklch(0.5 0.1 20)', 'color(srgb 1 1 1)' ])
       expect(cssHelpers.colorHexInputAccepts(value)).toBe(true);
     // shown in the value text instead: typing in a field that rejects what it
     // was given turns it red on the first keystroke
-    for(const value of [ 'var(--VTTblue)', 'linear-gradient(red, blue)', 'url("/assets/1_2") no-repeat', '#abcd', '#ghijkl', '', null ])
+    for(const value of [ 'var(--VTTblue)', 'linear-gradient(red, blue)', 'url("/assets/1_2") no-repeat', '#ghijkl', '', null ])
       expect(cssHelpers.colorHexInputAccepts(value)).toBe(false);
+    // a value shaped like a color but written with nonsense in it is not one
+    for(const value of [ 'rgb(banana)', 'oklch(foo bar baz)', 'hsl(1, 2, 3, 4, 5)', 'red !important' ])
+      expect(cssHelpers.colorHexInputAccepts(value)).toBe(false);
+  });
+
+  test('a color declared next to a gradient keeps both, and stays the edited one', () => {
+    const widget = widgetWith({ background: 'linear-gradient(red, blue)', 'background-color': '#ff0000' });
+    const options = backgroundOptions(widget);
+    expect(options.getValue()).toBe('#ff0000');
+    options.setValue('#00ff00');
+    expect(widget.state.css).toEqual({ background: 'linear-gradient(red, blue)', 'background-color': '#00ff00' });
+  });
+
+  test('a color the shorthand behind it resets is not the edited declaration', () => {
+    const widget = widgetWith({ 'background-color': '#ff0000', background: 'linear-gradient(red, blue)' });
+    const options = backgroundOptions(widget);
+    expect(options.getValue()).toBe(null);
+    expect(options.getEffective()).toBe('linear-gradient(red, blue)');
+    options.setValue('#00ff00');
+    expect(widget.state.css).toEqual({ 'background-color': '#ff0000', background: '#00ff00' });
+  });
+
+  test('a state class color wins over a gradient the default class paints', () => {
+    const widget = widgetWith({ default: { background: 'linear-gradient(red, blue)' }, '.droppable': { 'background-color': '#ff0000' } });
+    expect(backgroundOptions(widget, '.droppable').getValue()).toBe('#ff0000');
+    backgroundOptions(widget, '.droppable').setValue('#00ff00');
+    expect(widget.state.css).toEqual({ default: { background: 'linear-gradient(red, blue)' }, '.droppable': { 'background-color': '#00ff00' } });
+  });
+
+  test('a state class without a color of its own replaces the gradient it inherits', () => {
+    const widget = widgetWith({ default: { background: 'linear-gradient(red, blue)' }, '.droppable': {} });
+    backgroundOptions(widget, '.droppable').setValue('#00ff00');
+    expect(widget.state.css).toEqual({ default: { background: 'linear-gradient(red, blue)' }, '.droppable': { background: '#00ff00' } });
   });
 
   test('clearing the color drops both declarations from the state class it was set on', () => {

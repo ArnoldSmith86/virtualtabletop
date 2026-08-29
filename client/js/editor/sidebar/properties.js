@@ -956,6 +956,20 @@ function parsePropertyFromCSS(css, prop, defaultValue='', cssClass="default") {
   return defaultValue;
 }
 
+// The declarations a css class writes itself, in the order it has them - what
+// parsePropertyFromCSS cannot say, because it answers a state class with the
+// "default" one when the class does not carry the property, and because two
+// declarations of the same rule are decided by which one comes last.
+function cssClassOwnDeclarations(css, cssClass='default') {
+  const source = typeof css === 'string' ? cssStringToObject(css) : css;
+  if (!isObjectLike(source))
+    return [];
+  const className = cssClass || 'default';
+  if (hasNestedCSSClasses(source))
+    return isObjectLike(source[className]) ? cssDeclarationList(source[className]) : [];
+  return className === 'default' ? cssDeclarationList(source) : [];
+}
+
 function cssStringToObject(str) {
   const out = {};
   if (!str || typeof str !== 'string') return out;
@@ -1128,6 +1142,23 @@ function cssValueIsColor(value) {
   if(text.match(/^(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\([^()]*\)$/))
     return true;
   return cssNamedColors.indexOf(text) != -1;
+}
+
+// Whether css takes a value as a color, asked of the css parser instead of
+// matched by hand: a value it does not understand never makes it onto the
+// declaration, so what is left there is the answer. A var() passes - it is a
+// valid color value, whatever the custom property behind it holds.
+let cssColorProbe = null;
+function cssColorIsValid(value) {
+  const text = String(value === null || value === undefined ? '' : value).trim();
+  if(!text)
+    return false;
+  if(typeof document == 'undefined')
+    return cssValueIsColor(text);
+  cssColorProbe = cssColorProbe || document.createElement('div');
+  cssColorProbe.style.color = '';
+  cssColorProbe.style.color = text;
+  return cssColorProbe.style.color !== '';
 }
 
 // A declaration value without its "!important" priority - the color inputs
