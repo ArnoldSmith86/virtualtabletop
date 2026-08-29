@@ -391,6 +391,7 @@ function closeEditorPopups() {
     }
   }
   closePropertyInfoPopup();
+  closeEmojiVariantFlyout();
   for(const write of applied)
     editorNote(writeWords(write));
 }

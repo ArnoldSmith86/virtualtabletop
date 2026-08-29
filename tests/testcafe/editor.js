@@ -24,6 +24,22 @@ const propertiesModuleOpen = { modules: { 'Edit Widgets': 'editorModuleTopLeft' 
 // above restores is what tells "the editor is there" from "the click has not arrived yet"
 const propertiesModule = Selector('#editorModuleTopLeft.tune');
 
+// Where the board sits in the window, so a test can put the pointer on a board coordinate
+const boardGeometry = ClientFunction(() => {
+  const surface = document.getElementById('topSurface').getBoundingClientRect();
+  const room = document.getElementById('roomArea').getBoundingClientRect();
+  return { left: surface.left - room.left, top: surface.top - room.top, scale: surface.width/1600 };
+});
+
+// Selecting more than one widget means dragging a rubber band around them: a click in the room
+// always selects the single widget under it.
+async function bandSelect(t, x1, y1, x2, y2) {
+  const geometry = await boardGeometry();
+  const point = (x, y) => ({ x: Math.round(geometry.left + x*geometry.scale), y: Math.round(geometry.top + y*geometry.scale) });
+  const from = point(x1, y1), to = point(x2, y2);
+  await t.drag('#roomArea', to.x - from.x, to.y - from.y, { offsetX: from.x, offsetY: from.y, speed: 0.5 });
+}
+
 test('Edit mode opens the Edit Widgets module when no module is remembered', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -1036,6 +1052,232 @@ test('Basic curates the stacking, scale and visibility switches, the scoreboard 
     .expect(value('board', 'seats')).eql('null');
 });
 
+test('The arrange bar puts a multi-selection on a circle around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    c1: { id: 'c1', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
+    c2: { id: 'c2', type: 'basic', x: 400, y: 100, width: 100, height: 100, rotation: 45 },
+    c3: { id: 'c3', type: 'basic', x: 400, y: 400, width: 100, height: 100, rotation: -30, scale: 1.5 },
+    // a global update routine runs once per property change, and only for a
+    // change that has the room to itself - one dot per widget the tool moves
+    tally: { id: 'tally', type: 'basic', x: 1200, y: 800, width: 50, height: 50, moves: '',
+      xGlobalUpdateRoutine: [ { func: 'SET', collection: 'thisButton', property: 'moves', value: '${PROPERTY moves OF tally}.' } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // where a widget ended up, in board coordinates, and how far it was turned
+  const placement = ClientFunction(() => [ 'c1', 'c2', 'c3' ].map(id => {
+    const widget = widgets.get(id);
+    return `${id}: ${widget.get('x')},${widget.get('y')} @${Math.round(widget.get('rotation') || 0)}`;
+  }).join(' | '));
+  const dragRadiusSlider = ClientFunction(value => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = value === null ? slider.max : value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  // Done in the same breath as the last move of the slider, which is what
+  // letting go of it looks like: the arrangement it started is still on its way
+  const setRadiusAndPressDone = ClientFunction(value => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = value;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('.arrangeCircleOptions button[icon=check]').click();
+  });
+  // every widget of the arrangement is drawn inside the board - the box a
+  // turned or enlarged widget covers, not the width and height it stores
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'c1', 'c2', 'c3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  const clearTally = ClientFunction(() => widgets.get('tally').set('moves', ''));
+  const tallied = ClientFunction(() => widgets.get('tally').get('moves'));
+  const start = 'c1: 100,100 @0 | c2: 400,100 @45 | c3: 400,400 @-30';
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
+  const options = Selector('.arrangeCircleOptions');
+  const radius = options.find('input[type=number]');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  // two widgets are not a circle - the button stays there and says why
+  await bandSelect(t, 40, 40, 560, 260);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('2 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).ok()
+    .expect(circleButton.getAttribute('title')).contains('needs 3+ widgets');
+
+  // the button arranges the selection right away, with the settings it comes
+  // with, and only then shows them: the circle is centered on what the
+  // selection covers - the turned and the enlarged widget with the box they
+  // are drawn in, not the one their width and height describe
+  await bandSelect(t, 40, 40, 560, 560);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(circleButton.hasAttribute('disabled')).notOk()
+    // the radius a press would apply is named on the button, so a selection is
+    // not thrown across the board by a setting left behind an hour ago
+    .expect(circleButton.getAttribute('title')).contains('radius 200')
+    .expect(options.find('input').exists).notOk()
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    // the box below the bar belongs to this button, which stays pressed for it
+    .expect(circleButton.hasClass('open')).ok()
+    .expect(radius.value).eql('200')
+    .expect(placement()).eql('c1: 476,265 @0 | c2: 176,439 @45 | c3: 176,92 @-30')
+    // each of the three moves is a change of its own, so a routine listening for
+    // one runs three times rather than being swallowed by an overlapping move
+    .expect(tallied()).eql('...')
+    // a radius that is typed in arranges the selection again, from where it was
+    // before the tool ran - so the widgets do not walk outwards step by step
+    .typeText(radius, '250', { replace: true })
+    .pressKey('enter')
+    .expect(placement()).eql('c1: 526,265 @0 | c2: 151,482 @45 | c3: 151,49 @-30')
+    // the slider is the other half of the same setting: it takes over from the
+    // field once that is no longer the one being typed in
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'));
+
+  await dragRadiusSlider('150');
+  await t
+    .expect(radius.value).eql('150')
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30')
+    // rotation goes on and off again, which gives every widget the rotation it
+    // brought rather than leaving it turned away from the center
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 426,265 @90 | c2: 201,395 @210 | c3: 201,135 @330')
+    .click(options.find('label.switchbox'))
+    .expect(placement()).eql('c1: 426,265 @0 | c2: 201,395 @45 | c3: 201,135 @-30');
+
+  // the slider ends its travel at the largest circle that keeps the selection
+  // on the board, so dragging it all the way leaves everything in sight - the
+  // widget drawn half again its size included, which needs the room it is drawn
+  // in rather than the 100x100 it stores
+  await dragRadiusSlider(null);
+  await t
+    .expect(radius.value).eql('213')
+    // the ceiling the slider is given again on every step keeps the thumb where
+    // the drag left it rather than pulling it back
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('213')
+    .expect(options.find('input[type=range]').value).eql('213')
+    .expect(placement()).eql('c1: 489,265 @0 | c2: 169,450 @45 | c3: 169,81 @-30')
+    .expect(onBoard()).ok()
+    // an emptied field keeps the radius the arrangement is standing on, so it
+    // has to show that radius again rather than read as blank
+    .selectText(radius)
+    .pressKey('delete')
+    .expect(radius.value).eql('')
+    .click(Selector('.arrangeButtons .arrangeGroupLabel').withExactText('Circle'))
+    .expect(radius.value).eql('213')
+    // and a circle of radius 0, which would stack the selection on one point,
+    // is not one of the values the field takes
+    .typeText(radius, '0', { replace: true })
+    .expect(radius.value).eql('1')
+    // which is the radius the board ends up on as well
+    .expect(placement()).eql('c1: 277,265 @0 | c2: 275,266 @45 | c3: 275,265 @-30');
+
+  // undoing puts the whole selection back, rotations included, and closes the
+  // settings again
+  await clearTally();
+  await t
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start)
+    // and putting them back is three changes as well, not one
+    .expect(tallied()).eql('...')
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
+
+  // done is the other way out: it closes the settings and leaves the widgets on
+  // the circle rather than putting them back. The radius it is pressed on is
+  // still being applied at that moment, so it is the one that has to end up on
+  // the board - not the one before it
+  await t.click(circleButton);
+  await setRadiusAndPressDone('100');
+  await t
+    .expect(placement()).eql('c1: 376,265 @0 | c2: 226,352 @45 | c3: 226,179 @-30')
+    .expect(options.find('input').exists).notOk()
+    .expect(circleButton.hasClass('open')).notOk();
+});
+
+test('The arrange bar arranges a selection inside another widget on the board around it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    // x, y and rotation of the three widgets are the box's, and the box shows
+    // them at half the size they are stored in: what the tool reads and the
+    // board the circle has to fit on are two different spaces
+    box: { id: 'box', type: 'basic', x: 600, y: 200, width: 400, height: 400, scale: 0.5 },
+    p1: { id: 'p1', type: 'basic', parent: 'box', x: 10, y: 10, width: 60, height: 60 },
+    p2: { id: 'p2', type: 'basic', parent: 'box', x: 200, y: 10, width: 60, height: 60 },
+    p3: { id: 'p3', type: 'basic', parent: 'box', x: 100, y: 200, width: 60, height: 60 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  // the arrangement measured where it is drawn: around the middle of the three
+  // widgets on the board, each of them the radius away from it
+  const circleOnBoard = ClientFunction(expected => {
+    const centers = [ 'p1', 'p2', 'p3' ].map(id => ({
+      x: widgets.get(id).get('_centerAbsoluteX'),
+      y: widgets.get(id).get('_centerAbsoluteY')
+    }));
+    const middle = {
+      x: centers.reduce((sum, c) => sum + c.x, 0) / centers.length,
+      y: centers.reduce((sum, c) => sum + c.y, 0) / centers.length
+    };
+    const radii = centers.map(c => Math.hypot(c.x - middle.x, c.y - middle.y));
+    const off = Math.hypot(middle.x - expected.x, middle.y - expected.y);
+    return off <= 2 && radii.every(r => Math.abs(r - expected.radius) <= 2)
+      ? `on a circle of ${expected.radius} around ${expected.x},${expected.y}`
+      : `${Math.round(middle.x)},${Math.round(middle.y)} r${radii.map(r => Math.round(r)).join('/')}`;
+  });
+  const onBoard = ClientFunction(() => {
+    const surface = document.getElementById('topSurface').getBoundingClientRect();
+    return [ 'p1', 'p2', 'p3' ].every(id => {
+      const box = widgets.get(id).domElement.getBoundingClientRect();
+      return box.left >= surface.left - 1 && box.top >= surface.top - 1 && box.right <= surface.right + 1 && box.bottom <= surface.bottom + 1;
+    });
+  });
+  // where the widgets sit in the box they belong to, which is what they store
+  const placement = ClientFunction(() => [ 'p1', 'p2', 'p3' ].map(id => `${id}: ${widgets.get(id).get('x')},${widgets.get(id).get('y')}`).join(' | '));
+  const dragRadiusSliderToMax = ClientFunction(() => {
+    const slider = document.querySelector('.arrangeCircleOptions input[type=range]');
+    slider.value = slider.max;
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  const start = 'p1: 10,10 | p2: 200,10 | p3: 100,200';
+  const circleButton = Selector('.arrangeButtons button[icon=scatter_plot]');
+  const options = Selector('.arrangeCircleOptions');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+
+  await bandSelect(t, 700, 300, 835, 435);
+  await t
+    .expect(Selector('#editorModules').innerText).contains('3 widgets selected')
+    .expect(placement()).eql(start)
+    .click(circleButton)
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 200 })).eql('on a circle of 200 around 767.5,367.5')
+    // the space around the selection is measured on the board as well, so the
+    // slider keeps the travel the board has room for instead of ending at the
+    // radius that is already applied
+    .expect(options.find('input[type=range]').getAttribute('max')).eql('352')
+    .expect(onBoard()).ok();
+
+  await dragRadiusSliderToMax();
+  await t
+    .expect(circleOnBoard({ x: 767.5, y: 367.5, radius: 352 })).eql('on a circle of 352 around 767.5,367.5')
+    .expect(onBoard()).ok()
+    // and taking it back puts every widget where its own box had it
+    .click(options.find('button[icon=undo]'))
+    .expect(placement()).eql(start);
+});
+
 test('Create game using edit mode', async t => {
   console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);
@@ -1309,6 +1551,370 @@ test('The symbol picker says an image-only search found nothing', async t => {
     .expect(Selector('#symbolList .material-symbols').filterVisible().count).eql(1)
     .click('#symbolPickerOverlay [icon=close]')
     .expect(Selector('#symbolPickerOverlay').visible).notOk();
+  await setEditorState(null);
+});
+
+// Where the skin tone flyout (client/js/emojivariants.js) is put and which colours it takes are
+// decided against the real page, and that is where its bugs have been: a box that hung off the
+// viewport, and the editor's dark colours on top of the always-light "Pick icon" overlay. jsdom sees
+// neither, so the two live here. The flyout goes into #editor whenever its icon does - the deck
+// editor moves the overlay in there as well, which is what made the colours go wrong.
+const flyoutAppearance = ClientFunction(() => {
+  const flyout = document.querySelector('.emojiVariantFlyout');
+  const box = flyout.getBoundingClientRect();
+  return {
+    parent: flyout.parentNode.id,
+    background: getComputedStyle(flyout).backgroundColor,
+    onScreen: box.left >= 0 && box.top >= 0 && box.right <= window.innerWidth && box.bottom <= window.innerHeight
+  };
+});
+const overlayBackground = ClientFunction(() => getComputedStyle(document.querySelector('#symbolPickerOverlay')).backgroundColor);
+const setDarkMode = ClientFunction(() => document.querySelector('body').classList.add('darkMode'));
+
+test('The skin tone flyout takes the colours of the picker it belongs to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+  await setDarkMode();
+
+  // the sidebar's chips are part of the editor, so their flyout is dark along with it
+  await t
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+    .click(Selector('.propertyValueChip.hasEmojiVariants').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(8, 9, 10)', onScreen: true })
+    .click(Selector('.iconInput .propertyPreviewButton'))   // closes the picker, and the flyout with it
+    .expect(Selector('.emojiVariantFlyout').exists).notOk();
+
+  // the fullscreen picker is white wherever it is parented, and the deck editor parents it inside
+  // #editor - so the flyout of one of its icons has to stay white too
+  await t
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#topSurface', { offsetX: 10, offsetY: 10 })
+    .click('#editorToolbar [icon=style]')
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorAddIcon')
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(overlayBackground()).eql('rgb(255, 255, 255)')
+    // wide enough for the forms to stay in the flyout: a search this one could show in the list
+    // itself has no flyout to take the colours of (see the test below)
+    .typeText('#symbolPickerOverlay input', 'hand')
+    .click(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(flyoutAppearance()).eql({ parent: 'editor', background: 'rgb(255, 255, 255)', onScreen: true })
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+// Which searches are narrow enough for their skin tones to go into the list itself is decided
+// against the real icon list - 13288 icons, none of which jsdom has.
+const widgetIcon = ClientFunction(() => JSON.stringify(widgets.get('w').get('icon')));
+const inlineForms = ClientFunction(() => ({
+  forms: document.querySelectorAll('#symbolList .emojiVariantInline:not(.hidden)').length,
+  expanded: document.querySelector('#symbolList').classList.contains('emojiVariantsExpanded'),
+  marker: getComputedStyle(document.querySelector('#symbolList i.hasEmojiVariants:not(.hidden)'), '::after').display
+}));
+
+test('A search narrow enough shows the skin tones in the icon list itself', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+    .click(Selector('.propertyPicker button[icon=apps]'))                  // "Show all"
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+
+    // the three thumb emoji and their five tones each, and the corner marker gone because nothing
+    // is left for it to point at
+    .typeText('#symbolPickerOverlay input', 'thumbs')
+    .expect(inlineForms()).eql({ forms: 15, expanded: true, marker: 'none' })
+
+    // a search that would fill the list with them keeps them out, and keeps the flyout - which a
+    // click on a marked icon opens instead of picking the icon, so the picker stays where it is
+    .typeText('#symbolPickerOverlay input', 'hand', { replace: true })
+    .expect(inlineForms()).eql({ forms: 0, expanded: false, marker: 'block' })
+    .click(Selector('#symbolList i.emoji-color.hasEmojiVariants:not(.hidden)').nth(0))
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .pressKey('esc')
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
+
+    // and a form in the list is picked with a single click, like any other icon of it
+    .typeText('#symbolPickerOverlay input', 'victory', { replace: true })
+    .expect(inlineForms()).eql({ forms: 5, expanded: true, marker: 'none' })
+    .click(Selector('#symbolList .emojiVariantInline').nth(4))
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    .expect(widgetIcon()).contains('✌🏿');
+  await setEditorState(null);
+});
+
+// The same for the picker that sits in the sidebar itself, whose list is the chips of its search
+// (and, through the same control, the picker of a deck editor property row). Its limit is the
+// number of icons the search shows at all, so which searches fit is decided by the real index here
+// as well - "woman" has more matches than it can show, "thumbs" has thirty-five.
+// The forms sit in the list like every other chip, so a wrapped row of them keeps the columns of
+// the rows above it: anything the forms added between the chips would put every row after a group
+// out of those columns (offColumn counts the chips that are not on the pitch).
+const inlineChips = ClientFunction(() => {
+  const lists = document.querySelectorAll('.propertyPickerChips');
+  const results = lists[lists.length-1];
+  const marked = results.querySelector('.hasEmojiVariants');
+  const chips = results.querySelectorAll('.propertyValueChip');
+  const left = results.getBoundingClientRect().left;
+  const pitch = chips.length ? Math.round(chips[0].getBoundingClientRect().width) + 4 : 1;
+  let offColumn = 0;
+  for(let i = 0; i < chips.length; ++i)
+    if(Math.round(chips[i].getBoundingClientRect().left - left) % pitch)
+      ++offColumn;
+  return {
+    forms: results.querySelectorAll('.emojiVariantInline').length,
+    expanded: results.classList.contains('emojiVariantsExpanded'),
+    marker: marked ? getComputedStyle(marked, '::after').display : 'no marked chip',
+    offColumn
+  };
+});
+const markedResultChip = Selector('.propertyPickerChips').nth(-1).find('.propertyValueChip.hasEmojiVariants').nth(0);
+// the picker's search field, which is its only text input - the type toggles are checkboxes and
+// the icon scale is a number
+const iconPickerSearch = Selector('.propertyPicker input:not([type])');
+
+test('A search narrow enough shows the skin tones in the sidebar icon picker itself', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, text: 'Icon', icon: '👍' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.iconInput .propertyPreviewButton'))
+
+    // the three thumb emoji and their five tones each, and nothing left for the corner marker to
+    // point at
+    .typeText(iconPickerSearch, 'thumbs')
+    .expect(inlineChips()).eql({ forms: 15, expanded: true, marker: 'none', offColumn: 0 })
+
+    // a search the picker already cuts off has more to show than its tones, so they stay behind
+    // the flyout there - which a click on a marked chip opens instead of picking that chip
+    .typeText(iconPickerSearch, 'woman', { replace: true })
+    .expect(inlineChips()).eql({ forms: 0, expanded: false, marker: 'block', offColumn: 0 })
+    .click(markedResultChip)
+    .expect(Selector('.emojiVariantFlyout').exists).ok()
+    .expect(widgetIcon()).eql('"👍"')
+    .pressKey('esc')
+    .expect(Selector('.emojiVariantFlyout').exists).notOk()
+
+    // and a form in the list is picked with a single click, like any other chip of it
+    .typeText(iconPickerSearch, 'victory', { replace: true })
+    .expect(inlineChips()).eql({ forms: 5, expanded: true, marker: 'none', offColumn: 0 })
+    .click(Selector('.propertyPickerChips').nth(-1).find('.emojiVariantInline').nth(4))
+    .expect(widgetIcon()).contains('✌🏿');
+  await setEditorState(null);
+});
+
+test('The inline icon picker hands its search term to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, icon: 'casino' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+  const pickerSearch = picker.find('input:not([type])').nth(0);
+  // the transferred term is selected, so typing a different search replaces it instead of appending to it
+  const searchSelection = ClientFunction(() => {
+    const input = document.querySelector('#symbolPickerOverlay input');
+    return { start: input.selectionStart, end: input.selectionEnd, focused: document.activeElement == input };
+  });
+  // the search field is a type=search input, so the browser draws its own clear button in it - that button
+  // empties the field and fires input without ever firing a keystroke, exactly like paste, cut and drop do
+  const clearSearchNatively = ClientFunction(() => {
+    const input = document.querySelector('#symbolPickerOverlay input');
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    .typeText(pickerSearch, 'dragon')
+    // the button opens the picker with this search in it, so it offers more of what the user is
+    // looking for rather than everything there is
+    .expect(picker.find('button[icon=apps]').textContent).eql('Browse more...')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    // the search the user already typed carries over, so the picker opens filtered instead of
+    // making them type it again in a list of thousands of icons
+    .expect(Selector('#symbolPickerOverlay input').value).eql('dragon')
+    .expect(searchSelection()).eql({ start: 0, end: 6, focused: true })
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i.hidden').count).gt(0)
+    // opening filtered is only helpful if the picker says so: how much of the list is left, and the
+    // way back to all of it - a short list otherwise reads as the whole catalogue
+    .expect(Selector('#symbolSearchStatus').visible).ok()
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons match "dragon"$/)
+    // both pickers rank the same way, so a term transferred from the inline one finds the same
+    // icons here - including the ones only a second term narrows down to
+    .typeText('#symbolPickerOverlay input', 'dragon head', { replace: true })
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0);
+
+  // emptying the field the way the browser's own clear button does has to filter again as well
+  await clearSearchNatively();
+
+  await t
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .typeText('#symbolPickerOverlay input', 'dragon', { replace: true })
+    .expect(Selector('#symbolSearchStatus').visible).ok()
+    // "Show all icons" empties the search field, which is the whole list back in one click
+    .click('#symbolSearchStatus button')
+    .expect(Selector('#symbolPickerOverlay input').value).eql('')
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .expect(Selector('#symbolList h2.hidden').count).eql(0)
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    // an icon whose name carries uppercase letters ([card_K]) has to be found on both sides of the
+    // handover, or the term the inline picker answered comes up empty in the one it opens
+    .typeText(pickerSearch, 'card_k', { replace: true })
+    .expect(picker.find('.propertyValueChip[data-value="[card_K]"]').exists).ok()
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolList i[data-symbol="[card_K]"]').hasClass('hidden')).notOk()
+    .expect(Selector('#symbolList i.exactMatch:not(.hidden)').getAttribute('data-symbol')).eql('[card_K]')
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+test('The inline icon picker hands its chosen libraries to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'button', x: 200, y: 200, icon: 'casino' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+  const pickerSearch = picker.find('input:not([type])').nth(0);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    // switching a library off and then being handed icons from it anyway contradicts the filter the
+    // user just set, so the "Libraries:" checkboxes travel with the search term
+    .click(picker.find('.iconPickerFilterChip').withText('Game Icons').find('input'))
+    .typeText(pickerSearch, 'flag')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolList i:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i[data-type=game-icons]:not(.hidden)').count).eql(0)
+    // ...and every library left ticked has to arrive whole. The emoji drawn from their artwork - the
+    // 269 flags among them - are what notices first if the filter reads data-type as anything but
+    // the library the icon belongs to
+    .expect(Selector('#symbolList i.emojiAsImage:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i.emojiAsImage:not([data-type=emoji-color])').count).eql(0)
+    .expect(Selector('#symbolList i[data-type=emoji-color]:not(.hidden)').count).gt(0)
+    .expect(Selector('#symbolList i[data-type=material-symbols]:not(.hidden)').count).gt(0)
+    // the picker has no library checkboxes of its own, so it has to say which filter it is under
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ icons from 4 of 5 libraries match "flag"$/)
+    // ...and "Show all icons" is the way back from both filters at once
+    .click('#symbolSearchStatus button')
+    .expect(Selector('#symbolPickerOverlay input').value).eql('')
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .click('#symbolPickerOverlay [icon=close]')
+    // a library filter is only what this one picker was opened with: the next one is unfiltered again
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolSearchStatus').visible).notOk()
+    .expect(Selector('#symbolList i.hidden').count).eql(0)
+    .click('#symbolPickerOverlay [icon=close]');
+  await setEditorState(null);
+});
+
+test('The inline image picker hands its search term to the symbol picker', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    w: { id: 'w', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const picker = Selector('.propertyPicker').filterVisible();
+  const pickerSearch = picker.find('input:not([type])').nth(0);
+  const imageProperty = ClientFunction(() => widgets.get('w').get('image'));
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_w')
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .typeText(pickerSearch, 'dragon')
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .expect(Selector('#symbolPickerOverlay input').value).eql('dragon')
+    // this picker offers images only, so the transferred term is narrowed by the search and by the
+    // font family hidden in CSS - the result counters have to agree with both
+    .expect(Selector('#symbolPickerOverlay').hasClass('hideFonts')).ok()
+    .expect(Selector('#symbolNoResults').visible).notOk()
+    .expect(Selector('#symbolList i:not(.hidden)').filterVisible().count).gt(0)
+    // the same dialog is the image picker here, so it calls what it offers images - the field the term
+    // came from searched images - and its count leaves the hidden font family out
+    .expect(Selector('#symbolPickerOverlay h1').textContent).eql('Pick image')
+    .expect(Selector('#symbolPickerOverlay input').getAttribute('placeholder')).contains('what the image shows')
+    .expect(Selector('#symbolSearchStatus span').textContent).match(/^\d+ of \d+ images match "dragon"$/)
+    .expect(Selector('#symbolSearchStatus button').textContent).eql('Show all images')
+    // ...so a term that only font icons answer ends up empty and has to say so
+    .typeText('#symbolPickerOverlay input', '10k', { replace: true })
+    .expect(Selector('#symbolNoResults').visible).ok()
+    .expect(Selector('#symbolNoResults').textContent).contains('No images match "10k".')
+    .expect(Selector('#symbolList').visible).notOk()
+    .click('#symbolPickerOverlay [icon=close]')
+    .expect(Selector('#symbolPickerOverlay').visible).notOk()
+    // ...and the next picker opened from an icon field is an icon picker again
+    .click(Selector('.pickerInput.iconInput .propertyPreviewButton').nth(0))
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolPickerOverlay h1').textContent).eql('Pick icon')
+    .click('#symbolPickerOverlay [icon=close]')
+    // a flag emoji is a color emoji like any other, so picking one has to hand back its image URL -
+    // an unrecognized type resolves to url: null, which clears the image instead of setting it
+    .click(Selector('.pickerInput.imageInput .propertyPreviewButton').nth(0))
+    .typeText(pickerSearch, 'flag', { replace: true })
+    .click(picker.find('button[icon=apps]'))
+    .expect(Selector('#symbolList i.emojiAsImage:not(.hidden)').count).gt(0)
+    .click(Selector('#symbolList i.emojiAsImage:not(.hidden)').nth(0))
+    .expect(imageProperty()).match(/^\/i\/noto-emoji\/emoji_u[0-9a-f_]+\.svg$/);
   await setEditorState(null);
 });
 
