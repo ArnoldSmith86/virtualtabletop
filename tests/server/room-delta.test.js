@@ -30,6 +30,14 @@ describe("Scenarios: Applying a delta to the room state", () => {
       expect(room.state.orig).toEqual({ id: 'orig', type: 'widget' });
       expect(room.broadcastedDeltas[0].args.s).toEqual({ orig: { dropShadowWidget: null } });
     });
+
+    // a widget without an id is dropped by every client on the next full state load
+    test("Then a delta unsetting its id keeps the id and does not broadcast the unset", () => {
+      const room = createRoom({ orig: { id: 'orig', type: 'widget' } });
+      room.receiveDelta(player, { s: { orig: { id: null, x: 5 } } });
+      expect(room.state.orig).toEqual({ id: 'orig', type: 'widget', x: 5 });
+      expect(room.broadcastedDeltas[0].args.s).toEqual({ orig: { x: 5 } });
+    });
   });
 
   describe("Given a widget the room does not have", () => {

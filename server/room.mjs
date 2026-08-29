@@ -783,7 +783,11 @@ export default class Room {
         this.state[widgetID] = delta.s[widgetID];
       } else {
         for(const property in delta.s[widgetID]) {
-          if(delta.s[widgetID][property] === null) {
+          if(property == 'id' && !delta.s[widgetID][property]) {
+            // every widget needs its id - one without it is dropped by every client on the next full state load
+            Logging.log(`WARNING: ignoring attempt to unset the id of widget ${widgetID} in room ${this.id}`);
+            delete delta.s[widgetID][property];
+          } else if(delta.s[widgetID][property] === null) {
             delete this.state[widgetID][property];
           } else {
             this.state[widgetID][property] = delta.s[widgetID][property];
