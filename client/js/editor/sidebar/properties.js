@@ -1144,6 +1144,13 @@ function cssValueIsColor(value) {
   return cssNamedColors.indexOf(text) != -1;
 }
 
+// The keywords every css property takes, whatever it is: they stand for a value
+// from somewhere else instead of naming one, so a color input can neither show
+// them nor take them for the color a declaration paints.
+function cssValueIsCssWideKeyword(value) {
+  return !!String(value === null || value === undefined ? '' : value).trim().match(/^(inherit|initial|unset|revert|revert-layer)$/i);
+}
+
 // Whether css takes a value as a color, asked of the css parser instead of
 // matched by hand: a value it does not understand never makes it onto the
 // declaration, so what is left there is the answer. A var() passes - it is a
@@ -1151,7 +1158,7 @@ function cssValueIsColor(value) {
 let cssColorProbe = null;
 function cssColorIsValid(value) {
   const text = String(value === null || value === undefined ? '' : value).trim();
-  if(!text)
+  if(!text || cssValueIsCssWideKeyword(text))
     return false;
   if(typeof document == 'undefined')
     return cssValueIsColor(text);
@@ -1177,7 +1184,7 @@ function cssBackgroundIsPlainColor(value) {
   const text = cssValueWithoutImportant(value);
   if(text.match(/^var\(\s*--[^()]*\)$/))
     return true;
-  return cssValueIsColor(text);
+  return cssColorIsValid(text);
 }
 
 // colors an <input type="color"> cannot represent, so the row shows them

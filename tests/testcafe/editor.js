@@ -429,6 +429,37 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   await t.expect(result.y).notEql(200);
 });
 
+test('The background color is set where the image on the widget survives it', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    tile: {
+      id: 'tile', type: 'basic', x: 200, y: 200, width: 200, height: 200,
+      css: { background: 'steelblue', 'background-image': 'url("/i/cards-default/2B.svg")', 'background-size': 'contain' }
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const tileCSS = ClientFunction(() => widgets.get('tile').get('css'));
+  const paintedSize = ClientFunction(() => getComputedStyle(document.querySelector('#w_tile')).backgroundSize);
+  const backgroundRow = Selector('#editorModules .colorInput').find('label[data-label=Background]').parent('.colorInput');
+  // the pickers of a color row open in a shared area below it, not inside the input
+  const backgroundPicker = Selector('#editorModules .propertyPicker.colorPicker').filterVisible();
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_tile')
+    .click(backgroundRow.find('.propertyPreviewButton'))
+    // a color a game keeps in the background shorthand is read from there...
+    .expect(backgroundPicker.find('.colorHexInput').value).eql('steelblue')
+    .typeText(backgroundPicker.find('.colorHexInput'), '#112233', { replace: true })
+    // ...and written to the longhand, which leaves the image and its scaling alone
+    .expect(tileCSS()).eql({ 'background-image': 'url("/i/cards-default/2B.svg")', 'background-size': 'contain', 'background-color': '#112233' })
+    .expect(paintedSize()).eql('contain');
+});
+
 test('Dice faces have their own icon, image scale and CSS controls', async t => {
   // Keep this at the narrow layout from the review so the controls remain
   // useful in the smallest supported properties sidebar.

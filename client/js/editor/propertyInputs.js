@@ -1185,6 +1185,31 @@ function colorInputHexValue(value, host) {
   return resolved && resolved != 'transparent' ? cssColorHexValue(resolved) : null;
 }
 
+// The hex of an rgb()/rgba() the browser resolved a color to, without its
+// alpha, or null for anything else - a color space the browser keeps as it is
+// (oklch, color()) does not reduce to one.
+function opaqueHexFromRGBExpression(value) {
+  const parts = String(value === null || value === undefined ? '' : value).trim().match(/^rgba?\(([^()]*)\)$/i);
+  if(!parts)
+    return null;
+  const channels = parts[1].split(/[\s,/]+/).filter(part=>part !== '').slice(0, 3).map(Number);
+  if(channels.length < 3 || channels.some(channel=>!isFinite(channel)))
+    return null;
+  return '#' + channels.map(channel=>Math.max(0, Math.min(255, Math.round(channel))).toString(16).padStart(2, '0')).join('');
+}
+
+// The hex an <input type="color"> stands in with for a color it cannot show
+// exactly: the element has no alpha, so a semi-transparent color still opens
+// the dialog on the color it is made of instead of losing the dialog. null for
+// everything that is no single color (a gradient, an image shorthand).
+function colorInputOpaqueHexValue(value, host) {
+  const text = cssValueWithoutImportant(value);
+  if(!text)
+    return null;
+  const resolved = resolveCssColorExpression(host, text);
+  return resolved == 'transparent' ? '#000000' : opaqueHexFromRGBExpression(resolved);
+}
+
 class ColorInput extends PickerInput {
   cssClass() {
     return 'pickerInput colorInput';
@@ -1207,7 +1232,9 @@ class ColorInput extends PickerInput {
   }
 
   renderChip(target, value) {
-    const chip = renderColorChip(propertyInputValueSet(value) ? value : 'transparent', target);
+    // an "!important" priority is no part of the value CSSOM takes, and a chip
+    // handed one paints nothing at all
+    const chip = renderColorChip(propertyInputValueSet(value) ? cssValueWithoutImportant(value) : 'transparent', target);
     if(this.valueNeedsNoSwatch(value))
       chip.title = `${cssValueWithoutImportant(value)} - a color picked here replaces it`;
     return chip;
@@ -1219,14 +1246,31 @@ class ColorInput extends PickerInput {
     return this.widget && this.widget.domElement || null;
   }
 
+  // The hex the native swatch shows the value as: the color itself where the
+  // element can show it, otherwise the color without the transparency it cannot
+  // keep. null when the value is no single color at all.
+  swatchHexValue(value) {
+    const host = this.colorHost();
+    const exact = colorInputHexValue(value, host);
+    return exact !== null ? exact : colorInputOpaqueHexValue(value, host);
+  }
+
   // Whether the native swatch would have to stand in for something it cannot
-  // show (a gradient, an image shorthand, a color with alpha or a color space
-  // it does not know): it would be a black square in front of a value the chip
-  // next to it paints correctly.
+  // show at all (a gradient, an image shorthand, a color space it does not
+  // know): it would be a black square in front of a value the chip next to it
+  // paints correctly, so the row leaves it out.
   valueNeedsNoSwatch(value) {
     if(!propertyInputValueSet(value) || cssValueWithoutImportant(value) == 'transparent')
       return false;
-    return colorInputHexValue(value, this.colorHost()) === null;
+    return this.swatchHexValue(value) === null;
+  }
+
+  // Whether the swatch shows the value without its transparency, which the
+  // native dialog has no way to keep.
+  valueSwatchDropsAlpha(value) {
+    if(!propertyInputValueSet(value) || cssValueWithoutImportant(value) == 'transparent')
+      return false;
+    return colorInputHexValue(value, this.colorHost()) === null && this.swatchHexValue(value) !== null;
   }
 
   renderSummaryControls(target, value) {
@@ -1247,7 +1291,7 @@ class ColorInput extends PickerInput {
       colorPicker = document.createElement('input');
       colorPicker.type = 'color';
       colorPicker.title = 'Open the color dialog';
-      colorPicker.value = colorInputHexValue(shown, this.colorHost()) || toHex(this.options.default || '#000000');
+      colorPicker.value = this.swatchHexValue(shown) || toHex(this.options.default || '#000000');
       // some browsers (Firefox on some platforms) only fire "change" when the
       // native dialog closes, so listen to both events
       colorPicker.onchange = colorPicker.oninput = _=>{
@@ -1264,7 +1308,7 @@ class ColorInput extends PickerInput {
         hexInput.classList.remove('inputError');
         this.setValue(v);
         if(colorPicker)
-          colorPicker.value = colorInputHexValue(v, this.colorHost()) || colorPicker.value;
+          colorPicker.value = this.swatchHexValue(v) || colorPicker.value;
       } else if(v === '') {
         hexInput.classList.remove('inputError');
         this.setValue(null);
@@ -1310,7 +1354,7 @@ class ColorInput extends PickerInput {
           setPickerValueText(valueText, propertyInputValueSet(value) ? String(value) : (propertyInputValueSet(shown) ? String(shown) : null));
         const colorPicker = this.summaryDOM.querySelector('input[type=color]');
         if(colorPicker && document.activeElement !== colorPicker && propertyInputValueSet(shown))
-          colorPicker.value = colorInputHexValue(shown, this.colorHost()) || colorPicker.value;
+          colorPicker.value = this.swatchHexValue(shown) || colorPicker.value;
         const hexInput = this.summaryDOM.querySelector('.colorHexInput');
         if(hexInput && document.activeElement !== hexInput)
           hexInput.value = colorHexInputAccepts(value) ? String(value).trim() : '';
@@ -1324,16 +1368,28 @@ class ColorInput extends PickerInput {
       this.renderFooter(value);
   }
 
+  // What the picker says about a value the swatch next to it cannot show: the
+  // lists below do something else to it than the "color behind the image" they
+  // set on every other widget, so the two clicks do not look the same.
+  pickerNoteText(shown) {
+    if(this.valueNeedsNoSwatch(shown))
+      return 'The current value is a gradient, an image or a color the swatch cannot show. Picking a color here replaces it.';
+    if(this.valueSwatchDropsAlpha(shown))
+      return 'The current value has transparency in it. The color dialog cannot keep that, so a color picked there is fully opaque - type an rgba() or #rrggbbaa value in the field next to it to stay transparent.';
+    return null;
+  }
+
   updatePickerNote(shown) {
-    if(this.noteDOM)
-      this.noteDOM.style.display = this.valueNeedsNoSwatch(shown) ? '' : 'none';
+    if(!this.noteDOM)
+      return;
+    const text = this.pickerNoteText(shown);
+    this.noteDOM.style.display = text ? '' : 'none';
+    if(text)
+      this.noteDOM.innerHTML = html(text);
   }
 
   renderPickerContent(target, value) {
-    // a gradient or an image is not a color, so the lists below do something
-    // else to it than the "color behind the image" they set on every other
-    // widget - say so instead of letting the two clicks look the same
-    this.noteDOM = div(target, 'propertyNote', html('The current value is a gradient, an image or a color the swatch cannot show. Picking a color here replaces it.'));
+    this.noteDOM = div(target, 'propertyNote');
     this.updatePickerNote(propertyInputValueSet(value) ? value : this.getEffectiveValue());
     this.addChipList(target, 'Used in this game', usedGameColors(), value, renderColorChip);
     this.addChipList(target, 'Palette (checkerboard = transparent)', propertyInputPalette, value, renderColorChip);
@@ -1829,21 +1885,28 @@ function backgroundColorFromShorthand(css, cssClass) {
 // carries, so it says which one and what that means for an image behind it.
 const backgroundColorHint = 'Sets background-color, so an image on the widget and the way it is scaled stay as they are. A color a game keeps in the background shorthand is read from there and moved here as soon as it is changed - which also ends any image that shorthand was hiding. A background that paints a gradient or an image keeps using the shorthand, and a color picked here replaces it - unless a background-color of its own already sits behind it.';
 
-// The declaration the color row reads and writes: background-color, except
-// where a shorthand that paints more than a color (a gradient, an image) is the
-// one in effect. That shorthand would cover anything set on background-color,
-// so writing the longhand would change nothing on screen - and it has already
-// reset the image properties the longhand exists to protect. A background-color
-// the class declares itself does stay the edited declaration: it paints behind
-// the gradient rather than being covered by it, unless the shorthand follows it
-// in the same rule and resets it.
-function backgroundColorKey(css, cssClass) {
-  const shorthand = parsePropertyFromCSS(css, 'background', null, cssClass);
-  if(shorthand === null || cssBackgroundIsPlainColor(shorthand))
+// Which of the two declarations paints the widget's background color, so the
+// row shows the color that is actually on screen: the shorthand resets
+// background-color, so a longhand only counts when the class declares it after
+// its shorthand - or when the shorthand comes from a less specific class.
+function backgroundColorInEffect(css, cssClass) {
+  if(parsePropertyFromCSS(css, 'background', null, cssClass) === null)
     return 'background-color';
   const names = cssClassOwnDeclarations(css, cssClass).map(declaration=>String(declaration.name).trim());
   const longhandIndex = names.indexOf('background-color');
   return longhandIndex != -1 && longhandIndex > names.indexOf('background') ? 'background-color' : 'background';
+}
+
+// The declaration the color row writes: background-color, except where a
+// shorthand that paints more than a color (a gradient, an image) is the one in
+// effect. That shorthand would cover anything set on background-color, so
+// writing the longhand would change nothing on screen - and it has already
+// reset the image properties the longhand exists to protect. A shorthand that
+// only paints a color moves into the longhand instead, wherever it sits.
+function backgroundColorKey(css, cssClass) {
+  if(backgroundColorInEffect(css, cssClass) == 'background-color')
+    return 'background-color';
+  return cssBackgroundIsPlainColor(parsePropertyFromCSS(css, 'background', null, cssClass)) ? 'background-color' : 'background';
 }
 
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
@@ -1888,19 +1951,20 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
       const css = widget.get(cssProperty);
       if(!isBackgroundColor)
         return parsePropertyFromCSS(css, key, null, cssClass);
-      // a shorthand that paints more than a color is no color to offer as the
-      // set one - the row shows it as the effective value instead
-      if(backgroundColorKey(css, cssClass) == 'background')
-        return null;
+      // the shorthand in effect resets any background-color under it, so its
+      // color is the set one - and a shorthand that paints more than a color is
+      // no color to offer at all, only an effective value to show
+      if(backgroundColorInEffect(css, cssClass) == 'background')
+        return backgroundColorFromShorthand(css, cssClass);
       const value = parsePropertyFromCSS(css, key, null, cssClass);
-      return value !== null ? value : backgroundColorFromShorthand(css, cssClass);
+      return value !== null ? cssValueWithoutImportant(value) : backgroundColorFromShorthand(css, cssClass);
     },
     getEffective: _=>{
       const css = widget.get(cssProperty);
       if(isBackgroundColor) {
         // whatever the declaration in effect paints is what the widget shows,
         // so the row names it instead of claiming the background is not set
-        const value = parsePropertyFromCSS(css, backgroundColorKey(css, cssClass), null, cssClass);
+        const value = parsePropertyFromCSS(css, backgroundColorInEffect(css, cssClass), null, cssClass);
         if(propertyInputValueSet(value))
           return cssValueWithoutImportant(value);
         const shorthand = parsePropertyFromCSS(css, 'background', null, cssClass);

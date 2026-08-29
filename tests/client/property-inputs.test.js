@@ -76,6 +76,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'ex
     cssColorHasAlpha,
     cssBackgroundIsPlainColor,
     colorHexInputAccepts,
+    colorInputOpaqueHexValue,
+    opaqueHexFromRGBExpression,
     cssValueOptions,
     cssDeclarationIsValid,
     cssValueSuggestions,
@@ -562,6 +564,14 @@ describe('css helpers', () => {
     expect(cssHelpers.cssBackgroundIsPlainColor('red url("/assets/1_2")')).toBe(false);
     expect(cssHelpers.cssBackgroundIsPlainColor('')).toBe(false);
     expect(cssHelpers.cssBackgroundIsPlainColor(null)).toBe(false);
+    // css names ~150 colors, so which ones are one is a question for the parser
+    expect(cssHelpers.cssBackgroundIsPlainColor('steelblue')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('rebeccapurple')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('red !important')).toBe(true);
+    expect(cssHelpers.cssBackgroundIsPlainColor('#12345')).toBe(false);
+    expect(cssHelpers.cssBackgroundIsPlainColor('rgb(banana)')).toBe(false);
+    // a keyword that stands for a value from somewhere else is no color to move
+    expect(cssHelpers.cssBackgroundIsPlainColor('inherit')).toBe(false);
   });
 
   test('the size-ratio lock stays local while honoring a legacy false value', () => {
@@ -598,9 +608,9 @@ describe('the background color input', () => {
     expect(widget.state.css).toEqual({ background: '#112233' });
   });
 
-  test('the color is read without its !important priority', () => {
-    const widget = widgetWith({ background: '#abcdef !important' });
-    expect(backgroundOptions(widget).getValue()).toBe('#abcdef');
+  test('the color is read without its !important priority, in either declaration', () => {
+    expect(backgroundOptions(widgetWith({ background: '#abcdef !important' })).getValue()).toBe('#abcdef');
+    expect(backgroundOptions(widgetWith({ 'background-color': '#abcdef !important' })).getValue()).toBe('#abcdef');
   });
 
   test('a css string is converted and keeps its other declarations', () => {
@@ -633,6 +643,9 @@ describe('the background color input', () => {
       expect(cssHelpers.colorHexInputAccepts(value)).toBe(false);
     // a value shaped like a color but written with nonsense in it is not one
     for(const value of [ 'rgb(banana)', 'oklch(foo bar baz)', 'hsl(1, 2, 3, 4, 5)', 'red !important' ])
+      expect(cssHelpers.colorHexInputAccepts(value)).toBe(false);
+    // css takes these in every property, but none of them names a color
+    for(const value of [ 'inherit', 'initial', 'unset', 'revert', 'revert-layer' ])
       expect(cssHelpers.colorHexInputAccepts(value)).toBe(false);
   });
 
@@ -670,6 +683,38 @@ describe('the background color input', () => {
     const widget = widgetWith({ default: {}, '.droptarget': { background: '#abcdef' } });
     backgroundOptions(widget, '.droptarget').setValue(null);
     expect(widget.state.css).toEqual({ default: {} });
+  });
+
+  test('a named color in the shorthand moves into the longhand, keeping the image sizing', () => {
+    const widget = widgetWith({ background: 'steelblue', 'background-image': 'url("/assets/1_2")', 'background-size': 'contain' });
+    const options = backgroundOptions(widget);
+    expect(options.getValue()).toBe('steelblue');
+    options.setValue('#112233');
+    expect(widget.state.css).toEqual({ 'background-image': 'url("/assets/1_2")', 'background-size': 'contain', 'background-color': '#112233' });
+  });
+
+  test('a plain shorthand behind the longhand is the color the row shows and edits', () => {
+    const widget = widgetWith({ 'background-color': '#ff0000', background: '#00ff00' });
+    const options = backgroundOptions(widget);
+    expect(options.getValue()).toBe('#00ff00');
+    expect(options.getEffective()).toBe('#00ff00');
+    options.setValue('#0000ff');
+    expect(widget.state.css).toEqual({ 'background-color': '#0000ff' });
+  });
+
+  test('the native swatch falls back to the color behind a transparency it cannot show', () => {
+    // the browser resolves a color to rgb()/rgba() before the swatch gets it
+    expect(cssHelpers.opaqueHexFromRGBExpression('rgba(255, 255, 255, 0.4)')).toBe('#ffffff');
+    expect(cssHelpers.opaqueHexFromRGBExpression('rgb(1, 2, 3)')).toBe('#010203');
+    expect(cssHelpers.opaqueHexFromRGBExpression('rgb(1 2 3 / 0.5)')).toBe('#010203');
+    // a color space that stays as it is does not reduce to a swatch color
+    expect(cssHelpers.opaqueHexFromRGBExpression('oklch(0.5 0.1 20)')).toBe(null);
+    expect(cssHelpers.opaqueHexFromRGBExpression('')).toBe(null);
+    // ...whatever the value was written as, and whatever priority it carries
+    expect(cssHelpers.colorInputOpaqueHexValue('#fff6', null)).toBe('#ffffff');
+    expect(cssHelpers.colorInputOpaqueHexValue('steelblue !important', null)).toBe('#4682b4');
+    expect(cssHelpers.colorInputOpaqueHexValue('linear-gradient(red, blue)', null)).toBe(null);
+    expect(cssHelpers.colorInputOpaqueHexValue('', null)).toBe(null);
   });
 });
 
