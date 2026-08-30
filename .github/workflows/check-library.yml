@@ -54,6 +54,8 @@ jobs:
             else
               echo "⚠️ Asset files need DOS line endings. This PR comes from a fork, so the fix"
               echo "   cannot be pushed for you — please apply it locally and push again."
+              # Undo the local fix so the remaining checks see what was actually submitted.
+              git checkout HEAD -- .
               found_error=true
             fi
           fi
@@ -125,42 +127,73 @@ jobs:
           
           summary_only=false
           [[ ${#changed_files[@]} -gt 10 ]] && summary_only=true
-          
+
+          # The comment API rejects bodies over 65536 characters, so the comment carries
+          # whole file sections up to this budget only. The step summary gets everything.
+          max_comment=55000
           validation_output=""
+          full_output=""
           found_issues=false
-          
+          truncated=false
+
           for file in "${changed_files[@]}"; do
             if [ "$summary_only" = true ]; then
               if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
                 echo "✅ $file - No issues found"
-                validation_output+="✅ \`$file\` - No issues found\n"
+                section="✅ \`$file\` - No issues found\n"
               else
                 echo "❌ $file - Issues found"
-                validation_output+="❌ \`$file\` - Issues found\n"
+                section="❌ \`$file\` - Issues found\n"
                 found_issues=true
               fi
             else
               if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
                 echo "✅ $file - No issues found"
-              else
-                echo "❌ $file - Issues found:"
-                echo "$output"
-                validation_output+="### Issues in \`$file\`\n\`\`\`\n$output\n\`\`\`\n\n"
-                found_issues=true
+                continue
               fi
+              echo "❌ $file - Issues found:"
+              echo "$output"
+              # Fence with one backtick more than the longest run in the output itself, so
+              # validator output containing a code fence cannot break out of the block.
+              ticks=$(printf '%s' "$output" | grep -o '`\+' | awk '{ if (length($0) > m) m = length($0) } END { print (m > 2 ? m + 1 : 3) }')
+              fence=$(printf '`%.0s' $(seq "$ticks"))
+              section="### Issues in \`$file\`\n$fence\n$output\n$fence\n\n"
+              found_issues=true
+            fi
+            full_output+="$section"
+            if [ $((${#validation_output} + ${#section})) -le "$max_comment" ]; then
+              validation_output+="$section"
+            else
+              truncated=true
             fi
           done
-          
+
+          if [ "$truncated" = true ]; then
+            run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            validation_output+="_Too many issues to list here — see the [run summary]($run_url) for the full report._\n"
+          fi
+
           if [ "$found_issues" = true ]; then
-            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
+            delimiter="VALIDATION_$(openssl rand -hex 8)"
+            echo "validation_output<<$delimiter" >> $GITHUB_OUTPUT
             echo -e "$validation_output" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            echo "$delimiter" >> $GITHUB_OUTPUT
+            {
+              echo '## Game File Validation Issues'
+              echo
+              echo -e "$full_output"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '✅ No game file validation issues.' >> "$GITHUB_STEP_SUMMARY"
           fi
 
       # A pull_request event from a fork only gets a read-only token, so the comment is
       # rendered here and posted by check-library-comment.yml, which runs privileged.
+      # The artifact only exists when validation actually ran: without it the posting
+      # workflow leaves any existing comment alone, rather than reading a broken run as
+      # "nothing to report" and deleting the comment.
       - name: Prepare validation comment
-        if: always()
+        if: always() && steps.validate.outcome == 'success'
         env:
           VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
         run: |
@@ -172,19 +205,18 @@ jobs:
               echo
               printf '%s\n' "$VALIDATION_OUTPUT"
             } > validation-result/comment.md
-            cat validation-result/comment.md >> "$GITHUB_STEP_SUMMARY"
           else
             # An empty comment tells the posting workflow to remove a stale comment.
             : > validation-result/comment.md
-            echo '✅ No game file validation issues.' >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload validation result
-        if: always()
+        if: always() && steps.validate.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: validation-result
           path: validation-result/
+          retention-days: 1
 
       - name: Fail if any check failed
         if: always() && (steps.asset-names.outcome == 'failure' || steps.square-images.outcome == 'failure')

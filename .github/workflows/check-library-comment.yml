@@ -13,6 +13,12 @@ permissions:
   actions: read
   pull-requests: write
 
+# Serialize per head branch so two runs cannot both create the comment, and so a run
+# that finishes late cannot overwrite a newer result.
+concurrency:
+  group: check-library-comment-${{ github.event.workflow_run.head_repository.full_name }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+
 jobs:
   comment:
     if: github.event.workflow_run.event == 'pull_request'
@@ -38,6 +44,19 @@ jobs:
             const issue_number = Number(fs.readFileSync('validation-result/pr-number', 'utf8').trim());
             if (!Number.isInteger(issue_number) || issue_number <= 0)
               return;
+
+            // "Check Library" runs the workflow file from the pull request head, so the
+            // number in the artifact is contributor-controlled. Only comment on a pull
+            // request whose head is the very commit that produced this artifact —
+            // otherwise a fork could make this job write on any pull request.
+            const run = context.payload.workflow_run;
+            const pr = await github.rest.pulls.get({ ...context.repo, pull_number: issue_number })
+              .then(r => r.data, () => null);
+            if (!pr || pr.head.sha !== run.head_sha || pr.head.repo?.full_name !== run.head_repository?.full_name) {
+              core.warning(`Ignoring result for #${issue_number}: it does not match the head of run ${run.id}.`);
+              return;
+            }
+
             const issues = fs.existsSync('validation-result/comment.md')
               ? fs.readFileSync('validation-result/comment.md', 'utf8').trim() : '';
 
