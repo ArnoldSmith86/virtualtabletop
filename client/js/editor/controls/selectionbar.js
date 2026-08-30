@@ -30,7 +30,6 @@ let selectionBarSwallowEscapeUp = false;
 let selectionBarTabHeld = false;    // Tab+Left / Tab+Right walk the history
 let selectionBarPeekActive = false; // the peek key is down, see selectionBarPeekStart
 let selectionBarPeekBar = null;     // the bar whose list the peek opened and has to close again
-let selectionBarPeekTreeBar = null; // ... and whose tree it had to push aside to do so
 let selectionBarScanFrame = null;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
@@ -318,6 +317,12 @@ function selectionBarInstallListeners() {
       return;
     if(e.key == SELECTION_BAR_PEEK_KEY)
       selectionBarPeekStart();
+    // an OS-level menu or a shortcut handled outside the page can take the
+    // keyup of the peek key without ever blurring the window, which would leave
+    // the list latched open and scanning every frame - the next keystroke says
+    // the key is not down after all, so let it out of that
+    else if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      selectionBarPeekStop();
     if(selectionBarHandleHistoryKey(e))
       return;
     if(selectionBarHandleDropdownKey(e))
@@ -328,16 +333,11 @@ function selectionBarInstallListeners() {
       return;
     e.preventDefault();
     // Shift is what holds the list open, so it cannot also mean "add to the
-    // selection" while it does: the key of a row selects that row on its own,
-    // the way it did in the panel this list replaces. Shift+Enter and a
-    // shift-click on a row still add to the selection while the peek is up.
-    const addToSelection = e.shiftKey && !selectionBarPeekActive;
+    // selection": the key of a row selects that row on its own, the way it did
+    // in the panel this list replaces. Shift+Enter on the keyboard cursor and a
+    // shift-click on a row are what add to the selection.
     if(e.ctrlKey && jeEnabled)
       jePasteText(jeContext[jeContext.length-1] == '"null"' ? `"${widget.id}"` : widget.id, true);
-    else if(addToSelection && selectedWidgets.indexOf(widget) != -1)
-      setSelection(selectedWidgets.filter(w=>w!=widget));
-    else if(addToSelection)
-      setSelection([ widget ].concat(selectedWidgets));
     else
       setSelection([ widget ]);
   });
@@ -386,13 +386,19 @@ function selectionBarInstallListeners() {
 // mouse move. Holding Shift brings that back for as long as the key is down -
 // the list opens, follows the pointer without waiting for it to settle, and goes
 // away again with the key. A list that was already open is only made live: it
-// belongs to whoever opened it, and so does the tree it would have pushed aside.
+// belongs to whoever opened it.
 function selectionBarPeekStart() {
   // the key answers "what is under the pointer", so it only does anything while
   // the pointer is in the room - a dropdown covers the panel it hangs in, and a
   // shift-click somewhere in the sidebar must not have the list drop onto what
   // it was aimed at
   if(selectionBarPeekActive || !selectionBarPointerInRoom || !selectionBarKeyboardIsFree())
+    return;
+  // the tree's filter box is a text field like any other as far as this key is
+  // concerned: the exemption it gets in selectionBarKeyboardIsFree() is there so
+  // the arrow keys reach the tree while it is being filtered, and a capital
+  // typed into it is not somebody asking for the stack under the pointer
+  if($('#jeWidgetSearchBox') && document.activeElement === $('#jeWidgetSearchBox'))
     return;
   if(document.body.classList.contains('overlayActive') || document.body.classList.contains('deckEditorActive'))
     return;
@@ -402,9 +408,16 @@ function selectionBarPeekStart() {
   if(!selectionBars.some(bar=>bar.options.stack && bar.dom.classList.contains('stackVisible'))) {
     const bar = selectionBarKeyboardBar && selectionBarKeyboardBar.options.stack
               ? selectionBarKeyboardBar : selectionBars.find(bar=>bar.options.stack);
-    if(bar) {
+    // The two dropdowns share the space below the bar, so putting the list
+    // where the tree is means taking the tree down. That tree is something
+    // somebody opened and is working in - the keyboard can be in its filter
+    // box, and it comes back scrolled to the selection rather than to wherever
+    // it was left - and a key that gets tapped all day long must not be able to
+    // do that to it. A bar showing its tree keeps it, and the key only makes
+    // the stack follow the pointer: the count on the button and the widget the
+    // function keys address are live either way.
+    if(bar && !bar.dom.classList.contains('treeVisible')) {
       selectionBarPeekBar = bar;
-      selectionBarPeekTreeBar = bar.dom.classList.contains('treeVisible') ? bar : null;
       selectionBarToggleStack(bar, false, true);
     }
   }
@@ -420,14 +433,10 @@ function selectionBarPeekStop() {
   selectionBarPeekActive = false;
   selectionBarCancelScan();
   const bar = selectionBarPeekBar;
-  const treeBar = selectionBarPeekTreeBar;
   selectionBarPeekBar = null;
-  selectionBarPeekTreeBar = null;
   selectionBarPrune();
   if(bar && bar.dom.isConnected)
     selectionBarToggleStack(bar, true, true);
-  if(treeBar && treeBar.dom.isConnected)
-    selectionBarToggleTree(treeBar, false);
   updateSelectionBars(); // a list that stays open says what the keys do, and that just changed
 }
 

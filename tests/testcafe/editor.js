@@ -4434,6 +4434,10 @@ const storedStackOpen = ClientFunction(_=>{
   const state = JSON.parse(localStorage.getItem('editorState') || '{}');
   return !!(state.selectionBar || {}).stackOpen;
 });
+const storedTreeOpen = ClientFunction(_=>{
+  const state = JSON.parse(localStorage.getItem('editorState') || '{}');
+  return !!(state.selectionBar || {}).treeOpen;
+});
 
 test('Holding Shift opens the stack list and has it follow the pointer', async t => {
   await t.resizeWindow(1280, 800);
@@ -4448,6 +4452,7 @@ test('Holding Shift opens the stack list and has it follow the pointer', async t
 
   const bar = Selector('#editorModuleTopLeft .selectionBar');
   const stackRows = bar.find('.selectionBarStackRow');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
 
   await t
     .click('#editButton')
@@ -4499,6 +4504,57 @@ test('Holding Shift opens the stack list and has it follow the pointer', async t
     .expect(bar.hasClass('stackVisible')).ok()
     .expect(storedStackOpen()).ok()
     .click(bar.find('button[icon=layers]'));
+
+  // the tree is the other dropdown and they share the space below the bar, so
+  // showing the list where the tree is would mean taking the tree down - which
+  // is somebody's filter box, keyboard and scroll position. The key leaves it
+  // standing and only makes the stack follow the pointer.
+  await t
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(tree.exists).ok()
+    .expect(activeElementID()).eql('jeWidgetSearchBox')
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(tree.exists).ok()
+    .expect(bar.hasClass('stackVisible')).notOk()
+    // so a capital typed into the filter box still goes into it
+    .expect(activeElementID()).eql('jeWidgetSearchBox')
+    .expect(storedTreeOpen()).ok();
+  await holdPeekKey(false);
+  await t
+    .expect(tree.exists).ok()
+    .expect(storedTreeOpen()).ok()
+    .click(bar.find('button[icon=account_tree]'));
+  await setEditorState(null);
+});
+
+// Shift is how capitals are typed, so a text field has first claim on it: the
+// JSON text area keeps the key even with the pointer parked over the room.
+test('The peek key does nothing while a text field has the keyboard', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    checker: { id: 'checker', type: 'basic', x: 40, y: 60, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_checker')
+    .click('#jeText')
+    .expect(activeElementID()).eql('jeText')
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .expect(activeElementID()).eql('jeText');
+  await holdPeekKey(false);
   await setEditorState(null);
 });
 
