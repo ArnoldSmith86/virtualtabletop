@@ -51,6 +51,18 @@ body.loadingEditMode * {
   cursor: wait;
 }
 
+/* the editor is fetched from the server the first time it is opened, which takes long enough to
+   need an answer to the click - and a wait cursor is not one on a touch device */
+body.loadingEditMode #editButton {
+  animation: loadingEditMode 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes loadingEditMode {
+  to {
+    opacity: 0.35;
+  }
+}
+
 /* The "this browser cannot run VirtualTabletop" message at the end of room.html. It is the only
    thing on the page that has to render on a browser we do not support, so it stays on plain,
    ancient CSS - no custom properties, no flexbox, no shorthand insets. Declaring no display keeps

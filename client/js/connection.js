@@ -3,6 +3,8 @@ let lastOverlay = null;
 let connection;
 let serverStart = null;
 let userNavigatedAway = false;
+let outdated = false;
+let editModeAttempts = 0;
 let messageCallbacks = {};
 
 //used by unit tests until jest supports mocking ESM static imports
@@ -56,11 +58,18 @@ export function startWebSocket() {
     }
 
     if(func == 'serverStart') {
+      // the first thing the server sends, so a connection that gets this far is one that works: the
+      // backoff is about how long the server stays away, not about the tab's age, and resetting it
+      // on the handshake alone keeps retrying a socket that is accepted and dropped every two seconds
+      lastTimeout = 1000;
+
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
-        setTimeout(location.reload, rand()*10000);
-        showOverlay('connectionLostOverlay', true);
-        preventReconnect();
+        outdated = true;
+        // the arrow keeps reload() on its Location: a timer calls what it is handed on the window,
+        // which throws instead of reloading
+        setTimeout(_=>location.reload(), rand()*10000);
+        showServerRestartOverlay();
         connection.close();
       }
       serverStart = args;
@@ -69,6 +78,75 @@ export function startWebSocket() {
     for(const callback of (messageCallbacks[func] || []))
       callback(args);
   };
+}
+
+// The overlay that comes up when the connection drops explains that it is expected back and
+// suggests reloading or switching rooms, none of which applies to a restart: reconnecting has been
+// switched off and the page is reloading by itself. Say that instead, and offer the reload right
+// away for whoever does not want to wait out the delay that spreads the clients over a few seconds.
+export function showServerRestartOverlay() {
+  // a reconnect that lands in the meantime restores whatever overlay was up before the connection
+  // dropped, which would take this message away again moments before the page reloads
+  preventReconnect();
+  $('#connectionLostOverlay').classList.add('serverRestarting');
+  showOverlay('connectionLostOverlay', true);
+}
+
+// True once this page has seen the server it is talking to restart: everything it was served -
+// the client bundle it is running included - can be from a build the server no longer has.
+export function clientIsOutdated() {
+  return outdated;
+}
+
+// The editor is a second bundle that is only fetched the first time edit mode is opened, so by
+// then the server may already be a different build - one whose editor does not fit the client
+// bundle this page is running. Ask for the build this page belongs to rather than for the editor
+// as such, so a server that has been replaced refuses the request instead of handing out a half
+// that does not fit: checking first and importing afterwards leaves a window in between in which
+// the server changes and the answer to the check no longer describes what arrives.
+export function editModeURL() {
+  const parameters = new URLSearchParams();
+  // a page that has never been connected does not know which build served it, so it has nothing to
+  // ask for and takes whatever the server has
+  if(serverStart != null)
+    parameters.set('serverStart', serverStart);
+  // a dynamic import that failed is remembered as failed for that exact URL: importing it again
+  // re-throws the recorded error without going to the network at all, so the retry the user is
+  // invited to make needs a URL this page has not asked for yet. The server reads nothing but
+  // serverStart, so counting the attempts costs it nothing and still asks for the same build.
+  if(editModeAttempts)
+    parameters.set('retry', editModeAttempts);
+  const query = String(parameters);
+  return query ? `./edit.js?${query}` : './edit.js';
+}
+
+// Called when fetching the editor bundle failed, so that the next attempt is a request the browser
+// has no recorded failure for rather than a replay of this one.
+export function editModeLoadFailed() {
+  editModeAttempts++;
+}
+
+// The socket only learns about a restart once it manages to reconnect, while the new server starts
+// answering over HTTP the moment it binds the port - so in between, this page still believes it is
+// up to date. Ask the server directly rather than going by the last thing the socket heard.
+// Resolves to whether it answered at all: a server that does not is a server in the middle of
+// restarting, which says on its own that nothing is to be expected from it right now.
+export async function checkForServerRestart() {
+  let response;
+  try {
+    response = await fetch('edit.js', { method: 'HEAD', cache: 'no-store' });
+  } catch(error) {
+    console.error('Could not ask the server which build it is running.', error);
+    return false;
+  }
+
+  // a page that has never been connected has nothing to compare against: its bundle came from
+  // whichever server answered the request for the page itself, which nothing here has seen
+  const currentStart = response.headers.get('X-Server-Start');
+  if(serverStart != null && currentStart != null && currentStart != serverStart)
+    outdated = true;
+
+  return response.ok;
 }
 
 export function onMessage(func, callback) {
