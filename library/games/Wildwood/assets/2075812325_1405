@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 220 140"
+     width="220" height="140"
+     role="img"
+     aria-label="Region mit Fahne und Fragezeichen">
+
+  <defs>
+    <style>
+      .line { fill:none; stroke:#000; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; }
+      .mast { fill:none; stroke:#000; stroke-width:5; stroke-linecap:round; }
+      .thin { fill:none; stroke:#000; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+      .fill { fill:#000; }
+    </style>
+  </defs>
+
+  <!-- ===== Region ===== -->
+  <g transform="translate(20,15)">
+    <!-- Regionen-Umriss (größer) -->
+    <path class="line"
+          d="M15 35
+             C40 5, 95 10, 115 40
+             C140 70, 125 110, 90 120
+             C55 130, 25 115, 15 90
+             C5 65, 5 50, 15 35 Z"/>
+
+    <!-- Fahnen-MAST (oben gekürzt) -->
+    <path class="mast" d="M56 30 L56 92"/>
+
+    <!-- Fahnen-Stempel / Fuß -->
+    <ellipse class="fill" cx="56" cy="96" rx="5" ry="3.5"/>
+
+    <!-- Dreiecks-Fahne -->
+    <path class="thin" d="M56 32 L84 44 L56 56 Z"/>
+  </g>
+
+  <!-- ===== Fragezeichen (rechts neben der Region) ===== -->
+  <g transform="translate(155,45)">
+    <!-- Fragezeichen-Kurve -->
+    <path class="thin"
+          d="M12 8
+             C22 2, 36 6, 36 18
+             C36 30, 22 30, 22 40"/>
+    <!-- Punkt -->
+    <circle class="fill" cx="22" cy="50" r="3"/>
+  </g>
+
+</svg>
