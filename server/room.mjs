@@ -355,8 +355,12 @@ export default class Room {
   editState(player, id, meta, variantInput, variantOperationQueue) {
     const variants = this.state._meta.states[id].variants;
 
+    // reordering parks a save file under a name of its own while the variants it swaps with move.
+    // variants are addressed by their numeric index, so a non-numeric name cannot collide with one
+    const tempVariantID = '--TEMP--';
+
     const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
-      if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
+      if(oldVariantID == tempVariantID && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != tempVariantID && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
         this.moveFile(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
     };
 
@@ -379,16 +383,16 @@ export default class Room {
 
       if(o.operation == 'up') {
         if(o.variantID) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID-1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID-1);
+          renameVariantFile(id, tempVariantID, o.variantID-1);
 
           variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=1; i<variants.length; ++i)
             renameVariantFile(id, i, i-1);
-          renameVariantFile(id, player.name, variants.length-1);
+          renameVariantFile(id, tempVariantID, variants.length-1);
 
           variants.push(variants.shift());
         }
@@ -396,16 +400,16 @@ export default class Room {
 
       if(o.operation == 'down') {
         if(o.variantID < variants.length-1) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID+1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID+1);
+          renameVariantFile(id, tempVariantID, o.variantID+1);
 
           variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=variants.length-2; i>=0; --i)
             renameVariantFile(id, i, i+1);
-          renameVariantFile(id, player.name, 0);
+          renameVariantFile(id, tempVariantID, 0);
 
           variants.unshift(variants.pop());
         }
@@ -420,6 +424,17 @@ export default class Room {
         variants.splice(o.variantID, 1);
       }
 
+    }
+
+    // a game is nothing but its variants, and the save files of the deleted ones are already gone -
+    // keeping the metadata of a game without a single variant would leave an entry that the game
+    // list has nothing to show for and that nobody can reach again. removeState refuses public
+    // library games on servers that do not allow editing them, so the game can survive the call -
+    // its metadata is then updated like in any other edit.
+    if(!variants.length) {
+      this.removeState(player, id);
+      if(!this.state._meta.states[id])
+        return;
     }
 
     for(const variantID in variantInput)
@@ -550,6 +565,7 @@ export default class Room {
       this.migrateBrokenSaveWithoutVersion();
       await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
+      this.removeStatesWithoutVariants(player);
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.normalizeGameSettings(this.state._meta.gameSettings);
@@ -854,7 +870,10 @@ export default class Room {
       const operations = [];
       for(const [ variantID, variant ] of Object.entries(state.variants))
         if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
-          operations.push({ operation: 'delete', variantID });
+          operations.push({ operation: 'delete', variantID: +variantID });
+      // deleting a variant shifts every later one down by one index, so the queue runs from the last
+      // dead link to the first - that way each operation still addresses the variant it was collected for
+      operations.reverse();
       if(operations.length)
         this.editState(player, id, state, state.variants, operations);
     }
@@ -889,7 +908,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    if(stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+    if(String(stateID).match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
       return;
 
     for(const variantID in this.state._meta.states[stateID].variants) {
@@ -898,7 +917,7 @@ export default class Room {
         fs.unlinkSync(savefile);
     }
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       this.state._meta.states[stateID].variants = [];
       this.writePublicLibraryAssetsToFilesystem(stateID);
 
@@ -909,12 +928,22 @@ export default class Room {
 
     delete this.state._meta.states[stateID];
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       delete Room.publicLibrary;
       this.publicLibraryUpdatedCallback();
     } else {
       this.sendMetaUpdate();
     }
+  }
+
+  // older versions kept a game whose last variant was deleted, leaving an entry with an empty
+  // variant list that the game list has nothing to show for, so it can neither be played nor
+  // deleted. Public library games are left alone - their variants come from the filesystem and are
+  // emptied for a moment while their game directory is removed.
+  removeStatesWithoutVariants(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states))
+      if(!String(id).match(/^PL:/) && !Object.keys(state.variants || {}).length)
+        this.removeState(player, id);
   }
 
   renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
