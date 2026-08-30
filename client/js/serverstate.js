@@ -486,6 +486,25 @@ function receiveDeltaFromServer(delta) {
   receiveDelta(delta);
 }
 
+// Take the current room apart so that nothing of it can mix into the state that is loaded
+// next: neither a widget that throws while being torn down, nor one whose removal is still in
+// flight, nor one that is only reachable through a broken parent chain. A widget with a live
+// parent is reached through that parent so a holder sees its children go before itself; the
+// second pass takes what the first cannot reach, like a parent/child cycle.
+export function tearDownRoom() {
+  const removedWidgets = new Set();
+  for(const widget of Array.from(widgets.values()))
+    if(!widgets.has(widget.get('parent')))
+      widget.applyRemoveRecursive(removedWidgets);
+  for(const widget of Array.from(widgets.values()))
+    widget.applyRemoveRecursive(removedWidgets);
+  widgets.clear();
+  dropTargets.clear();
+  maxZ = {};
+  StateManaged.globalUpdateListeners = {};
+  StateManaged.inheritFromMapping = {};
+}
+
 function receiveStateFromServer(args) {
   addStateEntryToUndoProtocol(args);
 
@@ -497,22 +516,7 @@ function receiveStateFromServer(args) {
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  const removedWidgets = new Set();
-  // the widgets of the new state are added right after this, so nothing of the old room may
-  // survive it: neither a widget that throws while being torn down, nor one whose removal is
-  // still in flight, nor one that is only reachable through a broken parent chain. A widget
-  // with a live parent is reached through that parent so a holder sees its children go before
-  // itself; the second pass takes what the first cannot reach, like a parent/child cycle.
-  for(const widget of Array.from(widgets.values()))
-    if(!widgets.has(widget.get('parent')))
-      widget.applyRemoveRecursive(removedWidgets);
-  for(const widget of Array.from(widgets.values()))
-    widget.applyRemoveRecursive(removedWidgets);
-  widgets.clear();
-  dropTargets.clear();
-  maxZ = {};
-  StateManaged.globalUpdateListeners = {};
-  StateManaged.inheritFromMapping = {};
+  tearDownRoom();
   let isEmpty = true;
   for(const widgetID in args) {
     if(widgetID != '_meta') {

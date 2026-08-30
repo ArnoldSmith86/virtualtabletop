@@ -1,16 +1,21 @@
 import { setText } from '../../client/js/domhelpers.js';
-import { widgets, addWidget } from '../../client/js/serverstate.js';
+import { dropTargets } from '../../client/js/main.js';
+import { widgets, addWidget, tearDownRoom } from '../../client/js/serverstate.js';
+import { StateManaged } from '../../client/js/statemanaged.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 
 import { createWidget, removeWidget } from './client-util.js';
 
-// timer.js relies on the concatenated global scope of the shipped bundle rather than
-// on imports, so expose the identifiers it references before importing it.
+// timer.js and the room teardown rely on the concatenated global scope of the shipped bundle
+// rather than on imports, so expose the identifiers they reference before importing them.
 let Timer;
 beforeAll(async () => {
   globalThis.Widget = Widget;
   globalThis.setText = setText;
   globalThis.activePlayers = [];
+  globalThis.StateManaged = StateManaged;
+  globalThis.dropTargets = dropTargets;
+  globalThis.maxZ = {};
   ({ Timer } = await import('../../client/js/widgets/timer.js'));
 });
 
@@ -182,5 +187,81 @@ describe('Removing a tree of widgets', () => {
 
     expect(first.domElement.parentNode).toBe(null);
     expect(second.domElement.parentNode).toBe(null);
+  });
+});
+
+// Loading a room state takes the whole previous room apart before the new widgets are added.
+// Whatever is left of the old room at that point ends up in the new one, so the teardown has to
+// reach every widget of the room - including the ones the widget tree itself cannot lead to.
+describe('Tearing down a room', () => {
+  afterEach(() => {
+    for(const id of [ ...widgets.keys() ])
+      removeWidget(id);
+  });
+
+  test('leaves no widget behind', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    const child = createWidget({ id: 'aChild', type: 'holder', parent: 'aParent' });
+
+    tearDownRoom();
+
+    expect([ ...widgets.keys() ]).toEqual([]);
+    expect(parent.domElement.parentNode).toBe(null);
+    expect(child.domElement.parentNode).toBe(null);
+  });
+
+  test('takes down a widget whose element left the dom', () => {
+    const detached = createWidget({ id: 'detached', type: 'holder' });
+    const other = createWidget({ id: 'other', type: 'holder' });
+    detached.domElement.remove();
+
+    expect(() => tearDownRoom()).not.toThrow();
+
+    expect([ ...widgets.keys() ]).toEqual([]);
+    expect(other.domElement.parentNode).toBe(null);
+  });
+
+  test('stops a timer of the old room from ticking into the new one', () => {
+    const timer = new Timer('aTimer');
+    addWidget({ id: 'aTimer', type: 'timer' }, timer);
+    timer.startTimer();
+    timer.domElement.remove();
+
+    tearDownRoom();
+
+    expect(timer.interval).toBe(undefined);
+    expect([ ...widgets.keys() ]).toEqual([]);
+  });
+
+  test('takes down a widget whose removal is still in flight', () => {
+    const inFlight = createWidget({ id: 'inFlight', type: 'holder' });
+    inFlight.isBeingRemoved = true;
+
+    tearDownRoom();
+
+    expect(inFlight.domElement.parentNode).toBe(null);
+    expect([ ...widgets.keys() ]).toEqual([]);
+  });
+
+  test('takes down a widget its parent does not know about', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    const orphan = createWidget({ id: 'anOrphan', type: 'holder', parent: 'aParent' });
+    parent.childArray = [];
+
+    tearDownRoom();
+
+    expect(orphan.domElement.parentNode).toBe(null);
+    expect([ ...widgets.keys() ]).toEqual([]);
+  });
+
+  test('forgets the listeners of the room it took down', () => {
+    const widget = createWidget({ id: 'aWidget', type: 'holder' });
+    StateManaged.globalUpdateListeners = { aProperty: [ [ widget, () => {} ] ] };
+    StateManaged.inheritFromMapping = { aWidget: [ widget ] };
+
+    tearDownRoom();
+
+    expect(StateManaged.globalUpdateListeners).toEqual({});
+    expect(StateManaged.inheritFromMapping).toEqual({});
   });
 });

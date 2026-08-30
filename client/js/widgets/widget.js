@@ -437,10 +437,13 @@ export class Widget extends StateManaged {
     } catch(e) {
       console.error(`Could not remove widget!`, this.id, e);
       reportErrorSilently(`Could not remove widget ${this.id}\n${describeError(e, 'Unknown error')}`);
-      // applyRemove can throw before it gets around to taking the widget off the board, so
-      // do that here: an object of a room that is gone must not stay painted on the next one
+      // applyRemove can throw before it gets around to any part of its cleanup, so redo what
+      // does not depend on the widget being intact: an object of a room that is gone must not
+      // stay painted on the next one, and it must not keep listening for its updates either
       removeFromDOM($(`#STYLES_${this.cssScope}`));
       removeFromDOM(this.domElement);
+      this.inheritFromUnregister();
+      this.globalUpdateListenersUnregister();
     }
   }
 
