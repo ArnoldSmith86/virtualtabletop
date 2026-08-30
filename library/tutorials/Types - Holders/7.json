@@ -1,15 +1,15 @@
 {
   "title": {
     "id": "title",
-    "x": 300,
+    "x": 400,
     "y": -2,
+    "width": 800,
     "height": 60,
     "z": 74,
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Holders: stackOffset and dropOffset",
-    "width": 1000
+    "text": "Holders: dropTarget"
   },
   "overview": {
     "id": "overview",
@@ -22,7 +22,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The information in this variant is intended to be used when the <b>layout</b> is &quotcustom&quot. The <b>dropOffsetX</b> and <b>dropOffsetY</b> properties are the x/y position in the holder where the first widget will be placed. The <b>stackOffsetX</b> and <b>stackOffsetY</b> properties of a holder control the distance between subsequent widgets. The values should be numbers and can be negative, zero, or positive. When dropping widgets into a holder with a stack offset, the dropped widget can be placed between other widgets already in the holder allowing them to be reorderd."
+    "html": "The <b>dropTarget</b> property of a holder controls which widgets can dropped into and become children of a holder. <b>dropTarget</b>, when expressed in the form of an object or an array of objects, can apply to any property of the widget being dropped. When <b>dropTarget</b> is an array of objects and the widget being dropped matches all of the criteria in any object, it can be dropped. Look at the holders below and drag and drop the widgets to see how this works."
   },
   "text1": {
     "id": "text1",
@@ -35,7 +35,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This is a default holder modified to allow any widget type to be dropped. The default <b>stackOffsetX</b>, <b>stackOffsetY</b>, <b>dropOffsetX</b>, and <b>dropOffsetY</b> are all 0 so the cards form a pile. If you use the pawns, they are still be located together, but would not make a pile.",
+    "html": "This is a default holder with no modifications. The default <b>dropTarget</b> <i>{&quottype&quot:&quotcard&quot}</i> allows any card widget (and only card widgets) to be dropped into the holder.",
     "layer": -3
   },
   "text2": {
@@ -49,7 +49,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This holder has <b>stackOffsetX</b> set to 20 so widgets are 20 pixels apart and stack from left to right. If you combine more than one type of widget in the same holder, the visual effect may not be what you desire as the stack offset is applied to the previous widget, no matter what it is.",
+    "html": "This holder has <b>dropTarget</b> set as something other than an object. In this case it is an empty string. If <b>dropTarget</b> is not an object or array of objects, then it will not accept any dropped widgets. This is essentially the same as setting <b>dropLimit</b> to 0.",
     "layer": -3
   },
   "text3": {
@@ -63,7 +63,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This holder has <b>dropOffsetX</b> set to 93. Based on the width of the holder and the width of the card, this aligns the right edge of the first card with the right edge of the holder. It also has <b>stackOffsetX</b> set to -20 so widgets stack 20 pixels apart, but to the left of the previous one. The same effect is applied to the pawns, but because of their width, they do not align to the right edge.",
+    "html": "This holder has <b>dropTarget</b> set to <i>{&quotpawn&quot:true}</i>. This allows the pawns (and only the pawns), which have a custom property on them, to be dropped into the holder. It also has small <b>stackOffsetX</b> and <b>stackOffsetY</b> values set so you can see a little part of each widget.",
     "layer": -3
   },
   "text4": {
@@ -77,13 +77,13 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This holder has <b>stackOffsetY</b> set to 10 so widgets are stacked 10 pixels apart from top to bottom. If you change an offset programmatically, all widgets in the holder automatically reposition. Put a few cards or pawns in the holder above then click the button.",
+    "html": "This holder has <b>dropTarget</b> set to an empty object: <i>{ }</i>. This means that any widget can be dropped into it. Setting it to <br><i>[ { } ]</i> would have the same effect. It also has small <b>stackOffsetX</b> and <b>stackOffsetY</b> values set.",
     "layer": -3
   },
   "deckHolder": {
     "type": "holder",
     "id": "deckHolder",
-    "x": 1450,
+    "x": 35,
     "y": 771,
     "dropTarget": {
       "type": "card"
@@ -631,484 +631,473 @@
   },
   "A_C": {
     "id": "A_C",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 01",
-    "z": 9979,
-    "parent": "50f9"
+    "z": 982
   },
   "2_C": {
     "id": "2_C",
     "deck": "deck",
     "type": "card",
     "cardType": "C 02",
-    "z": 9967,
-    "parent": "50f9"
+    "z": 987,
+    "parent": "r9yy"
   },
   "3_C": {
     "id": "3_C",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 03",
-    "z": 9973
+    "z": 991
   },
   "4_C": {
     "id": "4_C",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 04",
-    "z": 10002
+    "z": 1021
   },
   "5_C": {
     "id": "5_C",
     "deck": "deck",
     "type": "card",
     "cardType": "C 05",
-    "z": 10007,
-    "parent": "50f9"
+    "z": 1027,
+    "parent": "r9yy"
   },
   "6_C": {
     "id": "6_C",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 06",
-    "z": 9966,
-    "parent": "50f9"
+    "z": 1025
   },
   "7_C": {
     "id": "7_C",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 07",
-    "z": 9988
+    "z": 1000
   },
   "8_C": {
     "id": "8_C",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 08",
-    "z": 10003,
-    "parent": "50f9"
+    "z": 1015
   },
   "9_C": {
     "id": "9_C",
     "deck": "deck",
     "type": "card",
     "cardType": "C 09",
-    "z": 9999,
-    "parent": "50f9"
+    "z": 1041,
+    "parent": "r9yy"
   },
   "T_C": {
     "id": "T_C",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 10",
-    "z": 10001,
-    "parent": "50f9"
+    "z": 1028
   },
   "J_C": {
     "id": "J_C",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 2J",
-    "z": 9981
+    "z": 1030
   },
   "Q_C": {
     "id": "Q_C",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 9983,
-    "parent": "50f9"
+    "z": 1007
   },
   "K_C": {
     "id": "K_C",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "C 4K",
-    "z": 9959
+    "z": 1024
   },
   "A_D": {
     "id": "A_D",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 01",
-    "z": 9982,
-    "parent": "50f9"
+    "z": 1010
   },
   "2_D": {
     "id": "2_D",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 02",
-    "z": 9987,
-    "parent": "50f9"
+    "z": 1002
   },
   "3_D": {
     "id": "3_D",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 03",
-    "z": 9994
+    "z": 1019
   },
   "4_D": {
     "id": "4_D",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 04",
-    "z": 9969,
-    "parent": "50f9"
+    "z": 1022
   },
   "5_D": {
     "id": "5_D",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 05",
-    "z": 9962,
-    "parent": "50f9"
+    "z": 1008
   },
   "6_D": {
     "id": "6_D",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 06",
-    "z": 10008,
-    "parent": "50f9"
+    "z": 1032
   },
   "7_D": {
     "id": "7_D",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 07",
-    "z": 9972,
-    "parent": "50f9"
+    "z": 1016
   },
   "8_D": {
     "id": "8_D",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 08",
-    "z": 9971
+    "z": 1005
   },
   "9_D": {
     "id": "9_D",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 09",
-    "z": 9964
+    "z": 1001
   },
   "T_D": {
     "id": "T_D",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 10",
-    "z": 9992,
-    "parent": "50f9"
+    "z": 1013
   },
   "J_D": {
     "id": "J_D",
     "deck": "deck",
     "type": "card",
     "cardType": "D 2J",
-    "z": 9978,
-    "parent": "50f9"
+    "z": 995,
+    "parent": "r9yy"
   },
   "Q_D": {
     "id": "Q_D",
     "deck": "deck",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 10005,
-    "parent": "50f9"
+    "z": 999,
+    "parent": "r9yy"
   },
   "K_D": {
     "id": "K_D",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "D 4K",
-    "z": 9993
+    "z": 989
   },
   "A_H": {
     "id": "A_H",
     "deck": "deck",
     "type": "card",
     "cardType": "H 01",
-    "z": 9958,
-    "parent": "50f9"
+    "z": 998,
+    "parent": "r9yy"
   },
   "2_H": {
     "id": "2_H",
     "deck": "deck",
     "type": "card",
     "cardType": "H 02",
-    "z": 9984,
-    "parent": "50f9"
+    "z": 1031,
+    "parent": "r9yy"
   },
   "3_H": {
     "id": "3_H",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 03",
-    "z": 10000,
-    "parent": "50f9"
+    "z": 986
   },
   "4_H": {
     "id": "4_H",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 04",
-    "z": 9960,
-    "parent": "50f9"
+    "z": 1012
   },
   "5_H": {
     "id": "5_H",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 05",
-    "z": 9965
+    "z": 1018
   },
   "6_H": {
     "id": "6_H",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 06",
-    "z": 10004,
-    "parent": "50f9"
+    "z": 985
   },
   "7_H": {
     "id": "7_H",
     "deck": "deck",
     "type": "card",
     "cardType": "H 07",
-    "z": 9968,
-    "parent": "50f9"
+    "z": 1026,
+    "parent": "r9yy"
   },
   "8_H": {
     "id": "8_H",
     "deck": "deck",
     "type": "card",
     "cardType": "H 08",
-    "z": 9989,
-    "parent": "50f9"
+    "z": 1014,
+    "parent": "r9yy"
   },
   "9_H": {
     "id": "9_H",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 09",
-    "z": 9997,
-    "parent": "50f9"
+    "z": 1009
   },
   "T_H": {
     "id": "T_H",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 10",
-    "z": 9970
+    "z": 983
   },
   "J_H": {
     "id": "J_H",
     "deck": "deck",
     "type": "card",
     "cardType": "H 2J",
-    "z": 10006,
-    "parent": "50f9"
+    "z": 992,
+    "parent": "r9yy"
   },
   "Q_H": {
     "id": "Q_H",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 9961,
-    "parent": "50f9"
+    "z": 1029
   },
   "K_H": {
     "id": "K_H",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "H 4K",
-    "z": 9975
+    "z": 988
   },
   "A_S": {
     "id": "A_S",
     "deck": "deck",
     "type": "card",
     "cardType": "S 01",
-    "z": 10009,
-    "parent": "50f9"
+    "z": 994,
+    "parent": "r9yy"
   },
   "2_S": {
     "id": "2_S",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 02",
-    "z": 9980
+    "z": 984
   },
   "3_S": {
     "id": "3_S",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 03",
-    "z": 9995,
-    "parent": "50f9"
+    "z": 1006
   },
   "4_S": {
     "id": "4_S",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 04",
-    "z": 9985
+    "z": 1020
   },
   "5_S": {
     "id": "5_S",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 05",
-    "z": 9991
+    "z": 990
   },
   "6_S": {
     "id": "6_S",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 06",
-    "z": 9998
+    "z": 1011
   },
   "7_S": {
     "id": "7_S",
     "deck": "deck",
     "type": "card",
     "cardType": "S 07",
-    "z": 9974,
-    "parent": "50f9"
+    "z": 993,
+    "parent": "r9yy"
   },
   "8_S": {
     "id": "8_S",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 08",
-    "z": 9986
+    "z": 997
   },
   "9_S": {
     "id": "9_S",
     "deck": "deck",
     "type": "card",
     "cardType": "S 09",
-    "z": 9996,
-    "parent": "50f9"
+    "z": 1004,
+    "parent": "r9yy"
   },
   "T_S": {
     "id": "T_S",
-    "parent": "50f9",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 10",
-    "z": 9990
+    "z": 1003
   },
   "J_S": {
     "id": "J_S",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 2J",
-    "z": 9963,
-    "parent": "50f9"
+    "z": 1017
   },
   "Q_S": {
     "id": "Q_S",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 9977,
-    "parent": "50f9"
+    "z": 996
   },
   "K_S": {
     "id": "K_S",
+    "parent": "r9yy",
     "deck": "deck",
     "type": "card",
     "cardType": "S 4K",
-    "z": 9976,
-    "parent": "50f9"
+    "z": 1023
   },
   "holder2": {
     "type": "holder",
     "id": "holder2",
-    "x": 344,
+    "x": 394,
     "y": 338,
     "z": 1,
-    "stackOffsetX": 20,
-    "width": 200,
-    "dropTarget": {},
-    "layout": "custom"
+    "dropTarget": ""
   },
   "holder1": {
     "type": "holder",
     "id": "holder1",
     "x": 75,
     "y": 338,
-    "z": 1,
-    "dropTarget": {},
-    "layout": "custom"
+    "z": 1
   },
   "holder3": {
     "type": "holder",
     "id": "holder3",
-    "x": 662,
+    "x": 712,
     "y": 338,
     "z": 1,
-    "width": 200,
-    "dropOffsetX": 93,
-    "stackOffsetX": -20,
-    "dropTarget": {},
-    "layout": "custom"
+    "dropTarget": {
+      "pawn": true
+    },
+    "stackOffsetX": 5,
+    "stackOffsetY": 5
   },
   "holder4": {
     "type": "holder",
     "id": "holder4",
     "x": 1031,
-    "y": 249,
+    "y": 338,
     "z": 1,
-    "height": 257,
-    "stackOffsetY": 30,
     "dropTarget": {},
-    "layout": "custom"
+    "stackOffsetX": 5,
+    "dropOffsetY": 5
   },
   "holder5": {
     "type": "holder",
     "id": "holder5",
-    "x": 1300,
-    "y": 249,
+    "x": 1350,
+    "y": 338,
     "z": 1,
-    "stackOffsetX": 20,
-    "stackOffsetY": 20,
-    "width": 200,
-    "height": 257,
-    "dropOffsetX": 20,
-    "dropOffsetY": 20,
-    "dropTarget": {},
-    "enterRoutine": [
+    "dropTarget": [
       {
-        "func": "MOVE",
-        "collection": "child",
-        "to": "${PROPERTY id}"
+        "pawn": true
+      },
+      {
+        "type": "card"
       }
     ],
-    "layout": "custom"
+    "stackOffsetX": 5,
+    "stackOffsetY": 5
   },
   "text5": {
     "id": "text5",
@@ -1121,44 +1110,25 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This holder sets all four offset properties to 20. It has an <b>enterRoutine</b> to position each new widget last, so new widgets cannot be inserted into the middle of the stack in this holder.",
+    "html": "This holder has <b>dropTarget</b> set to allow two specific properties. In this case, cards and the pawns can be dropped into the holder, but not the cubes. Note that if <b>dropTarget</b> were written as <i>{&quotpawn&quot:true, &quottype&quot:&quotcard&quot}</i> instead of <i>[{&quotpawn&quot:true},{&quottype&quot:'card&quot}]</i> then a widget could only be dropped if it met all of the criteria of the object. Think of the former syntax as <i>and</i> while the later syntax is <i>or</i>. ",
     "layer": -3
   },
-  "swkg": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "holder4"
-        ],
-        "property": "stackOffsetY",
-        "relation": "+",
-        "value": 10
-      }
-    ],
-    "x": 1149,
-    "y": 341,
-    "z": 1,
-    "id": "swkg",
-    "text": "offsetY +10"
-  },
-  "50f9": {
+  "r9yy": {
     "type": "pile",
     "parent": "deckHolder",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "50f9"
+    "id": "r9yy"
   },
-  "pawn1": {
-    "id": "pawn1",
-    "x": 7,
-    "y": 239,
+  "pawnl": {
+    "id": "pawnl",
+    "x": 644,
+    "y": 212,
     "width": 50.4,
     "height": 90,
-    "z": 75,
+    "z": 9733,
     "color": "red",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -1168,15 +1138,16 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1
+    "borderWidth": 1,
+    "pawn": true
   },
   "pawn2": {
     "id": "pawn2",
-    "x": 57,
-    "y": 239,
+    "x": 694,
+    "y": 212,
     "width": 50.4,
     "height": 90,
-    "z": 75,
+    "z": 9733,
     "color": "orange",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -1186,15 +1157,16 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1
+    "borderWidth": 1,
+    "pawn": true
   },
   "pawn3": {
     "id": "pawn3",
-    "x": 107,
-    "y": 239,
+    "x": 744,
+    "y": 212,
     "width": 50.4,
     "height": 90,
-    "z": 75,
+    "z": 9733,
     "color": "yellow",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -1204,15 +1176,16 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1
+    "borderWidth": 1,
+    "pawn": true
   },
   "pawn4": {
     "id": "pawn4",
-    "x": 157,
-    "y": 239,
+    "x": 794,
+    "y": 212,
     "width": 50.4,
     "height": 90,
-    "z": 75,
+    "z": 9733,
     "color": "green",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -1222,15 +1195,16 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1
+    "borderWidth": 1,
+    "pawn": true
   },
   "pawn5": {
     "id": "pawn5",
-    "x": 207,
-    "y": 239,
+    "x": 844,
+    "y": 212,
     "width": 50.4,
     "height": 90,
-    "z": 75,
+    "z": 9733,
     "color": "blue",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -1240,7 +1214,108 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1
+    "borderWidth": 1,
+    "pawn": true
+  },
+  "cube1": {
+    "id": "cube1",
+    "x": 997,
+    "y": 242,
+    "width": 36,
+    "height": 40,
+    "z": 9734,
+    "color": "red",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
+  },
+  "cube2": {
+    "id": "cube2",
+    "x": 1033,
+    "y": 242,
+    "width": 36,
+    "height": 40,
+    "z": 9734,
+    "color": "orange",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
+  },
+  "cube3": {
+    "id": "cube3",
+    "x": 1069,
+    "y": 242,
+    "width": 36,
+    "height": 40,
+    "z": 9734,
+    "color": "yellow",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
+  },
+  "cube4": {
+    "id": "cube4",
+    "x": 1105,
+    "y": 242,
+    "width": 36,
+    "height": 40,
+    "z": 9734,
+    "color": "green",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
+  },
+  "cube5": {
+    "id": "cube5",
+    "x": 1141,
+    "y": 242,
+    "width": 36,
+    "height": 40,
+    "z": 9734,
+    "color": "blue",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black"
   },
   "_meta": {
     "version": 24,
@@ -1257,7 +1332,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788033060238,
+      "lastUpdate": 1788033060234,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1268,7 +1343,7 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "stackOffset and dropOffset",
+      "variant": "dropTarget",
       "language": "en-US",
       "players": "1"
     }

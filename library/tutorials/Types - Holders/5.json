@@ -9,7 +9,7 @@
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
     "layer": -3,
-    "text": "Holders: Layouts - random"
+    "text": "Holders: Layout - grid"
   },
   "overview": {
     "id": "overview",
@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "<b>layout</b> &quotrandom&quot scatters whatever is dropped into the holder. Every piece lands on a spot of its own with a small random tilt, measured against its size so nothing overlaps and nothing pokes past the border. A piece you drop keeps the spot you aimed for while it is free. On a crowded spot, it hops to a random free one instead. A widget taken back out straightens up again. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin the pieces keep to the border."
+    "html": "<b>layout</b> &quotgrid&quot arranges a holder's cards in a grid that always stays inside the holder. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin to the holder's edge and <b>stackOffsetX</b>/<b>stackOffsetY</b> the gap between the cells. The column count comes from whatever fits with the least overlap, or from <b>gridColumns</b>/<b>gridRows</b> if you use them. When the cards stop fitting at the requested spacing they overlap instead of spilling outside. A grid normally keeps no piles - whatever you drop in is dealt out into the grid - but write <b>preventPiles</b> <i>false</i> and every cell becomes a stack instead. <b>pilesOffsetX</b>/<b>pilesOffsetY</b> pin the pitch of the cells outright: they sit exactly that far apart however many there are, which is what lines a grid up with a background image."
   },
   "holder1": {
     "type": "holder",
@@ -30,78 +30,18 @@
     "y": 240,
     "width": 460,
     "height": 380,
-    "layout": "random",
-    "dropTarget": {
-      "type": "dice"
+    "layout": "grid",
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "stackOffsetX": 10,
+    "stackOffsetY": 10,
+    "onEnter": {
+      "activeFace": 1
     }
-  },
-  "d1": {
-    "type": "dice",
-    "id": "d1",
-    "parent": "holder1",
-    "x": 80,
-    "y": 60,
-    "z": 1,
-    "width": 60,
-    "height": 60,
-    "rotation": -8,
-    "activeFace": 3,
-    "classes": "transitions shaking"
-  },
-  "d2": {
-    "type": "dice",
-    "id": "d2",
-    "parent": "holder1",
-    "x": 240,
-    "y": 90,
-    "z": 2,
-    "width": 60,
-    "height": 60,
-    "rotation": 12,
-    "activeFace": 1,
-    "classes": "transitions shaking"
-  },
-  "d3": {
-    "type": "dice",
-    "id": "d3",
-    "parent": "holder1",
-    "x": 360,
-    "y": 200,
-    "z": 3,
-    "width": 60,
-    "height": 60,
-    "rotation": -4,
-    "activeFace": 5,
-    "classes": "transitions shaking"
-  },
-  "d4": {
-    "type": "dice",
-    "id": "d4",
-    "parent": "holder1",
-    "x": 120,
-    "y": 240,
-    "z": 4,
-    "width": 60,
-    "height": 60,
-    "rotation": 9,
-    "classes": "transitions shaking"
-  },
-  "d5": {
-    "type": "dice",
-    "id": "d5",
-    "parent": "holder1",
-    "x": 250,
-    "y": 290,
-    "z": 5,
-    "width": 60,
-    "height": 60,
-    "rotation": -13,
-    "activeFace": 4,
-    "classes": "transitions shaking"
   },
   "text1": {
     "id": "text1",
-    "x": 61,
+    "x": 40,
     "y": 650,
     "width": 440,
     "layer": -3,
@@ -110,55 +50,66 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Click a die, or the button below, to roll it. Every roll also movess it onto a fresh free spot. The &quottransitions&quot class was added to each die and the related CSS is applied under the Game Settings -> Global Room CSS area to enhance the effect."
+    "html": "A 460 x 380 <i>grid</i> with a <b>dropOffset</b> of <i>10</i> and a <b>stackOffset</b> of <i>10</i>. Six cards become three columns with a real gap between them. Deal six more and the grid packs them closer together instead of growing past the edge."
   },
   "holder2": {
     "type": "holder",
     "id": "holder2",
     "x": 560,
     "y": 240,
-    "width": 420,
+    "width": 140,
     "height": 380,
-    "layout": "random",
+    "layout": "grid",
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
     "onEnter": {
       "activeFace": 1
-    }
+    },
+    "gridColumns": 1
   },
   "text2": {
     "id": "text2",
-    "x": 551,
+    "x": 530,
     "y": 650,
-    "width": 400,
+    "width": 230,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "Cards scatter too. Deal a few. Each one lands on a free spot with its own tilt. Once the tray gets crowded the pieces overlap as little as possible instead of spilling past the border."
+    "html": "Only one card wide, and <b>gridColumns</b> <i>1</i> pins the single column. Without it the automatic count would switch to two."
   },
   "holder3": {
     "type": "holder",
     "id": "holder3",
-    "x": 1020,
+    "x": 790,
     "y": 240,
-    "width": 420,
-    "height": 380,
-    "layout": "random",
-    "dropTarget": {}
+    "width": 400,
+    "height": 210,
+    "layout": "grid",
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "text3": {
     "id": "text3",
-    "x": 1021,
+    "x": 770,
     "y": 650,
-    "width": 420,
+    "width": 380,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "Drag the checkers around. A piece dropped on a free spot keeps exactly that spot, one dropped onto another piece hops to a random free one. Pieces never overlap so long as there is space."
+    "html": "Barely taller than a card: the grid keeps one row and overlaps the cards sideways rather than starting a second row."
   },
   "button1": {
     "id": "button1",
@@ -167,210 +118,50 @@
     "y": 890,
     "width": 150,
     "height": 50,
-    "text": "Deal 3 cards",
+    "text": "Deal 6 to each",
     "clickRoutine": [
       {
         "func": "MOVE",
         "from": "deckHolder",
-        "to": "holder2",
-        "count": 3,
+        "to": "holder1",
+        "count": 6,
         "face": 1
-      }
-    ]
-  },
-  "button2": {
-    "id": "button2",
-    "type": "button",
-    "x": 230,
-    "y": 890,
-    "width": 150,
-    "height": 50,
-    "text": "Roll the dice",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "type": "dice",
-        "property": "parent",
-        "value": "holder1",
-        "collection": "trayDice"
       },
       {
-        "func": "CLICK",
-        "collection": "trayDice"
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder2",
+        "count": 6,
+        "face": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder3",
+        "count": 6,
+        "face": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder4",
+        "count": 4,
+        "face": 1
       }
     ]
   },
   "text4": {
     "id": "text4",
-    "x": 400,
+    "x": 230,
     "y": 885,
-    "width": 1010,
+    "width": 1180,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "The scatter never moves a piece it does not have to move. Dealing another card leaves everything else exactly where it lies."
-  },
-  "token1": {
-    "id": "token1",
-    "width": 75,
-    "height": 75,
-    "activeFace": 0,
-    "classes": "chip",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "secondaryColor": "#ffffff",
-    "parent": "holder3",
-    "x": 50,
-    "y": 60,
-    "z": 1,
-    "rotation": 7,
-    "color": "#4a68b6"
-  },
-  "token2": {
-    "id": "token2",
-    "width": 75,
-    "height": 75,
-    "activeFace": 0,
-    "classes": "chip",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "secondaryColor": "#ffffff",
-    "parent": "holder3",
-    "x": 220,
-    "y": 100,
-    "z": 2,
-    "rotation": -12,
-    "color": "#b8514d"
-  },
-  "token3": {
-    "id": "token3",
-    "width": 75,
-    "height": 75,
-    "activeFace": 0,
-    "classes": "chip",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "secondaryColor": "#ffffff",
-    "parent": "holder3",
-    "x": 110,
-    "y": 220,
-    "z": 3,
-    "rotation": 4,
-    "color": "#4a68b6"
-  },
-  "token4": {
-    "id": "token4",
-    "width": 75,
-    "height": 75,
-    "activeFace": 0,
-    "classes": "chip",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "secondaryColor": "#ffffff",
-    "x": 1480,
-    "y": 690,
-    "color": "#b8514d"
-  },
-  "token5": {
-    "id": "token5",
-    "width": 75,
-    "height": 75,
-    "activeFace": 0,
-    "classes": "chip",
-    "faces": [
-      {
-        "image": "i/game-pieces/2D/Checkers-2D.svg",
-        "crowned": false
-      },
-      {
-        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
-        "crowned": true
-      }
-    ],
-    "image": "i/game-pieces/2D/Checkers-2D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#000000",
-    "borderWidth": 1,
-    "secondaryColor": "#ffffff",
-    "x": 1495,
-    "y": 785,
-    "color": "#4a68b6"
+    "html": "Drag a card within a grid to insert it at the cell you point at and the other cards flow around it. A whole pile dropped into a grid breaks up into single cards, because a grid normally keeps no piles. The <i>preventPiles</i> button turns the first holder's cells into stacks instead: dropped piles stay, a card dropped onto a cell stacks onto it, and the handle counts the stack."
   },
   "deckHolder": {
     "type": "holder",
@@ -1344,11 +1135,39 @@
     "parent": "deckHolderP",
     "z": 52
   },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 1230,
+    "y": 240,
+    "width": 250,
+    "height": 380,
+    "layout": "grid",
+    "gridColumns": 2,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pilesOffsetY": 120
+  },
+  "text4b": {
+    "id": "text4b",
+    "x": 1215,
+    "y": 650,
+    "width": 260,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>gridColumns</b> <i>2</i> pins the column count however the holder is sized. <b>gridRows</b> does the same for the rows. Here <b>pilesOffsetY</b> <i>120</i> also pins the row pitch: a fixed pitch never squishes, so what does not fit sticks out of the holder."
+  },
   "_meta": {
     "version": 24,
     "gameSettings": {
-      "legacyModes": {},
-      "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 600ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
+      "legacyModes": {}
     },
     "info": {
       "name": "Types - Holder",
@@ -1360,7 +1179,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788033060230,
+      "lastUpdate": 1788112507056,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1371,9 +1190,57 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "layout: random",
+      "variant": "layout: grid",
       "language": "en-US",
       "players": "1"
     }
+  },
+  "stacksButton": {
+    "id": "stacksButton",
+    "type": "button",
+    "x": 60,
+    "y": 830,
+    "width": 170,
+    "height": 50,
+    "text": "preventPiles true",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY preventPiles OF holder1}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "holder1"
+            ],
+            "property": "preventPiles",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "preventPiles false"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "holder1"
+            ],
+            "property": "preventPiles",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "preventPiles true"
+          }
+        ]
+      }
+    ]
   }
 }

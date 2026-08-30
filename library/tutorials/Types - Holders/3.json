@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using with the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. Drag a whole group by the handle at its top right corner. The grey drop shadow is always on in a &quotmultiSpread&quot holder: pointed into a fan it opens the exact slot the card will take, and between the groups it takes the place the new group would get.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into the other one. A spread group dropped into any other kind of holder or onto the table collapses back into an ordinary pile, or is dealt out into the row, if the holder spreads its cards."
+    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using with the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. Drag a whole group by the handle at its top right corner. The grey drop shadow is on by default in a &quotmultiSpread&quot holder: pointed into a fan it opens the exact slot the card will take, and between the groups it takes the place the new group would get. Write <b>dropShadow</b> <i>false</i> to turn the preview off - the button below toggles it for all three holders. With <b>gridColumns</b> the groups wrap into rows; the next variant shows it.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into the other one. A spread group dropped into any other kind of holder or onto the table collapses back into an ordinary pile, or is dealt out into the row, if the holder spreads its cards."
   },
   "holder1": {
     "type": "holder",
@@ -1116,7 +1116,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788033060222,
+      "lastUpdate": 1788112507056,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1158,5 +1158,67 @@
       "font-size": "22px"
     },
     "html": "Using <b>spreadMin</b> allows piles to squeeze together to save space while still fanning out the specified minimum of cards. The holder to the left is set at 4, so drag and drop cards to create a group larger than 4 to see the effect."
+  },
+  "shadowButton": {
+    "id": "shadowButton",
+    "type": "button",
+    "x": 972,
+    "y": 387,
+    "width": 170,
+    "height": 50,
+    "text": "dropShadow true",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY dropShadow OF holder1}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "holder1",
+              "holder2",
+              "holder3"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "dropShadow",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "dropShadow false"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "holder1",
+              "holder2",
+              "holder3"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "dropShadow",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "dropShadow true"
+          }
+        ]
+      }
+    ]
   }
 }

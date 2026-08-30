@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "Every holder has a <b>layout</b> property that says in one word how it arranges the widgets you put into it. New holders start on <i>auto</i>. The other values are <i>pile</i>, <i>singleSpread</i>, <i>multiSpread</i>, <i>grid</i>, <i>random</i>, <i>freeform</i>, and <i>custom</i>. Pick it in the <i>Layout</i> section of the property editor or in the JSON Editor. A holder with <b>layout</b> &quotauto&quot, dynamically adjusts the arrangement. It centers what it holds, spreads it out when there is room, wraps it into as many rows as give each card the most visible area, and packs everything into one centered spot when nothing more fits. Piles are only kept while the holder fits just one card."
+    "html": "Every holder has a <b>layout</b> property that says in one word how it arranges the widgets you put into it. New holders start on <i>auto</i>. The other values are <i>pile</i>, <i>singleSpread</i>, <i>multiSpread</i>, <i>grid</i>, <i>random</i>, <i>freeform</i>, and <i>custom</i>. Pick it in the <i>Layout</i> section of the property editor or in the JSON Editor. A holder with <b>layout</b> &quotauto&quot, dynamically adjusts the arrangement. It centers what it holds, spreads it out when there is room, wraps it into as many rows as give each card the most visible area, and packs everything into one centered spot when nothing more fits. Piles are only kept while the holder is smaller than one and a half cards along both axes. <b>gridColumns</b>/<b>gridRows</b> pin how many cards go into a row - the row search stands down while the centering, the squish and everything else about &quotauto&quot stays on."
   },
   "deckHolder": {
     "type": "holder",
@@ -1184,16 +1184,16 @@
   },
   "text5": {
     "id": "text5",
-    "x": 600,
+    "x": 760,
     "y": 770,
-    "width": 850,
+    "width": 700,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "Deal some cards and drag them around. Dropped onto each other in the small holder they stay a pile, and a pile dropped into any of the wider holders is emptied out onto the row."
+    "html": "Deal some cards and drag them around. Dropped onto each other in the small holder they stay a pile, and a pile dropped into any of the wider holders is emptied out onto the row. The <i>gridColumns</i> button pins the wrap of the third holder to two cards per row."
   },
   "shadowButton": {
     "id": "shadowButton",
@@ -1287,7 +1287,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788033060214,
+      "lastUpdate": 1788112507056,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1302,5 +1302,53 @@
       "language": "en-US",
       "players": "1"
     }
+  },
+  "pinButton": {
+    "id": "pinButton",
+    "type": "button",
+    "x": 570,
+    "y": 770,
+    "width": 170,
+    "height": 50,
+    "text": "gridColumns null",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gridColumns OF holder3}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "holder3"
+            ],
+            "property": "gridColumns",
+            "value": 2
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "gridColumns 2"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "holder3"
+            ],
+            "property": "gridColumns",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "gridColumns null"
+          }
+        ]
+      }
+    ]
   }
 }

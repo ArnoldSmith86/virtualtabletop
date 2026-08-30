@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "This variant covers holders with <b>layout</b> set to &quotpile&quot and &quotsingleSpread&quot."
+    "html": "This variant covers holders with <b>layout</b> set to &quotpile&quot and &quotsingleSpread&quot. A single spread has no overflow handling of its own - a hand longer than the holder simply runs past its edge - but <b>spreadMin</b> keeps a long fan readable without growing past it."
   },
   "holder1": {
     "type": "holder",
@@ -95,7 +95,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>layout</b> &quotsingleSpread&quot: this layout is one spread fan of cards. This is how most games in the public library appear since most games were created before the <b>layout</b> property was available. However, if you look at a game from the library, you would usually see <b>layout</b> &quotcustom&quot as that does something similar but allows for modifying some of the parameters. The cards will overflow the right edge of the holder above. "
+    "html": "<b>layout</b> &quotsingleSpread&quot: this layout is one spread fan of cards. This is how most games in the public library appear since most games were created before the <b>layout</b> property was available. However, if you look at a game from the library, you would usually see <b>layout</b> &quotcustom&quot as that does something similar but allows for modifying some of the parameters."
   },
   "button1": {
     "id": "button1",
@@ -126,6 +126,13 @@
         "to": "holder3",
         "count": 3,
         "face": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder4",
+        "count": 3,
+        "face": 1
       }
     ]
   },
@@ -133,7 +140,7 @@
     "id": "text5",
     "x": 240,
     "y": 732,
-    "width": 700,
+    "width": 500,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
@@ -1130,7 +1137,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788033060218,
+      "lastUpdate": 1788112507056,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1145,5 +1152,31 @@
       "language": "en-US",
       "players": "1"
     }
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 790,
+    "y": 680,
+    "width": 540,
+    "height": 220,
+    "layout": "singleSpread",
+    "spreadMin": 3,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "text4": {
+    "id": "text4",
+    "x": 792,
+    "y": 910,
+    "width": 540,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>spreadMin</b> <i>3</i>: the topmost three cards keep the full fan step, the rest squeeze together - a long hand stays inside the holder. Deal a few times to see it."
   }
 }
