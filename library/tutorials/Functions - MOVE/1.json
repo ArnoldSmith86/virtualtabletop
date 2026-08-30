@@ -56,7 +56,7 @@
     "y": 250,
     "width": 780,
     "height": 180,
-    "layout": "multipleSpread",
+    "layout": "multiSpread",
     "stackOffsetX": 26,
     "onEnter": {
       "activeFace": 1
@@ -74,7 +74,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "A &quotmultipleSpread&quot holder: &quotgroupStart&quot and &quotgroupEnd&quot deal the two cards as a new group at the start or the end. &quotpileBottom&quot and &quotpileTop&quot add them to the first or last group that is already there."
+    "html": "A &quotmultiSpread&quot holder: &quotgroupStart&quot and &quotgroupEnd&quot deal the two cards as a new group at the start or the end. &quotpileBottom&quot and &quotpileTop&quot add them to the first or last group that is already there."
   },
   "button1": {
     "id": "button1",

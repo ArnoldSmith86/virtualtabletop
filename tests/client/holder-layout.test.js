@@ -158,17 +158,17 @@ describe('what each layout derives for the holder', () => {
     expect(holder.get('stackOffsetY')).toBe(30);
   });
 
-  test('multipleSpread arranges piles, shows the drop shadow and spaces the groups a default gap apart', () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread' });
+  test('multiSpread arranges piles, shows the drop shadow and spaces the groups a default gap apart', () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread' });
     expect(holder.get('allowPiles')).toBe(true);
     expect(holder.get('dropShadow')).toBe(true);
     expect(holder.get('pilesGapX')).toBe(8);
     expect(holder.arrangesPiles()).toBe(true);
   });
 
-  test('multipleSpread leaves the gap alone as soon as the game spaces the groups itself', () => {
-    expect(createHolder({ id: 'h', layout: 'multipleSpread', pilesOffsetX: 60 }).get('pilesGapX')).toBe(null);
-    expect(createHolder({ id: 'h2', layout: 'multipleSpread', pilesGapX: 0 }).get('pilesGapX')).toBe(0);
+  test('multiSpread leaves the gap alone as soon as the game spaces the groups itself', () => {
+    expect(createHolder({ id: 'h', layout: 'multiSpread', pilesOffsetX: 60 }).get('pilesGapX')).toBe(null);
+    expect(createHolder({ id: 'h2', layout: 'multiSpread', pilesGapX: 0 }).get('pilesGapX')).toBe(0);
   });
 
   test('grid prevents piles, freeform drops alignment', () => {
@@ -739,7 +739,7 @@ describe('MOVE with a position parameter', () => {
   });
 
   test('pileBottom on a holder that arranges piles joins the first group at its bottom', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     const first = await createPile('first', holder, 4, 4, 2);
     await createPile('second', holder, 300, 4, 2);
     await holder.updateAfterShuffle();
@@ -750,7 +750,7 @@ describe('MOVE with a position parameter', () => {
   });
 
   test('pileTop joins the last group on top', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     await createPile('first', holder, 4, 4, 2);
     const second = await createPile('second', holder, 300, 4, 2);
     await holder.updateAfterShuffle();
@@ -762,7 +762,7 @@ describe('MOVE with a position parameter', () => {
   });
 
   test('groupStart forms a new group before the others', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     await createPile('existing', holder, 4, 4, 2);
     await holder.updateAfterShuffle();
     const moved = [ createCard('m1', { parent: 'h', z: 50 }), createCard('m2', { parent: 'h', z: 51 }) ];
@@ -775,7 +775,7 @@ describe('MOVE with a position parameter', () => {
   });
 
   test('groupEnd forms a new group after the others, one moved card staying loose', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     await createPile('existing', holder, 4, 4, 2);
     await holder.updateAfterShuffle();
     const moved = [ createCard('m1', { parent: 'h', z: 50 }) ];
@@ -786,7 +786,7 @@ describe('MOVE with a position parameter', () => {
   });
 
   test('pileTop takes cards already inside a group over into the last one', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     const first = await createPile('first', holder, 4, 4, 4);
     const second = await createPile('second', holder, 300, 4, 2);
     await holder.updateAfterShuffle();
@@ -802,7 +802,7 @@ describe('MOVE with a position parameter', () => {
   });
 
   test('groupEnd deals cards already inside a group out as the final group', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     await createPile('first', holder, 4, 4, 2);
     await createPile('second', holder, 300, 4, 2);
     await holder.updateAfterShuffle();
@@ -819,7 +819,7 @@ describe('MOVE with a position parameter', () => {
   });
 
   test('groupStart pulls a card out of a group and renumbers it in front', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     const first = await createPile('first', holder, 4, 4, 3);
     await holder.updateAfterShuffle();
     const moved = [ first.children().sort((a, b)=>b.get('z') - a.get('z'))[0] ];
@@ -833,7 +833,7 @@ describe('MOVE with a position parameter', () => {
 
 describe('SORT with groupBy', () => {
   test('re-partitions an arranging holder into one group per distinct value', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     const cards = [
       [ 'S', 3 ], [ 'H', 1 ], [ 'S', 1 ], [ 'H', 2 ], [ 'S', 2 ]
     ].map(([ suit, rank ], i)=>createCard(`card-${suit}${rank}`, { parent: 'h', z: i+1, suit, rank }));
@@ -853,7 +853,7 @@ describe('SORT with groupBy', () => {
   });
 
   test('handed a subset it regroups only those cards and keeps the rest ahead', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
     const mine = [
       [ 'S', 2 ], [ 'H', 1 ], [ 'S', 1 ], [ 'H', 2 ]
     ].map(([ suit, rank ], i)=>createCard(`m${suit}${rank}`, { parent: 'h', z: i+1, suit, rank, owner: 'jestPlayer' }));
@@ -877,7 +877,7 @@ describe('SORT with groupBy', () => {
   });
 
   test('a subset from inside a group is pulled out and the rest keeps its place', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 900, height: 120 });
     const fan = await createPile('fan', holder, 4, 4, 3);
     for(const [ i, suit ] of [ 'S', 'H', 'S' ].entries())
       await widgets.get(`fan-card-${i}`).set('suit', suit);
@@ -895,7 +895,7 @@ describe('SORT with groupBy', () => {
   });
 
   test('a value only one card has stays a loose card', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     createCard('a1', { parent: 'h', z: 1, suit: 'S' });
     createCard('a2', { parent: 'h', z: 2, suit: 'S' });
     createCard('b1', { parent: 'h', z: 3, suit: 'H' });
@@ -907,7 +907,7 @@ describe('SORT with groupBy', () => {
 
 describe('a drop pointed into a fan', () => {
   test('names the slot of the fan it points at', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetY: 40, width: 300, height: 700 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetY: 40, width: 300, height: 700 });
     const fan = await createPile('fan', holder, 4, 4, 4);
     await holder.updateAfterShuffle();
     const dropped = createCard('dropped');
@@ -918,12 +918,12 @@ describe('a drop pointed into a fan', () => {
     // aimed far past the end of the fan: on top
     expect(holder.spreadFanIndexOf(fan, dropped, x, y + 200 - CARD_HEIGHT/2)).toBe(4);
     // a compact pile has no fan to point into
-    const stack = await createPile('stack', createHolder({ id: 'h2', layout: 'multipleSpread', width: 300, height: 700 }), 4, 4, 3);
-    expect(createHolder({ id: 'h3', layout: 'multipleSpread' }).spreadFanIndexOf(stack, dropped, 4, 4)).toBe(null);
+    const stack = await createPile('stack', createHolder({ id: 'h2', layout: 'multiSpread', width: 300, height: 700 }), 4, 4, 3);
+    expect(createHolder({ id: 'h3', layout: 'multiSpread' }).spreadFanIndexOf(stack, dropped, 4, 4)).toBe(null);
   });
 
   test('inserts the cards at that slot', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetY: 40, width: 300, height: 700 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetY: 40, width: 300, height: 700 });
     const fan = await createPile('fan', holder, 4, 4, 3);
     const dropped = createCard('dropped', { parent: 'fan', z: 50 });
     await fan.insertChildrenAt([ dropped ], 1);
@@ -932,7 +932,7 @@ describe('a drop pointed into a fan', () => {
   });
 
   test('names the slot of a fan running in the negative direction', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetY: -40, width: 300, height: 700 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetY: -40, width: 300, height: 700 });
     const fan = await createPile('fan', holder, 4, 4, 4);
     await holder.updateAfterShuffle();
     const dropped = createCard('dropped');
@@ -946,12 +946,12 @@ describe('a drop pointed into a fan', () => {
   });
 });
 
-describe('a multipleSpread with more groups than fit', () => {
+describe('a multiSpread with more groups than fit', () => {
   // avail is the holder width minus the drop offset on both sides (default 4)
   test('shrinks the gaps between the groups first', async () => {
     // two fans of 3 at stack offset 40: bases 200, fans 160, one gap of 8 ->
     // full row 368; at width 370 (avail 362) only a 2px gap still fits
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 370, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 370, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     await createPile('two', holder, 300, 4, 3);
     await holder.updateAfterShuffle();
@@ -964,7 +964,7 @@ describe('a multipleSpread with more groups than fit', () => {
 
   test('compresses the fans evenly once the gaps are gone', async () => {
     // bases 200, fans 160: at width 288 (avail 280) the fans keep half their spread
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 288, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 288, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     await createPile('two', holder, 300, 4, 3);
     await holder.updateAfterShuffle();
@@ -978,7 +978,7 @@ describe('a multipleSpread with more groups than fit', () => {
   });
 
   test('overlaps the groups themselves when even the bare cards do not fit', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 180, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 180, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     await createPile('two', holder, 300, 4, 3);
     await holder.updateAfterShuffle();
@@ -990,7 +990,7 @@ describe('a multipleSpread with more groups than fit', () => {
   });
 
   test('a row spaced by pilesOffset is the game taking manual control, so it is honored', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, pilesOffsetX: 60, width: 180, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, pilesOffsetX: 60, width: 180, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     await createPile('two', holder, 300, 4, 3);
     await holder.updateAfterShuffle();
@@ -1001,7 +1001,7 @@ describe('a multipleSpread with more groups than fit', () => {
   });
 
   test('removing groups hands the room back', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 288, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 288, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     const two = await createPile('two', holder, 300, 4, 3);
     await holder.updateAfterShuffle();
@@ -1016,7 +1016,7 @@ describe('a multipleSpread with more groups than fit', () => {
   test('resizing the holder re-runs the squish', async () => {
     // bases 200, fans 160: plenty of room at width 700, half the fan spread at
     // 288 (avail 280) - the squish follows the size in both directions
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 700, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 700, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     await createPile('two', holder, 300, 4, 3);
     await holder.updateAfterShuffle();
@@ -1033,7 +1033,7 @@ describe('a multipleSpread with more groups than fit', () => {
     // a pile renders at the highest z among its own and its cards' values, so
     // rows numbered with a plain z++ let two fans tie and stack in DOM order -
     // which hid their count handles behind a neighbor at random
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 900, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     await createPile('two', holder, 300, 4, 2);
     createCard('loose', { parent: 'h', x: 600, y: 4, z: 50 });
@@ -1047,7 +1047,7 @@ describe('a multipleSpread with more groups than fit', () => {
 
 describe('the drop shadow previewing an insertion into a fan', () => {
   async function previewRoom() {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 600, height: 120 });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 600, height: 120 });
     await createPile('one', holder, 4, 4, 3);
     await createPile('two', holder, 300, 4, 2);
     await holder.updateAfterShuffle();
@@ -1183,7 +1183,7 @@ describe('a shared hand (childrenPerOwner) keeps its lanes', () => {
   // the local player is jestPlayer, so anything that wrongly hands cards to
   // "whoever clicked" shows up as an owner flipping to jestPlayer
   async function sharedHand() {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
     await createPile('mine', holder, 4, 4, 2);
     await createPile('theirs', holder, 300, 4, 2);
     await widgets.get('mine').set('owner', 'jestPlayer');
@@ -1253,7 +1253,7 @@ describe('a shared hand (childrenPerOwner) keeps its lanes', () => {
   });
 
   test('a card dropped onto a lone card of its lane piles up with it', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
     createCard('lone', { parent: 'h', x: 4, y: 4, z: 1 });
     await widgets.get('lone').set('owner', 'jestPlayer');
     const dropped = createCard('dropped', { x: 10, y: 10, z: 5 });
@@ -1329,16 +1329,16 @@ describe('switching layouts with piles inside', () => {
     expect(holder.children().length).toBe(3);
   });
 
-  test('leaving multipleSpread for a spreading layout empties the groups onto the row', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+  test('leaving multiSpread for a spreading layout empties the groups onto the row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     await createPile('group', holder, 4, 4, 3);
     await holder.set('layout', 'singleSpread');
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
     expect(holder.children().length).toBe(3);
   });
 
-  test('leaving multipleSpread for auto empties them too, since a spreading auto layout allows no piles', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 900, height: 300 });
+  test('leaving multiSpread for auto empties them too, since a spreading auto layout allows no piles', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
     await createPile('group', holder, 4, 4, 3);
     await holder.set('layout', 'auto');
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
@@ -1346,8 +1346,8 @@ describe('switching layouts with piles inside', () => {
     expect(holder.children().every(c=>c.get('parent') == 'h')).toBe(true);
   });
 
-  test('leaving multipleSpread for auto keeps a group where the holder only fits one card', async () => {
-    const holder = createHolder({ id: 'h', layout: 'multipleSpread', width: 120, height: 120 });
+  test('leaving multiSpread for auto keeps a group where the holder only fits one card', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 120, height: 120 });
     await createPile('group', holder, 4, 4, 3);
     await holder.set('layout', 'auto');
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);

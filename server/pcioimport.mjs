@@ -777,7 +777,7 @@ export default async function convertPCIO(content) {
       if(widget.id == 'hand') {
         // a PCIO hand is a multi-group spread: cards fan out and can be
         // grouped into stacks the player arranges, 20 pixels apart
-        w.layout = 'multipleSpread';
+        w.layout = 'multiSpread';
         w.dropOffsetX = 6;
         w.dropOffsetY = 6;
         w.stackOffsetX = 40;
@@ -837,7 +837,7 @@ export default async function convertPCIO(content) {
         // a multi-group spread: each group fans out by the band PCIO leaves
         // visible of a card (40 x 54 pixels), the groups sit the 20 pixels
         // apart PCIO keeps between them
-        w.layout = 'multipleSpread';
+        w.layout = 'multiSpread';
         w.pilesGapX = 20;
         if(widget.spreadDirection == 'down') {
           w.stackOffsetY = 54;

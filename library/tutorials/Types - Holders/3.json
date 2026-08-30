@@ -9,7 +9,7 @@
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
     "layer": -3,
-    "text": "Holders: Layout - multipleSpread"
+    "text": "Holders: Layout - multiSpread"
   },
   "overview": {
     "id": "overview",
@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "<b>layout</b> &quotmultipleSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using with the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. Drag a whole group by the handle at its top right corner. The grey drop shadow is always on in a &quotmultipleSpread&quot holder: pointed into a fan it opens the exact slot the card will take, and between the groups it takes the place the new group would get.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into the other one. A spread group dropped into any other kind of holder or onto the table collapses back into an ordinary pile, or is dealt out into the row, if the holder spreads its cards."
+    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using with the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. Drag a whole group by the handle at its top right corner. The grey drop shadow is always on in a &quotmultiSpread&quot holder: pointed into a fan it opens the exact slot the card will take, and between the groups it takes the place the new group would get.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into the other one. A spread group dropped into any other kind of holder or onto the table collapses back into an ordinary pile, or is dealt out into the row, if the holder spreads its cards."
   },
   "holder1": {
     "type": "holder",
@@ -30,7 +30,7 @@
     "y": 455,
     "width": 680,
     "height": 200,
-    "layout": "multipleSpread",
+    "layout": "multiSpread",
     "stackOffsetX": 35,
     "onEnter": {
       "activeFace": 1
@@ -47,7 +47,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>layout</b> &quotmultipleSpread&quot with <b>stackOffsetX</b> <i>25</i> and no spacing properties, so the groups sit the default 8 px apart."
+    "html": "<b>layout</b> &quotmultiSpread&quot with <b>stackOffsetX</b> <i>25</i> and no spacing properties, so the groups sit the default 8 px apart."
   },
   "holder2": {
     "type": "holder",
@@ -56,7 +56,7 @@
     "y": 455,
     "width": 680,
     "height": 200,
-    "layout": "multipleSpread",
+    "layout": "multiSpread",
     "stackOffsetX": 25,
     "onEnter": {
       "activeFace": 1
@@ -1127,7 +1127,7 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "layout: multipleSpread",
+      "variant": "layout: multiSpread",
       "language": "en-US",
       "players": "1"
     }
@@ -1139,7 +1139,7 @@
     "y": 782,
     "width": 680,
     "height": 200,
-    "layout": "multipleSpread",
+    "layout": "multiSpread",
     "stackOffsetX": 35,
     "onEnter": {
       "activeFace": 1

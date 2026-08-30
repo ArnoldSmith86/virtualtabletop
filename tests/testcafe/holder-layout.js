@@ -41,7 +41,7 @@ function multiSpreadHand(extra, properties) {
   return baseState(Object.assign({
     hand: Object.assign({
       id: 'hand', type: 'holder', x: 100, y: 100, width: 900, height: 300,
-      dropTarget: { type: 'card' }, layout: 'multipleSpread', stackOffsetX: 40
+      dropTarget: { type: 'card' }, layout: 'multiSpread', stackOffsetX: 40
     }, properties)
   }, extra));
 }
@@ -342,7 +342,7 @@ test('MOVE with position pileBottom puts the batch at the start of a spread', as
   await t.expect(byZ(state, 'row').map(c=>c.x)).eql([ 4, 44, 84 ], 'so it leads the spread');
 });
 
-test('MOVE with position groupEnd and pileTop work the groups of a multiple spread', async t => {
+test('MOVE with position groupEnd and pileTop work the groups of a multi spread', async t => {
   await openRoom(t, 'modern', multiSpreadHand(Object.assign(fan('fan', 4, 2), {
     source: { id: 'source', type: 'holder', layout: 'pile', x: 1200, y: 100, dropTarget: { type: 'card' } },
     m1: card('m1', { parent: 'source', x: 4, y: 4, z: 1 }),

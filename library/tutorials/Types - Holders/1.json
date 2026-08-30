@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "Every holder has a <b>layout</b> property that says in one word how it arranges the widgets you put into it. New holders start on <i>auto</i>. The other values are <i>pile</i>, <i>singleSpread</i>, <i>multipleSpread</i>, <i>grid</i>, <i>random</i>, <i>freeform</i>, and <i>custom</i>. Pick it in the <i>Layout</i> section of the property editor or in the JSON Editor. A holder with <b>layout</b> &quotauto&quot, dynamically adjusts the arrangement. It centers what it holds, spreads it out when there is room, wraps it into as many rows as give each card the most visible area, and packs everything into one centered spot when nothing more fits. Piles are only kept while the holder fits just one card."
+    "html": "Every holder has a <b>layout</b> property that says in one word how it arranges the widgets you put into it. New holders start on <i>auto</i>. The other values are <i>pile</i>, <i>singleSpread</i>, <i>multiSpread</i>, <i>grid</i>, <i>random</i>, <i>freeform</i>, and <i>custom</i>. Pick it in the <i>Layout</i> section of the property editor or in the JSON Editor. A holder with <b>layout</b> &quotauto&quot, dynamically adjusts the arrangement. It centers what it holds, spreads it out when there is room, wraps it into as many rows as give each card the most visible area, and packs everything into one centered spot when nothing more fits. Piles are only kept while the holder fits just one card."
   },
   "deckHolder": {
     "type": "holder",

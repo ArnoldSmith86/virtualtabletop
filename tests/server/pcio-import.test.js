@@ -71,10 +71,10 @@ describe('PCIO importer', () => {
       { id: 'down',  type: 'holder', x: 200, y: 0, layoutType: 'spread', spreadMulti: 'multi', spreadDirection: 'down' }
     ], 8);
 
-    expect(state.right.layout).toBe('multipleSpread');
+    expect(state.right.layout).toBe('multiSpread');
     expect(state.right.stackOffsetX).toBe(40);
     expect(state.right.pilesGapX).toBe(20);
-    expect(state.down.layout).toBe('multipleSpread');
+    expect(state.down.layout).toBe('multiSpread');
     expect(state.down.stackOffsetY).toBe(54);
     expect(state.down.pilesGapX).toBe(20);
     expect(state._meta.info.importerWarnings).toBeUndefined();
@@ -86,7 +86,7 @@ describe('PCIO importer', () => {
       { id: 'extra', type: 'hand', x: 0, y: 700 }
     ], 8);
 
-    expect(state.hand.layout).toBe('multipleSpread');
+    expect(state.hand.layout).toBe('multiSpread');
     expect(state.hand.stackOffsetX).toBe(40);
     expect(state.hand.pilesGapX).toBe(20);
     expect(state.hand.childrenPerOwner).toBe(true);

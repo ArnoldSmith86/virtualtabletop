@@ -1322,7 +1322,7 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder fits just one card; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMultiple spread lines up several groups (piles) side by side.\nGrid fills rows and columns.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
+  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder fits just one card; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMulti spread lines up several groups (piles) side by side.\nGrid fills rows and columns.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
   allowPiles: 'Keep piles that are dropped in as piles and line them up as groups, instead of emptying them out one card per slot.',
   pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds.',
   pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds.',
@@ -1449,10 +1449,10 @@ const editorTypeSections = {
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true },
-      // a multiple spread always shows the shadow - it is what says where the
+      // a multi spread always shows the shadow - it is what says where the
       // dragged card is about to be inserted
       { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox',
-        available: widget=>holderEffectiveLayout(widget) != 'multipleSpread',
+        available: widget=>holderEffectiveLayout(widget) != 'multiSpread',
         availableListenTo: holderArrangementListenTo }
     ],
     // the layout decides most of these low-level switches for the holder, so
@@ -10067,7 +10067,7 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader('Layout');
 
     // whether the last layout choice wrote the starter fan below, so leaving
-    // multipleSpread with it untouched takes it out again - a layout the user
+    // multiSpread with it untouched takes it out again - a layout the user
     // merely explored through the select leaves nothing behind
     let wroteStarterFan = false;
     new SelectInput(this, widget, 'Arrange as', {
@@ -10082,13 +10082,13 @@ class PropertiesModule extends SidebarModule {
           // auto only applies while the arrangement properties are untouched
           for(const property of holderArrangementProperties)
             widget.set(property, null);
-        if(wroteStarterFan && value != 'multipleSpread' && widget.state.stackOffsetX === 40 && widget.state.stackOffsetY === undefined) {
+        if(wroteStarterFan && value != 'multiSpread' && widget.state.stackOffsetX === 40 && widget.state.stackOffsetY === undefined) {
           widget.set('stackOffsetX', null);
           wroteStarterFan = false;
         }
-        // a multiple spread without a stack offset is a row of flat stacks -
+        // a multi spread without a stack offset is a row of flat stacks -
         // give it the classic hand fan as its starting point
-        if(value == 'multipleSpread' && !widget.state.stackOffsetX && !widget.state.stackOffsetY) {
+        if(value == 'multiSpread' && !widget.state.stackOffsetX && !widget.state.stackOffsetY) {
           widget.set('stackOffsetX', 40);
           wroteStarterFan = true;
         }
@@ -10101,7 +10101,7 @@ class PropertiesModule extends SidebarModule {
         { value: 'custom',         text: 'Custom (properties below)' },
         { value: 'pile',           text: 'Pile' },
         { value: 'singleSpread',   text: 'Single spread' },
-        { value: 'multipleSpread', text: 'Multiple spread (groups)' },
+        { value: 'multiSpread', text: 'Multi spread (groups)' },
         { value: 'grid',           text: 'Grid' },
         { value: 'random',         text: 'Random (scatter)' },
         { value: 'freeform',       text: 'Freeform' }
@@ -10130,11 +10130,11 @@ class PropertiesModule extends SidebarModule {
       rows.push({ row: input.dom, layouts, properties: [ property ] });
     };
 
-    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'multipleSpread', 'grid', 'random' ]);
-    addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'multipleSpread', 'grid' ]);
-    addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multipleSpread' ]);
-    addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multipleSpread' ]);
-    addNumberRow('Spread min',   'spreadMin',   [ 'multipleSpread' ]);
+    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'multiSpread', 'grid', 'random' ]);
+    addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'multiSpread', 'grid' ]);
+    addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multiSpread' ]);
+    addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multiSpread' ]);
+    addNumberRow('Spread min',   'spreadMin',   [ 'multiSpread' ]);
     addNumberRow('Grid columns', 'gridColumns', [ 'grid' ], { min: 1 });
     addNumberRow('Grid rows',    'gridRows',    [ 'grid' ], { min: 1 });
 
@@ -10142,9 +10142,9 @@ class PropertiesModule extends SidebarModule {
       const layout = widget.effectiveLayout();
       autoNote.style.display = layout == 'custom' && widget.get('layout') == 'auto' ? '' : 'none';
       // the piles rows also belong to a custom layout that arranges piles
-      const arrangesPiles = layout == 'multipleSpread' || layout == 'custom' && widget.get('allowPiles');
+      const arrangesPiles = layout == 'multiSpread' || layout == 'custom' && widget.get('allowPiles');
       for(const entry of rows) {
-        const applies = entry.layouts.indexOf(layout) != -1 || arrangesPiles && entry.layouts.indexOf('multipleSpread') != -1;
+        const applies = entry.layouts.indexOf(layout) != -1 || arrangesPiles && entry.layouts.indexOf('multiSpread') != -1;
         entry.row.style.display = applies || entry.properties.some(p=>widget.state[p] !== undefined) ? '' : 'none';
       }
     };

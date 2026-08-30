@@ -116,7 +116,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>groupBy</b>: in a holder that fans groups (<i>layout: \"multipleSpread\"</i>), SORT stacks one group per value of that property. <b>Key</b> sorts inside each group. This also works on collections (for example, one player's cards only)."
+    "html": "<b>groupBy</b>: in a holder that fans groups (<i>layout: \"multiSpread\"</i>), SORT stacks one group per value of that property. <b>Key</b> sorts inside each group. This also works on collections (for example, one player's cards only)."
   },
   "text2": {
     "id": "text2",
@@ -164,7 +164,7 @@
     "y": 460,
     "width": 1360,
     "height": 190,
-    "layout": "multipleSpread",
+    "layout": "multiSpread",
     "stackOffsetX": 40,
     "dropTarget": {
       "type": "card"

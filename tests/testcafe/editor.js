@@ -611,12 +611,12 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(align.visible).notOk()
     .expect(pilesGap.visible).notOk();
 
-  // a multiple spread arranges piles: it brings the group spacing (and a starting fan) with
+  // a multi spread arranges piles: it brings the group spacing (and a starting fan) with
   // it, and the switches it decides stay hidden
   await t
     .click(layout.find('select'))
-    .click(layout.find('option').withAttribute('value', '"multipleSpread"'))
-    .expect(stateOf('layout')).eql('"multipleSpread"')
+    .click(layout.find('option').withAttribute('value', '"multiSpread"'))
+    .expect(stateOf('layout')).eql('"multiSpread"')
     .expect(stateOf('stackOffsetX')).eql('40')
     .expect(pilesGap.visible).ok()
     .expect(align.visible).notOk()

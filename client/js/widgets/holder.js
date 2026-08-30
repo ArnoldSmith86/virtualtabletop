@@ -1,11 +1,11 @@
 // What each layout decides for the holder. Only the properties named here are
 // overridden while the layout is in effect; every other property keeps its raw
-// value and acts as a knob of the layout (the fan step of a multipleSpread, the
+// value and acts as a knob of the layout (the fan step of a multiSpread, the
 // margins of a grid, ...).
 const layoutDerivedProperties = {
   pile:           { alignChildren: true,  allowPiles: false, stackOffsetX: 0, stackOffsetY: 0 },
   singleSpread:   { alignChildren: true,  allowPiles: false, preventPiles: false },
-  multipleSpread: { alignChildren: true,  allowPiles: true,  preventPiles: false, dropShadow: true },
+  multiSpread: { alignChildren: true,  allowPiles: true,  preventPiles: false, dropShadow: true },
   grid:           { alignChildren: true,  allowPiles: false, preventPiles: true },
   random:         { alignChildren: true,  allowPiles: false, preventPiles: true },
   freeform:       { alignChildren: false },
@@ -154,9 +154,9 @@ export class Holder extends ImageWidget {
       // stack offset gets the classic hand fan as its starting point
       if(layout == 'singleSpread' && (property == 'stackOffsetX' || property == 'stackOffsetY') && !super.get('stackOffsetX') && !super.get('stackOffsetY'))
         return property == 'stackOffsetX' ? 40 : 0;
-      // the groups of a multipleSpread sit a small default gap apart until the
+      // the groups of a multiSpread sit a small default gap apart until the
       // game spaces them out itself (an explicit pilesGapX of 0 packs them flush)
-      if(layout == 'multipleSpread' && property == 'pilesGapX' && [ 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY' ].every(p=>super.get(p) === null))
+      if(layout == 'multiSpread' && property == 'pilesGapX' && [ 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY' ].every(p=>super.get(p) === null))
         return 8;
       // an auto holder too small to arrange its cards centers them: the classic
       // paths put children at the drop offset, so that is where centering lives
@@ -661,7 +661,7 @@ export class Holder extends ImageWidget {
     if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle();
     // the layouts that decide the arrangement from the holder's size react to it changing
-    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multipleSpread' ].indexOf(this.get('layout')) != -1))
+    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread' ].indexOf(this.get('layout')) != -1))
       await this.updateAfterShuffle();
   }
 
@@ -1020,7 +1020,7 @@ export class Holder extends ImageWidget {
   gridMetrics(n) {
     const marginX = this.get('dropOffsetX');
     const marginY = this.get('dropOffsetY');
-    // the default cell gap matches the gap a multipleSpread leaves between its
+    // the default cell gap matches the gap a multiSpread leaves between its
     // groups, so cards read as separate cells out of the box
     const gapX = Math.abs(this.get('stackOffsetX')) || 8;
     const gapY = Math.abs(this.get('stackOffsetY')) || 8;
@@ -1157,7 +1157,7 @@ export class Holder extends ImageWidget {
   // starts the next one behind its cards, pilesOffset at a fixed distance
   // regardless of how many cards it holds, and with neither of them given the
   // piles are placed flush, one right after the other. An overflowing
-  // multipleSpread hands in its fanSquish, which shrinks the gaps and in the
+  // multiSpread hands in its fanSquish, which shrinks the gaps and in the
   // last resort overlaps the groups themselves.
   childSpacing(child, axis, squish=null) {
     const stackOffset = this.get('stackOffset' + axis);
@@ -1187,7 +1187,7 @@ export class Holder extends ImageWidget {
     return [ 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY' ].some(p=>this.get(p) !== null);
   }
 
-  // How the groups of a multipleSpread stay inside the holder when they take
+  // How the groups of a multiSpread stay inside the holder when they take
   // more room than it has: the gaps between them give way first, then the fans
   // inside the groups compress evenly, and only when even the bare cards do
   // not fit side by side do the groups start to overlap, the last one ending
@@ -1200,7 +1200,7 @@ export class Holder extends ImageWidget {
   fanSquish(owner) {
     const axis = this.spreadDirection()[0];
     const result = { axis, gap: this.get('pilesGap' + axis), fans: 1, groups: 1 };
-    if(this.effectiveLayout() != 'multipleSpread' || result.gap === null)
+    if(this.effectiveLayout() != 'multiSpread' || result.gap === null)
       return result;
 
     const size = axis == 'X' ? 'width' : 'height';
