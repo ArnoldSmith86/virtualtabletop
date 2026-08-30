@@ -13,14 +13,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Every check writes its findings to $RUNNER_TEMP/check-results as a one-line
+      # <id>.summary (the table cell) and an <id>.md section, which "Prepare validation
+      # comment" assembles into the comment posted on the pull request.
       - name: Check and fix asset file names
         id: asset-names
         continue-on-error: true
         run: |
+          mkdir -p "$RUNNER_TEMP/check-results"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           found_error=false
-          fixed_any=false
+          crlf_files=()
+          bad_files=()
           while IFS= read -r file; do
             if [[ "$file" =~ library/.*/assets/ ]] && [[ -f "$file" ]]; then
               expected=$(python3 -c "import sys,os,zlib; f=sys.argv[1]; d=open(f,'rb').read(); c=zlib.crc32(d); s=os.path.getsize(f); print(f'{c-0x100000000 if c>0x7fffffff else c}_{s}')" "$file")
@@ -36,29 +41,65 @@ jobs:
                 if [[ "$(basename "$file")" == "$expected" ]]; then
                   echo "✅ $file (auto-fixed)"
                   git add "$file"
-                  fixed_any=true
+                  crlf_files+=("$file")
                 else
                   echo "❌ $file (expected: $expected)"
                   git checkout "$file"
+                  bad_files+=("$file|$expected")
                   found_error=true
                 fi
               fi
             fi
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
-          if [ "$fixed_any" = true ]; then
+          if [ ${#crlf_files[@]} -gt 0 ]; then
             # On a fork PR, origin is the base repository and the token is read-only,
             # so the fix cannot be pushed back to the contributor's branch.
             if [ "${{ github.event.pull_request.head.repo.full_name }}" = "${{ github.repository }}" ]; then
               git commit -m "fix: convert asset to DOS line endings"
               git push origin HEAD:${GITHUB_HEAD_REF}
+              crlf_files=()
             else
-              echo "⚠️ Asset files need DOS line endings. This PR comes from a fork, so the fix"
-              echo "   cannot be pushed for you — please apply it locally and push again."
+              echo "⚠️ These asset files need DOS line endings. This PR comes from a fork, so"
+              echo "   the fix cannot be pushed for you — please apply it locally and push again:"
+              for f in "${crlf_files[@]}"; do echo "     unix2dos \"$f\""; done
               # Undo the local fix so the remaining checks see what was actually submitted.
               git checkout HEAD -- .
               found_error=true
             fi
           fi
+
+          count=$(( ${#crlf_files[@]} + ${#bad_files[@]} ))
+          if [ "$count" -gt 0 ]; then
+            if [ "$count" -eq 1 ]; then
+              echo "❌ 1 asset file is named wrong" > "$RUNNER_TEMP/check-results/asset-names.summary"
+            else
+              echo "❌ $count asset files are named wrong" > "$RUNNER_TEMP/check-results/asset-names.summary"
+            fi
+            {
+              echo '### ❌ Asset file names'
+              echo
+              echo 'Assets are named `<crc32>_<size>` after their own content, so the name has to match the file byte for byte.'
+              echo
+              if [ ${#crlf_files[@]} -gt 0 ]; then
+                echo 'These assets only differ in their line endings. The fix cannot be pushed to a fork, so please apply it locally and push again:'
+                echo
+                echo '```sh'
+                for f in "${crlf_files[@]}"; do echo "unix2dos \"$f\""; done
+                echo '```'
+                echo
+              fi
+              if [ ${#bad_files[@]} -gt 0 ]; then
+                echo 'These assets could not be fixed automatically. Re-export the game from VirtualTabletop, or rename each file to the expected name and update the reference in the game file:'
+                echo
+                for entry in "${bad_files[@]}"; do
+                  echo "- \`${entry%%|*}\` — expected \`${entry##*|}\`"
+                done
+                echo
+              fi
+            } > "$RUNNER_TEMP/check-results/asset-names.md"
+            cat "$RUNNER_TEMP/check-results/asset-names.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
           if [ "$found_error" = true ]; then
             echo "Found files with inconsistent naming patterns"
             exit 1
@@ -68,6 +109,7 @@ jobs:
         id: square-images
         continue-on-error: true
         run: |
+          mkdir -p "$RUNNER_TEMP/check-results"
           set +e
           output=$(python3 -m pip install Pillow 2>&1)
           if [ $? -ne 0 ]; then
@@ -75,7 +117,7 @@ jobs:
             echo "$output"
             exit 1
           fi
-          found_non_square=false
+          non_square=()
           while IFS= read -r file; do
             if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
               image_path=$(python3 -c "import json, sys; data = json.load(open(sys.argv[1])); print(data.get('_meta', {}).get('info', {}).get('image', ''))" "$file")
@@ -95,7 +137,7 @@ jobs:
                     height=$(echo "$dimensions" | cut -d'x' -f2)
                     if [ "$width" != "$height" ]; then
                       echo "❌ $file: library image $asset_file is not square (${width}x${height})"
-                      found_non_square=true
+                      non_square+=("$file|$asset_file|${width}x${height}")
                     else
                       echo "✅ $file: library image $asset_file is square (${width}x${height})"
                     fi
@@ -104,11 +146,28 @@ jobs:
               fi
             fi
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
-          if [ "$found_non_square" = true ]; then
+
+          if [ ${#non_square[@]} -gt 0 ]; then
+            if [ ${#non_square[@]} -eq 1 ]; then
+              echo "❌ 1 library image is not square" > "$RUNNER_TEMP/check-results/square-images.summary"
+            else
+              echo "❌ ${#non_square[@]} library images are not square" > "$RUNNER_TEMP/check-results/square-images.summary"
+            fi
+            {
+              echo '### ❌ Library images are not square'
+              echo
+              echo 'The library image (`_meta.info.image`) is the tile shown in the game list, so it has to be square:'
+              echo
+              for entry in "${non_square[@]}"; do
+                image="${entry#*|}"
+                echo "- \`${entry%%|*}\` — \`${image%%|*}\` is ${entry##*|}"
+              done
+              echo
+            } > "$RUNNER_TEMP/check-results/square-images.md"
+            cat "$RUNNER_TEMP/check-results/square-images.md" >> "$GITHUB_STEP_SUMMARY"
             exit 1
-          else
-            exit 0
           fi
+          exit 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -118,92 +177,222 @@ jobs:
       - name: Run validator on changed game files
         id: validate
         run: |
+          mkdir -p "$RUNNER_TEMP/check-results"
           changed_files=()
           while IFS= read -r file; do
             if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
               changed_files+=("$file")
             fi
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
-          
-          summary_only=false
-          [[ ${#changed_files[@]} -gt 10 ]] && summary_only=true
 
-          # The comment API rejects bodies over 65536 characters, so the comment carries
-          # whole file sections up to this budget only. The step summary gets everything.
-          max_comment=55000
-          validation_output=""
-          full_output=""
-          found_issues=false
-          truncated=false
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          # The comment API rejects bodies over 65536 characters and a job summary over
+          # 1 MiB, so both are assembled from whole file sections up to a budget. The raw
+          # log of this step always contains every line.
+          max_comment=50000
+          max_summary=900000
+          # Lines per file in the comment, so one broken file cannot bury all the others.
+          max_lines=60
+
+          body="$RUNNER_TEMP/validation-body.md"
+          full="$RUNNER_TEMP/validation-full.md"
+          comment_section="$RUNNER_TEMP/validation-section.md"
+          full_section="$RUNNER_TEMP/validation-section-full.md"
+          stderr_file="$RUNNER_TEMP/validation-stderr"
+          : > "$body"
+          : > "$full"
+          reported=0
+          with_issues=0
+          crashed=0
+          shown=0
+          summary_shown=0
+          body_used=0
+          full_used=0
+
+          # <summary line> <note> <output> <footer>: one collapsible section per file.
+          section() {
+            local ticks fence
+            # Fence with one backtick more than the longest run in the output itself, so
+            # validator output containing a code fence cannot break out of the block.
+            ticks=$( { printf '%s' "$3" | grep -o '`\+' || true; } | awk '{ if (length($0) > m) m = length($0) } END { print (m > 2 ? m + 1 : 3) }')
+            fence=$(printf '`%.0s' $(seq "$ticks"))
+            printf '%s\n\n' "$1"
+            if [ -n "$2" ]; then printf '%s\n\n' "$2"; fi
+            printf '%s\n%s\n%s\n\n' "$fence" "$3" "$fence"
+            if [ -n "$4" ]; then printf '%s\n\n' "$4"; fi
+            printf '</details>\n\n'
+          }
 
           for file in "${changed_files[@]}"; do
-            if [ "$summary_only" = true ]; then
-              if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
-                echo "✅ $file - No issues found"
-                section="✅ \`$file\` - No issues found\n"
-              else
-                echo "❌ $file - Issues found"
-                section="❌ \`$file\` - Issues found\n"
-                found_issues=true
-              fi
-            else
-              if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
-                echo "✅ $file - No issues found"
-                continue
-              fi
-              echo "❌ $file - Issues found:"
-              echo "$output"
-              # Fence with one backtick more than the longest run in the output itself, so
-              # validator output containing a code fence cannot break out of the block.
-              ticks=$(printf '%s' "$output" | grep -o '`\+' | awk '{ if (length($0) > m) m = length($0) } END { print (m > 2 ? m + 1 : 3) }')
-              fence=$(printf '`%.0s' $(seq "$ticks"))
-              section="### Issues in \`$file\`\n$fence\n$output\n$fence\n\n"
-              found_issues=true
+            if output=$(node validator/validate_gamefile_node.js "$file" 2>"$stderr_file"); then
+              echo "✅ $file - No issues found"
+              continue
             fi
-            full_output+="$section"
-            if [ $((${#validation_output} + ${#section})) -le "$max_comment" ]; then
-              validation_output+="$section"
+            reported=$((reported + 1))
+            crash=$(cat "$stderr_file")
+            if [ -n "$crash" ]; then
+              # The validator only writes to stderr when it throws, so this is a broken
+              # validator rather than a game file the contributor can do anything about.
+              crashed=$((crashed + 1))
+              echo "❌ $file - the validator itself failed:"
+              echo "$crash"
+              head_line="<details><summary>⚠️ <code>$file</code> — the validator itself failed</summary>"
+              section "$head_line" 'This is a bug in the validator rather than a problem with the game file. Please report it.' "$crash" '' > "$full_section"
+              cp "$full_section" "$comment_section"
             else
-              truncated=true
+              with_issues=$((with_issues + 1))
+              issues=$(printf '%s\n' "$output" | wc -l)
+              if [ "$issues" -eq 1 ]; then label='1 issue'; else label="$issues issues"; fi
+              echo "❌ $file - $label found:"
+              echo "$output"
+              head_line="<details><summary>❌ <code>$file</code> — $label</summary>"
+              section "$head_line" '' "$output" '' > "$full_section"
+              if [ "$issues" -gt "$max_lines" ]; then
+                short=$(printf '%s\n' "$output" | sed -n "1,${max_lines}p")
+                section "$head_line" '' "$short" "_${issues} issues in total — see the [Actions run summary]($run_url) for the rest._" > "$comment_section"
+              else
+                cp "$full_section" "$comment_section"
+              fi
+            fi
+
+            size=$(wc -c < "$comment_section")
+            if [ "$size" -gt "$max_comment" ]; then
+              # A handful of pathologically long lines can still blow the budget.
+              printf '%s\n\n_Too large to show here — see the [Actions run summary](%s)._\n\n</details>\n\n' "$head_line" "$run_url" > "$comment_section"
+              size=$(wc -c < "$comment_section")
+            fi
+            if [ $((body_used + size)) -le "$max_comment" ]; then
+              cat "$comment_section" >> "$body"
+              body_used=$((body_used + size))
+              shown=$((shown + 1))
+            fi
+
+            size=$(wc -c < "$full_section")
+            if [ $((full_used + size)) -le "$max_summary" ]; then
+              cat "$full_section" >> "$full"
+              full_used=$((full_used + size))
+              summary_shown=$((summary_shown + 1))
             fi
           done
 
-          if [ "$truncated" = true ]; then
-            run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-            validation_output+="_Too many issues to list here — see the [run summary]($run_url) for the full report._\n"
+          if [ "$reported" -eq 0 ]; then
+            echo '✅ No game file validation issues.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
           fi
 
-          if [ "$found_issues" = true ]; then
-            delimiter="VALIDATION_$(openssl rand -hex 8)"
-            echo "validation_output<<$delimiter" >> $GITHUB_OUTPUT
-            echo -e "$validation_output" >> $GITHUB_OUTPUT
-            echo "$delimiter" >> $GITHUB_OUTPUT
-            {
-              echo '## Game File Validation Issues'
-              echo
-              echo -e "$full_output"
-            } >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo '✅ No game file validation issues.' >> "$GITHUB_STEP_SUMMARY"
+          # The table cell and the section header name whichever of the two failure kinds
+          # actually occurred, so neither is reported as the other.
+          total=${#changed_files[@]}
+          parts=()
+          cells=()
+          if [ "$with_issues" -gt 0 ]; then
+            if [ "$total" -eq 1 ]; then
+              parts+=('this game file has validation issues')
+            elif [ "$with_issues" -eq 1 ]; then
+              parts+=("1 of $total changed game files has validation issues")
+            else
+              parts+=("$with_issues of $total changed game files have validation issues")
+            fi
+            if [ "$with_issues" -eq 1 ]; then
+              cells+=('1 game file has validation issues')
+            else
+              cells+=("$with_issues game files have validation issues")
+            fi
+          fi
+          if [ "$crashed" -gt 0 ]; then
+            if [ "$crashed" -eq 1 ]; then
+              parts+=('the validator itself failed on 1 game file')
+              cells+=('the validator failed on 1 game file')
+            else
+              parts+=("the validator itself failed on $crashed game files")
+              cells+=("the validator failed on $crashed game files")
+            fi
+          fi
+          sentence="${parts[0]}"
+          cell="${cells[0]}"
+          if [ ${#parts[@]} -eq 2 ]; then
+            sentence="${parts[0]} and ${parts[1]}"
+            cell="${cells[0]}, ${cells[1]}"
+          fi
+          echo "⚠️ ${cell^}" > "$RUNNER_TEMP/check-results/validation.summary"
+
+          header="$RUNNER_TEMP/validation-header.md"
+          {
+            echo '### ⚠️ Game file validation'
+            echo
+            echo "**${sentence^}.** Validation issues are advisory — they do not block merging, but please fix what you can."
+            echo
+            echo 'Reproduce them locally with `node validator/validate_gamefile_node.js <file>`. The property names come from the [Widgets](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets) wiki page.'
+            echo
+          } > "$header"
+
+          # A single file is expanded right away; more than one would be a wall of text.
+          if [ "$reported" -eq 1 ]; then
+            sed -i '0,/^<details>/s//<details open>/' "$body"
+            sed -i '0,/^<details>/s//<details open>/' "$full"
+          fi
+
+          cat "$header" "$body" > "$RUNNER_TEMP/check-results/validation.md"
+          if [ "$shown" -lt "$reported" ]; then
+            printf '_Showing %s of %s files — see the [Actions run summary](%s) for the rest._\n\n' \
+              "$shown" "$reported" "$run_url" >> "$RUNNER_TEMP/check-results/validation.md"
+          fi
+
+          cat "$header" "$full" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$summary_shown" -lt "$reported" ]; then
+            printf '_Showing %s of %s files — the raw log of this step has all of them._\n\n' \
+              "$summary_shown" "$reported" >> "$GITHUB_STEP_SUMMARY"
           fi
 
       # A pull_request event from a fork only gets a read-only token, so the comment is
       # rendered here and posted by check-library-comment.yml, which runs privileged.
-      # The artifact only exists when validation actually ran: without it the posting
-      # workflow leaves any existing comment alone, rather than reading a broken run as
-      # "nothing to report" and deleting the comment.
+      # The artifact only exists when all three checks actually ran: without it the
+      # posting workflow leaves any existing comment alone, rather than reading a broken
+      # run as "nothing to report" and deleting the comment.
       - name: Prepare validation comment
         if: always() && steps.validate.outcome == 'success'
         env:
-          VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
+          ASSET_NAMES_OUTCOME: ${{ steps.asset-names.outcome }}
+          SQUARE_IMAGES_OUTCOME: ${{ steps.square-images.outcome }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          results="$RUNNER_TEMP/check-results"
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           mkdir -p validation-result
-          echo "${{ github.event.pull_request.number }}" > validation-result/pr-number
-          if [ -n "$VALIDATION_OUTPUT" ]; then
+          echo "$PR_NUMBER" > validation-result/pr-number
+
+          # A check with no findings of its own still gets a cell, so the comment always
+          # says what passed as well as what did not.
+          cell() {
+            if [ -s "$results/$1.summary" ]; then
+              tr -d '\n' < "$results/$1.summary"
+            elif [ "$2" = failure ]; then
+              printf '❌ Failed — see the [run log](%s)' "$run_url"
+            else
+              printf '✅'
+            fi
+          }
+
+          if [ -s "$results/asset-names.md" ] || [ -s "$results/square-images.md" ] || [ -s "$results/validation.md" ] \
+             || [ "$ASSET_NAMES_OUTCOME" = failure ] || [ "$SQUARE_IMAGES_OUTCOME" = failure ]; then
             {
-              echo '## Game File Validation Issues'
+              echo '## Library check results'
               echo
-              printf '%s\n' "$VALIDATION_OUTPUT"
+              echo '| Check | Result |'
+              echo '| --- | --- |'
+              echo "| Asset file names | $(cell asset-names "$ASSET_NAMES_OUTCOME") |"
+              echo "| Library images square | $(cell square-images "$SQUARE_IMAGES_OUTCOME") |"
+              echo "| Game file validation | $(cell validation success) |"
+              echo
+              echo '❌ fails this check, ⚠️ is advisory and does not block merging.'
+              echo
+              for check in asset-names square-images validation; do
+                if [ -s "$results/$check.md" ]; then
+                  cat "$results/$check.md"
+                fi
+              done
+              echo "<sub>Checked <code>${HEAD_SHA:0:7}</code> · <a href=\"$run_url\">Actions run summary</a></sub>"
             } > validation-result/comment.md
           else
             # An empty comment tells the posting workflow to remove a stale comment.
