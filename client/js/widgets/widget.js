@@ -3244,17 +3244,23 @@ export class Widget extends StateManaged {
       if(this.isBeingRemoved && !this.isBeingRenamed)
         for(const line of linesWithStop(this.id))
           await line.removeStop(this.id);
-      if(oldValue) {
-        const oldParent = widgets.get(oldValue);
+      // a parent id no widget in the room has leaves this one in limbo (the
+      // editor marks it "Invalid Parent") - there is nothing to hand the widget
+      // over to or take it from, so that half of the move is simply skipped
+      const oldParent = oldValue && widgets.has(oldValue) ? widgets.get(oldValue) : null;
+      if(oldParent) {
         await oldParent.onChildRemove(this);
         if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
-      if(newValue) {
+      if(newValue && widgets.has(newValue)) {
+        // a widget in limbo sits on the surface, so it arrives with global
+        // coordinates and there is no widget it can name as the one it came from
+        const oldParentID = oldParent ? oldValue : null;
         const newParent = widgets.get(newValue);
-        await newParent.onChildAdd(this, oldValue);
+        await newParent.onChildAdd(this, oldParentID);
         if(Array.isArray(newParent.get('enterRoutine')))
-          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+          await newParent.evaluateRoutine('enterRoutine', { oldParentID }, { child: [ this ] });
       }
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
@@ -3340,7 +3346,7 @@ export class Widget extends StateManaged {
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);
-    if(this instanceof Card)
+    if(this instanceof Card && this.deck)
       this.deck.removeCard(this);
     return this;
   }
