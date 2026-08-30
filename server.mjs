@@ -624,7 +624,9 @@ MinifyHTML().then(function(result) {
       }
       const errorID = Math.random().toString(36).substring(2, 10).padEnd(8, '0');
       fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));
-      Logging.log(`${req.body.type == 'feedback' ? 'Feedback' : 'ERROR: Client error'} ${errorID}: ${req.body.message}`);
+      // a report the client sent while carrying on is not an ERROR the server has to page anyone about
+      const reportType = { feedback: 'Feedback', nonFatal: 'Client error (survived)' }[req.body.type] || 'ERROR: Client error';
+      Logging.log(`${reportType} ${errorID}: ${req.body.message}`);
       res.send(errorID);
     } else {
       res.send('not a valid JSON object');
