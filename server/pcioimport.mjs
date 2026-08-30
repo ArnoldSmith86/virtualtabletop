@@ -457,6 +457,79 @@ export default async function convertPCIO(content) {
       widget.r = widget.rotation;
   }
 
+  // PCIO identifies its widgets with random strings. Replace them with IDs
+  // derived from the widget type they are imported as, so that the resulting
+  // game is readable in the editor. The shared hand keeps its ID: both this
+  // importer and the routines it generates refer to it by the name 'hand'.
+  const idPrefixes = {
+    automationButton: 'button',
+    turnButton:       'button',
+    cardDeck:         'deck',
+    cardPile:         'holder',
+    hand:             'holder',
+    piece:            'card',
+    chooser:          'card',
+    labelText:        'label'
+  };
+  const piecePrefixes = {
+    classic: 'pawn'
+  };
+
+  // PCIO names most of its piece types in the plural ('checkers', 'pucks'), the
+  // ID prefix uses the single piece ('checker1', 'puck1').
+  const singular = name=>name.replace(/([^s])s$/, '$1');
+
+  function idPrefix(widget) {
+    const name = String((widget.type == 'gamePiece' ? widget.pieceType : widget.type) || '').replace(/[^a-zA-Z]/g, '').toLowerCase();
+    if(widget.type == 'gamePiece')
+      return piecePrefixes[widget.pieceType] || singular(name) || 'piece';
+    return idPrefixes[widget.type] || name || 'widget';
+  }
+
+  const idCounters = {};
+  function uniqueID(prefix) {
+    return prefix + (idCounters[prefix] = (idCounters[prefix] || 0) + 1);
+  }
+
+  // Widgets that are dropped further down must not consume an ID number, or the
+  // output would be numbered with gaps like card1, card2, card4.
+  const pcioIDs = new Set(widgets.map(w=>w.id));
+  const isDropped = widget=>
+    widget.type == 'hand' && widget.enabled === false ||
+    [ 'card', 'piece', 'chooser' ].includes(widget.type) && !pcioIDs.has(widget.deck);
+
+  const idMap = { hand: 'hand' };
+  for(const widget of widgets)
+    if(idMap[widget.id] === undefined && !isDropped(widget))
+      idMap[widget.id] = uniqueID(idPrefix(widget));
+
+  // A PCIO ID is a random string, so a string that equals one names that widget.
+  // The whole file is therefore walked instead of the properties that are known
+  // to point at a widget: those differ per schema version, an operation names
+  // its targets under different keys and nests them differently per version, and
+  // a step this importer does not translate is copied into the output as it was
+  // - so mapping known keys only would leave some of them pointing at IDs that
+  // exist nowhere.
+  //
+  // Left alone are the keys that name something from another namespace: a widget
+  // or piece type, an operation, and a card type (the key of an entry in the
+  // deck's cardTypes, which is a random string just like an ID).
+  const otherNamespaces = [ 'type', 'pieceType', 'func', 'cardType', 'chooserChoice' ];
+  function mapIDs(value) {
+    if(Array.isArray(value))
+      return value.map(mapIDs);
+    if(value && typeof value == 'object') {
+      for(const key in value)
+        if(otherNamespaces.indexOf(key) == -1)
+          value[key] = mapIDs(value[key]);
+      return value;
+    }
+    return typeof value == 'string' && idMap[value] !== undefined ? idMap[value] : value;
+  }
+
+  for(const widget of widgets)
+    mapIDs(widget);
+
   const pileHasDeck = {};
   const pileOverlaps = {};
   const pileTransparent = {};
@@ -628,7 +701,7 @@ export default async function convertPCIO(content) {
   const piles = {};
   for(const coord in cardsPerCoordinates) {
     if(cardsPerCoordinates[coord] > 1) {
-      const id = Math.random().toString(36).substring(3, 7);
+      const id = uniqueID('pile');
       output[id] = piles[coord] = {
         id,
         type: 'pile',

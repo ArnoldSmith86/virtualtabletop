@@ -14,6 +14,7 @@ import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
+import { readEmojiVariants } from './server/emojivariants.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
@@ -30,6 +31,7 @@ const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 const customWidgets = fs.existsSync(path.resolve() + '/assets/widgets.json') ? JSON.parse(fs.readFileSync(path.resolve() + '/assets/widgets.json')) : { widgets: [], groups: [] };
+const emojiVariants = readEmojiVariants();
 
 
 const serverStart = +new Date();
@@ -340,6 +342,13 @@ MinifyHTML().then(function(result) {
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(deck));
     }).catch(next);
+  });
+
+  // the skin tone forms the noto-emoji directory holds, for the pickers' variant flyout: the
+  // directory is checked into the repository and does not change while the server runs, so the
+  // list is read at startup like the other checked-in data and this hands out what is in memory
+  router.get('/api/emojiVariants', function(req, res, next) {
+    res.json(emojiVariants);
   });
 
   router.get('/api/widgets', function(req, res, next) {

@@ -43,11 +43,15 @@ function applyCustomCss(gameSettings) {
   }
 }
 
-function generateUniqueWidgetID() {
+// derivedIDs is passed by composite widgets that build their child IDs from the
+// base ID (deck1B, deck1P, deck1_A_C, ...): a base is only accepted when none of
+// those is taken either, so adding a composite never overwrites another widget.
+function generateUniqueWidgetID(type, derivedIDs) {
   let id;
+  let i = 1;
   do {
-    id = rand().toString(36).substring(3, 7);
-  } while (widgets.has(id));
+    id = type ? type + i++ : rand().toString(36).substring(3, 7);
+  } while (widgets.has(id) || derivedIDs && derivedIDs(id).some(derived=>widgets.has(String(derived))));
   return id;
 }
 
@@ -131,9 +135,13 @@ export function addWidget(widget, instance) {
   delete deferredChildren[widget.id];
 }
 
-async function addWidgetLocal(widget) {
+// useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
+// creation) so live gameplay keeps random IDs - type-based IDs are an
+// authoring/edit-mode convenience and give no benefit during play, while
+// sequential IDs would raise the collision risk between concurrent clients.
+async function addWidgetLocal(widget, useTypeBasedID = true) {
   if (!widget.id)
-    widget.id = generateUniqueWidgetID();
+    widget.id = generateUniqueWidgetID(useTypeBasedID ? widget.type : undefined);
   else
     widget.id = String(widget.id);
 

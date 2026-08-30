@@ -10,6 +10,9 @@ let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeIsSVG = {};
+// how long an image that could not be read stays remembered as unreadable, in step with the retry
+// the engine does for the same file (UNREADABLE_RETRY_MS in main.js)
+const jeSVGRetryDelay = 30000;
 let jeWidgetHighlighting = true;
 let jeDebugViewing = null;
 let jeInMacroExecution = false;
@@ -85,12 +88,14 @@ const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'i
 // the engine and the SVG replacements editor make, so the three cannot disagree
 // about the same file. It also spares decoding a whole bitmap as text just to
 // find no <svg> in it, and does not call a PNG that happens to contain the
-// three bytes "svg" somewhere an SVG.
+// three bytes "svg" somewhere an SVG. A file that could not be read at all is
+// answered with undefined: that says nothing about what the file is, so it must
+// not be remembered as a verdict - fetchSVG() retries such a file as well.
 async function checkIfSVG(url) {
   try {
     return (await fetchSVG(url)) !== null;
   } catch (e) {
-    return false;
+    return undefined;
   }
 }
 
@@ -218,14 +223,32 @@ const jeCommands = [
       if (typeof jeIsSVG[url] === 'boolean') return jeIsSVG[url];
       if (url.match(/\.svg$/i))
         return true;
-      checkIfSVG(url).then(result => {
-        jeIsSVG[url] = result;
-        jeShowCommands();
-      });
+      // Only a definite answer is remembered as a verdict - a file that could not be read says
+      // nothing about what it is, and fetchSVG() retries it. What is remembered for such a file is
+      // *when* it failed, because the buttons are redrawn by plenty of things - every keystroke in
+      // the JSON pane among them - and a dead URL would otherwise cost one failing request each.
+      // While the request is in flight the url is marked as being asked about, so a failure that
+      // redraws the buttons cannot ask for the file again without ever stopping.
+      if (jeIsSVG[url] === undefined || jeIsSVG[url].failedAt < Date.now() - jeSVGRetryDelay) {
+        jeIsSVG[url] = 'pending';
+        checkIfSVG(url).then(result => {
+          if (typeof result === 'boolean') {
+            jeIsSVG[url] = result;
+            jeShowCommands();
+          } else {
+            jeIsSVG[url] = { failedAt: Date.now() };
+          }
+        });
+      }
       return false;
     },
-    call: async function(options) {  
-      jeSVGColors();
+    call: async function(options) {
+      // pressing the button again closes the panel it opened, so it is never left without a way out
+      const panel = $('#jeSVGColors');
+      if (panel)
+        panel.querySelector('.jeSVGColorsClose').click();
+      else
+        jeSVGColors();
     }
   },
   /* Now the context-dependent stuff */
@@ -1591,6 +1614,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
+  jeAddEnumCommands('^scoreboard ↦ scoreEntry',['auto', 'keypad', 'pane', 'type']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -2412,7 +2436,7 @@ function jeToggleWidgetHighlighting() {
 function jeSVGColors() {
   const div = document.createElement('div');
   div.id = 'jeSVGColors';
-  div.innerHTML = `<b>SVG Colors:</b><div></div><button>Close</button>`;
+  div.innerHTML = `<div class="jeSVGColorsHeader"><b>SVG colors</b><button class="jeSVGColorsClose" title="Close">✕</button></div><div class="jeSVGColorsBody"></div>`;
   $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
 
   // Reinsert the div because it gets removed
@@ -2420,57 +2444,124 @@ function jeSVGColors() {
     if (!document.querySelector('#jeSVGColors')) {
       $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
     }
+    closeIfImageChanged();
   });
   const jeCommands = document.querySelector('#jeCommands');
   if (jeCommands) {
     observer.observe(jeCommands, { childList: true, subtree: false });
   }
 
-  // Extract and display SVG colors
-  fetch(mapAssetURLs(jeStateNow.image))
-  .then(response => response.text())
-  .then(svg => {
-    const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
-    const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
-    const colors = [...new Set(uniqueColors)];
-    const colorsDiv = div.querySelector('div');
-    if (colorsDiv) {
-      colorsDiv.innerHTML = colors.map(color => {
-        const backgroundColor = color === 'currentColor' ? 'black' : color;
-        const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
-        return `<button style="width: 100%; background-color: ${backgroundColor}; color: ${textColor}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
-      }).join('');
+  const body = div.querySelector('.jeSVGColorsBody');
+  const image = jeStateNow.image;
 
-      // Create the buttons
-      const buttons = colorsDiv.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          if (!jeStateNow.svgReplaces) {
-            jeStateNow.svgReplaces = {};
-          }
-          const color = this.getAttribute('data-color');
-          if (!(color in jeStateNow.svgReplaces)) {
-            jeStateNow.svgReplaces[color] = "###SELECT ME###";
-            jeSetAndSelect("");
-          }
-        });
-      });
+  // Whatever the panel has to say instead of colors, followed by the URL it is about: the panel is
+  // a narrow column and the image property it answers for is easily scrolled out of the JSON pane.
+  function sayInPanel(text, offerRetry) {
+    body.innerHTML = '';
+    const message = document.createElement('div');
+    message.className = 'jeSVGColorsMessage';
+    message.textContent = text;
+    const url = document.createElement('div');
+    url.className = 'jeSVGColorsURL';
+    url.textContent = url.title = image;
+    body.append(message, url);
+    if (offerRetry) {
+      const retry = document.createElement('button');
+      retry.textContent = 'Try again';
+      // fetchSVG() forgets a request that failed, so this really does ask for the file again
+      retry.addEventListener('click', loadColors);
+      body.appendChild(retry);
     }
-  });
+  }
 
-  $a('#jeSVGColors button')[0].addEventListener('click', function () {
+  // the text of a swatch has to stay readable on the color itself, and contrastAnyColor() reads a
+  // six digit hex: a short form or an alpha channel would go through a canvas it cannot answer for
+  // and come back as black on every swatch
+  function opaqueHex(color) {
+    const short = color.match(/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])[0-9a-fA-F]?$/);
+    return short ? `#${short[1]}${short[1]}${short[2]}${short[2]}${short[3]}${short[3]}` : color.slice(0, 7);
+  }
+
+  function showColors(colors) {
+    body.innerHTML = `<div class="jeSVGColorList">` + colors.map(color => {
+      const backgroundColor = color === 'currentColor' ? 'black' : color;
+      const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(opaqueHex(color), 1);
+      const title = color === 'currentColor' ? ` title="Inherits the widget's text color"` : '';
+      return `<button style="background-color: ${backgroundColor}; color: ${textColor};" data-color="${color}"${title}>${color}</button>`;
+    }).join('') + `</div>`;
+
+    // Create the buttons
+    const buttons = body.querySelectorAll('button');
+    // a color that already has an svgReplaces entry is checked off, so working through a long
+    // palette shows what is left instead of looking the same after every click
+    const markMapped = _=>buttons.forEach(button => button.classList.toggle('jeSVGColorMapped', !!jeStateNow.svgReplaces && button.getAttribute('data-color') in jeStateNow.svgReplaces));
+    markMapped();
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        // a color of one file has no business in another widget's svgReplaces
+        if (!jeStateNow || jeStateNow.image !== image)
+          return;
+        if (!jeStateNow.svgReplaces) {
+          jeStateNow.svgReplaces = {};
+        }
+        const color = this.getAttribute('data-color');
+        if (!(color in jeStateNow.svgReplaces)) {
+          jeStateNow.svgReplaces[color] = "###SELECT ME###";
+          jeSetAndSelect("");
+        }
+        markMapped();
+      });
+    });
+  }
+
+  // Extract and display SVG colors. The file comes from fetchSVG() (main.js), the one request per
+  // image the engine and the SVG replacements editor go through as well: it answers with the file's
+  // text, with null for a file that turned out not to be an SVG, and rejects when the file could not
+  // be read at all - a cross-origin image blocked by CORS, a server that is not answering, a URL
+  // that 404s. Every outcome gets a sentence in the panel, including an SVG that simply uses no hex
+  // colors, so it never sits empty looking like it is still loading. An unhandled rejection here is
+  // treated as a client crash and takes the whole session down with the error overlay.
+  function loadColors() {
+    sayInPanel('Loading the image …');
+    fetchSVG(image).then(svg => {
+      if (svg === null)
+        return sayInPanel('The file behind this URL is not an SVG - the server answered with something else - so it has no colors that could be replaced.');
+      // longest first, so #33aabbcc is one color and not #33aabb followed by nothing
+      const hexColorRegex = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})\b|currentColor/g;
+      const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
+      const colors = [...new Set(uniqueColors)];
+      if (!colors.length)
+        return sayInPanel('This SVG paints itself with named colors like red, with rgb() values or from a <style> block. Only hex colors such as #3366cc can be replaced.');
+      showColors(colors);
+    }).catch(_=>sayInPanel('This image could not be loaded, so the colors it uses could not be listed. Check the URL, then try again.', true));
+  }
+  loadColors();
+
+  // The panel answers for one file, so it goes away as soon as the widget is showing another one -
+  // otherwise it keeps listing the colors of the file it was opened with, names that file in its
+  // messages and retries that file. Reloading it instead would request one URL per keystroke while
+  // the image property is being typed, each prefix of it a URL of its own.
+  function closeIfImageChanged() {
+    if (jeStateNow && jeStateNow.image !== image)
+      closePanel();
+  }
+
+  let classObserver;
+  const closePanel = function() {
     div.remove();
     observer.disconnect();
-  });
+    if (classObserver)
+      classObserver.disconnect();
+  };
+  div.querySelector('.jeSVGColorsClose').addEventListener('click', closePanel);
 
-  // Close the color viewer if the widget is deselected
-  const widgetDiv = document.querySelector(`#w_${jeStateNow.id}`);
+  // Close the color viewer if the widget is deselected. The widget's DOM id is escaped, so it is
+  // asked for its element rather than looked up by the id as it is written in the JSON.
+  const widgetDiv = jeWidget && jeWidget.domElement;
   if (widgetDiv) {
-    const classObserver = new MutationObserver(() => {
-      if (!widgetDiv.classList.contains('selectedInEdit')) {
-        div.remove();
-        classObserver.disconnect();
-      }
+    classObserver = new MutationObserver(() => {
+      if (!widgetDiv.classList.contains('selectedInEdit'))
+        closePanel();
     });
     classObserver.observe(widgetDiv, { attributes: true, attributeFilter: ['class'] });
   }
@@ -2704,7 +2795,10 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/)) {
+  const id = String(widget.get('id'));
+  // extras are only helpful on generated IDs (random four characters or a
+  // type/piece prefix plus a number), not on IDs an author chose
+  if(id.match(/^[0-9a-z]{4}$/) || (type ? id.startsWith(type) && id.substr(type.length).match(/^[0-9]+$/) : id.match(/^[a-z]+[0-9]+$/))) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))

@@ -165,6 +165,8 @@ test('the JSON editor recognizes exactly the files the engine can replace in', a
   mockFetch('\x89PNG\r\n\x1a\n<!-- svg -->');
   expect(await checkIfSVG('/assets/9_9')).toBe(false);
 
+  // a file that could not be read at all says nothing about what it is - fetchSVG() retries it,
+  // so the answer is undefined rather than a verdict the editor would remember
   mockFetch(new TypeError('Failed to fetch'));
-  expect(await checkIfSVG('https://example.com/blocked.svg')).toBe(false);
+  expect(await checkIfSVG('https://example.com/blocked.svg')).toBe(undefined);
 });

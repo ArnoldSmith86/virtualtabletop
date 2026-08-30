@@ -28,22 +28,59 @@ describe('PCIO importer', () => {
       { id: 'card', type: 'card', deck: 'deck', cardType: 'a', parent: 'holder', x: 10, y: 20 }
     ], 8);
 
-    expect(state.holder.type).toBe('holder');
-    expect(state.holder.css).toBeUndefined();
-    expect(state.holder_label.text).toBe('Draw');
-    expect(state.holder_shuffleButton.type).toBe('button');
-    expect(state.card.parent).toBe('holder');
+    expect(state.holder1.type).toBe('holder');
+    expect(state.holder1.css).toBeUndefined();
+    expect(state.holder1_label.text).toBe('Draw');
+    expect(state.holder1_shuffleButton.type).toBe('button');
+    expect(state.card1.parent).toBe('holder1');
     expect(state._meta.info.importerSchemaVersion).toBe(8);
     expect(state._meta.info.importerWarnings).toBeUndefined();
+  });
+
+  it('replaces the PlayingCards.io IDs everywhere in the file', async () => {
+    const state = await importWidgets([
+      { id: 'wDgT', type: 'holder', x: 0, y: 0, allowedDecks: [ 'kR2m' ] },
+      { id: 'kR2m', type: 'cardDeck', parent: 'wDgT', x: 0, y: 0, cardTypes: { xY7q: { label: 'A' } } },
+      { id: 'q7Ka', type: 'card', deck: 'kR2m', cardType: 'xY7q', parent: 'wDgT', x: 0, y: 0 },
+      { id: 'zP4v', type: 'seat', seatIndex: 0, x: 400, y: 0 },
+      { id: 'hand', type: 'hand', x: 0, y: 400, linkedSeat: 'zP4v' },
+      { id: 'tN9d', type: 'turnButton', label: 'Next', x: 200, y: 300, currentTurn: 'zP4v' },
+      {
+        id: 'bT8n', type: 'automationButton', label: 'Deal', x: 0, y: 300,
+        clickRoutine: { steps: [ { id: 'aQ2w', branches: [ { func: 'MOVE_CARDS_BETWEEN_HOLDERS', args: {
+          from:     { type: 'literal', value: [ 'wDgT' ] },
+          to:       { type: 'literal', value: [ 'hand' ] },
+          quantity: { type: 'literal', value: 1 }
+        } } ] } ] }
+      }
+    ], 8);
+
+    expect(JSON.stringify(state)).not.toMatch(/wDgT|kR2m|q7Ka|zP4v|tN9d|bT8n|aQ2w/);
+    expect(state.card1.deck).toBe('deck1');
+    expect(state.holder1.dropTarget).toEqual([ { deck: 'deck1' } ]);
+    expect(state.hand.linkedToSeat).toBe('seat1');
+    expect(state.button2.clickRoutine).toEqual([ { func: 'MOVE', from: 'holder1', to: 'hand' } ]);
+  });
+
+  it('leaves a card type alone that is named like a widget', async () => {
+    const state = await importWidgets([
+      { id: 'holder', type: 'holder', x: 0, y: 0 },
+      { id: 'q7Ka', type: 'holder', x: 200, y: 0 },
+      { id: 'deck', type: 'cardDeck', parent: 'holder', x: 0, y: 0, cardTypes: { q7Ka: { label: 'A' } } },
+      { id: 'card', type: 'card', deck: 'deck', cardType: 'q7Ka', parent: 'holder', x: 0, y: 0 }
+    ], 8);
+
+    expect(Object.keys(state.deck1.cardTypes)).toEqual([ 'q7Ka' ]);
+    expect(state.card1.cardType).toBe('q7Ka');
   });
 
   it('still imports the old cardPile type', async () => {
     const state = await importWidgets([
       { id: 'holder', type: 'cardPile', x: 10, y: 20, layoutType: 'spread', spreadDirection: 'down' }
     ]);
-    expect(state.holder.type).toBe('holder');
-    expect(state.holder.layout).toBe('singleSpread');
-    expect(state.holder.stackOffsetY).toBe(168);
+    expect(state.holder1.type).toBe('holder');
+    expect(state.holder1.layout).toBe('singleSpread');
+    expect(state.holder1.stackOffsetY).toBe(168);
     expect(state._meta.info.importerSchemaVersion).toBe(0);
   });
 
@@ -55,28 +92,30 @@ describe('PCIO importer', () => {
       { id: 'table',  type: 'holder', x: 600, y: 0, layoutType: 'grid' }
     ], 8);
 
-    expect(state.stack.layout).toBe('pile');
-    expect(state.row.layout).toBe('singleSpread');
-    expect(state.row.stackOffsetX).toBe(111);
-    expect(state.free.layout).toBe('freeform');
-    expect(state.table.layout).toBe('grid');
-    expect(state.table.dropOffsetX).toBe(6);
-    expect(state.table.stackOffsetX).toBe(4);
+    expect(state.holder1.layout).toBe('pile');
+    expect(state.holder2.layout).toBe('singleSpread');
+    expect(state.holder2.stackOffsetX).toBe(111);
+    expect(state.holder3.layout).toBe('freeform');
+    expect(state.holder4.layout).toBe('grid');
+    expect(state.holder4.dropOffsetX).toBe(6);
+    expect(state.holder4.stackOffsetX).toBe(4);
     expect(state._meta.info.importerWarnings).toBeUndefined();
   });
 
   it('turns a multi spread into groups the way PCIO fans them', async () => {
     const state = await importWidgets([
-      { id: 'right', type: 'holder', x: 0,   y: 0, layoutType: 'spread', spreadMulti: 'multi' },
-      { id: 'down',  type: 'holder', x: 200, y: 0, layoutType: 'spread', spreadMulti: 'multi', spreadDirection: 'down' }
+      // ids that cannot collide with property values like spreadDirection's
+      // 'down', which the importer's ID rewriting would replace
+      { id: 'zRt1', type: 'holder', x: 0,   y: 0, layoutType: 'spread', spreadMulti: 'multi' },
+      { id: 'zDn2', type: 'holder', x: 200, y: 0, layoutType: 'spread', spreadMulti: 'multi', spreadDirection: 'down' }
     ], 8);
 
-    expect(state.right.layout).toBe('multiSpread');
-    expect(state.right.stackOffsetX).toBe(40);
-    expect(state.right.pilesGapX).toBe(20);
-    expect(state.down.layout).toBe('multiSpread');
-    expect(state.down.stackOffsetY).toBe(54);
-    expect(state.down.pilesGapX).toBe(20);
+    expect(state.holder1.layout).toBe('multiSpread');
+    expect(state.holder1.stackOffsetX).toBe(40);
+    expect(state.holder1.pilesGapX).toBe(20);
+    expect(state.holder2.layout).toBe('multiSpread');
+    expect(state.holder2.stackOffsetY).toBe(54);
+    expect(state.holder2.pilesGapX).toBe(20);
     expect(state._meta.info.importerWarnings).toBeUndefined();
   });
 
@@ -90,15 +129,15 @@ describe('PCIO importer', () => {
     expect(state.hand.stackOffsetX).toBe(40);
     expect(state.hand.pilesGapX).toBe(20);
     expect(state.hand.childrenPerOwner).toBe(true);
-    expect(state.extra.layout).toBe('freeform');
+    expect(state.holder1.layout).toBe('freeform');
   });
 
   it('keeps the position of a counter that sits at the very top of the table', async () => {
     const state = await importWidgets([
       { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 3 }
     ], 8);
-    expect(state.counter.y).toBe(5);
-    expect(state.counter.x).toBeUndefined();
+    expect(state.counter1.y).toBe(5);
+    expect(state.counter1.x).toBeUndefined();
   });
 
   it('reads automation steps wrapped in branches and translates their arguments', async () => {
@@ -122,12 +161,12 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
+    expect(state.button1.clickRoutine).toEqual([
       // PCIO deals one card after the other unless it is told to move the pile
       { note: 'Deal one at a time', func: 'FOREACH', range: [ 1, 3 ], loopRoutine: [
-        { func: 'MOVE', from: 'source', to: 'target', count: 1, face: 1 }
+        { func: 'MOVE', from: 'holder1', to: 'holder2', count: 1, face: 1 }
       ] },
-      { func: 'SORT', holder: 'target', key: 'sortingOrder' }
+      { func: 'SORT', holder: 'holder2', key: 'sortingOrder' }
     ]);
   });
 
@@ -163,15 +202,15 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
+    expect(state.button1.clickRoutine).toEqual([
       'var pcioroll = randRange 1 7 1',
-      'var pcioNumber1 = parseFloat ${PROPERTY text OF counter}',
+      'var pcioNumber1 = parseFloat ${PROPERTY text OF counter1}',
       'var pciohigh = ${pcioroll} > ${pcioNumber1}',
       {
         func: 'IF',
         condition: '${pciohigh}',
-        thenRoutine: [ { func: 'LABEL', label: 'counter', value: '${pcioroll}' } ],
-        elseRoutine: [ { func: 'LABEL', label: 'counter', mode: 'inc', value: 1 } ]
+        thenRoutine: [ { func: 'LABEL', label: 'counter1', value: '${pcioroll}' } ],
+        elseRoutine: [ { func: 'LABEL', label: 'counter1', mode: 'inc', value: 1 } ]
       }
     ]);
   });
@@ -194,14 +233,14 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine[1]).toEqual({
+    expect(state.button1.clickRoutine[1]).toEqual({
       note: 'Deal one at a time',
       func: 'IF',
       operand1: '${howMany}',
       relation: '>',
       operand2: 0,
       thenRoutine: [
-        { func: 'FOREACH', range: [ 1, '${howMany}' ], loopRoutine: [ { func: 'MOVE', from: 'source', to: 'target', count: 1 } ] }
+        { func: 'FOREACH', range: [ 1, '${howMany}' ], loopRoutine: [ { func: 'MOVE', from: 'holder1', to: 'holder2', count: 1 } ] }
       ]
     });
     expect(state._meta.info.importerWarnings).toBeUndefined();
@@ -221,7 +260,7 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([ { func: 'MOVE', from: 'source', to: 'target', count: 200 } ]);
+    expect(state.button1.clickRoutine).toEqual([ { func: 'MOVE', from: 'holder1', to: 'holder2', count: 200 } ]);
     expect(state._meta.info.importerWarnings).toEqual([
       '"Deal" moves up to 200 objects in one go instead of one after the other - they can end up in the opposite order.'
     ]);
@@ -240,22 +279,22 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.counter.text).toBe(5);
-    expect(state.counter_incrementButton.clickRoutine).toEqual([
-      'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+    expect(state.counter1.text).toBe(5);
+    expect(state.counter1_incrementButton.clickRoutine).toEqual([
+      'var pcioCounter = parseFloat ${PROPERTY text OF counter1}',
       'var pcioCounter = ${pcioCounter} || 0',
       'var pcioCounter = ${pcioCounter} + 2',
       'var pcioCounter = max ${pcioCounter} 0',
       'var pcioCounter = min ${pcioCounter} 5',
-      { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
+      { func: 'LABEL', label: 'counter1', value: '${pcioCounter}' }
     ]);
-    expect(state.button.clickRoutine).toEqual([
-      'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+    expect(state.button1.clickRoutine).toEqual([
+      'var pcioCounter = parseFloat ${PROPERTY text OF counter1}',
       'var pcioCounter = ${pcioCounter} || 0',
       'var pcioCounter = ${pcioCounter} + 4',
       'var pcioCounter = max ${pcioCounter} 0',
       'var pcioCounter = min ${pcioCounter} 5',
-      { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
+      { func: 'LABEL', label: 'counter1', value: '${pcioCounter}' }
     ]);
   });
 
@@ -264,16 +303,16 @@ describe('PCIO importer', () => {
       { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 3, counterMax: 10 }
     ], 8);
 
-    expect(state.counter.text).toBe(3);
-    expect(state.counter_incrementButton.clickRoutine).toEqual([
-      'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+    expect(state.counter1.text).toBe(3);
+    expect(state.counter1_incrementButton.clickRoutine).toEqual([
+      'var pcioCounter = parseFloat ${PROPERTY text OF counter1}',
       'var pcioCounter = ${pcioCounter} || 0',
       'var pcioCounter = ${pcioCounter} + 1',
       'var pcioCounter = min ${pcioCounter} 10',
-      { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
+      { func: 'LABEL', label: 'counter1', value: '${pcioCounter}' }
     ]);
     expect(state._meta.info.importerWarnings).toEqual([
-      'Typing a value into the counter "counter" is not restricted to its maximum of 10 - the buttons and the automations that change it are.'
+      'Typing a value into the counter "counter1" is not restricted to its maximum of 10 - the buttons and the automations that change it are.'
     ]);
   });
 
@@ -291,8 +330,8 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
-      { func: 'SELECT', property: 'parent', relation: 'in', value: [ 'holder' ], type: 'card', collection: 'pcioPile', sortBy: 'z' },
+    expect(state.button1.clickRoutine).toEqual([
+      { func: 'SELECT', property: 'parent', relation: 'in', value: [ 'holder1' ], type: 'card', collection: 'pcioPile', sortBy: 'z' },
       'var pcioFace = 0',
       { func: 'GET', collection: 'pcioPile', property: 'activeFace', aggregation: 'last', variable: 'pcioFace' },
       'var pcioFace = 1 - ${pcioFace}',
@@ -316,7 +355,7 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
+    expect(state.button1.clickRoutine).toEqual([
       { note: 'Pass the hands on', func: 'SHIFT', holders: [ 'seat1', 'seat2' ], interval: 1, direction: 'forward' }
     ]);
   });
@@ -337,11 +376,11 @@ describe('PCIO importer', () => {
     ], 8);
 
     expect(state.pcioShiftTempHolder.type).toBe('holder');
-    expect(state.button.clickRoutine).toEqual([
-      { func: 'MOVE', from: 'c', to: 'pcioShiftTempHolder',   count: 'all' },
-      { func: 'MOVE', from: 'b', to: 'c',                     count: 'all' },
-      { func: 'MOVE', from: 'a', to: 'b',                     count: 'all' },
-      { func: 'MOVE', from: 'pcioShiftTempHolder', to: 'a',   count: 'all' }
+    expect(state.button1.clickRoutine).toEqual([
+      { func: 'MOVE', from: 'holder3', to: 'pcioShiftTempHolder',   count: 'all' },
+      { func: 'MOVE', from: 'holder2', to: 'holder3',                     count: 'all' },
+      { func: 'MOVE', from: 'holder1', to: 'holder2',                     count: 'all' },
+      { func: 'MOVE', from: 'pcioShiftTempHolder', to: 'holder1',   count: 'all' }
     ]);
   });
 
@@ -370,10 +409,10 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
+    expect(state.button1.clickRoutine).toEqual([
       'var pciomod = 7 % 3',
       'var pciopow = ${pciomod} ** 3',
-      { func: 'LABEL', label: 'counter', value: '${pciopow}' }
+      { func: 'LABEL', label: 'counter1', value: '${pciopow}' }
     ]);
   });
 
@@ -401,11 +440,11 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
+    expect(state.button1.clickRoutine).toEqual([
       'var pcioask = 1 == 1',
       'var pcioroll = 0',
       { func: 'IF', condition: '${pcioask}', thenRoutine: [ 'var pcioroll = randRange 1 7 1' ] },
-      { func: 'LABEL', label: 'counter', value: '${pcioroll}' }
+      { func: 'LABEL', label: 'counter1', value: '${pcioroll}' }
     ]);
   });
 
@@ -438,12 +477,12 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
-      'var pciolist = parseFloat ${PROPERTY text OF a}',
-      'var pciolist = ${pciolist} + ${PROPERTY text OF b}',
-      { func: 'LABEL', label: 'a', mode: 'inc', value: 10 },
+    expect(state.button1.clickRoutine).toEqual([
+      'var pciolist = parseFloat ${PROPERTY text OF counter1}',
+      'var pciolist = ${pciolist} + ${PROPERTY text OF counter2}',
+      { func: 'LABEL', label: 'counter1', mode: 'inc', value: 10 },
       'var pciosum = ${pciolist}',
-      { func: 'LABEL', label: 'total', value: '${pciosum}' }
+      { func: 'LABEL', label: 'counter3', value: '${pciosum}' }
     ]);
   });
 
@@ -479,18 +518,18 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
-      'var pcioNumber1 = parseFloat ${PROPERTY text OF a}',
+    expect(state.button1.clickRoutine).toEqual([
+      'var pcioNumber1 = parseFloat ${PROPERTY text OF counter1}',
       'var pciofirst = ${pcioNumber1} == 1',
       'var pciolist = 0',
       {
         func: 'IF',
         condition: '${pciofirst}',
-        thenRoutine: [ 'var pciolist = parseFloat ${PROPERTY text OF a}' ],
-        elseRoutine: [ 'var pciolist = parseFloat ${PROPERTY text OF b}' ]
+        thenRoutine: [ 'var pciolist = parseFloat ${PROPERTY text OF counter1}' ],
+        elseRoutine: [ 'var pciolist = parseFloat ${PROPERTY text OF counter2}' ]
       },
       'var pciosum = ${pciolist}',
-      { func: 'LABEL', label: 'total', value: '${pciosum}' }
+      { func: 'LABEL', label: 'counter3', value: '${pciosum}' }
     ]);
   });
 
@@ -506,8 +545,8 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.borderRadius).toBe(12);
-    expect(state.button.css).toBe([
+    expect(state.button1.borderRadius).toBe(12);
+    expect(state.button1.css).toBe([
       'background: linear-gradient(270deg, #ff0000 0%, #0000ff 100%)',
       'border: 2px solid #000000',
       'box-sizing: border-box',
@@ -541,9 +580,9 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
-      { func: 'LABEL', label: 'counter', mode: 'inc', value: 2 },
-      { func: 'FLIP', collection: [ 'chooser' ], faceCycle: 'backward' }
+    expect(state.button1.clickRoutine).toEqual([
+      { func: 'LABEL', label: 'counter1', mode: 'inc', value: 2 },
+      { func: 'FLIP', collection: [ 'card1' ], faceCycle: 'backward' }
     ]);
   });
 
@@ -555,7 +594,7 @@ describe('PCIO importer', () => {
       { id: 'die', type: 'dice', deck: 'diceDeck', x: 0, y: 0, diceValue: 'two' }
     ], 8);
 
-    expect(state.die).toMatchObject({
+    expect(state.dice1).toMatchObject({
       type: 'dice',
       width: 60,
       height: 60,
@@ -575,7 +614,7 @@ describe('PCIO importer', () => {
       { id: 'd3', type: 'dice', deck: 'd3Deck', x: 0, y: 0 }
     ], 8);
 
-    expect(state.d3.faces).toEqual([
+    expect(state.dice1.faces).toEqual([
       { image: 'https://playingcards.io/img/dice-basic/1.svg' },
       { image: 'https://playingcards.io/img/dice-basic/2.svg' },
       { image: 'https://playingcards.io/img/dice-basic/3.svg' }
@@ -592,7 +631,7 @@ describe('PCIO importer', () => {
       { id: 'd6', type: 'dice', deck: 'd6Deck', x: 0, y: 0 }
     ], 8);
 
-    expect(state.d6.faces).toBeUndefined();
+    expect(state.dice1.faces).toBeUndefined();
   });
 
   it('reports what it could not translate', async () => {
@@ -606,11 +645,11 @@ describe('PCIO importer', () => {
     ], 8);
 
     expect(state._meta.info.importerWarnings).toEqual([
-      'Widgets of type "somethingNew" cannot be imported - the striped placeholder at 0,0 marks where "unknown" was.',
-      'Ignored a widget without a type (noType).',
+      'Widgets of type "somethingNew" cannot be imported - the striped placeholder at 0,0 marks where "somethingnew1" was.',
+      'Ignored a widget without a type (widget1).',
       'The automation step "FUTURE_STEP" of "Shift" has no VirtualTabletop equivalent and was skipped.'
     ]);
-    expect(state.button.clickRoutine).toEqual([]);
+    expect(state.button1.clickRoutine).toEqual([]);
   });
 
   it('keeps the size of a widget it cannot import and says what it was', async () => {
@@ -618,9 +657,9 @@ describe('PCIO importer', () => {
       { id: 'unknown', type: 'videoPlayer', x: 200, y: 400, width: 180, height: 100 }
     ], 8);
 
-    expect(state.unknown.width).toBe(180);
-    expect(state.unknown.height).toBe(100);
-    expect(state.unknown.text).toBe('videoPlayer not imported');
+    expect(state.videoplayer1.width).toBe(180);
+    expect(state.videoplayer1.height).toBe(100);
+    expect(state.videoplayer1.text).toBe('videoPlayer not imported');
   });
 
   it('does not put the text style of a holder on the chrome it generates', async () => {
@@ -633,11 +672,11 @@ describe('PCIO importer', () => {
     ], 8);
 
     // PCIO renders a holder label at a fixed size and ignores mainTextStyle there
-    expect(state.holder.css).toBe('border: 2px solid #000000; box-sizing: border-box; box-shadow: 0 0 0 8px #ff0000');
-    expect(state.holder_label.css).toBeUndefined();
+    expect(state.holder1.css).toBe('border: 2px solid #000000; box-sizing: border-box; box-shadow: 0 0 0 8px #ff0000');
+    expect(state.holder1_label.css).toBeUndefined();
     // the outlines reach 8px beyond the holder, so label and button move aside
-    expect(state.holder_label.y).toBe(-48);
-    expect(state.holder_shuffleButton.y).toBe(1.02*168 + 8);
+    expect(state.holder1_label.y).toBe(-48);
+    expect(state.holder1_shuffleButton.y).toBe(1.02*168 + 8);
   });
 
   it('styles the value of a counter without styling its caption and buttons', async () => {
@@ -648,12 +687,12 @@ describe('PCIO importer', () => {
     ], 8);
 
     // PCIO draws a value shorter than four characters a quarter larger than its style
-    expect(state.counter.css).toEqual({
+    expect(state.counter1.css).toEqual({
       default: 'background: #dcedc8',
       ' > textarea': { 'font-size': '33px', 'line-height': '33px', color: '#1b5e20' }
     });
-    expect(state.counter_label.css).toBeUndefined();
-    expect(state.counter_incrementButton.css).toBeUndefined();
+    expect(state.counter1_label.css).toBeUndefined();
+    expect(state.counter1_incrementButton.css).toBeUndefined();
   });
 
   it('paints a gradient text fill onto the glyphs and reports where it cannot', async () => {
@@ -671,11 +710,11 @@ describe('PCIO importer', () => {
       'background-clip': 'text',
       '-webkit-text-fill-color': 'transparent'
     };
-    expect(state.label.css[' textarea']).toEqual(Object.assign({ 'letter-spacing': '-1px' }, gradientCSS));
-    expect(state.label.css.default.color).toBeUndefined();
-    expect(state.counter.css[' > textarea']).toEqual(Object.assign({ 'font-size': '33px', 'line-height': '33px' }, gradientCSS));
-    // the button paints its own background, which clipping the text would eat
-    expect(state.button.css).toBe('font-size: 20px');
+    expect(state.label1.css[' textarea']).toEqual(Object.assign({ 'letter-spacing': '-1px' }, gradientCSS));
+    expect(state.label1.css.default.color).toBeUndefined();
+    expect(state.counter1.css[' > textarea']).toEqual(Object.assign({ 'font-size': '33px', 'line-height': '33px' }, gradientCSS));
+    // the url button paints its own background, which clipping the text would eat
+    expect(state.urlbutton1.css).toBe('font-size: 20px');
     expect(state._meta.info.importerWarnings).toEqual([
       'The text of "Rules" is filled with a gradient, which VirtualTabletop only does for labels and counters - it uses the default text colour instead.'
     ]);
@@ -705,12 +744,12 @@ describe('PCIO importer', () => {
       { id: 'link', type: 'urlButton', x: 0, y: 0, label: 'Rules & "tips"', clickURL: 'https://example.com/rules?a=1&b=2' }
     ], 8);
 
-    expect(state.link.type).toBe('basic');
-    expect(state.link.classes).toBe('button');
-    expect(state.link.movable).toBe(false);
-    expect(state.link.clickRoutine).toBe(undefined);
-    expect(state.link.html).toContain('href="https://example.com/rules?a=1&amp;b=2"');
-    expect(state.link.html).toContain('>Rules &amp; &quot;tips&quot;</a>');
+    expect(state.urlbutton1.type).toBe('basic');
+    expect(state.urlbutton1.classes).toBe('button');
+    expect(state.urlbutton1.movable).toBe(false);
+    expect(state.urlbutton1.clickRoutine).toBe(undefined);
+    expect(state.urlbutton1.html).toContain('href="https://example.com/rules?a=1&amp;b=2"');
+    expect(state.urlbutton1.html).toContain('>Rules &amp; &quot;tips&quot;</a>');
     expect(state._meta.info.importerWarnings).toBe(undefined);
   });
 
@@ -719,9 +758,9 @@ describe('PCIO importer', () => {
       { id: 'link', type: 'urlButton', x: 0, y: 0, label: 'Rules', clickURL: 'javascript:alert(1)' }
     ], 8);
 
-    expect(state.link.type).toBe('button');
-    expect(state.link.html).toBe(undefined);
-    expect(state.link.clickRoutine).toEqual([ {
+    expect(state.urlbutton1.type).toBe('button');
+    expect(state.urlbutton1.html).toBe(undefined);
+    expect(state.urlbutton1.clickRoutine).toEqual([ {
       func: 'INPUT',
       header: 'Rules',
       confirmButtonText: 'Close',
@@ -743,8 +782,8 @@ describe('PCIO importer', () => {
         labelContent: 'A label with quite a lot of text in it that has to wrap several times to fit' }
     ], 8);
 
-    expect(state.short.height).toBe(60);
-    expect(state.long.height).toBeGreaterThan(60);
+    expect(state.label1.height).toBe(60);
+    expect(state.label2.height).toBeGreaterThan(60);
   });
 
   it('puts a classic game piece into the box its pawn shape fills', async () => {
@@ -754,8 +793,8 @@ describe('PCIO importer', () => {
     ], 8);
 
     // PCIO gives the piece a 90x90 box while the pawn only fills 56x84 of it, at 17,3
-    expect(state.pawn).toMatchObject({ x: 317, y: 303, width: 56, height: 84, classes: 'classicPiece' });
-    expect(state.origin).toMatchObject({ x: 17, y: 3, width: 56, height: 84 });
+    expect(state.pawn1).toMatchObject({ x: 317, y: 303, width: 56, height: 84, classes: 'classicPiece' });
+    expect(state.pawn2).toMatchObject({ x: 17, y: 3, width: 56, height: 84 });
   });
 
   it('grows a label whose box is shorter than one line of its own text', async () => {
@@ -764,7 +803,7 @@ describe('PCIO importer', () => {
     ], 8);
 
     // the striped placeholder is written in the default 16px
-    expect(state.unknown.height).toBe(18);
+    expect(state.videoplayer1.height).toBe(18);
   });
 
   it('lays a counter out the way PCIO does instead of from the size in the file', async () => {
@@ -778,12 +817,12 @@ describe('PCIO importer', () => {
     // PCIO ignores the width and height of a counter: its box is as wide as the
     // widest value its bounds allow, at least 52px, plus 44px per button, and one
     // line of the value tall, at least as tall as the buttons
-    expect(state.counter).toMatchObject({ width: state.plain.width, height: 44 });
-    expect(state.plain.width).toBeCloseTo(4.5*0.62*21 + 88);
+    expect(state.counter1).toMatchObject({ width: state.counter2.width, height: 44 });
+    expect(state.counter2.width).toBeCloseTo(4.5*0.62*21 + 88);
     // -9999..9999 needs room for 4.5 characters, 0..10 only for two, so the 52px win
-    expect(state.bounded.width).toBe(140);
-    expect(state.bare).toMatchObject({ width: state.plain.width - 88, height: 28 });
-    expect(state.bare_decrementButton).toBeUndefined();
+    expect(state.counter3.width).toBe(140);
+    expect(state.counter4).toMatchObject({ width: state.counter2.width - 88, height: 28 });
+    expect(state.counter4_decrementButton).toBeUndefined();
   });
 
   it('puts a 32px button into each end of a counter the way PCIO draws them', async () => {
@@ -793,11 +832,11 @@ describe('PCIO importer', () => {
     ], 8);
 
     // 44px of the box belong to each button, of which PCIO paints the middle 32px
-    expect(state.counter_decrementButton).toMatchObject({ x: 6, y: 6, width: 32, height: 32 });
-    expect(state.counter_incrementButton).toMatchObject({ x: state.counter.width - 38, y: 6, width: 32, height: 32 });
+    expect(state.counter1_decrementButton).toMatchObject({ x: 6, y: 6, width: 32, height: 32 });
+    expect(state.counter1_incrementButton).toMatchObject({ x: state.counter1.width - 38, y: 6, width: 32, height: 32 });
     // a value that needs a taller box keeps its buttons in the middle of it
-    expect(state.tall.height).toBe(82);
-    expect(state.tall_decrementButton).toMatchObject({ x: 6, y: 25, width: 32, height: 32 });
+    expect(state.counter2.height).toBe(82);
+    expect(state.counter2_decrementButton).toMatchObject({ x: 6, y: 25, width: 32, height: 32 });
   });
 
   it('writes the value of a counter in the size PCIO draws it at', async () => {
@@ -809,9 +848,9 @@ describe('PCIO importer', () => {
 
     // PCIO writes a counter in 21px and enlarges it by a quarter while its value
     // is shorter than four characters
-    expect(state.short.css[' > textarea']['font-size']).toBe('26px');
-    expect(state.long.css[' > textarea']['font-size']).toBe('21px');
-    expect(state.flat.css[' > textarea']['font-size']).toBe('21px');
+    expect(state.counter1.css[' > textarea']['font-size']).toBe('26px');
+    expect(state.counter2.css[' > textarea']['font-size']).toBe('21px');
+    expect(state.counter3.css[' > textarea']['font-size']).toBe('21px');
   });
 
   it('imports a turn button at the size PCIO gives it', async () => {
@@ -819,8 +858,8 @@ describe('PCIO importer', () => {
       { id: 'turn', type: 'turnButton', x: 0, y: 0, label: 'End Turn', clickRoutine: { steps: [] } }
     ], 8);
 
-    expect(state.turn.width).toBe(162);
-    expect(state.turn.height).toBe(66);
+    expect(state.button1.width).toBe(162);
+    expect(state.button1.height).toBe(66);
   });
 
   it('scales a die face down so that a word fits on it', async () => {
@@ -831,8 +870,8 @@ describe('PCIO importer', () => {
       { id: 'die', type: 'dice', deck: 'dd', x: 0, y: 0 }
     ], 8);
 
-    expect(state.die.faces).toEqual([ { value: 'Yes' }, { value: 'No' }, { value: 'Maybe' } ]);
-    expect(state.die.css).toBe('--fontSize: 17px');
+    expect(state.dice1.faces).toEqual([ { value: 'Yes' }, { value: 'No' }, { value: 'Maybe' } ]);
+    expect(state.dice1.css).toBe('--fontSize: 17px');
   });
 
   it('deals all objects one at a time, once per object that is there', async () => {
@@ -849,10 +888,10 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
-      { func: 'SELECT', type: 'card', property: 'parent', relation: 'in', value: [ 'source' ], collection: 'pcioDeal1' },
+    expect(state.button1.clickRoutine).toEqual([
+      { func: 'SELECT', type: 'card', property: 'parent', relation: 'in', value: [ 'holder1' ], collection: 'pcioDeal1' },
       { note: 'Deal one at a time', func: 'FOREACH', collection: 'pcioDeal1', loopRoutine: [
-        { func: 'MOVE', from: 'source', to: 'target', count: 1 }
+        { func: 'MOVE', from: 'holder1', to: 'holder2', count: 1 }
       ] }
     ]);
     expect(state._meta.info.importerWarnings).toBeUndefined();
@@ -873,7 +912,7 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([ { func: 'MOVE', from: 'source', to: 'target', count: 'all' } ]);
+    expect(state.button1.clickRoutine).toEqual([ { func: 'MOVE', from: 'holder1', to: 'holder2', count: 'all' } ]);
   });
 
   it('moves objects into the hand and hands recalled ones back to everyone', async () => {
@@ -899,10 +938,10 @@ describe('PCIO importer', () => {
 
     // objects moved to a hand become the private property of whoever pressed the
     // button, which is what a hand is on PlayingCards.io
-    expect(state.button.clickRoutine[0]).toEqual({ func: 'MOVE', from: 'source', to: 'hand' });
+    expect(state.button1.clickRoutine[0]).toEqual({ func: 'MOVE', from: 'holder1', to: 'hand' });
     // a deck without a holder is recalled onto its own position, and a recall takes
     // the objects back from their owner
-    const recall = state.button.clickRoutine.find(operation=>operation.func == 'MOVEXY');
+    const recall = state.button1.clickRoutine.find(operation=>operation.func == 'MOVEXY');
     expect(recall.resetOwner).toBeUndefined();
   });
 
@@ -920,7 +959,7 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([]);
+    expect(state.button1.clickRoutine).toEqual([]);
   });
 
   it('moves as many objects as the counter says and none at all when it says zero', async () => {
@@ -945,8 +984,8 @@ describe('PCIO importer', () => {
       to:         { type: 'literal', value: [ 'hand' ] },
       moveMethod: { type: 'literal', value: 'all' }
     }), 8);
-    expect(toHand.button.clickRoutine).toEqual([
-      { func: 'MOVE', count: '${PROPERTY text OF counter}', from: 'source', to: 'hand' }
+    expect(toHand.button1.clickRoutine).toEqual([
+      { func: 'MOVE', count: '${PROPERTY text OF counter1}', from: 'holder1', to: 'hand' }
     ]);
 
     // moving the objects in one go rather than one at a time, and turning them afterwards
@@ -955,9 +994,9 @@ describe('PCIO importer', () => {
       moveMethod:     { type: 'literal', value: 'all' },
       changeRotation: { type: 'literal', value: 'cw' }
     }), 8);
-    expect(wholePile.button.clickRoutine).toEqual([
-      { func: 'MOVE',   count: '${PROPERTY text OF counter}', from: 'source', to: 'target' },
-      { func: 'ROTATE', count: '${PROPERTY text OF counter}', holder: 'target', angle: 90 }
+    expect(wholePile.button1.clickRoutine).toEqual([
+      { func: 'MOVE',   count: '${PROPERTY text OF counter1}', from: 'holder1', to: 'holder2' },
+      { func: 'ROTATE', count: '${PROPERTY text OF counter1}', holder: 'holder2', angle: 90 }
     ]);
 
     // the same case with the zero spelled out in the file
@@ -966,8 +1005,8 @@ describe('PCIO importer', () => {
       moveMethod: { type: 'literal', value: 'all' },
       quantity:   { type: 'literal', value: 0 }
     }), 8);
-    expect(nothing.button.clickRoutine).toEqual([
-      { func: 'MOVE', count: 0, from: 'source', to: 'target' }
+    expect(nothing.button1.clickRoutine).toEqual([
+      { func: 'MOVE', count: 0, from: 'holder1', to: 'holder2' }
     ]);
   });
 
@@ -990,7 +1029,7 @@ describe('PCIO importer', () => {
 
     // a bottom move only works on a single pile, so the two destinations keep it
     // at the top and are dealt starting at the second one
-    expect(state.button.clickRoutine).toEqual([ { func: 'MOVE', from: 'source', to: [ 'right', 'left' ] } ]);
+    expect(state.button1.clickRoutine).toEqual([ { func: 'MOVE', from: 'holder1', to: [ 'holder3', 'holder2' ] } ]);
     expect(state._meta.info.importerWarnings).toEqual([
       'Moving objects to "bottom" is not supported - the objects "Under" moves end up on top of the destination.'
     ]);
@@ -1001,14 +1040,14 @@ describe('PCIO importer', () => {
       { id: 'counter', type: 'counter', x: 0, y: 0, counterValue: 0, counterMin: 0, counterMax: 1, counterStep: 0.1 }
     ], 8);
 
-    expect(state.counter_incrementButton.clickRoutine).toEqual([
-      'var pcioCounter = parseFloat ${PROPERTY text OF counter}',
+    expect(state.counter1_incrementButton.clickRoutine).toEqual([
+      'var pcioCounter = parseFloat ${PROPERTY text OF counter1}',
       'var pcioCounter = ${pcioCounter} || 0',
       'var pcioCounter = ${pcioCounter} + 0.1',
       'var pcioCounter = max ${pcioCounter} 0',
       'var pcioCounter = min ${pcioCounter} 1',
       'var pcioCounter = ${pcioCounter} toFixed 1',
-      { func: 'LABEL', label: 'counter', value: '${pcioCounter}' }
+      { func: 'LABEL', label: 'counter1', value: '${pcioCounter}' }
     ]);
   });
 
@@ -1042,16 +1081,16 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
+    expect(state.button1.clickRoutine).toEqual([
       'var pcioask = 1 == 1',
       'var pciomix = 0',
       {
         func: 'IF',
         condition: '${pcioask}',
-        thenRoutine: [ { func: 'SHUFFLE', holder: 'holder' } ],
+        thenRoutine: [ { func: 'SHUFFLE', holder: 'holder1' } ],
         elseRoutine: [ 'var pciomix = 2 + 3' ]
       },
-      { func: 'LABEL', label: 'counter', value: '${pciomix}' }
+      { func: 'LABEL', label: 'counter1', value: '${pciomix}' }
     ]);
   });
 
@@ -1076,9 +1115,9 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([
-      'var pciocalc = ${PROPERTY text OF a} * 1',
-      { func: 'LABEL', label: 'total', value: '${pciocalc}' }
+    expect(state.button1.clickRoutine).toEqual([
+      'var pciocalc = ${PROPERTY text OF counter1} * 1',
+      { func: 'LABEL', label: 'counter2', value: '${pciocalc}' }
     ]);
     expect(state._meta.info.importerWarnings).toEqual([
       'A number an automation step of "Double" calculates with could not be imported - it uses 1 instead.'
@@ -1101,7 +1140,7 @@ describe('PCIO importer', () => {
       }
     ], 8);
 
-    expect(state.button.clickRoutine).toEqual([ { func: 'SHUFFLE', holder: 'holder' } ]);
+    expect(state.button1.clickRoutine).toEqual([ { func: 'SHUFFLE', holder: 'holder1' } ]);
     expect(state._meta.info.importerWarnings).toEqual([
       'An automation step of "Shuffle" works on a widget that is not part of the file - that widget was left out.'
     ]);
@@ -1115,7 +1154,7 @@ describe('PCIO importer', () => {
       { id: 'die', type: 'dice', deck: 'dd', x: 0, y: 0 }
     ], 8);
 
-    expect(state.die.faces).toBeUndefined();
+    expect(state.dice1.faces).toBeUndefined();
     expect(state._meta.info.importerWarnings).toBeUndefined();
   });
 
@@ -1134,7 +1173,7 @@ describe('PCIO importer', () => {
       { id: 'board', type: 'board', x: 0, y: 0, width: 100, height: 100, boardImage: 'package://userassets/board.png' }
     ], 8, { 'asset-map.json': JSON.stringify({ '1234_5678': 'userassets/board.png' }) });
 
-    expect(state.board.image).toBe('/assets/1234_5678');
+    expect(state.board1.image).toBe('/assets/1234_5678');
   });
 
   it('ignores the folder entry that a .pcio carries for its assets', async () => {
@@ -1143,7 +1182,7 @@ describe('PCIO importer', () => {
     ], 8, { 'userassets': null });
 
     // it has no content, so it used to become an empty "undefined_undefined" asset
-    expect(state.board.image).toBe('package://userassets/');
+    expect(state.board1.image).toBe('package://userassets/');
     expect(state._meta.info.importerWarnings).toBeUndefined();
   });
 
@@ -1152,7 +1191,7 @@ describe('PCIO importer', () => {
       { id: 'board', type: 'board', x: 0, y: 0, width: 100, height: 100, boardImage: 'package://userassets/huge.png' }
     ], 8, { 'userassets/huge.png': Buffer.alloc(10485760) });
 
-    expect(state.board.image).toBe('package://userassets/huge.png');
+    expect(state.board1.image).toBe('package://userassets/huge.png');
     expect(state._meta.info.importerWarnings).toEqual([
       'Asset userassets/huge.png is bigger than 10 MiB and was not imported.'
     ]);
@@ -1161,7 +1200,7 @@ describe('PCIO importer', () => {
   it('writes face objects that follow a card type property as dynamic properties', async () => {
     const state = await importWidgets([ deck, { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 0, y: 0 } ], 8);
 
-    expect(state.deck.faceTemplates[0].objects[1]).toEqual({
+    expect(state.deck1.faceTemplates[0].objects[1]).toEqual({
       type: 'image', x: 0, y: 0, width: 103, height: 160, dynamicProperties: { value: 'image' }
     });
   });
@@ -1183,9 +1222,9 @@ describe('PCIO importer', () => {
     ], 8);
 
     expect(state.hand.text).toBe('Your cards');
-    expect(state.hand2.text).toBe('Tricks you won');
+    expect(state.holder1.text).toBe('Tricks you won');
     // only the main hand is the player's hand - the other private zones say what they are
-    expect(state.hand3.text).toBe('Private');
+    expect(state.holder2.text).toBe('Private');
   });
 
   it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
@@ -1204,7 +1243,7 @@ describe('PCIO importer', () => {
   it('imports a file whose schema version is missing or unreadable', async () => {
     for(const version of [ undefined, '', 'seven' ]) {
       const state = await importWidgets([ { id: 'holder', type: 'holder', x: 0, y: 0 } ], version);
-      expect(state.holder.type).toBe('holder');
+      expect(state.holder1.type).toBe('holder');
       expect(state._meta.info.importerSchemaVersion).toBe(0);
       expect(state._meta.info.importerWarnings).toBeUndefined();
     }
