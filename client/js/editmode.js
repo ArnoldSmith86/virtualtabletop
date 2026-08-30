@@ -357,7 +357,22 @@ function generateTimerWidgets(id, x, y) {
   ];
 }
 
-function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
+// A composite widget is a base widget plus children whose IDs are derived from
+// the base ID, so the base is only usable when none of the derived IDs is taken.
+async function addCompositeWidget(type, generate) {
+  const id = generateUniqueWidgetID(type, base=>generate(base).map(w=>w.id));
+  for(const w of generate(id))
+    await addWidgetLocal(w);
+  return id;
+}
+
+function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick, title) {
+  // how far the group reaches around its root widget, filled in below because most of these
+  // widgets leave their size to the widget defaults. The children hang off the root - the deck's
+  // reset button below the holder, the counter's -/+ beside the label, the ring's stops all round
+  // the line - so keeping only the root on the board would leave them off it on a small board.
+  const extents = { left: 0, top: 0, right: 0, bottom: 0 };
+  const rootID = widgetsToAdd.find(wi=>!wi.parent).id;
   for(const wi of widgetsToAdd) {
     let w = null;
     if(wi.type == 'button') w = new Button(wi.id);
@@ -372,14 +387,26 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
     w.domElement.id = w.id;
+    // the root and what is attached to it - a card inside the deck's pile is inside the group anyway
+    if(!wi.parent || wi.parent == rootID) {
+      const x = wi.parent ? wi.x || 0 : 0;
+      const y = wi.parent ? wi.y || 0 : 0;
+      extents.left   = Math.min(extents.left,   x);
+      extents.top    = Math.min(extents.top,    y);
+      extents.right  = Math.max(extents.right,  x + w.get('width'));
+      extents.bottom = Math.max(extents.bottom, y + w.get('height'));
+    }
     if(!wi.parent) {
       w.domElement.addEventListener('click', async _=>{
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
-        overlayDone(await onClick());
+        // the board size can change while edit mode is open, so where the widget goes has to be
+        // worked out on click and not when the overlay is populated
+        overlayDone(await onClick(...overlayPosition(wi.x, wi.y, w, extents)));
         batchEnd();
       });
-      $('#addOverlay').appendChild(w.domElement);
+      w.domElement.title = title;
+      $('#addOverlayLayout').appendChild(w.domElement);
     }
   }
   for(const wi of widgetsToAdd) {
@@ -389,7 +416,28 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
 
 const VTTblue = '#1f5ca6';
 
-function addPieceToAddWidgetOverlay(w, wi) {
+// addOverlayPosition (calculateLayout.js) for the board in use, taking the size to keep on the
+// board off the instantiated preview widget: most previews leave their size to the widget
+// defaults, which are bigger than the delta lets on - a holder is 111x168 with an empty delta.
+// A composite passes the extents of the whole group instead of its root widget's size.
+function overlayPosition(x, y, w, extents) {
+  if(extents)
+    return addOverlayPosition(viewportConfig, x, y, { left: extents.left, top: extents.top, width: extents.right-extents.left, height: extents.bottom-extents.top });
+  return addOverlayPosition(viewportConfig, x, y, { width: w.get('width'), height: w.get('height') });
+}
+
+// The hex previews that show an image need a colored hexagon painted behind them because their
+// clip-path css does not apply inside the overlay. That background is paint and nothing else: it
+// gets no click handler and no tooltip, and editmode.css keeps the ring of it that sticks out
+// around the preview from taking the click - it would add a plain 70x70 image widget that is not
+// a hex tile at all, which is not what the preview it sits behind promises.
+function addBackgroundToAddWidgetOverlay(w, wi) {
+  w.applyInitialDelta(wi);
+  w.domElement.id = w.id;
+  $('#addOverlayLayout').appendChild(w.domElement);
+}
+
+function addPieceToAddWidgetOverlay(w, wi, title) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     try {
@@ -404,6 +452,10 @@ function addPieceToAddWidgetOverlay(w, wi) {
         ]
       });
       const toAdd = {...wi};
+      const pieceName = (String(w.id).match(/^[A-Z][a-z]+/) || [])[0];
+      if(pieceName)
+        toAdd.id = generateUniqueWidgetID(pieceName.toLowerCase());
+      [ toAdd.x, toAdd.y ] = overlayPosition(wi.x, wi.y, w);
       toAdd.z = getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
 
@@ -414,19 +466,24 @@ function addPieceToAddWidgetOverlay(w, wi) {
     }
   });
   w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  w.domElement.title = title;
+  $('#addOverlayLayout').appendChild(w.domElement);
 }
 
-function addWidgetToAddWidgetOverlay(w, wi) {
+function addWidgetToAddWidgetOverlay(w, wi, title, idType) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
+    if(idType)
+      toAdd.id = generateUniqueWidgetID(idType);
+    [ toAdd.x, toAdd.y ] = overlayPosition(wi.x, wi.y, w);
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
   });
   w.domElement.id = w.id;
-  $('#addOverlay').appendChild(w.domElement);
+  w.domElement.title = title;
+  $('#addOverlayLayout').appendChild(w.domElement);
 }
 
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
@@ -440,25 +497,17 @@ function overlayDone(id) {
 
 function populateAddWidgetOverlay() {
   // Populate the Cards panel in the add widget overlay
-  const x = 115;
+  const cardsX = 115;
   addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
     type: 'holder',
-    x,
+    x: cardsX,
     y: 150
-  });
+  }, 'Add a card holder');
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 340, false))
-      await addWidgetLocal(w);
-    return id
-  });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 570, true))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', cardsX, 340, false),
+    (x, y)=>addCompositeWidget('deck', id=>generateCardDeckWidgets(id, x, y, false)), 'Add an empty deck and its holder');
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', cardsX, 570, true),
+    (x, y)=>addCompositeWidget('deck', id=>generateCardDeckWidgets(id, x, y, true)), 'Add a deck of 52 playing cards and its holder');
 
   //Add svg game pieces
   // First row
@@ -479,7 +528,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "black",
     borderWidth: 1
-  });
+  }, 'Add a pawn');
 
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
@@ -499,7 +548,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "black",
     borderWidth: "1"
-  });
+  }, 'Add a pin');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
     x: 390+2*75,
@@ -520,7 +569,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#ffffff",
     borderWidth: 1,
     secondaryColor: "#000000"
-  });
+  }, 'Add a marble');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
     x: 390+3*75,
@@ -541,7 +590,7 @@ function populateAddWidgetOverlay() {
     borderColor: "white",
     borderWidth: 1,
     secondaryColor: "black"
-  });
+  }, 'Add a cube');
 
   // Second row
 
@@ -575,7 +624,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 1,
     secondaryColor: "#ffffff"
-  });
+  }, 'Add a flat checker');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
     x: 445+100,
@@ -607,7 +656,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 1,
     secondaryColor: "#ffffff"
-  });
+  }, 'Add a checker');
 
   //Third row
 
@@ -628,7 +677,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 3
-  });
+  }, 'Add a flat meeple');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
     x: 450+100,
@@ -660,7 +709,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 1,
     state: "alive"
-  });
+  }, 'Add a meeple');
 
   //Fourth row
 
@@ -681,7 +730,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 2
-  });
+  }, 'Add a flat pig');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
     x: 450+100,
@@ -700,7 +749,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 1
-  });
+  }, 'Add a pig');
 
   //Fifth row
 
@@ -721,7 +770,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 1
-  });
+  }, 'Add a building');
 
   addPieceToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
     x: 490,
@@ -741,7 +790,7 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 2
-  });
+  }, 'Add a house');
 
   addPieceToAddWidgetOverlay(new BasicWidget('Road3DSVG'), {
     x: 610,
@@ -780,7 +829,7 @@ function populateAddWidgetOverlay() {
     note: "Game designer: You can remove any face you may not need. That way you can limit rotation",
     borderColor: "#000000",
     borderWidth: 1
-  });
+  }, 'Add a road');
 
    //Sixth row (hexagons)
 
@@ -799,7 +848,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     hexType: "flat"
-  });
+  }, 'Add a flat top hex tile');
 
   addPieceToAddWidgetOverlay(new BasicWidget('HexPoint'), {
     x: 465,
@@ -816,11 +865,11 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     hexType: "point"
-  });
+  }, 'Add a pointy top hex tile');
 
   //This is added only to provide a visual background for the actual piece "HexFlatImage" since the css there does not show on the overlay
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+  addBackgroundToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
     x: 530,
     y: 590,
     width: 70,
@@ -853,11 +902,11 @@ function populateAddWidgetOverlay() {
       }
     },
     hexType: "flat"
-  });
+  }, 'Add a flat top hex tile with an image');
 
   //This is added only to provide a visual background for the actual piece "HexPointImage" since the css there does not show on the overlay
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+  addBackgroundToAddWidgetOverlay(new BasicWidget('HexPointImageBack'), {
     x: 605,
     y: 590,
     width: 70,
@@ -890,7 +939,7 @@ function populateAddWidgetOverlay() {
       }
     },
     hexType: "point"
-  });
+  }, 'Add a pointy top hex tile with an image');
 
   //Poker chips
 
@@ -915,7 +964,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'Add a flat poker chip', 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
@@ -942,14 +991,10 @@ function populateAddWidgetOverlay() {
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
 
-  });
+  }, 'Add a flat dealer button', 'dealer');
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 916, 300, 2))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2),
+    (x, y)=>addCompositeWidget('chips', id=>generateChipPileWidgets(id, x, y, 2)), 'Add a pile of flat poker chips and its holder');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
     x: 1010,
@@ -973,7 +1018,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'Add a poker chip', 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
@@ -1000,14 +1045,10 @@ function populateAddWidgetOverlay() {
     borderWidth: 2,
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
-  });
+  }, 'Add a dealer button', 'dealer');
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, 1010, 309, 3))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3),
+    (x, y)=>addCompositeWidget('chips', id=>generateChipPileWidgets(id, x, y, 3)), 'Add a pile of poker chips and its holder');
 
   // Populate the dice. The real dice choosing happens in a popup.
   const dice2D = new Dice('add-dice2D0');
@@ -1033,6 +1074,7 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice2DAttrs};
+      [ toAdd.x, toAdd.y ] = overlayPosition(dice2DAttrs.x, dice2DAttrs.y, dice2D);
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
@@ -1043,7 +1085,8 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice2D.domElement.id = dice2D.id;
-  $('#addOverlay').appendChild(dice2D.domElement);
+  dice2D.domElement.title = 'Add a die - you pick how many sides it has';
+  $('#addOverlayLayout').appendChild(dice2D.domElement);
 
   const dice2DCube = new Dice('add-dice2DCube0');
   const dice2DCubeAttrs = {
@@ -1104,6 +1147,7 @@ function populateAddWidgetOverlay() {
         ]
       });
       const toAdd = {...dice2DCubeAttrs};
+      [ toAdd.x, toAdd.y ] = overlayPosition(dice2DCubeAttrs.x, dice2DCubeAttrs.y, dice2DCube);
       toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
       toAdd.cT = result.variables.color;
       toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
@@ -1115,7 +1159,8 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice2DCube.domElement.id = dice2DCube.id;
-  $('#addOverlay').appendChild(dice2DCube.domElement);
+  dice2DCube.domElement.title = 'Add a cube die - you pick its color';
+  $('#addOverlayLayout').appendChild(dice2DCube.domElement);
 
   const dice3D = new Dice('add-dice3D0');
   const dice3DAttrs = {
@@ -1142,6 +1187,7 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice3DAttrs};
+      [ toAdd.x, toAdd.y ] = overlayPosition(dice3DAttrs.x, dice3DAttrs.y, dice3D);
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
@@ -1152,7 +1198,8 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   dice3D.domElement.id = dice3D.id;
-  $('#addOverlay').appendChild(dice3D.domElement);
+  dice3D.domElement.title = 'Add a 3D die - you pick how many sides it has';
+  $('#addOverlayLayout').appendChild(dice3D.domElement);
 
   // Populate the Interactive panel in the add widget overlay.
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
@@ -1183,6 +1230,7 @@ function populateAddWidgetOverlay() {
       });
       const values = result.variables.values;
       const toAdd = {...spinAttrs};
+      [ toAdd.x, toAdd.y ] = overlayPosition(spinAttrs.x, spinAttrs.y, spinner);
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
       toAdd.options = Array.from({length: values}, (_, i) => i + 1);
@@ -1192,7 +1240,8 @@ function populateAddWidgetOverlay() {
     } catch(e) {}
   });
   spinner.domElement.id = spinner.id;
-  $('#addOverlay').appendChild(spinner.domElement);
+  spinner.domElement.title = 'Add a spinner - you pick how many values it has';
+  $('#addOverlayLayout').appendChild(spinner.domElement);
 
   addWidgetToAddWidgetOverlay(new Button('add-button'), {
     type: 'button',
@@ -1200,23 +1249,15 @@ function populateAddWidgetOverlay() {
     clickRoutine: [],
     x: 750,
     y: 860
-  });
+  }, 'Add a button that runs a routine when it is clicked');
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, 1005, 825))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825),
+    (x, y)=>addCompositeWidget('timer', id=>generateTimerWidgets(id, x, y)), 'Add a timer');
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, 1058, 890))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890),
+    (x, y)=>addCompositeWidget('counter', id=>generateCounterWidgets(id, x, y)), 'Add a counter');
 
   // Populate the Decorative panel in the add widget overlay
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
@@ -1224,7 +1265,7 @@ function populateAddWidgetOverlay() {
     text: 'Label',
     x: 1385,
     y: 100
-  });
+  }, 'Add a text label');
 
   addWidgetToAddWidgetOverlay(new Label('add-heading'), {
     type: 'label',
@@ -1234,14 +1275,10 @@ function populateAddWidgetOverlay() {
     width: 200,
     x: 1335,
     y: 150
-  });
+  }, 'Add a heading');
   // Add the composite line widget (a path with attached stops)
-  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateLineWidgets(id, 1310, 420))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420),
+    (x, y)=>addCompositeWidget('line', id=>generateLineWidgets(id, x, y)), 'Add a line with stops that pieces snap to');
 
   // The divider line is a plain line widget (without stops), so it can be
   // curved, restyled and connected like any other line
@@ -1254,7 +1291,7 @@ function populateAddWidgetOverlay() {
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 210, y: 10 },
     lineWidth: 4
-  });
+  }, 'Add a divider line');
 
   // a line without stops in its closed shape: a plain circle/oval outline
   addWidgetToAddWidgetOverlay(new Line('add-circle'), {
@@ -1267,15 +1304,11 @@ function populateAddWidgetOverlay() {
     lineStart: { x: 10, y: 10 },
     lineEnd: { x: 90, y: 90 },
     lineWidth: 4
-  });
+  }, 'Add a circle');
 
   // Add the composite ring widget (a closed line with stops all the way round)
-  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateRingWidgets(id, 1420, 495))
-      await addWidgetLocal(w);
-    return id
-  });
+  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495),
+    (x, y)=>addCompositeWidget('ring', id=>generateRingWidgets(id, x, y)), 'Add a ring of stops that pieces snap to');
 }
 // end of JSON generators
 
@@ -1285,6 +1318,7 @@ let libraryDecksIndex = null;
 let libraryDecksObserver = null;
 let libraryDeckPreviewCounter = 0;
 let libraryDecksPlacement = null; // set by openLibraryDecksOverlay for the deck a click adds
+let libraryDecksCancelled = null; // what the opener wants done when the browser is closed without picking a deck
 const libraryDeckDetailsCache = {};
 
 function getLibraryDeckDetails(entry) {
@@ -1305,8 +1339,11 @@ function getLibraryDeckDetails(entry) {
 
 // placement: what to add around a picked deck, when the browser was opened from the "Add New Deck" dialog (which
 // is hidden while browsing). Opened from anywhere else, a picked deck gets the holder and button it always got.
-async function openLibraryDecksOverlay(placement) {
+// onCancel: what to do when the browser is closed without picking one - the dialog that opened it is hidden, so
+// it has to bring itself back.
+async function openLibraryDecksOverlay(placement, onCancel) {
   libraryDecksPlacement = placement || deckPlacementDefault;
+  libraryDecksCancelled = onCancel || null;
   showOverlay('libraryDecksOverlay');
   if(libraryDecksIndex == 'loading')
     return;
@@ -1365,6 +1402,16 @@ function renderLibraryDecksList() {
   });
 
   const sortMode = $('#libraryDecksSort').value;
+
+  // Stars and play time are counted per server, so a server nobody has played on yet (a test server, a fresh
+  // installation) has none of either - and sorting by them silently shows the order by name. Say so rather
+  // than leaving a control that looks broken.
+  const sortedBy = { stars: entry=>entry.stars, popularity: entry=>entry.timePlayed }[sortMode];
+  $('#libraryDecksSortHint').textContent = sortedBy && !libraryDecksIndex.some(entry=>sortedBy(entry))
+    ? (sortMode == 'stars' ? 'No game on this server has been starred yet, so this is the order by name.'
+                           : 'No game on this server has been played yet, so this is the order by name.')
+    : '';
+
   groups.sort(function(a, b) {
     if(sortMode == 'stars' && b.stars != a.stars)
       return b.stars - a.stars;
@@ -1464,20 +1511,20 @@ async function addLibraryDeckToGame(entry) {
   batchStart();
   setDeltaCause(`${getPlayerDetails().playerName} added deck ${entry.deck} from public library game ${entry.gameName} in editor`);
 
-  let id = null;
   const suffixes = [ 'B', 'D', 'P', ...details.cards.map((_, i)=>`C${i+1}`) ];
-  do {
-    id = generateUniqueWidgetID();
-  } while(suffixes.some(suffix=>widgets.has(id+suffix)));
+  const id = generateUniqueWidgetID('deck', base=>suffixes.map(suffix=>base+suffix));
 
   const holderWidth  = entry.cardWidth  + 8;
   const holderHeight = entry.cardHeight + 11;
+  // the deck is added to the middle of the board, whatever size the board has
+  const centerX = viewportConfig.targetWidth/2;
+  const centerY = viewportConfig.targetHeight/2;
   if(placement.holder) {
     await addWidgetLocal({
       type: 'holder',
       id,
-      x: Math.round(800 - holderWidth/2),
-      y: Math.round(500 - holderHeight/2),
+      x: Math.round(centerX - holderWidth/2),
+      y: Math.round(centerY - holderHeight/2),
       width: holderWidth,
       height: holderHeight,
       dropTarget: { type: 'card' }
@@ -1495,16 +1542,17 @@ async function addLibraryDeckToGame(entry) {
     x: Math.round((holderWidth -deckWidth )/2),
     y: Math.round((holderHeight-deckHeight)/2)
   } : {
-    x: Math.round(800 - entry.cardWidth/2 - deckWidth - 10),
-    y: Math.round(500 - deckHeight/2)
+    x: Math.round(centerX - entry.cardWidth/2 - deckWidth - 10),
+    y: Math.round(centerY - deckHeight/2)
   }));
   await addWidgetLocal(placement.holder
     ? { type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight }
-    : { type: 'pile', id: id+'P', x: Math.round(800 - entry.cardWidth/2), y: Math.round(500 - entry.cardHeight/2), width: entry.cardWidth, height: entry.cardHeight });
+    : { type: 'pile', id: id+'P', x: Math.round(centerX - entry.cardWidth/2), y: Math.round(centerY - entry.cardHeight/2), width: entry.cardWidth, height: entry.cardHeight });
 
   for(const [ i, card ] of details.cards.entries())
     await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
 
+  libraryDecksCancelled = null; // a deck was picked, so whoever opened the browser is done with it
   overlayDone(placement.holder ? id : id+'P');
   batchEnd();
 }
@@ -1514,6 +1562,7 @@ function uploadWidget(preset) {
     let id;
     if(asset && preset == 'board') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('board'),
         image: asset,
         movable: false,
         width: viewportConfig.targetWidth,
@@ -1523,6 +1572,7 @@ function uploadWidget(preset) {
     }
     if(asset && preset == 'token') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('token'),
         image: asset
       });
     }
@@ -1723,12 +1773,17 @@ export function initializeEditMode(currentMetaData) {
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
+      id: generateUniqueWidgetID('basic'),
       text: "Basic widget"
     });
     overlayDone(id);
   });
 
   on('#addHand', 'click', async function() {
+    // the hand spans the width of the board along its bottom edge - on a board smaller than the
+    // 1600x1000 the 50/180 margins were picked for, they are scaled down so it still fits
+    const handHeight = Math.round(Math.min(180, viewportConfig.targetHeight/2));
+    const handMargin = Math.round(Math.min(50, viewportConfig.targetWidth/4));
     const hand = {
       type: 'holder',
       onEnter: { activeFace: 1 },
@@ -1739,29 +1794,47 @@ export function initializeEditMode(currentMetaData) {
       childrenPerOwner: true,
       dropShadow: true,
       hidePlayerCursors: true,
-      x: 50,
-      y: 820,
-      width: 1500,
-      height: 180
+      x: handMargin,
+      y: viewportConfig.targetHeight-handHeight,
+      width: viewportConfig.targetWidth-2*handMargin,
+      height: handHeight
     }
     if(!widgets.has('hand'))
       hand.id = 'hand';
     overlayDone(await addWidgetLocal(hand));
   });
 
+  // The deck browser is a screenful of its own rather than something drawn on the board, so editmode.css gives
+  // it the editor's box instead of the room's scale - which only works outside #roomArea, a size container and
+  // therefore the containing block its fixed positioning would otherwise be clipped by.
+  $('#editor').append($('#libraryDecksOverlay'));
+
   on('#browseLibraryDecks', 'click', _=>openLibraryDecksOverlay());
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);
-  on('#libraryDecksClose', 'click', _=>showOverlay());
+  on('#libraryDecksClose', 'click', function() {
+    const onCancel = libraryDecksCancelled;
+    libraryDecksCancelled = null;
+    if(onCancel)
+      onCancel();
+    else
+      showOverlay();
+  });
+
+  // the overlay had no way out of it other than leaving edit mode: a close button, a click next to
+  // the layout and Escape (window.onkeyup in main.js) all just close it
+  on('#addOverlayClose', 'click', _=>showOverlay());
+  on('#addOverlay', 'click', e=>e.target.id=='addOverlay'&&showOverlay());
 
   on('#addCanvas', 'click', async function() {
+    const size = Math.round(Math.min(800, viewportConfig.targetWidth/2, viewportConfig.targetHeight*0.8));
     const id = await addWidgetLocal({
       type: "canvas",
 
-      x: 400,
-      y: 100,
-      width: 800,
-      height: 800,
+      x: Math.round((viewportConfig.targetWidth-size)/2),
+      y: Math.round((viewportConfig.targetHeight-size)/2),
+      width: size,
+      height: size,
 
       activeColorChangeRoutine: [
         {
@@ -1981,11 +2054,12 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeat', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, { width: 150, height: 40 });
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
-      x: 840,
-      y: 90
+      x,
+      y
     })
     overlayDone(id);
   });
@@ -1993,11 +2067,14 @@ export function initializeEditMode(currentMetaData) {
   on('#addSeatCounter', 'click', async function() {
     const seats = widgetFilter(w=>w.get('type')=='seat');
     const maxIndex = Math.max(...seats.map(w=>w.get('index')));
+    // the counter badge hangs 20px off the top left corner of the seat, so the seat is put far
+    // enough onto the board for the badge to be on it too
+    const [ x, y ] = addOverlayPosition(viewportConfig, 840, 90, { left: -20, top: -20, width: 170, height: 60 });
     const id = await addWidgetLocal({
       type: 'seat',
       index: seats.length && maxIndex ? maxIndex+1 : 1,
-      x: 840,
-      y: 90
+      x,
+      y
     })
     await addWidgetLocal({
       id: id+'C',
@@ -2044,10 +2121,11 @@ export function initializeEditMode(currentMetaData) {
   });
 
   on('#addScoreboard', 'click', async function() {
+    const [ x, y ] = addOverlayPosition(viewportConfig, 1000, 660, { width: 300, height: 200 });
     await addWidgetLocal({
       type: 'scoreboard',
-      x: 1000,
-      y:660
+      x,
+      y
     });
     showOverlay();
   });

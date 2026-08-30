@@ -83,3 +83,225 @@
     bottom: unset;
   }
 }
+
+/* A cell a score can be entered into. Cells are addressed with data-seat and
+   data-round (data-total for the totals column) whether or not they can be
+   entered, so a game can style a single player or round from its own CSS. */
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell {
+  cursor: pointer;
+}
+
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell:hover,
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell.entering {
+  box-shadow: inset 0 0 0 2px var(--VTTblue);
+}
+
+/* the background and the text colour are set together: a game that styles its board
+   with light text would otherwise type white on white */
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell > input.scoreCellInput {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: -1px;
+  padding: 0;
+  border: none;
+  outline: 2px solid var(--VTTblue);
+  background: #fff;
+  color: #333;
+  font: inherit;
+  text-align: right;
+}
+
+/* an entry that is not a score is kept on its surface rather than written, so it
+   is marked as the thing standing between the player and a finished entry */
+.scoreboard > div.scoreboardIntermediate > table td.scoreCell > input.scoreCellInput.rejected,
+.scoreboardKeypadValue.rejected {
+  outline: 2px solid darkred;
+  color: darkred;
+}
+
+/* The keypad and the button that switches surfaces hang off <body> rather than off
+   the table: they stay thumb-sized whatever the board is scaled to, and a room area
+   shorter than the pad - a phone in portrait - does not clip them. */
+.scoreboardKeypad, .scoreEntrySwitchBar {
+  position: fixed;
+  z-index: 3;
+}
+
+.scoreboardKeypad {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--modalBackgroundColor);
+  border: 1px solid var(--modalBorderColor);
+  box-shadow: 0 4px 16px #00000066;
+  color: var(--overlayFontColor);
+}
+
+.scoreboardKeypadHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.scoreboardKeypadTitle {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.scoreboardKeypadValue {
+  min-height: 28px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 22px;
+  line-height: 28px;
+  text-align: right;
+}
+
+/* what the cell holds now sits above the entry rather than inside it, so an entry
+   left empty - which erases the cell - does not read as "confirm what is shown" */
+.scoreboardKeypadCurrent {
+  margin-bottom: -4px;
+  font-size: 12px;
+  text-align: right;
+  opacity: 0.6;
+}
+
+.scoreboardKeypadKeys {
+  display: grid;
+  grid-template-columns: repeat(4, 48px);
+  gap: 4px;
+}
+
+.scoreboardKeypadKeys > button {
+  height: 48px;
+}
+
+.scoreboardKeypadKeys > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  background-color: var(--VTTblue);
+}
+
+.scoreboardKeypadKeys > button[icon] {
+  padding-right: 0;
+}
+
+.scoreboardKeypadKeys > button[icon]::before {
+  margin: 0;
+}
+
+.scoreboardKeypadKeys > button.enter {
+  background-color: var(--positiveInput);
+}
+
+.scoreboardKeypadKeys > button.clear, .scoreboardKeypadKeys > button.delete {
+  background-color: var(--VTTblueDark);
+}
+
+/* the pad's own buttons are part of its title bar, not two more keys to hit - and
+   large enough for the fingers the pad exists for */
+button.scoreEntrySwitch, button.scoreEntryClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.75;
+}
+
+/* on its own beside a cell being typed into it has no title bar to sit in, so it
+   carries the pad's own background */
+.scoreEntrySwitchBar > button.scoreEntrySwitch {
+  border-radius: 8px;
+  background: var(--modalBackgroundColor);
+  border: 1px solid var(--modalBorderColor);
+  color: var(--overlayFontColor);
+  box-shadow: 0 2px 8px #00000044;
+}
+
+button.scoreEntrySwitch:hover, button.scoreEntryClose:hover {
+  opacity: 1;
+}
+
+button.scoreEntrySwitch::before, button.scoreEntryClose::before {
+  margin: 0;
+  font-size: 22px;
+  width: 22px;
+}
+
+/* an overlay is the top thing on screen: the keypad steps aside for it rather
+   than staying in front of it */
+body.overlayActive .scoreboardKeypad, body.overlayActive .scoreEntrySwitchBar {
+  display: none;
+}
+
+/* The strip the add-round button sits on. It is the foot of the sheet rather
+   than a round of it: quiet enough not to read as a row of scores, the width of
+   the table so that a finger has something to hit, and out of the way of the
+   first column and the totals line it sits between. */
+.scoreboard > div.scoreboardIntermediate > table tbody tr.addRoundRow > td {
+  position: static;
+  width: auto;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border-right: none;
+}
+
+.scoreboard > div.scoreboardIntermediate > table button.addRound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 24px;
+  margin: 0;
+  padding: 2px;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  text-transform: none;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0.8;
+}
+
+.scoreboard > div.scoreboardIntermediate > table button.addRound::before {
+  font-size: 16px;
+  width: 16px;
+  margin-right: 2px;
+}
+
+.scoreboard > div.scoreboardIntermediate > table button.addRound:hover {
+  background: #00000011;
+  opacity: 1;
+}
+
+/* a finger needs more of the strip to aim at than a mouse pointer does */
+body.usedTouch .scoreboard > div.scoreboardIntermediate > table button.addRound {
+  min-height: 32px;
+}
+
+/* while editing, the strip is part of the widget being laid out rather than a
+   button to press, so a press on it selects and drags the board like any other */
+body.edit .scoreboard > div.scoreboardIntermediate > table button.addRound {
+  pointer-events: none;
+}

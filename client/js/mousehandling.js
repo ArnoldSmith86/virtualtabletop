@@ -3,7 +3,27 @@ import { viewportConfig } from './calculateLayout.js';
 let usedTouch = false;
 let mouseTarget = null;
 let doubleClickTimeout = null;
+let scrollbarDrag = false;
 const mouseStatus = {};
+
+// Whether a press landed on the scrollbar of an element that scrolls its own overflow - the body
+// of a scoreboard with more rounds than fit. offsetX/offsetY are measured from the padding box,
+// which is the client box plus the scrollbars, so a coordinate between the client box and the
+// scrollbar the element actually reserves room for is on that scrollbar. The room it reserves is
+// what is left of the border box once the client box and the borders are taken off it: an element
+// with an overlay scrollbar, or none at all, reserves nothing and has no strip to hit - the same
+// coordinate is inside its border there, which is part of the widget like any other pixel of it.
+function pressedScrollbar(e) {
+  const el = e.target;
+  if(!el || !el.clientWidth && !el.clientHeight)
+    return false;
+  const style = getComputedStyle(el);
+  const border = side => parseFloat(style.getPropertyValue(`border-${side}-width`)) || 0;
+  const barWidth = el.offsetWidth - el.clientWidth - border('left') - border('right');
+  const barHeight = el.offsetHeight - el.clientHeight - border('top') - border('bottom');
+  return barWidth > 0 && e.offsetX > el.clientWidth && e.offsetX <= el.clientWidth + barWidth
+      || barHeight > 0 && e.offsetY > el.clientHeight && e.offsetY <= el.clientHeight + barHeight;
+}
 
 function eventCoords(name, e) {
   let coords;
@@ -70,6 +90,20 @@ async function inputHandler(name, e) {
 }
 
 async function handleInput(name, e, dragTarget) {
+  // Dragging a scrollbar scrolls and does nothing else: the press is neither a click on the widget
+  // behind it nor the start of a drag, and neither are the moves and the release that follow it.
+  // The release can happen outside the window, where no mouseup reaches us - so a move with no
+  // button held ends the drag as well, rather than leaving it latched until the next press.
+  if(name == 'mousedown')
+    scrollbarDrag = pressedScrollbar(e);
+  else if(name == 'mousemove' && !e.buttons)
+    scrollbarDrag = false;
+  if(scrollbarDrag) {
+    if(name == 'mouseup')
+      scrollbarDrag = false;
+    return;
+  }
+
   const isMiddleMouseButton = name.startsWith('mouse') && e.button == 1;
   if(edit && !isMiddleMouseButton && editInputHandler(name, e))
     return;
@@ -79,9 +113,17 @@ async function handleInput(name, e, dragTarget) {
 
   const editMovable = !isMiddleMouseButton && (edit || jeEnabled && e.ctrlKey);
 
-  if(!dragTarget && [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1)
-    if(!editMovable || !e.target.parentNode || !e.target.parentNode.className.match(/label/))
+  // a card's write object is a contenteditable div rather than a form control, but a click on it belongs to
+  // the text the same way a click on a text field does
+  const textInput = [ 'TEXTAREA', 'INPUT', 'BUTTON', 'OPTION', 'LABEL', 'SELECT' ].indexOf(e.target.tagName) != -1
+                 || e.target.isContentEditable && String(e.target.className).match(/cardFaceObject/);
+  if(!dragTarget && textInput) {
+    // while editing, a click on the text field of a label or on the write object of a card is not meant
+    // to type but to reach the widget below it, so that it can be selected and moved
+    const widgetText = e.target.parentNode && (e.target.parentNode.className.match(/label/) || String(e.target.className).match(/cardFaceObject/));
+    if(!editMovable || !widgetText)
       return;
+  }
 
   if(name == 'mousedown' || name == 'touchstart') {
     if (!window.getSelection().isCollapsed)
@@ -170,7 +212,7 @@ async function handleInput(name, e, dragTarget) {
         if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
           let editClickHandled = false;
           if(edit && !isMiddleMouseButton)
-            editClickHandled = await editClick(widget, e.button);
+            editClickHandled = await editClick(widget, e.button, e);
           else if(jeEnabled && !isMiddleMouseButton)
             editClickHandled = await jeClick(widget, e);
 

@@ -31,6 +31,7 @@
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
     <div class="divider"></div>
+    <button id="feedbackButton" class="toolbarButton"><span class="tooltip">Feedback</span></button>
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
@@ -375,6 +376,7 @@
       </template>
       <div id="variantsList">
         <div class="variantsList"></div>
+        <p id="emptyVariants">This game has no variants left. Variants are the different setups of a game - a game needs at least one of them to be playable.<span class="onlyForEdit"><br>Add one below, or save to remove the game from your game shelf.</span></p>
         <button icon="add" class="onlyForEdit">Add variant</button>
       </div>
       <div id="similarDetails" data-showfor="similarImage|similarName|similarDesigner|similarAwards|bgg|rules">
@@ -544,8 +546,9 @@
       </div>
       <div>
         <div icon="add_reaction">
-          <input placeholder="Search icons (sword, heart, dice, …)" />
-          <p icon="blur_on">Click an icon to pick it. Emoji use your browser font<span> and game-icons are previewed in low resolution</span>: hover one, or narrow the search below 100 results, to see the real image.</p>
+          <input type="search" />
+          <div id="symbolSearchStatus"><span aria-live="polite"></span><button icon="apps">Show all icons</button></div>
+          <p icon="blur_on">Click an icon to pick it. Emoji use your browser font<span> and game-icons are previewed in low resolution</span>: hover one, or narrow the search below 100 results, to see the real image. Icons with a blue corner offer skin tones - click one to choose, or narrow the search until they fit into the list itself.</p>
           <div id="symbolList">
             Loading...
           </div>
@@ -600,7 +603,7 @@
           <h3>Icons, Symbols, and Visual Assets</h3>
             <p>The VirtualTabletop.io logos and icons (consisting of "virtualtabletop.io" overlaid on a simulated screen and a stylized human figure popping out of a screen) are by various members of the VirtualTabletop.io community and are released under CC BY-NC-SA 4.0 (attribution to VirtualTabletop.io).</p>
             <p>The following pieces and symbols were created by Brandon Lewis (@mousewax) for VirtualTabletop.io and are released under the CC0 license: pawn, pin, marble, cube, checkers, poker chips, stylized human figures, pigs, house, village, and wood beam. The 3D dice were created by various members of the VirtualTabletop.io community and are also released under CC0.</p>
-            <p>Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from the following: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, John Colburnm, and other various artists.</p>
+            <p>Other icons from <a href="https://game-icons.net/" class="external">Game-icons.net</a> are available under CC BY 3.0 from the following: Delapouite, Lorc, Skoll, Viscious Speed, Caro Asercion, sbed, Simon (aussiesim), DarkZaitzev, Cathelineau, Quoting, Faithtoken, Lord Berandas, Willdabeast, PriorBlue, Carl Olsen, Lucas, Felbrigg, SeregaCthtuf, Pierre Leducq, Guard13007, rihlsul, Kier Heyl, John Redman, Zajkonur, GeneralAce135, Zeromancer, Andy Meneely, HeavenlyDog, Pepijn Poolman, starseeker, catsu, SpencerDub, sparker, Irongamer, John Colburnm, and other various artists.</p>
             <p>The custom cursors in the cursors folder are by RaphaelAlvez and are released under the CC0 license.</p>
         <hr>
           <h3>Fonts and Other Symbols</h3>
@@ -674,15 +677,46 @@
       </details>
     </div>
 
+    <div id="feedbackOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Feedback</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="feedback">
+          <p>Found a bug or have a suggestion? Let us know!</p>
+          <p><textarea style="height: 150px; width: 100%"></textarea></p>
+          <p class="feedbackError" style="display: none"></p>
+          <p class="feedbackThanks" style="display: none">Thank you! Your feedback has been sent.</p>
+          <p><input type="checkbox" id="feedbackIncludeState" checked> <label for="feedbackIncludeState">Include a snapshot of this room (URL, full page contents, game state, and player names)</label></p>
+          <p class="feedbackPrivacyNote">Your message and your browser info are always sent to help us fix things. Uncheck the box above if you'd rather not also share the room snapshot.</p>
+          <div class="buttons">
+            <button icon="close"></button>
+            <button icon="check"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="connectionLostOverlay" class="overlay" style="display:none;">
-      <h1>Connection lost</h1>
+      <h1 class="whileDisconnected">Connection lost</h1>
+      <h1 class="whileRestarting">The server was updated</h1>
       <div class="disconnected">
         <div class="cable">&nbsp;</div>
         <div class="plug">&nbsp;</div>
         <div class="cable">&nbsp;</div>
       </div>
-      <p>The connection to the server was lost. It should be reestablished in a few moments.</p>
-      <p>In case that doesn't work, try reloading the page or use a different room.</p>
+      <p class="whileDisconnected">The connection to the server was lost. It should be reestablished in a few moments.</p>
+      <p class="whileDisconnected">In case that doesn't work, try reloading the page or use a different room.</p>
+      <p class="whileRestarting">This page is reloading with the new version in a moment. Your room is not affected - it comes back exactly as you left it.</p>
+      <p class="whileRestarting"><button id="reloadNowButton">Reload now</button></p>
+    </div>
+
+    <div id="editModeUnavailableOverlay" class="overlay" style="display:none;">
+      <h1>Edit mode could not be loaded</h1>
+      <p>The editor is fetched from the server the first time it is opened, and the server did not answer - it is most likely restarting.</p>
+      <p>Nothing is broken and nothing is lost. Please try again in a moment.</p>
+      <p><button icon="close">Close</button></p>
     </div>
 
     <div id="playerCursors"></div>
@@ -710,6 +744,73 @@
     <button icon="movie"></button>
     <button icon="add_reaction"></button>
   </template>
+
+  <!-- The client is a single <script type="module">, so a browser that does not support modules
+       (or has JavaScript turned off) runs nothing at all and is left staring at the empty loading
+       screen with no hint of what went wrong. This says what happened instead, which part of the
+       browser is missing, and which version has it. The two scripts are deliberately ES5 and touch
+       nothing else - they are the one piece of the page that has to run on a browser we do not
+       support. The versions are the browserslist key of package.json, kept in step with it by
+       tests/browsercompat.test.js. -->
+  <div id="unsupportedBrowser" class="unsupportedBrowser" hidden>
+    <img src="i/branding/logo.svg" alt="VirtualTabletop">
+    <h1>This browser is too old for VirtualTabletop</h1>
+    <p>Please update this browser, or open this page in one of these - or anything newer:</p>
+    <ul id="unsupportedBrowserVersions">
+      <li><b>Chrome 88</b></li>
+      <li><b>Edge 88</b></li>
+      <li><b>Firefox 79</b></li>
+      <li><b>Safari 14.1</b></li>
+      <li><b>Safari on iOS 14.5</b></li>
+      <li><b>Samsung Internet 15</b></li>
+    </ul>
+    <p class="unsupportedBrowserURL">This page:<br><span id="unsupportedBrowserURL"></span></p>
+    <p><a href="#" id="unsupportedBrowserContinue">Let me try anyway</a></p>
+    <p id="unsupportedBrowserReason" class="unsupportedBrowserReason">(this browser is missing something VirtualTabletop is built on)</p>
+  </div>
+  <a href="#" id="unsupportedBrowserReopen" class="unsupportedBrowserReopen" hidden>Why this may not work</a>
+  <script>
+    function unsupportedBrowser(missing) {
+      document.getElementById('unsupportedBrowserReason').innerHTML = '(this browser is missing ' + missing + ', which VirtualTabletop is built on)';
+      document.getElementById('unsupportedBrowser').removeAttribute('hidden');
+      document.getElementById('unsupportedBrowserReopen').setAttribute('hidden', '');
+    }
+    // whoever has to move to another browser has to take the link with them, and they are on the
+    // machine that cannot open it - so spell the URL out instead of leaving it in the address bar
+    document.getElementById('unsupportedBrowserURL').textContent = window.location.href;
+    document.getElementById('unsupportedBrowserContinue').onclick = function() {
+      document.getElementById('unsupportedBrowser').setAttribute('hidden', '');
+      // dismissing is not final: the app may well do nothing at all, and then the loading screen
+      // is all that is left of the explanation
+      document.getElementById('unsupportedBrowserReopen').removeAttribute('hidden');
+      return false;
+    };
+    document.getElementById('unsupportedBrowserReopen').onclick = function() {
+      document.getElementById('unsupportedBrowser').removeAttribute('hidden');
+      document.getElementById('unsupportedBrowserReopen').setAttribute('hidden', '');
+      return false;
+    };
+    // A browser can be new enough to run this file and still be too old for the room. These are
+    // the pieces of the platform the client cannot do without at all - each of them arrived years
+    // before the oldest browser above, so a browser we do support never reads any of this.
+    if(!window.WebSocket)
+      unsupportedBrowser('WebSockets');
+    else if(!window.fetch)
+      unsupportedBrowser('the fetch API');
+    else if(!window.ResizeObserver)
+      unsupportedBrowser('ResizeObserver');
+    else if(!window.CSS || !CSS.supports || !CSS.supports('color', 'var(--a)'))
+      unsupportedBrowser('CSS custom properties');
+  </script>
+  <script nomodule>unsupportedBrowser('JavaScript modules');</script>
+  <noscript>
+    <div class="unsupportedBrowser">
+      <img src="i/branding/logo.svg" alt="VirtualTabletop">
+      <h1>VirtualTabletop needs JavaScript</h1>
+      <p>This page is a JavaScript application - there is nothing to show without it.</p>
+      <p>Please enable JavaScript for this site and reload the page.</p>
+    </div>
+  </noscript>
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 

@@ -1,6 +1,8 @@
+import crypto from 'crypto';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import url from 'url';
 import util from 'util';
 import zlib from 'zlib';
 
@@ -83,152 +85,176 @@ function htmlMinifyOptions() {
   };
 }
 
-export default async function minifyHTML() {
-  const room = await compress('client/room.html', [
-    'client/css/layout.css',
+// The build reads these lists and the disk cache hashes them, so they live here instead of inline:
+// a file that is added to a bundle but not to the hash would be served from a stale cache entry
+// forever. The order is what ends up in the bundle - do not sort them.
+const ROOM_HTML = 'client/room.html';
+const EDITOR_HTML = 'client/editor.html';
+const FFLATE_JS = 'node_modules/fflate/umd/index.js';
+const SYMBOLS_JSON = 'assets/fonts/symbols.json';
 
-    'client/css/overlays/misc.css',
-    'client/css/overlays/players.css',
-    'client/css/overlays/states.css',
-    'client/css/overlays/connectionlost.css',
-    'client/css/overlays/about.css',
-    'client/css/overlays/welcome.css',
+const CLIENT_CSS = [
+  'client/css/layout.css',
 
-    'client/css/widgets/basicwidget.css',
-    'client/css/widgets/imagewidget.css',
-    'client/css/widgets/button.css',
-    'client/css/widgets/canvas.css',
-    'client/css/widgets/card.css',
-    'client/css/widgets/classes.css',
-    'client/css/widgets/deck.css',
-    'client/css/widgets/dice.css',
-    'client/css/widgets/holder.css',
-    'client/css/widgets/label.css',
-    'client/css/widgets/line.css',
-    'client/css/widgets/pile.css',
-    'client/css/widgets/scoreboard.css',
-    'client/css/widgets/seat.css',
-    'client/css/widgets/spinner.css',
-    'client/css/widgets/timer.css',
+  'client/css/overlays/misc.css',
+  'client/css/overlays/players.css',
+  'client/css/overlays/states.css',
+  'client/css/overlays/connectionlost.css',
+  'client/css/overlays/about.css',
+  'client/css/overlays/welcome.css',
 
-    'client/css/fonts.css',
-    'client/css/custom.css'
-  ], [
-    'node_modules/dompurify/dist/purify.js',
+  'client/css/widgets/basicwidget.css',
+  'client/css/widgets/imagewidget.css',
+  'client/css/widgets/button.css',
+  'client/css/widgets/canvas.css',
+  'client/css/widgets/card.css',
+  'client/css/widgets/classes.css',
+  'client/css/widgets/deck.css',
+  'client/css/widgets/dice.css',
+  'client/css/widgets/holder.css',
+  'client/css/widgets/label.css',
+  'client/css/widgets/line.css',
+  'client/css/widgets/pile.css',
+  'client/css/widgets/scoreboard.css',
+  'client/css/widgets/seat.css',
+  'client/css/widgets/spinner.css',
+  'client/css/widgets/timer.css',
 
-    'client/js/domhelpers.js',
-    'client/js/calculateLayout.js',
-    'client/js/connection.js',
-    'client/js/serverstate.js',
-    'client/js/legacymoderegistry.js',
-    'client/js/legacymodes.js',
-    'client/js/geometry.js',
-    'client/js/compute.js',
-    'client/js/expression.js',
-    'client/js/mousehandling.js',
-    'client/js/zoom.js',
-    'client/js/tracing.js',
-    'client/js/statemanaged.js',
-    'client/js/color.js',
-    'client/js/symbols.js',
-    'client/js/audio.js',
+  'client/css/fonts.css',
+  'client/css/custom.css'
+];
 
-    'client/js/overlays/players.js',
-    'client/js/overlays/states.js',
-    'client/js/overlays/welcome.js',
+const CLIENT_JS = [
+  'node_modules/dompurify/dist/purify.js',
 
-    'client/js/widgets/widget.js',
-    'client/js/widgets/imagewidget.js',
-    'client/js/widgets/basicwidget.js',
-    'client/js/widgets/button.js',
-    'client/js/widgets/canvas.js',
-    'client/js/widgets/card.js',
-    'client/js/widgets/deck.js',
-    'client/js/widgets/dice.js',
-    'client/js/widgets/holder.js',
-    'client/js/widgets/label.js',
-    'client/js/widgets/line.js',
-    'client/js/widgets/pile.js',
-    'client/js/widgets/scoreboard.js',
-    'client/js/widgets/seat.js',
-    'client/js/widgets/spinner.js',
-    'client/js/widgets/timer.js',
+  'client/js/domhelpers.js',
+  'client/js/calculateLayout.js',
+  'client/js/containerQueryFallback.js',
+  'client/js/connection.js',
+  'client/js/serverstate.js',
+  'client/js/legacymoderegistry.js',
+  'client/js/legacymodes.js',
+  'client/js/geometry.js',
+  'client/js/compute.js',
+  'client/js/expression.js',
+  'client/js/mousehandling.js',
+  'client/js/zoom.js',
+  'client/js/tracing.js',
+  'client/js/statemanaged.js',
+  'client/js/color.js',
+  'client/js/symbols.js',
+  'client/js/emojivariants.js',
+  'client/js/audio.js',
 
-    'client/js/main.js'
-  ]);
+  'client/js/overlays/players.js',
+  'client/js/overlays/states.js',
+  'client/js/overlays/welcome.js',
 
-  const editorCSS = await compressCSS([
-    'client/css/editor/layout.css',
-    'client/css/editor/toolbar.css',
-    'client/css/editor/dragtoolbar.css',
-    'client/css/editor/sidebar.css',
-    'client/css/editor/sidebarModules.css',
-    'client/css/editor/sidebarProperties.css',
-    'client/css/editor/propertyInputs.css',
-    'client/css/editor/deckeditor.css',
-    'client/css/editor/controls/routine.css',
-    'client/css/editor/controls/popup.css',
-    'client/css/editor/controls/events.css',
+  'client/js/widgets/widget.js',
+  'client/js/widgets/imagewidget.js',
+  'client/js/widgets/basicwidget.js',
+  'client/js/widgets/button.js',
+  'client/js/widgets/canvas.js',
+  'client/js/widgets/card.js',
+  'client/js/widgets/deck.js',
+  'client/js/widgets/dice.js',
+  'client/js/widgets/holder.js',
+  'client/js/widgets/label.js',
+  'client/js/widgets/line.js',
+  'client/js/widgets/pile.js',
+  'client/js/widgets/scoreboard.js',
+  'client/js/widgets/seat.js',
+  'client/js/widgets/spinner.js',
+  'client/js/widgets/timer.js',
 
-    'client/css/editmode.css',
-    'client/css/jsonedit.css',
-    'client/css/tracing.css'
-  ]);
+  'client/js/main.js'
+];
 
-  let editorJS = await compressJS([  // keeps its exports: main.js imports this bundle
-    'client/js/editor/layout.js',
-    'client/js/editor/selection.js',
-    'client/js/editor/toolbarButton.js',
-    'client/js/editor/toolbar/new.js',
-    'client/js/editor/toolbar/save.js',
-    'client/js/editor/toolbar/darkmode.js',
-    'client/js/editor/toolbar/zoomout.js',
-    'client/js/editor/toolbar/display.js',
-    'client/js/editor/toolbar/fullscreen.js',
-    'client/js/editor/toolbar/close.js',
-    'client/js/editor/toolbar/undo.js',
-    'client/js/editor/toolbar/selectmode.js',
-    'client/js/editor/toolbar/add.js',
-    'client/js/editor/toolbar/delete.js',
-    'client/js/editor/toolbar/align.js',
-    'client/js/editor/toolbar/group.js',
-    'client/js/editor/toolbar/grid.js',
-    'client/js/editor/toolbar/deckeditor.js',
-    'client/js/editor/toolbar/tutorials.js',
-    'client/js/editor/toolbar/wiki.js',
-    'client/js/editor/dragButton.js',
-    'client/js/editor/dragbuttons/drag.js',
-    'client/js/editor/dragbuttons/settings.js',
-    'client/js/editor/dragbuttons/clone.js',
-    'client/js/editor/dragbuttons/spacing.js',
-    'client/js/editor/dragbuttons/rotate.js',
-    'client/js/editor/dragbuttons/move.js',
-    'client/js/editor/dragbuttons/resize.js',
-    'client/js/editor/sidebarModule.js',
-    'client/js/editor/propertyInputs.js',
-    'client/js/editor/controls/widgetselection.js',
-    'client/js/editor/cssEditor.js',
-    'client/js/editor/sidebar/properties.js',
-    'client/js/editor/sidebar/undo.js',
-    'client/js/editor/sidebar/json.js',
-    'client/js/editor/sidebar/assets.js',
-    'client/js/editor/sidebar/toolbox.js',
-    'client/js/editor/sidebar/gameSettings.js',
-    'client/js/editor/sidebar/widgets.js',
-    'client/js/editor/deckeditor.js',
+const EDITOR_CSS = [
+  'client/css/editor/layout.css',
+  'client/css/editor/toolbar.css',
+  'client/css/editor/dragtoolbar.css',
+  'client/css/editor/sidebar.css',
+  'client/css/editor/sidebarModules.css',
+  'client/css/editor/sidebarProperties.css',
+  'client/css/editor/propertyInputs.css',
+  'client/css/editor/deckeditor.css',
+  'client/css/editor/controls/routine.css',
+  'client/css/editor/controls/selectionbar.css',
+  'client/css/editor/controls/popup.css',
+  'client/css/editor/controls/events.css',
 
-    'client/js/editor/controls/routine.js',
-    'client/js/editor/controls/popup.js',
-    'client/js/editor/controls/events.js',
+  'client/css/editmode.css',
+  'client/css/jsonedit.css',
+  'client/css/tracing.css'
+];
 
-    'client/js/editmode.js',
-    'client/js/jsonedit.js',
-    'client/js/traceviewer.js',
+const EDITOR_JS = [
+  'client/js/editor/layout.js',
+  'client/js/editor/selection.js',
+  'client/js/editor/toolbarButton.js',
+  'client/js/editor/toolbar/new.js',
+  'client/js/editor/toolbar/save.js',
+  'client/js/editor/toolbar/darkmode.js',
+  'client/js/editor/toolbar/zoomout.js',
+  'client/js/editor/toolbar/display.js',
+  'client/js/editor/toolbar/fullscreen.js',
+  'client/js/editor/toolbar/close.js',
+  'client/js/editor/toolbar/undo.js',
+  'client/js/editor/toolbar/selectmode.js',
+  'client/js/editor/toolbar/add.js',
+  'client/js/editor/toolbar/delete.js',
+  'client/js/editor/toolbar/align.js',
+  'client/js/editor/toolbar/group.js',
+  'client/js/editor/toolbar/grid.js',
+  'client/js/editor/toolbar/deckeditor.js',
+  'client/js/editor/toolbar/tutorials.js',
+  'client/js/editor/toolbar/wiki.js',
+  'client/js/editor/toolbar/feedback.js',
+  'client/js/editor/dragButton.js',
+  'client/js/editor/dragbuttons/drag.js',
+  'client/js/editor/dragbuttons/settings.js',
+  'client/js/editor/dragbuttons/clone.js',
+  'client/js/editor/dragbuttons/spacing.js',
+  'client/js/editor/dragbuttons/rotate.js',
+  'client/js/editor/dragbuttons/move.js',
+  'client/js/editor/dragbuttons/resize.js',
+  'client/js/editor/sidebarModule.js',
+  'client/js/editor/propertyInputs.js',
+  'client/js/editor/legacyModeWarning.js',
+  'client/js/editor/controls/selectionbar.js',
+  'client/js/editor/controls/widgetselection.js',
+  'client/js/editor/cssEditor.js',
+  'client/js/editor/sidebar/properties.js',
+  'client/js/editor/sidebar/undo.js',
+  'client/js/editor/sidebar/json.js',
+  'client/js/editor/sidebar/assets.js',
+  'client/js/editor/sidebar/toolbox.js',
+  'client/js/editor/sidebar/gameSettings.js',
+  'client/js/editor/sidebar/widgets.js',
+  'client/js/editor/deckeditor.js',
 
-    'validator/validate_gamefile.js'
-  ], true);
+  'client/js/editor/controls/routine.js',
+  'client/js/editor/controls/popup.js',
+  'client/js/editor/controls/events.js',
 
-  const editorHTML = await htmlMinify(fs.readFileSync(path.resolve() + '/client/editor.html', {encoding:'utf8'}), htmlMinifyOptions());
+  'client/js/editmode.js',
+  'client/js/jsonedit.js',
+  'client/js/traceviewer.js',
+
+  'validator/validate_gamefile.js'
+];
+
+const INPUT_FILES = [ ROOM_HTML, ...CLIENT_CSS, ...CLIENT_JS, EDITOR_HTML, ...EDITOR_CSS, ...EDITOR_JS, FFLATE_JS, SYMBOLS_JSON ];
+
+export async function buildHTML() {
+  const room = await compress(ROOM_HTML, CLIENT_CSS, CLIENT_JS);
+
+  const editorCSS = await compressCSS(EDITOR_CSS);
+
+  let editorJS = await compressJS(EDITOR_JS, true);  // keeps its exports: main.js imports this bundle
+
+  const editorHTML = await htmlMinify(readInputFile(EDITOR_HTML).toString('utf8'), htmlMinifyOptions());
 
   editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ CSS\ \*\*\*\/\/\ ["']/, _=>'`' + editorCSS.replace(/\\/g, '\\\\') + '`');
   editorJS = editorJS.replace(/["']\ \/\/\*\*\*\ HTML\ \*\*\*\/\/\ ["']/, _=>'`' + editorHTML + '`');
@@ -236,16 +262,30 @@ export default async function minifyHTML() {
   // fflate is the one client script that does not go through the bundles: it is loaded on demand
   // (loadZipLibrary in client/js/overlays/states.js) and served straight from node_modules. It
   // already arrives minified, but it was sent uncompressed.
-  const fflate = fs.readFileSync(path.resolve() + '/node_modules/fflate/umd/index.js');
+  const fflate = readInputFile(FFLATE_JS);
+
+  // symbols.json is by far the biggest file the client fetches (the icon pickers read it in one go) and
+  // express.static sends it as it is, so keep it gzipped here as well - it compresses to about a fifth
+  const symbols = readInputFile(SYMBOLS_JSON);
+
+  // none of these three depend on each other and zlib does its work in the libuv threadpool, so
+  // waiting for them together instead of one after the other shortens the tail of the build by
+  // roughly the two smaller ones. What comes out is the same either way.
+  const [ editorJSgzipped, fflateGzipped, symbolsGzipped ] = await Promise.all([ gzip(editorJS), gzip(fflate), gzip(symbols) ]);
 
   return {
     min: room.min,
     gzipped: room.gzipped,
     editorJSmin: editorJS,
-    editorJSgzipped: await gzip(editorJS),
+    editorJSgzipped,
     fflateMin: fflate,
-    fflateGzipped: await gzip(fflate)
+    fflateGzipped,
+    symbolsGzipped
   };
+}
+
+function readInputFile(file) {
+  return fs.readFileSync(path.resolve() + '/' + file);
 }
 
 async function compressCSS(cssFiles) {
@@ -312,7 +352,7 @@ async function compressJS(jsFiles, keepExports) {
 }
 
 async function compress(htmlFile, cssFiles, jsFiles) {
-  let htmlString = fs.readFileSync(path.resolve() + '/' + htmlFile, {encoding:'utf8'});
+  let htmlString = readInputFile(htmlFile).toString('utf8');
   htmlString = htmlString.replace(/\ \/\*\*\*\ TITLE\ \*\*\*\/\ /g, _=>Config.get('serverName'));
   htmlString = htmlString.replace(/\ \/\*\*\*\ EXTERNAL_URL\ \*\*\*\/\ /g, _=>Config.get('externalURL'));
   htmlString = htmlString.replace(/\ \/\*\*\*\ URL_PREFIX\ \*\*\*\/\ /g, _=>Config.get('urlPrefix'));
@@ -329,4 +369,207 @@ async function compress(htmlFile, cssFiles, jsFiles) {
     min: html,
     gzipped: await gzip(html)
   };
+}
+
+// The disk cache below turns the build into something a deploy can do ahead of time.
+//
+// Bump this when the stored shape changes, so that entries written by an older version are
+// ignored instead of being loaded as something they are not.
+const CACHE_FORMAT = 1;
+
+// How many builds to keep. A handful is enough to survive switching back and forth between two
+// branches or between a minified and a readable build.
+const CACHE_ENTRIES = 5;
+
+// The fields minifyHTML() returns, and the file each of them is stored in. Buffers are written as
+// they are, strings as UTF-8, so an entry is roughly the size of what it holds.
+const CACHE_FILES = [
+  { field: 'min',             file: 'room.html',       encoding: 'utf8' },
+  { field: 'gzipped',         file: 'room.html.gz'                      },
+  { field: 'editorJSmin',     file: 'edit.js',         encoding: 'utf8' },
+  { field: 'editorJSgzipped', file: 'edit.js.gz'                        },
+  { field: 'fflateMin',       file: 'fflate.js'                         },
+  { field: 'fflateGzipped',   file: 'fflate.js.gz'                      },
+  { field: 'symbolsGzipped',  file: 'symbols.json.gz'                   }
+];
+
+const TOOL_PACKAGES = [ 'terser', 'clean-css', 'html-minifier-terser' ];
+
+function toolVersion(name) {
+  return JSON.parse(fs.readFileSync(`${path.resolve()}/node_modules/${name}/package.json`, 'utf8')).version;
+}
+
+export function cacheDirectory() {
+  return Config.directory('save') + '/minify-cache';
+}
+
+// Everything a build depends on: the files that go into it, everything that gets injected into
+// it, the minifiers doing the work and the code driving them. Two checkouts that agree on all of
+// those produce the same bytes, and only then may an entry of one be used by the other.
+export function cacheKey() {
+  const hash = crypto.createHash('sha256');
+  const stamp = value => hash.update(String(value) + '\0');
+
+  stamp(`format ${CACHE_FORMAT}`);
+  for(const name of TOOL_PACKAGES)
+    stamp(`${name} ${toolVersion(name)}`);
+
+  stamp(`serverName ${Config.get('serverName')}`);
+  stamp(`externalURL ${Config.get('externalURL')}`);
+  stamp(`urlPrefix ${Config.get('urlPrefix')}`);
+  stamp(`minifyJavascript ${minifyJavascript()}`);
+  stamp(`clientConfig ${JSON.stringify(Config.getClientConfig())}`);
+
+  // this module decides what the input files turn into, so editing it invalidates the cache just
+  // like editing one of them - and it is read through its own URL because prebuild and server may
+  // run it from a different working directory than the one the input files are read from
+  stamp('server/minify.mjs');
+  hash.update(fs.readFileSync(url.fileURLToPath(import.meta.url)));
+  stamp('');
+
+  for(const file of INPUT_FILES) {
+    stamp(file);
+    hash.update(readInputFile(file));
+    stamp('');
+  }
+
+  return hash.digest('hex');
+}
+
+// Throws on anything unexpected - a missing, truncated or foreign entry is a miss, not a reason
+// to serve half a build.
+export function loadFromCache(directory, key) {
+  const entry = JSON.parse(fs.readFileSync(`${directory}/${key}/entry.json`, 'utf8'));
+  if(entry.format !== CACHE_FORMAT || entry.key !== key)
+    throw new Error('entry was written for a different build');
+
+  const build = {};
+  for(const { field, file, encoding } of CACHE_FILES) {
+    const content = fs.readFileSync(`${directory}/${key}/${file}`);
+    if(content.length !== entry.sizes[file])
+      throw new Error(`${file} is ${content.length} bytes instead of ${entry.sizes[file]}`);
+    build[field] = encoding ? content.toString(encoding) : content;
+  }
+  return build;
+}
+
+function entryIsUsable(directory, key) {
+  try {
+    loadFromCache(directory, key);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+
+export function storeInCache(directory, key, build) {
+  // the random part keeps two processes that happen to share a PID - which containers on a common
+  // save volume do - from writing into the half-built directory of the other
+  const temporary = `${directory}/.tmp-${process.pid}-${crypto.randomUUID().slice(0, 8)}`;
+  fs.mkdirSync(temporary, { recursive: true });
+
+  try {
+    const sizes = {};
+    for(const { field, file, encoding } of CACHE_FILES) {
+      const content = encoding ? Buffer.from(build[field], encoding) : build[field];
+      fs.writeFileSync(`${temporary}/${file}`, content);
+      sizes[file] = content.length;
+    }
+    fs.writeFileSync(`${temporary}/entry.json`, JSON.stringify({ format: CACHE_FORMAT, key, sizes }));
+
+    // an entry that is already there was written by a build that agrees with this one, so it is
+    // just as good - unless it does not load, in which case nothing else would ever repair it
+    if(fs.existsSync(`${directory}/${key}`) && !entryIsUsable(directory, key))
+      fs.rmSync(`${directory}/${key}`, { recursive: true, force: true });
+
+    // the rename is what makes the entry visible, in one step: a crash before it leaves a stale
+    // temporary directory behind - which pruneCache removes later - but never half an entry
+    fs.renameSync(temporary, `${directory}/${key}`);
+  } catch(e) {
+    fs.rmSync(temporary, { recursive: true, force: true });
+    if(!fs.existsSync(`${directory}/${key}`))  // a parallel build got there first, which is fine
+      throw e;
+  }
+}
+
+function pruneCache(directory) {
+  const names = fs.readdirSync(directory);
+  // another process pruning the same directory can take a name away between the readdir and the
+  // stat, which says the same thing as an old entry does: it is gone or on its way out
+  const modified = name => fs.statSync(`${directory}/${name}`, { throwIfNoEntry: false })?.mtimeMs;
+
+  const entries = names.filter(name => /^[0-9a-f]{64}$/.test(name))
+    .map(name => ({ name, time: modified(name) ?? 0 }))
+    .sort((a, b) => b.time - a.time);
+  for(const { name } of entries.slice(CACHE_ENTRIES))
+    fs.rmSync(`${directory}/${name}`, { recursive: true, force: true });
+
+  const anHourAgo = Date.now() - 60*60*1000;
+  for(const name of names.filter(name => name.startsWith('.tmp-')))
+    if(modified(name) < anHourAgo)
+      fs.rmSync(`${directory}/${name}`, { recursive: true, force: true });
+}
+
+// Building the client bundles takes about half a minute on a production checkout and the result
+// only lives in memory, so every restart would pay for it again. server/prebuild.mjs calls this
+// while the old server is still serving, which fills the cache below; server.mjs then calls it
+// again at startup, finds the entry and is listening within seconds. A checkout that changed in
+// any way the build cares about misses the cache and builds exactly as before, and so does one
+// whose cache directory cannot be written - the cache never decides whether the server can start.
+export default async function minifyHTML() {
+  let directory, key;
+  try {
+    directory = cacheDirectory();
+    fs.mkdirSync(directory, { recursive: true });
+    fs.accessSync(directory, fs.constants.W_OK);
+    key = cacheKey();
+  } catch(e) {
+    Logging.log(`WARNING - Client bundles: cache unusable (${e.message}), building in memory`);
+    return await buildHTML();
+  }
+
+  const shortKey = key.slice(0, 8);
+
+  // having no entry for this key is the normal case and stays silent, but once entry.json is
+  // there the rest of the entry has to be readable as well - anything else is worth a warning
+  let cached = null;
+  if(fs.existsSync(`${directory}/${key}/entry.json`)) {
+    try {
+      cached = loadFromCache(directory, key);
+    } catch(e) {
+      Logging.log(`WARNING - Client bundles: discarding cache entry ${shortKey} (${e.message})`);
+    }
+  }
+
+  if(cached) {
+    try {
+      fs.utimesSync(`${directory}/${key}`, new Date(), new Date());  // youngest by use, not by build
+    } catch(e) {
+      // an entry written by another user can be read but not re-stamped, which only costs it its
+      // place in the pruning order - it never invalidates a build that already loaded
+    }
+    Logging.log(`Client bundles: cache hit ${shortKey}`);
+    return cached;
+  }
+
+  const started = Date.now();
+  const build = await buildHTML();
+  const seconds = ((Date.now() - started) / 1000).toFixed(1);
+
+  try {
+    storeInCache(directory, key, build);
+    Logging.log(`Client bundles: cache miss, built in ${seconds} s, stored as ${shortKey}`);
+  } catch(e) {
+    Logging.log(`WARNING - Client bundles: cache miss, built in ${seconds} s, could not be stored (${e.message})`);
+  }
+
+  // housekeeping of entries this build does not depend on, so whether it works says nothing about
+  // the entry that was just stored
+  try {
+    pruneCache(directory);
+  } catch(e) {
+    Logging.log(`WARNING - Client bundles: could not prune the cache (${e.message})`);
+  }
+
+  return build;
 }

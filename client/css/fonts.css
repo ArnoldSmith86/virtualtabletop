@@ -446,6 +446,11 @@
 #symbolPickerOverlay div[icon] {
   min-height: 210px;
 }
+/* the status line lives inside that clipped box, so while it is up the floor has to cover it too - the
+   34px line plus its 20px of margins, minus the 20px the search field gives up below itself */
+#symbolPickerOverlay.filtered div[icon] {
+  min-height: 244px;
+}
 
 #symbolPickerOverlay > button {
   position: absolute;
@@ -470,6 +475,33 @@
   margin-bottom: 20px;
 }
 
+/* a search leaves a slice of ~13000 icons, which the list itself cannot show - a short list looks like a
+   complete one. The status line says how many are left and holds the way back to all of them, so it takes
+   the place of the margin below the search field while it is up. */
+#symbolSearchStatus {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  color: black;
+  margin: 8px 0 12px;
+}
+#symbolPickerOverlay.filtered #symbolSearchStatus {
+  display: flex;
+}
+#symbolPickerOverlay.filtered input,
+#symbolPickerOverlay.filtered.fewResults input {
+  margin-bottom: 0;
+}
+#symbolSearchStatus button {
+  margin: 0;
+  flex-shrink: 0;
+}
+#symbolSearchStatus span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #symbolList {
   --symbolSize: 24px;
   color: black;
@@ -480,6 +512,25 @@
   /* the list takes what is left over, but never less than about four rows: with min-height: 0 whatever sits
      above it could squeeze it to nothing, and since it is the only scroller that leaves no icon reachable */
   min-height: 120px;
+  /* wrapping flex rows instead of an inline text flow: the icons line up the same way, but a search can rank
+     its matches with order (see below) - the list is built once, so it cannot sort them in the DOM */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  row-gap: 4px;
+}
+/* icons the search matched by name come before the ones it only matched by their tags, and the one that is called
+   exactly what was typed comes before those: same ranking as in the sidebar's icon picker, so "dragon" leads with
+   the dragons in both instead of with the fish scales here, and "soul" with the soul rather than the soul vessel */
+#symbolList .exactMatch {
+  order: -2;
+}
+#symbolList .nameMatch {
+  order: -1;
+}
+#symbolList .tagMatch {
+  order: 1;
 }
 #symbolPickerOverlay.bigPreviews.fewResults #symbolList {
   --symbolSize: 64px;
@@ -505,10 +556,17 @@
   margin-top: 0;
 }
 
+/* a heading owns its row of the list and stays on screen while its category scrolls past, so that a list of
+   73 categories and 13000 icons always says which one is being looked at */
 #symbolPickerOverlay h2 {
   font-size: 16px;
   border-bottom: 1px solid black;
   padding-left: 4px;
+  flex: 0 0 100%;
+  position: sticky;
+  top: 0;
+  background: var(--roomColor);
+  z-index: 1;
 }
 
 #symbolPickerOverlay i {
@@ -527,15 +585,24 @@
   vertical-align: top;
 }
 
-#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiFlag, #symbolPickerOverlay.fewResults .emoji-color {
+#symbolPickerOverlay .emoji-color:hover, #symbolPickerOverlay .emojiAsImage, #symbolPickerOverlay.fewResults .emoji-color {
   background: var(--url) center no-repeat;
   color: transparent;
   top: -3px;
 }
 
+/* An emoji drawn from its artwork gets the box of the game icons instead of the one its character has:
+   a character the browser's font does not know is a "not defined" box a third of an emoji's width, so
+   the artwork would end up tiny between the emoji the font can draw. */
+#symbolPickerOverlay .emojiAsImage {
+  display: inline-block;
+  width: var(--symbolSize);
+  height: var(--symbolSize);
+}
+
 #symbolPickerOverlay .gameicons {
   --spritesheetX: 60;
-  --spritesheetY: 69;
+  --spritesheetY: 70;
 
   display: inline-block;
   background: url(i/game-icons.net/overview24.png);
@@ -592,6 +659,175 @@
     padding: 5px;
     border-radius: 10px;
   }
+}
+
+/* Skin tone variants (client/js/emojivariants.js): the pickers list one icon per emoji, and the
+   ones that also have toned artwork get a corner triangle plus a flyout with the whole set. The
+   marker and the flyout are styled here rather than in the editor's stylesheet because both
+   pickers - the overlay grid and the chips of the editor sidebar - use them. */
+.hasEmojiVariants {
+  position: relative;
+}
+
+/* Drawn as a gradient rather than as a border triangle so the wedge can have a light edge: at full
+   opacity on top of a 30px emoji it otherwise merges into the artwork and reads as part of the
+   drawing (👇, ✊) instead of as something to point at. */
+.hasEmojiVariants::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, transparent 46%, white 46%, white 58%, var(--VTTblue) 58%);
+  pointer-events: none;
+}
+
+/* Once a search has narrowed a picker down far enough, the forms go into its list itself instead
+   (symbols.js for the overlay grid, propertyInputs.js for the sidebar and the deck editor), where
+   they sit like every other icon of the list - and the corner marker has nothing left to point at. */
+.emojiVariantsExpanded .hasEmojiVariants::after {
+  display: none;
+}
+
+/* the flyout hangs off an icon of a grid that scrolls (and, in the sidebar, of a 340px column), so
+   it is a fixed box at the document level instead of a child of that icon */
+/* Light by default and themed only inside #editor: the fullscreen picker is part of the room and
+   always light, but its flyout is a child of body, where editor/layout.css declares --backgroundColor
+   as soon as edit mode is entered - so a fallback would never apply and dark mode painted the
+   flyout black on top of the white overlay. */
+.emojiVariantFlyout {
+  --emojiVariantHighlightColor: #eef4fb;
+  --emojiVariantBorderColor: #ddd;
+  --emojiVariantHelpColor: #55606d;
+  position: fixed;
+  z-index: 2000001;
+  background: white;
+  color: black;
+  border: 1px solid var(--VTTblue);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px #0004;
+  padding: 8px 10px 9px;
+  /* border-box, or the padding and border are added on top of the cap and the last row of a matrix
+     hangs off the edge again */
+  box-sizing: border-box;
+  max-width: calc(100vw - 8px);
+  /* the 5x5 matrix is taller than a phone in landscape has to spare, and rows hanging off the
+     bottom edge could not be picked at all */
+  max-height: calc(100vh - 8px);
+  overflow-y: auto;
+}
+
+/* .inSymbolPicker says the icon the flyout belongs to is one of the overlay's, which stays light
+   wherever the overlay itself is parented - the deck editor moves it into #editor so it shows above
+   the card view, and the flyout of an icon in it must not take the editor's colours for that. */
+#editor .emojiVariantFlyout:not(.inSymbolPicker) {
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  --emojiVariantBorderColor: var(--backgroundHighlightColor1);
+  --emojiVariantHelpColor: var(--textHelpColor);
+}
+
+body.edit.darkMode #editor .emojiVariantFlyout:not(.inSymbolPicker) {
+  --emojiVariantHighlightColor: #1c2c3d;
+}
+
+.emojiVariantTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--emojiVariantHelpColor);
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+.emojiVariantTitle b {
+  color: var(--VTTblue);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
+}
+
+.emojiVariantRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+/* one column for the row labels, then one per skin tone - fixed, so the artwork sits on an even
+   pitch instead of every column being as wide as its own header, and so the cells reach the size
+   a fingertip needs */
+.emojiVariantMatrix {
+  display: grid;
+  grid-template-columns: auto repeat(5, 44px);
+  gap: 2px;
+  align-items: center;
+}
+
+.emojiVariantCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 3px 4px;
+  border: 1px solid var(--emojiVariantBorderColor);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.emojiVariantCell:hover {
+  border-color: var(--VTTblue);
+  background: var(--emojiVariantHighlightColor);
+}
+
+.emojiVariantCell img {
+  width: 30px;
+  height: 30px;
+}
+
+.emojiVariantMatrix .emojiVariantCell img {
+  width: 28px;
+  height: 28px;
+}
+
+/* the untoned form the grid itself shows, so that picking it from here is possible as well: an
+   outline rather than a fill, because a filled cell here reads as "this is the one in use" and
+   drowned out the cell that actually is */
+.emojiVariantBase {
+  border-style: dashed;
+}
+
+/* the form that is in use: a toned icon opens the same flyout, so its own cell is marked */
+.emojiVariantSelected {
+  border-color: var(--VTTblue);
+  border-style: solid;
+  background: var(--emojiVariantHighlightColor);
+  box-shadow: inset 0 0 0 1px var(--VTTblue);
+}
+
+.emojiVariantLabel {
+  font-size: 10px;
+  color: var(--emojiVariantHelpColor);
+  white-space: nowrap;
+}
+
+.emojiVariantHeader {
+  font-size: 10px;
+  color: var(--emojiVariantHelpColor);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.emojiVariantRowHeader {
+  text-align: right;
+  padding-right: 4px;
 }
 
 #audioPickerOverlay input {
@@ -676,13 +912,16 @@ p[icon]::before {
 }
 /* the other one of these is the welcome overlay's user-generated-content warning, which is laid
    out inside the board - the symbol picker's copy is handled by the media query above, since that
-   overlay is not always in the room */
+   overlay is not always in the room. Naming that one instead of leaving the container to scope
+   the block keeps it off a symbol picker the deck editor has moved out of #roomArea: the fallback
+   in containerQueryFallback.js can only copy a block's contents, so an unqualified p[icon] here
+   would apply wherever the picker is once the board is small. */
 @container roomArea ((max-width: 600px) or (max-height: 375px)) {
-  p[icon] {
+  #welcomeUserGenerated {
     margin: 10px;
     margin-left: 40px;
   }
-  p[icon]::before {
+  #welcomeUserGenerated::before {
     font-size: 150%;
     left: -30px;
   }

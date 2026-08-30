@@ -4,6 +4,7 @@ import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
 import { randomHue } from '../client/js/color.js';
 import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js/calculateLayout.js';
 import Statistics from './statistics.mjs';
@@ -291,7 +292,7 @@ export default class Room {
 
     for(const state of Object.values(states))
       for(const [ i, variant ] of Object.entries(state))
-        fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
+        FileWriter.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
 
     return filenameSuffix;
   }
@@ -354,8 +355,12 @@ export default class Room {
   editState(player, id, meta, variantInput, variantOperationQueue) {
     const variants = this.state._meta.states[id].variants;
 
+    // reordering parks a save file under a name of its own while the variants it swaps with move.
+    // variants are addressed by their numeric index, so a non-numeric name cannot collide with one
+    const tempVariantID = '--TEMP--';
+
     const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
-      if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
+      if(oldVariantID == tempVariantID && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != tempVariantID && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
         this.moveFile(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
     };
 
@@ -378,16 +383,16 @@ export default class Room {
 
       if(o.operation == 'up') {
         if(o.variantID) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID-1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID-1);
+          renameVariantFile(id, tempVariantID, o.variantID-1);
 
           variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=1; i<variants.length; ++i)
             renameVariantFile(id, i, i-1);
-          renameVariantFile(id, player.name, variants.length-1);
+          renameVariantFile(id, tempVariantID, variants.length-1);
 
           variants.push(variants.shift());
         }
@@ -395,16 +400,16 @@ export default class Room {
 
       if(o.operation == 'down') {
         if(o.variantID < variants.length-1) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID+1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID+1);
+          renameVariantFile(id, tempVariantID, o.variantID+1);
 
           variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=variants.length-2; i>=0; --i)
             renameVariantFile(id, i, i+1);
-          renameVariantFile(id, player.name, 0);
+          renameVariantFile(id, tempVariantID, 0);
 
           variants.unshift(variants.pop());
         }
@@ -419,6 +424,17 @@ export default class Room {
         variants.splice(o.variantID, 1);
       }
 
+    }
+
+    // a game is nothing but its variants, and the save files of the deleted ones are already gone -
+    // keeping the metadata of a game without a single variant would leave an entry that the game
+    // list has nothing to show for and that nobody can reach again. removeState refuses public
+    // library games on servers that do not allow editing them, so the game can survive the call -
+    // its metadata is then updated like in any other edit.
+    if(!variants.length) {
+      this.removeState(player, id);
+      if(!this.state._meta.states[id])
+        return;
     }
 
     for(const variantID in variantInput)
@@ -549,6 +565,7 @@ export default class Room {
       this.migrateBrokenSaveWithoutVersion();
       await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
+      this.removeStatesWithoutVariants(player);
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.normalizeGameSettings(this.state._meta.gameSettings);
@@ -754,7 +771,9 @@ export default class Room {
   }
 
   moveFile(source, target) {
-    fs.copyFileSync(source, target, fs.constants.COPYFILE_FICLONE);
+    if(source == target)
+      return;
+    FileWriter.copyFileSync(source, target);
     fs.unlinkSync(source);
   }
 
@@ -851,7 +870,10 @@ export default class Room {
       const operations = [];
       for(const [ variantID, variant ] of Object.entries(state.variants))
         if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
-          operations.push({ operation: 'delete', variantID });
+          operations.push({ operation: 'delete', variantID: +variantID });
+      // deleting a variant shifts every later one down by one index, so the queue runs from the last
+      // dead link to the first - that way each operation still addresses the variant it was collected for
+      operations.reverse();
       if(operations.length)
         this.editState(player, id, state, state.variants, operations);
     }
@@ -886,7 +908,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    if(stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+    if(String(stateID).match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
       return;
 
     for(const variantID in this.state._meta.states[stateID].variants) {
@@ -895,22 +917,33 @@ export default class Room {
         fs.unlinkSync(savefile);
     }
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       this.state._meta.states[stateID].variants = [];
       this.writePublicLibraryAssetsToFilesystem(stateID);
 
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets'));
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''));
+      // removes the assets directory along with anything else left in the game directory, like a
+      // temporary file from a write that was interrupted
+      fs.rmSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''), { recursive: true, force: true });
     }
 
     delete this.state._meta.states[stateID];
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       delete Room.publicLibrary;
       this.publicLibraryUpdatedCallback();
     } else {
       this.sendMetaUpdate();
     }
+  }
+
+  // older versions kept a game whose last variant was deleted, leaving an entry with an empty
+  // variant list that the game list has nothing to show for, so it can neither be played nor
+  // deleted. Public library games are left alone - their variants come from the filesystem and are
+  // emptied for a moment while their game directory is removed.
+  removeStatesWithoutVariants(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states))
+      if(!String(id).match(/^PL:/) && !Object.keys(state.variants || {}).length)
+        this.removeState(player, id);
   }
 
   renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
@@ -1442,7 +1475,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
+        FileWriter.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
@@ -1458,7 +1491,7 @@ export default class Room {
 
       state._meta.info.lastUpdate = +new Date();
 
-      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
+      FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
     }
 
     this.writePublicLibraryAssetsToFilesystem(stateID);
@@ -1483,13 +1516,13 @@ export default class Room {
 
     copy._meta.info.lastUpdate = +new Date();
 
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
   writeStateToFilesystem(stateID, variantID, state) {
     const copy = {...state};
     copy._meta = { version: copy._meta.version, gameSettings: copy._meta.gameSettings };
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
   writeToFilesystem() {
@@ -1498,7 +1531,7 @@ export default class Room {
       if(id.match(/^PL:/))
         delete copy._meta.states[id];
     const json = JSON.stringify(copy);
-    fs.writeFileSync(this.roomFilename(), json);
+    FileWriter.writeFileSync(this.roomFilename(), json);
   }
 
   variantFilename(stateID, variantID) {

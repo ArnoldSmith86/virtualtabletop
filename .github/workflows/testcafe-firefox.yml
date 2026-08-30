@@ -18,7 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         testfile:
+          - card.js
           - editor.js
+          - gameshelf.js
           - toolbar.js
           - boardsize.js
           - draglimit.js
