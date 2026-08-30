@@ -231,13 +231,13 @@ jobs:
             reported=$((reported + 1))
             crash=$(cat "$stderr_file")
             if [ -n "$crash" ]; then
-              # The validator only writes to stderr when it throws, so this is a broken
-              # validator rather than a game file the contributor can do anything about.
+              # Findings go to stdout, a file that cannot be parsed among them. Anything on
+              # stderr means the validator stopped without producing a verdict at all.
               crashed=$((crashed + 1))
-              echo "❌ $file - the validator itself failed:"
+              echo "❌ $file - the validator could not process this file:"
               echo "$crash"
-              head_line="<details><summary>⚠️ <code>$file</code> — the validator itself failed</summary>"
-              section "$head_line" 'This is a bug in the validator rather than a problem with the game file. Please report it.' "$crash" '' > "$full_section"
+              head_line="<details><summary>⚠️ <code>$file</code> — the validator could not process this file</summary>"
+              section "$head_line" 'The validator stopped with an error instead of reporting on the file. That is usually a bug in the validator rather than a problem with the game file — please report it, including this output.' "$crash" '' > "$full_section"
               cp "$full_section" "$comment_section"
             else
               with_issues=$((with_issues + 1))
@@ -301,11 +301,11 @@ jobs:
           fi
           if [ "$crashed" -gt 0 ]; then
             if [ "$crashed" -eq 1 ]; then
-              parts+=('the validator itself failed on 1 game file')
-              cells+=('the validator failed on 1 game file')
+              parts+=('the validator could not process 1 game file')
+              cells+=('the validator could not process 1 game file')
             else
-              parts+=("the validator itself failed on $crashed game files")
-              cells+=("the validator failed on $crashed game files")
+              parts+=("the validator could not process $crashed game files")
+              cells+=("the validator could not process $crashed game files")
             fi
           fi
           sentence="${parts[0]}"
@@ -320,9 +320,14 @@ jobs:
           {
             echo '### ⚠️ Game file validation'
             echo
-            echo "**${sentence^}.** Validation issues are advisory — they do not block merging, but please fix what you can."
-            echo
-            echo 'Reproduce them locally with `node validator/validate_gamefile_node.js <file>`. The property names come from the [Widgets](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets) wiki page.'
+            if [ "$with_issues" -gt 0 ]; then
+              echo "**${sentence^}.** Validation issues are advisory — they do not block merging, but please fix what you can."
+              echo
+              echo 'Reproduce them locally with `node validator/validate_gamefile_node.js <file>`. The property names come from the [Widgets](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets) wiki page.'
+            else
+              # Nothing for the contributor to fix, so the advice to fix it is left out.
+              echo "**${sentence^}.** This does not block merging."
+            fi
             echo
           } > "$header"
 

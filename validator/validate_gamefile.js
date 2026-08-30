@@ -1196,11 +1196,7 @@ function getCustomPropertyUsage(data) {
 function validateGameFile(data, checkMeta) {
     const problems = [];
     
-    // Get all custom properties used in the game file
-    const customProperties = getCustomPropertyUsage(data);
-    const calledCustomRoutines = [];
-    
-    // Basic structure validation
+    // Basic structure validation, before anything walks the data
     if (typeof data !== 'object' || data === null) {
         problems.push({
             widget: '',
@@ -1209,6 +1205,10 @@ function validateGameFile(data, checkMeta) {
         });
         return problems;
     }
+    
+    // Get all custom properties used in the game file
+    const customProperties = getCustomPropertyUsage(data);
+    const calledCustomRoutines = [];
     
     // Check for _meta
     if (checkMeta && !data._meta) {
