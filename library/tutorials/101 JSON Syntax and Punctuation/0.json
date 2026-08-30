@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1763354323448,
+      "lastUpdate": 1787511031276,
       "showName": false,
       "skill": "",
       "description": "",
@@ -110,7 +110,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ; white-space: pre-wrap",
-    "html": "VTT uses JavaScript Object Notation (JSON) to create games. Game developers interact with VTT by creating widgets that consist of JSON expressed as various properties of widgets. The syntax for using JSON is very strict and a misplaced punctuation mark can make a widget invalid (in which case it will revert to its last previously valid state when using Edit Mode). Review this tutorial to understand that syntax and to know which punctuation marks to use and where. \n\nIf you use the buttons in the Edit Mode to add and delete properties and their values, then this is mostly automated. However, at some point in game development, you will start cutting and pasting or just directly typing. Inevitably you will start to see red text in the Editor indicating some syntax problem. Keep the principles in this tutorial in mind when trying to find the problem. Also remember that the Editor will try to identify the line number of the problem for you."
+    "html": "VTT uses JavaScript Object Notation (JSON) to create games. Game developers interact with VTT by creating widgets that consist of JSON expressed as various properties of widgets. The syntax for using JSON is very strict and a misplaced punctuation mark can make a widget invalid (in which case it will revert to its last previously valid state when using Edit Mode). Review this tutorial to understand that syntax and to know which punctuation marks to use and where. \n\nThe Edit Widgets menu writes this punctuation for you, and the buttons in the JSON Editor menu that add and delete properties and their values mostly automate it as well. However, at some point in game development, you will start cutting and pasting or just directly typing. Inevitably you will start to see red text in the JSON Editor menu indicating some syntax problem. Keep the principles in this tutorial in mind when trying to find the problem. Also remember that the JSON Editor menu will try to identify the line number of the problem for you."
   },
   "button3": {
     "type": "button",
@@ -184,7 +184,7 @@
   "text1": {
     "id": "text1",
     "x": 4,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 185,
     "movable": false,
@@ -193,7 +193,7 @@
       "font-size": "22px",
       "white-space": "pre-wrap"
     },
-    "html": "Look at the JSON of the button above in Edit Mode. The properties appear between the first and last curly brackets. You never need to worry about the opening and closing bracket unless you accidentally delete one and then you have to add it back.\n\nNote the order: quotation marks, colon, then more quotation marks or brackets. All VTT JSON has this structure and every entry is a property."
+    "html": "Look at the button above in the JSON Editor menu. The properties appear between the first and last curly brackets. You never need to worry about them unless you delete one by accident and have to add it back. The Edit Widgets menu has no punctuation to get wrong.\n\nNote the order: quotation marks, colon, then more quotation marks or brackets. All VTT JSON has this structure and every entry is a property."
   },
   "button1": {
     "type": "button",
@@ -207,7 +207,7 @@
   "text2": {
     "id": "text2",
     "x": 325,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 121,
     "movable": false,
@@ -221,7 +221,7 @@
   "text3": {
     "id": "text3",
     "x": 651,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -234,7 +234,7 @@
   "text4": {
     "id": "text4",
     "x": 964,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 9732,
     "movable": false,
@@ -248,7 +248,7 @@
   "text5": {
     "id": "text5",
     "x": 1294,
-    "y": 552,
+    "y": 537,
     "width": 300,
     "z": 9732,
     "movable": false,

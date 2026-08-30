@@ -142,6 +142,7 @@ const CLIENT_JS = [
   'client/js/statemanaged.js',
   'client/js/color.js',
   'client/js/symbols.js',
+  'client/js/emojivariants.js',
   'client/js/audio.js',
 
   'client/js/overlays/players.js',
@@ -208,6 +209,7 @@ const EDITOR_JS = [
   'client/js/editor/toolbar/deckeditor.js',
   'client/js/editor/toolbar/tutorials.js',
   'client/js/editor/toolbar/wiki.js',
+  'client/js/editor/toolbar/feedback.js',
   'client/js/editor/dragButton.js',
   'client/js/editor/dragbuttons/drag.js',
   'client/js/editor/dragbuttons/settings.js',
@@ -218,6 +220,7 @@ const EDITOR_JS = [
   'client/js/editor/dragbuttons/resize.js',
   'client/js/editor/sidebarModule.js',
   'client/js/editor/propertyInputs.js',
+  'client/js/editor/legacyModeWarning.js',
   'client/js/editor/controls/selectionbar.js',
   'client/js/editor/controls/widgetselection.js',
   'client/js/editor/cssEditor.js',

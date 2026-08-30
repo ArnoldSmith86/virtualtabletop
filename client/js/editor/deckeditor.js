@@ -4149,7 +4149,7 @@ class DeckEditor {
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     batchStart();
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('deck', base=>[ base+'D' ]);
     setDeltaCause(`${getPlayerDetails().playerName} copied deck ${this.deckID} in deck editor`);
     await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
     await addWidgetLocal({
@@ -4530,7 +4530,7 @@ const deckPlacementDefault = { holder: true, resetButton: true };
 async function createStarterDeck(deckID, size, placement) {
   placement = placement || deckPlacementDefault;
   batchStart();
-  const id = generateUniqueWidgetID();
+  const id = generateUniqueWidgetID('deck', base=>[ base+'B', base+'D' ]);
   const dID = deckID || id+'D';
   const cardWidth = size && size.width || 103;
   const cardHeight = size && size.height || 160;
