@@ -4529,9 +4529,10 @@ test('Holding Shift opens the stack list and has it follow the pointer', async t
   await setEditorState(null);
 });
 
-// Shift is how capitals are typed, so a text field has first claim on it: the
-// JSON text area keeps the key even with the pointer parked over the room.
-test('The peek key does nothing while a text field has the keyboard', async t => {
+// Reading a widget's name off the room while the caret sits in the JSON text
+// area is what the panel this list replaces was there for, so the key works
+// with the keyboard in a text field - it takes nothing away from it.
+test('The peek key works with the caret in the JSON text area', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
     board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
@@ -4542,6 +4543,7 @@ test('The peek key does nothing while a text field has the keyboard', async t =>
   await setName(t);
 
   const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
 
   await t
     .click('#editButton')
@@ -4552,9 +4554,18 @@ test('The peek key does nothing while a text field has the keyboard', async t =>
     .hover('#w_checker');
   await holdPeekKey(true);
   await t
-    .expect(bar.hasClass('stackVisible')).notOk()
-    .expect(activeElementID()).eql('jeText');
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(2)
+    // the caret stays where it was: the list is a dropdown of the bar, not
+    // something that takes the keyboard off what is being typed in
+    .expect(activeElementID()).eql('jeText')
+    .hover('#w_board', { offsetX: 20, offsetY: 20 })
+    .expect(stackRows.count).eql(1);
   await holdPeekKey(false);
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .expect(activeElementID()).eql('jeText')
+    .expect(storedStackOpen()).notOk();
   await setEditorState(null);
 });
 

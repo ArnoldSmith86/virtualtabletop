@@ -388,17 +388,14 @@ function selectionBarInstallListeners() {
 // away again with the key. A list that was already open is only made live: it
 // belongs to whoever opened it.
 function selectionBarPeekStart() {
-  // the key answers "what is under the pointer", so it only does anything while
-  // the pointer is in the room - a dropdown covers the panel it hangs in, and a
-  // shift-click somewhere in the sidebar must not have the list drop onto what
-  // it was aimed at
-  if(selectionBarPeekActive || !selectionBarPointerInRoom || !selectionBarKeyboardIsFree())
-    return;
-  // the tree's filter box is a text field like any other as far as this key is
-  // concerned: the exemption it gets in selectionBarKeyboardIsFree() is there so
-  // the arrow keys reach the tree while it is being filtered, and a capital
-  // typed into it is not somebody asking for the stack under the pointer
-  if($('#jeWidgetSearchBox') && document.activeElement === $('#jeWidgetSearchBox'))
+  // Where the pointer is is the whole condition, the way it was for the panel
+  // this list replaces: that one was up whenever the pointer was in the room and
+  // hid as soon as it moved over the editor, and it did not care where the
+  // keyboard was - reading a widget's name while the caret sits in the JSON text
+  // area is the case it was there for. Outside the room the key does nothing at
+  // all: a dropdown covers the panel it hangs in, so a shift-click in the
+  // sidebar must not have the list drop onto what it was aimed at.
+  if(selectionBarPeekActive || !selectionBarPointerInRoom)
     return;
   if(document.body.classList.contains('overlayActive') || document.body.classList.contains('deckEditorActive'))
     return;
