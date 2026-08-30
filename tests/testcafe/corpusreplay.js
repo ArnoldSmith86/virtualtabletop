@@ -5,8 +5,7 @@ import { ClientFunction, Selector } from 'testcafe';
 import { diff } from 'json-diff';
 
 import { libraryVariants, readVariant } from '../server/corpus.js';
-import { flagsForGame } from '../server/fileupdater-util.js';
-import { applyLegacy, getStateObject, prepareClient, setRoomState, setupTestEnvironment } from './test-util.js';
+import { applyLegacy, getMeta, getStateObject, prepareClient, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -69,6 +68,10 @@ async function replay(t, state, overrideFlags, errorsBefore = 0) {
   await t.click('#activeGameButton');
   await setRoomState({});
   await setRoomState(JSON.parse(JSON.stringify(state)));
+  // The modes the room just derived, asked of the room rather than of the file updater: that
+  // updater is an ES module and a TestCafe test file is compiled to CommonJS, which cannot
+  // import one.
+  const legacyModes = ((await getMeta()).gameSettings || {}).legacyModes || {};
   // The room derives the modes from the file itself - Room.setState() runs FileUpdater for any
   // state carrying _meta, which every library file does - so the asserted replay needs no call
   // here, and a call *before* the load would be discarded by exactly that. Overriding them is
@@ -96,15 +99,15 @@ async function replay(t, state, overrideFlags, errorsBefore = 0) {
   }
 
   const messages = (await t.getBrowserConsoleMessages()).error || [];
-  return { clicked, errors: messages.slice(errorsBefore), errorsSeen: messages.length, state: await getStateObject() };
+  return { clicked, legacyModes, errors: messages.slice(errorsBefore), errorsSeen: messages.length, state: await getStateObject() };
 }
 
 for(const variant of selectedVariants()) {
   test(`Corpus: ${variant.library}/${variant.game} (variant ${variant.variant})`, async t => {
     const state = readVariant(variant);
-    const flags = flagsForGame(state);
 
     const withFlags = await replay(t, state, null);
+    const flags = withFlags.legacyModes;
     const report = {
       game: `${variant.library}/${variant.game}`,
       variant: variant.variant,

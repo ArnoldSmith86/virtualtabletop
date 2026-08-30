@@ -43,16 +43,20 @@ function applyCustomCss(gameSettings) {
   }
 }
 
-function generateUniqueWidgetID() {
+// derivedIDs is passed by composite widgets that build their child IDs from the
+// base ID (deck1B, deck1P, deck1_A_C, ...): a base is only accepted when none of
+// those is taken either, so adding a composite never overwrites another widget.
+function generateUniqueWidgetID(type, derivedIDs) {
   let id;
+  let i = 1;
   do {
-    id = rand().toString(36).substring(3, 7);
-  } while (widgets.has(id));
+    id = type ? type + i++ : rand().toString(36).substring(3, 7);
+  } while (widgets.has(id) || derivedIDs && derivedIDs(id).some(derived=>widgets.has(String(derived))));
   return id;
 }
 
-export function addWidget(widget, instance) {
-  if(widget.parent && !widgets.has(widget.parent)) {
+export function addWidget(widget, instance, allowMissingParent) {
+  if(widget.parent && !widgets.has(widget.parent) && !allowMissingParent) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
     deferredChildren[widget.parent].push(widget);
@@ -125,14 +129,21 @@ export function addWidget(widget, instance) {
       addWidget(c);
   delete deferredCards[widget.id];
 
+  // a widget that was deferred more than once (its parent changed while it was
+  // waiting) is only added by the first of those parents that shows up
   for(const c of deferredChildren[widget.id] || [])
-    addWidget(c);
+    if(!widgets.has(c.id))
+      addWidget(c);
   delete deferredChildren[widget.id];
 }
 
-async function addWidgetLocal(widget) {
+// useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
+// creation) so live gameplay keeps random IDs - type-based IDs are an
+// authoring/edit-mode convenience and give no benefit during play, while
+// sequential IDs would raise the collision risk between concurrent clients.
+async function addWidgetLocal(widget, useTypeBasedID = true) {
   if (!widget.id)
-    widget.id = generateUniqueWidgetID();
+    widget.id = generateUniqueWidgetID(useTypeBasedID ? widget.type : undefined);
   else
     widget.id = String(widget.id);
 
@@ -492,6 +503,10 @@ function receiveStateFromServer(args) {
   for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();
   widgets.clear();
+  // whatever an earlier delta deferred waits for a room that does not exist anymore:
+  // keeping it would add a second copy of a widget this state contains
+  deferredChildren = {};
+  deferredCards = {};
   dropTargets.clear();
   maxZ = {};
   StateManaged.globalUpdateListeners = {};
@@ -508,17 +523,38 @@ function receiveStateFromServer(args) {
     }
   }
 
+  // Whatever still waits for a parent here waits for a widget the state does not
+  // contain, or for one that is itself still waiting. Only the former go onto the
+  // surface in limbo instead of being dropped - edit mode outlines them as "Invalid
+  // Parent", so they can be found and given a real parent rather than silently
+  // disappearing from the room. Their own descendants follow through the regular
+  // deferred handling once they are there, so the hierarchy below an orphan survives
+  // no matter in which order the widgets appear in the state.
+  const deferredIDs = new Set();
+  for(const children of Object.values(deferredChildren))
+    for(const widget of children)
+      deferredIDs.add(widget.id);
+  for(const parentID of Object.keys(deferredChildren)) {
+    if(deferredIDs.has(parentID))
+      continue;
+    for(const widget of deferredChildren[parentID] || []) {
+      console.error(`Widget "${widget.id}" is in limbo because its parent "${parentID}" does not exist!`);
+      addWidget(widget, undefined, true);
+    }
+    delete deferredChildren[parentID];
+  }
+
+  // a parent chain that closes into a cycle has no widget that could be added first
+  for(const [ parentID, children ] of Object.entries(deferredChildren))
+    for(const widget of children)
+      console.error(`Could not add widget "${widget.id}" because its parent "${parentID}" could not be added!`);
+  deferredChildren = {};
+
   if(Object.keys(deferredCards).length) {
     for(const [ deckID, widgets ] of Object.entries(deferredCards))
       for(const widget of widgets)
         console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
     deferredCards = {};
-  }
-  if(Object.keys(deferredChildren).length) {
-    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
-      for(const widget of widgets)
-        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
-    deferredChildren = {};
   }
 
   // before resetZoomAndPan, which clamps the pan against the board size and the scale

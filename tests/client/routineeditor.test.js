@@ -21,6 +21,7 @@ beforeAll(() => {
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.setSelection = () => {};
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
+  window.closeEmojiVariantFlyout = () => {}; // the icon picker's skin tone flyout (emojivariants.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
   // the validator tables are part of the editor bundle; the property proposals read them
   window.WIDGET_PROPERTIES = {
@@ -596,7 +597,10 @@ describe('operation rendering', () => {
     [ { func: 'SCORE', seats: 'seat1', mode: 'inc', round: 2, value: 1 }, 'Add 1 to score of seat1 in round 2' ],
     [ { func: 'AUDIO', source: 'click.mp3' }, 'Play the sound click.mp3' ],
     [ { func: 'AUDIO', source: 'click.mp3', maxVolume: 0.5 }, 'Play the sound click.mp3 at 50% volume' ],
-    [ { func: 'SWAPHANDS' }, 'Pass every hand on to the next seat' ],
+    [ { func: 'SHIFT' }, "Pass the contents of every occupied seat's hand on to the next one" ],
+    [ { func: 'SHIFT', holders: [ 'h1', 'h2', 'h3' ], widgets: 'top' }, 'Pass the contents of h1, h2 and h3 on to the next one, only the top widget' ],
+    [ { func: 'SHIFT', holders: [ 'h1', 'h2' ], interval: 2, direction: 'backward', wrap: false },
+      'Pass the contents of h1 and h2 on to the next one but 2 places along, the other way round, stopping at the last one' ],
     [ { func: 'INPUT', fields: [ {}, {}, {} ], header: 'Choose a card' }, 'Ask the player "Choose a card" to fill in 3 fields' ],
     // a dialog with nothing to fill in is a question, and the sentence says so
     [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", canceling with "No"' ],
@@ -2823,9 +2827,9 @@ describe('widget type presets', () => {
       'RECALL.holder': 'holder',
       'ROTATE.holder': 'holder',
       'SCORE.seats': 'seat',
+      'SHIFT.holders': 'holder',
       'SHUFFLE.holder': 'holder',
       'SORT.holder': 'holder',
-      'SWAPHANDS.source': 'seat',
       'TIMER.timer': 'timer', 'TIMER.collection': 'timer',
       'TURN.turn': 'seat', 'TURN.source': 'seat'
     });
@@ -3281,9 +3285,10 @@ describe('the words and the units of an operation', () => {
       'RECALL inHolder': 'only the cards on the table',
       'RECALL byDistance': 'nearest cards first',
       'SELECT random': 'in random order',
+      'SHIFT wrap': 'stopping at the last one',
+      'SHIFT keepOrder': 'in the order the widgets were created',
       'SORT reverse': 'biggest first',
-      'SORT rearrange': 'without moving them',
-      'SWAPHANDS keepOrder': 'keeping the order of each hand'
+      'SORT rearrange': 'without moving them'
     });
   });
 

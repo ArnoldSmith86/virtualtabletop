@@ -1,6 +1,7 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { checkForServerRestart, clientIsOutdated, editModeLoadFailed, editModeURL, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { updateContainerQueryFallback } from './containerQueryFallback.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -263,6 +264,9 @@ function setScale() {
   document.documentElement.style.setProperty('--scale', scale);
   updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
+  // the board just changed size, which is what every container query in the overlays asks
+  // about - on a browser that has them this does nothing (see containerQueryFallback.js)
+  updateContainerQueryFallback();
   setSidebar(); // the game details sidebar is a container query on the board, so it flips with it
   if(edit)
     scaleHasChanged(scale);
@@ -841,7 +845,7 @@ async function loadEditMode() {
     try {
       edit = false;
       Object.assign(window, {
-        $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
+        $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, confirmOverlay, sleep, rand, shuffleArray,
         setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
         toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
         addWidgetLocal, updateWidgetId, removeWidgetLocal,
@@ -849,6 +853,7 @@ async function loadEditMode() {
         generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
         uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
         iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
+        enableEmojiVariantFlyouts, closeEmojiVariantFlyout, expandEmojiVariants, loadEmojiVariants,
         config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
         viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
         html, formField,
@@ -908,6 +913,16 @@ async function toggleEditMode() {
 }
 
 onLoad(function() {
+  // overflow: clip does not create a scroll container, the overflow: hidden that browsers
+  // predating it fall back to (layout.css) does. Nothing ever wants to scroll the board, but
+  // scrollIntoView() - what the JSON editor uses to reveal a widget and the game shelf to reveal
+  // a state - scrolls every scrollable ancestor along with its target, which would slide the
+  // board out from under the toolbar with no scrollbar and no gesture to put it back.
+  if(!(window.CSS && CSS.supports && CSS.supports('overflow', 'clip')))
+    on('#roomArea', 'scroll', function() {
+      this.scrollTop = this.scrollLeft = 0;
+    });
+
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
   on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());
@@ -1010,9 +1025,11 @@ onLoad(function() {
       // the returned promises reject when the browser denies the request (for
       // example inside an iframe without allowfullscreen) - don't treat that
       // as a client error
+      // compat-fallback api.Document.fullscreenElement: only read where requestFullscreen exists, the webkit branch below covers the rest
       if(!document.fullscreenElement)
         document.documentElement.requestFullscreen().catch(e=>console.warn(`Could not enter fullscreen mode: ${e.message}`));
       else
+        // compat-fallback api.Document.exitFullscreen: same branch, webkitExitFullscreen below
         document.exitFullscreen().catch(e=>console.warn(`Could not exit fullscreen mode: ${e.message}`));
     } else if(document.documentElement.webkitRequestFullscreen) {
       if(!document.webkitFullscreenElement)
