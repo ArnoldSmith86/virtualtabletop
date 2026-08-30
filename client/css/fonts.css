@@ -912,13 +912,16 @@ p[icon]::before {
 }
 /* the other one of these is the welcome overlay's user-generated-content warning, which is laid
    out inside the board - the symbol picker's copy is handled by the media query above, since that
-   overlay is not always in the room */
+   overlay is not always in the room. Naming that one instead of leaving the container to scope
+   the block keeps it off a symbol picker the deck editor has moved out of #roomArea: the fallback
+   in containerQueryFallback.js can only copy a block's contents, so an unqualified p[icon] here
+   would apply wherever the picker is once the board is small. */
 @container roomArea ((max-width: 600px) or (max-height: 375px)) {
-  p[icon] {
+  #welcomeUserGenerated {
     margin: 10px;
     margin-left: 40px;
   }
-  p[icon]::before {
+  #welcomeUserGenerated::before {
     font-size: 150%;
     left: -30px;
   }

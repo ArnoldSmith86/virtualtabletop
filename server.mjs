@@ -6,6 +6,7 @@ import express from 'express';
 import http from 'http';
 import CRC32 from 'crc-32';
 
+import AssetType  from './server/assettype.mjs';
 import WebSocket  from './server/websocket.mjs';
 import FileLoader from './server/fileloader.mjs';
 import FileUpdater from './server/fileupdater.mjs';
@@ -184,16 +185,9 @@ MinifyHTML().then(function(result) {
         return;
       }
 
-      if(content[0] == 0xff)
-        res.setHeader('Content-Type', 'image/jpeg');
-      else if(content[0] == 0x89)
-        res.setHeader('Content-Type', 'image/png');
-      else if(content[0] == 0x3c)
-        res.setHeader('Content-Type', 'image/svg+xml');
-      else if(content[0] == 0x47)
-        res.setHeader('Content-Type', 'image/gif');
-      else if(content[0] == 0x52)
-        res.setHeader('Content-Type', 'image/webp');
+      const contentType = AssetType.contentType(content);
+      if(contentType)
+        res.setHeader('Content-Type', contentType);
       else
         Logging.log(`WARNING: Unknown file type of asset ${req.params.name}`);
 
