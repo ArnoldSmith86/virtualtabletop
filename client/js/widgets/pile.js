@@ -213,14 +213,22 @@ export class Pile extends Widget {
       splitButton.textContent = 'Split the pile';
       splitButton.addEventListener('click', async e=>{
         batchStart();
-        for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
-          await c.set('parent', null);
-          await c.set('x', this.absoluteCoord('x'));
-          const y = this.absoluteCoord('y');
-          await c.set('y', y < 100 ? y+60 : y-60);
-          await c.updatePiles();
-          await c.bringToFront();
-        };
+        const cards = this.children().reverse().slice(childCount-splitInput.value);
+        const holder = this.holderArrangingPiles();
+        if(holder && holder.arrangesPiles()) {
+          // in a holder that lines its groups up, both halves keep their place
+          // in the row instead of the split half landing outside on the table
+          await holder.splitGroup(this, cards);
+        } else {
+          for(const c of cards) {
+            await c.set('parent', null);
+            await c.set('x', this.absoluteCoord('x'));
+            const y = this.absoluteCoord('y');
+            await c.set('y', y < 100 ? y+60 : y-60);
+            await c.updatePiles();
+            await c.bringToFront();
+          };
+        }
         showOverlay();
         batchEnd();
       });

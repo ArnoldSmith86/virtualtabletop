@@ -1353,6 +1353,40 @@ export class Holder extends ImageWidget {
     return pile;
   }
 
+  // Split the given cards - the top of one of this holder's groups, bottom of
+  // the new group first - off into a group of their own. Both halves stay
+  // inside the holder: the cards are put down right past the pile they came
+  // from, a hundredth of a unit apart, and the row then lines the new group
+  // up next to it. Clear of the pile's box, so the card a dissolving pile
+  // promotes is not aimed at them and keeps its own slot.
+  async splitGroup(pile, cards) {
+    const [ axis ] = this.spreadDirection();
+    const awayX = pile.get('x') + (axis == 'X' ? pile.spreadExtent('X') : 0);
+    const awayY = pile.get('y') + (axis == 'Y' ? pile.spreadExtent('Y') : 0);
+    this.preventRearrangeDuringPileDrop = true;
+    let i = 1;
+    for(const c of cards) {
+      // it moves within the holder like applyMovePosition's cards do: it
+      // keeps its lane in a shared hand and onEnter/onLeave stay out of it
+      c.currentParent = this;
+      c.movedByButton = true;
+      if(c.get('owner') !== null)
+        c.targetPlayer = c.get('owner');
+      await c.set('x', awayX + i/100);
+      await c.set('y', awayY + i/100);
+      await c.set('parent', this.get('id'));
+      delete c.targetPlayer;
+      delete c.movedByButton;
+      delete c.currentParent;
+      ++i;
+    }
+    delete this.preventRearrangeDuringPileDrop;
+    if(cards.length > 1)
+      return await this.makeGroup(cards);
+    await this.receiveCard(null);
+    return cards[0];
+  }
+
   // Where a MOVE with a position parameter puts the widgets it brought in. On a
   // holder that arranges piles the four values name the groups: the batch joins
   // the first or the last group (pileBottom/pileTop) or becomes a new group

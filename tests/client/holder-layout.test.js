@@ -831,6 +831,67 @@ describe('MOVE with a position parameter', () => {
   });
 });
 
+describe('splitting a group with the handle overlay', () => {
+  // what the overlay's split button hands over: the top of the pile, bottom of
+  // the new group first
+  const topOf = (pile, count) => pile.children().reverse().slice(pile.children().length - count);
+
+  test('both halves stay inside the holder, side by side', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
+    const pile = await createPile('split', holder, 4, 4, 4);
+    await createPile('other', holder, 200, 4, 2);
+    await holder.updateAfterShuffle();
+    await holder.splitGroup(pile, topOf(pile, 2));
+    const groups = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
+    expect(groups.map(g=>g.get('type'))).toEqual([ 'pile', 'pile', 'pile' ]);
+    expect(groups[0].get('id')).toBe('split');
+    expect(groups[0].children().length).toBe(2);
+    expect(groups[1].children().map(c=>c.get('id')).sort()).toEqual([ 'split-card-2', 'split-card-3' ]);
+    expect(groups[2].get('id')).toBe('other');
+    for(const g of groups) {
+      expect(g.get('x')).toBeGreaterThanOrEqual(0);
+      expect(g.get('x') + g.spreadExtent('X')).toBeLessThanOrEqual(900);
+    }
+  });
+
+  test('splitting all but the last card leaves a loose card and the new group', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
+    const pile = await createPile('split', holder, 4, 4, 3);
+    await holder.updateAfterShuffle();
+    await holder.splitGroup(pile, topOf(pile, 2));
+    expect(widgets.has('split')).toBe(false);
+    const entries = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
+    expect(entries.map(e=>e.get('id'))).toEqual([ 'split-card-0', entries[1].get('id') ]);
+    expect(entries[1].get('type')).toBe('pile');
+    expect(entries[1].children().map(c=>c.get('id')).sort()).toEqual([ 'split-card-1', 'split-card-2' ]);
+  });
+
+  test('splitting a single card off leaves it loose in the next slot', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
+    const pile = await createPile('split', holder, 4, 4, 3);
+    await holder.updateAfterShuffle();
+    await holder.splitGroup(pile, topOf(pile, 1));
+    const entries = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
+    expect(entries.map(e=>e.get('id'))).toEqual([ 'split', 'split-card-2' ]);
+    expect(entries[0].children().length).toBe(2);
+    expect(entries[1].get('x')).toBe(4 + CARD_WIDTH + 8);
+  });
+
+  test('in a shared hand the split halves keep their lane', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300, childrenPerOwner: true });
+    const pile = await createPile('theirs', holder, 4, 4, 4);
+    await pile.set('owner', 'alice');
+    await holder.updateAfterShuffle();
+    await holder.splitGroup(pile, topOf(pile, 2));
+    const groups = widgetFilter(w=>w.get('type') == 'pile');
+    expect(groups.length).toBe(2);
+    for(const g of groups) {
+      expect(g.get('owner')).toBe('alice');
+      expect(g.children().every(c=>c.get('owner') == 'alice')).toBe(true);
+    }
+  });
+});
+
 describe('SORT with groupBy', () => {
   test('re-partitions an arranging holder into one group per distinct value', async () => {
     const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 900, height: 300 });
