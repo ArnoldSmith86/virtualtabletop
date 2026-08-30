@@ -1497,3 +1497,223 @@ describe('switching layouts with piles inside', () => {
     expect(holder.children().length).toBe(3);
   });
 });
+
+describe('spreadMin on the holder row (singleSpread and custom)', () => {
+  test('a singleSpread compresses the row below the topmost spreadMin cards', async () => {
+    const holder = createHolder({ id: 'h', layout: 'singleSpread', spreadMin: 2, width: 680, height: 200 });
+    for(let i=0; i<5; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    // the starter fan of 40 steps at a tenth until the last spreadMin cards
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 8, 4 ], [ 12, 4 ], [ 16, 4 ], [ 56, 4 ] ]);
+  });
+
+  test('a custom row with a stack offset follows it the same way', async () => {
+    const holder = createHolder({ id: 'h', layout: 'custom', stackOffsetX: 30, spreadMin: 2, width: 680, height: 200 });
+    for(let i=0; i<4; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 7, 4 ], [ 10, 4 ], [ 40, 4 ] ]);
+  });
+
+  test('without spreadMin the row keeps the full step everywhere', async () => {
+    const holder = createHolder({ id: 'h', layout: 'singleSpread', width: 680, height: 200 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 44, 4 ], [ 84, 4 ] ]);
+  });
+});
+
+describe('grid pins on the auto layout', () => {
+  test('gridColumns pins how many cards go into a row without switching auto off', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 600, gridColumns: 4 });
+    for(let i=0; i<9; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    expect(holder.usesAutoLayout()).toBe(true);
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([
+      [ 94, 146 ], [ 198, 146 ], [ 302, 146 ], [ 406, 146 ],
+      [ 94, 250 ], [ 198, 250 ], [ 302, 250 ], [ 406, 250 ],
+      [ 250, 354 ]
+    ]);
+  });
+
+  test('gridRows wraps after as many columns as it takes to come out at that many rows', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 600, gridRows: 2 });
+    for(let i=0; i<6; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([
+      [ 146, 198 ], [ 250, 198 ], [ 354, 198 ],
+      [ 146, 302 ], [ 250, 302 ], [ 354, 302 ]
+    ]);
+  });
+});
+
+describe('a multiSpread wrapping its groups into rows', () => {
+  async function threeGroups(definition) {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 680, height: 300, ...definition });
+    await createPile('g1', holder, 4, 4, 2);
+    await createPile('g2', holder, 200, 4, 2);
+    await createPile('g3', holder, 400, 4, 2);
+    await holder.updateAfterShuffle();
+    return holder;
+  }
+
+  test('gridColumns starts a new row of groups below the previous one', async () => {
+    const holder = await threeGroups({ gridColumns: 2 });
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 152, 4 ], [ 4, 112 ] ]);
+  });
+
+  test('pilesGapY spaces the rows behind the tallest group of the row', async () => {
+    const holder = await threeGroups({ gridColumns: 2, pilesGapY: 20 });
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 152, 4 ], [ 4, 124 ] ]);
+  });
+
+  test('pilesOffsetY pins the pitch of the rows instead', async () => {
+    const holder = await threeGroups({ gridColumns: 2, pilesOffsetY: 90 });
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 152, 4 ], [ 4, 94 ] ]);
+  });
+
+  test('gridRows wraps the lane into that many rows', async () => {
+    const holder = await threeGroups({ gridRows: 3 });
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 4, 112 ], [ 4, 220 ] ]);
+  });
+
+  test('the squish measures each row on its own, not the whole lane', async () => {
+    // three fans of 240 would overflow 680 as one row, but two rows of at
+    // most two fit - so nothing squishes
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 70, gridColumns: 2, width: 680, height: 300 });
+    await createPile('g1', holder, 4, 4, 3);
+    await createPile('g2', holder, 200, 4, 3);
+    await createPile('g3', holder, 400, 4, 3);
+    await holder.updateAfterShuffle();
+    expect(holder.fanSquish(null)).toEqual({ axis: 'X', gap: 8, fans: 1, groups: 1 });
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 252, 4 ], [ 4, 112 ] ]);
+  });
+});
+
+describe('a grid whose cells are stacks (preventPiles: false)', () => {
+  test('writing preventPiles: false turns piles on, everything else keeps them off', () => {
+    const stacks = createHolder({ id: 'h', layout: 'grid', preventPiles: false });
+    expect(stacks.get('preventPiles')).toBe(false);
+    expect(stacks.get('allowPiles')).toBe(true);
+    expect(stacks.supportsPiles()).toBe(true);
+    // the cells are their own arrangement, not a row of groups
+    expect(stacks.arrangesPiles()).toBe(false);
+    const plain = createHolder({ id: 'h2', layout: 'grid' });
+    expect(plain.get('preventPiles')).toBe(true);
+    expect(plain.get('allowPiles')).toBe(false);
+  });
+
+  test('a pile survives as one cell and keeps its cards compact', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, stackOffsetX: 20, gridColumns: 2, width: 400, height: 300 });
+    const pile = await createPile('stack', holder, 50, 60, 3);
+    createCard('loose', { parent: 'h', x: 200, y: 60, z: 10 });
+    await holder.updateAfterShuffle();
+    expect(widgets.has('stack')).toBe(true);
+    expect(pile.get('parent')).toBe('h');
+    // the holder's stack offset is its cell gap, not a fan for the stack
+    expect(pile.get('stackOffsetX')).toBe(0);
+    expect(pile.children().every(c=>c.get('x') == 0 && c.get('y') == 0)).toBe(true);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 124, 4 ] ]);
+  });
+
+  test('a card dropped onto a stack joins it', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, gridColumns: 2, width: 400, height: 300 });
+    const pile = await createPile('stack', holder, 4, 4, 3, { onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    const drop = createCard('drop', { parent: 'h', x: 4, y: 4, z: 20, onPileCreation: {} });
+    await holder.onChildAddAlign(drop, 'h');
+    expect(drop.get('parent')).toBe('stack');
+    expect(pile.children().length).toBe(4);
+  });
+
+  test('a card dropped between the cells becomes a cell of its own', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, gridColumns: 2, width: 400, height: 300 });
+    await createPile('stack', holder, 4, 4, 3, { onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    const drop = createCard('drop', { parent: 'h', x: 200, y: 4, z: 20, onPileCreation: {} });
+    await holder.onChildAddAlign(drop, 'h');
+    expect(drop.get('parent')).toBe('h');
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ] ]);
+  });
+
+  test('turning preventPiles back on breaks the stacks into cells', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, gridColumns: 3, width: 400, height: 300 });
+    await createPile('stack', holder, 4, 4, 3);
+    await holder.set('preventPiles', true);
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    expect(holder.children().length).toBe(3);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ] ]);
+  });
+});
+
+describe('a grid with a pinned cell pitch (pilesOffset)', () => {
+  test('the cells sit exactly the pitch apart, however many there are', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', pilesOffsetX: 120, width: 400, height: 300 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 124, 4 ], [ 244, 4 ] ]);
+  });
+
+  test('a pitch of the card size packs the cells flush', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', pilesOffsetX: 100, width: 400, height: 300 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 104, 4 ], [ 204, 4 ] ]);
+  });
+
+  test('a vertical pitch pins the rows the same way', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 2, pilesOffsetY: 110, width: 300, height: 500 });
+    for(let i=0; i<4; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 114 ], [ 112, 114 ] ]);
+  });
+});
+
+describe('dropShadow as a knob of the multiSpread', () => {
+  test('it stays on by default and honors an explicit false', () => {
+    expect(createHolder({ id: 'h', layout: 'multiSpread' }).get('dropShadow')).toBe(true);
+    expect(createHolder({ id: 'h2', layout: 'multiSpread', dropShadow: false }).get('dropShadow')).toBe(false);
+    expect(createHolder({ id: 'h3', layout: 'multiSpread', dropShadow: true }).get('dropShadow')).toBe(true);
+  });
+});
+
+describe('the layout-dependent defaults survive set()', () => {
+  // set() normalizes a value equal to the default away, so the defaults the
+  // layouts turn on have to live in getDefaultValue - otherwise the editor
+  // checkbox and a SET routine could never write the explicit false
+  test('dropShadow: false written on a multiSpread sticks', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread' });
+    await holder.set('dropShadow', false);
+    expect(holder.state.dropShadow).toBe(false);
+    expect(holder.get('dropShadow')).toBe(false);
+    await holder.set('dropShadow', true);
+    expect(holder.state.dropShadow).toBe(undefined);
+    expect(holder.get('dropShadow')).toBe(true);
+  });
+
+  test('preventPiles: false written on a grid sticks and flips allowPiles', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid' });
+    await holder.set('preventPiles', false);
+    expect(holder.state.preventPiles).toBe(false);
+    expect(holder.get('preventPiles')).toBe(false);
+    expect(holder.get('allowPiles')).toBe(true);
+    await holder.set('preventPiles', true);
+    expect(holder.state.preventPiles).toBe(undefined);
+    expect(holder.get('preventPiles')).toBe(true);
+    expect(holder.get('allowPiles')).toBe(false);
+  });
+
+  test('under every other layout the classic false defaults stay', async () => {
+    const holder = createHolder({ id: 'h', layout: 'custom' });
+    await holder.set('dropShadow', false);
+    expect(holder.state.dropShadow).toBe(undefined);
+    expect(holder.get('dropShadow')).toBe(false);
+  });
+});

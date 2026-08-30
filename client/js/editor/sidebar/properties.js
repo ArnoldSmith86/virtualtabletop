@@ -1310,11 +1310,11 @@ const editorPropertyHints = {
   rollTime: 'How long the rolling animation lasts, in milliseconds.',
   swapTime: 'How long the face-swap animation lasts, in milliseconds.',
   pipColor: 'The color used for the pips or the face symbol of the dice.',
-  dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
+  dropShadow: 'Show a visual shadow while a movable widget is over this holder. A multi spread turns it on by default - it is what previews where the drop is about to be inserted - but unchecking it here turns the preview off.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
   dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries, on a pile the cards it takes. Leave empty for no limit.',
   showLimit: 'Make the handle read "2/3" instead of "2", so the drop limit of the pile is readable before a drop is refused.',
-  preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
+  preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles. A grid keeps them separate by default; unchecking this there turns every cell into a stack instead.',
   pileSnapRange: 'How close in pixels this pile has to be dropped to another pile or card to combine with it. A card dropped onto this pile uses its own snap range instead, which comes from the pile template of its deck.',
   handleCSS: 'Custom CSS declarations for the handle badge of the pile.',
   childrenPerOwner: 'Keep a separate set of held widgets for each player.',
@@ -1322,15 +1322,15 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder fits just one card; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMulti spread lines up several groups (piles) side by side.\nGrid fills rows and columns.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
+  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder is smaller than one and a half cards along both axes; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMulti spread lines up several groups (piles) side by side.\nGrid fills rows and columns.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
   allowPiles: 'Keep piles that are dropped in as piles and line them up as groups, instead of emptying them out one card per slot.',
-  pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds.',
-  pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds.',
+  pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds. In a grid it pins the horizontal pitch of the cells instead - a pitch of the card width packs them flush.',
+  pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds. In a grid it pins the vertical pitch of the cells instead.',
   pilesGapX: 'The next group starts right of the cards of the previous one, plus this many pixels.',
-  pilesGapY: 'The next group starts below the cards of the previous one, plus this many pixels.',
-  spreadMin: 'How many of the topmost cards of each pile keep the full stack offset; everything below them is squeezed together so a long pile stays readable.',
-  gridColumns: 'Pin the grid to this many columns instead of deriving the count from the holder size.',
-  gridRows: 'Pin the grid to this many rows instead of deriving the count from the holder size.',
+  pilesGapY: 'The next group starts below the cards of the previous one, plus this many pixels. With the groups wrapped into rows it is the gap between the rows.',
+  spreadMin: 'How many of the topmost cards of each pile - or of a fanned row of loose cards - keep the full stack offset; everything below them is squeezed together so a long fan stays readable.',
+  gridColumns: 'Pin the grid to this many columns instead of deriving the count from the holder size. Under Auto it pins how many cards go into a row, under Multi spread how many groups do.',
+  gridRows: 'Wrap after as many columns as it takes to come out at this many rows - the row count itself can come out smaller. Under Auto and Multi spread it wraps the cards or groups the same way. Grid columns wins where both are set.',
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
@@ -1449,11 +1449,10 @@ const editorTypeSections = {
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true },
-      // a multi spread always shows the shadow - it is what says where the
-      // dragged card is about to be inserted
+      // its default depends on the layout (a multi spread turns the preview
+      // on), so the checkbox re-reads it when the layout changes
       { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox',
-        available: widget=>holderEffectiveLayout(widget) != 'multiSpread',
-        availableListenTo: holderArrangementListenTo }
+        listenTo: [ 'dropShadow', ...holderArrangementListenTo ] }
     ],
     // the layout decides most of these low-level switches for the holder, so
     // while one is in effect the inputs it overrides step aside - an input
@@ -1464,8 +1463,9 @@ const editorTypeSections = {
         available: widget=>holderEffectiveLayout(widget) == 'custom' || holderStateHas(widget, 'alignChildren'),
         availableListenTo: holderArrangementListenTo },
       { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox',
-        available: widget=>[ 'custom', 'pile', 'singleSpread', 'freeform' ].indexOf(holderEffectiveLayout(widget)) != -1 || holderStateHas(widget, 'preventPiles'),
-        availableListenTo: holderArrangementListenTo },
+        available: widget=>[ 'custom', 'pile', 'singleSpread', 'freeform', 'grid' ].indexOf(holderEffectiveLayout(widget)) != -1 || holderStateHas(widget, 'preventPiles'),
+        availableListenTo: holderArrangementListenTo,
+        listenTo: holderArrangementListenTo },
       { label: 'Arrange dropped piles', property: 'allowPiles',       kind: 'checkbox',
         available: widget=>holderEffectiveLayout(widget) == 'custom' || holderStateHas(widget, 'allowPiles'),
         availableListenTo: holderArrangementListenTo },
@@ -10132,11 +10132,11 @@ class PropertiesModule extends SidebarModule {
 
     addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'multiSpread', 'grid', 'random' ]);
     addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'multiSpread', 'grid' ]);
-    addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multiSpread' ]);
+    addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multiSpread', 'grid' ]);
     addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multiSpread' ]);
-    addNumberRow('Spread min',   'spreadMin',   [ 'multiSpread' ]);
-    addNumberRow('Grid columns', 'gridColumns', [ 'grid' ], { min: 1 });
-    addNumberRow('Grid rows',    'gridRows',    [ 'grid' ], { min: 1 });
+    addNumberRow('Spread min',   'spreadMin',   [ 'multiSpread', 'singleSpread', 'custom' ]);
+    addNumberRow('Grid columns', 'gridColumns', [ 'grid', 'auto', 'multiSpread' ], { min: 1 });
+    addNumberRow('Grid rows',    'gridRows',    [ 'grid', 'auto', 'multiSpread' ], { min: 1 });
 
     const updateRows = _=>{
       const layout = widget.effectiveLayout();

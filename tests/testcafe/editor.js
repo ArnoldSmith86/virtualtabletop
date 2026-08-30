@@ -599,35 +599,54 @@ test('A holder layout is picked in the Layout section and takes over what it dec
   const layout = Selector('#editorModules .selectInput').withText('Arrange as');
   const align = Selector('#editorModules .checkboxInput').withText('Align dropped widgets');
   const arrangePiles = Selector('#editorModules .checkboxInput').withText('Arrange dropped piles');
+  const preventPiles = Selector('#editorModules .checkboxInput').withText('Prevent piles');
+  const dropShadow = Selector('#editorModules .checkboxInput').withText('Drop shadow');
   const pilesGap = Selector('#editorModules .numberPairRow').withText('Piles gap');
+  const pilesOffset = Selector('#editorModules .numberPairRow').withText('Piles offset');
+  const spreadMin = Selector('#editorModules .numberInput').withText('Spread min');
   const gridColumns = Selector('#editorModules .numberInput').withText('Grid columns');
 
-  // a new holder is on auto: the low-level switches it decides for itself stay out of the way
+  // a new holder is on auto: the low-level switches it decides for itself stay
+  // out of the way - the grid pins stay, they pin auto's wrap instead
   await t
     .click('#editButton')
     .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
     .click('#w_holder')
     .expect(layout.find('select').value).eql('"auto"')
     .expect(align.visible).notOk()
-    .expect(pilesGap.visible).notOk();
+    .expect(pilesGap.visible).notOk()
+    .expect(gridColumns.visible).ok();
 
   // a multi spread arranges piles: it brings the group spacing (and a starting fan) with
-  // it, and the switches it decides stay hidden
+  // it, and the switches it decides stay hidden; the grid pins wrap its groups
+  // into rows and the drop shadow is its knob to turn the insert preview off
   await t
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"multiSpread"'))
     .expect(stateOf('layout')).eql('"multiSpread"')
     .expect(stateOf('stackOffsetX')).eql('40')
     .expect(pilesGap.visible).ok()
+    .expect(gridColumns.visible).ok()
+    .expect(spreadMin.visible).ok()
+    .expect(dropShadow.visible).ok()
     .expect(align.visible).notOk()
     .expect(arrangePiles.visible).notOk();
 
-  // a grid offers its own knobs, custom offers every switch
+  // a grid offers its own knobs - including the cell pitch and the stacks
+  // switch - and a single spread keeps a long fan readable through spreadMin;
+  // custom offers every switch
   await t
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"grid"'))
     .expect(gridColumns.visible).ok()
+    .expect(pilesOffset.visible).ok()
+    .expect(preventPiles.visible).ok()
+    .expect(spreadMin.visible).notOk()
     .expect(pilesGap.visible).notOk()
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"singleSpread"'))
+    .expect(spreadMin.visible).ok()
+    .expect(pilesOffset.visible).notOk()
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"custom"'))
     .expect(align.visible).ok()

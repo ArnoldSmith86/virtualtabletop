@@ -215,9 +215,10 @@ export class Pile extends Widget {
         batchStart();
         const cards = this.children().reverse().slice(childCount-splitInput.value);
         const holder = this.holderArrangingPiles();
-        if(holder && holder.arrangesPiles()) {
-          // in a holder that lines its groups up, both halves keep their place
-          // in the row instead of the split half landing outside on the table
+        if(holder && (holder.arrangesPiles() || holder.get('layout') == 'grid')) {
+          // in a holder that lines its groups up - or keeps a stack per grid
+          // cell - both halves keep their place inside instead of the split
+          // half landing outside on the table
           await holder.splitGroup(this, cards);
         } else {
           for(const c of cards) {
@@ -276,7 +277,9 @@ export class Pile extends Widget {
       return this.children()[0].get('onPileCreation');
     if(pileInheritedProperties.indexOf(property) != -1) {
       const holder = this.holderArrangingPiles();
-      if(holder)
+      // a grid's offsets describe its cells, not the fan of a stack inside
+      // one - a stack in a cell keeps the pile's own compact defaults
+      if(holder && holder.get('layout') != 'grid')
         return holder.get(property);
     }
     return super.getDefaultValue(property);

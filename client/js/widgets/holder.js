@@ -5,8 +5,15 @@
 const layoutDerivedProperties = {
   pile:           { alignChildren: true,  allowPiles: false, stackOffsetX: 0, stackOffsetY: 0 },
   singleSpread:   { alignChildren: true,  allowPiles: false, preventPiles: false },
-  multiSpread: { alignChildren: true,  allowPiles: true,  preventPiles: false, dropShadow: true },
-  grid:           { alignChildren: true,  allowPiles: false, preventPiles: true },
+  // dropShadow is a default rather than derived: multiSpread turns the
+  // insertion preview on, but a game that writes dropShadow: false keeps it
+  // off - see Holder.getDefaultValue
+  multiSpread: { alignChildren: true,  allowPiles: true,  preventPiles: false },
+  // the two pile switches collapse into the preventPiles knob under a grid:
+  // writing preventPiles: false turns the cells into stacks - preventPiles
+  // defaults to true there (see Holder.getDefaultValue) and allowPiles
+  // follows it (see Holder.get)
+  grid:           { alignChildren: true },
   random:         { alignChildren: true,  allowPiles: false, preventPiles: true },
   freeform:       { alignChildren: false },
   // allowPiles is derived from the holder's size - see Holder.get
@@ -15,7 +22,7 @@ const layoutDerivedProperties = {
 
 // The properties a get() on a holder may derive from its layout instead of
 // answering from the state (see Holder.get below).
-const layoutDerivableProperties = new Set([ 'alignChildren', 'preventPiles', 'allowPiles', 'dropShadow', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesGapX' ]);
+const layoutDerivableProperties = new Set([ 'alignChildren', 'preventPiles', 'allowPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesGapX' ]);
 
 // The raw arrangement properties that switch an auto layout off: while any of
 // them is written to a value that differs from its classic default, the holder
@@ -28,6 +35,10 @@ const autoDeferProperties = [ 'alignChildren', 'preventPiles', 'allowPiles', 'st
 
 // The padding the auto layout keeps between its children and to the border.
 const autoLayoutPadding = 4;
+
+// What is left of the stack offset for the cards spreadMin does not cover in
+// a holder's own row - the same compression a pile applies to its fan.
+const compressedRowSpreadFactor = 0.1;
 
 // How far the random layout tilts its pieces, in degrees to either side.
 const randomLayoutMaxTilt = 15;
@@ -83,6 +94,19 @@ export class Holder extends ImageWidget {
     const value = super.getDefaultValue(property);
     if(property == 'layout' && value === 'auto' && legacyMode('classicHolderLayout'))
       return 'custom';
+    // What a layout merely turns on by default - not derives - is expressed as
+    // the property's default: set() normalizes a written value that equals the
+    // default away, so only this way can an explicit false survive in the
+    // state and turn the feature off again.
+    if(value === false && !(this.inheritedProperties && this.inheritedProperties[property])) {
+      // the insertion preview is what makes dropping into a fan legible
+      if(property == 'dropShadow' && this.effectiveLayout() == 'multiSpread')
+        return true;
+      // under a grid both pile switches follow the one preventPiles knob:
+      // writing preventPiles: false is what turns the cells into stacks
+      if(property == 'preventPiles' && this.effectiveLayout() == 'grid')
+        return true;
+    }
     return value;
   }
 
@@ -116,6 +140,20 @@ export class Holder extends ImageWidget {
     return this.effectiveLayout() == 'auto';
   }
 
+  // Whether the game provides a value for the property itself - written in
+  // its state or served through inheritFrom - rather than leaving the class
+  // default in charge.
+  providesValue(property) {
+    return this.state[property] !== undefined || !!(this.inheritedProperties && this.inheritedProperties[property]);
+  }
+
+  // Whether a grid holder keeps its cells as stacks: the grid normally keeps
+  // every card in a cell of its own, and writing preventPiles: false is the
+  // one knob that turns the cells into piles instead.
+  gridAllowsPiles() {
+    return this.providesValue('preventPiles') && (this.state.preventPiles !== undefined ? this.state.preventPiles : super.getDefaultValue('preventPiles')) === false;
+  }
+
   // What get('allowPiles') answers under the given effective layout. The auto
   // layout only allows piles where it has no room to line the cards up anyway
   // - the classic holder that fits just one card - and a game that writes
@@ -127,6 +165,8 @@ export class Holder extends ImageWidget {
     const derived = layoutDerivedProperties[layout];
     if(derived && derived.allowPiles !== undefined)
       return derived.allowPiles;
+    if(layout == 'grid')
+      return this.gridAllowsPiles();
     // a value the game wrote (or serves through inheritFrom) can only be the
     // default false under an active auto layout - anything else would have
     // switched it off - so its mere presence means piles are off
@@ -155,9 +195,18 @@ export class Holder extends ImageWidget {
       if(layout == 'singleSpread' && (property == 'stackOffsetX' || property == 'stackOffsetY') && !super.get('stackOffsetX') && !super.get('stackOffsetY'))
         return property == 'stackOffsetX' ? 40 : 0;
       // the groups of a multiSpread sit a small default gap apart until the
-      // game spaces them out itself (an explicit pilesGapX of 0 packs them flush)
-      if(layout == 'multiSpread' && property == 'pilesGapX' && [ 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY' ].every(p=>super.get(p) === null))
-        return 8;
+      // game spaces them out itself (an explicit pilesGapX of 0 packs them
+      // flush). With the groups wrapped into rows the Y pair spaces the rows,
+      // so only the X pair can take the default gap away.
+      if(layout == 'multiSpread' && property == 'pilesGapX') {
+        const veto = this.multiSpreadWraps() ? [ 'pilesOffsetX', 'pilesGapX' ] : [ 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY' ];
+        if(veto.every(p=>super.get(p) === null))
+          return 8;
+      }
+      // see gridAllowsPiles: under a grid allowPiles follows the preventPiles
+      // knob (whose grid default of true lives in getDefaultValue)
+      if(layout == 'grid' && property == 'allowPiles')
+        return this.gridAllowsPiles();
       // an auto holder too small to arrange its cards centers them: the classic
       // paths put children at the drop offset, so that is where centering lives
       if(layout == 'auto' && (property == 'dropOffsetX' || property == 'dropOffsetY') && !this.autoSpreads())
@@ -349,7 +398,7 @@ export class Holder extends ImageWidget {
       return await super.onChildAddAlign(child, oldParentID);
 
     if(this.get('layout') == 'grid') {
-      if(child.get('type') == 'pile') {
+      if(child.get('type') == 'pile' && !this.get('allowPiles')) {
         // a pile dropped into a grid breaks up into individual cards (the grid
         // derives preventPiles, so they won't re-merge). MOVE appends them; an
         // interactive drop inserts them at the cell under the cursor.
@@ -365,6 +414,23 @@ export class Holder extends ImageWidget {
         // alignment - so a pass over the other lanes would count it into every
         // one of them and shift their cards off the first cell.
         return await this.updateAfterShuffle(new Set([ this.childOwner(child) ]));
+      // with the cells turned into stacks, a drop aimed at one of them joins
+      // it: the widget is put exactly onto what it landed on, which is what
+      // updatePiles takes as the decision to merge. The drop shadow points at
+      // the same stack, so the preview and the drop agree.
+      if(this.get('allowPiles')) {
+        let coord = { x: child.get('x'), y: child.get('y') };
+        if(!oldParentID)
+          coord = this.coordLocalFromCoordGlobal(coord);
+        const target = this.arrangedChildAt(child, coord.x, coord.y);
+        if(target) {
+          if(child.get('dropShadowOwner'))
+            return await child.setPosition(target.get('x'), target.get('y'), target.get('z') + 1);
+          await child.setPosition(target.get('x'), target.get('y'), child.get('z'));
+          await child.updatePiles();
+          return await this.updateAfterShuffle(new Set([ this.childOwner(child) ]));
+        }
+      }
       // an interactive drop is inserted at the grid cell under the cursor and
       // the other cards reflow around it
       return await this.snapToGridCell(child, oldParentID);
@@ -402,9 +468,10 @@ export class Holder extends ImageWidget {
       await super.onChildAddAlign(child, oldParentID);
     else if(child.movedByButton) {
       const [ axis, direction ] = this.spreadDirection();
-      // the auto layout wraps into rows, so "the end" is the end on both axes
-      const auto = this.usesAutoLayout();
-      await this.receiveCard(child, [ axis == 'X' || auto ? direction*999999 : 0, axis == 'Y' || auto ? direction*999999 : 0 ]);
+      // a layout that wraps into rows ends on both axes, so "the end" is the
+      // far corner there
+      const wraps = this.usesAutoLayout() || this.multiSpreadWraps();
+      await this.receiveCard(child, [ axis == 'X' || wraps ? direction*999999 : 0, axis == 'Y' || wraps ? direction*999999 : 0 ]);
     } else {
       const x = child.get('x') - this.absoluteCoord('x');
       const y = child.get('y') - this.absoluteCoord('y');
@@ -678,6 +745,8 @@ export class Holder extends ImageWidget {
     // grid, or a spread without allowPiles.
     const stoppedArrangingPiles =
       property == 'allowPiles' && oldValue && !this.get('allowPiles') ||
+      // under a grid the preventPiles knob is what turns the stacks off again
+      property == 'preventPiles' && oldValue === false && this.get('layout') == 'grid' && !this.get('allowPiles') ||
       property == 'layout' && !this.get('allowPiles') && (!this.supportsPiles() || this.derivedAllowPiles(this.effectiveLayout(oldValue === undefined ? this.getDefaultValue('layout') : oldValue)));
     if(stoppedArrangingPiles) {
       const piles = this.childrenFilter(super.children(), true).filter(c=>c.get('type') == 'pile');
@@ -695,7 +764,7 @@ export class Holder extends ImageWidget {
       for(const entry of this.childrenFilter(super.children(), true))
         for(const w of entry.get('type') == 'pile' ? entry.children() : [ entry ])
           await w.set('rotation', w.getDefaultValue('rotation'));
-    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'allowPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
+    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'allowPiles', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle();
     // the layouts that decide the arrangement from the holder's size react to it changing
     if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread' ].indexOf(this.get('layout')) != -1))
@@ -705,8 +774,16 @@ export class Holder extends ImageWidget {
   async receiveCard(card, pos) {
     if(this.usesAutoLayout())
       return await this.receiveCardAuto(card, pos);
+    // a stack in a grid cell that changes notifies its holder like any other
+    // arrangement change - the grid pass is what lays the cells out
+    if(this.get('layout') == 'grid')
+      return await this.updateAfterShuffle();
     if(this.get('layout') == 'random')
       return await this.receiveCardRandom(card, pos);
+    // rows of groups are arranged like the auto layout's rows: the dropped
+    // widget goes to the nearest row first and to its place within it then
+    if(this.multiSpreadWraps())
+      return await this.receiveCardAuto(card, pos);
 
     // get children sorted by their position along the axis this holder spreads along
     // replace coordinates of the received card to its previous coordinates so it gets dropped at the correct position
@@ -792,11 +869,39 @@ export class Holder extends ImageWidget {
           await child.arrangeChildren(false);
     }
 
+    // with a grid pin the groups wrap into rows of perRow instead of running
+    // on as one endless row; the rows advance like the groups of a vertical
+    // multiSpread do - pilesGapY behind the tallest group of the row,
+    // pilesOffsetY as a fixed pitch, and the default gap with neither
+    const perRow = this.multiSpreadPerRow(children.length);
+    if(perRow !== null) {
+      const gapY = this.get('pilesGapY');
+      const offsetY = this.get('pilesOffsetY');
+      let y = this.get('dropOffsetY');
+      let z = 1;
+      for(let start = 0; start < children.length; start += perRow) {
+        const row = children.slice(start, start + perRow);
+        let xOffset = 0;
+        let rowExtent = 0;
+        for(const child of row) {
+          const newZ = z;
+          await child.setPosition(this.get('dropOffsetX') + xOffset, y, newZ);
+          const childZ = child.get('type') == 'pile' ? child.children().map(c=>c.get('z')) : [];
+          z = Math.max(newZ, ...childZ) + 1;
+          xOffset += this.childSpacing(child, 'X', squish);
+          rowExtent = Math.max(rowExtent, child.spreadExtent('Y', squish));
+        }
+        y += gapY === null && offsetY !== null ? offsetY : rowExtent + (gapY !== null ? gapY : 8);
+      }
+      return;
+    }
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
 
-    for(const child of children) {
+    for(let i = 0; i < children.length; ++i) {
+      const child = children[i];
       const newX = this.get('dropOffsetX') + xOffset;
       const newY = this.get('dropOffsetY') + yOffset;
       const newZ = z;
@@ -811,8 +916,8 @@ export class Holder extends ImageWidget {
       const childZ = child.get('type') == 'pile' ? child.children().map(c=>c.get('z')) : [];
       z = Math.max(newZ, ...childZ) + 1;
 
-      xOffset += this.childSpacing(child, 'X', squish);
-      yOffset += this.childSpacing(child, 'Y', squish);
+      xOffset += this.childSpacing(child, 'X', squish, i, children.length);
+      yOffset += this.childSpacing(child, 'Y', squish, i, children.length);
     }
   }
 
@@ -910,8 +1015,7 @@ export class Holder extends ImageWidget {
       }
       return extent;
     };
-    const rowGeometry = rows=>{
-      const perRow = Math.ceil(count / rows);
+    const rowGeometry = perRow=>{
       const rowsChildren = [];
       for(let row = 0; row * perRow < count; ++row)
         rowsChildren.push(children.slice(row * perRow, (row + 1) * perRow));
@@ -921,26 +1025,37 @@ export class Holder extends ImageWidget {
       return { rowsChildren, rowHeights, rowScalesX, scaleY };
     };
 
-    let rows = 1;
-    if(!wide && tall) {
-      rows = count;
-    } else if(wide && tall) {
-      // try every row count: the one that leaves each card the most visible
-      // area wins
-      let bestArea = 0;
-      for(let r = 1; r <= count; ++r) {
-        const { rowScalesX, scaleY } = rowGeometry(r);
-        const stepX = (size.width  + pad) * Math.min(...rowScalesX);
-        const stepY = (size.height + pad) * scaleY;
-        const area = Math.max(0, Math.min(size.width, stepX)) * Math.max(0, Math.min(size.height, stepY));
-        if(area > bestArea) {
-          bestArea = area;
-          rows = r;
+    // a grid pin decides the wrap outright: gridColumns children per row, or
+    // as many as it takes to come out at gridRows rows. Without one the
+    // holder's shape picks the row count as always.
+    let perRow = null;
+    if(this.get('gridColumns') > 0)
+      perRow = Math.max(1, Math.floor(this.get('gridColumns')));
+    else if(this.get('gridRows') > 0)
+      perRow = Math.ceil(count / Math.max(1, Math.floor(this.get('gridRows'))));
+
+    if(perRow === null) {
+      perRow = count;
+      if(!wide && tall) {
+        perRow = 1;
+      } else if(wide && tall) {
+        // try every row count: the one that leaves each card the most visible
+        // area wins
+        let bestArea = 0;
+        for(let r = 1; r <= count; ++r) {
+          const { rowScalesX, scaleY } = rowGeometry(Math.ceil(count / r));
+          const stepX = (size.width  + pad) * Math.min(...rowScalesX);
+          const stepY = (size.height + pad) * scaleY;
+          const area = Math.max(0, Math.min(size.width, stepX)) * Math.max(0, Math.min(size.height, stepY));
+          if(area > bestArea) {
+            bestArea = area;
+            perRow = Math.ceil(count / r);
+          }
         }
       }
     }
 
-    const { rowsChildren, rowHeights, rowScalesX, scaleY } = rowGeometry(rows);
+    const { rowsChildren, rowHeights, rowScalesX, scaleY } = rowGeometry(perRow);
     const stepsY = rowHeights.map((h, row)=>row == rowHeights.length - 1 ? 0 : (h + pad) * scaleY);
     const contentHeight = boundingExtent(rowHeights, stepsY);
     let y = Math.max(pad, (holderHeight - contentHeight) / 2);
@@ -1067,6 +1182,12 @@ export class Holder extends ImageWidget {
 
     const availX = Math.max(0, this.get('width')  - 2 * marginX - cardW);
     const availY = Math.max(0, this.get('height') - 2 * marginY - cardH);
+    // pilesOffset pins the pitch of the cells to a fixed distance the way it
+    // spaces the groups of a multiSpread: derived from nothing, capped by
+    // nothing - a pitch of the card size packs the cells flush, and lining
+    // the grid up with a background image stays lined up at any card count
+    const pitchX = this.get('pilesOffsetX') === null ? null : Math.abs(this.get('pilesOffsetX'));
+    const pitchY = this.get('pilesOffsetY') === null ? null : Math.abs(this.get('pilesOffsetY'));
     const fullStepX = cardW + gapX;
     const fullStepY = cardH + gapY;
 
@@ -1074,8 +1195,8 @@ export class Holder extends ImageWidget {
       const rows = Math.ceil(Math.max(1, n) / cols);
       return {
         cols,
-        stepX: cols > 1 ? Math.min(fullStepX, availX / (cols - 1)) : fullStepX,
-        stepY: rows > 1 ? Math.min(fullStepY, availY / (rows - 1)) : fullStepY
+        stepX: pitchX !== null ? pitchX : cols > 1 ? Math.min(fullStepX, availX / (cols - 1)) : fullStepX,
+        stepY: pitchY !== null ? pitchY : rows > 1 ? Math.min(fullStepY, availY / (rows - 1)) : fullStepY
       };
     };
 
@@ -1084,6 +1205,10 @@ export class Holder extends ImageWidget {
       best = stepsFor(Math.max(1, Math.floor(this.get('gridColumns'))));
     } else if(this.get('gridRows') > 0) {
       best = stepsFor(Math.ceil(Math.max(1, n) / Math.max(1, Math.floor(this.get('gridRows')))));
+    } else if(pitchX !== null) {
+      // a fixed pitch says how many cells fit side by side, so the column
+      // search has nothing left to decide
+      best = stepsFor(Math.max(1, Math.min(Math.max(1, n), pitchX > 0 ? Math.floor(availX / pitchX) + 1 : 1)));
     } else {
       for(let cols=1; cols<=Math.max(1, n); ++cols) {
         const candidate = stepsFor(cols);
@@ -1113,7 +1238,9 @@ export class Holder extends ImageWidget {
       coord = this.coordLocalFromCoordGlobal(coord);
 
     const owner = this.childOwner(child);
-    const others = this.children().filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
+    // a pile in a cell counts as the one entry it is, so the reflow moves the
+    // stacks around, not the cards inside them
+    const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
     const m = this.gridMetrics(others.length + 1);
     const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
     const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
@@ -1195,8 +1322,10 @@ export class Holder extends ImageWidget {
   // regardless of how many cards it holds, and with neither of them given the
   // piles are placed flush, one right after the other. An overflowing
   // multiSpread hands in its fanSquish, which shrinks the gaps and in the
-  // last resort overlaps the groups themselves.
-  childSpacing(child, axis, squish=null) {
+  // last resort overlaps the groups themselves. index and count locate the
+  // child in its row so spreadMin can compress the step below the topmost
+  // cards, the way a pile compresses its fan.
+  childSpacing(child, axis, squish=null, index=null, count=null) {
     const stackOffset = this.get('stackOffset' + axis);
 
     if(this.get('allowPiles')) {
@@ -1217,7 +1346,41 @@ export class Holder extends ImageWidget {
       return stackOffset ? child.spreadExtent(axis, squish) : 0;
     }
 
-    return !child.get('overlap') && stackOffset ? child.get(axis == 'X' ? 'width' : 'height') + 4 : stackOffset;
+    if(!child.get('overlap') && stackOffset)
+      return child.get(axis == 'X' ? 'width' : 'height') + 4;
+    return stackOffset * this.rowSpreadFactor(index, count);
+  }
+
+  // The share of the stack offset used for the step after the row's card at
+  // the given index: the topmost spreadMin cards keep the offset, everything
+  // below them is compressed - so a long fanned row stays readable without
+  // running past the holder, exactly like the fan of a pile.
+  rowSpreadFactor(index, count) {
+    const spreadMin = this.get('spreadMin');
+    if(spreadMin === null || index === null || count === null || count - index <= spreadMin)
+      return 1;
+    return compressedRowSpreadFactor;
+  }
+
+  // Whether the groups of this multiSpread wrap into rows: a grid pin turns
+  // the one endless row into as many as it takes, gridColumns groups each.
+  multiSpreadWraps() {
+    return this.effectiveLayout() == 'multiSpread' && (this.get('gridColumns') > 0 || this.get('gridRows') > 0);
+  }
+
+  // How many groups go into one row of a wrapping multiSpread, for a lane of
+  // the given size - null while the groups stay on one endless row.
+  // gridColumns pins the count outright, gridRows derives it from the lane.
+  multiSpreadPerRow(count) {
+    if(this.effectiveLayout() != 'multiSpread')
+      return null;
+    const columns = this.get('gridColumns');
+    if(columns > 0)
+      return Math.max(1, Math.floor(columns));
+    const rows = this.get('gridRows');
+    if(rows > 0)
+      return Math.ceil(Math.max(1, count) / Math.max(1, Math.floor(rows)));
+    return null;
   }
 
   pilesSpacingSet() {
@@ -1248,22 +1411,45 @@ export class Holder extends ImageWidget {
     const children = this.arrangedChildren().filter(c=>!c.fanPreviewPile && (c.get('display') || !c.get('dropShadowOwner')) && (!c.get('owner') || c.get('owner') === owner));
     if(!children.length)
       return result;
-    const bases = children.map(c=>c.get('type') == 'pile' && c.children().length ? c.children()[0].get(size) : c.get(size));
-    const fans = children.map(c=>c.get('type') == 'pile' ? c.fanLength(axis) : 0);
-    const baseSum = bases.reduce((a, b)=>a + b, 0);
-    const fanSum = fans.reduce((a, b)=>a + b, 0);
-    const gapCount = children.length - 1;
     const available = this.get(size) - 2 * this.get('dropOffset' + axis);
 
-    if(baseSum + fanSum + gapCount * result.gap <= available)
-      return result;
-    if(baseSum + fanSum <= available)
-      return Object.assign(result, { gap: gapCount ? (available - baseSum - fanSum) / gapCount : result.gap });
-    if(baseSum <= available && fanSum)
-      return Object.assign(result, { gap: 0, fans: Math.max(0, available - baseSum) / fanSum });
-    const lastBase = bases[bases.length - 1];
-    const stepSum = baseSum - lastBase;
-    return Object.assign(result, { gap: 0, fans: 0, groups: stepSum > 0 ? Math.min(1, Math.max(0, (available - lastBase) / stepSum)) : 1 });
+    const squishRow = row=>{
+      const bases = row.map(c=>c.get('type') == 'pile' && c.children().length ? c.children()[0].get(size) : c.get(size));
+      const fans = row.map(c=>c.get('type') == 'pile' ? c.fanLength(axis) : 0);
+      const baseSum = bases.reduce((a, b)=>a + b, 0);
+      const fanSum = fans.reduce((a, b)=>a + b, 0);
+      const gapCount = row.length - 1;
+
+      if(baseSum + fanSum + gapCount * result.gap <= available)
+        return { ...result };
+      if(baseSum + fanSum <= available)
+        return { ...result, gap: gapCount ? (available - baseSum - fanSum) / gapCount : result.gap };
+      if(baseSum <= available && fanSum)
+        return { ...result, gap: 0, fans: Math.max(0, available - baseSum) / fanSum };
+      const lastBase = bases[bases.length - 1];
+      const stepSum = baseSum - lastBase;
+      return { ...result, gap: 0, fans: 0, groups: stepSum > 0 ? Math.min(1, Math.max(0, (available - lastBase) / stepSum)) : 1 };
+    };
+
+    // with the groups wrapped into rows, each row is measured on its own and
+    // the tightest one decides - every fan of the holder follows one factor,
+    // and the fuller rows are what has to stay inside
+    const perRow = this.multiSpreadPerRow(children.length);
+    const rows = [];
+    if(perRow === null) {
+      rows.push(children);
+    } else {
+      const sorted = [ ...children ].sort((a, b)=>a.get('z') - b.get('z'));
+      for(let start = 0; start < sorted.length; start += perRow)
+        rows.push(sorted.slice(start, start + perRow));
+    }
+    let squished = null;
+    for(const row of rows) {
+      const candidate = squishRow(row);
+      if(!squished || candidate.groups < squished.groups || candidate.groups == squished.groups && (candidate.fans < squished.fans || candidate.fans == squished.fans && candidate.gap < squished.gap))
+        squished = candidate;
+    }
+    return squished;
   }
 
   // Whether this holder lines its children up instead of dropping them all on
@@ -1287,6 +1473,10 @@ export class Holder extends ImageWidget {
       const size = this.autoCardSize();
       return [ size !== null && !(size.width * 1.5 < this.get('width')) && size.height * 1.5 < this.get('height') ? 'Y' : 'X', 1 ];
     }
+    // wrapped groups always run in rows: the Y pair spaces the rows, so it
+    // must not turn the main axis vertical
+    if(this.multiSpreadWraps())
+      return [ 'X', 1 ];
     if(this.get('allowPiles')) {
       for(const axis of [ 'X', 'Y' ]) {
         if(this.get('pilesGap' + axis) !== null)
@@ -1306,9 +1496,11 @@ export class Holder extends ImageWidget {
   // Whether this holder keeps piles as the groups it lines up - what a dropped
   // pile survives as, what MOVE's position parameter and SORT's groupBy work
   // on. The auto layout never does: it only tolerates piles where it has no
-  // room to arrange anything anyway.
+  // room to arrange anything anyway. A grid keeps stacks in its cells, but
+  // the cells are their own arrangement rather than a row of groups, so the
+  // group operations - and the pile layout the groups inherit - stay out.
   arrangesPiles() {
-    return !!(this.get('allowPiles') && !this.usesAutoLayout() && this.get('alignChildren') && this.spreadsChildren() && this.supportsPiles());
+    return !!(this.get('allowPiles') && !this.usesAutoLayout() && this.get('layout') != 'grid' && this.get('alignChildren') && this.spreadsChildren() && this.supportsPiles());
   }
 
   // Cards a routine moves in arrive one by one. In a holder that arranges piles
@@ -1587,6 +1779,12 @@ export class Holder extends ImageWidget {
   async updateAfterShuffle(owners=null) {
     if(this.get('layout') == 'grid') {
       const entries = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
+      // a stack in a cell shows its cards the way its own layout says - by
+      // default collected into one compact pile - before the cells around it
+      // are measured
+      for(const entry of entries)
+        if(entry.get('type') == 'pile' && (!owners || owners.has(entry.get('owner') || null)))
+          await entry.arrangeChildren(false);
       for(const owner of new Set(entries.map(c=>c.get('owner') || null)))
         if(!owners || owners.has(owner))
           await this.rearrangeChildrenGrid(entries.filter(c=>!c.get('owner') || c.get('owner') === owner).sort((a, b)=>a.get('z') - b.get('z')));
