@@ -1426,12 +1426,14 @@ class DeckEditor {
 
   // Face 0 back / face 1 front is only the usual convention, so hedge with "usually" and drop the
   // hint entirely for decks with a non-standard number of faces.
-  faceLabel(face) {
+  // It also reads as part of a sentence in the panel titles, which is what the lower
+  // case form is for - a translation can capitalize the noun back.
+  faceLabel(face, lowerCase) {
     if(face == 0)
-      return 'Face 0 (back)';
+      return translate(lowerCase ? 'face 0 (back)' : 'Face 0 (back)');
     if(face == 1)
-      return 'Face 1 (front)';
-    return `Face ${face}`;
+      return translate(lowerCase ? 'face 1 (front)' : 'Face 1 (front)');
+    return translate(lowerCase ? 'face {number}' : 'Face {number}').replace('{number}', face);
   }
 
   renderCard(cardType, face, target) {
@@ -2227,16 +2229,16 @@ class DeckEditor {
       { id: 'defaults', label: 'All Cards', icon: 'style', scope: 'deckEditorScopeEveryCard', available: true,
         title: 'The properties every card of this deck starts with' },
       { id: 'face', label: 'Face', icon: 'crop_portrait', scope: 'deckEditorScopeEveryCard', available: !!face,
-        title: face ? `Settings of ${this.faceLabel(this.face).toLowerCase()}, on every card of this deck`
+        title: face ? translate('Settings of {face}, on every card of this deck').replace('{face}', this.faceLabel(this.face, true))
                     : 'This deck does not have any faces yet' },
       { id: 'cardType', label: 'Card Type', icon: 'label', scope: 'deckEditorScopeThisType', available: this.cardType !== null,
         title: this.cardType === null ? 'Select a card type in the strip below to edit its properties'
-                                      : `The properties of card type "${this.cardType}" alone` },
+                                      : translate('The properties of card type "{name}" alone').replace('{name}', this.cardType) },
       // Selecting an object is not required to open this tab: without one it still offers the + that adds a
       // face object, so an empty face can be filled without going through the tree.
       { id: 'object', label: 'Object', icon: 'category', scope: 'deckEditorScopeEveryCard', available: !!face,
-        title: this._selectedObjects.length > 1 ? `${this._selectedObjects.length} face objects of ${this.faceLabel(this.face).toLowerCase()} — every property here is set on all of them`
-             : object ? `Face object ${this.selectedObject+1} of ${this.faceLabel(this.face).toLowerCase()}`
+        title: this._selectedObjects.length > 1 ? translate('{count} face objects of {face} — every property here is set on all of them').replace('{count}', this._selectedObjects.length).replace('{face}', this.faceLabel(this.face, true))
+             : object ? translate('Face object {number} of {face}').replace('{number}', this.selectedObject+1).replace('{face}', this.faceLabel(this.face, true))
                       : 'Add a face object, or click one on the card or in the list to the left to edit it' }
     ];
   }
@@ -2250,7 +2252,6 @@ class DeckEditor {
     const hasFace = !!this.faceTemplates[this.face];
     const hasType = this.cardType !== null;
     const hasObject = !!this.selectedObjectTemplate();
-    const objectNoun = this._selectedObjects.length > 1 ? 'objects' : 'object';
     const actions = {
       defaults: [
         [ 'Add a new deck to the game', true, _=>this.openNewDeckOverlay() ],
@@ -2269,8 +2270,8 @@ class DeckEditor {
       ],
       object: [
         [ 'Add a face object to this face', hasFace, null ], // wired to the submenu below
-        [ `Copy the selected face ${objectNoun}`, hasObject, _=>this.copySelectedObject() ],
-        [ `Delete the selected face ${objectNoun}`, hasObject, _=>this.deleteSelectedObject() ]
+        [ translate(this._selectedObjects.length > 1 ? 'Copy the selected face objects' : 'Copy the selected face object'), hasObject, _=>this.copySelectedObject() ],
+        [ translate(this._selectedObjects.length > 1 ? 'Delete the selected face objects' : 'Delete the selected face object'), hasObject, _=>this.deleteSelectedObject() ]
       ]
     }[this.sidebarTab];
     if(!actions)
@@ -2470,7 +2471,7 @@ class DeckEditor {
       return;
     const header = document.createElement('header');
     header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard';
-    header.innerHTML = `<h2>Entire face properties</h2><p>${html(this.faceLabel(this.face))} of every card</p>`;
+    header.innerHTML = `<h2>${html(translate('Entire face properties'))}</h2><p>${html(translate('{face} of every card').replace('{face}', this.faceLabel(this.face)))}</p>`;
     sidebar.append(header);
 
     const faceProps = div(sidebar, 'deckEditorProperties');
@@ -2713,7 +2714,7 @@ class DeckEditor {
     const objSel = face === this.face && this.isObjectSelected(index);
     row.classList.toggle('selected', objSel && this.activeArea == 'tree');
     row.classList.toggle('selectedInactive', objSel && this.activeArea != 'tree');
-    row.title = `Face object ${index+1} (${object.type || 'text'}) — Ctrl+click to select several at once`;
+    row.title = translate('Face object {number} ({type}) — Ctrl+click to select several at once').replace('{number}', index+1).replace('{type}', object.type || 'text');
     const previewBox = $('.deckEditorObjectPreview', row);
     this.treeObjectPreviews.push({ box: previewBox, index, face });
     this.renderObjectPreview(previewBox, index, face);
@@ -2762,15 +2763,15 @@ class DeckEditor {
   updateTreeToolbar() {
     const hasDeck = !!this.deck();
     const level = this.treeLevel;
-    const noun = level == 'object' ? (this._selectedObjects.length > 1 ? 'objects' : 'object') : level;
+    const selection = level == 'object' ? (this._selectedObjects.length > 1 ? 'face objects' : 'face object') : level;
     const add = $('#deckEditorTreeAdd'), copy = $('#deckEditorTreeCopy'), del = $('#deckEditorTreeDelete'), show = $('#deckEditorShowAll');
     if(add) {
       add.disabled = !hasDeck;
       add.title = level == 'deck' ? 'Add a face to this deck' : 'Add a face object';
     }
     const noSelection = !hasDeck || (level == 'object' && this.selectedObject === null) || (level != 'deck' && !this.faceTemplates.length);
-    if(copy) { copy.disabled = noSelection; copy.title = `Copy the selected ${noun}`; }
-    if(del)  { del.disabled  = noSelection; del.title  = `Delete the selected ${noun}`; }
+    if(copy) { copy.disabled = noSelection; copy.title = translate(`Copy the selected ${selection}`); }
+    if(del)  { del.disabled  = noSelection; del.title  = translate(`Delete the selected ${selection}`); }
     // "Outline all face objects" applies whenever a card is shown, not only when an object is selected.
     if(show) show.disabled = !(hasDeck && !this.deckSymbolSelected && this.cardType !== null && this.faceTemplates.length > 0);
   }
@@ -4002,7 +4003,7 @@ class DeckEditor {
   async deleteFace() {
     if(!this.deck() || !this.faceTemplates.length)
       return;
-    if(!confirm(`Delete ${this.faceLabel(this.face)} from every card type of this deck?`))
+    if(!confirm(translate('Delete {face} from every card type of this deck?').replace('{face}', this.faceLabel(this.face))))
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     this.faceTemplates.splice(this.face, 1);

@@ -1,4 +1,5 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
+import { translate, getLanguage, translateSubtree, translateOnChange } from './i18n.js';
 import { startWebSocket, toServer } from './connection.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
 
@@ -819,6 +820,7 @@ async function loadEditMode() {
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
       asArray, compute_ops, positionNames, expressionError, expressionNames,
+      translate, getLanguage, translateSubtree, translateOnChange,
       eventCoords,
       getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
     });

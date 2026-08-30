@@ -1,3 +1,5 @@
+import { translate } from './i18n.js';
+
 export function $(selector, parent) {
   return (parent || document).querySelector(selector);
 }
@@ -25,13 +27,12 @@ export function div(parent, className, html) {
 }
 
 export function progressButton(button, clickHandler, disableWhenDone=true) {
-  const initialIcon = button.getAttribute('icon');
-  const initialText = button.innerText;
-
   button.onclick = async function() {
+    const initialIcon = button.getAttribute('icon');
+    const initialText = button.innerText;
     button.disabled = true;
     button.classList.add('progress');
-    button.innerText = 'Working...';
+    button.innerText = translate('Working...');
     button.setAttribute('icon', 'hourglass_empty');
     try {
       await clickHandler(function(status, progress) {
@@ -42,7 +43,7 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
         }
       });
       button.setAttribute('icon', 'check');
-      button.innerText = 'Done';
+      button.innerText = translate('Done');
       button.classList.remove('progress');
       button.classList.remove('visualProgress');
       button.classList.add('green');
@@ -82,7 +83,7 @@ export async function shareURL(url) {
 // uses a progressButton with a custom handler that shares a URL
 export function shareButton(button, urlCallback) {
   progressButton(button, async function(updateProgress) {
-    updateProgress('Sharing...');
+    updateProgress(translate('Sharing...'));
     await shareURL(urlCallback());
   });
 }

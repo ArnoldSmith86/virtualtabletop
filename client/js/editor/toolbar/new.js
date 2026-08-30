@@ -4,7 +4,7 @@ class NewButton extends ToolbarButton {
   }
 
   click() {
-    if (!confirm('Start with a new blank room? Your current room state will be replaced.'))
+    if (!confirm(translate('Start with a new blank room? Your current room state will be replaced.')))
       return;
     fetch(location.href.replace(/\/[^\/]+$/, a=>`/state${a}`), {
       method: 'PUT',

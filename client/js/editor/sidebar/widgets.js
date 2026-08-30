@@ -113,7 +113,8 @@ async function getSavedWidgets(source) {
 // description. In grid view the name is all that is shown, so the tooltip is
 // the only place that can tell apart e.g. a line with stops from a plain one.
 function tooltipAttribute(state) {
-  const tooltip = [ state.name || state.id, state.description ].filter(t=>t).join('\n');
+  // the two lines are separate dictionary entries, so translate them before joining
+  const tooltip = [ state.name || state.id, state.description ].filter(t=>t).map(t=>translate(t)).join('\n');
   return ` title="${html(tooltip)}"`;
 }
 
@@ -1029,7 +1030,7 @@ class WidgetsModule extends SidebarModule {
         deleteButton.style.display = 'none';
       }
       deleteButton.onclick = async e => {
-        if (confirm(`Are you sure you want to delete the widget "${state.name || state.id}"?`)) {
+        if (confirm(translate('Are you sure you want to delete the widget "{name}"?').replace('{name}', state.name || state.id))) {
           await this.deleteWidget(state.id, source);
           this.renderWidgetBuffer(filter);
         }
@@ -1254,7 +1255,7 @@ class WidgetsModule extends SidebarModule {
         const data = JSON.parse(e.dataTransfer.getData('text/plain'));
         const { id, source } = data;
 
-        const groupName = prompt('Enter a name for the new group:');
+        const groupName = prompt(translate('Enter a name for the new group:'));
         if (!groupName) return;
 
         const { widgets, groups } = await this.getWidgets(source);
@@ -1426,7 +1427,7 @@ class WidgetsModule extends SidebarModule {
           ${this.renderPreviewHTML(state.preview)}
           <button icon="add" class="sidebarButton add-to-room-grid"><span>Add widget to room</span></button>
         </div>
-        <div class="widget-name">${html(state.name || state.id)}${legacyModeDiff.length ? `<span title="${html(legacyModeWarningText(legacyModeDiff))}">${legacyModeWarningBadgeSVG}</span>` : ''}</div>
+        <div class="widget-name" translate="no">${html(state.name || state.id)}${legacyModeDiff.length ? `<span title="${html(legacyModeWarningText(legacyModeDiff))}">${legacyModeWarningBadgeSVG}</span>` : ''}</div>
       </div>
     `;
   }
@@ -1483,7 +1484,7 @@ class WidgetsModule extends SidebarModule {
     if (currentState.id !== previousState.id) {
       // ID has changed, this is tricky. We need to delete the old one and create a new one.
       // For simplicity, we'll prevent ID changes in this editor for now.
-      alert("Changing the widget ID is not supported here. Please create a new widget instead.");
+      alert(translate("Changing the widget ID is not supported here. Please create a new widget instead."));
       textarea.value = JSON.stringify(previousState, null, 2);
       return;
     }
@@ -1654,7 +1655,7 @@ class WidgetsModule extends SidebarModule {
           await this.renderWidgetBuffer();
 
         } catch (error) {
-          alert(`Error importing widgets: ${error.message}`);
+          alert(translate('Error importing widgets: {error}').replace('{error}', error.message));
         }
       };
       reader.readAsText(file);

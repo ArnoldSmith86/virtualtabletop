@@ -24,7 +24,7 @@ class ToolboxModule extends SidebarModule {
     if (duplicates.length) {
       // the dialog takes plain text, where a leading indent is dropped but a bullet survives
       const duplicatesList = duplicates.map(id=>`• ${id}`).join('\n');
-      const overwriteAll = await confirmInEditor('Widget IDs already exist', `These widget IDs are already in this game:\n\n${duplicatesList}\n\nAdding the buffer replaces those widgets.`, 'Overwrite', 'Cancel', 'content_paste', 'close');
+      const overwriteAll = await confirmInEditor(translate('Widget IDs already exist'), translate('These widget IDs are already in this game:') + `\n\n${duplicatesList}\n\n` + translate('Adding the buffer replaces those widgets.'), translate('Overwrite'), translate('Cancel'), 'content_paste', 'close');
       if (!overwriteAll) return;
     }
     batchStart();
@@ -36,7 +36,7 @@ class ToolboxModule extends SidebarModule {
         delete state.y;
       }
       if(state.type == 'card' && !widgetBuffer.filter(w=>w.id==state.deck).length && !widgets.has(state.deck))
-        alert(`Widget ${state.id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.`);
+        alert(translate('Widget {id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.').replace('{id}', state.id));
       else
         await addWidgetLocal(state);
     }
@@ -61,7 +61,7 @@ class ToolboxModule extends SidebarModule {
     try {
       regex = new RegExp(regex, flags);
     } catch(e) {
-      alert('Invalid regular expression');
+      alert(translate('Invalid regular expression'));
       return;
     }
 
@@ -73,7 +73,7 @@ class ToolboxModule extends SidebarModule {
       try {
         newState = JSON.stringify(JSON.parse(newState));
       } catch(e) {
-        alert('Replacement resulted in invalid JSON. This feauture is working on the JSON level, so make sure the replacement is valid JSON.');
+        alert(translate('Replacement resulted in invalid JSON. This feauture is working on the JSON level, so make sure the replacement is valid JSON.'));
         batchEnd();
         return;
       }

@@ -1503,7 +1503,7 @@ async function addLibraryDeckToGame(entry) {
   try {
     details = await getLibraryDeckDetails(entry);
   } catch(e) {
-    alert('Loading the deck failed. Please try again.');
+    alert(translate('Loading the deck failed. Please try again.'));
     return;
   }
 
@@ -1598,7 +1598,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
       delete widget[key];
 
   if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-    alert(`Parent widget ${widget.parent} does not exist.`);
+    alert(translate('Parent widget {id} does not exist.').replace('{id}', widget.parent));
     batchEnd();
     return;
   }
@@ -1763,12 +1763,21 @@ export function initializeEditMode(currentMetaData) {
   style.appendChild(document.createTextNode(' //*** CSS ***// '));
   $('head').appendChild(style);
 
-  for(const overlay of $a('#editorOverlays > *'))
+  const editorOverlays = $a('#editorOverlays > *');
+  for(const overlay of editorOverlays)
     $('#roomArea').append(overlay);
 
   jeInitEventListeners();
   initializeTraceViewer();
   initializeEditor(currentMetaData);
+
+  // the editor DOM did not exist when the page was translated on load; the
+  // editor and its overlays keep recreating their content, so keep translating
+  // those - the overlays are observed individually because they now live next to
+  // the room, whose widgets must not be walked on every move
+  translateSubtree($('body'));
+  for(const container of [ $('#editor'), ...editorOverlays ])
+    translateOnChange(container);
 
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
@@ -2141,7 +2150,7 @@ export function initializeEditMode(currentMetaData) {
         delete widget[key];
 
     if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-      alert(`Parent widget ${widget.parent} does not exist.`);
+      alert(translate('Parent widget {id} does not exist.').replace('{id}', widget.parent));
       return;
     }
 

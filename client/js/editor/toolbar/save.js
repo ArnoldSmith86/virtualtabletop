@@ -5,7 +5,7 @@ class SaveButton extends ToolbarButtonWithContent {
   }
 
   async button_saveCurrentState(updateProgress, mode) {
-    let name = mode == 'addState' ? prompt('Enter a name', this.activeState ? this.currentMetadata.name : 'Unnamed') : '';
+    let name = mode == 'addState' ? prompt(translate('Enter a name'), this.activeState ? this.currentMetadata.name : 'Unnamed') : '';
     if(name === null)
       throw new Error('Canceled.');
     if(!name)

@@ -270,6 +270,16 @@
   margin-right: 0.25rem;
 }
 
+#languageSettings select{
+  font-size: 1rem;
+  padding: 0.25em 0.5em;
+  margin-top: 0.5em;
+  color: var(--VTTblue);
+  background: white;
+  border: 1px solid rgb(31, 92, 166);
+  border-radius: 0.25em;
+}
+
 .overlay .heading{
   width: 100%;
   max-width: 40rem; /* same width as the table and the help section below */

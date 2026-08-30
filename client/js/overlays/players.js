@@ -1,4 +1,5 @@
 import { asArray, onLoad, rand, shareURL } from '../domhelpers.js';
+import { translate } from '../i18n.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -214,10 +215,10 @@ function fillPlayerList(players, active, sessions) {
       const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
       if(session) {
         // numbering the connections only carries information for players that actually have more than one
-        const label = playerSessions.length > 1 ? `Connection ${sessionIndex+1}` : 'connected';
-        $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `${label} (you)` : label;
+        const label = playerSessions.length > 1 ? translate('Connection {number}').replace('{number}', sessionIndex+1) : translate('connected');
+        $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? translate('{connection} (you)').replace('{connection}', label) : label;
       } else {
-        $('.sessionLabel', sessionCell).textContent = 'not connected';
+        $('.sessionLabel', sessionCell).textContent = translate('not connected');
       }
       row.appendChild(sessionCell);
 
@@ -229,8 +230,8 @@ function fillPlayerList(players, active, sessions) {
   }
   // with a second tab open as the same player, adding a player also moves this tab to it
   $('#addLocalPlayerButton').title = (sessionsByPlayer[playerName] || []).length > 1
-    ? 'Add a player and switch this browser tab to them'
-    : 'Add a player who shares this device';
+    ? translate('Add a player and switch this browser tab to them')
+    : translate('Add a player who shares this device');
   updatePlayerCountDisplay();
 }
 
@@ -239,7 +240,7 @@ function updatePlayerCountDisplay() {
   const playerCount = activePlayers.length;
 
   const tooltip = $('.tooltip', playersButton);
-  if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
+  if (tooltip) tooltip.textContent = translate('Players: {count}').replace('{count}', playerCount);
   updateToolbarLayout(); // the player count is part of the toolbar in some layouts
 
   [playersButton, tooltip].forEach(element => element.classList.add('playerChange'));
