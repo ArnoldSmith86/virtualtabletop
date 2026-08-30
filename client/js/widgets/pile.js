@@ -414,8 +414,10 @@ export class Pile extends Widget {
   // The length of the fan alone along one axis - how far the last slot sits
   // from the first one - before any squish is applied. What fanSquish measures
   // the groups by without asking for the squished layout it is about to decide.
+  // A slot a drop shadow keeps open counts: the fan is that long on screen,
+  // and it is how long the fan will be once the previewed drop lands.
   fanLength(axis) {
-    const count = this.children().length;
+    const count = this.children().length + (this.previewGap === undefined ? 0 : 1);
     if(count < 2 || !this.spreadsCards())
       return 0;
     let length = 0;

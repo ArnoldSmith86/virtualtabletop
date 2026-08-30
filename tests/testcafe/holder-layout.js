@@ -306,6 +306,31 @@ test('A card dropped beyond the groups becomes an entry of its own at that end',
   await t.expect(pileCount(state)).eql(0, 'without joining either card');
 });
 
+test('A drop released where the open slot pushed a card to forms the new group the shadow showed', async t => {
+  await openRoom(t, 'modern', multiSpreadHand(Object.assign(fan('one', 4, 3), {
+    inhand: card('inhand', { parent: 'hand', x: 195, y: 4, z: 8 }),
+    loose: card('loose', { x: 1200, y: 700, z: 9 })
+  })));
+
+  // three stops: into the gap before the in-hand card (the shadow's slot opens there and
+  // pushes the card a slot to the right), across the open slot, and onto the spot the card
+  // was pushed to. Joining there would let the card snap back out from under the pointer,
+  // so the preview keeps the shadow as its own group - and the drop delivers exactly that
+  // instead of joining a card the pointer is no longer over.
+  const startX = 1200 + CARD_WIDTH/2;
+  const startY = 700 + CARD_HEIGHT/2;
+  await dragPath(t, 'loose', [
+    { dx: (100 + 191) - startX, dy: (100 + 84) - startY },
+    { dx: (100 + 250) - startX, dy: (100 + 84) - startY },
+    { dx: (100 + 310) - startX, dy: (100 + 84) - startY }
+  ]);
+
+  const state = await stateWhen(s=>s.loose.parent == 'hand' && s.loose.x == 306);
+  await t.expect(state.loose.x).eql(306, 'the slot the shadow showed past the in-hand card');
+  await t.expect(state.inhand.x).eql(195, 'which kept its own slot');
+  await t.expect(pileCount(state)).eql(1, 'and no pile formed with it');
+});
+
 test('A card regrouped within its holder does not run onLeave, one that leaves does', async t => {
   await openRoom(t, 'modern', multiSpreadHand(fan('fan', 4, 2, { activeFace: 1 }), {
     onEnter: { activeFace: 1 },

@@ -3271,6 +3271,24 @@ export class Widget extends StateManaged {
     // took for that first move has to go whether one happened or not
     delete this.dragLimitStartCoord;
 
+    // What the shadow previews at the spot the drag ends is what the drop is
+    // meant to deliver - the slot of a fan, the group it parked on, or its
+    // own slot of the row - so it is recorded before the shadow is taken
+    // down, and the holder's onChildAddAlign delivers exactly that.
+    if(this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
+      const shadowWidget = widgets.get(this.get('dropShadowWidget'));
+      const shadowParentId = shadowWidget.get('parent');
+      const shadowParent = shadowParentId !== null && widgets.has(shadowParentId) ? widgets.get(shadowParentId) : null;
+      if(shadowParent && shadowParent.get('type') == 'pile' && shadowWidget.fanPreviewPile == shadowParent)
+        this.dropPreview = { holder: shadowParent.get('parent'), target: shadowParentId, index: shadowParent.previewGap };
+      else if(shadowParent && shadowParent.get('type') == 'holder') {
+        if(!shadowWidget.get('display') && shadowWidget.joinPreviewTarget)
+          this.dropPreview = { holder: shadowParentId, target: shadowWidget.joinPreviewTarget.get('id') };
+        else if(shadowWidget.get('display'))
+          this.dropPreview = { holder: shadowParentId, x: shadowWidget.get('x'), y: shadowWidget.get('y') };
+      }
+    }
+
     await this.hideShadowWidget();
     await this.set('dragging', null);
 
@@ -3305,6 +3323,7 @@ export class Widget extends StateManaged {
     await this.updatePiles();
     delete this.pileUpdateFromDrag;
     delete this.dropAnchor;
+    delete this.dropPreview;
   }
 
   async hideShadowWidget() {

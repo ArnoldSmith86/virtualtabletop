@@ -408,20 +408,38 @@ export class Holder extends ImageWidget {
     } else {
       const x = child.get('x') - this.absoluteCoord('x');
       const y = child.get('y') - this.absoluteCoord('y');
-      // Where the widget lands decides whether it piles up with what is already
-      // there, so that has to be settled before the holder pulls it into its
-      // slot: from there on it sits a whole slot away from its neighbours and
-      // could never combine with any of them.
-      const target = this.get('allowPiles') ? this.arrangedChildAt(child, x, y) : null;
-      if(child.get('dropShadowOwner'))
-        // while the preview moves the shadow between the holder and a pile, its
-        // coordinates are mid-conversion - the preview that started the move
-        // places it
-        return child.previewReparenting ? undefined : await this.previewShadowDrop(child, target, x, y);
-      if(target) {
+      // What the drop shadow last previewed here is what the drop delivers -
+      // the shadow and the actual drop area stay aligned even where laying
+      // the preview out shifted the row under the pointer. The recorded
+      // target has to still be one of this holder's groups; without a valid
+      // preview the drop is aimed the way the preview would have decided it.
+      const preview = child.dropPreview && child.dropPreview.holder == this.get('id') ? child.dropPreview : null;
+      let target = null;
+      let fanIndex = null;
+      let pos = [ x, y ];
+      if(preview) {
+        target = preview.target !== undefined && widgets.has(preview.target) ? widgets.get(preview.target) : null;
+        if(target && target.get('parent') != this.get('id'))
+          target = null;
+        fanIndex = target && preview.index !== undefined ? preview.index : null;
+        if(!target && preview.x !== undefined)
+          pos = [ preview.x, preview.y ];
+      } else {
+        // Where the widget lands decides whether it piles up with what is
+        // already there, so that has to be settled before the holder pulls it
+        // into its slot: from there on it sits a whole slot away from its
+        // neighbours and could never combine with any of them.
+        target = this.get('allowPiles') ? this.arrangedChildAt(child, x, y) : null;
+        if(child.get('dropShadowOwner'))
+          // while the preview moves the shadow between the holder and a pile,
+          // its coordinates are mid-conversion - the preview that started the
+          // move places it
+          return child.previewReparenting ? undefined : await this.previewShadowDrop(child, target, x, y);
         // where along the fan of the target the drop points decides where the
         // dropped widget is inserted, not just that it joins
-        const fanIndex = this.spreadFanIndexOf(target, child, x, y);
+        fanIndex = target ? this.spreadFanIndexOf(target, child, x, y) : null;
+      }
+      if(target) {
         const movedCards = child.get('type') == 'pile' ? [ ...child.children() ] : [ child ];
         await child.setPosition(target.get('x'), target.get('y'), child.get('z'));
         await child.updatePiles();
@@ -432,7 +450,7 @@ export class Holder extends ImageWidget {
             await pile.insertChildrenAt(movedCards, fanIndex);
         }
       }
-      await this.receiveCard(child, [ x, y ]);
+      await this.receiveCard(child, pos);
     }
   }
 
@@ -481,17 +499,35 @@ export class Holder extends ImageWidget {
     return gapIndex !== null && index > gapIndex ? index - 1 : index;
   }
 
-  // What the drop shadow shows while it hovers over this holder. Pointed into
-  // a fan, the drop inserts at the slot under the pointer - so the preview
-  // opens a gap at exactly that slot (previewGap on the pile) and the shadow
-  // sits in it, instead of pretending the drop would append a new group.
-  // Pointed at a group the drop would simply join - a loose card or a compact
-  // pile, where there is no slot to point into - the shadow disappears, so the
-  // group itself reads as what the drop lands on. Everywhere else the shadow
-  // lines up as the new group the drop would form.
+  // What the drop shadow shows while it hovers over this holder. Laying the
+  // preview out can shift the row - a slot opening or closing, the squish
+  // changing - which can put a different group under the pointer than the one
+  // the pass decided on. The drop delivers what the preview shows, so the
+  // decision is re-checked against the freshly laid-out row until it stands
+  // still (bounded, in case two layouts keep trading places).
   async previewShadowDrop(shadow, target, x, y) {
+    for(let i=0; ; ++i) {
+      await this.applyShadowPreview(shadow, target, x, y);
+      const settled = this.arrangedChildAt(shadow, x, y);
+      if(settled == target || i >= 2)
+        return;
+      target = settled;
+    }
+  }
+
+  // One pass of the preview. Pointed into a fan, the drop inserts at the slot
+  // under the pointer - so the preview opens a gap at exactly that slot
+  // (previewGap on the pile) and the shadow sits in it, instead of pretending
+  // the drop would append a new group. Pointed at a group the drop would
+  // simply join - a loose card or a compact pile, where there is no slot to
+  // point into - the shadow disappears, so the group itself reads as what the
+  // drop lands on. Everywhere else the shadow lines up as the new group the
+  // drop would form. What was decided is remembered on the shadow, so the
+  // drop right after can deliver exactly what the preview showed.
+  async applyShadowPreview(shadow, target, x, y) {
     const fanIndex = target ? this.spreadFanIndexOf(target, shadow, x, y) : null;
     const joins = target && fanIndex === null && !this.previewJoinBlocked(shadow, target);
+    delete shadow.joinPreviewTarget;
     const previous = shadow.fanPreviewPile;
     if(previous && (previous != target || fanIndex === null)) {
       delete shadow.fanPreviewPile;
@@ -500,6 +536,7 @@ export class Holder extends ImageWidget {
         await previous.arrangeChildren();
     }
     if(joins) {
+      shadow.joinPreviewTarget = target;
       if(shadow.get('parent') != this.get('id'))
         await this.reparentShadow(shadow, this.get('id'));
       if(shadow.get('display')) {
@@ -1204,7 +1241,11 @@ export class Holder extends ImageWidget {
       return result;
 
     const size = axis == 'X' ? 'width' : 'height';
-    const children = this.arrangedChildren().filter(c=>!c.get('dropShadowOwner') && !c.fanPreviewPile && (!c.get('owner') || c.get('owner') === owner));
+    // a drop shadow lined up as its own group takes a slot of the row, so it
+    // counts like the group the drop is about to form - the row the preview
+    // shows is then the row the drop leaves behind. A hidden shadow (join
+    // preview) and one slotted into a fan take no slot of their own.
+    const children = this.arrangedChildren().filter(c=>!c.fanPreviewPile && (c.get('display') || !c.get('dropShadowOwner')) && (!c.get('owner') || c.get('owner') === owner));
     if(!children.length)
       return result;
     const bases = children.map(c=>c.get('type') == 'pile' && c.children().length ? c.children()[0].get(size) : c.get(size));

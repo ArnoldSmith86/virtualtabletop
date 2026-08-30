@@ -1218,15 +1218,97 @@ describe('the drop shadow previewing an insertion into a fan', () => {
     await holder.previewShadowDrop(shadow, null, 335, 4);
     expect(shadow.get('display')).toBe(true);
     expect(loose.get('x')).toBe(448);
-    // over the loose card there is no slot to preview - the drop would pile up
-    // with it - so the shadow disappears and the row closes its gap
+    // pointed at the spot the open slot pushed the card to: joining would let
+    // the card snap back out from under the pointer, so the preview settles on
+    // the slot moving past the card and the shadow staying its own group -
+    // exactly the new group the drop right here would form
     await holder.previewShadowDrop(shadow, loose, 448, 4);
+    expect(shadow.get('display')).toBe(true);
+    expect(loose.get('x')).toBe(340);
+    expect(shadow.get('x')).toBe(448);
+    // over the card where it stands there is no slot to point into - the drop
+    // would pile up with it - so the shadow disappears and the row closes
+    await holder.previewShadowDrop(shadow, loose, 290, 4);
     expect(shadow.get('display')).toBe(false);
     expect(shadow.get('parent')).toBe('h');
+    expect(shadow.get('x')).toBe(340);
     expect(loose.get('x')).toBe(340);
     // off the card it lines up as its own group again
     await holder.previewShadowDrop(shadow, null, 500, 4);
     expect(shadow.get('display')).toBe(true);
+  });
+
+  test('the preview decision settles against the row it just laid out', async () => {
+    // three compact groups too wide for the holder: they only squish once the
+    // first arrangement pass runs, so a join decided against the stale
+    // positions would park the shadow on a group the pointer is not over
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', width: 260, height: 300 });
+    // a real card defaults onPileCreation to {}, which the join checks compare
+    await createPile('fan1', holder, 4, 4, 3, { onPileCreation: {} });
+    await createPile('fan2', holder, 115, 4, 3, { onPileCreation: {} });
+    const single = createCard('single', { parent: 'h', x: 226, y: 4, z: 7, onPileCreation: {} });
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 40, onPileCreation: {} });
+    // at corner 144 the point aims at 194: over fan2 before the squish, over
+    // the single card once the row has settled to 4 / 80 / 156
+    await holder.previewShadowDrop(shadow, widgets.get('fan2'), 144, 4);
+    expect(shadow.get('display')).toBe(false);
+    expect(shadow.get('x')).toBe(single.get('x'));
+  });
+
+  test('a visible shadow takes a slot of the row, so the squish counts it', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 300, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    createCard('other', { parent: 'h', x: 300, y: 4, z: 30 });
+    await holder.updateAfterShuffle();
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 40 });
+    // bases 300 with the shadow, fan 80, available 292: the fans compress the
+    // way they will once the previewed drop has landed
+    expect(holder.fanSquish(null).fans).toBe(0);
+    // a hidden shadow (join preview) takes no slot, so the row relaxes
+    await shadow.set('display', false);
+    expect(holder.fanSquish(null).fans).toBe(1);
+  });
+
+  test('an open preview gap counts into the fan length the squish measures', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 600, height: 120 });
+    const one = await createPile('one', holder, 4, 4, 3);
+    expect(one.fanLength('X')).toBe(80);
+    one.previewGap = 1;
+    expect(one.fanLength('X')).toBe(120);
+    delete one.previewGap;
+  });
+
+  test('the drop delivers the join the shadow last previewed', async () => {
+    const { holder } = await previewRoom();
+    const loose = createCard('loose', { parent: 'h', x: 500, y: 4, z: 30 });
+    await holder.updateAfterShuffle();
+    // what moveEnd records from the shadow before taking it down: the dropped
+    // card joins that exact group, wherever the pointer coordinates point
+    const dropped = createCard('dropped', { x: 700, y: 700, z: 41 });
+    dropped.dropPreview = { holder: 'h', target: 'loose' };
+    await dropped.set('parent', 'h');
+    delete dropped.dropPreview;
+    const pileID = dropped.get('parent');
+    expect(widgets.get(pileID).get('type')).toBe('pile');
+    expect(loose.get('parent')).toBe(pileID);
+  });
+
+  test('the drop lands in the row slot the shadow last previewed', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 600, height: 120 });
+    await createPile('one', holder, 4, 4, 3);
+    await createPile('two', holder, 300, 4, 2);
+    const loose = createCard('loose', { parent: 'h', x: 500, y: 4, z: 30 });
+    await holder.updateAfterShuffle();
+    // recorded own-group preview: the card becomes a new group at the slot the
+    // shadow showed - between the fans and the loose card - not at its own
+    // stale coordinates past the end of the row
+    const dropped = createCard('dropped', { x: 700, y: 700, z: 41 });
+    dropped.dropPreview = { holder: 'h', x: 340, y: 4 };
+    await dropped.set('parent', 'h');
+    delete dropped.dropPreview;
+    expect(dropped.get('parent')).toBe('h');
+    const row = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x')).map(w=>w.get('id'));
+    expect(row).toEqual([ 'one', 'two', 'dropped', 'loose' ]);
   });
 
   test('stays visible over a loose card the drop could not pile up with', async () => {
