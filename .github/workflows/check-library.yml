@@ -46,8 +46,16 @@ jobs:
             fi
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           if [ "$fixed_any" = true ]; then
-            git commit -m "fix: convert asset to DOS line endings"
-            git push origin HEAD:${GITHUB_HEAD_REF}
+            # On a fork PR, origin is the base repository and the token is read-only,
+            # so the fix cannot be pushed back to the contributor's branch.
+            if [ "${{ github.event.pull_request.head.repo.full_name }}" = "${{ github.repository }}" ]; then
+              git commit -m "fix: convert asset to DOS line endings"
+              git push origin HEAD:${GITHUB_HEAD_REF}
+            else
+              echo "⚠️ Asset files need DOS line endings. This PR comes from a fork, so the fix"
+              echo "   cannot be pushed for you — please apply it locally and push again."
+              found_error=true
+            fi
           fi
           if [ "$found_error" = true ]; then
             echo "Found files with inconsistent naming patterns"
@@ -149,19 +157,34 @@ jobs:
             echo "EOF" >> $GITHUB_OUTPUT
           fi
 
-      - name: Comment on PR with validation issues
-        if: always() && steps.validate.outputs.validation_output != ''
-        uses: actions/github-script@v6
+      # A pull_request event from a fork only gets a read-only token, so the comment is
+      # rendered here and posted by check-library-comment.yml, which runs privileged.
+      - name: Prepare validation comment
+        if: always()
         env:
           VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
+        run: |
+          mkdir -p validation-result
+          echo "${{ github.event.pull_request.number }}" > validation-result/pr-number
+          if [ -n "$VALIDATION_OUTPUT" ]; then
+            {
+              echo '## Game File Validation Issues'
+              echo
+              printf '%s\n' "$VALIDATION_OUTPUT"
+            } > validation-result/comment.md
+            cat validation-result/comment.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            # An empty comment tells the posting workflow to remove a stale comment.
+            : > validation-result/comment.md
+            echo '✅ No game file validation issues.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload validation result
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '## Game File Validation Issues\n\n' + process.env.VALIDATION_OUTPUT
-            });
+          name: validation-result
+          path: validation-result/
 
       - name: Fail if any check failed
         if: always() && (steps.asset-names.outcome == 'failure' || steps.square-images.outcome == 'failure')
