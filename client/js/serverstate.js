@@ -3,6 +3,7 @@ import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { setViewportSize } from './calculateLayout.js';
 import { playerName } from './overlays/players.js';
+import { describeError, reportErrorSilently } from './tracing.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
@@ -596,6 +597,7 @@ function removeWidget(widgetID) {
     widgets.get(widgetID).applyRemove();
   } catch(e) {
     console.error(`Could not remove widget!`, widgetID, e);
+    reportErrorSilently(`Could not remove widget ${widgetID}\n${describeError(e, 'Unknown error')}`);
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);

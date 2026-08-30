@@ -4,7 +4,7 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
-import { tracingEnabled } from '../tracing.js';
+import { describeError, reportErrorSilently, tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
@@ -436,6 +436,7 @@ export class Widget extends StateManaged {
       this.applyRemove();
     } catch(e) {
       console.error(`Could not remove widget!`, this.id, e);
+      reportErrorSilently(`Could not remove widget ${this.id}\n${describeError(e, 'Unknown error')}`);
       // applyRemove can throw before it gets around to taking the widget off the board, so
       // do that here: an object of a room that is gone must not stay painted on the next one
       removeFromDOM($(`#STYLES_${this.cssScope}`));
