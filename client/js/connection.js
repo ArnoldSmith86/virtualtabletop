@@ -1,5 +1,4 @@
 let lastTimeout = 1000;
-let lastOverlay = null;
 let connection;
 let serverStart = null;
 let userNavigatedAway = false;
@@ -20,8 +19,6 @@ export function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
-    showOverlay(null, true);
-    showOverlay(lastOverlay);
     if(!urlProperties.askID) {
       toServer('room', { playerName, roomID });
       if(urlProperties.trace)
@@ -35,10 +32,8 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
-    if(!userNavigatedAway) {
-      lastOverlay = [...$a('.overlay')].filter(d=>d.style.display!='none').map(d=>d.id)[0] || null;
+    if(!userNavigatedAway)
       for(const cb of onConnectionCloseCallbacks) cb();
-    }
     if(lastTimeout)
       setTimeout(startWebSocket, lastTimeout *= 2);
   };

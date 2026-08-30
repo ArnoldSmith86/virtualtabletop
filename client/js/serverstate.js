@@ -1,5 +1,6 @@
 import { toServer, onMessage, onConnectionClose } from './connection.js';
 import { setConnectionState, setStatusMessage, updateStatus } from './overlays/status.js';
+import { connectionClosed, connectionStatus, deltaConfirmed, deltaSent, monitorTick, stateReceived } from './deltamonitor.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
@@ -15,13 +16,7 @@ let delta = { s: {} };
 let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
-let pendingDeltas = [];
 let nextDeltaSendId = 0;
-let disconnectedSinceLastState = false;
-const DELTA_CONFIRM_ICON_MS = 5000;
-const DELTA_CONFIRM_MESSAGE_MS = 10000;
-const DELTA_CONFIRM_RELOAD_WARN_MS = 20000;
-const DELTA_CONFIRM_RELOAD_MS = 30000;
 let overlayShownForEmptyRoom = false;
 
 let triggerGameStartRoutineOnNextStateLoad = false;
@@ -466,9 +461,9 @@ function sendRawDelta(delta) {
   receiveDelta(delta);
   delta.id = deltaID;
   delta.deltaSendId = ++nextDeltaSendId;
-  pendingDeltas.push({ id: delta.deltaSendId, sentAt: Date.now() });
+  deltaSent(delta.deltaSendId);
   toServer('delta', delta);
-  updateConnectionMonitor();
+  refreshConnectionStatus();
 }
 
 function receiveDeltaFromServer(delta) {
@@ -519,13 +514,11 @@ function receiveStateFromServer(args) {
 
   resetZoomAndPan();
 
-  // a fresh state from the server makes any unconfirmed deltas moot; warn if some were reverted -
-  // always after a reconnect, and after 5s without confirmation for normal state broadcasts
-  if(!isLoading && pendingDeltas.length && (disconnectedSinceLastState || Date.now() - pendingDeltas[0].sentAt >= DELTA_CONFIRM_ICON_MS))
+  // a fresh state makes all unconfirmed deltas moot - tell the player when some were reverted
+  const changesLost = stateReceived();
+  if(changesLost && !isLoading)
     setStatusMessage('Connection restored. Your last changes could not be saved.', 'link');
-  pendingDeltas = [];
-  disconnectedSinceLastState = false;
-  updateConnectionMonitor();
+  refreshConnectionStatus();
 
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
@@ -636,27 +629,8 @@ export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
-function updateConnectionMonitor() {
-  // while the websocket is known-closed, the reconnect loop with its "Reconnecting..." status
-  // handles recovery - the escalation below only targets zombie connections that stay open
-  if(disconnectedSinceLastState) {
-    setConnectionState(0, '', 0);
-    updateStatus();
-    return;
-  }
-  const oldestAge = pendingDeltas.length ? Date.now() - pendingDeltas[0].sentAt : 0;
-  if(oldestAge >= DELTA_CONFIRM_RELOAD_MS) {
-    location.reload();
-    return;
-  }
-  if(oldestAge >= DELTA_CONFIRM_RELOAD_WARN_MS)
-    setConnectionState(pendingDeltas.length, 'reload', DELTA_CONFIRM_RELOAD_MS - oldestAge);
-  else if(oldestAge >= DELTA_CONFIRM_MESSAGE_MS)
-    setConnectionState(pendingDeltas.length, 'bad', 0);
-  else if(oldestAge >= DELTA_CONFIRM_ICON_MS)
-    setConnectionState(pendingDeltas.length, 'warn', 0);
-  else
-    setConnectionState(0, '', 0);
+function refreshConnectionStatus(status = connectionStatus()) {
+  setConnectionState(status.pendingCount, status.state, status.msUntilReload);
   updateStatus();
 }
 
@@ -664,8 +638,8 @@ onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('deltaConfirm', function(args) {
     if(args && args.id)
-      pendingDeltas = pendingDeltas.filter(p=>p.id != args.id);
-    updateConnectionMonitor();
+      deltaConfirmed(args.id);
+    refreshConnectionStatus();
   });
   onMessage('state', receiveStateFromServer);
   onMessage('meta', (args) => {
@@ -674,9 +648,18 @@ onLoad(function() {
     }
   });
   onConnectionClose(function() {
-    disconnectedSinceLastState = true;
-    updateConnectionMonitor();
+    connectionClosed();
+    refreshConnectionStatus();
   });
-  setInterval(updateConnectionMonitor, 500);
+  // only this tick may trigger the reload: it is the one that notices a suspended tab
+  setInterval(function() {
+    const status = monitorTick();
+    if(!status)
+      return;
+    if(status.reload)
+      location.reload();
+    else
+      refreshConnectionStatus(status);
+  }, 500);
   setScale();
 });

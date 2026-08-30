@@ -14,7 +14,7 @@ export default class Room {
   state = {};
   deltaID = 0;
   lastStatisticsDeltaID = 0;
-  lastMouseStateByPlayer = {};
+  lastMouseStateByPlayer = Object.create(null);
 
   constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
@@ -43,9 +43,13 @@ export default class Room {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
     } else {
       player.send('state', this.state);
+      // only the activity status is meaningful for somebody who just joined - replaying the whole
+      // mouse state would show every other player's cursor as active or even pressed at a position
+      // that can be minutes old
       for (const other of this.players) {
-        if (other !== player && this.lastMouseStateByPlayer[other.name])
-          player.send('mouse', { player: other.name, mouseState: this.lastMouseStateByPlayer[other.name] });
+        const mouseState = this.lastMouseStateByPlayer[other.name];
+        if (other !== player && mouseState)
+          player.send('mouse', { player: other.name, mouseState: { inactive: true, editMode: mouseState.editMode, activeOverlay: mouseState.activeOverlay } });
       }
     }
 
