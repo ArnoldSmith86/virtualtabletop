@@ -22,13 +22,19 @@ let selectionBarStack = [];         // widgets under the pointer, topmost first
 let selectionBarStackFromTouch = false; // ... or under the finger that tapped, see selectionBarWhere
 let selectionBarCoords = null;      // pointer position in room coordinates
 let selectionBarPointer = null;
+let selectionBarPointerInRoom = false;
 let selectionBarScanTimer = null;
 let selectionBarListening = false;
 let selectionBarKeyboardBar = null; // the bar whose dropdown the arrow keys walk
 let selectionBarSwallowEscapeUp = false;
 let selectionBarTabHeld = false;    // Tab+Left / Tab+Right walk the history
+let selectionBarPeekActive = false; // the peek key is down, see selectionBarPeekStart
+let selectionBarPeekBar = null;     // the bar whose list the peek opened and has to close again
+let selectionBarPeekTreeBar = null; // ... and whose tree it had to push aside to do so
+let selectionBarScanFrame = null;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
+const SELECTION_BAR_PEEK_KEY = 'Shift'; // held down, the list opens and follows the pointer without that delay
 
 // Alt+click needs a mouse and a modifier key, so it is not something to advise
 // on a tablet - the list works there and is the only way in.
@@ -147,8 +153,7 @@ function selectionBarSetStack(stack) {
 // is the stack the bar should be showing - otherwise the list can say "nothing
 // under the pointer" right next to a drill readout counting five of them.
 function selectionBarAdoptStack(stack, clientX, clientY) {
-  clearTimeout(selectionBarScanTimer);
-  selectionBarScanTimer = null;
+  selectionBarCancelScan();
   selectionBarStackFromTouch = false; // the drill is an Alt+click, so a mouse took this one
   selectionBarPointer = { x: clientX, y: clientY };
   selectionBarSetStack(stack);
@@ -200,6 +205,27 @@ function selectionBarIsActive() {
   return !!selectionBars.length && document.body.classList.contains('edit');
 }
 
+function selectionBarCancelScan() {
+  clearTimeout(selectionBarScanTimer);
+  selectionBarScanTimer = null;
+  if(selectionBarScanFrame !== null) {
+    cancelAnimationFrame(selectionBarScanFrame);
+    selectionBarScanFrame = null;
+  }
+}
+
+// While the peek key is held the list follows the pointer itself rather than the
+// spot it came to rest on, so the scan runs on every move - at most once per
+// frame, since what it costs is a hit test of the whole document.
+function selectionBarScanNextFrame() {
+  if(selectionBarScanFrame !== null)
+    return;
+  selectionBarScanFrame = requestAnimationFrame(function() {
+    selectionBarScanFrame = null;
+    selectionBarScan();
+  });
+}
+
 function selectionBarScan(fromTouch) {
   if(!selectionBarIsActive() || !selectionBarPointer)
     return;
@@ -241,13 +267,15 @@ function selectionBarInstallListeners() {
     if(!selectionBarIsActive())
       return;
     selectionBarSetPointerCoords(e.clientX, e.clientY);
+    selectionBarPointerInRoom = selectionBarPointerIsInRoom(e.target);
     if(e.buttons)
       return;
-    clearTimeout(selectionBarScanTimer);
-    selectionBarScanTimer = null;
-    if(!selectionBarPointerIsInRoom(e.target))
+    selectionBarCancelScan();
+    if(!selectionBarPointerInRoom)
       return;
     selectionBarPointer = { x: e.clientX, y: e.clientY };
+    if(selectionBarPeekActive)
+      return selectionBarScanNextFrame();
     selectionBarScanTimer = setTimeout(function() {
       selectionBarScanTimer = null;
       selectionBarScan();
@@ -266,8 +294,7 @@ function selectionBarInstallListeners() {
     if(!selectionBarIsActive() || e.touches.length != 1)
       return;
     selectionBarSetPointerCoords(e.touches[0].clientX, e.touches[0].clientY);
-    clearTimeout(selectionBarScanTimer);
-    selectionBarScanTimer = null;
+    selectionBarCancelScan();
     if(!selectionBarPointerIsInRoom(e.target))
       return;
     selectionBarPointer = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -289,6 +316,8 @@ function selectionBarInstallListeners() {
       selectionBarTabHeld = true;
     if(!selectionBarIsActive())
       return;
+    if(e.key == SELECTION_BAR_PEEK_KEY)
+      selectionBarPeekStart();
     if(selectionBarHandleHistoryKey(e))
       return;
     if(selectionBarHandleDropdownKey(e))
@@ -298,11 +327,16 @@ function selectionBarInstallListeners() {
     if(!widget)
       return;
     e.preventDefault();
+    // Shift is what holds the list open, so it cannot also mean "add to the
+    // selection" while it does: the key of a row selects that row on its own,
+    // the way it did in the panel this list replaces. Shift+Enter and a
+    // shift-click on a row still add to the selection while the peek is up.
+    const addToSelection = e.shiftKey && !selectionBarPeekActive;
     if(e.ctrlKey && jeEnabled)
       jePasteText(jeContext[jeContext.length-1] == '"null"' ? `"${widget.id}"` : widget.id, true);
-    else if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
+    else if(addToSelection && selectedWidgets.indexOf(widget) != -1)
       setSelection(selectedWidgets.filter(w=>w!=widget));
-    else if(e.shiftKey)
+    else if(addToSelection)
       setSelection([ widget ].concat(selectedWidgets));
     else
       setSelection([ widget ]);
@@ -317,14 +351,19 @@ function selectionBarInstallListeners() {
     // there), so the release has to be seen before it does
     if(e.key == 'Tab')
       selectionBarTabHeld = false;
+    if(e.key == SELECTION_BAR_PEEK_KEY)
+      selectionBarPeekStop();
     if(e.key == 'Escape' && selectionBarSwallowEscapeUp) {
       selectionBarSwallowEscapeUp = false;
       e.stopImmediatePropagation();
     }
   }, true);
 
-  // switching windows while Tab is down never delivers its keyup
-  window.addEventListener('blur', _=>selectionBarTabHeld = false);
+  // switching windows while a key is down never delivers its keyup
+  window.addEventListener('blur', function() {
+    selectionBarTabHeld = false;
+    selectionBarPeekStop();
+  });
 
   // A click in the editor's own panels that is not in a bar means the user has
   // moved on to something else in the sidebar - and a dropdown covers the very
@@ -337,6 +376,59 @@ function selectionBarInstallListeners() {
     if(e.target.closest('#editorSidebar, #editorModules, #editorModuleInOverlay'))
       selectionBarCloseDropdowns();
   }, true);
+}
+
+/* Peeking at the stack with a key held down */
+
+// The list costs a click to open and takes the stack where the pointer came to
+// rest, which is a step and a wait more than the fixed function-key panel it
+// replaces: that one stood permanently in the JSON editor and followed every
+// mouse move. Holding Shift brings that back for as long as the key is down -
+// the list opens, follows the pointer without waiting for it to settle, and goes
+// away again with the key. A list that was already open is only made live: it
+// belongs to whoever opened it, and so does the tree it would have pushed aside.
+function selectionBarPeekStart() {
+  // the key answers "what is under the pointer", so it only does anything while
+  // the pointer is in the room - a dropdown covers the panel it hangs in, and a
+  // shift-click somewhere in the sidebar must not have the list drop onto what
+  // it was aimed at
+  if(selectionBarPeekActive || !selectionBarPointerInRoom || !selectionBarKeyboardIsFree())
+    return;
+  if(document.body.classList.contains('overlayActive') || document.body.classList.contains('deckEditorActive'))
+    return;
+  selectionBarPrune();
+  selectionBarPeekActive = true;
+
+  if(!selectionBars.some(bar=>bar.options.stack && bar.dom.classList.contains('stackVisible'))) {
+    const bar = selectionBarKeyboardBar && selectionBarKeyboardBar.options.stack
+              ? selectionBarKeyboardBar : selectionBars.find(bar=>bar.options.stack);
+    if(bar) {
+      selectionBarPeekBar = bar;
+      selectionBarPeekTreeBar = bar.dom.classList.contains('treeVisible') ? bar : null;
+      selectionBarToggleStack(bar, false, true);
+    }
+  }
+  // whatever the last resting scan found can be a room and a pointer position
+  // ago, and the point of the key is that the list says what is under the
+  // pointer now
+  selectionBarScan();
+}
+
+function selectionBarPeekStop() {
+  if(!selectionBarPeekActive)
+    return;
+  selectionBarPeekActive = false;
+  selectionBarCancelScan();
+  const bar = selectionBarPeekBar;
+  const treeBar = selectionBarPeekTreeBar;
+  selectionBarPeekBar = null;
+  selectionBarPeekTreeBar = null;
+  selectionBarPrune();
+  if(bar && bar.dom.isConnected)
+    selectionBarToggleStack(bar, true, true);
+  if(treeBar && treeBar.dom.isConnected)
+    selectionBarToggleTree(treeBar, false);
+  updateSelectionBars(); // a list that stays open says what the keys do, and that just changed
 }
 
 /* Walking the history */
@@ -769,8 +861,12 @@ function selectionBarRenderStack(bar) {
   if(selectionBarStack.length)
     div(bar.stackList, 'selectionBarStackHelp', selectionBarStackFromTouch
       ? 'Tap a row to select that widget.'
+      : selectionBarPeekActive
+      ? 'Following the pointer while Shift is held - press the key shown to select that widget,'
+        + ' shift-click a row to add it to the selection.'
       : 'Click to select, shift-click to add to the selection, or press the key shown.'
-        + '<br>↑ ↓ step through the list, Enter selects, Esc closes it.');
+        + '<br>↑ ↓ step through the list, Enter selects, Esc closes it.'
+        + '<br>Hold Shift to have the list follow the pointer instead of waiting for it to settle.');
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 10 ? `F${index+3}` : '';
@@ -804,7 +900,9 @@ function selectionBarRenderStack(bar) {
   }
 
   if(!selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.');
+    div(bar.stackList, 'selectionBarStackEmpty', selectionBarPeekActive
+      ? 'Nothing under the pointer - move it over a widget while Shift is held.'
+      : 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.');
 
   selectionBarRenderStackCursor(bar);
 }
@@ -824,7 +922,9 @@ function selectionBarRenderDrill(bar) {
     : '';
 }
 
-function selectionBarToggleStack(bar, forceClose) {
+// transient is a list that is only up while a key is held: it must not become
+// the dropdown that comes back with the module the next time it is opened.
+function selectionBarToggleStack(bar, forceClose, transient) {
   if(!bar.options.stack)
     return;
   const open = !forceClose && !bar.dom.classList.contains('stackVisible');
@@ -835,7 +935,8 @@ function selectionBarToggleStack(bar, forceClose) {
   else
     selectionBarClearHover(); // the keyboard cursor outlines its row's widget, and the list is about to be gone
   bar.stackKeyIndex = -1;
-  selectionBarStoreState({ stackOpen: open });
+  if(!transient)
+    selectionBarStoreState({ stackOpen: open });
   bar.dom.classList.toggle('stackVisible', open);
   bar.stackButton.classList.toggle('active', open);
   selectionBarRenderStack(bar);
@@ -957,7 +1058,7 @@ function renderSelectionBar(target, options = {}) {
     bar.treeButton = selectionBarButton(bar.dom, 'account_tree', 'The widget tree of the room', _=>selectionBarToggleTree(bar, false, true));
   if(options.stack) {
     const stackTitle = 'The widgets under the pointer, or where you last tapped'
-                     + (selectionBarCanAltClick() ? ' - Alt+click in the room steps through them' : '');
+                     + (selectionBarCanAltClick() ? ' - hold Shift to open this while the pointer moves, Alt+click in the room steps through them' : '');
     bar.stackButton = selectionBarButton(bar.dom, 'layers', stackTitle, _=>selectionBarToggleStack(bar));
     bar.stackCount = document.createElement('span');
     bar.stackCount.className = 'selectionBarStackCount';
@@ -1036,11 +1137,12 @@ function selectionBarDeltaReceived(delta) {
 // be left on a widget while the game is played, and the rows and F keys of a
 // stack from another session must not still point somewhere.
 function selectionBarResetStack() {
-  clearTimeout(selectionBarScanTimer);
-  selectionBarScanTimer = null;
+  selectionBarPeekStop();
+  selectionBarCancelScan();
   selectionBarStack = [];
   selectionBarResetStackCursor();
   selectionBarPointer = null;
+  selectionBarPointerInRoom = false;
   selectionBarSetPointerCoords(null);
   selectionBarClearHover();
   updateSelectionBars();

@@ -4416,6 +4416,92 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
   await setEditorState(null);
 });
 
+// The list is a click away and takes the stack where the pointer came to rest,
+// which the panel it replaces did not: that one stood permanently in the JSON
+// editor and followed every mouse move. Holding Shift is that panel back.
+// testcafe cannot hold a key down across other actions, so the two events the
+// peek is built on are dispatched by hand - together with the modifier state a
+// real browser would carry into whatever is pressed in between.
+const holdPeekKey = ClientFunction(down => {
+  window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key: 'Shift', shiftKey: down, bubbles: true, cancelable: true }));
+});
+const pressFunctionKeyWithShift = ClientFunction(key => {
+  const event = new KeyboardEvent('keydown', { key, shiftKey: true, bubbles: true, cancelable: true });
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
+});
+const storedStackOpen = ClientFunction(_=>{
+  const state = JSON.parse(localStorage.getItem('editorState') || '{}');
+  return !!(state.selectionBar || {}).stackOpen;
+});
+
+test('Holding Shift opens the stack list and has it follow the pointer', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_checker')
+    .expect(bar.hasClass('stackVisible')).notOk()
+    // the key says "what is under the pointer", so it does nothing while the
+    // pointer is not in the room - a dropdown covers the panel it hangs in, and
+    // a shift-click in the sidebar must not have the list drop onto it
+    .hover(bar.find('.selectionBarCrumbs'));
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await holdPeekKey(false);
+
+  await t.hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(3)
+    // and it follows the pointer while the key is down instead of standing on
+    // the spot the pointer last came to rest on
+    .hover('#w_board', { offsetX: 20, offsetY: 20 })
+    .expect(stackRows.count).eql(1)
+    .expect(stackRows.nth(0).textContent).contains('board')
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3)
+    // Shift is what holds the list open, so the key of a row selects that row on
+    // its own rather than adding it to the selection
+    .expect(pressFunctionKeyWithShift('F3')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk();
+
+  await holdPeekKey(false);
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    // a list that only stood while the key was down is not the dropdown that
+    // comes back with the module the next time it is opened
+    .expect(storedStackOpen()).notOk();
+
+  // a list somebody opened themselves is only made live by the key, and stays
+  // open when it is let go
+  await t
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3);
+  await holdPeekKey(true);
+  await holdPeekKey(false);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(storedStackOpen()).ok()
+    .click(bar.find('button[icon=layers]'));
+  await setEditorState(null);
+});
+
 // What the panel paints under an open dropdown. A widget preview is a real
 // widget, so it carries the widget's own z-index ((layer + 10) * 100000 + z) -
 // which, off the table, beats everything the module draws around it. The seat
