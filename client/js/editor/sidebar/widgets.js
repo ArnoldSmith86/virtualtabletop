@@ -915,6 +915,8 @@ class WidgetsModule extends SidebarModule {
                 case 'timer': previewWidget = new Timer(tempId); break;
                 default: previewWidget = new BasicWidget(tempId); break;
               }
+              // the preview is not part of the room, so nothing it renders may be written back
+              previewWidget.isReadonlyCopy = true;
               previewWidget.domElement.style.transformOrigin = 'top left';
               tempWidgetInstances.set(tempId, previewWidget);
             }
@@ -949,7 +951,10 @@ class WidgetsModule extends SidebarModule {
           e.dataTransfer.setDragImage(previewContainer, 0, 0);
 
           setTimeout(() => {
-            for (const tempId of tempWidgetInstances.keys()) {
+            for (const [ tempId, previewWidget ] of tempWidgetInstances) {
+              // the preview is torn down the way a widget leaving the room is, so that whatever it
+              // registered while it rendered - a running timer, a listener - is released with it
+              previewWidget.applyRemove();
               widgets.delete(tempId);
             }
             document.body.removeChild(previewContainer);
@@ -1153,6 +1158,8 @@ class WidgetsModule extends SidebarModule {
               case 'timer': previewWidget = new Timer(tempId); break;
               default: previewWidget = new BasicWidget(tempId); break;
             }
+            // the preview is not part of the room, so nothing it renders may be written back
+            previewWidget.isReadonlyCopy = true;
             previewWidget.domElement.style.transformOrigin = 'top left';
             tempWidgetInstances.set(tempId, previewWidget);
           }
@@ -1187,7 +1194,10 @@ class WidgetsModule extends SidebarModule {
         e.dataTransfer.setDragImage(previewContainer, 0, 0);
 
         setTimeout(() => {
-          for (const tempId of tempWidgetInstances.keys()) {
+          for (const [ tempId, previewWidget ] of tempWidgetInstances) {
+            // the preview is torn down the way a widget leaving the room is, so that whatever it
+            // registered while it rendered - a running timer, a listener - is released with it
+            previewWidget.applyRemove();
             widgets.delete(tempId);
           }
           document.body.removeChild(previewContainer);

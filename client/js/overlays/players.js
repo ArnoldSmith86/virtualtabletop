@@ -8,6 +8,7 @@ let activePlayers = [];
 let activeColors = [];
 let mouseCoords = [];
 let mySessionID = null;
+let primarySessionID = null;
 let metaUpdateResolves = [];
 let inviteStatusTimeout = null;
 localStorage.setItem('playerName', playerName);
@@ -18,6 +19,21 @@ export {
   activePlayers,
   activeColors,
   mouseCoords
+}
+
+// Work that exactly one client in the room may do - ticking a running timer - falls to the primary
+// session. The server numbers sessions in connection order, so every client picks the same one
+// without talking to the others, and the next session inherits the job as soon as that one
+// disconnects.
+export function primarySessionOf(sessions) {
+  return (sessions || []).reduce((oldest, s)=>oldest === null || s.sessionID < oldest ? s.sessionID : oldest, null);
+}
+
+// While the session list is unknown, every client considers itself primary: doing the work twice is
+// something its caller has to cope with anyway (during a handover two clients hold the job for a
+// moment), not doing it at all is not.
+export function isPrimarySession() {
+  return primarySessionID === null || primarySessionID === mySessionID;
 }
 
 function getPlayerDetails() {
@@ -119,6 +135,7 @@ function showInviteStatus(text, isError) {
 
 function fillPlayerList(players, active, sessions) {
   activePlayers = [...new Set(active)];
+  primarySessionID = primarySessionOf(sessions);
   activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playersTable tbody > tr, #playerCursors > .cursor');
 
