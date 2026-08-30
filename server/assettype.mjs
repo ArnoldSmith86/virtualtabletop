@@ -56,28 +56,31 @@ const signatures = [
 // What XML allows to stand before the root element, each written as the whole run to skip: a
 // comment - which is where Illustrator writes its "Generator" line and where a licence header
 // usually goes - a processing instruction, the <?xml ...?> prolog among them, and a doctype
-// with or without an internal subset. Whoever uploads an asset writes these bytes and the
-// sniffer runs on every request for it, so no two parts of a pattern may be able to consume the
-// same run: an unterminated doctype has to fail in one pass over the 64KB below rather than
-// backtracking through it.
+// with or without an internal subset. The subset ends at the first ] that is not inside a quoted
+// string, because an entity value is allowed to contain one. Whoever uploads an asset writes
+// these bytes and the sniffer runs on every request for it, so no two parts of a pattern may be
+// able to consume the same run - every alternative starts on a character the others exclude - so
+// an unterminated doctype fails in one pass over the 64KB below rather than backtracking
+// through it.
 const beforeRootElement = [
   /^<!--[\s\S]*?-->/,
   /^<\?[\s\S]*?\?>/,
-  /^<!doctype\s+svg[^[>]*(?:\[[^\]]*\][^>]*)?>/i
+  /^<!doctype\s+(?:[a-zA-Z_][\w.-]*:)?svg[^[>]*(?:\[(?:[^\]"']|"[^"]*"|'[^']*')*\][^>]*)?>/i
 ];
 
 // Assets are served from the site's own origin and anyone can PUT one, so what we call an SVG
 // gets to run script there - "it starts with a <" is not enough to earn that. Everything XML
 // allows in front of the root element is skipped, and what is left has to be the <svg> tag
-// itself. Every one of the 1800 markup assets in the library passes; anything else keeps the no
-// Content-Type answer the caller gives unknown bytes. The window is generous because a licence
-// header can be a few KB and the tag has to still be inside it.
+// itself, under whatever namespace prefix the document binds it to - "<svg:svg xmlns:svg=...>",
+// the way some XML pipelines write it. Every one of the 1800 markup assets in the library passes;
+// anything else keeps the no Content-Type answer the caller gives unknown bytes. The window is
+// generous because a licence header can be a few KB and the tag has to still be inside it.
 function isSVG(content) {
   let rest = content.toString('utf8', 0, 65536).replace(/^\uFEFF/, '').trimStart();
   for(;;) {
     const skip = beforeRootElement.map(part=>rest.match(part)).find(Boolean);
     if(!skip)
-      return /^<svg[\s/>]/i.test(rest);
+      return /^<(?:[a-zA-Z_][\w.-]*:)?svg[\s/>]/i.test(rest);
     rest = rest.slice(skip[0].length).trimStart();
   }
 }

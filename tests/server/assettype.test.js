@@ -59,13 +59,25 @@ describe('server/assettype.mjs', function() {
     expect(AssetType.contentType(asset('<!-- Generator: Adobe Illustrator 19.0.0 --><svg xmlns="http://www.w3.org/2000/svg"></svg>'))).toEqual('image/svg+xml');
     expect(AssetType.contentType(asset(`<?xml version="1.0"?>\n<!-- ${'GPL-3.0 '.repeat(400)}-->\n<svg></svg>`))).toEqual('image/svg+xml');
     expect(AssetType.contentType(asset('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [\n<!ENTITY ns_svg "http://www.w3.org/2000/svg">\n]>\n<svg></svg>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('<!DOCTYPE svg [<!ENTITY box "M 0 0 h 10]v 10">]>\n<svg></svg>'))).toEqual('image/svg+xml');
+  });
+
+  // an XML pipeline may bind the SVG namespace to a prefix and write the root element under it -
+  // a different spelling of the same picture, which rendered before the sniffer looked at the tag
+  test('reads a root element that carries a namespace prefix', function() {
+    expect(AssetType.contentType(asset('<svg:svg xmlns:svg="http://www.w3.org/2000/svg"></svg:svg>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('<?xml version="1.0"?><s:svg xmlns:s="http://www.w3.org/2000/svg"/>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('<!DOCTYPE s:svg [<!ENTITY ns "http://www.w3.org/2000/svg">]><s:svg/>'))).toEqual('image/svg+xml');
+    expect(AssetType.contentType(asset('<svgmap version="1.1"></svgmap>'))).toEqual(null);
+    expect(AssetType.contentType(asset('<x:svgz xmlns:x="urn:whatever"/>'))).toEqual(null);
   });
 
   // the bytes in front of the tag are written by whoever uploaded the asset and read again on
   // every request for it, so markup that makes a pattern backtrack over its own run costs the
   // single threaded server that time on each one
   test('gives up on markup meant to make it backtrack instead of chewing through it', function() {
-    const fillers = [ 'a'.repeat(65536), '[]'.repeat(32768), `${'a'.repeat(30000)}[x]${'b'.repeat(30000)}` ];
+    const fillers = [ 'a'.repeat(65536), '[]'.repeat(32768), `${'a'.repeat(30000)}[x]${'b'.repeat(30000)}`,
+                      `["${'a'.repeat(65000)}`, `[${'"x]y"'.repeat(13000)}` ];
     for(const filler of fillers) {
       const started = Date.now();
       expect(AssetType.contentType(asset(`<!doctype svg ${filler}`))).toEqual(null);
