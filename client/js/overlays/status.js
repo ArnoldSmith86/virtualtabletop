@@ -1,11 +1,12 @@
 import { $, onLoad } from '../domhelpers.js';
-import { onMessage, onConnectionClose } from '../connection.js';
+import { onMessage, onConnectionClose, onServerRestart } from '../connection.js';
 
 const STATUS_MESSAGE_DURATION_MS = 10000;
 const STATUS_MESSAGE_MAX = 5;
 
 let connectionState = { pendingCount: 0, state: '', msUntilReload: 0 };
 let reconnecting = false;
+let serverRestarted = false;
 let statusMessages = []; // { message, icon, expiresAt } - each expires individually
 let playerActivity = {}; // player name -> { editMode, activeOverlay }
 let activePlayersList = [];
@@ -53,6 +54,11 @@ function render() {
   if(connectionState.state == 'reload')
     return show(el, 'reload', 'link_off', `No response from server. Reloading the page in ${Math.max(1, Math.ceil(connectionState.msUntilReload / 1000))} seconds.`);
 
+  // the reload after a server restart is spread over several seconds so the server is not hit by
+  // every tab at once, which is long enough for the page to look frozen without saying why
+  if(serverRestarted)
+    return show(el, 'reconnecting', 'link_off', 'The server was restarted. Reloading the page...');
+
   if(reconnecting)
     return show(el, 'reconnecting', 'link_off', 'Connection lost. Reconnecting...');
 
@@ -92,6 +98,10 @@ onLoad(function() {
   });
   onConnectionClose(function() {
     reconnecting = true;
+    render();
+  });
+  onServerRestart(function() {
+    serverRestarted = true;
     render();
   });
   setInterval(render, 500);

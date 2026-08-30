@@ -4,7 +4,9 @@ let serverStart = null;
 let userNavigatedAway = false;
 let messageCallbacks = {};
 let onConnectionCloseCallbacks = [];
+let onServerRestartCallbacks = [];
 export function onConnectionClose(cb) { onConnectionCloseCallbacks.push(cb); }
+export function onServerRestart(cb) { onServerRestartCallbacks.push(cb); }
 
 //used by unit tests until jest supports mocking ESM static imports
 export function mockConnection() {
@@ -56,6 +58,7 @@ export function startWebSocket() {
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
         setTimeout(() => location.reload(), rand()*10000);
+        for(const cb of onServerRestartCallbacks) cb();
         preventReconnect();
         connection.close();
       }
