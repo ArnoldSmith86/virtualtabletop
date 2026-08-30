@@ -119,7 +119,29 @@ function showInviteStatus(text, isError) {
     inviteStatusTimeout = setTimeout(_=>showInviteStatus(''), 5000);
 }
 
-// announces joins, leaves and renames by comparing the sessions of a meta update to the previous ones
+// describes the joins, leaves and renames between two session lists of a meta update
+// session IDs are per connection, so a reconnect or a second tab of the same player appears as a new
+// session for a name that is already there - as with closing one of two tabs, that is not announced
+export function sessionChangeMessages(previous, current, ownSessionID) {
+  const currentNames = new Set(current.values());
+  const previousNames = new Set(previous.values());
+  const parts = new Set();
+  for(const [ sessionID, player ] of previous)
+    if(!current.has(sessionID) && !currentNames.has(player))
+      parts.add(`${player} left`);
+  for(const [ sessionID, player ] of current) {
+    const before = previous.get(sessionID);
+    if(before === undefined) {
+      if(!previousNames.has(player))
+        parts.add(`${player} joined`);
+    // a rename of this tab is already announced by the 'rename' message handler
+    } else if(before != player && sessionID != ownSessionID) {
+      parts.add(`${before} renamed to ${player}`);
+    }
+  }
+  return [ ...parts ];
+}
+
 function announceSessionChanges(sessions) {
   const current = new Map((sessions || []).map(s=>[ s.sessionID, s.player ]));
   const previous = prevSessions;
@@ -127,21 +149,9 @@ function announceSessionChanges(sessions) {
   if(!previous)
     return;
 
-  const currentNames = new Set(current.values());
-  const parts = new Set();
-  for(const [ sessionID, player ] of previous)
-    if(!current.has(sessionID) && !currentNames.has(player))
-      parts.add(`${player} left`);
-  for(const [ sessionID, player ] of current) {
-    const before = previous.get(sessionID);
-    if(before === undefined)
-      parts.add(`${player} joined`);
-    // a rename of this tab is already announced by the 'rename' message handler
-    else if(before != player && sessionID != mySessionID)
-      parts.add(`${before} renamed to ${player}`);
-  }
-  if(parts.size)
-    setStatusMessage([ ...parts ].join('; '));
+  const parts = sessionChangeMessages(previous, current, mySessionID);
+  if(parts.length)
+    setStatusMessage(parts.join('; '));
 }
 
 function fillPlayerList(players, active, sessions) {
