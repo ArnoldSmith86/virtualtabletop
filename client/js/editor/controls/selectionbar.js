@@ -371,9 +371,13 @@ function selectionBarInstallListeners() {
     }
   }, true);
 
-  // switching windows while a key is down never delivers its keyup
+  // Switching windows while a key is down never delivers its keyup - and an
+  // Escape whose keyup is owed to nobody must not eat the next one: Ctrl+Escape
+  // opens the Start menu on Windows, so the release of the very keystroke that
+  // closed a dropdown can be the one that never arrives.
   window.addEventListener('blur', function() {
     selectionBarTabHeld = false;
+    selectionBarSwallowEscapeUp = false;
     selectionBarPeekRelease();
   });
 
