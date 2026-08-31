@@ -379,6 +379,31 @@ function selectionBarInstallListeners() {
     selectionBarStepStack(bar, e.deltaY > 0 ? 1 : -1);
   }, { capture: true, passive: false });
 
+  // The middle button finishes what the wheel started: it takes the row the
+  // wheel and the arrows are on, which is what Enter does on it - so the whole
+  // gesture can be made by the hand that is already on the mouse, without the
+  // pointer ever leaving the widget it is reading. Only a row the keys have
+  // actually stepped to is taken; a middle press that was aimed at no row is
+  // left alone, since in edit mode that is the press that plays a widget.
+  // Capture phase, so the room's own input handling never sees it - and its
+  // default with it, which is the autoscroll of a middle press on Windows and
+  // the primary-selection paste of one on X11.
+  window.addEventListener('mousedown', function(e) {
+    if(e.button != 1 || !selectionBarIsActive() || !selectionBarPeekActive)
+      return;
+    if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      return selectionBarPeekRelease();
+    const bar = selectionBarPeekedListBar();
+    const widget = bar && selectionBarStack[bar.stackKeyIndex];
+    // out on a row of the list the pointer has a row of its own to click, and
+    // the button means there whatever it means anywhere else in the editor
+    if(!widget || !selectionBarPointerIsInRoom(e.target))
+      return;
+    e.preventDefault();
+    e.stopPropagation();
+    selectionBarPickCursorRow(bar, widget, e.shiftKey);
+  }, true);
+
   // F1, F2, F3, F6 ... F12 pick the rows of the list without opening it - the
   // keys the panel this replaces was built around. Ctrl pastes the id into the
   // JSON editor, which only means anything while that one is open.
@@ -755,17 +780,24 @@ function selectionBarHandleDropdownKey(e) {
     const widget = dropdown.kind == 'stack' ? selectionBarStack[dropdown.bar.stackKeyIndex] : widgets.get(dropdown.bar.treeKeyID);
     if(!widget)
       return false;
-    if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
-      setSelection(selectedWidgets.filter(w=>w!=widget));
-    else if(e.shiftKey)
-      setSelection([ widget ].concat(selectedWidgets));
-    else
-      dropdown.bar.options.onPick(widget);
+    selectionBarPickCursorRow(dropdown.bar, widget, e.shiftKey);
     e.preventDefault();
     return true;
   }
 
   return false;
+}
+
+// Taking the row the keys landed on: Enter, and the middle mouse button while
+// the peek key holds the list open. Shift with either adds the widget to the
+// selection or takes it out again, the way shift-clicking a row does.
+function selectionBarPickCursorRow(bar, widget, add) {
+  if(add && selectedWidgets.indexOf(widget) != -1)
+    setSelection(selectedWidgets.filter(w=>w!=widget));
+  else if(add)
+    setSelection([ widget ].concat(selectedWidgets));
+  else
+    bar.options.onPick(widget);
 }
 
 function selectionBarResetStackCursor() {
@@ -1059,13 +1091,13 @@ function selectionBarRenderStack(bar) {
   // Once the pointer has left the room the list is standing still and its rows
   // are back within reach, so it says what a list that is not moving says.
   // Escape reaches the list whatever owns the keyboard, and so do the arrows and
-  // Enter while the peek key holds it open - the wheel with them, since the hand
-  // that holds the key is on the mouse. A list nobody is holding open leaves
-  // those keys to the text field that owns them, so the line only offers what
-  // will answer.
+  // Enter while the peek key holds it open - the wheel and the middle button
+  // with them, since the hand that holds the key is on the mouse. A list nobody
+  // is holding open leaves those keys to the text field that owns them, so the
+  // line only offers what will answer.
   const peeked = selectionBarPeekedListBar() === bar;
   const keyHelp = peeked
-    ? '<br>↑ ↓ or the wheel step through the list, Enter selects, Esc closes it.'
+    ? '<br>↑ ↓ or the wheel step through the list, Enter or the middle mouse button selects, Esc closes it.'
     : selectionBarKeyboardIsFree()
     ? '<br>↑ ↓ step through the list, Enter selects, Esc closes it.'
     : '<br>Esc closes it.';

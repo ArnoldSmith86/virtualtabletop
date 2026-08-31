@@ -4477,6 +4477,26 @@ const turnWheel = ClientFunction((selector, deltaY, withPeekKey) => {
   document.elementFromPoint(x, y).dispatchEvent(event);
   return event.defaultPrevented;
 });
+// A click of the middle button where the pointer is, dispatched on the element
+// under it the way the wheel turn above is. The release goes with it, or a press
+// the room did get to see would leave the widget latched into a drag. Returns
+// whether the list took the press: the room's own input handling listens on the
+// window on the way back up, so a press the list used up never gets there - and
+// the room preventDefault()s everything it does see, which makes the default the
+// wrong thing to ask about here.
+const pressMiddleButton = ClientFunction((selector, withPeekKey, shift) => {
+  const rect = document.querySelector(selector).getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
+  const options = { button: 1, buttons: 4, ctrlKey: withPeekKey, shiftKey: !!shift, clientX: x, clientY: y, bubbles: true, cancelable: true };
+  const target = document.elementFromPoint(x, y);
+  let reachedRoom = false;
+  const spy = _=>{ reachedRoom = true; };
+  window.addEventListener('mousedown', spy);
+  target.dispatchEvent(new MouseEvent('mousedown', options));
+  window.removeEventListener('mousedown', spy);
+  target.dispatchEvent(new MouseEvent('mouseup', Object.assign({}, options, { buttons: 0 })));
+  return !reachedRoom;
+});
 const roomZoom = ClientFunction(_=>getComputedStyle(document.documentElement).getPropertyValue('--zoom').trim());
 const storedStackOpen = ClientFunction(_=>{
   const state = JSON.parse(localStorage.getItem('editorState') || '{}');
@@ -4791,6 +4811,70 @@ test('The wheel steps the peeked list instead of zooming the room', async t => {
   await t.expect(bar.hasClass('stackVisible')).notOk();
   await t.expect(await turnWheel('#w_checker', -120, false)).ok();
   await t.expect(roomZoom()).notEql(zoom);
+  await setEditorState(null);
+});
+
+// Stepping the list with the wheel leaves the hand on the mouse, so the middle
+// button takes the row it landed on - the same thing Enter does on it, and the
+// half of the gesture that keeps the pointer on the widget being read.
+test('The middle mouse button takes the row the wheel stepped to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_board')
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(3)
+    // the help line names the button next to the key that does the same thing
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('Enter or the middle mouse button selects');
+
+  // a press that no key and no wheel has aimed at a row is left where it was:
+  // in edit mode the middle button is what plays a widget
+  await t.expect(await pressMiddleButton('#w_checker', true)).notOk();
+  await t.expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk();
+
+  await turnWheel('#w_checker', 120, true);
+  await turnWheel('#w_checker', 120, true);
+  await t.expect(stackRows.nth(1).hasClass('selectionBarKeyRow')).ok();
+  await t.expect(await pressMiddleButton('#w_checker', true)).ok();
+  await t
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).notOk();
+
+  // Shift with it adds the row to the selection, the way it does with Enter
+  await turnWheel('#w_checker', 120, true);
+  await t.expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok();
+  await t.expect(await pressMiddleButton('#w_checker', true, true)).ok();
+  await t
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok();
+
+  // out on a row of the list the pointer has a row of its own to click, so the
+  // button is left to whatever it means in the editor
+  await movePointerWithPeekKey([ '#editorModuleTopLeft .selectionBarCrumbs' ]);
+  await t.expect(await pressMiddleButton('#editorModuleTopLeft .selectionBarStackRow', true)).notOk();
+  await holdPeekKey(false);
+
+  // and with nothing holding the list open the button is the room's again
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .hover('#w_checker');
+  await t.expect(await pressMiddleButton('#w_checker', false)).notOk();
   await setEditorState(null);
 });
 
