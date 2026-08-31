@@ -315,6 +315,35 @@ describe('the auto layout arranging its children', () => {
     expect(positionsByZ(holder)).toEqual([ [ 58, 58 ], [ 162, 58 ], [ 58, 162 ], [ 162, 162 ] ]);
   });
 
+  test('children of different sizes share the row, each with its own room', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 200 });
+    createCard('small',  { parent: 'h', z: 1, width: 60,  height: 60 });
+    createCard('big',    { parent: 'h', z: 2, width: 140, height: 140 });
+    createCard('small2', { parent: 'h', z: 3, width: 60,  height: 60 });
+    await holder.updateAfterShuffle();
+    const row = positionsByZ(holder);
+    // the tallest child names the vertical margin (200-140)/2 = 30, and the
+    // row spreads until it ends 30 from either edge as well
+    expect(row[0]).toEqual([ 30, 30 ]);
+    expect(row[2][0] + 60).toBe(570);
+    expect(row.every(([ , y ])=>y == 30)).toBe(true);
+  });
+
+  test('a pile dropped onto the middle of the row is inserted there, not at the back', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 120 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    // the row runs c0 c1 c2; the pile is dropped between c0 and c1
+    const pile = await createPile('drop', holder, 150, 10, 2);
+    await holder.onChildAddAlign(pile, 'h');
+    expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
+    const order = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x')).map(c=>c.get('id'));
+    expect(order[0]).toBe('c0');
+    expect(order.slice(1, 3).sort()).toEqual([ 'drop-card-0', 'drop-card-1' ]);
+    expect(order.slice(3)).toEqual([ 'c1', 'c2' ]);
+  });
+
   test('a pile in a holder with the room to spread is emptied out, one card per slot', async () => {
     const holder = createHolder({ id: 'h', width: 600, height: 120 });
     await createPile('group', holder, 4, 4, 3);

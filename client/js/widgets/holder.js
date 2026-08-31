@@ -817,17 +817,22 @@ export class Holder extends ImageWidget {
 
   // In the auto layout the children wrap into rows, so where a dropped widget
   // lands is not decided along a single axis: it goes to the nearest row first
-  // and to its place within that row then.
+  // and to its place within that row then. The hundredth-of-a-unit offsets an
+  // emptied pile leaves its cards with must not read as rows of their own, so
+  // anything within a unit counts as one row - the place within the row is
+  // then decided by x alone, which is what puts a pile dropped onto the
+  // middle of a row into the middle instead of behind everything.
   async receiveCardAuto(card, pos) {
     const children = this.arrangedChildrenOwned();
-    const rowsY = [ ...new Set(children.filter(c=>c != card).map(c=>c.get('y'))) ];
+    const rows = [];
+    for(const y of children.filter(c=>c != card).map(c=>c.get('y')).sort((a, b)=>a - b))
+      if(!rows.length || y - rows[rows.length - 1] > 1)
+        rows.push(y);
+    const rowY = y=>rows.length ? rows.reduce((nearest, row)=>Math.abs(row - y) < Math.abs(nearest - y) ? row : nearest) : y;
     const sortCoords = c=>{
-      if(c != card || !pos)
-        return [ c.get('y'), c.get('x') ];
-      let [ x, y ] = pos;
-      if(rowsY.length)
-        y = rowsY.reduce((nearest, rowY)=>Math.abs(rowY - y) < Math.abs(nearest - y) ? rowY : nearest);
-      return [ y, x ];
+      if(c == card && pos)
+        return [ rowY(pos[1]), pos[0] ];
+      return [ rowY(c.get('y')), c.get('x') ];
     };
     const sorted = children.sort((a, b)=>{
       const [ aY, aX ] = sortCoords(a);
