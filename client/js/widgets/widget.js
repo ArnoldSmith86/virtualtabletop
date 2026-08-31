@@ -3931,7 +3931,7 @@ export class Widget extends StateManaged {
   holderArrangingPilesOf(parent) {
     if(parent && widgets.has(parent)) {
       const holder = widgets.get(parent);
-      if(holder.get('type') == 'holder' && holder.get('allowPiles'))
+      if(holder.get('type') == 'holder' && holder.keepsPiles())
         return holder;
     }
     return null;

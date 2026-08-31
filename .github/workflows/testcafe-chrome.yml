@@ -36,11 +36,11 @@ jobs:
           - routines.js
           - legacymatrix.js
           - interactions.js
-          # holderevents.js, allowpiles.js and holder-layout.js drive their drags with synthetic
+          # holderevents.js, multispread.js and holder-layout.js drive their drags with synthetic
           # mouse events whose timing against the drop animation has only been measured in Chrome
           # so far
           - holderevents.js
-          - allowpiles.js
+          - multispread.js
           - holder-layout.js
           - keyboardzoom.js
           # the score entry surfaces are driven with synthetic mouse and wheel events -

@@ -127,10 +127,10 @@ describe('what each layout derives for the holder', () => {
   });
 
   test('pile stacks everything: the stack offsets answer 0 whatever is written', () => {
-    const holder = createHolder({ id: 'h', layout: 'pile', stackOffsetX: 40, allowPiles: true });
+    const holder = createHolder({ id: 'h', layout: 'pile', stackOffsetX: 40 });
     expect(holder.get('stackOffsetX')).toBe(0);
     expect(holder.get('stackOffsetY')).toBe(0);
-    expect(holder.get('allowPiles')).toBe(false);
+    expect(holder.keepsPiles()).toBe(false);
     expect(holder.get('alignChildren')).toBe(true);
     expect(holder.spreadsChildren()).toBe(false);
   });
@@ -154,7 +154,7 @@ describe('what each layout derives for the holder', () => {
 
   test('multiSpread arranges piles, shows the drop shadow and spaces the groups a default gap apart', () => {
     const holder = createHolder({ id: 'h', layout: 'multiSpread' });
-    expect(holder.get('allowPiles')).toBe(true);
+    expect(holder.keepsPiles()).toBe(true);
     expect(holder.get('dropShadow')).toBe(true);
     expect(holder.get('pilesGapX')).toBe(8);
     expect(holder.arrangesPiles()).toBe(true);
@@ -175,32 +175,33 @@ describe('what each layout derives for the holder', () => {
     const holder = createHolder({ id: 'h', layout: 'custom', stackOffsetX: 20, preventPiles: true });
     expect(holder.get('stackOffsetX')).toBe(20);
     expect(holder.get('preventPiles')).toBe(true);
-    expect(holder.get('allowPiles')).toBe(false);
+    expect(holder.keepsPiles()).toBe(false);
   });
 
   test('auto only allows piles while the holder fits just one card', () => {
     const big = createHolder({ id: 'big', width: 600, height: 300 });
     createCard('bigc', { parent: 'big', z: 1 });
-    expect(big.get('allowPiles')).toBe(false);
+    expect(big.keepsPiles()).toBe(false);
     const small = createHolder({ id: 'small', width: 120, height: 120 });
     createCard('smallc', { parent: 'small', z: 1 });
-    expect(small.get('allowPiles')).toBe(true);
+    expect(small.keepsPiles()).toBe(true);
     // an empty holder has no card to measure against, so it starts out the
     // classic way - the first drop decides
-    expect(createHolder({ id: 'empty', width: 600, height: 300 }).get('allowPiles')).toBe(true);
+    expect(createHolder({ id: 'empty', width: 600, height: 300 }).keepsPiles()).toBe(true);
   });
 
-  test('allowPiles: false written on an auto holder turns piles off without switching auto off', () => {
-    const holder = createHolder({ id: 'h', width: 120, height: 120, allowPiles: false });
+  test('writing preventPiles turns piles off in a small holder, on the classic path', () => {
+    const holder = createHolder({ id: 'h', width: 120, height: 120, preventPiles: true });
     createCard('c1', { parent: 'h', z: 1 });
-    expect(holder.usesAutoLayout()).toBe(true);
-    expect(holder.get('allowPiles')).toBe(false);
+    expect(holder.usesAutoLayout()).toBe(false);
+    expect(holder.keepsPiles()).toBe(false);
+    expect(holder.supportsPiles()).toBe(false);
   });
 });
 
 describe('when the auto layout applies', () => {
   test('it steps aside while any classic arrangement property is written to a non-default value', () => {
-    for(const deferring of [ { stackOffsetX: 40 }, { dropOffsetY: 10 }, { alignChildren: false }, { preventPiles: true }, { allowPiles: true }, { pilesGapX: 20 }, { spreadMin: 3 } ]) {
+    for(const deferring of [ { stackOffsetX: 40 }, { dropOffsetY: 10 }, { alignChildren: false }, { preventPiles: true }, { pilesGapX: 20 }, { spreadMin: 3 } ]) {
       const holder = createHolder({ id: 'h', ...deferring });
       expect(holder.get('layout')).toBe('auto');
       expect(holder.effectiveLayout()).toBe('custom');
@@ -210,9 +211,9 @@ describe('when the auto layout applies', () => {
   });
 
   test('a written value that equals the classic default was a no-op classically, so it stays one', () => {
-    // writing allowPiles: false (or any other default) into a classic holder
+    // writing stackOffsetX: 0 (or any other default) into a classic holder
     // changed nothing - so it does not switch the auto layout off either
-    for(const harmless of [ { allowPiles: false }, { stackOffsetX: 0 }, { alignChildren: true }, { preventPiles: false }, { dropOffsetX: 4 } ]) {
+    for(const harmless of [ { stackOffsetX: 0 }, { alignChildren: true }, { preventPiles: false }, { dropOffsetX: 4 } ]) {
       const holder = createHolder({ id: 'h', ...harmless });
       expect(holder.effectiveLayout()).toBe('auto');
       expect(holder.usesAutoLayout()).toBe(true);
@@ -242,7 +243,7 @@ describe('when the auto layout applies', () => {
   });
 
   test('but an inherited value that equals the classic default leaves auto in charge', () => {
-    createHolder({ id: 'template', allowPiles: false });
+    createHolder({ id: 'template', stackOffsetX: 0 });
     const holder = createHolder({ id: 'h', width: 600, height: 300, inheritFrom: 'template' });
     expect(holder.usesAutoLayout()).toBe(true);
   });
@@ -384,14 +385,13 @@ describe('the auto layout arranging its children', () => {
       expect(new Set(pile.children().map(c=>c.get('owner'))).size).toBe(1);
   });
 
-  test('a written allowPiles: false keeps the shrunken holder from forming one', async () => {
-    const holder = createHolder({ id: 'h', width: 600, height: 120, allowPiles: false });
+  test('a written preventPiles keeps the shrunken holder from forming one', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 120, preventPiles: true });
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
     await holder.set('width', 120);
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
-    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ], [ 10, 10 ], [ 10, 10 ] ]);
   });
 
   test('a card being dragged is left out of the gather', async () => {
@@ -678,7 +678,7 @@ describe('the random layout', () => {
   test('random prevents piles and counts as a spreading arrangement', () => {
     const holder = createHolder({ id: 'h', layout: 'random' });
     expect(holder.get('preventPiles')).toBe(true);
-    expect(holder.get('allowPiles')).toBe(false);
+    expect(holder.keepsPiles()).toBe(false);
     expect(holder.get('alignChildren')).toBe(true);
     expect(holder.spreadsChildren()).toBe(true);
     expect(holder.supportsPiles()).toBe(false);
@@ -1818,13 +1818,13 @@ describe('a grid whose cells are stacks (preventPiles: false)', () => {
   test('writing preventPiles: false turns piles on, everything else keeps them off', () => {
     const stacks = createHolder({ id: 'h', layout: 'grid', preventPiles: false });
     expect(stacks.get('preventPiles')).toBe(false);
-    expect(stacks.get('allowPiles')).toBe(true);
+    expect(stacks.keepsPiles()).toBe(true);
     expect(stacks.supportsPiles()).toBe(true);
     // the cells are their own arrangement, not a row of groups
     expect(stacks.arrangesPiles()).toBe(false);
     const plain = createHolder({ id: 'h2', layout: 'grid' });
     expect(plain.get('preventPiles')).toBe(true);
-    expect(plain.get('allowPiles')).toBe(false);
+    expect(plain.keepsPiles()).toBe(false);
   });
 
   test('a pile survives as one cell and keeps its cards compact', async () => {
@@ -1989,16 +1989,16 @@ describe('the layout-dependent defaults survive set()', () => {
     expect(holder.get('dropShadow')).toBe(true);
   });
 
-  test('preventPiles: false written on a grid sticks and flips allowPiles', async () => {
+  test('preventPiles: false written on a grid sticks and turns the cells into stacks', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid' });
     await holder.set('preventPiles', false);
     expect(holder.state.preventPiles).toBe(false);
     expect(holder.get('preventPiles')).toBe(false);
-    expect(holder.get('allowPiles')).toBe(true);
+    expect(holder.keepsPiles()).toBe(true);
     await holder.set('preventPiles', true);
     expect(holder.state.preventPiles).toBe(undefined);
     expect(holder.get('preventPiles')).toBe(true);
-    expect(holder.get('allowPiles')).toBe(false);
+    expect(holder.keepsPiles()).toBe(false);
   });
 
   test('under every other layout the classic false defaults stay', async () => {

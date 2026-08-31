@@ -37,10 +37,12 @@ beforeAll(async () => {
 });
 
 // The real Holder is not a module either, and everything asserted here only needs a parent
-// that answers to the two properties the pile reads from it.
+// that answers to the two properties the pile reads from it - and to keepsPiles(), which
+// names the layouts whose piles take the holder's arrangement.
 function createHolder(definition) {
   const holder = createWidget({ type: 'holder', ...definition });
   holder.receiveCard = async () => {};
+  holder.keepsPiles = () => holder.get('layout') == 'multiSpread';
   return holder;
 }
 
@@ -138,7 +140,7 @@ describe('a pile spreading its cards', () => {
 
 describe('a pile in a holder that arranges piles', () => {
   test('is laid out the way the holder lays out its cards', async () => {
-    createHolder({ id: 'tableau', allowPiles: true, stackOffsetY: 30, spreadMin: 2 });
+    createHolder({ id: 'tableau', layout: 'multiSpread', stackOffsetY: 30, spreadMin: 2 });
     const pile = withCards(createPile({ id: 'inherit', parent: 'tableau' }).get('id'), 4);
 
     expect(pile.get('stackOffsetY')).toBe(30);
@@ -148,7 +150,7 @@ describe('a pile in a holder that arranges piles', () => {
   });
 
   test('collects its cards when it is taken out of the holder', async () => {
-    createHolder({ id: 'tableau', allowPiles: true, stackOffsetY: 40 });
+    createHolder({ id: 'tableau', layout: 'multiSpread', stackOffsetY: 40 });
     const pile = withCards(createPile({ id: 'leaving', parent: 'tableau' }).get('id'), 3);
     await pile.arrangeChildren();
     expect(positions('leaving', 3)).toEqual([ 0, 40, 80 ]);
@@ -159,7 +161,7 @@ describe('a pile in a holder that arranges piles', () => {
   });
 
   test('keeps its own offset when it has one', async () => {
-    createHolder({ id: 'tableau', allowPiles: true, stackOffsetY: 30 });
+    createHolder({ id: 'tableau', layout: 'multiSpread', stackOffsetY: 30 });
     const pile = withCards(createPile({ id: 'own', parent: 'tableau', stackOffsetY: 10 }).get('id'), 3);
 
     await pile.arrangeChildren();

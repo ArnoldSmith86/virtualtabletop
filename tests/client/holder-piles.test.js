@@ -4,7 +4,7 @@ import { Widget } from '../../client/js/widgets/widget.js';
 
 import { createWidget, removeWidget } from './client-util.js';
 
-// A holder with allowPiles arranges piles instead of dissolving them: it decides what a drop
+// A multiSpread holder arranges piles instead of dissolving them: it decides what a drop
 // lands on and how much room each pile gets. holder.js relies on the concatenated global scope
 // of the shipped bundle rather than on imports, so expose the identifiers it references before
 // importing it.
@@ -83,7 +83,7 @@ afterEach(() => {
 describe('a holder deciding what a drop lands on', () => {
   let holder;
   beforeEach(() => {
-    holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 900, height: 700, allowPiles: true, stackOffsetY: 40, pilesGapX: 20 });
+    holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 900, height: 700, layout: 'multiSpread', stackOffsetY: 40, pilesGapX: 20 });
   });
 
   test('takes a card dropped anywhere along a fanned pile into that pile', async () => {
@@ -122,7 +122,7 @@ describe('a holder deciding what a drop lands on', () => {
   });
 
   test('picks the pile in front where two of them overlap', async () => {
-    const overlapping = createHolder({ id: 'row', x: 0, y: 0, allowPiles: true, stackOffsetY: 40, pilesOffsetX: 60 });
+    const overlapping = createHolder({ id: 'row', x: 0, y: 0, layout: 'multiSpread', stackOffsetY: 40, pilesOffsetX: 60 });
     const behind = await createColumn('behind', overlapping, 4, 4, 1);
     const inFront = await createColumn('inFront', overlapping, 64, 4, 1);
     await behind.set('z', 1);
@@ -160,7 +160,8 @@ describe('a holder deciding what a drop lands on', () => {
 
 describe('a holder spacing out the piles it arranges', () => {
   const spacing = async (properties, count) => {
-    const holder = createHolder({ id: 'tableau', x: 0, y: 0, allowPiles: true, ...properties });
+    // roomy enough that the overflow squish stays out of these measurements
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 900, height: 700, layout: 'multiSpread', ...properties });
     const column = await createColumn('col1', holder, 4, 4, count);
     return [ holder.childSpacing(column, 'X'), holder.childSpacing(column, 'Y') ];
   };
@@ -178,18 +179,22 @@ describe('a holder spacing out the piles it arranges', () => {
     expect(await spacing({ stackOffsetY: 40, pilesGapX: 20, pilesOffsetX: 60 }, 3)).toEqual([ CARD_WIDTH + 20, 0 ]);
   });
 
-  test('places them flush along the axis its stack offset names', async () => {
-    expect(await spacing({ stackOffsetX: 40 }, 3)).toEqual([ CARD_WIDTH + 2*40, 0 ]);
+  test('leaves the small default gap between them until the game spaces them itself', async () => {
+    expect(await spacing({ stackOffsetY: 40 }, 3)).toEqual([ CARD_WIDTH + 8, 0 ]);
+  });
+
+  test('packs them flush along the row when the gap is written as zero', async () => {
+    expect(await spacing({ stackOffsetX: 40, pilesGapX: 0 }, 3)).toEqual([ CARD_WIDTH + 2*40, 0 ]);
   });
 
   test('gives a card of its own the same slot as a pile, since it is one pile deep', async () => {
-    const holder = createHolder({ id: 'tableau', x: 0, y: 0, allowPiles: true, stackOffsetY: 40, pilesGapX: 20 });
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, layout: 'multiSpread', stackOffsetY: 40, pilesGapX: 20 });
     const card = createCard('loose', { parent: 'tableau' });
     expect([ holder.childSpacing(card, 'X'), holder.childSpacing(card, 'Y') ]).toEqual([ CARD_WIDTH + 20, 0 ]);
   });
 
   test('gives it the same flush slot as such a pile as well, so the row stays flush', async () => {
-    const holder = createHolder({ id: 'tableau', x: 0, y: 0, allowPiles: true, stackOffsetX: 40 });
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, layout: 'multiSpread', stackOffsetX: 40, pilesGapX: 0 });
     const column = await createColumn('col1', holder, 4, 4, 1);
     const card = createCard('loose', { parent: 'tableau' });
     expect(holder.childSpacing(card, 'X')).toBe(holder.childSpacing(column, 'X'));
@@ -199,12 +204,12 @@ describe('a holder spacing out the piles it arranges', () => {
 
 describe('a holder that stops arranging piles', () => {
   test('empties them out onto the row, so it goes on holding the cards it held', async () => {
-    const holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 900, height: 700, allowPiles: true, stackOffsetY: 40, pilesGapX: 20 });
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 900, height: 700, layout: 'multiSpread', stackOffsetY: 40, pilesGapX: 20 });
     await createColumn('col1', holder, 4, 4, 3);
     await createColumn('col2', holder, 124, 4, 2);
     expect(holder.children().length).toBe(5);
 
-    await holder.set('allowPiles', false);
+    await holder.set('layout', 'singleSpread');
 
     // a spreading holder can hold no pile - COUNT and dropLimit would count the piles instead
     // of the cards from here on
@@ -214,9 +219,9 @@ describe('a holder that stops arranging piles', () => {
   });
 
   test('keeps them where it does not spread its children out, as any holder may hold a pile', async () => {
-    const holder = createHolder({ id: 'stack', x: 0, y: 0, allowPiles: true, pilesOffsetX: 60 });
+    const holder = createHolder({ id: 'stack', x: 0, y: 0, layout: 'multiSpread', pilesOffsetX: 60 });
     const column = await createColumn('col1', holder, 4, 4, 3);
-    await holder.set('allowPiles', false);
+    await holder.set('layout', 'custom');
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(1);
     // it places its own cards no longer, so it collects them onto one spot
     expect(column.children().every(c=>c.get('x') == 0 && c.get('y') == 0)).toBe(true);
@@ -227,7 +232,7 @@ describe('a pile authored with a single card', () => {
   // the engine dissolves a pile before it gets this small, but a hand-written game file
   // can start one off like this - taking the card must not leave an empty pile behind
   test('goes away when that card is taken out', async () => {
-    const holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 400, height: 300, allowPiles: true, stackOffsetY: 40 });
+    const holder = createHolder({ id: 'tableau', x: 0, y: 0, width: 400, height: 300, layout: 'multiSpread', stackOffsetY: 40 });
     await createColumn('lonely', holder, 4, 4, 1);
     await widgets.get('lonely-card-0').set('parent', null);
     expect(widgets.has('lonely')).toBe(false);
@@ -243,8 +248,8 @@ describe('the axis a holder lines its children up along', () => {
   });
 
   test('is the one the piles are spaced out on where it arranges them', () => {
-    expect(direction({ allowPiles: true, stackOffsetY: 40, pilesGapX: 20 })).toEqual([ 'X', 1 ]);
-    expect(direction({ allowPiles: true, stackOffsetX: 40, pilesOffsetY: 60 })).toEqual([ 'Y', 1 ]);
-    expect(direction({ allowPiles: true, stackOffsetX: 40, pilesOffsetY: -60 })).toEqual([ 'Y', -1 ]);
+    expect(direction({ layout: 'multiSpread', stackOffsetY: 40, pilesGapX: 20 })).toEqual([ 'X', 1 ]);
+    expect(direction({ layout: 'multiSpread', stackOffsetX: 40, pilesOffsetY: 60 })).toEqual([ 'Y', 1 ]);
+    expect(direction({ layout: 'multiSpread', stackOffsetX: 40, pilesOffsetY: -60 })).toEqual([ 'Y', -1 ]);
   });
 });

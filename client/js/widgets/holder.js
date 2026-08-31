@@ -3,35 +3,33 @@
 // value and acts as a knob of the layout (the fan step of a multiSpread, the
 // margins of a grid, ...).
 const layoutDerivedProperties = {
-  pile:           { alignChildren: true,  allowPiles: false, stackOffsetX: 0, stackOffsetY: 0 },
-  singleSpread:   { alignChildren: true,  allowPiles: false, preventPiles: false },
+  pile:           { alignChildren: true,  stackOffsetX: 0, stackOffsetY: 0 },
+  singleSpread:   { alignChildren: true,  preventPiles: false },
   // dropShadow is a default rather than derived: multiSpread turns the
   // insertion preview on, but a game that writes dropShadow: false keeps it
   // off - see Holder.getDefaultValue
-  multiSpread: { alignChildren: true,  allowPiles: true,  preventPiles: false },
-  // the two pile switches collapse into the preventPiles knob under a grid:
-  // writing preventPiles: false turns the cells into stacks - preventPiles
-  // defaults to true there (see Holder.getDefaultValue) and allowPiles
-  // follows it (see Holder.get)
+  multiSpread: { alignChildren: true,  preventPiles: false },
+  // preventPiles is the one pile knob of a grid: writing preventPiles: false
+  // turns the cells into stacks - it defaults to true there (see
+  // Holder.getDefaultValue)
   grid:           { alignChildren: true },
-  random:         { alignChildren: true,  allowPiles: false, preventPiles: true },
+  random:         { alignChildren: true,  preventPiles: true },
   freeform:       { alignChildren: false },
-  // allowPiles is derived from the holder's size - see Holder.get
   auto:           { alignChildren: true,  preventPiles: false }
 };
 
 // The properties a get() on a holder may derive from its layout instead of
 // answering from the state (see Holder.get below).
-const layoutDerivableProperties = new Set([ 'alignChildren', 'preventPiles', 'allowPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesGapX' ]);
+const layoutDerivableProperties = new Set([ 'alignChildren', 'preventPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesGapX' ]);
 
 // The raw arrangement properties that switch an auto layout off: while any of
 // them is written to a value that differs from its classic default, the holder
 // behaves exactly as if its layout were 'custom'. That way JSON written
 // against the classic properties - copied from an older game or from the wiki -
 // keeps meaning exactly what it always did, while a written default (like
-// allowPiles: false) stays the classic no-op it always was and leaves the
+// stackOffsetX: 0) stays the classic no-op it always was and leaves the
 // auto layout in charge.
-const autoDeferProperties = [ 'alignChildren', 'preventPiles', 'allowPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
+const autoDeferProperties = [ 'alignChildren', 'preventPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
 
 // The padding the auto layout keeps between its children and to the border.
 const autoLayoutPadding = 4;
@@ -64,7 +62,6 @@ export class Holder extends ImageWidget {
       dropShadow: false,
       alignChildren: true,
       preventPiles: false,
-      allowPiles: false,
       childrenPerOwner: false,
       showInactiveFaceToSeat: null,
 
@@ -95,8 +92,8 @@ export class Holder extends ImageWidget {
       // the insertion preview is what makes dropping into a fan legible
       if(property == 'dropShadow' && this.effectiveLayout() == 'multiSpread')
         return true;
-      // under a grid both pile switches follow the one preventPiles knob:
-      // writing preventPiles: false is what turns the cells into stacks
+      // a grid keeps every card in a cell of its own by default: writing
+      // preventPiles: false is what turns the cells into stacks
       if(property == 'preventPiles' && this.effectiveLayout() == 'grid')
         return true;
     }
@@ -147,25 +144,24 @@ export class Holder extends ImageWidget {
     return this.providesValue('preventPiles') && (this.state.preventPiles !== undefined ? this.state.preventPiles : super.getDefaultValue('preventPiles')) === false;
   }
 
-  // What get('allowPiles') answers under the given effective layout. The auto
-  // layout only allows piles where it has no room to line the cards up anyway
-  // - the classic holder that fits just one card - and a game that writes
-  // allowPiles: false itself keeps them off there as well (writing true is a
-  // classic arrangement setup and switches the auto layout off entirely, see
-  // effectiveLayout). onPropertyChange also asks this about the layout a
+  // Whether this holder keeps the piles it holds as units of its arrangement -
+  // the groups of a multiSpread, the stacks in a grid's cells, the one pile of
+  // an auto holder too small to line cards up. Decided entirely by the layout
+  // and its preventPiles knob; everywhere else a dropped pile is emptied out,
+  // one card per slot. onPropertyChange also asks this about the layout a
   // change just left behind.
-  derivedAllowPiles(layout) {
-    const derived = layoutDerivedProperties[layout];
-    if(derived && derived.allowPiles !== undefined)
-      return derived.allowPiles;
+  keepsPiles(layout) {
+    if(layout === undefined)
+      layout = this.effectiveLayout();
+    if(layout == 'multiSpread')
+      return true;
     if(layout == 'grid')
       return this.gridAllowsPiles();
-    // a value the game wrote (or serves through inheritFrom) can only be the
-    // default false under an active auto layout - anything else would have
-    // switched it off - so its mere presence means piles are off
+    // the auto layout only tolerates piles where it has no room to line the
+    // cards up anyway - the classic holder that fits just one card
     if(layout == 'auto')
-      return this.state.allowPiles === undefined && !(this.inheritedProperties && this.inheritedProperties.allowPiles) && !this.autoSpreads();
-    return !!super.get('allowPiles');
+      return !this.autoSpreads();
+    return false;
   }
 
   // The layout decides the lower-level properties it owns, so reading them
@@ -196,18 +192,10 @@ export class Holder extends ImageWidget {
         if(veto.every(p=>super.get(p) === null))
           return 8;
       }
-      // see gridAllowsPiles: under a grid allowPiles follows the preventPiles
-      // knob (whose grid default of true lives in getDefaultValue)
-      if(layout == 'grid' && property == 'allowPiles')
-        return this.gridAllowsPiles();
       // an auto holder too small to arrange its cards centers them: the classic
       // paths put children at the drop offset, so that is where centering lives
       if(layout == 'auto' && (property == 'dropOffsetX' || property == 'dropOffsetY') && !this.autoSpreads())
         return this.autoCenteredDropOffset(property == 'dropOffsetX' ? 'X' : 'Y');
-      // piles fight an arrangement, so the auto layout decides from its size
-      // whether it allows them - see derivedAllowPiles
-      if(layout == 'auto' && property == 'allowPiles')
-        return this.derivedAllowPiles(layout);
     }
     return super.get(property);
   }
@@ -224,7 +212,7 @@ export class Holder extends ImageWidget {
     let children = this.childrenFilter(super.children(), true);
     if(children.length == 1 && children[0].get('type') == 'pile')
       children = this.childrenFilter(children[0].children(), false);
-    else if(this.get('allowPiles'))
+    else if(this.keepsPiles())
       // a holder that arranges piles still holds cards as far as everything
       // else is concerned: MOVE, COUNT and dropLimit count the cards, not the
       // piles they happen to be arranged in
@@ -319,7 +307,7 @@ export class Holder extends ImageWidget {
     // onLeave and leaveRoutine must not fire (they would e.g. flip the card
     // face down in a typical hand).
     let stillInside = false;
-    if(this.get('allowPiles') && !isLeaving) {
+    if(this.keepsPiles() && !isLeaving) {
       const newParent = card.get('parent');
       stillInside = newParent == this.get('id') || widgets.has(newParent) && widgets.get(newParent).get('parent') == this.get('id')
         // picking a card up out of one of the groups detaches it from that pile
@@ -396,7 +384,7 @@ export class Holder extends ImageWidget {
       return await super.onChildAddAlign(child, oldParentID);
 
     if(this.get('layout') == 'grid') {
-      if(child.get('type') == 'pile' && !this.get('allowPiles')) {
+      if(child.get('type') == 'pile' && !this.gridAllowsPiles()) {
         // a pile dropped into a grid breaks up into individual cards (the grid
         // derives preventPiles, so they won't re-merge). MOVE fills them into
         // the free cells; an interactive drop puts them down at the cell under
@@ -418,7 +406,7 @@ export class Holder extends ImageWidget {
       // it: the widget is put exactly onto what it landed on, which is what
       // updatePiles takes as the decision to merge. The drop shadow points at
       // the same stack, so the preview and the drop agree.
-      if(this.get('allowPiles')) {
+      if(this.gridAllowsPiles()) {
         let coord = { x: child.get('x'), y: child.get('y') };
         if(!oldParentID)
           coord = this.coordLocalFromCoordGlobal(coord);
@@ -440,9 +428,9 @@ export class Holder extends ImageWidget {
 
     const spreads = this.get('alignChildren') && this.spreadsChildren();
 
-    // a holder that arranges piles takes a dropped pile as it is - everywhere
+    // a holder that keeps piles takes a dropped pile as it is - everywhere
     // else the pile is emptied into the holder, one card per slot
-    if((this.get('preventPiles') || spreads && !this.get('allowPiles')) && child.get('type') == 'pile') {
+    if((this.get('preventPiles') || spreads && !this.keepsPiles()) && child.get('type') == 'pile') {
       let i=1;
       const arrived = [];
       this.preventRearrangeDuringPileDrop = true;
@@ -504,7 +492,7 @@ export class Holder extends ImageWidget {
         // already there, so that has to be settled before the holder pulls it
         // into its slot: from there on it sits a whole slot away from its
         // neighbours and could never combine with any of them.
-        target = this.get('allowPiles') ? this.arrangedChildAt(child, x, y) : null;
+        target = this.keepsPiles() ? this.arrangedChildAt(child, x, y) : null;
         if(child.get('dropShadowOwner'))
           // while the preview moves the shadow between the holder and a pile,
           // its coordinates are mid-conversion - the preview that started the
@@ -586,7 +574,7 @@ export class Holder extends ImageWidget {
   async previewShadowDrop(shadow, target, x, y) {
     for(let i=0; ; ++i) {
       await this.applyShadowPreview(shadow, target, x, y);
-      const settled = this.get('allowPiles') ? this.arrangedChildAt(shadow, x, y) : null;
+      const settled = this.keepsPiles() ? this.arrangedChildAt(shadow, x, y) : null;
       if(settled == target || i >= 2)
         return;
       target = settled;
@@ -745,20 +733,19 @@ export class Holder extends ImageWidget {
     // The piles took their layout from this holder and lose it here, so they
     // have to place their cards themselves again - arrangedChildren() no longer
     // sees them. A holder that spreads its children holds no pile at all: every
-    // pile dropped into one is emptied out, one card per slot, which is exactly
-    // what allowPiles makes optional. So the piles it was arranging are emptied
-    // out the same way rather than left behind in a state nothing else in here
-    // expects, where children() would go on reporting them instead of the cards
-    // they hold and COUNT, dropLimit and MOVE would silently count piles.
-    // A switch away from arranging piles is not the only one that leaves piles
+    // pile dropped into one is emptied out, one card per slot. So the piles it
+    // was arranging are emptied out the same way rather than left behind in a
+    // state nothing else in here expects, where children() would go on
+    // reporting them instead of the cards they hold and COUNT, dropLimit and
+    // MOVE would silently count piles.
+    // A switch away from keeping piles is not the only one that leaves piles
     // behind: the pile layout stacks dropped cards into one, so its piles have
     // to be dissolved as well when the new layout cannot host piles at all - a
-    // grid, or a spread without allowPiles.
+    // grid, or a spread.
     const stoppedArrangingPiles =
-      property == 'allowPiles' && oldValue && !this.get('allowPiles') ||
       // under a grid the preventPiles knob is what turns the stacks off again
-      property == 'preventPiles' && oldValue === false && this.get('layout') == 'grid' && !this.get('allowPiles') ||
-      property == 'layout' && !this.get('allowPiles') && (!this.supportsPiles() || this.derivedAllowPiles(this.effectiveLayout(oldValue === undefined ? this.getDefaultValue('layout') : oldValue)));
+      property == 'preventPiles' && oldValue === false && this.get('layout') == 'grid' && !this.keepsPiles() ||
+      property == 'layout' && !this.keepsPiles() && (!this.supportsPiles() || this.keepsPiles(this.effectiveLayout(oldValue === undefined ? this.getDefaultValue('layout') : oldValue)));
     if(stoppedArrangingPiles) {
       const piles = this.childrenFilter(super.children(), true).filter(c=>c.get('type') == 'pile');
       for(const pile of piles)
@@ -778,8 +765,8 @@ export class Holder extends ImageWidget {
     // a geometry knob moves a grid's cells as little as it can (sticky); a
     // layout switch or a pile switch changes what the cells mean, so those
     // hand the cells out again from scratch
-    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'allowPiles', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
-      await this.updateAfterShuffle(null, { sticky: [ 'layout', 'allowPiles', 'preventPiles' ].indexOf(property) == -1 });
+    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
+      await this.updateAfterShuffle(null, { sticky: [ 'layout', 'preventPiles' ].indexOf(property) == -1 });
     // the layouts that decide the arrangement from the holder's size react to it changing
     if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread' ].indexOf(this.get('layout')) != -1))
       await this.updateAfterShuffle(null, { sticky: true });
@@ -939,9 +926,8 @@ export class Holder extends ImageWidget {
   // The card size the auto layout measures against: the biggest card among the
   // children, looking into piles for the cards they hold - never the box of a
   // pile itself, whose size follows from the layout and would feed back into
-  // the decision. Everything reads from super.children() because get(
-  // 'allowPiles') derives from this measurement, so going through children()
-  // would recurse.
+  // the decision. Everything reads from super.children() because keepsPiles()
+  // derives from this measurement, so going through children() would recurse.
   autoCardSize() {
     // measured through every get() of a derived property, so the scan over
     // the children is cached until any state it could depend on changes
@@ -1670,7 +1656,7 @@ export class Holder extends ImageWidget {
   childSpacing(child, axis, squish=null, index=null, count=null) {
     const stackOffset = this.get('stackOffset' + axis);
 
-    if(this.get('allowPiles')) {
+    if(this.keepsPiles()) {
       const squished = squish && squish.axis == axis;
       const gap = squished ? squish.gap : this.get('pilesGap' + axis);
       if(gap !== null)
@@ -1803,7 +1789,7 @@ export class Holder extends ImageWidget {
       return this.autoSpreads();
     if(this.get('layout') == 'random')
       return true;
-    return !!(this.get('stackOffsetX') || this.get('stackOffsetY') || this.get('allowPiles') && this.pilesSpacingSet());
+    return !!(this.get('stackOffsetX') || this.get('stackOffsetY') || this.keepsPiles() && this.pilesSpacingSet());
   }
 
   // The axis the children are lined up along and the direction along it, which
@@ -1819,7 +1805,7 @@ export class Holder extends ImageWidget {
     // must not turn the main axis vertical
     if(this.multiSpreadWraps())
       return [ 'X', 1 ];
-    if(this.get('allowPiles')) {
+    if(this.keepsPiles()) {
       for(const axis of [ 'X', 'Y' ]) {
         if(this.get('pilesGap' + axis) !== null)
           return [ axis, 1 ];
@@ -1842,7 +1828,7 @@ export class Holder extends ImageWidget {
   // the cells are their own arrangement rather than a row of groups, so the
   // group operations - and the pile layout the groups inherit - stay out.
   arrangesPiles() {
-    return !!(this.get('allowPiles') && !this.usesAutoLayout() && this.get('layout') != 'grid' && this.get('alignChildren') && this.spreadsChildren() && this.supportsPiles());
+    return !!(this.keepsPiles() && !this.usesAutoLayout() && this.get('layout') != 'grid' && this.get('alignChildren') && this.spreadsChildren() && this.supportsPiles());
   }
 
   // Cards a routine moves in arrive one by one. In a holder that arranges piles
@@ -2112,7 +2098,7 @@ export class Holder extends ImageWidget {
   }
 
   supportsPiles() {
-    return !this.get('preventPiles') && (this.get('allowPiles') || !this.get('alignChildren') || !this.spreadsChildren());
+    return !this.get('preventPiles') && (this.keepsPiles() || !this.get('alignChildren') || !this.spreadsChildren());
   }
 
   // owners limits the pass to the lanes that actually changed - a deal into a
@@ -2140,7 +2126,7 @@ export class Holder extends ImageWidget {
       // spread out while there was room gathers back into one pile per lane,
       // centered where the derived drop offset points
       if(this.usesAutoLayout()) {
-        if(this.get('allowPiles') && !this.preventRearrangeDuringPileDrop)
+        if(this.keepsPiles() && !this.preventRearrangeDuringPileDrop)
           await this.gatherIntoPiles();
         if(this.arrangedChildren().length)
           await this.rearrangeChildrenAuto(this.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z')));
@@ -2157,11 +2143,11 @@ export class Holder extends ImageWidget {
       return;
     }
 
-    // an auto layout with the room to line cards up allows no piles - so when
+    // an auto layout with the room to line cards up keeps no piles - so when
     // a resize (or a layout switch) gives it that room, the piles it kept
     // while it was smaller are emptied out one card per slot, exactly like a
     // pile dropped into it now would be
-    if(this.usesAutoLayout() && !this.get('allowPiles') && !this.preventRearrangeDuringPileDrop)
+    if(this.usesAutoLayout() && !this.keepsPiles() && !this.preventRearrangeDuringPileDrop)
       for(const pile of this.childrenFilter(super.children(), true).filter(c=>c.get('type') == 'pile' && !c.get('dropShadowOwner')))
         await this.emptyPileIntoSlots(pile);
 

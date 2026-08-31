@@ -1323,7 +1323,6 @@ const editorPropertyHints = {
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
   layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder is smaller than one and a half cards along both axes; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMulti spread lines up several groups (piles) side by side.\nGrid snaps every card to a cell of its own: a drop lands in the very cell it is aimed at, empty cells stay empty, and deals fill the gaps first.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
-  allowPiles: 'Keep piles that are dropped in as piles and line them up as groups, instead of emptying them out one card per slot.',
   pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds. In a grid it pins the horizontal pitch of the cells instead - a pitch of the card width packs them flush.',
   pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds. In a grid it pins the vertical pitch of the cells instead.',
   pilesGapX: 'The next group starts right of the cards of the previous one, plus this many pixels.',
@@ -1370,7 +1369,7 @@ const editorPropertyHints = {
 // plus the raw arrangement properties that switch an auto layout off (see
 // Holder.effectiveLayout). Everything conditional on the layout listens to all
 // of them.
-const holderArrangementProperties = [ 'alignChildren', 'preventPiles', 'allowPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
+const holderArrangementProperties = [ 'alignChildren', 'preventPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
 const holderArrangementListenTo = [ 'layout', ...holderArrangementProperties ];
 
 // The layout a holder actually follows; a multi-selection facade has no
@@ -1467,9 +1466,6 @@ const editorTypeSections = {
         available: widget=>[ 'custom', 'pile', 'singleSpread', 'freeform', 'grid' ].indexOf(holderEffectiveLayout(widget)) != -1 || holderStateHas(widget, 'preventPiles'),
         availableListenTo: holderArrangementListenTo,
         listenTo: holderArrangementListenTo },
-      { label: 'Arrange dropped piles', property: 'allowPiles',       kind: 'checkbox',
-        available: widget=>holderEffectiveLayout(widget) == 'custom' || holderStateHas(widget, 'allowPiles'),
-        availableListenTo: holderArrangementListenTo },
       { label: 'Children per owner',    property: 'childrenPerOwner', kind: 'checkbox' }
     ]
   },
@@ -10526,10 +10522,8 @@ class PropertiesModule extends SidebarModule {
     const updateRows = _=>{
       const layout = widget.effectiveLayout();
       autoNote.style.display = layout == 'custom' && widget.get('layout') == 'auto' ? '' : 'none';
-      // the piles rows also belong to a custom layout that arranges piles
-      const arrangesPiles = layout == 'multiSpread' || layout == 'custom' && widget.get('allowPiles');
       for(const entry of rows) {
-        const applies = entry.layouts.indexOf(layout) != -1 || arrangesPiles && entry.layouts.indexOf('multiSpread') != -1;
+        const applies = entry.layouts.indexOf(layout) != -1;
         entry.row.style.display = applies || entry.properties.some(p=>widget.state[p] !== undefined) ? '' : 'none';
       }
     };

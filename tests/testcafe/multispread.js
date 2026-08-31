@@ -4,7 +4,7 @@ import { dragPath, openRoom, stateWhen, surfaceGeometry } from './interaction-ut
 
 setupTestEnvironment();
 
-// A holder with allowPiles arranges piles instead of dissolving them, and the piles it arranges
+// A multiSpread holder arranges piles instead of dissolving them, and the piles it arranges
 // spread their cards the way it says. What that comes to is asserted through the pointer here:
 // where a widget is when it is dropped, what a pile does on its way out of the holder and what
 // a routine hands the holder are the parts of it a unit test cannot reach - the arithmetic
@@ -39,7 +39,7 @@ function tableau(extra) {
     deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 1450, y: 20 },
     tableau: {
       id: 'tableau', type: 'holder', x: 100, y: 100, width: 900, height: 700,
-      dropTarget: { type: 'card' }, allowPiles: true, stackOffsetY: STACK_OFFSET, pilesGapX: 20
+      dropTarget: { type: 'card' }, layout: 'multiSpread', stackOffsetY: STACK_OFFSET, pilesGapX: 20
     }
   }, extra);
 }
@@ -147,13 +147,13 @@ test('A column dragged out of the holder collects its cards again', async t => {
   await t.expect(state.col1.height).eql(CARD_HEIGHT, 'and the pile is card-sized again');
 });
 
-test('Turning allowPiles off empties the piles the holder was arranging', async t => {
+test('Switching to a single spread empties the piles the holder was arranging', async t => {
   await openRoom(t, 'modern', tableau(Object.assign(column('col1', 4, 3), column('col2', 127, 2), {
     off: {
       id: 'off', type: 'button', x: 1100, y: 100, width: 120, height: 60, text: 'off',
       clickRoutine: [
         { func: 'SELECT', property: 'id', value: 'tableau' },
-        { func: 'SET', property: 'allowPiles', value: false }
+        { func: 'SET', property: 'layout', value: 'singleSpread' }
       ]
     }
   })));
