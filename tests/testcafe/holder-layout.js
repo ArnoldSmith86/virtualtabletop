@@ -144,7 +144,7 @@ test('A pile dropped into an auto holder with room to spread is emptied into the
   await t.expect(pileCount(state)).eql(0, 'the pile was emptied out');
   const row = byZ(state, 'holder');
   await t.expect(row.length).eql(3, 'all three cards are in the holder');
-  await t.expect(row.map(c=>c.x).sort((a, b)=>a - b)).eql([ 141.5, 248.5, 355.5 ], 'one card per slot of the centered row');
+  await t.expect(row.map(c=>c.x).sort((a, b)=>a - b)).eql([ 70, 248.5, 427 ], 'one card per slot of the row, its margins as even as the holder allows');
   await t.expect(row.map(c=>c.y)).eql([ 70, 70, 70 ]);
 });
 
@@ -179,9 +179,9 @@ function keptPileRoom(count, extra) {
 test('Resizing an auto holder empties the pile and gathers it back', async t => {
   await openRoom(t, 'modern', baseState({
     holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },
-    c1: card('c1', { parent: 'holder', x: 141.5, y: 70, z: 1 }),
+    c1: card('c1', { parent: 'holder', x: 70, y: 70, z: 1 }),
     c2: card('c2', { parent: 'holder', x: 248.5, y: 70, z: 2 }),
-    c3: card('c3', { parent: 'holder', x: 355.5, y: 70, z: 3 }),
+    c3: card('c3', { parent: 'holder', x: 427, y: 70, z: 3 }),
     shrink: { id: 'shrink', type: 'button', x: 1200, y: 400, text: 'shrink', clickRoutine: [
       { func: 'SELECT', property: 'id', value: 'holder' },
       { func: 'SET', property: 'width', value: 121 },
@@ -206,7 +206,7 @@ test('Resizing an auto holder empties the pile and gathers it back', async t => 
   // and the room coming back empties it onto the row again
   await t.click('#w_grow');
   state = await stateWhen(s=>pileCount(s) == 0 && s.c1 && s.c1.parent == 'holder');
-  await t.expect(byZ(state, 'holder').map(c=>c.x)).eql([ 141.5, 248.5, 355.5 ], 'one card per slot of the centered row');
+  await t.expect(byZ(state, 'holder').map(c=>c.x)).eql([ 70, 248.5, 427 ], 'one card per slot of the row, its margins as even as the holder allows');
   await t.expect(byZ(state, 'holder').map(c=>c.id)).eql([ 'c1', 'c2', 'c3' ], 'in the order they were stacked');
 });
 
@@ -257,7 +257,7 @@ test('A holder inheriting classic arrangement properties follows them like their
   await t.expect(state.loose.y).eql(4);
 });
 
-test('MOVE into an auto holder spreads the cards into a centered row', async t => {
+test('MOVE into an auto holder spreads the cards into a row with even margins', async t => {
   await openRoom(t, 'modern', baseState({
     holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' } },
     source: { id: 'source', type: 'holder', layout: 'pile', x: 1200, y: 100, dropTarget: { type: 'card' } },
@@ -269,10 +269,10 @@ test('MOVE into an auto holder spreads the cards into a centered row', async t =
 
   await t.click('#w_deal');
 
-  const state = await stateWhen(s=>s.c3.parent == 'holder' && s.c3.x == 355.5);
+  const state = await stateWhen(s=>s.c3.parent == 'holder' && s.c3.x == 427);
   const row = byZ(state, 'holder');
   await t.expect(row.map(c=>c.id)).eql([ 'c1', 'c2', 'c3' ], 'in the order they were moved');
-  await t.expect(row.map(c=>c.x)).eql([ 141.5, 248.5, 355.5 ], 'a centered row');
+  await t.expect(row.map(c=>c.x)).eql([ 70, 248.5, 427 ], 'a row with even margins');
   await t.expect(row.map(c=>c.y)).eql([ 70, 70, 70 ]);
   await t.expect(pileCount(state)).eql(0, 'spread out, not grouped');
 });
