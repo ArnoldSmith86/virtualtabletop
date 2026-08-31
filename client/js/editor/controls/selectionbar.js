@@ -951,7 +951,12 @@ function selectionBarRenderStack(bar) {
   // The keys are the same either way, so only the first line differs: a list the
   // pointer is towing along has moved on by the time the pointer has travelled
   // to one of its rows, so it names the keys rather than sending anyone clicking.
-  const keyHelp = '<br>↑ ↓ step through the list, Enter selects, Esc closes it.';
+  // Escape reaches the list whatever owns the keyboard, but the arrows and Enter
+  // belong to the text field that has it - the caret sitting in a line of JSON is
+  // the posture the peek gets used in, so the line only offers what will answer.
+  const keyHelp = selectionBarKeyboardIsFree()
+    ? '<br>↑ ↓ step through the list, Enter selects, Esc closes it.'
+    : '<br>Esc closes it.';
   if(selectionBarStack.length)
     div(bar.stackList, 'selectionBarStackHelp', selectionBarStackFromTouch
       ? 'Tap a row to select that widget.'

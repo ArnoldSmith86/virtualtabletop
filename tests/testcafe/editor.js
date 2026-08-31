@@ -4500,6 +4500,9 @@ test('Holding Ctrl opens the stack list and has it follow the pointer', async t 
     .expect(peekKeyDownOpensListAtOnce()).notOk()
     .expect(bar.hasClass('stackVisible')).ok()
     .expect(stackRows.count).eql(3)
+    // nothing else holds the keyboard here, so the arrows and Enter reach the
+    // list and the help line offers them
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('step through the list')
     // and it follows the pointer while the key is down instead of standing on
     // the spot the pointer last came to rest on
     .hover('#w_board', { offsetX: 20, offsetY: 20 })
@@ -4630,6 +4633,10 @@ test('The peek key works with the caret in the JSON text area', async t => {
     // the caret stays where it was: the list is a dropdown of the bar, not
     // something that takes the keyboard off what is being typed in
     .expect(activeElementID()).eql('jeText')
+    // ... which is why the arrows and Enter do not reach the list here, so the
+    // help line names only the keys that do
+    .expect(bar.find('.selectionBarStackHelp').textContent).notContains('step through the list')
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('Esc closes it.')
     .hover('#w_board', { offsetX: 20, offsetY: 20 })
     .expect(stackRows.count).eql(1);
   await holdPeekKey(false);
