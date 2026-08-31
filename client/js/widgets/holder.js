@@ -337,6 +337,10 @@ export class Holder extends ImageWidget {
       }
     }
     if(this.get('layout') == 'grid') {
+      // a drag that leaves takes its insertion preview with it - unless the
+      // drop is what ends it, which lands in the cell the preview holds open
+      if(card.get('dropShadowOwner') && this.gridInsertPreview && !this.preventRearrangeDuringPileDrop)
+        await this.closeGridInsertPreview();
       // a card taken out of the grid leaves its cell empty - the settled cells
       // stay where they are; the pass only tidies up what no longer fits
       if(!this.preventGridReflowDuringMerge)
@@ -1359,7 +1363,10 @@ export class Holder extends ImageWidget {
       }
     } else if(claims) {
       for(const [ entry, index ] of claims) {
-        if(index < range && !assigned.has(index))
+        // where the cells cannot stack the fill order continues past the
+        // lattice, so a settled entry on an overflow cell keeps it - only a
+        // grid of stacks caps its cells and pulls strays back inside
+        if((index < range || !isFinite(m.capacity)) && !assigned.has(index))
           assigned.set(index, entry);
         else
           pending.push({ entry, near: Math.min(index, range - 1) });
@@ -1485,10 +1492,13 @@ export class Holder extends ImageWidget {
   }
 
   // Which cell (or which stack) a drop aimed at the given cell goes to: the
-  // aimed cell while it is free, the nearest free cell while there is one, and
-  // the nearest stack that takes it once there is none. The drop and its
-  // shadow resolve through the same call, so the preview shows exactly what
-  // the drop will do.
+  // aimed cell while it is free, an insertion where it is taken and the cells
+  // cannot stack - the occupied cells from there on step one forward, up to
+  // the first hole, the way a spread opens a slot for a drop - the nearest
+  // free cell where insertion is not what a drop means (the cells are stacks
+  // but the drop missed every card), and the nearest stack that takes it once
+  // there is none. The drop and its shadow resolve through the same call, so
+  // the preview shows exactly what the drop will do.
   resolveGridDrop(m, others, child, aimIndex) {
     const occupied = new Map();
     for(const entry of others) {
@@ -1499,6 +1509,9 @@ export class Holder extends ImageWidget {
     const range = this.gridCellRange(m);
     if(aimIndex < range && !occupied.has(aimIndex))
       return { index: aimIndex };
+
+    if(!this.gridAllowsPiles() && occupied.has(aimIndex))
+      return { index: aimIndex, insert: true };
 
     let best = null;
     for(let i=0; i<range; ++i) {
@@ -1537,7 +1550,9 @@ export class Holder extends ImageWidget {
   }
 
   // An interactive drop lands in the cell it was aimed at - a free cell takes
-  // it as it is, holes and all, and the settled cards stay where they are.
+  // it as it is, holes and all, and the settled cards stay where they are. An
+  // occupied cell of a grid whose cells cannot stack takes it as an insertion:
+  // the cards from that cell on step one cell forward to make room.
   async snapToGridCell(child, oldParentID) {
     let coord = { x: child.get('x'), y: child.get('y') };
     if(!oldParentID)
@@ -1548,20 +1563,76 @@ export class Holder extends ImageWidget {
     // never claim cells of their own
     const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
     const m = this.gridMetrics(others.length + 1);
-    const resolved = this.resolveGridDrop(m, others, child, this.gridCellFromCoord(m, coord.x, coord.y));
+    const aimIndex = this.gridCellFromCoord(m, coord.x, coord.y);
 
     if(child.get('dropShadowOwner')) {
+      // an insertion preview holds while the pointer stays on its cell; aimed
+      // anywhere else it is taken back before the aim is resolved again
+      if(this.gridInsertPreview && this.gridInsertPreview.index !== aimIndex)
+        await this.closeGridInsertPreview();
+      const resolved = this.resolveGridDrop(m, others, child, aimIndex);
       // the preview: only the shadow is placed, parked on the stack it would
       // join or on the cell the drop will take
       if(resolved.host)
         return await child.setPosition(resolved.host.get('x'), resolved.host.get('y'), resolved.host.get('z') + 1);
+      if(resolved.insert)
+        this.gridInsertPreview = { index: aimIndex, count: others.length + 1, moved: await this.gridOpenCell(m, others, aimIndex) };
       const { x, y } = this.gridCellPosition(m, resolved.index);
       return await child.setPosition(x, y, others.length + 1);
     }
 
+    // the drop consumes the cell its preview holds open; aimed anywhere else,
+    // the preview is taken back before the drop is resolved
+    const preview = this.gridInsertPreview;
+    if(preview) {
+      delete this.gridInsertPreview;
+      if(preview.index !== aimIndex)
+        await this.closeGridInsertPreview(preview);
+    }
+    const resolved = this.resolveGridDrop(m, others, child, aimIndex);
     if(resolved.host && await this.mergeGridDrop(child, resolved.host))
       return true;
+    if(resolved.insert)
+      await this.gridOpenCell(m, others, aimIndex);
     return await this.gridArrange([ ...others, child ].sort((a, b)=>a.get('z') - b.get('z')), { arrivals: new Set([ child ]), aimIndex: resolved.host ? null : resolved.index });
+  }
+
+  // Step the chain of occupied cells that starts at the given cell one cell
+  // forward - it ends at the first hole, so the cards between it and the
+  // insertion point move by one and everything past the hole stays put.
+  // Answers with what moved, so an insertion preview can be taken back.
+  async gridOpenCell(m, entries, index) {
+    const occupied = new Map();
+    for(const entry of entries) {
+      const i = this.gridClaimedCell(m, entry);
+      if(i !== null && !occupied.has(i))
+        occupied.set(i, entry);
+    }
+    let free = index;
+    while(occupied.has(free))
+      ++free;
+    const moved = [];
+    for(let i = free - 1; i >= index; --i) {
+      const entry = occupied.get(i);
+      const { x, y } = this.gridCellPosition(m, i + 1);
+      await entry.setPosition(x, y, entry.get('z'));
+      moved.push({ entry, index: i });
+    }
+    return moved;
+  }
+
+  // Take an insertion preview back: the cards the open cell pushed forward
+  // step back onto the cells they came from.
+  async closeGridInsertPreview(preview = this.gridInsertPreview) {
+    delete this.gridInsertPreview;
+    if(!preview)
+      return;
+    const m = this.gridMetrics(preview.count);
+    for(const { entry, index } of preview.moved)
+      if(widgets.has(entry.get('id'))) {
+        const { x, y } = this.gridCellPosition(m, index);
+        await entry.setPosition(x, y, entry.get('z'));
+      }
   }
 
   // Break a pile dropped interactively into a grid and put its cards down at

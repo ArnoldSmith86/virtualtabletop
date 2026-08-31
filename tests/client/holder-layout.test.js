@@ -581,14 +581,58 @@ describe('dropping into any grid cell', () => {
     expect([ drop.get('x'), drop.get('y') ]).toEqual([ 220, 112 ]);
   });
 
-  test('a drop aimed at a taken cell goes to the nearest free one', async () => {
+  test('a drop aimed at a taken cell inserts there: the card steps one cell forward', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 2, width: 400, height: 300 });
     const a = createCard('a', { parent: 'h', x: 112, y: 4, z: 1 });
     await holder.onChildAddAlign(a, 'h');
     const b = createCard('b', { parent: 'h', x: 116, y: 8, z: 2 });
     await holder.onChildAddAlign(b, 'h');
-    expect([ a.get('x'), a.get('y') ]).toEqual([ 112, 4 ]);
-    expect([ b.get('x'), b.get('y') ]).toEqual([ 4, 4 ]);
+    expect([ a.get('x'), a.get('y') ]).toEqual([ 220, 4 ]);
+    expect([ b.get('x'), b.get('y') ]).toEqual([ 112, 4 ]);
+  });
+
+  test('the chain of stepped cards ends at the first hole', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 4, gridRows: 1, width: 500, height: 200 });
+    // cells at x 4, 112, 220, 328 - cell 2 stays empty
+    for(const [ id, x, z ] of [ [ 'a', 4, 1 ], [ 'b', 112, 2 ], [ 'd', 328, 3 ] ]) {
+      const c = createCard(id, { parent: 'h', x, y: 4, z });
+      await holder.onChildAddAlign(c, 'h');
+    }
+    const drop = createCard('drop', { parent: 'h', x: 8, y: 8, z: 9 });
+    await holder.onChildAddAlign(drop, 'h');
+    expect([ drop.get('x'), widgets.get('a').get('x'), widgets.get('b').get('x') ]).toEqual([ 4, 112, 220 ]);
+    // the card past the hole never moved
+    expect(widgets.get('d').get('x')).toBe(328);
+  });
+
+  test('inserting into a full grid steps the last card onto an overflow row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 2, gridRows: 2, width: 300, height: 300 });
+    for(let i=0; i<4; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 112 ], [ 112, 112 ] ]);
+    const drop = createCard('drop', { parent: 'h', x: 112, y: 4, z: 9 });
+    await holder.onChildAddAlign(drop, 'h');
+    // the chain from the aimed cell stepped forward, past the lattice
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 112 ], [ 112, 112 ], [ 4, 220 ] ]);
+    expect([ drop.get('x'), drop.get('y') ]).toEqual([ 112, 4 ]);
+  });
+
+  test('the insertion preview steps the cards aside and back', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 1, width: 400, height: 200 });
+    for(const [ id, x, z ] of [ [ 'a', 4, 1 ], [ 'b', 112, 2 ] ]) {
+      const c = createCard(id, { parent: 'h', x, y: 4, z });
+      await holder.onChildAddAlign(c, 'h');
+    }
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'someone', x: 6, y: 6, z: 9 });
+    await holder.onChildAddAlign(shadow, 'h');
+    // the preview opened the aimed cell: both cards stepped forward
+    expect([ shadow.get('x'), widgets.get('a').get('x'), widgets.get('b').get('x') ]).toEqual([ 4, 112, 220 ]);
+    // aimed at the free far cell instead, the preview closes and the cards step back
+    await shadow.setPosition(220, 4, 9);
+    await holder.onChildAddAlign(shadow, 'h');
+    expect([ widgets.get('a').get('x'), widgets.get('b').get('x') ]).toEqual([ 4, 112 ]);
+    expect(shadow.get('x')).toBe(220);
   });
 
   test('a card taken out leaves its cell empty and a deal fills it again', async () => {
