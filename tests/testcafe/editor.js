@@ -4673,6 +4673,66 @@ test('The peek key works with the caret in the JSON text area', async t => {
   await setEditorState(null);
 });
 
+// Pasting the id of a row into the JSON text is what Ctrl has always meant here,
+// and it is now also the key that holds the peeked list open. Which of the two it
+// is is decided by where the pointer is: from a row of the list - or anywhere
+// else outside the room - it is the modifier, whether the list was opened by hand
+// or is being held open by the key.
+test('Ctrl pastes the id of a row into the JSON text from outside the room', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    checker: { id: 'checker', type: 'basic', x: 40, y: 60, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(2)
+    // the rows say so themselves while the JSON editor is what an id would go into
+    .expect(stackRows.nth(1).getAttribute('title')).contains('Ctrl+click pastes the id')
+    // travelling to the list takes the pointer out of the room, which is where
+    // the key goes back to being the modifier
+    .hover(stackRows.nth(1));
+  await putCursorBehind('"width": 100');
+  await t
+    .expect(pressFunctionKeyWithPeekKey('F2')).ok()
+    .expect(jsonEditorText()).contains('"width": 100board')
+    // the row the key names pastes the same id when it is clicked with Ctrl
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).notOk();
+  await putCursorBehind('"width": 100');
+  await t
+    .click(stackRows.nth(0), { modifiers: { ctrl: true } })
+    .expect(jsonEditorText()).contains('"width": 100checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+
+  // a list the key is holding open is no different once the pointer is on one of
+  // its rows: it stopped following the pointer when that left the room, and it
+  // says so rather than going on claiming to follow it
+  await t.hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('Following the pointer')
+    .hover(stackRows.nth(1))
+    .expect(bar.find('.selectionBarStackHelp').textContent).notContains('Following the pointer');
+  await putCursorBehind('"width": 100');
+  await t
+    .click(stackRows.nth(1), { modifiers: { ctrl: true } })
+    .expect(jsonEditorText()).contains('"width": 100board');
+  await holdPeekKey(false);
+  await setEditorState(null);
+});
+
 // What the panel paints under an open dropdown. A widget preview is a real
 // widget, so it carries the widget's own z-index ((layer + 10) * 100000 + z) -
 // which, off the table, beats everything the module draws around it. The seat
