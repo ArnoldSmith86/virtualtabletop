@@ -1,4 +1,6 @@
-import { toServer } from './connection.js';
+import { toServer, onMessage, onConnectionClose } from './connection.js';
+import { setConnectionState, setStatusMessage, updateStatus } from './overlays/status.js';
+import { connectionClosed, connectionStatus, deltaConfirmed, deltaSent, monitorTick, stateReceived } from './deltamonitor.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { setViewportSize } from './calculateLayout.js';
@@ -16,6 +18,7 @@ let delta = { s: {} };
 let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
+let nextDeltaSendId = 0;
 let overlayShownForEmptyRoom = false;
 
 let triggerGameStartRoutineOnNextStateLoad = false;
@@ -480,7 +483,10 @@ function getDelta() {
 function sendRawDelta(delta) {
   receiveDelta(delta);
   delta.id = deltaID;
+  delta.deltaSendId = ++nextDeltaSendId;
+  deltaSent(delta.deltaSendId);
   toServer('delta', delta);
+  refreshConnectionStatus();
 }
 
 function receiveDeltaFromServer(delta) {
@@ -562,6 +568,12 @@ function receiveStateFromServer(args) {
     applyViewportLayout();
 
   resetZoomAndPan();
+
+  // a fresh state makes all unconfirmed deltas moot - tell the player when some were reverted
+  const changesLost = stateReceived();
+  if(changesLost && !isLoading)
+    setStatusMessage('Connection restored. Your last changes could not be saved.', 'link');
+  refreshConnectionStatus();
 
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
@@ -648,11 +660,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 
 function sendDelta() {
   if(!batchDepth) {
-    if(deltaChanged) {
-      receiveDelta(delta);
-      delta.id = deltaID;
-      toServer('delta', delta);
-    }
+    if(deltaChanged)
+      sendRawDelta(delta);
     delta = { s: {} };
     deltaChanged = false;
   }
@@ -673,6 +682,11 @@ export function sendPropertyUpdate(widgetID, property, value) {
 
 export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
+}
+
+function refreshConnectionStatus(status = connectionStatus()) {
+  setConnectionState(status.pendingCount, status.state, status.msUntilReload);
+  updateStatus();
 }
 
 // --- Remote & multi-player INPUT ------------------------------------------
@@ -917,6 +931,11 @@ function cancelInputBlocks() {
 
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
+  onMessage('deltaConfirm', function(args) {
+    if(args && args.id)
+      deltaConfirmed(args.id);
+    refreshConnectionStatus();
+  });
   onMessage('state', receiveStateFromServer);
   onMessage('showInput', receiveShowInput);
   onMessage('hideInput', receiveHideInput);
@@ -930,5 +949,19 @@ onLoad(function() {
       applyCustomCss(args.meta.gameSettings);
     }
   });
+  onConnectionClose(function() {
+    connectionClosed();
+    refreshConnectionStatus();
+  });
+  // only this tick may trigger the reload: it is the one that notices a suspended tab
+  setInterval(function() {
+    const status = monitorTick();
+    if(!status)
+      return;
+    if(status.reload)
+      location.reload();
+    else
+      refreshConnectionStatus(status);
+  }, 500);
   setScale();
 });

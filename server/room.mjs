@@ -15,6 +15,7 @@ export default class Room {
   state = {};
   deltaID = 0;
   lastStatisticsDeltaID = 0;
+  lastMouseState = new Map();
 
   constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
@@ -52,6 +53,14 @@ export default class Room {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
     } else {
       player.send('state', this.state);
+      // only the activity status is meaningful for somebody who just joined - replaying the whole
+      // mouse state would show every other player's cursor as active or even pressed at a position
+      // that can be minutes old
+      for(const other of this.players) {
+        const mouseState = this.lastMouseState.get(other);
+        if(other != player && mouseState)
+          player.send('mouse', { player: other.name, mouseState: { inactive: true, editMode: mouseState.editMode, activeOverlay: mouseState.activeOverlay } });
+      }
     }
 
     if(this.traceIsEnabled()) {
@@ -767,6 +776,7 @@ export default class Room {
   }
 
   mouseMove(player, mouseState) {
+    this.lastMouseState.set(player, mouseState);
     this.broadcast('mouse', { player: player.name, mouseState });
   }
 
@@ -804,6 +814,11 @@ export default class Room {
       }
     }
     delta.id = ++this.deltaID;
+
+    if(delta.deltaSendId) {
+      player.send('deltaConfirm', { id: delta.deltaSendId });
+      delete delta.deltaSendId;
+    }
 
     if(this.waitingForDeltaFromPlayer == player) {
       delete this.waitingForDeltaFromPlayer;
@@ -896,6 +911,7 @@ export default class Room {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
 
+    this.lastMouseState.delete(player);
     this.players = this.players.filter(e => e != player);
     this.cleanupInputForPlayer(player);
     if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)

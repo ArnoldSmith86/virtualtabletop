@@ -34,7 +34,6 @@ function startedClient(onReload, serving) {
   const sockets = [];
   const requests = [];
   const overlays = [];
-  const overlayClasses = new Set();
 
   function FakeWebSocket(url) {
     this.url = url;
@@ -59,7 +58,7 @@ function startedClient(onReload, serving) {
   }
 
   const client = loadConnection(fakeLocation(onReload), (callback, delay)=>timers.push({ callback, delay }), FakeWebSocket, fakeFetch,
-    id=>overlays.push(id), _=>({ classList: overlayClasses }), _=>[], _=>0, {}, 'tester', 'testroom');
+    id=>overlays.push(id), _=>null, _=>[], _=>0, {}, 'tester', 'testroom');
   client.startWebSocket();
 
   return {
@@ -70,7 +69,6 @@ function startedClient(onReload, serving) {
     showServerRestartOverlay: client.showServerRestartOverlay,
     requests,
     overlays,
-    overlayClasses,
     connect: _=>sockets[sockets.length-1].onopen(),
     disconnect: _=>sockets[sockets.length-1].onclose(),
     reconnectDelays: _=>timers.map(timer=>timer.delay),
@@ -111,8 +109,7 @@ describe('Scenarios: the server the page is talking to restarts', () => {
 
       // the connection is not coming back and the page is going away, so neither "it should be
       // reestablished in a few moments" nor "use a different room" applies any longer
-      expect(client.overlays).toContain('connectionLostOverlay');
-      expect(client.overlayClasses.has('serverRestarting')).toBe(true);
+      expect(client.overlays).toContain('serverRestartOverlay');
     });
 
     test('Then the page knows that it is outdated before the reload happens', () => {
@@ -164,8 +161,9 @@ describe('Scenarios: the server the page is talking to restarts', () => {
       client.showServerRestartOverlay();
       client.disconnect();
 
-      // a reconnect restores whatever overlay was up before the connection dropped, which here
-      // would clear the message a second before the page reloads
+      // the page is going away, so there is nothing left to reconnect for: another socket to a
+      // server this build no longer fits would only put the connection status back on screen
+      // next to the notice, a second before the reload
       expect(client.reconnectDelays()).toEqual([]);
     });
   });
