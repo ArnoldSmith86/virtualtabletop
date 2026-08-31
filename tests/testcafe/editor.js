@@ -4418,12 +4418,12 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
 
 // The list is a click away and takes the stack where the pointer came to rest,
 // which the panel it replaces did not: that one stood permanently in the JSON
-// editor and followed every mouse move. Holding Shift is that panel back.
+// editor and followed every mouse move. Holding Ctrl is that panel back.
 // testcafe cannot hold a key down across other actions, so the two events the
 // peek is built on are dispatched by hand - together with the modifier state a
 // real browser would carry into whatever is pressed in between.
 const holdPeekKey = ClientFunction(down => {
-  window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key: 'Shift', shiftKey: down, bubbles: true, cancelable: true }));
+  window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key: 'Control', ctrlKey: down, bubbles: true, cancelable: true }));
 });
 // A real browser carries the modifier state into the mouse events as well, which
 // is what opens the list when the key went down before the pointer ever reached
@@ -4432,13 +4432,13 @@ const holdPeekKey = ClientFunction(down => {
 const movePointerWithPeekKey = ClientFunction(selector => {
   const rect = document.querySelector(selector).getBoundingClientRect();
   const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
-  document.elementFromPoint(x, y).dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, shiftKey: true, bubbles: true }));
+  document.elementFromPoint(x, y).dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, ctrlKey: true, bubbles: true }));
 });
 const pressKeyWithoutPeekKey = ClientFunction(key => {
   window.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
 });
-const pressFunctionKeyWithShift = ClientFunction(key => {
-  const event = new KeyboardEvent('keydown', { key, shiftKey: true, bubbles: true, cancelable: true });
+const pressFunctionKeyWithPeekKey = ClientFunction((key, shift) => {
+  const event = new KeyboardEvent('keydown', { key, ctrlKey: true, shiftKey: !!shift, bubbles: true, cancelable: true });
   window.dispatchEvent(event);
   return event.defaultPrevented;
 });
@@ -4451,7 +4451,7 @@ const storedTreeOpen = ClientFunction(_=>{
   return !!(state.selectionBar || {}).treeOpen;
 });
 
-test('Holding Shift opens the stack list and has it follow the pointer', async t => {
+test('Holding Ctrl opens the stack list and has it follow the pointer', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
     board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
@@ -4473,7 +4473,7 @@ test('Holding Shift opens the stack list and has it follow the pointer', async t
     .expect(bar.hasClass('stackVisible')).notOk()
     // the key says "what is under the pointer", so it does nothing while the
     // pointer is not in the room - a dropdown covers the panel it hangs in, and
-    // a shift-click in the sidebar must not have the list drop onto it
+    // a Ctrl+click in the sidebar must not have the list drop onto it
     .hover(bar.find('.selectionBarCrumbs'));
   await holdPeekKey(true);
   await t.expect(bar.hasClass('stackVisible')).notOk();
@@ -4491,11 +4491,15 @@ test('Holding Shift opens the stack list and has it follow the pointer', async t
     .expect(stackRows.nth(0).textContent).contains('board')
     .hover('#w_checker')
     .expect(stackRows.count).eql(3)
-    // Shift is what holds the list open, so the key of a row selects that row on
-    // its own rather than adding it to the selection
-    .expect(pressFunctionKeyWithShift('F3')).ok()
+    // the key that holds the list open is not read as a modifier while it does,
+    // so the keys of the rows mean what the rows say they mean: the key of a row
+    // selects it, and Shift with that key adds it to the selection
+    .expect(pressFunctionKeyWithPeekKey('F3')).ok()
     .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
-    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk();
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk()
+    .expect(pressFunctionKeyWithPeekKey('F1', true)).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
 
   await holdPeekKey(false);
   await t

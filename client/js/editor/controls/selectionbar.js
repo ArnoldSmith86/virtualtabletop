@@ -33,7 +33,7 @@ let selectionBarPeekBar = null;     // the bar whose list the peek opened and ha
 let selectionBarScanFrame = null;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
-const SELECTION_BAR_PEEK_KEY = 'Shift'; // held down, the list opens and follows the pointer without that delay
+const SELECTION_BAR_PEEK_KEY = 'Control'; // held down, the list opens and follows the pointer without that delay
 
 // Alt+click needs a mouse and a modifier key, so it is not something to advise
 // on a tablet - the list works there and is the only way in.
@@ -335,12 +335,12 @@ function selectionBarInstallListeners() {
     if(!widget)
       return;
     e.preventDefault();
-    // Shift is what holds the list open, so it cannot also mean "add to the
-    // selection": the key of a row selects that row on its own, the way it did
-    // in the panel this list replaces. Shift+Enter on the keyboard cursor and a
-    // shift-click on a row are what add to the selection.
-    if(e.ctrlKey && jeEnabled)
+    if(selectionBarPeekKeyIsModifier(e) && jeEnabled)
       jePasteText(jeContext[jeContext.length-1] == '"null"' ? `"${widget.id}"` : widget.id, true);
+    else if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
+      setSelection(selectedWidgets.filter(w=>w!=widget));
+    else if(e.shiftKey)
+      setSelection([ widget ].concat(selectedWidgets));
     else
       setSelection([ widget ]);
   });
@@ -385,7 +385,7 @@ function selectionBarInstallListeners() {
 // The list costs a click to open and takes the stack where the pointer came to
 // rest, which is a step and a wait more than the fixed function-key panel it
 // replaces: that one stood permanently in the JSON editor and followed every
-// mouse move. Holding Shift brings that back for as long as the key is down -
+// mouse move. Holding Ctrl brings that back for as long as the key is down -
 // the list opens, follows the pointer without waiting for it to settle, and goes
 // away again with the key. A list that was already open is only made live: it
 // belongs to whoever opened it. The key and the pointer being in the room are
@@ -397,8 +397,9 @@ function selectionBarPeekStart() {
   // hid as soon as it moved over the editor, and it did not care where the
   // keyboard was - reading a widget's name while the caret sits in the JSON text
   // area is the case it was there for. Outside the room the key does nothing at
-  // all: a dropdown covers the panel it hangs in, so a shift-click in the
-  // sidebar must not have the list drop onto what it was aimed at.
+  // all: a dropdown covers the panel it hangs in, so a Ctrl+click in the sidebar
+  // - which is how a module is docked in the lower slot - must not have the list
+  // drop onto what it was aimed at.
   if(selectionBarPeekActive || !selectionBarPointerInRoom)
     return;
   if(document.body.classList.contains('overlayActive') || document.body.classList.contains('deckEditorActive'))
@@ -537,10 +538,18 @@ function selectionBarCloseDropdown(dropdown) {
     button.focus();
 }
 
+// Ctrl is what pastes the id of a row into the JSON editor, and it is also what
+// holds the peeked list open - so while it is doing that it is not read as a
+// modifier at all. A list that follows the pointer answers to exactly the keys
+// its rows and its help line name, the same ones as a list opened by hand.
+function selectionBarPeekKeyIsModifier(e) {
+  return e.ctrlKey && !selectionBarPeekActive;
+}
+
 // Escape closes the open dropdown, the arrow keys step through it and Enter
 // picks what they landed on. Returns true when the key was used up.
 function selectionBarHandleDropdownKey(e) {
-  if(e.ctrlKey || e.metaKey || e.altKey)
+  if(selectionBarPeekKeyIsModifier(e) || e.metaKey || e.altKey)
     return false;
   if([ 'Escape', 'ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Enter' ].indexOf(e.key) == -1)
     return false;
@@ -883,11 +892,11 @@ function selectionBarRenderStack(bar) {
     div(bar.stackList, 'selectionBarStackHelp', selectionBarStackFromTouch
       ? 'Tap a row to select that widget.'
       : selectionBarPeekActive
-      ? 'Following the pointer while Shift is held - press the key shown to select that widget,'
-        + ' shift-click a row to add it to the selection.'
+      ? 'Following the pointer while Ctrl is held - press the key shown to select that widget,'
+        + ' shift-click a row or hold Shift with the key to add it to the selection.'
       : 'Click to select, shift-click to add to the selection, or press the key shown.'
         + '<br>↑ ↓ step through the list, Enter selects, Esc closes it.'
-        + '<br>Hold Shift to have the list follow the pointer instead of waiting for it to settle.');
+        + '<br>Hold Ctrl to have the list follow the pointer instead of waiting for it to settle.');
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 10 ? `F${index+3}` : '';
@@ -909,7 +918,7 @@ function selectionBarRenderStack(bar) {
     row.onmouseleave = _=>widget.domElement.classList.remove('selectionBarHover');
     row.onclick = function(e) {
       selectionBarClearHover();
-      if(e.ctrlKey && jeEnabled)
+      if(selectionBarPeekKeyIsModifier(e) && jeEnabled)
         jePasteText(jeContext[jeContext.length-1] == '"null"' ? `"${widget.id}"` : widget.id, true);
       else if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
         setSelection(selectedWidgets.filter(w=>w!=widget));
@@ -922,7 +931,7 @@ function selectionBarRenderStack(bar) {
 
   if(!selectionBarStack.length)
     div(bar.stackList, 'selectionBarStackEmpty', selectionBarPeekActive
-      ? 'Nothing under the pointer - move it over a widget while Shift is held.'
+      ? 'Nothing under the pointer - move it over a widget while Ctrl is held.'
       : 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.');
 
   selectionBarRenderStackCursor(bar);
@@ -1079,7 +1088,7 @@ function renderSelectionBar(target, options = {}) {
     bar.treeButton = selectionBarButton(bar.dom, 'account_tree', 'The widget tree of the room', _=>selectionBarToggleTree(bar, false, true));
   if(options.stack) {
     const stackTitle = 'The widgets under the pointer, or where you last tapped'
-                     + (selectionBarCanAltClick() ? ' - hold Shift to open this while the pointer moves, Alt+click in the room steps through them' : '');
+                     + (selectionBarCanAltClick() ? ' - hold Ctrl to open this while the pointer moves, Alt+click in the room steps through them' : '');
     bar.stackButton = selectionBarButton(bar.dom, 'layers', stackTitle, _=>selectionBarToggleStack(bar));
     bar.stackCount = document.createElement('span');
     bar.stackCount.className = 'selectionBarStackCount';
