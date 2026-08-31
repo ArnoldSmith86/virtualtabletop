@@ -2061,3 +2061,87 @@ describe('the layout-dependent defaults survive set()', () => {
     expect(holder.get('dropShadow')).toBe(false);
   });
 });
+
+describe('the arc layout', () => {
+  const rotations = holder => holder.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('rotation'));
+
+  test('the cards fan along a circle, tangent to it, the middle at the top', async () => {
+    const holder = createHolder({ id: 'h', layout: 'arc', width: 600, height: 400 });
+    for(let i=0; i<5; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    // the sweep grows 6 degrees per card: five cards fan to +-12
+    expect(rotations(holder)).toEqual([ -12, -6, 0, 6, 12 ]);
+    const row = positionsByZ(holder);
+    // the span is the 40px step of the underlying spread, centered
+    expect(row[0][0]).toBeCloseTo(170, 3);
+    expect(row[2][0]).toBeCloseTo(250, 3);
+    expect(row[4][0]).toBeCloseTo(330, 3);
+    // the middle card sits at the top of the fan, the ends dip below it, symmetrically
+    expect(row[0][1]).toBeCloseTo(row[4][1], 3);
+    expect(row[0][1]).toBeGreaterThan(row[1][1]);
+    expect(row[1][1]).toBeGreaterThan(row[2][1]);
+    // and the whole fan stands centered: the room above it equals the room
+    // below the lowest corner of the tilted end cards
+    const top = row[2][1];
+    const sagitta = row[0][1] - top;
+    const endHalf = (100*Math.cos(12*Math.PI/180) + 100*Math.sin(12*Math.PI/180)) / 2;
+    expect(top).toBeCloseTo(400 - (top + sagitta + 50 + endHalf), 1);
+  });
+
+  test('a holder without height for the dip flattens the arc to a straight row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'arc', width: 600, height: 108 });
+    for(let i=0; i<11; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    const row = positionsByZ(holder);
+    expect(row.every(([ , y ])=>y == 4)).toBe(true);
+    expect(rotations(holder)).toEqual(new Array(11).fill(0));
+    expect(row[0][0]).toBe(50);
+    expect(row[10][0]).toBe(450);
+  });
+
+  test('a wide hand justifies across the holder, the sweep capped at 30 degrees', async () => {
+    const holder = createHolder({ id: 'h', layout: 'arc', width: 400, height: 400 });
+    for(let i=0; i<13; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    const r = rotations(holder);
+    expect(r[0]).toBe(-30);
+    expect(r[12]).toBe(30);
+    const row = positionsByZ(holder);
+    // justified: the ends sit the margin from the edges (chord 292, centered)
+    expect(row[0][0]).toBeCloseTo(4, 3);
+    expect(row[12][0]).toBeCloseTo(296, 3);
+  });
+
+  test('the tilt belongs to the holder: it leaves with the layout and with the card', async () => {
+    const holder = createHolder({ id: 'h', layout: 'arc', width: 600, height: 400 });
+    for(let i=0; i<5; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(widgets.get('c0').get('rotation')).toBe(-12);
+
+    // checkParent dispenses a card only once it has really left
+    const leaving = widgets.get('c0');
+    await leaving.set('parent', null);
+    await holder.dispenseCard(leaving, true);
+    expect(leaving.get('rotation')).toBe(0);
+
+    await holder.set('layout', 'singleSpread');
+    expect(rotations(holder).every(r=>r == 0)).toBe(true);
+  });
+
+  test('a drop lands at the slot its position points into', async () => {
+    const holder = createHolder({ id: 'h', layout: 'arc', width: 600, height: 400 });
+    for(let i=0; i<4; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    // dropped at the left end of the fan, it becomes the first card
+    const drop = createCard('drop', { parent: 'h', x: 150, y: 30, z: 9 });
+    await holder.onChildAddAlign(drop, 'h');
+    const row = holder.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z'));
+    expect(row[0].get('id')).toBe('drop');
+    expect(rotations(holder)).toEqual([ -12, -6, 0, 6, 12 ]);
+  });
+});

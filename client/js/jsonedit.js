@@ -1589,7 +1589,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(MOVE\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(MOVE\\) ↦ position', [ 'pileBottom', 'pileTop', 'groupStart', 'groupEnd' ]);
-  jeAddEnumCommands('^holder ↦ layout', [ 'auto', 'custom', 'pile', 'singleSpread', 'multiSpread', 'grid', 'random', 'freeform' ]);
+  jeAddEnumCommands('^holder ↦ layout', [ 'auto', 'custom', 'pile', 'singleSpread', 'arc', 'multiSpread', 'grid', 'random', 'freeform' ]);
   jeAddEnumCommands('^.*\\(MOVEXY\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ angle', [ 45, 60, 90, 135, 180 ]);
   jeAddEnumCommands('^.*\\(ROTATE\\) ↦ mode', [ 'set', 'add' ]);

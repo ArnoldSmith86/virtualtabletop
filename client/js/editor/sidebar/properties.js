@@ -1322,7 +1322,7 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder is smaller than one and a half cards along both axes; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nMulti spread lines up several groups (piles) side by side.\nGrid snaps every card to a cell of its own: a drop lands in the very cell it is aimed at, empty cells stay empty, and deals fill the gaps first.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
+  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder is smaller than one and a half cards along both axes; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nArc bends that fan into the curve of a hand held over the table: the cards tilt along a circle, up to 30 degrees at the outer ends, as far as the holder has height for the dip.\nMulti spread lines up several groups (piles) side by side.\nGrid snaps every card to a cell of its own: a drop lands in the very cell it is aimed at - an occupied cell makes room by stepping the cards behind it one cell forward - empty cells stay empty, and deals fill the gaps first.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
   pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds. In a grid it pins the horizontal pitch of the cells instead - a pitch of the card width packs them flush.',
   pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds. In a grid it pins the vertical pitch of the cells instead.',
   pilesGapX: 'The next group starts right of the cards of the previous one, plus this many pixels.',
@@ -10455,6 +10455,7 @@ class PropertiesModule extends SidebarModule {
         { value: 'custom',         text: 'Custom (properties below)' },
         { value: 'pile',           text: 'Pile' },
         { value: 'singleSpread',   text: 'Single spread' },
+        { value: 'arc',            text: 'Arc (curved fan)' },
         { value: 'multiSpread', text: 'Multi spread (groups)' },
         { value: 'grid',           text: 'Grid' },
         { value: 'random',         text: 'Random (scatter)' },
@@ -10511,8 +10512,8 @@ class PropertiesModule extends SidebarModule {
       rows.push({ row: input.dom, layouts, properties: [ property ] });
     };
 
-    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'multiSpread', 'grid', 'random' ]);
-    addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'multiSpread', 'grid' ]);
+    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'arc', 'multiSpread', 'grid', 'random' ]);
+    addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'arc', 'multiSpread', 'grid' ]);
     addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multiSpread', 'grid' ]);
     addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multiSpread' ]);
     addNumberRow('Spread min',   'spreadMin',   [ 'multiSpread', 'singleSpread', 'custom' ]);

@@ -5,6 +5,7 @@
 const layoutDerivedProperties = {
   pile:           { alignChildren: true,  stackOffsetX: 0, stackOffsetY: 0 },
   singleSpread:   { alignChildren: true,  preventPiles: false },
+  arc:            { alignChildren: true,  preventPiles: false },
   // dropShadow is a default rather than derived: multiSpread turns the
   // insertion preview on, but a game that writes dropShadow: false keeps it
   // off - see Holder.getDefaultValue
@@ -40,6 +41,12 @@ const compressedRowSpreadFactor = 0.1;
 
 // How far the random layout tilts its pieces, in degrees to either side.
 const randomLayoutMaxTilt = 15;
+
+// The largest tilt the arc layout gives its outermost cards, in degrees to
+// either side, and how much of that a hand of few cards uses: the sweep grows
+// by this many degrees per card until it reaches the cap.
+const arcLayoutMaxHalfSweep = 30;
+const arcLayoutSweepPerCard = 6;
 
 export class Holder extends ImageWidget {
   constructor(object, surface) {
@@ -180,8 +187,9 @@ export class Holder extends ImageWidget {
       if(derived && derived[property] !== undefined)
         return derived[property];
       // choosing a spread has to visibly spread, so a singleSpread without any
-      // stack offset gets the classic hand fan as its starting point
-      if(layout == 'singleSpread' && (property == 'stackOffsetX' || property == 'stackOffsetY') && !super.get('stackOffsetX') && !super.get('stackOffsetY'))
+      // stack offset gets the classic hand fan as its starting point - and the
+      // arc takes the same step as the base spacing it bends
+      if((layout == 'singleSpread' || layout == 'arc') && (property == 'stackOffsetX' || property == 'stackOffsetY') && !super.get('stackOffsetX') && !super.get('stackOffsetY'))
         return property == 'stackOffsetX' ? 40 : 0;
       // the groups of a multiSpread sit a small default gap apart until the
       // game spaces them out itself (an explicit pilesGapX of 0 packs them
@@ -323,9 +331,10 @@ export class Holder extends ImageWidget {
       toProcess = card.children();
     if(!stillInside) {
       for(const w of toProcess) {
-        // the tilt of the random layout belongs to the tray: a piece taken out
-        // straightens up again (an onLeave below can still rotate it itself)
-        if(this.get('layout') == 'random')
+        // the tilt of the random and arc layouts belongs to the holder: a
+        // piece taken out straightens up again (an onLeave below can still
+        // rotate it itself)
+        if(this.get('layout') == 'random' || this.get('layout') == 'arc')
           await w.set('rotation', w.getDefaultValue('rotation'));
         if(!w.get('ignoreOnLeave')) {
           for(const property in this.get('onLeave')) {
@@ -760,9 +769,9 @@ export class Holder extends ImageWidget {
         else
           await pile.arrangeChildren(false, true);
     }
-    // the tilt of the random layout belongs to it: a switch away straightens
-    // the pieces before the new layout lines them up
-    if(property == 'layout' && oldValue == 'random' && this.get('layout') != 'random')
+    // the tilt of the random and arc layouts belongs to them: a switch away
+    // straightens the pieces before the new layout lines them up
+    if(property == 'layout' && [ 'random', 'arc' ].indexOf(oldValue) != -1 && this.get('layout') != oldValue)
       for(const entry of this.childrenFilter(super.children(), true))
         for(const w of entry.get('type') == 'pile' ? entry.children() : [ entry ])
           await w.set('rotation', w.getDefaultValue('rotation'));
@@ -772,7 +781,7 @@ export class Holder extends ImageWidget {
     if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle(null, { sticky: [ 'layout', 'preventPiles' ].indexOf(property) == -1 });
     // the layouts that decide the arrangement from the holder's size react to it changing
-    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread' ].indexOf(this.get('layout')) != -1))
+    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread', 'arc' ].indexOf(this.get('layout')) != -1))
       await this.updateAfterShuffle(null, { sticky: true });
   }
 
@@ -862,6 +871,8 @@ export class Holder extends ImageWidget {
       return await this.rearrangeChildrenGrid(children);
     if(this.get('layout') == 'random')
       return await this.rearrangeChildrenRandom(children);
+    if(this.get('layout') == 'arc')
+      return await this.rearrangeChildrenArc(children);
 
     const owner = children.map(c=>c.get('owner')).find(o=>o) || null;
     const squish = this.fanSquish(owner);
@@ -1105,6 +1116,68 @@ export class Holder extends ImageWidget {
         x += steps[i];
       }
       y += stretchedStepsY[row];
+    }
+  }
+
+  // The arc layout: a singleSpread bent into the fan a hand of cards makes on
+  // a table - the cards sit on a circle, tilted tangent to it, the middle of
+  // the hand at the top and the ends dropping away. Everything is derived:
+  // the step along the row is the stack offset (the singleSpread default of
+  // 40 without one), the sweep grows with the hand up to ±30 degrees, and the
+  // curvature follows from span and sweep - a holder without the height for
+  // that dip gets a flatter arc, down to a straight row.
+  async rearrangeChildrenArc(children) {
+    if(this.preventRearrangeDuringPileDrop || !children.length)
+      return;
+    const cardW = Math.max(...children.map(c=>c.get('width')));
+    const cardH = Math.max(...children.map(c=>c.get('height')));
+    const count = children.length;
+    const step = Math.abs(this.get('stackOffsetX')) || 40;
+    const availW = Math.max(0, this.get('width') - 2*this.get('dropOffsetX') - cardW);
+    // the span between the first and the last card's center: the natural step
+    // while it fits, spread out to justified steps once it would overflow
+    const chord = Math.min(step * (count - 1), availW);
+    const centerX = this.get('width') / 2;
+
+    let halfSweep = Math.min(arcLayoutMaxHalfSweep, arcLayoutSweepPerCard * (count - 1) / 2) * Math.PI / 180;
+    let radius = null;
+    let sagitta = 0;
+    if(halfSweep > 0.001 && chord > 0) {
+      radius = chord / (2 * Math.sin(halfSweep));
+      sagitta = radius * (1 - Math.cos(halfSweep));
+      const room = Math.max(0, this.get('height') - 2*this.get('dropOffsetY') - cardH);
+      if(sagitta > room) {
+        // without the height for the dip, the circle through the same span
+        // with the sagitta the holder has room for - possibly a straight row
+        if(room < 1) {
+          radius = null;
+          sagitta = 0;
+        } else {
+          radius = (chord * chord / 4 + room * room) / (2 * room);
+          halfSweep = Math.asin(Math.min(1, chord / (2 * radius)));
+          sagitta = room;
+        }
+      }
+    }
+    if(radius === null)
+      halfSweep = 0;
+
+    // the whole fan stands centered in the holder: from the top of the middle
+    // card down to the lowest corner of the tilted end cards
+    const endHalf = (cardH * Math.cos(halfSweep) + cardW * Math.sin(halfSweep)) / 2;
+    const top = Math.max(this.get('dropOffsetY'), (this.get('height') - sagitta - cardH/2 - endHalf) / 2);
+
+    let z = 1;
+    for(let i = 0; i < count; ++i) {
+      const angle = count < 2 ? 0 : -halfSweep + i * 2 * halfSweep / (count - 1);
+      const along = count < 2 ? 0 : -chord/2 + i * chord / (count - 1);
+      const x = centerX + (radius === null ? along : radius * Math.sin(angle)) - cardW/2;
+      const y = top + (radius === null ? 0 : radius * (1 - Math.cos(angle)));
+      await children[i].setPosition(Math.round(x*1024)/1024, Math.round(y*1024)/1024, z++);
+      // tangent to the circle, on top of whatever the card's own default is
+      const base = +children[i].getDefaultValue('rotation') || 0;
+      const tilt = radius === null ? 0 : Math.round(angle * 1800 / Math.PI) / 10;
+      await children[i].set('rotation', tilt ? base + tilt : children[i].getDefaultValue('rotation'));
     }
   }
 
