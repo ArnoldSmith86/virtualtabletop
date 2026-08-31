@@ -619,6 +619,7 @@ test('A holder layout is picked in the Layout section and takes over what it dec
   const dropShadow = Selector('#editorModules .checkboxInput').withText('Drop shadow');
   const pilesGap = Selector('#editorModules .numberPairRow').withText('Piles gap');
   const pilesOffset = Selector('#editorModules .numberPairRow').withText('Piles offset');
+  const stackOffset = Selector('#editorModules .numberPairRow').withText('Stack offset');
   const spreadMin = Selector('#editorModules .numberInput').withText('Spread min');
   const gridColumns = Selector('#editorModules .numberInput').withText('Grid columns');
 
@@ -641,6 +642,9 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .click(layout.find('option').withAttribute('value', '"multiSpread"'))
     .expect(stateOf('layout')).eql('"multiSpread"')
     .expect(stateOf('stackOffsetX')).eql('40')
+    .expect(stackOffset.find('input').nth(0).value).eql('40')
+    .expect(pilesGap.find('input').nth(0).value).eql('')
+    .expect(pilesGap.find('input').nth(0).getAttribute('placeholder')).eql('8')
     .expect(pilesGap.visible).ok()
     .expect(gridColumns.visible).ok()
     .expect(spreadMin.visible).ok()
@@ -659,10 +663,18 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(preventPiles.visible).ok()
     .expect(spreadMin.visible).notOk()
     .expect(pilesGap.visible).notOk()
+    // the room contradicts a hard 0 here: an unset cell gap renders as 8, an
+    // unset single-spread offset fans at 40 - the inputs stay empty and show
+    // the derived value as a greyed placeholder instead
+    .expect(stackOffset.find('input').nth(0).value).eql('')
+    .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('8')
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"singleSpread"'))
     .expect(spreadMin.visible).ok()
     .expect(pilesOffset.visible).notOk()
+    .expect(stackOffset.find('input').nth(0).value).eql('')
+    .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('40')
+    .expect(stackOffset.find('input').nth(1).getAttribute('placeholder')).eql('0')
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"custom"'))
     .expect(align.visible).ok()

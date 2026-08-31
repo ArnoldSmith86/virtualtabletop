@@ -10471,11 +10471,38 @@ class PropertiesModule extends SidebarModule {
     // and how to get Auto back, right where the surprise happens
     const autoNote = div(this.moduleDOM, 'layoutAutoNote', 'Auto is switched off because an arrangement property below is set. Choosing Auto clears them all.');
 
+    // the inputs show only what the holder sets itself: some layouts derive a
+    // value for an unset offset (a singleSpread fans at 40, a grid falls back
+    // to an 8px cell gap), so a hard 0 here would contradict what the room
+    // renders. The derived value shows as a greyed placeholder instead - the
+    // same treatment the pile editor gives its inherited stack offset.
+    const derivedValue = property=>{
+      const layout = widget.effectiveLayout();
+      // gridMetrics reads the cell gap with a fallback of 8 instead of
+      // deriving it in get(), so the placeholder needs the same fallback
+      if(layout == 'grid' && (property == 'stackOffsetX' || property == 'stackOffsetY'))
+        return Math.abs(widget.get(property)) || 8;
+      // wrapped multiSpread rows advance by the row extent plus a fallback
+      // gap of 8 unless a pitch or gap is written (see rearrangeChildren)
+      if(layout == 'multiSpread' && property == 'pilesGapY' && widget.multiSpreadWraps() && widget.get('pilesGapY') === null && widget.get('pilesOffsetY') === null)
+        return 8;
+      return widget.get(property);
+    };
+    const derivedAwareOptions = property=>({
+      hint: `${editorPropertyHints[property]} A greyed value comes from the chosen layout (or the default) instead of being set here.`,
+      nullIfEmpty: true,
+      listenTo: [ ...holderArrangementListenTo, 'gridColumns', 'gridRows' ],
+      getValue: _=>holderStateHas(widget, property) ? widget.state[property] : null,
+      placeholder: _=>{
+        const value = derivedValue(property);
+        return value === null || value === undefined ? '' : String(value);
+      }
+    });
     const rows = [];
     const addPairRow = (title, propertyX, propertyY, layouts)=>{
       const row = this.renderNumberPairRow(widget, title, [
-        { label: 'X', property: propertyX, options: { hint: editorPropertyHints[propertyX] } },
-        { label: 'Y', property: propertyY, options: { hint: editorPropertyHints[propertyY] } }
+        { label: 'X', property: propertyX, options: derivedAwareOptions(propertyX) },
+        { label: 'Y', property: propertyY, options: derivedAwareOptions(propertyY) }
       ]);
       rows.push({ row, layouts, properties: [ propertyX, propertyY ] });
       return row;
