@@ -279,7 +279,16 @@ describe('the auto layout arranging its children', () => {
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 146, 10 ], [ 250, 10 ], [ 354, 10 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ], [ 250, 10 ], [ 490, 10 ] ]);
+  });
+
+  test('the margins come out even: the tighter axis decides how far the row spreads', async () => {
+    const holder = createHolder({ id: 'h', width: 600, height: 140 });
+    for(let i=0; i<2; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    // the vertical margin is (140-100)/2 = 20, so the row ends 20 from either edge as well
+    expect(positionsByZ(holder)).toEqual([ [ 20, 20 ], [ 480, 20 ] ]);
   });
 
   test('a tall holder stacks them into one centered column instead', async () => {
@@ -287,7 +296,7 @@ describe('the auto layout arranging its children', () => {
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 10, 146 ], [ 10, 250 ], [ 10, 354 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ], [ 10, 250 ], [ 10, 490 ] ]);
   });
 
   test('the spacing squishes before anything spills out of the holder', async () => {
@@ -317,7 +326,7 @@ describe('the auto layout arranging its children', () => {
     expect(holder.children().every(c=>c.get('parent') == 'h')).toBe(true);
     // all four of them lined up in the centered row
     const xs = holder.arrangedChildren().map(c=>c.get('x')).sort((a, b)=>a - b);
-    expect(xs).toEqual([ 94, 198, 302, 406 ]);
+    expect(xs).toEqual([ 10, 170, 330, 490 ]);
   });
 
   test('a holder without the room to spread keeps a pile and centers it', async () => {
@@ -357,7 +366,7 @@ describe('the auto layout arranging its children', () => {
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
     const row = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
     expect(row.map(c=>c.get('id'))).toEqual([ 'c0', 'c1', 'c2' ]);
-    expect(row.map(c=>[ c.get('x'), c.get('y') ])).toEqual([ [ 146, 10 ], [ 250, 10 ], [ 354, 10 ] ]);
+    expect(row.map(c=>[ c.get('x'), c.get('y') ])).toEqual([ [ 10, 10 ], [ 250, 10 ], [ 490, 10 ] ]);
   });
 
   test('a pile and a loose card in a small holder gather into one pile', async () => {
@@ -1797,9 +1806,9 @@ describe('grid pins on the auto layout', () => {
     expect(holder.usesAutoLayout()).toBe(true);
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([
-      [ 94, 146 ], [ 198, 146 ], [ 302, 146 ], [ 406, 146 ],
+      [ 94, 94 ], [ 198, 94 ], [ 302, 94 ], [ 406, 94 ],
       [ 94, 250 ], [ 198, 250 ], [ 302, 250 ], [ 406, 250 ],
-      [ 250, 354 ]
+      [ 250, 406 ]
     ]);
   });
 
@@ -1809,8 +1818,8 @@ describe('grid pins on the auto layout', () => {
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([
-      [ 146, 198 ], [ 250, 198 ], [ 354, 198 ],
-      [ 146, 302 ], [ 250, 302 ], [ 354, 302 ]
+      [ 146, 146 ], [ 250, 146 ], [ 354, 146 ],
+      [ 146, 354 ], [ 250, 354 ], [ 354, 354 ]
     ]);
   });
 });

@@ -1020,6 +1020,20 @@ export class Holder extends ImageWidget {
       }
       return extent;
     };
+    // How far the steps can grow before the binding entry ends the given
+    // margin from the far edge - Infinity while nothing constrains them (a
+    // lone entry has no step to grow).
+    const stretchScale = (extents, steps, room, margin)=>{
+      let scale = Infinity;
+      let offset = 0;
+      for(let i = 1; i < extents.length; ++i) {
+        offset += steps[i - 1];
+        if(offset > 0)
+          scale = Math.min(scale, (room - 2*margin - extents[i]) / offset);
+      }
+      return scale;
+    };
+    const clampStretch = scale=>isFinite(scale) ? Math.max(1, scale) : 1;
     const rowGeometry = perRow=>{
       const rowsChildren = [];
       for(let row = 0; row * perRow < count; ++row)
@@ -1062,20 +1076,35 @@ export class Holder extends ImageWidget {
 
     const { rowsChildren, rowHeights, rowScalesX, scaleY } = rowGeometry(perRow);
     const stepsY = rowHeights.map((h, row)=>row == rowHeights.length - 1 ? 0 : (h + pad) * scaleY);
+    // per-child spacing so a fanned pile gets the room of its whole spread
+    const rowExtents = rowsChildren.map(rowChildren=>rowChildren.map(c=>c.spreadExtent('X')));
+    const rowSteps = rowsChildren.map((rowChildren, row)=>rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : (rowExtents[row][i] + pad) * rowScalesX[row]));
+
+    // The margins come out as even as the room allows: the tighter axis names
+    // the target margin and the other one spreads its steps until its content
+    // ends that margin from the edges as well. The widest row binds the shared
+    // factor, so the rows keep lining up; what cannot spread - a lone card in
+    // its row, a full row - keeps its centered slack.
     const contentHeight = boundingExtent(rowHeights, stepsY);
-    let y = Math.max(pad, (holderHeight - contentHeight) / 2);
+    const contentWidth = Math.max(...rowsChildren.map((_, row)=>boundingExtent(rowExtents[row], rowSteps[row])));
+    const margin = Math.min(Math.max(pad, (holderWidth - contentWidth) / 2), Math.max(pad, (holderHeight - contentHeight) / 2));
+    const stretchX = clampStretch(Math.min(...rowsChildren.map((_, row)=>stretchScale(rowExtents[row], rowSteps[row], holderWidth, margin))));
+    const stretchY = clampStretch(stretchScale(rowHeights, stepsY, holderHeight, margin));
+
+    const stretchedStepsY = stepsY.map(step=>step * stretchY);
+    let y = Math.max(pad, (holderHeight - boundingExtent(rowHeights, stretchedStepsY)) / 2);
 
     for(let row = 0; row < rowsChildren.length; ++row) {
       const rowChildren = rowsChildren[row];
-      // per-child spacing so a fanned pile gets the room of its whole spread
-      const steps = rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : (c.spreadExtent('X') + pad) * rowScalesX[row]);
-      const contentWidth = boundingExtent(rowChildren.map(c=>c.spreadExtent('X')), steps);
-      let x = Math.max(pad, (holderWidth - contentWidth) / 2);
+      const steps = rowSteps[row].map(step=>step * stretchX);
+      let x = Math.max(pad, (holderWidth - boundingExtent(rowExtents[row], steps)) / 2);
       for(let i = 0; i < rowChildren.length; ++i) {
-        await rowChildren[i].setPosition(x, y, z++);
+        // stretching multiplies fractions into the offsets - written to the
+        // state they are rounded the way a plain drop is
+        await rowChildren[i].setPosition(Math.round(x*1024)/1024, Math.round(y*1024)/1024, z++);
         x += steps[i];
       }
-      y += stepsY[row];
+      y += stretchedStepsY[row];
     }
   }
 
