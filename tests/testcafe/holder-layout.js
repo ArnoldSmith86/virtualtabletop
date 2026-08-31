@@ -72,7 +72,7 @@ test('An auto holder centers a dropped card', async t => {
 
 test('A pre-v25 game keeps drops at the drop offset', async t => {
   // the file updater writes layout: 'custom' into the bare holder of an older save
-  await openRoom(t, 'modern', Object.assign({ _meta: { version: 24 } }, autoRoom()));
+  await openRoom(t, 'modern', Object.assign(autoRoom(), { _meta: { version: 24 } }));
 
   await dragPath(t, 'loose', [ { onto: 'holder' } ]);
 
