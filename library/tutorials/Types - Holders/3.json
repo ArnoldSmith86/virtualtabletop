@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. The grey drop shadow previews both: the slot in the fan, or the place the new group will get. <b>dropShadow</b> <i>false</i> turns the preview off - the button below toggles it for all three holders. With <b>gridColumns</b> the groups wrap into rows; the next variant shows it.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into another one. Dropped into a holder that spreads cards, a group deals itself out into the row; anywhere else it collapses back into an ordinary pile."
+    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. The grey drop shadow previews both: the slot in the fan, or the place the new group will get. <b>dropShadow</b> <i>false</i> turns the preview off. With <b>gridColumns</b> the groups wrap into rows; the next variant shows it.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into another one. Dropped into a holder that spreads cards, a group deals itself out into the row; anywhere else it collapses back into an ordinary pile."
   },
   "holder1": {
     "type": "holder",
@@ -79,8 +79,8 @@
   "button1": {
     "id": "button1",
     "type": "button",
-    "x": 592,
-    "y": 387,
+    "x": 506,
+    "y": 378,
     "width": 170,
     "height": 50,
     "text": "Deal a group of 3",
@@ -105,8 +105,8 @@
   "button2": {
     "id": "button2",
     "type": "button",
-    "x": 782,
-    "y": 387,
+    "x": 696,
+    "y": 378,
     "width": 150,
     "height": 50,
     "text": "Deal one card",
@@ -1116,7 +1116,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788135592485,
+      "lastUpdate": 1788142590083,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1162,8 +1162,8 @@
   "shadowButton": {
     "id": "shadowButton",
     "type": "button",
-    "x": 972,
-    "y": 387,
+    "x": 886,
+    "y": 378,
     "width": 170,
     "height": 50,
     "text": "dropShadow true",

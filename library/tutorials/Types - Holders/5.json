@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "<b>layout</b> &quotgrid&quot arranges a holder's cards in a grid that always stays inside the holder: when the cards stop fitting at the requested spacing they overlap instead of spilling outside. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin to the holder's edge and <b>stackOffsetX</b>/<b>stackOffsetY</b> the gap between the cells. The column count comes from whatever fits with the least overlap, or from <b>gridColumns</b>/<b>gridRows</b>. A grid normally keeps no piles - whatever you drop in is dealt out into the grid."
+    "html": "<b>layout</b> &quotgrid&quot arranges a holder's cards in a grid that always stays inside the holder: when the cards stop fitting at the requested spacing they overlap instead of spilling outside. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin to the holder's edge and <b>stackOffsetX</b>/<b>stackOffsetY</b> the gap between the cells. The column count comes from whatever fits with the least overlap, or from <b>gridColumns</b>/<b>gridRows</b>. By default, a grid does not keep piles. Whatever you drop in is dealt out into the grid. However, change <b>preventPiles</b> to false and you can have grids with piles."
   },
   "holder1": {
     "type": "holder",
@@ -1179,7 +1179,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788135592485,
+      "lastUpdate": 1788142590091,
       "skill": "",
       "description": "",
       "similarImage": "",

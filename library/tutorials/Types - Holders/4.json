@@ -21,13 +21,13 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "With <b>layout</b> &quotmultiSpread&quot the groups normally line up along one endless row. Give the holder <b>gridColumns</b> and they wrap instead: that many groups per row, the next row starting below the tallest group of the one above. <b>gridRows</b> wraps after as many columns as it takes to come out at that many rows. The rows sit 8 pixels apart until <b>pilesGapY</b> says otherwise, and <b>pilesOffsetY</b> pins a fixed row pitch instead. A drop goes to the nearest row first, then to its place within it - and when a row overflows, its gaps and fans give way by themselves."
+    "html": "With <b>layout</b> &quotmultiSpread&quot the groups normally line up along one endless row. Give the holder <b>gridColumns</b> and they wrap instead: that many groups per row, the next row starting below the tallest group of the one above. <b>gridRows</b> wraps after as many columns as it takes to come out at that many rows. The rows sit 8 pixels apart until <b>pilesGapY</b> says otherwise, and <b>pilesOffsetY</b> pins a fixed row pitch instead. A drop goes to the nearest row first, then to its place within it. And when a row overflows, its gaps and fans give way by themselves."
   },
   "holder1": {
     "type": "holder",
     "id": "holder1",
     "x": 60,
-    "y": 320,
+    "y": 361,
     "width": 680,
     "height": 380,
     "layout": "multiSpread",
@@ -40,7 +40,7 @@
   "text1": {
     "id": "text1",
     "x": 62,
-    "y": 715,
+    "y": 756,
     "width": 640,
     "layer": -3,
     "movable": false,
@@ -48,13 +48,13 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>gridColumns</b> <i>2</i>: two groups per row, wrapped onto the next row from the third group on. The rows sit the default 8 px apart."
+    "html": "<b>gridColumns</b> <i>2</i>: two groups per row, wrapped onto the next row from the third group on. The rows sit the default 8 px apart. It does not matter how big each group each; there will always be exactly two."
   },
   "holder2": {
     "type": "holder",
     "id": "holder2",
     "x": 800,
-    "y": 320,
+    "y": 361,
     "width": 680,
     "height": 380,
     "layout": "multiSpread",
@@ -69,7 +69,7 @@
   "text2": {
     "id": "text2",
     "x": 802,
-    "y": 715,
+    "y": 756,
     "width": 640,
     "layer": -3,
     "movable": false,
@@ -82,7 +82,7 @@
   "text3": {
     "id": "text3",
     "x": 430,
-    "y": 245,
+    "y": 286,
     "width": 1020,
     "height": 60,
     "layer": -3,
@@ -91,13 +91,13 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Every click of <b>Deal a group of 3</b> adds one new group at the end of each holder. Deal until the rows wrap, then drag groups by their handles - the drop shadow points at the slot they will take."
+    "html": "Every click of <b>Deal a group of 3</b> adds one new group at the end of each holder. Deal until the rows wrap, then drag groups by their handles. The drop shadow points at the slot they will take."
   },
   "button1": {
     "id": "button1",
     "type": "button",
     "x": 60,
-    "y": 245,
+    "y": 286,
     "width": 170,
     "height": 50,
     "text": "Deal a group of 3",
@@ -122,7 +122,7 @@
     "id": "button2",
     "type": "button",
     "x": 250,
-    "y": 245,
+    "y": 286,
     "width": 150,
     "height": 50,
     "text": "Deal one card",
@@ -1131,7 +1131,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788135592485,
+      "lastUpdate": 1788142590087,
       "skill": "",
       "description": "",
       "similarImage": "",

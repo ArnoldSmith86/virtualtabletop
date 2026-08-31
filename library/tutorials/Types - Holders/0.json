@@ -49,7 +49,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This holder changes <b>layout</b> to &quotcustom&quot. It also has <b>preventPiles</b> set to true so a pile handle does not form and it appears as if there is only one card in the holder.",
+    "html": "This holder changes <b>layout</b> to &quotcustom&quot. It also has <b>preventPiles</b> set to true so a pile handle does not form and it appears as if there is only one card in the holder.<br><br>Changing certain holder properties will treat the <b>layout</b> as if it were &quotcustom&quot even if it is set to &quotauto&quot. See the wiki for details.",
     "layer": -3
   },
   "text3": {
@@ -1103,7 +1103,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788033060208,
+      "lastUpdate": 1788142590068,
       "skill": "",
       "description": "",
       "similarImage": "",
