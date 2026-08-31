@@ -286,9 +286,13 @@ function selectionBarInstallListeners() {
     // the modifier state a mouse event carries says whether the key is down,
     // whether or not its keydown ever reached the page. Only opening is done
     // here: what closes the list is the key coming up, and a move that reports
-    // no modifier while it is still held would take it away mid-gesture.
+    // no modifier while it is still held would take it away mid-gesture. A key
+    // that is still down after it turned out to be a chord arms nothing, and the
+    // list then goes on being taken where the pointer rests like any other: the
+    // stack the count and the function keys are read off must not freeze for as
+    // long as somebody keeps a finger on Ctrl.
     if(!selectionBarPeekActive && e.getModifierState(SELECTION_BAR_PEEK_KEY))
-      return selectionBarPeekArm();
+      selectionBarPeekArm();
     if(selectionBarPeekActive)
       return selectionBarScanNextFrame();
     selectionBarScanTimer = setTimeout(function() {

@@ -4538,6 +4538,17 @@ test('Holding Ctrl opens the stack list and has it follow the pointer', async t 
   await t
     .wait(600)
     .expect(bar.hasClass('stackVisible')).notOk();
+  // the list stays away, but the stack behind it goes on being taken where the
+  // pointer rests: the count on the button and the widget an F key addresses are
+  // the ones under the pointer now, not the ones it was over when the chord was
+  // typed. The move carries the key that is still held, the way a real one does.
+  await movePointerWithPeekKey('#w_board');
+  await t
+    .expect(bar.find('.selectionBarStackCount').textContent).eql('1')
+    .expect(pressFunctionKeyWithPeekKey('F1')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk()
+    .expect(bar.hasClass('stackVisible')).notOk();
   await holdPeekKey(false);
   // pressed again, on its own, it opens as before
   await holdPeekKey(true);
