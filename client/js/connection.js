@@ -79,16 +79,16 @@ export function startWebSocket() {
   };
 }
 
-// The overlay that comes up when the connection drops explains that it is expected back and
-// suggests reloading or switching rooms, none of which applies to a restart: reconnecting has been
-// switched off and the page is reloading by itself. Say that instead, and offer the reload right
+// A restart is not a connection that is expected back: reconnecting has been switched off and the
+// page is reloading by itself, so the status display in the corner - which is what a dropped
+// connection gets - has nothing left to say. Say it in full instead, and offer the reload right
 // away for whoever does not want to wait out the delay that spreads the clients over a few seconds.
 export function showServerRestartOverlay() {
-  // a reconnect that lands in the meantime restores whatever overlay was up before the connection
-  // dropped, which would take this message away again moments before the page reloads
+  // the page is going away, so there is nothing left to reconnect for: another socket to a server
+  // this build no longer fits would only put the connection status back on screen next to this
+  // notice, a second before the reload
   preventReconnect();
-  $('#connectionLostOverlay').classList.add('serverRestarting');
-  showOverlay('connectionLostOverlay', true);
+  showOverlay('serverRestartOverlay', true);
   for(const cb of onServerRestartCallbacks) cb();
 }
 
