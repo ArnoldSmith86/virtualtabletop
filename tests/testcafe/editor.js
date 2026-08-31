@@ -4437,6 +4437,19 @@ const movePointerWithPeekKey = ClientFunction(selector => {
 const pressKeyWithoutPeekKey = ClientFunction(key => {
   window.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
 });
+const pressKeyWithPeekKey = ClientFunction(key => {
+  window.dispatchEvent(new KeyboardEvent('keydown', { key, ctrlKey: true, bubbles: true, cancelable: true }));
+});
+// The list must not be there in the same tick the key goes down: a chord starts
+// with the same key, and a dropdown the width of the panel flashing over it for
+// the length of a keystroke is what the hold has to be told apart from.
+const peekKeyDownOpensListAtOnce = ClientFunction(_=>{
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Control', ctrlKey: true, bubbles: true, cancelable: true }));
+  return document.querySelector('#editorModuleTopLeft .selectionBar').classList.contains('stackVisible');
+});
+const pressEscapeWithPeekKey = ClientFunction(_=>{
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', ctrlKey: true, bubbles: true, cancelable: true }));
+});
 const pressFunctionKeyWithPeekKey = ClientFunction((key, shift) => {
   const event = new KeyboardEvent('keydown', { key, ctrlKey: true, shiftKey: !!shift, bubbles: true, cancelable: true });
   window.dispatchEvent(event);
@@ -4479,9 +4492,12 @@ test('Holding Ctrl opens the stack list and has it follow the pointer', async t 
   await t.expect(bar.hasClass('stackVisible')).notOk();
   await holdPeekKey(false);
 
+  // the same key starts Ctrl+Z, Ctrl+J and every other chord of the editor, so
+  // it has to be held to mean the list: nothing drops over the panel in the tick
+  // the key goes down
   await t.hover('#w_checker');
-  await holdPeekKey(true);
   await t
+    .expect(peekKeyDownOpensListAtOnce()).notOk()
     .expect(bar.hasClass('stackVisible')).ok()
     .expect(stackRows.count).eql(3)
     // and it follows the pointer while the key is down instead of standing on
@@ -4507,6 +4523,32 @@ test('Holding Ctrl opens the stack list and has it follow the pointer', async t 
     // a list that only stood while the key was down is not the dropdown that
     // comes back with the module the next time it is opened
     .expect(storedStackOpen()).notOk();
+
+  // a chord is the key plus a key the list knows nothing about, and it leaves
+  // the list away for the rest of the hold rather than opening it once the chord
+  // is over. The letter stands for Ctrl+Z, Ctrl+J and the rest of them - it is
+  // one the editor has no shortcut on, so the room it is typed over is left
+  // exactly as it was.
+  await t.hover('#w_checker');
+  await holdPeekKey(true);
+  await pressKeyWithPeekKey('q');
+  await t
+    .wait(600)
+    .expect(bar.hasClass('stackVisible')).notOk();
+  await holdPeekKey(false);
+  // pressed again, on its own, it opens as before
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).ok();
+
+  // Escape puts a peeked list away like any other, and the key that is still
+  // held must not bring it straight back
+  await pressEscapeWithPeekKey();
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await movePointerWithPeekKey('#w_checker');
+  await t
+    .wait(600)
+    .expect(bar.hasClass('stackVisible')).notOk();
+  await holdPeekKey(false);
 
   // an OS-level menu or shortcut can take the keyup without ever blurring the
   // window, which would leave the list latched open and scanning every frame -
@@ -4541,6 +4583,9 @@ test('Holding Ctrl opens the stack list and has it follow the pointer', async t 
     .hover('#w_checker');
   await holdPeekKey(true);
   await t
+    // with no list on screen the button the stack belongs to is what says the
+    // key is doing anything
+    .expect(bar.find('button[icon=layers]').hasClass('peeking')).ok()
     .expect(tree.exists).ok()
     .expect(bar.hasClass('stackVisible')).notOk()
     // so a capital typed into the filter box still goes into it
@@ -4548,6 +4593,7 @@ test('Holding Ctrl opens the stack list and has it follow the pointer', async t 
     .expect(storedTreeOpen()).ok();
   await holdPeekKey(false);
   await t
+    .expect(bar.find('button[icon=layers]').hasClass('peeking')).notOk()
     .expect(tree.exists).ok()
     .expect(storedTreeOpen()).ok()
     .click(bar.find('button[icon=account_tree]'));
