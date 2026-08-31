@@ -614,7 +614,6 @@ test('A holder layout is picked in the Layout section and takes over what it dec
   const stateOf = ClientFunction(property => JSON.stringify(widgets.get('holder').state[property] === undefined ? null : widgets.get('holder').state[property]));
   const layout = Selector('#editorModules .selectInput').withText('Arrange as');
   const align = Selector('#editorModules .checkboxInput').withText('Align dropped widgets');
-  const arrangePiles = Selector('#editorModules .checkboxInput').withText('Arrange dropped piles');
   const preventPiles = Selector('#editorModules .checkboxInput').withText('Prevent piles');
   const dropShadow = Selector('#editorModules .checkboxInput').withText('Drop shadow');
   const pilesGap = Selector('#editorModules .numberPairRow').withText('Piles gap');
@@ -649,8 +648,7 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(gridColumns.visible).ok()
     .expect(spreadMin.visible).ok()
     .expect(dropShadow.visible).ok()
-    .expect(align.visible).notOk()
-    .expect(arrangePiles.visible).notOk();
+    .expect(align.visible).notOk();
 
   // a grid offers its own knobs - including the cell pitch and the stacks
   // switch - and a single spread keeps a long fan readable through spreadMin;
@@ -675,10 +673,18 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(stackOffset.find('input').nth(0).value).eql('')
     .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('40')
     .expect(stackOffset.find('input').nth(1).getAttribute('placeholder')).eql('0')
+    // the arc bends the same spread: it reads the same step, so the same
+    // derived 40 shows, and the piles knobs stay away
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"arc"'))
+    .expect(stateOf('layout')).eql('"arc"')
+    .expect(stackOffset.visible).ok()
+    .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('40')
+    .expect(pilesOffset.visible).notOk()
+    .expect(spreadMin.visible).notOk()
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"custom"'))
-    .expect(align.visible).ok()
-    .expect(arrangePiles.visible).ok();
+    .expect(align.visible).ok();
 
   // random scatters inside the drop offset margin: that pair is its only knob
   const dropOffset = Selector('#editorModules .numberPairRow').withText('Drop offset');
@@ -1461,7 +1467,7 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_dice2')
     .click('#w_dice2');
-  await compareState(t, 'cb0b951304fc082699ed5c9d4d679a02');
+  await compareState(t, '4a31318f485cc711be24ee083afa8e4d');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
