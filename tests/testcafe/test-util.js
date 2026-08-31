@@ -42,11 +42,12 @@ export function roomURL() {
   return `${server}/testcafe-testing`;
 }
 
-// The URL a public library game is shared under. Its slug is derived from the game name the same
-// way Room.getStateDetails() derives it when it matches a link back to a game.
-export function publicGameURL(gameName) {
+// The URL a public library game is shared under - 'game' for the Games library, 'tutorial' for
+// the Tutorials one. The slug is derived from the game name the same way Room.getStateDetails()
+// derives it when it matches a link back to a game, so digits and spaces both become separators.
+export function publicGameURL(gameName, category='game') {
   const slug = gameName.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '');
-  return `${server}/game/${slug}`;
+  return `${server}/${category}/${slug}`;
 }
 
 export function prepareClient() {
