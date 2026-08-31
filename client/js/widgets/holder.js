@@ -600,11 +600,14 @@ export class Holder extends ImageWidget {
   // changing - which can put a different group under the pointer than the one
   // the pass decided on. The drop delivers what the preview shows, so the
   // decision is re-checked against the freshly laid-out row until it stands
-  // still (bounded, in case two layouts keep trading places).
+  // still (bounded, in case two layouts keep trading places). Only a holder
+  // that arranges piles aims drops at the group under the pointer - anywhere
+  // else the drop slots into the row no matter what it covers, so the shadow
+  // keeps previewing that slot instead of a join that would never happen.
   async previewShadowDrop(shadow, target, x, y) {
     for(let i=0; ; ++i) {
       await this.applyShadowPreview(shadow, target, x, y);
-      const settled = this.arrangedChildAt(shadow, x, y);
+      const settled = this.get('allowPiles') ? this.arrangedChildAt(shadow, x, y) : null;
       if(settled == target || i >= 2)
         return;
       target = settled;
@@ -875,17 +878,17 @@ export class Holder extends ImageWidget {
     if(this.preventRearrangeDuringPileDrop)
       return;
 
+    // a drop shadow previewing an insertion into one of the fans sits inside
+    // that fan, and one previewing a join sits hidden on the group it would
+    // join - every layout arranges as if neither were there
+    children = children.filter(c=>!c.fanPreviewPile && (c.get('display') || !c.get('dropShadowOwner')));
+
     if(this.usesAutoLayout())
       return await this.rearrangeChildrenAuto(children);
     if(this.get('layout') == 'grid')
       return await this.rearrangeChildrenGrid(children);
     if(this.get('layout') == 'random')
       return await this.rearrangeChildrenRandom(children);
-
-    // a drop shadow previewing an insertion into one of the fans sits inside
-    // that fan, and one previewing a join sits hidden on the group it would
-    // join - the row is laid out as if neither were there
-    children = children.filter(c=>!c.fanPreviewPile && (c.get('display') || !c.get('dropShadowOwner')));
 
     const owner = children.map(c=>c.get('owner')).find(o=>o) || null;
     const squish = this.fanSquish(owner);

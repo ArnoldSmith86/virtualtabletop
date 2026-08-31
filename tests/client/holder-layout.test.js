@@ -1373,6 +1373,83 @@ describe('the drop shadow previewing an insertion into a fan', () => {
   });
 });
 
+describe('the drop shadow in holders that do not arrange piles', () => {
+  // a drop into these holders slots into the row no matter which card it
+  // covers - onChildAddAlign only aims drops at the group under the pointer
+  // where piles are allowed - so the preview must keep showing that slot
+  // instead of hiding the shadow as if the drop would join what it covers
+
+  test('a singleSpread keeps the shadow visible over the middle of the row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'singleSpread', width: 500, height: 120 });
+    // a real card defaults onPileCreation to {}, which the join checks compare
+    for(let i=0; i<3; ++i)
+      createCard('c' + i, { parent: 'h', x: 4 + 40*i, y: 4, z: i+1, onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 40, onPileCreation: {} });
+    // aimed between the first two cards, deep inside the covered row
+    await holder.previewShadowDrop(shadow, null, 30, 4);
+    expect(shadow.get('display')).toBe(true);
+    // it holds the slot the dropped card will get, and the row spreads around it
+    expect(shadow.get('x')).toBe(44);
+    expect(widgets.get('c2').get('x')).toBe(124);
+  });
+
+  test('a classic spread holder keeps the shadow visible over its cards', async () => {
+    // the exact shape every classic hand has: no layout property, a written
+    // stack offset - with the classicHolderLayout legacy mode active
+    globalThis.legacyMode = name => name == 'classicHolderLayout';
+    const holder = createHolder({ id: 'h', stackOffsetX: 40, width: 500, height: 120 });
+    expect(holder.effectiveLayout()).toBe('custom');
+    for(let i=0; i<3; ++i)
+      createCard('c' + i, { parent: 'h', x: 4 + 40*i, y: 4, z: i+1, onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 40, onPileCreation: {} });
+    await holder.previewShadowDrop(shadow, null, 30, 4);
+    expect(shadow.get('display')).toBe(true);
+    expect(shadow.get('x')).toBe(44);
+  });
+
+  test('a spreading auto holder keeps the shadow visible over its cards', async () => {
+    const holder = createHolder({ id: 'h', width: 560, height: 200 });
+    for(let i=0; i<4; ++i)
+      createCard('c' + i, { parent: 'h', x: 4, y: 4, z: i+1, onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 40, onPileCreation: {} });
+    // swept across the row the way a drag hovers - wherever it points, the
+    // shadow stays visible instead of vanishing over the cards it covers
+    for(const aimX of [ 40, 120, 200, 280, 360 ]) {
+      await holder.previewShadowDrop(shadow, null, aimX, 50);
+      expect(shadow.get('display')).toBe(true);
+    }
+    // visible, it takes a slot of the row like the dropped card will
+    expect(new Set(holder.arrangedChildren().map(c=>c.get('x'))).size).toBe(5);
+  });
+
+  test('a hidden shadow does not keep a slot open in the auto rows', async () => {
+    const holder = createHolder({ id: 'h', width: 560, height: 200 });
+    for(let i=0; i<4; ++i)
+      createCard('c' + i, { parent: 'h', x: 4, y: 4, z: i+1 });
+    await holder.updateAfterShuffle();
+    const before = positionsByZ(holder);
+    createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 40, display: false });
+    await holder.receiveCard(null);
+    // the row closes as if the shadow were not there - no empty gap remains
+    expect(positionsByZ(holder).slice(0, before.length)).toEqual(before);
+  });
+
+  test('the random tray keeps the shadow visible over a settled piece', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 400, height: 300 });
+    createCard('piece', { parent: 'h', x: 100, y: 100, z: 1, onPileCreation: {} });
+    const shadow = createCard('shadow', { parent: 'h', dropShadowOwner: 'jestPlayer', z: 2, onPileCreation: {} });
+    // aimed right onto the settled piece: the drop would scatter next to it,
+    // never merge - the shadow stays pinned under the pointer
+    await holder.previewShadowDrop(shadow, null, 110, 110);
+    expect(shadow.get('display')).toBe(true);
+    expect([ shadow.get('x'), shadow.get('y') ]).toEqual([ 110, 110 ]);
+    expect(randCalls).toBe(0);
+  });
+});
+
 describe('a shared hand (childrenPerOwner) keeps its lanes', () => {
   // the local player is jestPlayer, so anything that wrongly hands cards to
   // "whoever clicked" shows up as an owner flipping to jestPlayer
