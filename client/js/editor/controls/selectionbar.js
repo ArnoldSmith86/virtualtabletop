@@ -33,6 +33,7 @@ let selectionBarPeekBar = null;     // the bar whose list the peek opened and ha
 let selectionBarPeekArmTimer = null;
 let selectionBarPeekArmed = false;  // the key has been held long enough to mean the list, see selectionBarPeekArm
 let selectionBarPeekBlocked = false; // ... or it turned out to be the first half of a chord after all
+let selectionBarPeekRestPoint = null; // the spot the peeked list stops on, see selectionBarPeekSettle
 let selectionBarScanFrame = null;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
@@ -282,7 +283,7 @@ function selectionBarInstallListeners() {
       // says about itself changes with that: from out here its rows are what the
       // pointer can reach, and the key on it is the modifier again
       if(selectionBarPeekActive && wasInRoom)
-        updateSelectionBars();
+        selectionBarPeekSettle();
       return;
     }
     selectionBarPointer = { x: e.clientX, y: e.clientY };
@@ -300,8 +301,16 @@ function selectionBarInstallListeners() {
     // long as somebody keeps a finger on Ctrl.
     if(!selectionBarPeekActive && e.getModifierState(SELECTION_BAR_PEEK_KEY))
       selectionBarPeekArm();
-    if(selectionBarPeekActive)
-      return selectionBarScanNextFrame();
+    if(selectionBarPeekActive) {
+      selectionBarScanNextFrame();
+      // the spot the pointer stops on is the stack the list is read at, and the
+      // one it goes back to when the pointer leaves for a row, see selectionBarPeekSettle
+      selectionBarScanTimer = setTimeout(function() {
+        selectionBarScanTimer = null;
+        selectionBarPeekNoteRestPoint();
+      }, SELECTION_BAR_SCAN_DELAY);
+      return;
+    }
     selectionBarScanTimer = setTimeout(function() {
       selectionBarScanTimer = null;
       selectionBarScan();
@@ -449,6 +458,29 @@ function selectionBarPeekStart() {
   // ago, and the point of the key is that the list says what is under the
   // pointer now
   selectionBarScan();
+  selectionBarPeekNoteRestPoint(); // the pointer is standing still on this one, that is what armed the key
+}
+
+// A spot with nothing under it is not one the list can be read at, so it is not
+// one to stop on either: the empty space around the board is the last thing the
+// pointer crosses on its way out of the room.
+function selectionBarPeekNoteRestPoint() {
+  if(selectionBarStack.length)
+    selectionBarPeekRestPoint = selectionBarPointer;
+}
+
+// A pointer on its way to a row of the list crosses everything that lies between
+// the widget it was reading and the panel - the rest of the room, and the empty
+// space around the board - and a list that followed it all the way there would
+// arrive showing that instead, with the row that was aimed at gone from under
+// the click. What the pointer last came to rest on is what the list was read at,
+// so that is the stack it stops on when the pointer leaves the room.
+function selectionBarPeekSettle() {
+  if(selectionBarPeekRestPoint)
+    selectionBarPointer = selectionBarPeekRestPoint;
+  // the rows change back and the help line with them: a list that has stopped
+  // following the pointer says so rather than going on claiming to follow it
+  selectionBarScan();
 }
 
 function selectionBarPeekStop() {
@@ -500,6 +532,7 @@ function selectionBarPeekBlock() {
 function selectionBarPeekRelease() {
   selectionBarPeekBlocked = false;
   selectionBarPeekArmed = false;
+  selectionBarPeekRestPoint = null;
   selectionBarPeekCancelArm();
   selectionBarPeekStop();
 }

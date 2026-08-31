@@ -4428,11 +4428,19 @@ const holdPeekKey = ClientFunction(down => {
 // A real browser carries the modifier state into the mouse events as well, which
 // is what opens the list when the key went down before the pointer ever reached
 // the room. The move is dispatched on the element it lands on, since testcafe
-// cannot hold a key down across a hover either.
-const movePointerWithPeekKey = ClientFunction(selector => {
-  const rect = document.querySelector(selector).getBoundingClientRect();
-  const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
-  document.elementFromPoint(x, y).dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, ctrlKey: true, bubbles: true }));
+// cannot hold a key down across a hover either. Given several selectors the
+// pointer travels over them one frame at a time: the list takes the stack of
+// every spot on the way, and no spot is held long enough to count as the pointer
+// having come to rest on it - which is the trip to a row of the list, and which
+// a hover cannot do either since it moves at a speed of its own.
+const movePointerWithPeekKey = ClientFunction(selectors => {
+  const move = selector => {
+    const rect = document.querySelector(selector).getBoundingClientRect();
+    const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
+    document.elementFromPoint(x, y).dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, ctrlKey: true, bubbles: true }));
+  };
+  const frame = _=>new Promise(resolve=>requestAnimationFrame(_=>requestAnimationFrame(resolve)));
+  return [].concat(selectors).reduce((chain, selector)=>chain.then(_=>{ move(selector); return frame(); }), Promise.resolve());
 });
 const pressKeyWithoutPeekKey = ClientFunction(key => {
   window.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
@@ -4673,6 +4681,44 @@ test('The peek key works with the caret in the JSON text area', async t => {
   await setEditorState(null);
 });
 
+// Getting to a row of the list means taking the pointer off the widget it was
+// read on and across the rest of the room, and a list that followed it all the
+// way out would be showing whatever it crossed by the time the pointer arrived -
+// the row that was aimed at gone from under the click.
+test('The peeked list stops on the stack the pointer last rested on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    checker: { id: 'checker', type: 'basic', x: 40, y: 60, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(stackRows.count).eql(2)
+    .expect(stackRows.nth(0).find('.selectionBarStackId').textContent).eql('checker');
+
+  // the trip to a row: across the middle of the board, where the checker is not,
+  // and out of the room. The list takes the board on the way, and is back on the
+  // stack it was read at by the time the pointer is out
+  await movePointerWithPeekKey([ '#w_board', '#editorModuleTopLeft .selectionBarCrumbs' ]);
+  await t
+    .expect(stackRows.count).eql(2)
+    .expect(stackRows.nth(0).find('.selectionBarStackId').textContent).eql('checker')
+    .expect(bar.find('.selectionBarStackHelp').textContent).notContains('Following the pointer');
+  await holdPeekKey(false);
+  await setEditorState(null);
+});
+
 // Pasting the id of a row into the JSON text is what Ctrl has always meant here,
 // and it is now also the key that holds the peeked list open. Which of the two it
 // is is decided by where the pointer is: from a row of the list - or anywhere
@@ -4723,12 +4769,16 @@ test('Ctrl pastes the id of a row into the JSON text from outside the room', asy
   await t
     .expect(bar.hasClass('stackVisible')).ok()
     .expect(bar.find('.selectionBarStackHelp').textContent).contains('Following the pointer')
-    .hover(stackRows.nth(1))
+    .hover(stackRows.nth(0))
     .expect(bar.find('.selectionBarStackHelp').textContent).notContains('Following the pointer');
+  // the list stops on the stack the pointer set out from, but a hover travels at
+  // a speed of its own and can come to rest again on the way, so which widget the
+  // top row names is read off the list rather than assumed
+  const rowID = await stackRows.nth(0).find('.selectionBarStackId').textContent;
   await putCursorBehind('"width": 100');
   await t
-    .click(stackRows.nth(1), { modifiers: { ctrl: true } })
-    .expect(jsonEditorText()).contains('"width": 100board');
+    .click(stackRows.nth(0), { modifiers: { ctrl: true } })
+    .expect(jsonEditorText()).contains(`"width": 100${rowID}`);
   await holdPeekKey(false);
   await setEditorState(null);
 });
