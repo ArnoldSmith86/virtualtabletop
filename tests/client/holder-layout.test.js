@@ -665,6 +665,57 @@ describe('the random layout', () => {
     expect(randCalls).toBe(0);
   });
 
+  test('a drop onto a covered spot moves nothing but the dropped piece', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 260, height: 260 });
+    // crowd the tray until pieces overlap - even then a drop only places the
+    // piece that was dropped, everything lying there keeps spot, tilt and z
+    for(let i = 0; i < 5; ++i)
+      await holder.receiveCard(createCard(`c${i}`, { parent: 'h', z: i + 1 }), null);
+    const snapshot = ()=>[ 0, 1, 2, 3, 4 ].map(i=>{
+      const c = widgets.get(`c${i}`);
+      return [ c.get('x'), c.get('y'), c.get('rotation'), c.get('z') ];
+    });
+    const before = snapshot();
+    const drop = createCard('drop', { parent: 'h', z: 6 });
+    await holder.receiveCard(drop, [ 100, 100 ]);
+    expect(snapshot()).toEqual(before);
+    expect(drop.get('z')).toBeGreaterThan(Math.max(...before.map(e=>e[3])));
+    expectInsideHolder(holder);
+  });
+
+  test('a dropped pile scatters its own cards only', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 500, height: 500 });
+    await holder.receiveCard(createCard('lying0', { parent: 'h', z: 1 }), [ 60, 60 ]);
+    await holder.receiveCard(createCard('lying1', { parent: 'h', z: 2 }), [ 350, 320 ]);
+    const snapshot = ()=>[ 'lying0', 'lying1' ].map(id=>{
+      const c = widgets.get(id);
+      return [ c.get('x'), c.get('y'), c.get('rotation'), c.get('z') ];
+    });
+    const before = snapshot();
+    const pile = await createPile('group', holder, 200, 200, 3);
+    await holder.onChildAddAlign(pile, null);
+    expect(snapshot()).toEqual(before);
+    expect(holder.children().length).toBe(5);
+    expectInsideHolder(holder);
+  });
+
+  test('taking a piece out of a crowded tray moves nothing', async () => {
+    const holder = createHolder({ id: 'h', layout: 'random', width: 260, height: 260 });
+    for(let i = 0; i < 5; ++i)
+      await holder.receiveCard(createCard(`c${i}`, { parent: 'h', z: i + 1 }), null);
+    const snapshot = ()=>[ 1, 2, 3, 4 ].map(i=>{
+      const c = widgets.get(`c${i}`);
+      return [ c.get('x'), c.get('y'), c.get('rotation'), c.get('z') ];
+    });
+    const before = snapshot();
+    const c0 = widgets.get('c0');
+    await c0.set('parent', null);
+    randCalls = 0;
+    await holder.dispenseCard(c0, true);
+    expect(snapshot()).toEqual(before);
+    expect(randCalls).toBe(0);
+  });
+
   test('a holder too full for free spots keeps everything inside instead of spilling out', async () => {
     const holder = createHolder({ id: 'h', layout: 'random', width: 230, height: 230 });
     for(let i = 0; i < 6; ++i)
@@ -1638,6 +1689,38 @@ describe('a grid whose cells are stacks (preventPiles: false)', () => {
     await holder.onChildAddAlign(drop, 'h');
     expect(drop.get('parent')).toBe('h');
     expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ] ]);
+  });
+
+  test('a card stacked onto a lone card grows a stack in place - no cell reflows', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, width: 320, height: 320 });
+    for(let i=0; i<4; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1, onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 112 ], [ 112, 112 ] ]);
+    // drop c0 onto c3: they merge into a stack on c3's cell, and the other
+    // cells stay exactly where they are - c0's old cell stays an empty spot
+    const c0 = widgets.get('c0');
+    await c0.setPosition(112, 112, 5);
+    await holder.onChildAddAlign(c0, 'h');
+    const stack = widgets.get(c0.get('parent'));
+    expect(stack.get('type')).toBe('pile');
+    expect([ stack.get('x'), stack.get('y') ]).toEqual([ 112, 112 ]);
+    expect(positionsByZ(holder)).toEqual([ [ 112, 4 ], [ 4, 112 ], [ 112, 112 ] ]);
+  });
+
+  test('the merged stack keeps its slot in the by-z order for later passes', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, gridColumns: 3, width: 400, height: 300 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1, onPileCreation: {} });
+    await holder.updateAfterShuffle();
+    const before = positionsByZ(holder);
+    const drop = createCard('drop', { parent: 'h', x: 112, y: 4, z: 20, onPileCreation: {} });
+    await holder.onChildAddAlign(drop, 'h');
+    expect(positionsByZ(holder)).toEqual(before);
+    // a later full pass sorts the entries by z again - the stack has to hold
+    // the middle cell, not drift to the front or the end of the grid
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual(before);
   });
 
   test('turning preventPiles back on breaks the stacks into cells', async () => {

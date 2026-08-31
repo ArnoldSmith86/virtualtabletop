@@ -355,9 +355,14 @@ export class Holder extends ImageWidget {
         }
       }
     }
-    if(this.get('layout') == 'grid')
-      await this.updateAfterShuffle();
-    else if(this.get('alignChildren') && this.spreadsChildren())
+    if(this.get('layout') == 'grid') {
+      // a card that joins a stack in one of the cells has not left the grid:
+      // the merge keeps every cell where it is
+      if(!this.preventGridReflowDuringMerge)
+        await this.updateAfterShuffle();
+    // a piece taken out of the random tray leaves no hole to close - the
+    // others just stay lying where they are
+    } else if(this.get('alignChildren') && this.spreadsChildren() && this.get('layout') != 'random')
       await this.receiveCard(null);
     if(!stillInside && Array.isArray(this.get('leaveRoutine')))
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
@@ -426,8 +431,26 @@ export class Holder extends ImageWidget {
         if(target) {
           if(child.get('dropShadowOwner'))
             return await child.setPosition(target.get('x'), target.get('y'), target.get('z') + 1);
+          // the stack grows right where it stands: the merge turns two entries
+          // into one, and a grid pass over that would shift every other cell -
+          // so the passes the merge triggers are suppressed, and the merged
+          // stack takes over the cell (and the slot in the by-z order) of what
+          // it landed on
+          const targetZ = target.get('z');
           await child.setPosition(target.get('x'), target.get('y'), child.get('z'));
+          this.preventGridReflowDuringMerge = true;
           await child.updatePiles();
+          delete this.preventGridReflowDuringMerge;
+          if(child.isBeingRemoved || child.get('parent') != this.get('id') || target.get('parent') != this.get('id')) {
+            let stack = child.isBeingRemoved ? target : child;
+            if(stack.get('parent') != this.get('id') && widgets.has(stack.get('parent')))
+              stack = widgets.get(stack.get('parent'));
+            if(stack.get('parent') == this.get('id'))
+              await stack.set('z', targetZ);
+            return true;
+          }
+          // updatePiles refused the merge (a dropLimit, mismatched
+          // onPileCreation), so the drop gets a cell of its own like any other
           return await this.updateAfterShuffle(new Set([ this.childOwner(child) ]));
         }
       }
@@ -442,11 +465,13 @@ export class Holder extends ImageWidget {
     // else the pile is emptied into the holder, one card per slot
     if((this.get('preventPiles') || spreads && !this.get('allowPiles')) && child.get('type') == 'pile') {
       let i=1;
+      const arrived = [];
       this.preventRearrangeDuringPileDrop = true;
       for(const w of child.children().reverse()) {
         await w.set('x', child.get('x') - this.absoluteCoord('x') + i/100);
         await w.set('y', child.get('y') - this.absoluteCoord('y') + i/100);
         await w.set('parent', this.get('id'));
+        arrived.push(w);
         ++i;
         if(this.get('preventPiles')) {
           // the random layout scatters from where the pile was dropped, so the
@@ -459,7 +484,11 @@ export class Holder extends ImageWidget {
         }
       }
       delete this.preventRearrangeDuringPileDrop;
-      if(!this.get('preventPiles') || this.get('layout') == 'random')
+      if(this.get('layout') == 'random')
+        // only the dropped pile's cards scatter from the heap it left them in
+        // - everything already lying in the tray stays put
+        await this.rearrangeChildrenRandom(this.arrangedChildrenOwned().sort((a, b)=>a.get('z') - b.get('z')), new Set(arrived));
+      else if(!this.get('preventPiles'))
         await this.receiveCard();
       return true;
     }
@@ -775,9 +804,14 @@ export class Holder extends ImageWidget {
     if(this.usesAutoLayout())
       return await this.receiveCardAuto(card, pos);
     // a stack in a grid cell that changes notifies its holder like any other
-    // arrangement change - the grid pass is what lays the cells out
-    if(this.get('layout') == 'grid')
-      return await this.updateAfterShuffle();
+    // arrangement change - the grid pass is what lays the cells out. While a
+    // drop is merging into one of the cells the stack grows in place, and the
+    // grid around it stays put.
+    if(this.get('layout') == 'grid') {
+      if(!this.preventGridReflowDuringMerge)
+        await this.updateAfterShuffle();
+      return;
+    }
     if(this.get('layout') == 'random')
       return await this.receiveCardRandom(card, pos);
     // rows of groups are arranged like the auto layout's rows: the dropped
@@ -834,10 +868,6 @@ export class Holder extends ImageWidget {
       return await card.setPosition(at.x, at.y, this.arrangedChildrenOwned().length + 1);
     }
     const children = this.arrangedChildrenOwned().sort((a, b)=>a.get('z') - b.get('z'));
-    // the piece being placed goes last: it never pushes the others off their
-    // spots, and it ends up on top
-    if(card && children.indexOf(card) != -1)
-      children.push(children.splice(children.indexOf(card), 1)[0]);
     await this.rearrangeChildrenRandom(children, card, card && card.movedByButton ? null : pos);
   }
 
@@ -1100,12 +1130,15 @@ export class Holder extends ImageWidget {
     };
   }
 
-  // The scatter pass of the random layout. Every piece keeps its spot while it
-  // lies inside the margins and clear of the pieces placed before it, so laying
+  // The scatter pass of the random layout. A full pass (a resize, a changed
+  // margin, a layout switch) lets every piece keep its spot while it lies
+  // inside the margins and clear of the pieces placed before it, so laying
   // the holder out again moves nothing that does not have to move - and
-  // consumes no randomness. What cannot stay - the piece that was just dropped
-  // onto an occupied spot, or one a shrunken holder no longer has room for -
-  // is thrown onto a random spot with a fresh tilt instead. Of the spots
+  // consumes no randomness. A drop pass (dropped names one piece or a Set of
+  // them) places only what is being put down: everything already lying in the
+  // tray stays exactly where it is and merely counts as the obstacles the
+  // landing spot is measured against. What cannot stay where it aimed is
+  // thrown onto a random spot with a fresh tilt instead. Of the spots
   // tried, the one covering the least of the other pieces wins, so a holder
   // too full for free spots overlaps its pieces instead of spilling them out.
   async rearrangeChildrenRandom(children, dropped=null, pos=null) {
@@ -1122,24 +1155,37 @@ export class Holder extends ImageWidget {
       Math.max(0, Math.min(box.y + box.h, p.y + p.h) - Math.max(box.y, p.y)), 0);
     const freshTilt = child=>(+child.getDefaultValue('rotation') || 0) + Math.round((rand() * 2 - 1) * randomLayoutMaxTilt);
 
-    let z = 1;
+    const droppedSet = !dropped ? null : dropped instanceof Set ? dropped : new Set([ dropped ]);
+    if(droppedSet)
+      for(const child of children)
+        if(!droppedSet.has(child))
+          placed.push(boxAt({ x: child.get('x'), y: child.get('y') }, this.randomPieceMetrics(child, child.get('rotation'))));
+
+    // a drop leaves the z of what already lies in the tray alone and just
+    // settles on top of it; a full pass renumbers the whole tray
+    let z = droppedSet ? children.reduce((max, c)=>droppedSet.has(c) ? max : Math.max(max, c.get('z')), 0) + 1 : 1;
     for(const child of children) {
+      if(droppedSet && !droppedSet.has(child))
+        continue;
       let rotation = child.get('rotation');
       let metrics = this.randomPieceMetrics(child, rotation);
       let at = null;
-      if(child == dropped) {
+      if(droppedSet) {
         // the piece being put down settles with a fresh tilt, decided before
-        // the aimed spot is checked so the tilted box is what has to fit there
+        // the aimed spot is checked so the tilted box is what has to fit
+        // there. A single drop is aimed by where it was released, the cards
+        // of a dropped pile by the heap the pile left them in.
         rotation = freshTilt(child);
         metrics = this.randomPieceMetrics(child, rotation);
-        if(pos)
-          at = this.randomClampPiece({ x: pos[0], y: pos[1] }, metrics);
+        const aim = dropped instanceof Set ? [ child.get('x'), child.get('y') ] : pos;
+        if(aim)
+          at = this.randomClampPiece({ x: aim[0], y: aim[1] }, metrics);
       } else {
         at = this.randomClampPiece({ x: child.get('x'), y: child.get('y') }, metrics);
       }
 
       if(!at || coveredArea(boxAt(at, metrics))) {
-        if(child != dropped) {
+        if(!droppedSet) {
           rotation = freshTilt(child);
           metrics = this.randomPieceMetrics(child, rotation);
         }

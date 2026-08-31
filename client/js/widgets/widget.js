@@ -2035,8 +2035,12 @@ export class Widget extends StateManaged {
               // to another seat of the same shared hand only changes owners,
               // so the lane a card left needs the pass as much as the one it
               // arrived in - without it the leaving card's old neighbors keep
-              // the offsets they had while it was still in front of them
-              await holder.updateAfterShuffle(new Set([ ...batch.cards.map(c=>c.get('owner') || null), ...batch.leftLanes ]));
+              // the offsets they had while it was still in front of them.
+              // A random tray already threw each arrival as it landed, and
+              // the pieces lying in it never move for anything else arriving
+              // or leaving - it has no batch pass to run.
+              if(holder.get('layout') != 'random')
+                await holder.updateAfterShuffle(new Set([ ...batch.cards.map(c=>c.get('owner') || null), ...batch.leftLanes ]));
             }
           }
           arrivals.clear();
@@ -2215,7 +2219,10 @@ export class Widget extends StateManaged {
               }
               for(const source of sources) {
                 delete source.preventRearrangeDuringPileDrop;
-                await source.updateAfterShuffle();
+                // pieces recalled out of a random tray leave no holes to
+                // close, so what stays in it keeps lying where it is
+                if(source.get('layout') != 'random')
+                  await source.updateAfterShuffle();
               }
               sources.clear();
             } else {
