@@ -422,17 +422,18 @@ function selectionBarPeekStart() {
   selectionBarPeekActive = true;
 
   if(!selectionBars.some(bar=>bar.options.stack && bar.dom.classList.contains('stackVisible'))) {
-    const bar = selectionBarKeyboardBar && selectionBarKeyboardBar.options.stack
-              ? selectionBarKeyboardBar : selectionBars.find(bar=>bar.options.stack);
     // The two dropdowns share the space below the bar, so putting the list
     // where the tree is means taking the tree down. That tree is something
     // somebody opened and is working in - the keyboard can be in its filter
     // box, and it comes back scrolled to the selection rather than to wherever
     // it was left - and a key that gets tapped all day long must not be able to
-    // do that to it. A bar showing its tree keeps it, and the key only makes
-    // the stack follow the pointer: the count on the button and the widget the
-    // function keys address are live either way.
-    if(bar && !bar.dom.classList.contains('treeVisible')) {
+    // do that to it. So the list goes to a bar that is not showing one, which
+    // with two docked modules can be the other one; where every bar is showing
+    // its tree the key only makes the stack follow the pointer, and the count on
+    // the button and the widget the function keys address are live either way.
+    const free = selectionBars.filter(bar=>bar.options.stack && !bar.dom.classList.contains('treeVisible'));
+    const bar = free.indexOf(selectionBarKeyboardBar) != -1 ? selectionBarKeyboardBar : free[0];
+    if(bar) {
       selectionBarPeekBar = bar;
       selectionBarToggleStack(bar, false, true);
     }
