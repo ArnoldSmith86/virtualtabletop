@@ -343,6 +343,42 @@ function selectionBarInstallListeners() {
       selectionBarSetPointerCoords(e.touches[0].clientX, e.touches[0].clientY);
   }, true);
 
+  // A list the peek key is holding open answers to the arrows and Enter even
+  // where the keyboard belongs to a text field, and those keys have to be taken
+  // on the way down: #jeText turns an Enter into a newline in its own handler,
+  // so a keystroke claimed only on the way back up would have edited the JSON
+  // before the row it picked was ever selected. Escape is left where it was - it
+  // reaches the list whatever owns the keyboard, and everything else in the page
+  // that watches for it still gets to see it.
+  window.addEventListener('keydown', function(e) {
+    if(!selectionBarIsActive() || selectionBarKeyboardIsFree())
+      return;
+    if([ 'ArrowUp', 'ArrowDown', 'Enter' ].indexOf(e.key) == -1)
+      return;
+    selectionBarSyncPeek(e); // a key nobody is holding any more owns nothing
+    if(selectionBarPeekedListBar() && selectionBarHandleDropdownKey(e))
+      e.stopImmediatePropagation();
+  }, true);
+
+  // The wheel walks the peeked list the way the arrows do - the hand holding the
+  // key is already on the mouse. The room zooms to the cursor on a turn of the
+  // wheel, so while the key holds the list open that zoom gives way: what the
+  // gesture is aimed at is the list of what lies under the pointer. Capture
+  // phase and stopPropagation, since the zoom listens on #roomArea on the way
+  // back up.
+  window.addEventListener('wheel', function(e) {
+    if(!selectionBarIsActive() || !selectionBarPeekActive)
+      return;
+    if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      return selectionBarPeekRelease();
+    const bar = selectionBarPeekedListBar();
+    if(!bar || !e.deltaY)
+      return;
+    e.preventDefault();
+    e.stopPropagation();
+    selectionBarStepStack(bar, e.deltaY > 0 ? 1 : -1);
+  }, { capture: true, passive: false });
+
   // F1, F2, F3, F6 ... F12 pick the rows of the list without opening it - the
   // keys the panel this replaces was built around. Ctrl pastes the id into the
   // JSON editor, which only means anything while that one is open.
@@ -621,6 +657,17 @@ function selectionBarKeyboardIsFree() {
   return !focused.isContentEditable && !focused.matches('input:not([type=button]), textarea, select');
 }
 
+// The list the peek key is holding open, when that is the dropdown the keys are
+// on: opening it hands it the keyboard, so it is the one selectionBarKeyboardDropdown
+// finds - with two modules docked the bar the peek landed in can be the one that
+// is not showing its tree, and there the keys stay with that tree.
+function selectionBarPeekedListBar() {
+  if(!selectionBarPeekActive)
+    return null;
+  const dropdown = selectionBarKeyboardDropdown();
+  return dropdown && dropdown.kind == 'stack' ? dropdown.bar : null;
+}
+
 function selectionBarCloseDropdown(dropdown) {
   const button = dropdown.kind == 'stack' ? dropdown.bar.stackButton : dropdown.bar.treeButton;
   const focusWasInside = document.activeElement && dropdown.bar.dom.contains(document.activeElement);
@@ -678,7 +725,12 @@ function selectionBarHandleDropdownKey(e) {
     return true;
   }
 
-  if(!selectionBarKeyboardIsFree())
+  // The arrows and Enter go back to whatever owns the keyboard: they move the
+  // caret in the JSON text area and step every number input in the editor. A
+  // list the peek key is holding open is the exception - the caret sitting in a
+  // line of JSON is the posture the key gets held in, so that list would
+  // otherwise be the one list its own keys never reach.
+  if(!selectionBarKeyboardIsFree() && !selectionBarPeekedListBar())
     return false;
 
   const step = e.key == 'ArrowDown' ? 1 : e.key == 'ArrowUp' ? -1 : 0;
@@ -1006,10 +1058,15 @@ function selectionBarRenderStack(bar) {
   // to one of its rows, so it names the keys rather than sending anyone clicking.
   // Once the pointer has left the room the list is standing still and its rows
   // are back within reach, so it says what a list that is not moving says.
-  // Escape reaches the list whatever owns the keyboard, but the arrows and Enter
-  // belong to the text field that has it - the caret sitting in a line of JSON is
-  // the posture the peek gets used in, so the line only offers what will answer.
-  const keyHelp = selectionBarKeyboardIsFree()
+  // Escape reaches the list whatever owns the keyboard, and so do the arrows and
+  // Enter while the peek key holds it open - the wheel with them, since the hand
+  // that holds the key is on the mouse. A list nobody is holding open leaves
+  // those keys to the text field that owns them, so the line only offers what
+  // will answer.
+  const peeked = selectionBarPeekedListBar() === bar;
+  const keyHelp = peeked
+    ? '<br>↑ ↓ or the wheel step through the list, Enter selects, Esc closes it.'
+    : selectionBarKeyboardIsFree()
     ? '<br>↑ ↓ step through the list, Enter selects, Esc closes it.'
     : '<br>Esc closes it.';
   const following = selectionBarPeekActive && selectionBarPointerInRoom;
