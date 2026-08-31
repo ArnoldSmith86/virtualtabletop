@@ -1522,7 +1522,7 @@
     "html": "Without <b>holder</b>, SORT orders the current <b>collection</b>. With <i>rearrange: false</i> nothing on the table moves. The routine just reads the sorted order. This example uses rank."
   },
   "_meta": {
-    "version": 24,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {}
     },

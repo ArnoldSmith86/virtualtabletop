@@ -1165,7 +1165,7 @@
     "html": "<b>gridColumns</b> <i>2</i> pins the column count however the holder is sized, <b>gridRows</b> would pin the rows. <b>pilesOffsetY</b> <i>120</i> pins the row pitch: a fixed pitch never squishes, so what does not fit sticks out of the holder."
   },
   "_meta": {
-    "version": 24,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {}
     },

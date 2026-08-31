@@ -112,18 +112,12 @@ describe('what each layout derives for the holder', () => {
     expect(createHolder({ id: 'h' }).get('layout')).toBe('auto');
   });
 
-  test('a game with the classicHolderLayout legacy mode keeps the classic default', () => {
-    globalThis.legacyMode = name => name == 'classicHolderLayout';
-    const holder = createHolder({ id: 'h' });
+  test('a migrated holder - layout custom written by the file updater - keeps the classic behavior', () => {
+    const holder = createHolder({ id: 'h', layout: 'custom' });
     expect(holder.get('layout')).toBe('custom');
     expect(holder.usesAutoLayout()).toBe(false);
     // and an empty holder in such a game arranges nothing
     expect(holder.spreadsChildren()).toBe(false);
-  });
-
-  test('a holder in a legacy game can still opt into auto explicitly', () => {
-    globalThis.legacyMode = name => name == 'classicHolderLayout';
-    expect(createHolder({ id: 'h', layout: 'auto' }).usesAutoLayout()).toBe(true);
   });
 
   test('a null layout means unset, so the default applies', () => {
@@ -1396,8 +1390,7 @@ describe('the drop shadow in holders that do not arrange piles', () => {
 
   test('a classic spread holder keeps the shadow visible over its cards', async () => {
     // the exact shape every classic hand has: no layout property, a written
-    // stack offset - with the classicHolderLayout legacy mode active
-    globalThis.legacyMode = name => name == 'classicHolderLayout';
+    // stack offset - the auto layout defers to it
     const holder = createHolder({ id: 'h', stackOffsetX: 40, width: 500, height: 120 });
     expect(holder.effectiveLayout()).toBe('custom');
     for(let i=0; i<3; ++i)

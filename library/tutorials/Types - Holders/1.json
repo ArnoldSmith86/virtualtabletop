@@ -1273,7 +1273,7 @@
     "html": "<b>dropShadow</b> <i>true</i> previews the exact spot a dragged card will land on. Try a drag, then click the button to turn it off."
   },
   "_meta": {
-    "version": 24,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {}
     },

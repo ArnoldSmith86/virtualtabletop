@@ -85,15 +85,8 @@ export class Holder extends ImageWidget {
     });
   }
 
-  // Games from before the layout property keep the classic default: every one
-  // of their holders behaves exactly as it always did, while holders in newer
-  // games start from 'auto'. Only the class default is replaced - an answer
-  // that came through inheritFrom went through the source's get() and is
-  // already legacy-aware.
   getDefaultValue(property) {
     const value = super.getDefaultValue(property);
-    if(property == 'layout' && value === 'auto' && legacyMode('classicHolderLayout'))
-      return 'custom';
     // What a layout merely turns on by default - not derives - is expressed as
     // the property's default: set() normalizes a written value that equals the
     // default away, so only this way can an explicit false survive in the

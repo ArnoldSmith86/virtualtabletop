@@ -69,21 +69,29 @@ describe('legacy mode detection', () => {
       h: { id: 'h', type: 'holder', color: 'red' },
       b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }
     });
-    expect(flagsFor(state)).toEqual({ disableHolderImageWidget: true, classicHolderLayout: true });
+    expect(flagsFor(state)).toEqual({ disableHolderImageWidget: true });
   });
 
   test('a post-v18 save without gameSettings is classified instead of crashing', () => {
     // hand-written saves and importers can produce one; the detectors used to assume the v18
     // step had already created the object
-    expect(flagsFor(at(19, { h: { id: 'h', type: 'holder', color: 'red' } }))).toEqual({ disableHolderImageWidget: true, classicHolderLayout: true });
+    expect(flagsFor(at(19, { h: { id: 'h', type: 'holder', color: 'red' } }))).toEqual({ disableHolderImageWidget: true });
   });
 
-  test('a pre-v24 save with a holder gets classicHolderLayout', () => {
-    expect(flagsFor(at(23, { h: { id: 'h', type: 'holder' } })).classicHolderLayout).toBe(true);
+  test('a pre-v25 holder without a layout is written as custom', () => {
+    expect(FileUpdater(at(24, { h: { id: 'h', type: 'holder' } })).h.layout).toEqual('custom');
   });
 
-  test('a pre-v24 save without a holder does not get classicHolderLayout', () => {
-    expect(flagsFor(at(23, { l: { id: 'l', type: 'label', text: 'hi' } })).classicHolderLayout).toBe(undefined);
+  test('a holder that spells its layout out keeps it', () => {
+    expect(FileUpdater(at(24, { h: { id: 'h', type: 'holder', layout: 'grid' } })).h.layout).toEqual('grid');
+  });
+
+  test('the layout rewrite leaves other widget types alone', () => {
+    expect(FileUpdater(at(24, { c: { id: 'c', type: 'card' } })).c.layout).toEqual(undefined);
+  });
+
+  test('a current-version save keeps its bare holders on the auto default', () => {
+    expect(FileUpdater(at(VERSION, { h: { id: 'h', type: 'holder' } })).h.layout).toEqual(undefined);
   });
 
   test('a current-version save is left exactly as it is', () => {
@@ -151,14 +159,14 @@ const CLASSIFICATION_FIXTURES = {
   'v17 deck with an html face': [ at(17, { d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'html', value: 'x' } ] } ] } }), [ 'useIframeForHtmlCards' ] ],
   'v17 deck with an image face': [ at(17, { d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'image', value: 'x.png' } ] } ] } }), [] ],
   'v18 game with a var routine': [ at(18, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] } }), [] ],
-  'v19 holder with an icon': [ at(19, { h: { id: 'h', type: 'holder', icon: 'star' } }), [ 'disableHolderImageWidget', 'classicHolderLayout' ] ],
-  'v19 holder with text': [ at(19, { h: { id: 'h', type: 'holder', text: 'draw' } }), [ 'disableHolderImageWidget', 'classicHolderLayout' ] ],
-  'v19 holder with nothing on it': [ at(19, { h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
-  'v20 holder with svgReplaces': [ at(20, { h: { id: 'h', type: 'holder', svgReplaces: { a: 'b' } } }), [ 'disableHolderImageWidget', 'classicHolderLayout' ] ],
-  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
-  'v22 game with a holder': [ at(22, { h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ],
+  'v19 holder with an icon': [ at(19, { h: { id: 'h', type: 'holder', icon: 'star' } }), [ 'disableHolderImageWidget' ] ],
+  'v19 holder with text': [ at(19, { h: { id: 'h', type: 'holder', text: 'draw' } }), [ 'disableHolderImageWidget' ] ],
+  'v19 holder with nothing on it': [ at(19, { h: { id: 'h', type: 'holder' } }), [] ],
+  'v20 holder with svgReplaces': [ at(20, { h: { id: 'h', type: 'holder', svgReplaces: { a: 'b' } } }), [ 'disableHolderImageWidget' ] ],
+  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [] ],
+  'v22 game with a holder': [ at(22, { h: { id: 'h', type: 'holder' } }), [] ],
   'v22 game without a holder': [ at(22, { l: { id: 'l', type: 'label', text: 'hi' } }), [] ],
-  'v23 game with a holder': [ at(23, { h: { id: 'h', type: 'holder' } }), [ 'classicHolderLayout' ] ]
+  'v23 game with a holder': [ at(23, { h: { id: 'h', type: 'holder' } }), [] ]
 };
 
 describe('classification stability', () => {
@@ -189,8 +197,7 @@ describe('_meta shape', () => {
     state._meta.gameSettings = { legacyModes: { useIframeForHtmlCards: true } };
     expect(FileUpdater(state)._meta.gameSettings.legacyModes).toEqual({
       useIframeForHtmlCards: true,
-      disableHolderImageWidget: true,
-      classicHolderLayout: true
+      disableHolderImageWidget: true
     });
   });
 });

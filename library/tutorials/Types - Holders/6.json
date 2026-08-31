@@ -1345,7 +1345,7 @@
     "z": 52
   },
   "_meta": {
-    "version": 24,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {},
       "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 600ms\n}\n\n.transitions.dragging {\n  transition: none\n}"

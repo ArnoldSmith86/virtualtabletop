@@ -5,7 +5,7 @@ import { dragPath, openRoom, stateWhen } from './interaction-util.js';
 setupTestEnvironment();
 
 // The layout property, driven through the pointer and through routines: where a drop lands in
-// an auto holder and what the classicHolderLayout legacy mode keeps it doing, how a multiple
+// an auto holder and what the file updater keeps a pre-v25 game doing, how a multiple
 // spread takes a drop pointed into a fan, what MOVE's position parameter and SORT's groupBy
 // leave behind. The arithmetic itself is covered in tests/client/holder-layout.test.js - this
 // is about the parts only a real drag or a real routine reaches.
@@ -70,8 +70,9 @@ test('An auto holder centers a dropped card', async t => {
   await t.expect(state.loose.y).eql(70, 'centered vertically');
 });
 
-test('The classicHolderLayout legacy mode keeps drops at the drop offset', async t => {
-  await openRoom(t, 'only-classicHolderLayout', autoRoom());
+test('A pre-v25 game keeps drops at the drop offset', async t => {
+  // the file updater writes layout: 'custom' into the bare holder of an older save
+  await openRoom(t, 'modern', Object.assign({ _meta: { version: 24 } }, autoRoom()));
 
   await dragPath(t, 'loose', [ { onto: 'holder' } ]);
 
