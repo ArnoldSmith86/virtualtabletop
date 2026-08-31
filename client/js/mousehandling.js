@@ -1,3 +1,4 @@
+import { getCurrentOverlayId, getEditMode } from './overlaystate.js';
 import { viewportConfig } from './calculateLayout.js';
 
 let usedTouch = false;
@@ -286,16 +287,17 @@ async function handleInput(name, e, dragTarget) {
 
   let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(coords.clientX, coords.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
 
+  const ctx = { activeOverlay: getCurrentOverlayId(), editMode: getEditMode() };
   if(hoveredWidgetsWithHiddenCursor.length) {
-    toServer('mouse', { hidden: true });
+    toServer('mouse', { hidden: true, ...ctx });
   } else {
-    toServer('mouse',
-      {
-        x: Math.round(coords.x),
-        y: Math.round(coords.y),
-        pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
-        target: mouseTarget? unescapeID(mouseTarget.id.slice(2)) : null
-      });
+    toServer('mouse', {
+      x: Math.round(coords.x),
+      y: Math.round(coords.y),
+      pressed: (e.buttons & 1 == 1) || name == 'touchstart' || name == 'touchmove',
+      target: mouseTarget ? unescapeID(mouseTarget.id.slice(2)) : null,
+      ...ctx
+    });
   }
 }
 

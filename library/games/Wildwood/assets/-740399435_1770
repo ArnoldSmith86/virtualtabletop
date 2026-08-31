@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="25 0 170 170"
+     width="220" height="170"
+     role="img"
+     aria-label="Die meisten übernommenen Regionen (horizontal komplett zugeschnitten)">
+
+  <defs>
+    <style>
+      .region { fill:none; stroke:#000; stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
+      .flag   { fill:none; stroke:#000; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+      .fill   { fill:#000; }
+    </style>
+  </defs>
+
+  <!-- ===== Region oben ===== -->
+  <g transform="translate(70,10)">
+    <path class="region"
+          d="M20 25
+             C35 10, 65 12, 75 30
+             C90 45, 85 70, 65 78
+             C45 85, 25 78, 20 65
+             C10 50, 12 35, 20 25 Z"/>
+    <path class="flag" d="M45 28 L45 62"/>
+    <ellipse class="fill" cx="45" cy="66" rx="3.5" ry="2.5"/>
+    <path class="flag" d="M45 32 L60 40 L45 48 Z"/>
+  </g>
+
+  <!-- ===== Region unten links ===== -->
+  <g transform="translate(15,80)">
+    <path class="region"
+          d="M20 25
+             C35 10, 65 12, 75 30
+             C90 45, 85 70, 65 78
+             C45 85, 25 78, 20 65
+             C10 50, 12 35, 20 25 Z"/>
+    <path class="flag" d="M45 28 L45 62"/>
+    <ellipse class="fill" cx="45" cy="66" rx="3.5" ry="2.5"/>
+    <path class="flag" d="M45 32 L60 40 L45 48 Z"/>
+  </g>
+
+  <!-- ===== Region unten rechts ===== -->
+  <g transform="translate(125,80)">
+    <path class="region"
+          d="M20 25
+             C35 10, 65 12, 75 30
+             C90 45, 85 70, 65 78
+             C45 85, 25 78, 20 65
+             C10 50, 12 35, 20 25 Z"/>
+    <path class="flag" d="M45 28 L45 62"/>
+    <ellipse class="fill" cx="45" cy="66" rx="3.5" ry="2.5"/>
+    <path class="flag" d="M45 32 L60 40 L45 48 Z"/>
+  </g>
+
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 160 140"
+     width="160" height="140"
+     role="img"
+     aria-label="Mein Gebiet">
+
+  <defs>
+    <style>
+      .line { fill:none; stroke:#000; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; }
+      .mast { fill:none; stroke:#000; stroke-width:5; stroke-linecap:round; }
+      .thin { fill:none; stroke:#000; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+      .fill { fill:#000; }
+    </style>
+  </defs>
+
+  <!-- ===== Region (mein Gebiet) ===== -->
+  <g transform="translate(20,10)">
+    <!-- Regionen-Umriss -->
+    <path class="line"
+          d="M20 30
+             C45 5, 95 10, 115 40
+             C135 70, 120 110, 85 120
+             C50 130, 20 115, 15 90
+             C5 65, 5 50, 20 30 Z"/>
+
+    <!-- Fahnenmast -->
+    <path class="mast" d="M60 32 L60 92"/>
+
+    <!-- Fahnen-Stempel / Fuß -->
+    <ellipse class="fill" cx="60" cy="96" rx="5" ry="3.5"/>
+
+    <!-- Dreiecks-Fahne -->
+    <path class="thin" d="M60 36 L88 48 L60 60 Z"/>
+  </g>
+
+</svg>

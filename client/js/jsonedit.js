@@ -2004,6 +2004,11 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
 }
 
 async function jeApplyChanges() {
+  // while the state is only semantically wrong the commands keep editing the text, but the
+  // room is never handed a state it cannot load - including by the commands that apply their
+  // own change instead of going through the gated call in clickButton
+  if(jeJSONerror)
+    return;
   if(jeMode == 'multi')
     return await jeApplyChangesMulti();
 
@@ -2054,12 +2059,12 @@ async function jeApplyChangesMulti() {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
-    const widgets = jeMultiSelectedWidgets();
-    const widgetIDs = widgets.map(w=>w.get('id'));
+    const selection = jeMultiSelectedWidgets();
+    const widgetIDs = selection.map(w=>w.get('id'));
     for(const key in currentState) {
       if(key != 'widgets') {
-        for(const w of widgets) {
-          if(typeof currentState[key] != 'object' || currentState[key] === null || Object.keys(currentState[key]).filter(k=>!widgetIDs.includes(k)).length)
+        for(const w of selection) {
+          if(!jeMultiValueIsPerWidget(currentState[key], widgetIDs))
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
             await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
@@ -2391,6 +2396,66 @@ function jeMultiSelectedWidgets() {
     }));
   }
   return selected;
+}
+
+// In the multi-selection editor a property is either one value that goes to all
+// selected widgets or an object that maps each selected widget id to its own.
+function jeMultiValueIsPerWidget(value, widgetIDs) {
+  return typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!widgetIDs.includes(k)).length;
+}
+
+// Pairs every value the multi-selection state gives for a property with the widget
+// it belongs to, or with null where one value goes to the whole selection. Gathering
+// the ids of the selection means running its search terms, so the shared case is
+// answered without doing that.
+function jeMultiPropertyEntries(state, property) {
+  const value = state[property];
+  if(typeof value != 'object' || value === null)
+    return [ [ null, value ] ];
+  const widgetIDs = jeMultiSelectedWidgets().map(w=>w.get('id'));
+  if(!jeMultiValueIsPerWidget(value, widgetIDs))
+    return [ [ null, value ] ];
+  return Object.entries(value);
+}
+
+// The properties of a multi-selection whose value has to name a widget in the room,
+// with the message for the first one that does not.
+function jeMultiWidgetReferenceError(state) {
+  // gathering the selection means running its search terms, so a state without either
+  // property is answered without doing that
+  let cardIDs = null;
+  const goesToACard = widgetID => {
+    if(cardIDs === null)
+      cardIDs = new Set(jeMultiSelectedWidgets().filter(w=>w.get('type') == 'card').map(w=>w.get('id')));
+    return widgetID === null ? cardIDs.size > 0 : cardIDs.has(widgetID);
+  };
+  for(const [ property, label ] of [ [ 'parent', 'Parent' ], [ 'deck', 'Deck' ] ]) {
+    if(state[property] === undefined)
+      continue;
+    for(const [ widgetID, value ] of jeMultiPropertyEntries(state, property)) {
+      // deck names a deck on a card - on anything else it is an ordinary property
+      // that happens to be called deck
+      if(property == 'deck' && !goesToACard(widgetID))
+        continue;
+      // null is applied by deleting the property: a widget without a parent belongs to the
+      // room, while a card without a deck is dropped on the next load like a missing one
+      if(value === undefined || (value === null && property != 'deck'))
+        continue;
+      const forWidget = widgetID === null ? '' : ` (widget "${widgetID}")`;
+      // an object arrives here either as a value that is no ID at all, or as a
+      // per-widget object whose keys do not match the selection - which makes the
+      // whole object the one value the selection shares
+      if(value !== null && typeof value == 'object')
+        return widgetID === null
+          ? `${label} has to be a widget ID, or an object with one entry per selected widget.`
+          : `${label} has to be a widget ID${forWidget}.`;
+      if(!widgets.has(value))
+        return `${label} ${value} does not exist${forWidget}.`;
+      if(property == 'deck' && !widgets.get(value).get('cardTypes'))
+        return `Given widget ${value} is not a deck or doesn't define cardTypes${forWidget}.`;
+    }
+  }
+  return null;
 }
 
 function jeSelectedIDs() {
@@ -2938,7 +3003,7 @@ function jeGetContext() {
   }
 
   // make sure the context actually exists in the widget
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     let pointer = jeStateNow;
     for(let i=1; i<keys.length; ++i) {
       if(pointer[keys[i]] === undefined) {
@@ -2952,7 +3017,7 @@ function jeGetContext() {
   // insert the operation type as a virtual key so commands can check which operation they're in
   try {
     for(let i=1; i<keys.length-1; ++i) {
-      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror) {
+      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONisUnparsed()) {
         const operation = jeGetValue(keys.slice(1, i+2), true);
         const func = typeof operation == 'string' && operation.match(/^var/) ? 'var expression' : operation.func;
         keys.splice(i+2, 0, '(' + (func || String(keys.slice(0, i+2))) + ')');
@@ -2967,10 +3032,16 @@ function jeGetContext() {
     try {
       jeStateNow = JSON.parse(v);
 
-      if(!Array.isArray(jeStateNow.widgets))
+      if(!Array.isArray(jeStateNow.widgets)) {
         jeJSONerror = 'Key widgets is not an array.';
-      else
-        jeJSONerror = null;
+      } else {
+        // the same checks the single widget mode does above - a parent no widget in
+        // the room has would leave the whole selection in limbo, a deck no widget in
+        // the room has leaves the card without faces and drops it on the next load.
+        // While the widgets array itself is being edited, the values still describe
+        // the previous selection, so there is nothing to check yet.
+        jeJSONerror = keys[1] == 'widgets' ? null : jeMultiWidgetReferenceError(jeStateNow);
+      }
     } catch(e) {
       jeStateNow = null;
       jeJSONerror = e;
@@ -3002,7 +3073,7 @@ function jeGetValue(context, all) {
 }
 
 function jeInsert(context, key, value) {
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     let pointer = jeGetValue(context);
     pointer[key] = '###SELECT ME###';
     jeSetAndSelect(value);
@@ -3759,6 +3830,15 @@ function jeMatchCommandName(name, filter) {
   return filterWords.every(fw => words.some(w => w.startsWith(fw)));
 }
 
+// A parse error leaves nothing to work with. A state that parsed and was only
+// rejected for what it says - a parent that does not exist, an ID already in use -
+// still has a valid object behind it, so the context can be resolved against it and
+// the commands that would fix it stay available and keep inserting. Only handing the
+// state to the room waits for the message to go away.
+function jeJSONisUnparsed() {
+  return jeJSONerror instanceof Error;
+}
+
 function jeShowCommands() {
 
   // First set up top buttons
@@ -3795,7 +3875,7 @@ function jeShowCommands() {
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
+    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONisUnparsed()) && (!command.show || command.show())) {
       const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
       if(activeCommands[title] === undefined)
         activeCommands[title] = [];
@@ -3808,7 +3888,7 @@ function jeShowCommands() {
     commandText += `<div id="var_results"></div>\n`;
   }
 
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
 
     const sortByName = function(a, b) {
@@ -3975,11 +4055,11 @@ function jeShowCommands() {
   commandText += `\n\n${html(context)}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
-      commandText += `\nCtrl-Space: go to error\n`;
-    commandText += `\n<i class=error>${html(String(jeJSONerror))}</i>\n`;
+      commandText += `\n<div>Ctrl-Space: go to error</div>\n`;
+    commandText += `\n<div class=error>${html(String(jeJSONerror))}</div>\n`;
   }
   if(jeCommandError)
-    commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
+    commandText += `\n<div class=error>Last command failed: ${html(String(jeCommandError))}</div>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n<pre>${html(jeSecondaryWidget)}</pre>\n`;
   commandText += `</div>`;
