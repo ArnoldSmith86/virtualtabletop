@@ -904,6 +904,13 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin: 20px auto;
 }
 
+#emptyVariants {
+  color: black;
+  font-style: italic;
+  margin: 0;
+  padding: 1rem;
+}
+
 
 #helpTexts {
   top: calc(var(--mainDetailsHeight) + 20px);

@@ -1,0 +1,78 @@
+name: Check Library Comment
+
+# Posts the validation result rendered by "Check Library". That workflow runs with a
+# read-only token for pull requests from forks, so the comment is posted from here,
+# where the job runs in base repository context and no pull request code is executed.
+
+on:
+  workflow_run:
+    workflows: ["Check Library"]
+    types: [completed]
+
+permissions:
+  actions: read
+  pull-requests: write
+
+# Serialize per head branch so two runs cannot both create the comment, and so a run
+# that finishes late cannot overwrite a newer result.
+concurrency:
+  group: check-library-comment-${{ github.event.workflow_run.head_repository.full_name }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+
+jobs:
+  comment:
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download validation result
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: validation-result
+          path: validation-result
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Post or update the comment
+        if: steps.download.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- check-library-validation -->';
+            const issue_number = Number(fs.readFileSync('validation-result/pr-number', 'utf8').trim());
+            if (!Number.isInteger(issue_number) || issue_number <= 0)
+              return;
+
+            // "Check Library" runs the workflow file from the pull request head, so the
+            // number in the artifact is contributor-controlled. Only comment on a pull
+            // request whose head is the very commit that produced this artifact —
+            // otherwise a fork could make this job write on any pull request.
+            const run = context.payload.workflow_run;
+            const pr = await github.rest.pulls.get({ ...context.repo, pull_number: issue_number })
+              .then(r => r.data, () => null);
+            if (!pr || pr.head.sha !== run.head_sha || pr.head.repo?.full_name !== run.head_repository?.full_name) {
+              core.warning(`Ignoring result for #${issue_number}: it does not match the head of run ${run.id}.`);
+              return;
+            }
+
+            const issues = fs.existsSync('validation-result/comment.md')
+              ? fs.readFileSync('validation-result/comment.md', 'utf8').trim() : '';
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              ...context.repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (!issues) {
+              if (existing)
+                await github.rest.issues.deleteComment({ ...context.repo, comment_id: existing.id });
+              return;
+            }
+
+            const body = `${issues}\n\n${marker}`;
+            if (existing)
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            else
+              await github.rest.issues.createComment({ ...context.repo, issue_number, body });
