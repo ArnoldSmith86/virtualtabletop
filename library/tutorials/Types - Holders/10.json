@@ -3110,10 +3110,9 @@
     "id": "o2md"
   },
   "_meta": {
-    "version": 25,
+    "version": 24,
     "gameSettings": {
       "legacyModes": {
-        "classicHolderLayout": true
       }
     },
     "info": {

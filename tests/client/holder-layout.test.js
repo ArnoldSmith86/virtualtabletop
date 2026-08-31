@@ -540,6 +540,105 @@ describe('the grid layout', () => {
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ] ]);
   });
+
+  test('with room to spare the lattice spans the holder and fills row by row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', width: 440, height: 320 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    // four columns fit, so three cards line the top row instead of blocking up
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ] ]);
+  });
+
+  test('gridRows pinned alone fills column by column, so the rows fill evenly', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridRows: 2, width: 440, height: 320 });
+    const deal = async id => {
+      const c = createCard(id, { z: 1 });
+      c.movedByButton = true;
+      await c.set('parent', 'h');
+      await c.bringToFront();
+      delete c.movedByButton;
+    };
+    for(const id of [ 'a', 'b', 'c', 'd' ])
+      await deal(id);
+    expect([ widgets.get('a').get('x'), widgets.get('a').get('y') ]).toEqual([ 4, 4 ]);
+    expect([ widgets.get('b').get('x'), widgets.get('b').get('y') ]).toEqual([ 4, 112 ]);
+    expect([ widgets.get('c').get('x'), widgets.get('c').get('y') ]).toEqual([ 112, 4 ]);
+    expect([ widgets.get('d').get('x'), widgets.get('d').get('y') ]).toEqual([ 112, 112 ]);
+  });
+});
+
+describe('dropping into any grid cell', () => {
+  test('a drop lands in the very cell it was aimed at - even in an empty grid', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 2, width: 400, height: 300 });
+    const drop = createCard('drop', { parent: 'h', x: 220, y: 112, z: 1 });
+    await holder.onChildAddAlign(drop, 'h');
+    expect([ drop.get('x'), drop.get('y') ]).toEqual([ 220, 112 ]);
+    const drop2 = createCard('drop2', { parent: 'h', x: 6, y: 2, z: 2 });
+    await holder.onChildAddAlign(drop2, 'h');
+    expect([ drop2.get('x'), drop2.get('y') ]).toEqual([ 4, 4 ]);
+    // the first drop keeps the far cell it was put in
+    expect([ drop.get('x'), drop.get('y') ]).toEqual([ 220, 112 ]);
+  });
+
+  test('a drop aimed at a taken cell goes to the nearest free one', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 2, width: 400, height: 300 });
+    const a = createCard('a', { parent: 'h', x: 112, y: 4, z: 1 });
+    await holder.onChildAddAlign(a, 'h');
+    const b = createCard('b', { parent: 'h', x: 116, y: 8, z: 2 });
+    await holder.onChildAddAlign(b, 'h');
+    expect([ a.get('x'), a.get('y') ]).toEqual([ 112, 4 ]);
+    expect([ b.get('x'), b.get('y') ]).toEqual([ 4, 4 ]);
+  });
+
+  test('a card taken out leaves its cell empty and a deal fills it again', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, width: 400, height: 300 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    const gone = widgets.get('c1');
+    await holder.dispenseCard(gone, true);
+    await gone.set('parent', null);
+    // the middle cell stays an empty spot - nothing slides over
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 220, 4 ] ]);
+    const dealt = createCard('dealt', { z: 9 });
+    dealt.movedByButton = true;
+    await dealt.set('parent', 'h');
+    await dealt.bringToFront();
+    delete dealt.movedByButton;
+    expect([ dealt.get('x'), dealt.get('y') ]).toEqual([ 112, 4 ]);
+  });
+
+  test('a shuffle moves the cards between their cells and keeps the holes', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 2, width: 400, height: 300 });
+    for(const [ id, x, y ] of [ [ 'a', 4, 4 ], [ 'b', 220, 4 ], [ 'c', 112, 112 ] ]) {
+      const drop = createCard(id, { parent: 'h', x, y, z: 5 });
+      await holder.onChildAddAlign(drop, 'h');
+    }
+    // reverse the z order the way a SHUFFLE might: the same three cells stay
+    // occupied, only who sits where changes
+    await widgets.get('a').set('z', 30);
+    await widgets.get('c').set('z', 1);
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 220, 4 ], [ 112, 112 ] ]);
+    expect([ widgets.get('c').get('x'), widgets.get('c').get('y') ]).toEqual([ 4, 4 ]);
+    expect([ widgets.get('a').get('x'), widgets.get('a').get('y') ]).toEqual([ 112, 112 ]);
+  });
+
+  test('without stacks a full pinned grid spills into an extra row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 2, gridRows: 2, width: 400, height: 300 });
+    const deal = async id => {
+      const c = createCard(id, { z: 1 });
+      c.movedByButton = true;
+      await c.set('parent', 'h');
+      await c.bringToFront();
+      delete c.movedByButton;
+    };
+    for(const id of [ 'a', 'b', 'c', 'd', 'e' ])
+      await deal(id);
+    // no piles to absorb the fifth card, so it goes below the pinned rows
+    expect([ widgets.get('e').get('x'), widgets.get('e').get('y') ]).toEqual([ 4, 220 ]);
+  });
 });
 
 describe('the random layout', () => {
@@ -1791,6 +1890,45 @@ describe('a grid whose cells are stacks (preventPiles: false)', () => {
     // the middle cell, not drift to the front or the end of the grid
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual(before);
+  });
+
+  test('a full pinned grid stacks its overflow instead of adding rows', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, gridColumns: 2, gridRows: 2, width: 400, height: 300 });
+    const deal = async id => {
+      const c = createCard(id, { z: 1, onPileCreation: {} });
+      c.movedByButton = true;
+      await c.set('parent', 'h');
+      await c.bringToFront();
+      delete c.movedByButton;
+    };
+    for(const id of [ 'a', 'b', 'c', 'd', 'e', 'f' ])
+      await deal(id);
+    // six cards, four cells: every card stays within the two pinned rows,
+    // layered onto the least loaded cells instead of starting a third one
+    expect(holder.children().length).toBe(6);
+    const entries = holder.arrangedChildren();
+    expect(entries.length).toBe(4);
+    for(const entry of entries) {
+      expect([ 4, 112 ]).toContain(entry.get('x'));
+      expect([ 4, 112 ]).toContain(entry.get('y'));
+    }
+    expect(entries.filter(entry=>entry.get('type') == 'pile').length).toBe(2);
+  });
+
+  test('a drop into a full grid of stacks joins the nearest one', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', preventPiles: false, gridColumns: 2, gridRows: 1, width: 400, height: 300 });
+    for(const [ id, x ] of [ [ 'a', 4 ], [ 'b', 112 ] ]) {
+      const c = createCard(id, { parent: 'h', x, y: 4, z: 1, onPileCreation: {} });
+      await holder.onChildAddAlign(c, 'h');
+    }
+    // dropped into the gap right of the second cell: nothing is free, so it
+    // joins the stack of the cell it is closest to
+    const drop = createCard('drop', { parent: 'h', x: 220, y: 4, z: 9, onPileCreation: {} });
+    await holder.onChildAddAlign(drop, 'h');
+    const stack = widgets.get(drop.get('parent'));
+    expect(stack.get('type')).toBe('pile');
+    expect([ stack.get('x'), stack.get('y') ]).toEqual([ 112, 4 ]);
+    expect([ widgets.get('a').get('x'), widgets.get('a').get('y') ]).toEqual([ 4, 4 ]);
   });
 
   test('turning preventPiles back on breaks the stacks into cells', async () => {
