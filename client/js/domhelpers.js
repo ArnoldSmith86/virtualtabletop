@@ -47,6 +47,9 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
       button.classList.remove('visualProgress');
       button.classList.add('green');
     } catch(e) {
+      // the button label is the only other place this error shows up, and it is reset again a
+      // few seconds later - so log it as well to leave a stack trace behind in the console
+      console.error(e);
       button.setAttribute('icon', 'error');
       button.innerText = e.toString();
       button.classList.remove('progress');
