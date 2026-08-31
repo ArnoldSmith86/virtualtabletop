@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "With <b>layout</b> &quotmultiSpread&quot the groups normally line up along one endless row. Give the holder <b>gridColumns</b> and they wrap instead: that many groups per row, the next row starting below the tallest group of the one above. <b>gridRows</b> wraps after as many columns as it takes to come out at that many rows. The rows sit 8 pixels apart until <b>pilesGapY</b> says otherwise, and <b>pilesOffsetY</b> pins a fixed row pitch instead. A drop goes to the nearest row first and to its place within that row then, and when a row overflows, its gaps and fans give way on their own - each row is squeezed by itself.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end of each holder. Deal until the rows wrap, then drag groups by their handles between the rows and watch the drop shadow point at the slot they will take."
+    "html": "With <b>layout</b> &quotmultiSpread&quot the groups normally line up along one endless row. Give the holder <b>gridColumns</b> and they wrap instead: that many groups per row, the next row starting below the tallest group of the one above. <b>gridRows</b> wraps after as many columns as it takes to come out at that many rows. The rows sit 8 pixels apart until <b>pilesGapY</b> says otherwise, and <b>pilesOffsetY</b> pins a fixed row pitch instead. A drop goes to the nearest row first, then to its place within it - and when a row overflows, its gaps and fans give way by themselves."
   },
   "holder1": {
     "type": "holder",
@@ -78,6 +78,20 @@
       "font-size": "22px"
     },
     "html": "<b>gridColumns</b> <i>3</i> with <b>pilesGapX</b> <i>20</i> and <b>pilesGapY</b> <i>30</i>: three narrower groups per row and a wider gap between the rows. Use <b>pilesOffsetY</b> instead to pin the rows a fixed distance apart."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 430,
+    "y": 245,
+    "width": 1020,
+    "height": 60,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Every click of <b>Deal a group of 3</b> adds one new group at the end of each holder. Deal until the rows wrap, then drag groups by their handles - the drop shadow points at the slot they will take."
   },
   "button1": {
     "id": "button1",
@@ -1117,7 +1131,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788112461033,
+      "lastUpdate": 1788135592485,
       "skill": "",
       "description": "",
       "similarImage": "",

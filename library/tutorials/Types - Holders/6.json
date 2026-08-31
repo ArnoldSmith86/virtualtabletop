@@ -110,7 +110,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Click a die, or the button below, to roll it. Every roll also movess it onto a fresh free spot. The &quottransitions&quot class was added to each die and the related CSS is applied under the Game Settings -> Global Room CSS area to enhance the effect."
+    "html": "Click a die, or the button below, to roll it. Every roll also moves it onto a fresh free spot. The &quottransitions&quot class was added to each die and the related CSS is applied under the Game Settings -> Global Room CSS area to enhance the effect."
   },
   "holder2": {
     "type": "holder",
@@ -1360,7 +1360,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788033060230,
+      "lastUpdate": 1788135592485,
       "skill": "",
       "description": "",
       "similarImage": "",

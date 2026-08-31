@@ -21,7 +21,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "<b>layout</b> &quotgrid&quot arranges a holder's cards in a grid that always stays inside the holder. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin to the holder's edge and <b>stackOffsetX</b>/<b>stackOffsetY</b> the gap between the cells. The column count comes from whatever fits with the least overlap, or from <b>gridColumns</b>/<b>gridRows</b> if you use them. When the cards stop fitting at the requested spacing they overlap instead of spilling outside. A grid normally keeps no piles - whatever you drop in is dealt out into the grid - but write <b>preventPiles</b> <i>false</i> and every cell becomes a stack instead. <b>pilesOffsetX</b>/<b>pilesOffsetY</b> pin the pitch of the cells outright: they sit exactly that far apart however many there are, which is what lines a grid up with a background image."
+    "html": "<b>layout</b> &quotgrid&quot arranges a holder's cards in a grid that always stays inside the holder: when the cards stop fitting at the requested spacing they overlap instead of spilling outside. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin to the holder's edge and <b>stackOffsetX</b>/<b>stackOffsetY</b> the gap between the cells. The column count comes from whatever fits with the least overlap, or from <b>gridColumns</b>/<b>gridRows</b>. A grid normally keeps no piles - whatever you drop in is dealt out into the grid."
   },
   "holder1": {
     "type": "holder",
@@ -1153,16 +1153,16 @@
   },
   "text4b": {
     "id": "text4b",
-    "x": 1215,
+    "x": 1170,
     "y": 650,
-    "width": 260,
+    "width": 370,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>gridColumns</b> <i>2</i> pins the column count however the holder is sized. <b>gridRows</b> does the same for the rows. Here <b>pilesOffsetY</b> <i>120</i> also pins the row pitch: a fixed pitch never squishes, so what does not fit sticks out of the holder."
+    "html": "<b>gridColumns</b> <i>2</i> pins the column count however the holder is sized, <b>gridRows</b> would pin the rows. <b>pilesOffsetY</b> <i>120</i> pins the row pitch: a fixed pitch never squishes, so what does not fit sticks out of the holder."
   },
   "_meta": {
     "version": 24,
@@ -1179,7 +1179,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788112507056,
+      "lastUpdate": 1788135592485,
       "skill": "",
       "description": "",
       "similarImage": "",

@@ -16,12 +16,12 @@
     "x": 108,
     "y": 80,
     "width": 1330,
-    "height": 150,
+    "height": 290,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using with the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. Drag a whole group by the handle at its top right corner. The grey drop shadow is on by default in a &quotmultiSpread&quot holder: pointed into a fan it opens the exact slot the card will take, and between the groups it takes the place the new group would get. Write <b>dropShadow</b> <i>false</i> to turn the preview off - the button below toggles it for all three holders. With <b>gridColumns</b> the groups wrap into rows; the next variant shows it.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into the other one. A spread group dropped into any other kind of holder or onto the table collapses back into an ordinary pile, or is dealt out into the row, if the holder spreads its cards."
+    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. The grey drop shadow previews both: the slot in the fan, or the place the new group will get. <b>dropShadow</b> <i>false</i> turns the preview off - the button below toggles it for all three holders. With <b>gridColumns</b> the groups wrap into rows; the next variant shows it.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into another one. Dropped into a holder that spreads cards, a group deals itself out into the row; anywhere else it collapses back into an ordinary pile."
   },
   "holder1": {
     "type": "holder",
@@ -1116,7 +1116,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788112507056,
+      "lastUpdate": 1788135592485,
       "skill": "",
       "description": "",
       "similarImage": "",

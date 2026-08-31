@@ -16,12 +16,12 @@
     "x": 108,
     "y": 80,
     "width": 1330,
-    "height": 150,
+    "height": 170,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "Every holder has a <b>layout</b> property that says in one word how it arranges the widgets you put into it. New holders start on <i>auto</i>. The other values are <i>pile</i>, <i>singleSpread</i>, <i>multiSpread</i>, <i>grid</i>, <i>random</i>, <i>freeform</i>, and <i>custom</i>. Pick it in the <i>Layout</i> section of the property editor or in the JSON Editor. A holder with <b>layout</b> &quotauto&quot, dynamically adjusts the arrangement. It centers what it holds, spreads it out when there is room, wraps it into as many rows as give each card the most visible area, and packs everything into one centered spot when nothing more fits. Piles are only kept while the holder is smaller than one and a half cards along both axes. <b>gridColumns</b>/<b>gridRows</b> pin how many cards go into a row - the row search stands down while the centering, the squish and everything else about &quotauto&quot stays on."
+    "html": "Every holder has a <b>layout</b> property that says in one word how it arranges the widgets you put into it. New holders start on <i>auto</i>; pick another value in the <i>Layout</i> section of the property editor or in the JSON Editor. On <i>auto</i> the holder decides from its size: it centers what it holds, spreads it out when there is room, wraps it into the rows that keep the most of each card visible, and packs everything into one pile when only that still fits. <b>gridColumns</b>/<b>gridRows</b> pin how many cards go into a row - the centering, the squish and everything else about <i>auto</i> stays on."
   },
   "deckHolder": {
     "type": "holder",
@@ -1287,7 +1287,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788112507056,
+      "lastUpdate": 1788135592485,
       "skill": "",
       "description": "",
       "similarImage": "",
