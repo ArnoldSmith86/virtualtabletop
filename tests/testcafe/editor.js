@@ -4425,6 +4425,18 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
 const holdPeekKey = ClientFunction(down => {
   window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key: 'Shift', shiftKey: down, bubbles: true, cancelable: true }));
 });
+// A real browser carries the modifier state into the mouse events as well, which
+// is what opens the list when the key went down before the pointer ever reached
+// the room. The move is dispatched on the element it lands on, since testcafe
+// cannot hold a key down across a hover either.
+const movePointerWithPeekKey = ClientFunction(selector => {
+  const rect = document.querySelector(selector).getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
+  document.elementFromPoint(x, y).dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, shiftKey: true, bubbles: true }));
+});
+const pressKeyWithoutPeekKey = ClientFunction(key => {
+  window.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+});
 const pressFunctionKeyWithShift = ClientFunction(key => {
   const event = new KeyboardEvent('keydown', { key, shiftKey: true, bubbles: true, cancelable: true });
   window.dispatchEvent(event);
@@ -4491,6 +4503,15 @@ test('Holding Shift opens the stack list and has it follow the pointer', async t
     // a list that only stood while the key was down is not the dropdown that
     // comes back with the module the next time it is opened
     .expect(storedStackOpen()).notOk();
+
+  // an OS-level menu or shortcut can take the keyup without ever blurring the
+  // window, which would leave the list latched open and scanning every frame -
+  // the next keystroke says the key is not down after all
+  await t.hover('#w_checker');
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).ok();
+  await pressKeyWithoutPeekKey('Control');
+  await t.expect(bar.hasClass('stackVisible')).notOk();
 
   // a list somebody opened themselves is only made live by the key, and stays
   // open when it is let go
@@ -4566,6 +4587,21 @@ test('The peek key works with the caret in the JSON text area', async t => {
     .expect(bar.hasClass('stackVisible')).notOk()
     .expect(activeElementID()).eql('jeText')
     .expect(storedStackOpen()).notOk();
+
+  // Putting the caret on a line leaves the pointer over the editor, so in this
+  // module the key is normally down before the pointer gets anywhere near the
+  // room: the pointer arriving there has to open the list just as the key going
+  // down does.
+  await t.hover(bar.find('.selectionBarCrumbs'));
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await movePointerWithPeekKey('#w_checker');
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(2)
+    .expect(activeElementID()).eql('jeText');
+  await holdPeekKey(false);
+  await t.expect(bar.hasClass('stackVisible')).notOk();
   await setEditorState(null);
 });
 

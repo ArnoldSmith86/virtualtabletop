@@ -273,6 +273,16 @@ function selectionBarInstallListeners() {
     if(!selectionBarPointerInRoom)
       return;
     selectionBarPointer = { x: e.clientX, y: e.clientY };
+    // The key is very often already down by the time the pointer gets here:
+    // putting the caret on a line of the JSON text leaves the pointer over the
+    // editor, and holding the key there and then moving onto the room is the
+    // whole gesture. So the pointer arriving in the room opens the list too -
+    // the modifier state a mouse event carries says whether the key is down,
+    // whether or not its keydown ever reached the page. Only opening is done
+    // here: what closes the list is the key coming up, and a move that reports
+    // no modifier while it is still held would take it away mid-gesture.
+    if(!selectionBarPeekActive && e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      return selectionBarPeekStart();
     if(selectionBarPeekActive)
       return selectionBarScanNextFrame();
     selectionBarScanTimer = setTimeout(function() {
@@ -315,14 +325,7 @@ function selectionBarInstallListeners() {
       selectionBarTabHeld = true;
     if(!selectionBarIsActive())
       return;
-    if(e.key == SELECTION_BAR_PEEK_KEY)
-      selectionBarPeekStart();
-    // an OS-level menu or a shortcut handled outside the page can take the
-    // keyup of the peek key without ever blurring the window, which would leave
-    // the list latched open and scanning every frame - the next keystroke says
-    // the key is not down after all, so let it out of that
-    else if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
-      selectionBarPeekStop();
+    selectionBarSyncPeek(e);
     if(selectionBarHandleHistoryKey(e))
       return;
     if(selectionBarHandleDropdownKey(e))
@@ -351,8 +354,7 @@ function selectionBarInstallListeners() {
     // there), so the release has to be seen before it does
     if(e.key == 'Tab')
       selectionBarTabHeld = false;
-    if(e.key == SELECTION_BAR_PEEK_KEY)
-      selectionBarPeekStop();
+    selectionBarSyncPeek(e);
     if(e.key == 'Escape' && selectionBarSwallowEscapeUp) {
       selectionBarSwallowEscapeUp = false;
       e.stopImmediatePropagation();
@@ -386,7 +388,9 @@ function selectionBarInstallListeners() {
 // mouse move. Holding Shift brings that back for as long as the key is down -
 // the list opens, follows the pointer without waiting for it to settle, and goes
 // away again with the key. A list that was already open is only made live: it
-// belongs to whoever opened it.
+// belongs to whoever opened it. The key and the pointer being in the room are
+// two halves of one condition and either can arrive last, so both the key going
+// down and the pointer coming in open the list.
 function selectionBarPeekStart() {
   // Where the pointer is is the whole condition, the way it was for the panel
   // this list replaces: that one was up whenever the pointer was in the room and
@@ -435,6 +439,17 @@ function selectionBarPeekStop() {
   if(bar && bar.dom.isConnected)
     selectionBarToggleStack(bar, true, true);
   updateSelectionBars(); // a list that stays open says what the keys do, and that just changed
+}
+
+// Whether the peek should be up is read off the event in hand rather than
+// remembered from a keydown: a keyup lost to an OS-level menu or shortcut would
+// otherwise leave the list latched open and scanning every frame, and the next
+// keystroke that reports the key as up puts it away.
+function selectionBarSyncPeek(e) {
+  if(e.getModifierState(SELECTION_BAR_PEEK_KEY))
+    selectionBarPeekStart();
+  else
+    selectionBarPeekStop();
 }
 
 /* Walking the history */
