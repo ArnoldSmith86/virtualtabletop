@@ -21,6 +21,7 @@ jobs:
           - card.js
           - editor.js
           - connection.js
+          - gameshelf.js
           - toolbar.js
           - boardsize.js
           - draglimit.js

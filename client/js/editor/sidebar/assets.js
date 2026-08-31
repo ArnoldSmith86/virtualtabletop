@@ -37,6 +37,18 @@ function getAllAssetsGrouped() {
     return assets;
 }
 
+// What an asset the compression table cannot do anything with is, in the words of the column it
+// sits in: 'Sound' next to 'SVG' and 'WEBP', not the MIME type it arrives as.
+function assetKind(type) {
+  return { audio: 'Sound', video: 'Video', font: 'Font', text: 'Text' }[type.replace(/\/.*/, '')] || 'File';
+}
+
+function assetFormat(type) {
+  if(type.match(/^audio\/(mpeg|mp3)$/))
+    return 'MP3';
+  return type.replace(/^[^/]*\//, '').replace(/^x-/, '').toUpperCase() || 'Unknown type';
+}
+
 function getAssetTargetSize(asset, originalWidth, originalHeight) {
     let targetWidth = 0;
     let targetHeight = 0;
@@ -115,7 +127,10 @@ class AssetsModule extends SidebarModule {
       updateProgress(`Fetching asset ${i+1}/${assets.length}`, (i+1)/assets.length);
       const blob = await (await fetch(assetObj.asset.substr(1))).blob();
       const assetFileName = usePropertyFilenames ? `${assetObj.type} ${assetObj.widget} - ${assetObj.keys.join(' - ')}` : `asset ${assetObj.asset.match(/[^\/]+$/)[0]}`;
-      files[assetFileName + '.' + blob.type.match(/[^\/]+$/)[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin')] = new Uint8Array(await blob.arrayBuffer());
+      // an asset whose bytes name no type at all is served without a Content-Type, which leaves
+      // blob.type empty - it still belongs in the zip, just without a real extension
+      const extension = (blob.type.match(/[^\/]+$/) || [ 'bin' ])[0].replace(/\+xml/, '').replace(/octet-stream/, 'bin');
+      files[`${assetFileName}.${extension}`] = new Uint8Array(await blob.arrayBuffer());
     }
 
     updateProgress('Building file...');
@@ -251,9 +266,20 @@ class AssetsModule extends SidebarModule {
 
       const createOriginalCell = (isSVG, asset, blob) => {
         const cell = row.insertCell();
-        const img = new Image();
         const sizeLabel = document.createElement('label');
 
+        // An asset that is not an image at all - a sound - has nothing to show in an <img> but
+        // the broken image icon, and its onload never comes, so the label would keep the
+        // placeholder text below forever. Say what the asset is instead, in the three lines the
+        // image labels below use: what kind of thing it is first, because someone looking for the
+        // sound they uploaded recognises "Sound" and not "audio/mpeg".
+        if(!blob.type.match(/^image/)) {
+          sizeLabel.textContent = `${assetKind(blob.type)}\n${assetFormat(blob.type)}\n${(blob.size / 1024).toFixed(2)} KB`;
+          cell.appendChild(sizeLabel);
+          return;
+        }
+
+        const img = new Image();
         sizeLabel.textContent = `${asset.asset}\n${blob.type}`;
         img.onload = function() {
           const sizeInKB = (blob.size / 1024).toFixed(2);
@@ -276,6 +302,15 @@ class AssetsModule extends SidebarModule {
       const imageBlob = await (await fetch(asset.asset.substr(1))).blob();
       if (imageBlob.type === "image/svg+xml" || !imageBlob.type.match(/^image/)) {
         createOriginalCell(true, asset, imageBlob);
+        // There is nothing to offer in the WebP and PNG columns for this one, and leaving them as
+        // two empty grey cells reads as two conversions that failed rather than as a row with no
+        // choice to make. One cell across both columns, saying why.
+        const cell = row.insertCell();
+        cell.colSpan = 2;
+        cell.className = 'nothingToCompress';
+        cell.textContent = imageBlob.type.match(/^image/)
+          ? 'Vector image - see the SVG tips below the table'
+          : 'Not an image - nothing to compress here';
       } else {
         createOriginalCell(false, asset, imageBlob);
         const targets = [/*'jpeg',*/ 'webp' ];
@@ -321,9 +356,9 @@ class AssetsModule extends SidebarModule {
             console.log(e);
           }
         }
+        while(row.cells.length < 4)
+          row.insertCell();
       }
-      while(row.cells.length < 4)
-        row.insertCell();
     }
 
     const compressDiv = div(this.moduleDOM, 'compressAssetsContainer', `
@@ -413,7 +448,7 @@ class AssetsModule extends SidebarModule {
 
     this.addSubHeader('Included Assets');
     div(target, 'buttonBar', `
-      <p>The Compress Assets button allows you to choose image by image to reduce the file size of the assets by compression or by converting to another file type. Make the desired selection for each image, click the Replace Selected Images button at the bottom of the screen, and then save the game.</p>
+      <p>The Compress Assets button allows you to choose image by image to reduce the file size of the assets by compression or by converting to another file type. Make the desired selection for each image, click the Replace Selected Images button at the bottom of the screen, and then save the game. The list also has a row for every asset that is not a compressible image - a sound, an SVG - so you can see what a game weighs, but there is nothing to select on those.</p>
       <button icon=compress id=compressAssetsButton>Compress assets</button>
       <p>These download buttons will download all the assets used in this game as a zip file so you can process them on your computer (replace/resize/...).</p>
       <button icon=cloud_download id=downloadAllAssetsButton>Download all assets</button>

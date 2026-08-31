@@ -99,6 +99,7 @@ const CLIENT_CSS = [
   'client/css/overlays/misc.css',
   'client/css/overlays/players.css',
   'client/css/overlays/states.css',
+  'client/css/overlays/connectionlost.css',
   'client/css/overlays/status.css',
   'client/css/overlays/about.css',
   'client/css/overlays/welcome.css',
@@ -129,6 +130,7 @@ const CLIENT_JS = [
 
   'client/js/domhelpers.js',
   'client/js/calculateLayout.js',
+  'client/js/containerQueryFallback.js',
   'client/js/connection.js',
   'client/js/overlays/status.js',
   'client/js/deltamonitor.js',

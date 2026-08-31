@@ -67,6 +67,7 @@
   background-size: calc(100% * var(--imageScale));
   background-origin: content-box;
 
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -334,6 +335,7 @@
 }
 
 .d6.animateBegin.dice.widget {
+  overflow: hidden;
   overflow: clip;
 }
 

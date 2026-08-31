@@ -25,6 +25,7 @@
 }
 
 .card > .cardFace > .cardFaceObject.html {
+  white-space: normal;  /* the same thing before white-space became a shorthand */
   white-space: collapse;
 }
 

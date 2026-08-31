@@ -47,9 +47,11 @@ function checkForGameURL() {
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
         toggleClass($('#linkDetailsOverlay .star'),               'hidden',       gameDetails.type == 'user' || !state.stars);
         toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden',       gameDetails.type == 'public');
-        toggleClass($('#linkDetailsOverlay .mainStateImage'),     'has-ai-badge', !!state.usesAIImagery);
-        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden',       !state.usesAIImagery);
-        toggleClass($('#linkDetailsOverlay .ai-imagery-notice'),  'hidden',       !state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .mainStateImage'),     'has-ai-badge', usesAI(state));
+        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden',       !usesAI(state));
+        $('#linkDetailsOverlay .ai-badge').title = aiDisclosureText(state);
+        for(const notice of $a('#linkDetailsOverlay .ai-notice'))
+          toggleClass(notice, 'hidden', !state[notice.dataset.showfor]);
 
         let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
         document.title = `${state.name} - ${tabSuffix}`;

@@ -11688,11 +11688,11 @@ class PropertiesModule extends SidebarModule {
       title: 'Add property',
       suggestions: Object.keys(widget.defaults || {}).filter(property=>
         [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 &&
-        !/Routine$/.test(property) && !Object.hasOwn(widget.state, property)
+        !/Routine$/.test(property) && !this.isPropertyDeclaredOnWidget(widget, property)
       ).sort(),
       nativeSuggestionButtonOnly: true,
       onAdd: property=>{
-        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
+        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || this.isPropertyDeclaredOnWidget(widget, property))
           return false;
         this.inputValueUpdated(widget, property, '');
         this.onSelectionChangedWhileActive([ widget ]);

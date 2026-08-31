@@ -51,13 +51,16 @@ function render() {
   if(!el)
     return;
 
+  // a detected restart puts up an overlay of its own that says the page is reloading, so there is
+  // nothing left for the corner to add - and "reconnecting" would contradict it
+  if(serverRestarted) {
+    el.classList.remove('visible');
+    el.dataset.state = '';
+    return;
+  }
+
   if(connectionState.state == 'reload')
     return show(el, 'reload', 'link_off', `No response from server. Reloading the page in ${Math.max(1, Math.ceil(connectionState.msUntilReload / 1000))} seconds.`);
-
-  // the reload after a server restart is spread over several seconds so the server is not hit by
-  // every tab at once, which is long enough for the page to look frozen without saying why
-  if(serverRestarted)
-    return show(el, 'reconnecting', 'link_off', 'The server was restarted. Reloading the page...');
 
   if(reconnecting)
     return show(el, 'reconnecting', 'link_off', 'Connection lost. Reconnecting...');
