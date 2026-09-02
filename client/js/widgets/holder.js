@@ -346,14 +346,10 @@ export class Holder extends ImageWidget {
       }
     }
     if(this.get('layout') == 'grid') {
-      // a drag that leaves takes its insertion preview with it - unless the
-      // drop is what ends it, which lands in the cell the preview holds open
-      if(card.get('dropShadowOwner') && this.gridInsertPreview && !this.preventRearrangeDuringPileDrop)
-        await this.closeGridInsertPreview();
-      // a card taken out of the grid leaves its cell empty - the settled cells
-      // stay where they are; the pass only tidies up what no longer fits
+      // a card that joins a stack in one of the cells has not left the grid:
+      // the merge keeps every cell where it is
       if(!this.preventGridReflowDuringMerge)
-        await this.updateAfterShuffle(null, { sticky: true });
+        await this.updateAfterShuffle();
     // a piece taken out of the random tray leaves no hole to close - the
     // others just stay lying where they are
     } else if(this.get('alignChildren') && this.spreadsChildren() && this.get('layout') != 'random')
@@ -399,22 +395,20 @@ export class Holder extends ImageWidget {
     if(this.get('layout') == 'grid') {
       if(child.get('type') == 'pile' && !this.gridAllowsPiles()) {
         // a pile dropped into a grid breaks up into individual cards (the grid
-        // derives preventPiles, so they won't re-merge). MOVE fills them into
-        // the free cells; an interactive drop puts them down at the cell under
-        // the cursor.
+        // derives preventPiles, so they won't re-merge). MOVE appends them; an
+        // interactive drop inserts them at the cell under the cursor.
         if(child.movedByButton) {
-          const cards = [ ...child.children() ].sort((a, b)=>a.get('z') - b.get('z'));
           await this.breakUpPile(child);
-          return await this.gridArriveLane(cards);
+          return await this.updateAfterShuffle();
         }
         return await this.snapPileToGrid(child, oldParentID);
       }
       if(child.movedByButton)
-        // MOVE fills the first free cell. Only the arriving card's lane is
+        // MOVE fills the grid sequentially. Only the arriving card's lane is
         // laid out: the card has no owner yet - that is assigned after this
         // alignment - so a pass over the other lanes would count it into every
-        // one of them.
-        return await this.gridArriveLane([ child ]);
+        // one of them and shift their cards off the first cell.
+        return await this.updateAfterShuffle(new Set([ this.childOwner(child) ]));
       // with the cells turned into stacks, a drop aimed at one of them joins
       // it: the widget is put exactly onto what it landed on, which is what
       // updatePiles takes as the decision to merge. The drop shadow points at
@@ -431,11 +425,11 @@ export class Holder extends ImageWidget {
             return true;
           // updatePiles refused the merge (a dropLimit, mismatched
           // onPileCreation), so the drop gets a cell of its own like any other
-          return await this.gridArriveLane([ child ]);
+          return await this.updateAfterShuffle(new Set([ this.childOwner(child) ]));
         }
       }
-      // an interactive drop lands in the cell under the cursor - or, aimed at
-      // an occupied one, the nearest cell that takes it
+      // an interactive drop is inserted at the grid cell under the cursor and
+      // the other cards reflow around it
       return await this.snapToGridCell(child, oldParentID);
     }
 
@@ -775,14 +769,11 @@ export class Holder extends ImageWidget {
       for(const entry of this.childrenFilter(super.children(), true))
         for(const w of entry.get('type') == 'pile' ? entry.children() : [ entry ])
           await w.set('rotation', w.getDefaultValue('rotation'));
-    // a geometry knob moves a grid's cells as little as it can (sticky); a
-    // layout switch or a pile switch changes what the cells mean, so those
-    // hand the cells out again from scratch
     if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
-      await this.updateAfterShuffle(null, { sticky: [ 'layout', 'preventPiles' ].indexOf(property) == -1 });
+      await this.updateAfterShuffle();
     // the layouts that decide the arrangement from the holder's size react to it changing
     if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread', 'arc' ].indexOf(this.get('layout')) != -1))
-      await this.updateAfterShuffle(null, { sticky: true });
+      await this.updateAfterShuffle();
   }
 
   async receiveCard(card, pos) {
@@ -794,7 +785,7 @@ export class Holder extends ImageWidget {
     // grid around it stays put.
     if(this.get('layout') == 'grid') {
       if(!this.preventGridReflowDuringMerge)
-        await this.updateAfterShuffle(null, { sticky: true });
+        await this.updateAfterShuffle();
       return;
     }
     if(this.get('layout') == 'random')
@@ -1036,20 +1027,6 @@ export class Holder extends ImageWidget {
       }
       return extent;
     };
-    // How far the steps can grow before the binding entry ends the given
-    // margin from the far edge - Infinity while nothing constrains them (a
-    // lone entry has no step to grow).
-    const stretchScale = (extents, steps, room, margin)=>{
-      let scale = Infinity;
-      let offset = 0;
-      for(let i = 1; i < extents.length; ++i) {
-        offset += steps[i - 1];
-        if(offset > 0)
-          scale = Math.min(scale, (room - 2*margin - extents[i]) / offset);
-      }
-      return scale;
-    };
-    const clampStretch = scale=>isFinite(scale) ? Math.max(1, scale) : 1;
     const rowGeometry = perRow=>{
       const rowsChildren = [];
       for(let row = 0; row * perRow < count; ++row)
@@ -1092,35 +1069,20 @@ export class Holder extends ImageWidget {
 
     const { rowsChildren, rowHeights, rowScalesX, scaleY } = rowGeometry(perRow);
     const stepsY = rowHeights.map((h, row)=>row == rowHeights.length - 1 ? 0 : (h + pad) * scaleY);
-    // per-child spacing so a fanned pile gets the room of its whole spread
-    const rowExtents = rowsChildren.map(rowChildren=>rowChildren.map(c=>c.spreadExtent('X')));
-    const rowSteps = rowsChildren.map((rowChildren, row)=>rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : (rowExtents[row][i] + pad) * rowScalesX[row]));
-
-    // The margins come out as even as the room allows: the tighter axis names
-    // the target margin and the other one spreads its steps until its content
-    // ends that margin from the edges as well. The widest row binds the shared
-    // factor, so the rows keep lining up; what cannot spread - a lone card in
-    // its row, a full row - keeps its centered slack.
     const contentHeight = boundingExtent(rowHeights, stepsY);
-    const contentWidth = Math.max(...rowsChildren.map((_, row)=>boundingExtent(rowExtents[row], rowSteps[row])));
-    const margin = Math.min(Math.max(pad, (holderWidth - contentWidth) / 2), Math.max(pad, (holderHeight - contentHeight) / 2));
-    const stretchX = clampStretch(Math.min(...rowsChildren.map((_, row)=>stretchScale(rowExtents[row], rowSteps[row], holderWidth, margin))));
-    const stretchY = clampStretch(stretchScale(rowHeights, stepsY, holderHeight, margin));
-
-    const stretchedStepsY = stepsY.map(step=>step * stretchY);
-    let y = Math.max(pad, (holderHeight - boundingExtent(rowHeights, stretchedStepsY)) / 2);
+    let y = Math.max(pad, (holderHeight - contentHeight) / 2);
 
     for(let row = 0; row < rowsChildren.length; ++row) {
       const rowChildren = rowsChildren[row];
-      const steps = rowSteps[row].map(step=>step * stretchX);
-      let x = Math.max(pad, (holderWidth - boundingExtent(rowExtents[row], steps)) / 2);
+      // per-child spacing so a fanned pile gets the room of its whole spread
+      const steps = rowChildren.map((c, i)=>i == rowChildren.length - 1 ? 0 : (c.spreadExtent('X') + pad) * rowScalesX[row]);
+      const contentWidth = boundingExtent(rowChildren.map(c=>c.spreadExtent('X')), steps);
+      let x = Math.max(pad, (holderWidth - contentWidth) / 2);
       for(let i = 0; i < rowChildren.length; ++i) {
-        // stretching multiplies fractions into the offsets - written to the
-        // state they are rounded the way a plain drop is
-        await rowChildren[i].setPosition(Math.round(x*1024)/1024, Math.round(y*1024)/1024, z++);
+        await rowChildren[i].setPosition(x, y, z++);
         x += steps[i];
       }
-      y += stretchedStepsY[row];
+      y += stepsY[row];
     }
   }
 
@@ -1289,21 +1251,14 @@ export class Holder extends ImageWidget {
     }
   }
 
-  // Compute the grid geometry: the cell lattice the cards snap to. The cell
-  // size is taken from the first child - the grid assumes all children share
-  // one size, as a card deck does - dropOffset is the margin from the edges
-  // and stackOffset the gap between cells. pilesOffset pins the pitch of the
-  // cells to a fixed distance the way it spaces the groups of a multiSpread:
-  // a pitch of the card size packs the cells flush, and lining the grid up
-  // with a background image stays lined up at any card count.
-  //
-  // The lattice spans the holder: every cell it has room for exists whether a
-  // card sits in it or not, so a drop can aim at any of them. gridColumns and
-  // gridRows pin the column and row count instead. Where the cells are stacks
-  // (preventPiles: false), the pins and the holder's edge cap the grid
-  // outright - what does not fit stacks up rather than adding rows. Only a
-  // grid whose cells cannot stack makes room: extra rows where the columns
-  // are pinned, compressed cells where nothing is.
+  // Compute the grid geometry for n cards: the column count and per-cell step
+  // that keep every card inside the holder with the least overlap. dropOffset
+  // is the margin from the edges and stackOffset the desired gap between cells;
+  // when the cards do not all fit at that spacing they overlap instead of
+  // spilling outside. gridColumns/gridRows pin the column count so a one-pixel
+  // resize cannot reflow the whole table. Note: the cell size is taken from the
+  // first child, so the grid assumes all children share one size (as a card
+  // deck does); mixed-size children may overlap or overflow.
   gridMetrics(n) {
     const marginX = this.get('dropOffsetX');
     const marginY = this.get('dropOffsetY');
@@ -1317,266 +1272,51 @@ export class Holder extends ImageWidget {
 
     const availX = Math.max(0, this.get('width')  - 2 * marginX - cardW);
     const availY = Math.max(0, this.get('height') - 2 * marginY - cardH);
+    // pilesOffset pins the pitch of the cells to a fixed distance the way it
+    // spaces the groups of a multiSpread: derived from nothing, capped by
+    // nothing - a pitch of the card size packs the cells flush, and lining
+    // the grid up with a background image stays lined up at any card count
     const pitchX = this.get('pilesOffsetX') === null ? null : Math.abs(this.get('pilesOffsetX'));
     const pitchY = this.get('pilesOffsetY') === null ? null : Math.abs(this.get('pilesOffsetY'));
-    const fullStepX = pitchX !== null ? pitchX : cardW + gapX;
-    const fullStepY = pitchY !== null ? pitchY : cardH + gapY;
+    const fullStepX = cardW + gapX;
+    const fullStepY = cardH + gapY;
 
-    const colsFit = Math.max(1, fullStepX > 0 ? Math.floor(availX / fullStepX) + 1 : 1);
-    const rowsFit = Math.max(1, fullStepY > 0 ? Math.floor(availY / fullStepY) + 1 : 1);
-    const pinnedColumns = this.get('gridColumns') > 0 ? Math.max(1, Math.floor(this.get('gridColumns'))) : null;
-    const pinnedRows    = this.get('gridRows')    > 0 ? Math.max(1, Math.floor(this.get('gridRows')))    : null;
-    const stacks = this.gridAllowsPiles();
-    const demand = Math.max(1, n);
+    // a grid pinned to both a column and a row count whose cells are stacks
+    // never grows past its pins: everything past the capacity stacks onto the
+    // cells instead of adding rows
+    const capacity = this.gridAllowsPiles() && this.get('gridColumns') > 0 && this.get('gridRows') > 0
+      ? Math.max(1, Math.floor(this.get('gridColumns'))) * Math.max(1, Math.floor(this.get('gridRows'))) : Infinity;
+    const demand = Math.min(Math.max(1, n), capacity);
 
-    let cols;
-    if(pinnedColumns !== null) {
-      cols = pinnedColumns;
-    } else if(pinnedRows !== null) {
-      // as many columns as the cards need; where the cells are stacks the
-      // holder's edge caps them, since the stacks absorb what does not fit
-      cols = Math.max(1, Math.ceil(demand / pinnedRows));
-      if(stacks)
-        cols = Math.min(cols, colsFit);
-    } else if(stacks || demand <= colsFit * rowsFit) {
-      cols = colsFit;
-    } else {
-      // more cards than the holder has cells and nothing to absorb them: find
-      // the column count that keeps every card inside with the least overlap
-      let best = null;
-      for(let candidate=1; candidate<=demand; ++candidate) {
-        const rows = Math.ceil(demand / candidate);
-        const stepX = pitchX !== null ? pitchX : candidate > 1 ? Math.min(fullStepX, availX / (candidate - 1)) : fullStepX;
-        const stepY = pitchY !== null ? pitchY : rows > 1 ? Math.min(fullStepY, availY / (rows - 1)) : fullStepY;
-        const overlapX = candidate > 1 ? Math.max(0, (cardW - stepX) / cardW) : 0;
-        const overlapY = rows > 1 ? Math.max(0, (cardH - stepY) / cardH) : 0;
-        const score = Math.max(overlapX, overlapY) + (overlapX + overlapY) / 10;
-        if(!best || score < best.score - 1e-9)
-          best = { cols: candidate, score };
-      }
-      cols = best.cols;
-    }
-
-    let stepRows = pinnedRows !== null ? pinnedRows : Math.max(1, Math.ceil(demand / cols));
-    if(pinnedRows === null && stacks)
-      stepRows = Math.min(stepRows, rowsFit);
-
-    const stepX = pitchX !== null ? pitchX : cols     > 1 ? Math.min(fullStepX, availX / (cols     - 1)) : fullStepX;
-    const stepY = pitchY !== null ? pitchY : stepRows > 1 ? Math.min(fullStepY, availY / (stepRows - 1)) : fullStepY;
-
-    return {
-      cols, stepX, stepY, marginX, marginY, cardW, cardH,
-      // the rows a drop can aim at
-      aimRows: pinnedRows !== null ? pinnedRows : Math.max(stepRows, rowsFit),
-      // all the cells the grid will ever place while its cells are stacks -
-      // everything past them stacks up. Unlimited where they cannot.
-      capacity: stacks ? cols * (pinnedRows !== null ? pinnedRows : rowsFit) : Infinity,
-      // a grid pinned to a row count fills its rows evenly, one column after
-      // the next, the way a column-pinned grid fills row after row
-      fillByColumn: pinnedRows !== null && pinnedColumns === null
+    const stepsFor = cols=>{
+      const rows = Math.ceil(demand / cols);
+      return {
+        cols,
+        stepX: pitchX !== null ? pitchX : cols > 1 ? Math.min(fullStepX, availX / (cols - 1)) : fullStepX,
+        stepY: pitchY !== null ? pitchY : rows > 1 ? Math.min(fullStepY, availY / (rows - 1)) : fullStepY
+      };
     };
-  }
 
-  // The fill order of the lattice, and the mapping between a cell index, its
-  // column and row, and its position. Indices past the lattice continue it -
-  // extra rows (or, filling by column, extra columns) - which is where a grid
-  // whose cells cannot stack overflows to.
-  gridCellIndex(m, col, row) {
-    return m.fillByColumn ? col * m.aimRows + row : row * m.cols + col;
-  }
-
-  gridCellAt(m, index) {
-    return m.fillByColumn
-      ? { col: Math.floor(index / m.aimRows), row: index % m.aimRows }
-      : { col: index % m.cols, row: Math.floor(index / m.cols) };
-  }
-
-  gridCellPosition(m, index) {
-    const { col, row } = this.gridCellAt(m, index);
-    return { x: m.marginX + col * m.stepX, y: m.marginY + row * m.stepY };
-  }
-
-  gridCellRange(m) {
-    return Math.min(m.capacity, m.cols * m.aimRows);
-  }
-
-  // The cell index a coordinate inside the holder aims at.
-  gridCellFromCoord(m, x, y) {
-    const col = Math.max(0, Math.min(m.cols - 1, Math.round((x - m.marginX) / (m.stepX || 1))));
-    const row = Math.max(0, Math.min(m.aimRows - 1, Math.round((y - m.marginY) / (m.stepY || 1))));
-    return this.gridCellIndex(m, col, row);
-  }
-
-  // The cell a settled entry sits on, or null when it does not sit exactly on
-  // a lattice point - which means the lattice itself moved under it (a resize
-  // that compressed the steps, an arrangement from another layout) and the
-  // pass has to hand the cells out again.
-  gridClaimedCell(m, entry) {
-    const col = Math.round((entry.get('x') - m.marginX) / (m.stepX || 1));
-    const row = Math.round((entry.get('y') - m.marginY) / (m.stepY || 1));
-    if(!isFinite(col) || !isFinite(row) || col < 0 || row < 0)
-      return null;
-    if(Math.abs(entry.get('x') - (m.marginX + col * m.stepX)) >= 0.5)
-      return null;
-    if(Math.abs(entry.get('y') - (m.marginY + row * m.stepY)) >= 0.5)
-      return null;
-    return this.gridCellIndex(m, col, row);
-  }
-
-  // One arrangement pass over a grid lane. Settled entries keep the cell their
-  // position names - holes and all - so a membership or size change moves
-  // nothing that still fits: a card taken out leaves its cell empty, a dealt
-  // card fills the first free cell, a dropped one the cell it was aimed at.
-  // Entries that lost their cell (out of range, two claims on one cell) go to
-  // the nearest free one. Once every cell is taken and the cells are stacks,
-  // the leftovers stack onto the least loaded compatible cell - never past the
-  // lattice; anywhere else they overflow onto the cells the fill order
-  // continues with. An ordered pass (SHUFFLE, SORT, MOVE's position) hands the
-  // occupied cells out again in z order instead - the holes stay holes - and
-  // when the entries do not sit on the lattice at all, everything is packed
-  // from the first cell.
-  async gridArrange(entries, { ordered=false, arrivals=null, aimIndex=null }={}) {
-    if(this.preventRearrangeDuringPileDrop || !entries.length)
-      return;
-    const m = this.gridMetrics(entries.length);
-    const range = this.gridCellRange(m);
-
-    const assigned = new Map();  // cell index -> entry
-    const pending = [];          // { entry, near } - entries that need a cell
-
-    // read the cell each settled entry claims; any entry off the lattice means
-    // the lattice moved and every cell is handed out again from scratch
-    let claims = new Map();
-    const settled = arrivals ? entries.filter(e=>!arrivals.has(e)) : entries;
-    for(const entry of settled) {
-      const index = this.gridClaimedCell(m, entry);
-      if(index === null) {
-        claims = null;
-        break;
-      }
-      claims.set(entry, index);
-    }
-
-    if(claims && ordered) {
-      // an explicit reorder permutes the entries across the cells they occupy:
-      // shuffling a partly cleared grid moves the cards between their cells
-      // instead of packing them back together
-      const cells = [ ...new Set(claims.values()) ].filter(index=>index < range).sort((a, b)=>a - b);
-      if(cells.length == entries.length) {
-        for(let i=0; i<entries.length; ++i)
-          assigned.set(cells[i], entries[i]);
-      } else {
-        claims = null;
-      }
-    } else if(claims) {
-      for(const [ entry, index ] of claims) {
-        // where the cells cannot stack the fill order continues past the
-        // lattice, so a settled entry on an overflow cell keeps it - only a
-        // grid of stacks caps its cells and pulls strays back inside
-        if((index < range || !isFinite(m.capacity)) && !assigned.has(index))
-          assigned.set(index, entry);
-        else
-          pending.push({ entry, near: Math.min(index, range - 1) });
-      }
-      for(const entry of entries)
-        if(arrivals && arrivals.has(entry))
-          pending.push({ entry, near: aimIndex });
-    }
-
-    if(!claims) {
-      let index = 0;
-      for(const entry of entries) {
-        if(index < range || !isFinite(m.capacity))
-          assigned.set(index, entry);
-        else
-          pending.push({ entry, near: index % range });
-        ++index;
+    let best = null;
+    if(this.get('gridColumns') > 0) {
+      best = stepsFor(Math.max(1, Math.floor(this.get('gridColumns'))));
+    } else if(this.get('gridRows') > 0) {
+      best = stepsFor(Math.ceil(demand / Math.max(1, Math.floor(this.get('gridRows')))));
+    } else if(pitchX !== null) {
+      // a fixed pitch says how many cells fit side by side, so the column
+      // search has nothing left to decide
+      best = stepsFor(Math.max(1, Math.min(demand, pitchX > 0 ? Math.floor(availX / pitchX) + 1 : 1)));
+    } else {
+      for(let cols=1; cols<=demand; ++cols) {
+        const candidate = stepsFor(cols);
+        const overlapX = cols > 1 ? Math.max(0, (cardW - candidate.stepX) / cardW) : 0;
+        const overlapY = Math.ceil(demand / cols) > 1 ? Math.max(0, (cardH - candidate.stepY) / cardH) : 0;
+        candidate.score = Math.max(overlapX, overlapY) + (overlapX + overlapY) / 10;
+        if(!best || candidate.score < best.score - 1e-9)
+          best = candidate;
       }
     }
-
-    // hand out the free cells: the aimed (or lost) cell while it is free, the
-    // nearest free one otherwise, the first free one for an aimless arrival
-    const leftovers = [];
-    for(const { entry, near } of pending) {
-      let found = null;
-      for(let i=0; i<range; ++i) {
-        if(assigned.has(i))
-          continue;
-        if(near === null) {
-          found = i;
-          break;
-        }
-        const cell = this.gridCellAt(m, i);
-        const aim = this.gridCellAt(m, near);
-        const distance = Math.pow((cell.col - aim.col) * m.stepX, 2) + Math.pow((cell.row - aim.row) * m.stepY, 2);
-        if(!found || distance < found.distance - 1e-9)
-          found = { index: i, distance };
-      }
-      if(found !== null) {
-        assigned.set(typeof found == 'number' ? found : found.index, entry);
-      } else if(!isFinite(m.capacity)) {
-        let i = range;
-        while(assigned.has(i))
-          ++i;
-        assigned.set(i, entry);
-      } else {
-        leftovers.push({ entry, near });
-      }
-    }
-
-    // every cell is taken: the leftovers stack onto the least loaded cell that
-    // takes them - same onPileCreation, room under the stack's dropLimit, the
-    // rules a drop merging into the cell follows. Dealing past the capacity
-    // this way layers the stacks evenly. A leftover nothing can host gets an
-    // overflow cell after all - better visible than gone.
-    const merges = [];
-    if(leftovers.length) {
-      const plannedSize = new Map();
-      const sizeOf = entry => entry.get('type') == 'pile' ? entry.children().length : 1;
-      for(const { entry, near } of leftovers) {
-        let best = null;
-        for(const [ index, host ] of assigned) {
-          if(!this.gridCanStackOnto(host, entry, (plannedSize.get(host) || sizeOf(host)) + sizeOf(entry)))
-            continue;
-          const size = plannedSize.get(host) || sizeOf(host);
-          const cell = this.gridCellAt(m, index);
-          const aim = this.gridCellAt(m, near === null ? 0 : near);
-          const distance = Math.pow((cell.col - aim.col) * m.stepX, 2) + Math.pow((cell.row - aim.row) * m.stepY, 2);
-          if(!best || size < best.size || size == best.size && distance < best.distance - 1e-9)
-            best = { index, host, size, distance };
-        }
-        if(best) {
-          plannedSize.set(best.host, (plannedSize.get(best.host) || sizeOf(best.host)) + sizeOf(entry));
-          merges.push({ entry, index: best.index });
-        } else {
-          let i = range;
-          while(assigned.has(i))
-            ++i;
-          assigned.set(i, entry);
-        }
-      }
-    }
-
-    // write the positions; z runs in fill order over the occupied cells, so
-    // "the top card" keeps meaning the last cell like it always has
-    let z = 1;
-    for(const index of [ ...assigned.keys() ].sort((a, b)=>a - b)) {
-      const { x, y } = this.gridCellPosition(m, index);
-      await assigned.get(index).setPosition(x, y, z++);
-    }
-
-    for(const { entry, index } of merges) {
-      const host = assigned.get(index);
-      const cards = entry.get('type') == 'pile' ? [ ...entry.children() ].sort((a, b)=>a.get('z') - b.get('z')) : [ entry ];
-      const reflowFlag = this.preventGridReflowDuringMerge;
-      this.preventGridReflowDuringMerge = true;
-      if(host.get('type') == 'pile')
-        await this.mergeIntoGroup(cards, host);
-      else
-        assigned.set(index, await this.makeGroup([ host, ...cards ]));
-      if(!reflowFlag)
-        delete this.preventGridReflowDuringMerge;
-    }
+    return { cols: best.cols, stepX: best.stepX, stepY: best.stepY, marginX, marginY, cardW, cardH, capacity };
   }
 
   // Whether an entry can stack onto the entry of an occupied cell: the same
@@ -1595,179 +1335,131 @@ export class Holder extends ImageWidget {
   async rearrangeChildrenGrid(children) {
     if(this.preventRearrangeDuringPileDrop || !children.length)
       return;
-    await this.gridArrange(children, { ordered: true });
+    await this.layoutGridCells(children);
   }
 
-  // Which cell (or which stack) a drop aimed at the given cell goes to: the
-  // aimed cell while it is free, an insertion where it is taken and the cells
-  // cannot stack - the occupied cells from there on step one forward, up to
-  // the first hole, the way a spread opens a slot for a drop - the nearest
-  // free cell where insertion is not what a drop means (the cells are stacks
-  // but the drop missed every card), and the nearest stack that takes it once
-  // there is none. The drop and its shadow resolve through the same call, so
-  // the preview shows exactly what the drop will do.
-  resolveGridDrop(m, others, child, aimIndex) {
-    const occupied = new Map();
-    for(const entry of others) {
-      const index = this.gridClaimedCell(m, entry);
-      if(index !== null && !occupied.has(index))
-        occupied.set(index, entry);
-    }
-    const range = this.gridCellRange(m);
-    if(aimIndex < range && !occupied.has(aimIndex))
-      return { index: aimIndex };
-
-    if(!this.gridAllowsPiles() && occupied.has(aimIndex))
-      return { index: aimIndex, insert: true };
-
-    let best = null;
-    for(let i=0; i<range; ++i) {
-      if(occupied.has(i))
-        continue;
-      const cell = this.gridCellAt(m, i);
-      const aim = this.gridCellAt(m, aimIndex);
-      const distance = Math.pow((cell.col - aim.col) * m.stepX, 2) + Math.pow((cell.row - aim.row) * m.stepY, 2);
-      if(!best || distance < best.distance - 1e-9)
-        best = { index: i, distance };
-    }
-    if(best)
-      return { index: best.index };
-
-    if(isFinite(m.capacity)) {
-      const sizeOf = entry => entry.get('type') == 'pile' ? entry.children().length : 1;
-      let host = null;
-      for(const [ index, entry ] of occupied) {
-        if(!this.gridCanStackOnto(entry, child, sizeOf(entry) + sizeOf(child)))
-          continue;
-        const size = sizeOf(entry);
-        const cell = this.gridCellAt(m, index);
-        const aim = this.gridCellAt(m, aimIndex);
-        const distance = Math.pow((cell.col - aim.col) * m.stepX, 2) + Math.pow((cell.row - aim.row) * m.stepY, 2);
-        if(!host || size < host.size || size == host.size && distance < host.distance - 1e-9)
-          host = { entry, size, distance };
-      }
-      if(host)
-        return { host: host.entry };
-    }
-
-    let i = range;
-    while(occupied.has(i))
-      ++i;
-    return { index: i };
-  }
-
-  // An interactive drop lands in the cell it was aimed at - a free cell takes
-  // it as it is, holes and all, and the settled cards stay where they are. An
-  // occupied cell of a grid whose cells cannot stack takes it as an insertion:
-  // the cards from that cell on step one cell forward to make room.
+  // Insert an interactively-dropped card into the grid at the cell nearest where
+  // it was dropped and reflow the rest so the whole grid stays in order with the
+  // new card at that position (rather than the card always landing in the next
+  // sequential slot, which is what MOVE does). The other cards flow around it.
+  // A capped grid that is already full takes the drop onto the nearest stack
+  // that has room for it instead - the settled cells stay where they are.
   async snapToGridCell(child, oldParentID) {
     let coord = { x: child.get('x'), y: child.get('y') };
     if(!oldParentID)
       coord = this.coordLocalFromCoordGlobal(coord);
 
     const owner = this.childOwner(child);
-    // a pile in a cell counts as the one entry it is: the cards inside it
-    // never claim cells of their own
+    // a pile in a cell counts as the one entry it is, so the reflow moves the
+    // stacks around, not the cards inside them
     const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
     const m = this.gridMetrics(others.length + 1);
-    const aimIndex = this.gridCellFromCoord(m, coord.x, coord.y);
 
-    if(child.get('dropShadowOwner')) {
-      // an insertion preview holds while the pointer stays on its cell; aimed
-      // anywhere else it is taken back before the aim is resolved again
-      if(this.gridInsertPreview && this.gridInsertPreview.index !== aimIndex)
-        await this.closeGridInsertPreview();
-      const resolved = this.resolveGridDrop(m, others, child, aimIndex);
-      // the preview: only the shadow is placed, parked on the stack it would
-      // join or on the cell the drop will take
-      if(resolved.host)
-        return await child.setPosition(resolved.host.get('x'), resolved.host.get('y'), resolved.host.get('z') + 1);
-      if(resolved.insert)
-        this.gridInsertPreview = { index: aimIndex, count: others.length + 1, moved: await this.gridOpenCell(m, others, aimIndex) };
-      const { x, y } = this.gridCellPosition(m, resolved.index);
-      return await child.setPosition(x, y, others.length + 1);
-    }
-
-    // the drop consumes the cell its preview holds open; aimed anywhere else,
-    // the preview is taken back before the drop is resolved
-    const preview = this.gridInsertPreview;
-    if(preview) {
-      delete this.gridInsertPreview;
-      if(preview.index !== aimIndex)
-        await this.closeGridInsertPreview(preview);
-    }
-    const resolved = this.resolveGridDrop(m, others, child, aimIndex);
-    if(resolved.host && await this.mergeGridDrop(child, resolved.host))
-      return true;
-    if(resolved.insert)
-      await this.gridOpenCell(m, others, aimIndex);
-    return await this.gridArrange([ ...others, child ].sort((a, b)=>a.get('z') - b.get('z')), { arrivals: new Set([ child ]), aimIndex: resolved.host ? null : resolved.index });
-  }
-
-  // Step the chain of occupied cells that starts at the given cell one cell
-  // forward - it ends at the first hole, so the cards between it and the
-  // insertion point move by one and everything past the hole stays put.
-  // Answers with what moved, so an insertion preview can be taken back.
-  async gridOpenCell(m, entries, index) {
-    const occupied = new Map();
-    for(const entry of entries) {
-      const i = this.gridClaimedCell(m, entry);
-      if(i !== null && !occupied.has(i))
-        occupied.set(i, entry);
-    }
-    let free = index;
-    while(occupied.has(free))
-      ++free;
-    const moved = [];
-    for(let i = free - 1; i >= index; --i) {
-      const entry = occupied.get(i);
-      const { x, y } = this.gridCellPosition(m, i + 1);
-      await entry.setPosition(x, y, entry.get('z'));
-      moved.push({ entry, index: i });
-    }
-    return moved;
-  }
-
-  // Take an insertion preview back: the cards the open cell pushed forward
-  // step back onto the cells they came from.
-  async closeGridInsertPreview(preview = this.gridInsertPreview) {
-    delete this.gridInsertPreview;
-    if(!preview)
-      return;
-    const m = this.gridMetrics(preview.count);
-    for(const { entry, index } of preview.moved)
-      if(widgets.has(entry.get('id'))) {
-        const { x, y } = this.gridCellPosition(m, index);
-        await entry.setPosition(x, y, entry.get('z'));
+    if(others.length + 1 > m.capacity) {
+      const host = this.nearestGridHost(others, child, coord);
+      if(host) {
+        if(child.get('dropShadowOwner'))
+          return await child.setPosition(host.get('x'), host.get('y'), host.get('z') + 1);
+        if(await this.mergeGridDrop(child, host))
+          return true;
       }
+      // nothing has room for it: the drop spills past the pins rather than
+      // reshuffling the settled stacks
+      return await this.layoutGridCells([ ...others, child ]);
+    }
+
+    const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
+    const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
+    const index = Math.max(0, Math.min(others.length, row * m.cols + column));
+
+    const ordered = others.slice();
+    ordered.splice(index, 0, child);
+    // position this lane's cards (including the drop shadow, if child is one)
+    // directly, since updateAfterShuffle deliberately skips shadows
+    await this.layoutGridCells(ordered);
   }
 
-  // Break a pile dropped interactively into a grid and put its cards down at
-  // the cell under the cursor and the free cells around it - the settled
-  // cards stay where they are.
+  // The stack nearest the drop that can take it, by the same onPileCreation
+  // and dropLimit rules updatePiles applies to a merge.
+  nearestGridHost(others, child, coord) {
+    const sizeOf = entry=>entry.get('type') == 'pile' ? entry.children().length : 1;
+    let best = null;
+    for(const entry of others) {
+      if(!this.gridCanStackOnto(entry, child, sizeOf(entry) + sizeOf(child)))
+        continue;
+      const distance = Math.pow(entry.get('x') - coord.x, 2) + Math.pow(entry.get('y') - coord.y, 2);
+      if(!best || distance < best.distance)
+        best = { entry, distance };
+    }
+    return best && best.entry;
+  }
+
+  // Break a pile dropped interactively into a grid and insert its cards at the
+  // cell under the cursor (reflowing the rest), instead of appending them.
   async snapPileToGrid(pile, oldParentID) {
     let coord = { x: pile.get('x'), y: pile.get('y') };
     if(!oldParentID)
       coord = this.coordLocalFromCoordGlobal(coord);
 
-    const owner = this.childOwner(pile);
     const incoming = [ ...pile.children() ].sort((a, b)=>a.get('z') - b.get('z'));
+    const owner = this.childOwner(pile);
     await this.breakUpPile(pile);
 
-    const entries = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
-    const m = this.gridMetrics(entries.length);
-    await this.gridArrange(entries, { arrivals: new Set(incoming), aimIndex: this.gridCellFromCoord(m, coord.x, coord.y) });
+    const others = this.children().filter(w=>!incoming.includes(w) && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
+    const m = this.gridMetrics(others.length + incoming.length);
+    const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
+    const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
+    const index = Math.max(0, Math.min(others.length, row * m.cols + column));
+
+    const ordered = others.slice(0, index).concat(incoming, others.slice(index));
+    await this.layoutGridCells(ordered);
   }
 
-  // Cards a routine moves into the grid arrive without an aim: each fills the
-  // first free cell of its lane, and everything settled stays where it is.
-  async gridArriveLane(cards) {
-    for(const owner of new Set(cards.map(c=>this.childOwner(c)))) {
-      const lane = cards.filter(c=>this.childOwner(c) === owner);
-      const entries = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
-      await this.gridArrange(entries, { arrivals: new Set(lane) });
+  // Position an ordered list of cards into grid cells and assign matching z.
+  // Everything past a capped grid's capacity stacks onto the cells instead:
+  // each leftover joins the least loaded cell that takes it - the same
+  // onPileCreation and dropLimit rules a drop merging into a cell follows -
+  // so dealing past the capacity layers the stacks evenly. A leftover no
+  // cell can host gets a cell past the pins after all - better visible than
+  // gone.
+  async layoutGridCells(cards) {
+    if(!cards.length)
+      return;
+    const m = this.gridMetrics(cards.length);
+    const cells = cards.slice(0, Math.min(cards.length, m.capacity));
+    let z = 1;
+    for(let i=0; i<cells.length; ++i) {
+      const column = i % m.cols;
+      const row = Math.floor(i / m.cols);
+      await cells[i].setPosition(m.marginX + column * m.stepX, m.marginY + row * m.stepY, z++);
     }
-    return true;
+
+    const sizeOf = entry=>entry.get('type') == 'pile' ? entry.children().length : 1;
+    let spill = cells.length;
+    for(const entry of cards.slice(cells.length)) {
+      let best = null;
+      for(let i=0; i<cells.length; ++i)
+        if(this.gridCanStackOnto(cells[i], entry, sizeOf(cells[i]) + sizeOf(entry)) && (best === null || sizeOf(cells[i]) < sizeOf(cells[best])))
+          best = i;
+      if(best === null) {
+        await entry.setPosition(m.marginX + spill % m.cols * m.stepX, m.marginY + Math.floor(spill / m.cols) * m.stepY, spill + 1);
+        ++spill;
+        continue;
+      }
+      // the merged stack keeps the cell and the slot in the by-z order of what
+      // it joined, so the next pass finds it where the merge left it
+      const hostZ = cells[best].get('z');
+      const group = entry.get('type') == 'pile' ? [ ...entry.children() ].sort((a, b)=>a.get('z') - b.get('z')) : [ entry ];
+      const reflowFlag = this.preventGridReflowDuringMerge;
+      this.preventGridReflowDuringMerge = true;
+      if(cells[best].get('type') == 'pile')
+        await this.mergeIntoGroup(group, cells[best]);
+      else
+        cells[best] = await this.makeGroup([ cells[best], ...group ]);
+      await cells[best].set('z', hostZ);
+      if(!reflowFlag)
+        delete this.preventGridReflowDuringMerge;
+    }
   }
 
   // Merge an interactively dropped widget into the entry of the cell it landed
@@ -2281,10 +1973,8 @@ export class Holder extends ImageWidget {
 
   // owners limits the pass to the lanes that actually changed - a deal into a
   // shared hand touches one lane per batch, not all of them. null arranges
-  // every lane. sticky asks a grid to keep every settled cell where it is
-  // (membership and size changes); without it the cells are handed out again
-  // in z order (SHUFFLE, SORT, a layout switch).
-  async updateAfterShuffle(owners=null, { sticky=false }={}) {
+  // every lane.
+  async updateAfterShuffle(owners=null) {
     if(this.get('layout') == 'grid') {
       const entries = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
       // a stack in a cell shows its cards the way its own layout says - by
@@ -2295,7 +1985,7 @@ export class Holder extends ImageWidget {
           await entry.arrangeChildren(false);
       for(const owner of new Set(entries.map(c=>c.get('owner') || null)))
         if(!owners || owners.has(owner))
-          await this.gridArrange(entries.filter(c=>!c.get('owner') || c.get('owner') === owner).sort((a, b)=>a.get('z') - b.get('z')), { ordered: !sticky });
+          await this.rearrangeChildrenGrid(entries.filter(c=>!c.get('owner') || c.get('owner') === owner).sort((a, b)=>a.get('z') - b.get('z')));
       return;
     }
 

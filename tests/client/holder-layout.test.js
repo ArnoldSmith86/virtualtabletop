@@ -279,16 +279,7 @@ describe('the auto layout arranging its children', () => {
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ], [ 250, 10 ], [ 490, 10 ] ]);
-  });
-
-  test('the margins come out even: the tighter axis decides how far the row spreads', async () => {
-    const holder = createHolder({ id: 'h', width: 600, height: 140 });
-    for(let i=0; i<2; ++i)
-      createCard(`c${i}`, { parent: 'h', z: i+1 });
-    await holder.updateAfterShuffle();
-    // the vertical margin is (140-100)/2 = 20, so the row ends 20 from either edge as well
-    expect(positionsByZ(holder)).toEqual([ [ 20, 20 ], [ 480, 20 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 146, 10 ], [ 250, 10 ], [ 354, 10 ] ]);
   });
 
   test('a tall holder stacks them into one centered column instead', async () => {
@@ -296,7 +287,7 @@ describe('the auto layout arranging its children', () => {
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 10, 10 ], [ 10, 250 ], [ 10, 490 ] ]);
+    expect(positionsByZ(holder)).toEqual([ [ 10, 146 ], [ 10, 250 ], [ 10, 354 ] ]);
   });
 
   test('the spacing squishes before anything spills out of the holder', async () => {
@@ -323,9 +314,9 @@ describe('the auto layout arranging its children', () => {
     await holder.updateAfterShuffle();
     const row = positionsByZ(holder);
     // the tallest child names the vertical margin (200-140)/2 = 30, and the
-    // row spreads until it ends 30 from either edge as well
-    expect(row[0]).toEqual([ 30, 30 ]);
-    expect(row[2][0] + 60).toBe(570);
+    // row is centered as one block: (600 - (64+144+60)) / 2 = 166
+    expect(row[0]).toEqual([ 166, 30 ]);
+    expect(row[2][0] + 60).toBe(434);
     expect(row.every(([ , y ])=>y == 30)).toBe(true);
   });
 
@@ -355,7 +346,7 @@ describe('the auto layout arranging its children', () => {
     expect(holder.children().every(c=>c.get('parent') == 'h')).toBe(true);
     // all four of them lined up in the centered row
     const xs = holder.arrangedChildren().map(c=>c.get('x')).sort((a, b)=>a - b);
-    expect(xs).toEqual([ 10, 170, 330, 490 ]);
+    expect(xs).toEqual([ 94, 198, 302, 406 ]);
   });
 
   test('a holder without the room to spread keeps a pile and centers it', async () => {
@@ -395,7 +386,7 @@ describe('the auto layout arranging its children', () => {
     expect(widgetFilter(w=>w.get('type') == 'pile').length).toBe(0);
     const row = holder.arrangedChildren().sort((a, b)=>a.get('x') - b.get('x'));
     expect(row.map(c=>c.get('id'))).toEqual([ 'c0', 'c1', 'c2' ]);
-    expect(row.map(c=>[ c.get('x'), c.get('y') ])).toEqual([ [ 10, 10 ], [ 250, 10 ], [ 490, 10 ] ]);
+    expect(row.map(c=>[ c.get('x'), c.get('y') ])).toEqual([ [ 146, 10 ], [ 250, 10 ], [ 354, 10 ] ]);
   });
 
   test('a pile and a loose card in a small holder gather into one pile', async () => {
@@ -579,71 +570,47 @@ describe('the grid layout', () => {
     expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ] ]);
   });
 
-  test('with room to spare the lattice spans the holder and fills row by row', async () => {
-    const holder = createHolder({ id: 'h', layout: 'grid', width: 440, height: 320 });
-    for(let i=0; i<3; ++i)
+  test('gridRows pinned alone derives the columns from the count and fills row by row', async () => {
+    const holder = createHolder({ id: 'h', layout: 'grid', gridRows: 2, width: 440, height: 320 });
+    for(let i=0; i<4; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
-    // four columns fit, so three cards line the top row instead of blocking up
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ] ]);
-  });
-
-  test('gridRows pinned alone fills column by column, so the rows fill evenly', async () => {
-    const holder = createHolder({ id: 'h', layout: 'grid', gridRows: 2, width: 440, height: 320 });
-    const deal = async id => {
-      const c = createCard(id, { z: 1 });
-      c.movedByButton = true;
-      await c.set('parent', 'h');
-      await c.bringToFront();
-      delete c.movedByButton;
-    };
-    for(const id of [ 'a', 'b', 'c', 'd' ])
-      await deal(id);
-    expect([ widgets.get('a').get('x'), widgets.get('a').get('y') ]).toEqual([ 4, 4 ]);
-    expect([ widgets.get('b').get('x'), widgets.get('b').get('y') ]).toEqual([ 4, 112 ]);
-    expect([ widgets.get('c').get('x'), widgets.get('c').get('y') ]).toEqual([ 112, 4 ]);
-    expect([ widgets.get('d').get('x'), widgets.get('d').get('y') ]).toEqual([ 112, 112 ]);
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 112 ], [ 112, 112 ] ]);
   });
 });
 
-describe('dropping into any grid cell', () => {
-  test('a drop lands in the very cell it was aimed at - even in an empty grid', async () => {
+describe('dropping into a grid', () => {
+  test('a drop into an empty grid packs to the first cell, wherever it was aimed', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 2, width: 400, height: 300 });
     const drop = createCard('drop', { parent: 'h', x: 220, y: 112, z: 1 });
     await holder.onChildAddAlign(drop, 'h');
-    expect([ drop.get('x'), drop.get('y') ]).toEqual([ 220, 112 ]);
-    const drop2 = createCard('drop2', { parent: 'h', x: 6, y: 2, z: 2 });
-    await holder.onChildAddAlign(drop2, 'h');
-    expect([ drop2.get('x'), drop2.get('y') ]).toEqual([ 4, 4 ]);
-    // the first drop keeps the far cell it was put in
-    expect([ drop.get('x'), drop.get('y') ]).toEqual([ 220, 112 ]);
+    expect([ drop.get('x'), drop.get('y') ]).toEqual([ 4, 4 ]);
   });
 
-  test('a drop aimed at a taken cell inserts there: the card steps one cell forward', async () => {
+  test('a drop aimed at a taken cell inserts there and the rest reflows', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 2, width: 400, height: 300 });
     const a = createCard('a', { parent: 'h', x: 112, y: 4, z: 1 });
     await holder.onChildAddAlign(a, 'h');
-    const b = createCard('b', { parent: 'h', x: 116, y: 8, z: 2 });
+    expect([ a.get('x'), a.get('y') ]).toEqual([ 4, 4 ]);
+    const b = createCard('b', { parent: 'h', x: 6, y: 8, z: 2 });
     await holder.onChildAddAlign(b, 'h');
-    expect([ a.get('x'), a.get('y') ]).toEqual([ 220, 4 ]);
-    expect([ b.get('x'), b.get('y') ]).toEqual([ 112, 4 ]);
+    expect([ b.get('x'), b.get('y') ]).toEqual([ 4, 4 ]);
+    expect([ a.get('x'), a.get('y') ]).toEqual([ 112, 4 ]);
   });
 
-  test('the chain of stepped cards ends at the first hole', async () => {
+  test('a drop in front steps every later card one cell forward', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 4, gridRows: 1, width: 500, height: 200 });
-    // cells at x 4, 112, 220, 328 - cell 2 stays empty
     for(const [ id, x, z ] of [ [ 'a', 4, 1 ], [ 'b', 112, 2 ], [ 'd', 328, 3 ] ]) {
       const c = createCard(id, { parent: 'h', x, y: 4, z });
       await holder.onChildAddAlign(c, 'h');
     }
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ] ]);
     const drop = createCard('drop', { parent: 'h', x: 8, y: 8, z: 9 });
     await holder.onChildAddAlign(drop, 'h');
-    expect([ drop.get('x'), widgets.get('a').get('x'), widgets.get('b').get('x') ]).toEqual([ 4, 112, 220 ]);
-    // the card past the hole never moved
-    expect(widgets.get('d').get('x')).toBe(328);
+    expect([ drop.get('x'), widgets.get('a').get('x'), widgets.get('b').get('x'), widgets.get('d').get('x') ]).toEqual([ 4, 112, 220, 328 ]);
   });
 
-  test('inserting into a full grid steps the last card onto an overflow row', async () => {
+  test('inserting into a full pinned grid compresses the rows to make room', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 2, gridRows: 2, width: 300, height: 300 });
     for(let i=0; i<4; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
@@ -651,8 +618,8 @@ describe('dropping into any grid cell', () => {
     expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 112 ], [ 112, 112 ] ]);
     const drop = createCard('drop', { parent: 'h', x: 112, y: 4, z: 9 });
     await holder.onChildAddAlign(drop, 'h');
-    // the chain from the aimed cell stepped forward, past the lattice
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 112 ], [ 112, 112 ], [ 4, 220 ] ]);
+    // no piles to absorb the fifth card, so the rows squeeze a third one in
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 4, 100 ], [ 112, 100 ], [ 4, 196 ] ]);
     expect([ drop.get('x'), drop.get('y') ]).toEqual([ 112, 4 ]);
   });
 
@@ -673,53 +640,38 @@ describe('dropping into any grid cell', () => {
     expect(shadow.get('x')).toBe(220);
   });
 
-  test('a card taken out leaves its cell empty and a deal fills it again', async () => {
+  test('a card taken out closes its gap and a dealt card appends at the end', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, width: 400, height: 300 });
     for(let i=0; i<3; ++i)
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
+    // checkParent dispenses only once the card has really left
     const gone = widgets.get('c1');
-    await holder.dispenseCard(gone, true);
     await gone.set('parent', null);
-    // the middle cell stays an empty spot - nothing slides over
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 220, 4 ] ]);
+    await holder.dispenseCard(gone, true);
+    // the cards pack back together - no cell stays empty
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ] ]);
     const dealt = createCard('dealt', { z: 9 });
     dealt.movedByButton = true;
     await dealt.set('parent', 'h');
     await dealt.bringToFront();
     delete dealt.movedByButton;
-    expect([ dealt.get('x'), dealt.get('y') ]).toEqual([ 112, 4 ]);
+    expect([ dealt.get('x'), dealt.get('y') ]).toEqual([ 220, 4 ]);
   });
 
-  test('a shuffle moves the cards between their cells and keeps the holes', async () => {
+  test('a shuffle hands the cells out again in z order', async () => {
     const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 3, gridRows: 2, width: 400, height: 300 });
     for(const [ id, x, y ] of [ [ 'a', 4, 4 ], [ 'b', 220, 4 ], [ 'c', 112, 112 ] ]) {
       const drop = createCard(id, { parent: 'h', x, y, z: 5 });
       await holder.onChildAddAlign(drop, 'h');
     }
-    // reverse the z order the way a SHUFFLE might: the same three cells stay
-    // occupied, only who sits where changes
+    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 112, 4 ], [ 220, 4 ] ]);
+    // reverse the z order the way a SHUFFLE might
     await widgets.get('a').set('z', 30);
     await widgets.get('c').set('z', 1);
     await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 4, 4 ], [ 220, 4 ], [ 112, 112 ] ]);
     expect([ widgets.get('c').get('x'), widgets.get('c').get('y') ]).toEqual([ 4, 4 ]);
-    expect([ widgets.get('a').get('x'), widgets.get('a').get('y') ]).toEqual([ 112, 112 ]);
-  });
-
-  test('without stacks a full pinned grid spills into an extra row', async () => {
-    const holder = createHolder({ id: 'h', layout: 'grid', gridColumns: 2, gridRows: 2, width: 400, height: 300 });
-    const deal = async id => {
-      const c = createCard(id, { z: 1 });
-      c.movedByButton = true;
-      await c.set('parent', 'h');
-      await c.bringToFront();
-      delete c.movedByButton;
-    };
-    for(const id of [ 'a', 'b', 'c', 'd', 'e' ])
-      await deal(id);
-    // no piles to absorb the fifth card, so it goes below the pinned rows
-    expect([ widgets.get('e').get('x'), widgets.get('e').get('y') ]).toEqual([ 4, 220 ]);
+    expect([ widgets.get('a').get('x'), widgets.get('a').get('y') ]).toEqual([ 220, 4 ]);
   });
 });
 
@@ -1835,9 +1787,9 @@ describe('grid pins on the auto layout', () => {
     expect(holder.usesAutoLayout()).toBe(true);
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([
-      [ 94, 94 ], [ 198, 94 ], [ 302, 94 ], [ 406, 94 ],
+      [ 94, 146 ], [ 198, 146 ], [ 302, 146 ], [ 406, 146 ],
       [ 94, 250 ], [ 198, 250 ], [ 302, 250 ], [ 406, 250 ],
-      [ 250, 406 ]
+      [ 250, 354 ]
     ]);
   });
 
@@ -1847,8 +1799,8 @@ describe('grid pins on the auto layout', () => {
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([
-      [ 146, 146 ], [ 250, 146 ], [ 354, 146 ],
-      [ 146, 354 ], [ 250, 354 ], [ 354, 354 ]
+      [ 146, 198 ], [ 250, 198 ], [ 354, 198 ],
+      [ 146, 302 ], [ 250, 302 ], [ 354, 302 ]
     ]);
   });
 });

@@ -161,7 +161,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Drag a card onto any cell you point at - even an empty one far from the rest: it lands right there and everything else stays put. A card taken out leaves its cell empty, and dealt cards fill the empty cells first. A whole pile dropped into a grid breaks up into single cards, because a grid normally keeps no piles. The <i>preventPiles</i> button turns the first holder's cells into stacks instead: dropped piles stay, a card dropped onto a cell stacks onto it, and the handle counts the stack."
+    "html": "Drag a card within a grid to insert it at the cell you point at and the other cards flow around it. A whole pile dropped into a grid breaks up into single cards, because a grid normally keeps no piles. The <i>preventPiles</i> button turns the first holder's cells into stacks instead: dropped piles stay, a card dropped onto a cell stacks onto it, and the handle counts the stack."
   },
   "deckHolder": {
     "type": "holder",
