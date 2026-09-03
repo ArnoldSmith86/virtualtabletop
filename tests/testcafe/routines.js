@@ -467,7 +467,30 @@ test('the recursion limit is reported in the routine that was clicked', async t 
 
   // the problem has to be on the operation of the outermost routine, not only hundreds of levels
   // down in the one that hit the limit
-  await t.expect(Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems').innerText).contains('nested inside each other');
+  const outermostProblem = Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems');
+  await t.expect(outermostProblem.innerText).contains('Not running clickRoutine of loop more than 250 times.');
+  // the message names what re-entered the routine, so the operation to go and look at is in it
+  await t.expect(outermostProblem.innerText).contains('recursive routine calling itself');
+});
+
+// A clickRoutine that CLICKs its own widget nests the same way a routine calling itself does, and
+// the message says so rather than pointing at CALL. (#1405)
+test('a routine clicking its own widget is reported as a recursive click', async t => {
+  await setRoomState({
+    loop: { id: 'loop', type: 'button', text: 'loop', x: 800, y: 400, clickRoutine: [ { func: 'CLICK', collection: 'thisButton' } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('loop').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  const outermostProblem = Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems');
+  await t.expect(outermostProblem.innerText).contains('Not running clickRoutine of loop more than 250 times.');
+  await t.expect(outermostProblem.innerText).contains('recursive click on itself');
 });
 
 // A routine waiting in DELAY has nothing running inside it, so it must not use up the nesting

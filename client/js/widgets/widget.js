@@ -52,6 +52,15 @@ let routineDepth = 0;
 let routineDepthProblem = null;
 let routineDepthProblemForOutermost = null;
 
+// What re-entered the routine, so that the message names the operation the user has to go and look
+// at. CALL and click() set it immediately before they hand over; every other way in - the first
+// click on the table, a change routine, an IF branch - leaves it null and gets the generic hint.
+let routineEntry = null;
+const routineEntryHint = {
+  CALL: 'This is likely a recursive routine calling itself.',
+  click: 'This is likely a recursive click on itself.'
+};
+
 // A routine waiting in DELAY or INPUT has nothing running inside it, so it gives its level back for
 // as long as it waits. Otherwise a game that keeps a handful of timer driven routines in flight -
 // each of them legitimately waiting, none of them calling itself - would run into the nesting limit.
@@ -611,6 +620,7 @@ export class Widget extends StateManaged {
     }
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
+      routineEntry = 'click';
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
@@ -1240,8 +1250,11 @@ export class Widget extends StateManaged {
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+    const entry = routineEntry;
+    routineEntry = null;
     if(routineDepth >= maxRoutineDepth) {
-      routineDepthProblem = routineDepthProblemForOutermost = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')}: more than ${maxRoutineDepth} routines, IF branches and LOOP bodies are nested inside each other. A routine is probably calling itself.`;
+      const hint = routineEntryHint[entry] || 'Routines, IF branches and LOOP bodies all count towards that limit, so something is probably triggering itself.';
+      routineDepthProblem = routineDepthProblemForOutermost = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')} more than ${maxRoutineDepth} times. ${hint}`;
       return { variable: null, collection: [] };
     }
 
@@ -1591,6 +1604,7 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
+            routineEntry = 'CALL';
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
