@@ -3819,6 +3819,36 @@ test('the Debug module logs each operation of a routine with its result', async 
   await setEditorState(null);
 });
 
+// Routine logging is switched off while playing, so the panel that is still open when edit mode
+// comes back has to switch it on again - loading a game leaves edit mode on the way to the game
+// shelf, which is where an always-open Debug module used to end up logging nothing.
+test('the Debug module logs again after edit mode was left and entered once more', async t => {
+  await setRoomState({
+    button: { id: 'button', type: 'button', clickRoutine: [ 'var roll = randInt 5 5' ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok()
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk()
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+
+  await ClientFunction(() => {
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  })();
+
+  await t
+    .expect(Selector('.jeLogEmptyNote').visible).notOk()
+    .expect(Selector('#jeLog .jeLogSummary').nth(0).innerText).eql('roll = randInt 5 5');
+
+  await setEditorState(null);
+});
+
 // drags a selection rectangle around the given widgets - the events go to the
 // window, where the editor listens for them, so they need no element to start
 // from. A rectangle around a single widget is treated like a click on it, which

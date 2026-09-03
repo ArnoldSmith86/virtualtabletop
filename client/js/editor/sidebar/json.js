@@ -121,6 +121,15 @@ class DebugModule extends SidebarModule {
     this.updateValidation();
   }
 
+  // Leaving edit mode switches routine logging off (see closeEditor), which the panel itself does
+  // not notice - so a Debug module that is still open when edit mode is entered again switches it
+  // back on. Without this, the log stays empty until the module is closed and opened once more.
+  onEditorOpen() {
+    super.onEditorOpen();
+    if(this.moduleDOM)
+      setJEroutineLogging(jeRoutineLogging = true);
+  }
+
   onStateReceivedWhileActive() {
     this.button_clearButton();
     this.updateValidation();
