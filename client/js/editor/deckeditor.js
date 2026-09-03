@@ -4555,7 +4555,7 @@ async function createStarterDeck(deckID, size, placement) {
     type: 'deck',
     id: dID
   }, placement.holder ? { parent: id, x: 12, y: 41 } : { x: 748 - 96, y: 400 }, {
-    cardDefaults: { width: cardWidth, height: cardHeight },
+    cardDefaults: { classes: 'transition', width: cardWidth, height: cardHeight },
     cardTypes: { 'type 1': {} },
     faceTemplates: [
       { objects: [ { type: 'image', x: 0, y: 0, width: cardWidth, height: cardHeight, color: VTTblue } ] },

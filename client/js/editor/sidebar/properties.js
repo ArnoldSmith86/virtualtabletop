@@ -3768,6 +3768,10 @@ class PropertiesModule extends SidebarModule {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
 
+    // Cards of a new deck glide to wherever they are moved to instead of jumping there. It sits in
+    // cardDefaults so a game author can simply remove it again, or restyle .transition in the room CSS.
+    deck = Object.assign({}, deck, { cardDefaults: Object.assign({ classes: 'transition' }, deck.cardDefaults) });
+
     // Match the public-library flow: a holder sized to the cards, a Recall & Shuffle button, the deck
     // centered in it and the cards stacked in a pile - rather than spreading loose cards across the table.
     const cardWidth  = deck.cardDefaults && deck.cardDefaults.width  || deck.width  || 103;
@@ -7220,7 +7224,7 @@ class PropertiesModule extends SidebarModule {
       new TextInput(this, widget, 'User defined active classes', {
         property: 'classes',
         nullIfEmpty: true,
-        hint: 'Space separated list of CSS classes applied to the widget, like "transparent" for holders or classes defined in the room\'s custom css. Classes can also be triggered by some properties of the widget and be inherited from parent widgets.'
+        hint: 'Space separated list of CSS classes applied to the widget, like "transparent" for holders, "transition" to make the widget glide to a new position instead of jumping there, or classes defined in the room\'s custom css. Classes can also be triggered by some properties of the widget and be inherited from parent widgets.'
       }).render(body);
 
       this.renderTriggeredClassesNote(widget, body);

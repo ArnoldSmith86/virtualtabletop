@@ -203,3 +203,14 @@
   line-height: 1;
   text-align:center;
 }
+
+/* Widgets carrying this class glide to wherever they end up instead of jumping there. The duration
+   can be changed per widget by setting --transitionDuration, or the whole rule can be replaced from
+   the room's custom CSS - a rule defined there wins because it is added after this stylesheet.
+   A widget being dragged is excluded: it follows the pointer every frame and would lag behind it. */
+.transition {
+  transition: transform var(--transitionDuration, 300ms);
+}
+.transition.dragging {
+  transition: none;
+}

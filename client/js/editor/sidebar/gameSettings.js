@@ -629,7 +629,12 @@ class GameSettingsModule extends SidebarModule {
 
     const p1 = document.createElement('p');
     p1.textContent = 'You can add custom CSS to your game. This is an advanced feature and should be used with care. VTT updates may break your custom CSS.';
-    target.append(p1);
+
+    // Rules here are applied after the built-in stylesheet, so they win against a built-in class of the
+    // same specificity - which is how a game changes what one of them does instead of inventing its own.
+    const p2 = document.createElement('p');
+    p2.textContent = 'Rules here also override the built-in classes. Widgets with the "transition" class glide to a new position over 300ms, for example, which ".transition { transition: transform 600ms; }" slows down.';
+    target.append(p1, p2);
 
     const gameSettings = getCurrentGameSettings();
     const currentCss = gameSettings ? gameSettings.globalCss || '' : '';

@@ -1364,7 +1364,7 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_dice2')
     .click('#w_dice2');
-  await compareState(t, '3878b15bd31f8ad1d0972a20b69d7ea5');
+  await compareState(t, 'f1b7028d28a75d5d0dd88a8380c1c4e2');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
@@ -1409,7 +1409,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#deckEditorTreeDelete')                   // delete the just-added (current) face
     .pressKey('esc') // closes the deck editor, since no face object is selected at this point
     .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
-  await compareState(t, '58a003635d5de3dca9db433bf7862c09');
+  await compareState(t, '37fe748a394f5a132255e27e6db76cf3');
 });
 
 // Both the object form of the css property and the css of an html face object are put into a style element
@@ -1521,7 +1521,7 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
     .pressKey('esc');
-  await compareState(t, 'd052dc1c0a50f93896325518bee01ac8');
+  await compareState(t, '252a788d6293626108c2b98ad1789b7d');
 });
 
 test('The symbol picker says an image-only search found nothing', async t => {
@@ -1974,7 +1974,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
     .click('#deckEditorRedo')                 // restore and then remove it again to exercise redo without changing the old final state
     .click('#deckEditorUndo')
     .pressKey('esc');
-  await compareState(t, '261ba6765efc84b628f1d62ba7e679d6');
+  await compareState(t, '7ef83e2dd103ebf9aee47ad826501803');
 });
 
 test('Deck editor: remote update preserves an unrelated pending edit', async t => {
@@ -2032,7 +2032,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   await t
     .expect(getEditedValues(deckID)).eql({ text: 'Pending local edit', receivedProperty: 'Remote value' })
     .pressKey('esc');
-  await compareState(t, 'c6db1d55c7f0bc9fe6f061f61662d046');
+  await compareState(t, 'b10bc909499a3eb29ca43c74fc34bce8');
 });
 
 // Two different fields edited within one debounce window, then a structural action right after, must stay
@@ -2105,7 +2105,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
     .click('#deckEditorUndo') // reverts only the fontSize edit
     .expect(getTextObject(deckID)).eql({ value: 'RapidValue', fontSize: 20 })
     .pressKey('esc');
-  await compareState(t, '5aa7273ddccb7e6f55a8a57715e83437');
+  await compareState(t, 'f9090c713dc230a6b077bf0f219aa493');
 });
 
 // Regression test for the crash reported on switching games while a deck was being edited (the previously
@@ -2295,7 +2295,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.pressKey('esc');          // closes the deck editor - and only the deck editor
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
-  await compareState(t, 'a3826d837df312e2612e461c40a1bf15');
+  await compareState(t, '08fd4fc28330d11cb0c32b07d01455be');
 });
 
 test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {
@@ -2514,7 +2514,7 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
     .typeText('.textCardsCopies', '2', { replace: true })
     .click('#deckEditorNewDeckPanel .goButton [icon=add]')
     .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
-  await compareState(t, 'bac90198761e33be360df604952691bd');
+  await compareState(t, '56acdbdb0ac9ae1ff387bdbf3ffca089');
 });
 
 // The other way of cutting the typed text into cards: with a blank line as the separator a card's text keeps
