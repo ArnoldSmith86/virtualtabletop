@@ -1,6 +1,7 @@
 .editorModule h1 {
   color: var(--VTTblue);
   text-align: center;
+  position: relative;
 }
 
 .editorModule h2 {
@@ -25,13 +26,41 @@
   display: inline-flex;
 }
 
+/* The Debug module's controls act on the log right below them, which starts at the left edge of the
+   panel, so they are laid out as a row that starts there rather than inheriting the right-aligned
+   default - that would leave the filter field most of a screen away from the tree it filters. The
+   label is a flex item, so a narrow panel wraps it as a block instead of orphaning its last word. */
+.editorModule.pest_control .buttonBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  text-align: left;
+}
+
+.editorModule.pest_control .buttonBar #jeLogFilter {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.editorModule.pest_control .buttonBar #clearLogButton {
+  margin-left: auto;
+}
+
 /* The row with the primary action. Laid out as a flex row so a status text placed before the button - the
-   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. */
+   explanation of why it is disabled - sits next to it instead of somewhere further up the panel. It wraps
+   because that explanation is a sentence: in a narrow panel it was squeezed into a 40px wide column of
+   single words beside the buttons instead of taking a line of its own. */
 .editorModule .goButton.buttonBar {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 12px;
+}
+
+.editorModule .goButton.buttonBar > span {
+  flex: 1 1 200px;
 }
 
 /* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
@@ -46,12 +75,27 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-  margin: 8px 0;
+  max-width: 420px; /* the panel can be half the window wide - without this they become banners */
+  margin: 8px auto; /* and without the auto they hug the left edge of a wide panel */
   padding: 10px;
   justify-content: center;
 }
 
 /* properties */
+
+/* Every box that holds a preview of a widget. A preview is a real widget, so it
+   carries the widget's own z-index ((layer + 10) * 100000 + z) - a number that
+   says where it is on the table, not where it is in the panel. Left alone it
+   beats everything the module draws around it: the seat style presets painted
+   over the selection bar's open dropdown. Each box is its own stacking context
+   instead, so a preview is only ever ordered against the previews beside it.
+   (.textCardsPreviewCard already is one through its scale transform.) */
+.editorModule .widgetSelectionButton,
+.editorModule .facePreview,
+.editorModule .diceFacePreview,
+.editorModule .renderedWidget {
+  isolation: isolate;
+}
 
 .editorModule .widgetSelectionButton {
   height: 150px;
@@ -284,23 +328,206 @@
 }
 
 
+/* An uploaded card front next to its settings. The image is a flex item, so it needs a wrapper it cannot be
+   stretched by: stretching it hid how the picture really looks - a sheet of two rows of cards showed up as a
+   single row - and made the card size derived from it come out squashed. */
 .tune.editorModule .cardFrontPreview {
   display: flex;
+  align-items: flex-start;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
-.tune.editorModule .cardFrontPreview > div {
+/* A column of a fixed width rather than one that shrink-wraps its picture: two uploads of different shapes
+   started their settings at different x positions, and the two "Cards across / Cards down" stacks then read
+   as two unrelated forms. The frame inside it is what the picture is measured by, so the grid overlay still
+   sits exactly on the picture. */
+.tune.editorModule .cardFrontPreviewImage {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 clamp(140px, 45%, 280px);
+  min-width: 0;
+  line-height: 0;
+}
+
+.cardFrontPreviewFrame {
+  position: relative;
+  max-width: 100%;
+  cursor: zoom-in;
+}
+
+.tune.editorModule .cardFrontPreviewSettings {
   flex-grow: 1;
+  min-width: 0;
   text-align: left;
 }
 
+/* The preview is there to check the cut lines against the picture, so all of it has to stay in the dialog:
+   bounded by the width alone, a tall sheet - 2 x 10 is a normal print-and-play shape - ran off the bottom and
+   took the lower rows of the grid with it. The wrapper shrink-wraps the image, so the overlay still lines up. */
 .tune.editorModule .cardFrontPreview img {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 220px;
+  width: auto;
+  height: auto;
+}
+
+/* A portrait picture in a column that narrow is a sliver - the taller it is, the less of it is left. Give
+   it the full panel and put the settings underneath, which is also the layout every upload gets on a phone. */
+.tune.editorModule .cardFrontPreviewTall {
+  flex-direction: column;
+  align-items: stretch; /* the settings get the whole panel now, not the width they shrink-wrap to */
+}
+
+.tune.editorModule .cardFrontPreviewTall .cardFrontPreviewImage {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.tune.editorModule .cardFrontPreviewTall img {
+  max-height: min(60vh, 460px);
+}
+
+/* The cuts the rows and columns above make, drawn onto the picture itself so a wrong grid is visible right
+   away instead of only on the cards afterwards. The frame around it comes from the element's own outline, so
+   a sheet is recognisable as one before it has been cut at all. Dashed, the way a cut line is drawn on the
+   mode's icon - and the way scissors marks are drawn on a print-and-play sheet. */
+.cardFrontPreviewGrid {
+  display: none;
+  position: absolute;
+  inset: 0;
+  /* inverting whatever is underneath keeps the cut lines visible on a dark and on a light picture alike */
+  mix-blend-mode: difference;
+  outline: 2px dashed #fff;
+  outline-offset: -2px;
+}
+
+/* One pseudo element per direction: the line is a gradient across the picture and the dashes are a mask
+   along it, which a single background layer cannot do in both directions at once. */
+.cardFrontPreviewGrid::before,
+.cardFrontPreviewGrid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.cardFrontPreviewGrid::before {
+  background-image: repeating-linear-gradient(to right, #fff 0 2px, transparent 2px calc(100% / var(--sheetColumns, 1)));
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 12px);
+  mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 12px);
+}
+
+.cardFrontPreviewGrid::after {
+  background-image: repeating-linear-gradient(to bottom, #fff 0 2px, transparent 2px calc(100% / var(--sheetRows, 1)));
+  -webkit-mask-image: repeating-linear-gradient(to right, #000 0 6px, transparent 6px 12px);
+  mask-image: repeating-linear-gradient(to right, #000 0 6px, transparent 6px 12px);
+}
+
+.cardFrontPreviewSheet .cardFrontPreviewGrid {
+  display: block;
+}
+
+/* The panel has room for a thumbnail of a print-and-play sheet and no more - a 2 x 10 one is a few pixels
+   per column there, which is not enough to check a cut line against a card. Clicking the picture opens the
+   same picture and the same grid at window size. It hangs in #editor because that is where a fixed box
+   resolves against the window rather than against the dialog it was opened from. */
+#editor > .cardPictureZoom {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #000000cc;
+  cursor: zoom-out;
+}
+
+/* the frame keeps its zoom-in cursor in the wizard, but inside the full-size view clicking zooms out */
+#editor > .cardPictureZoom .cardFrontPreviewFrame {
+  cursor: zoom-out;
+}
+
+#editor > .cardPictureZoom img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100 * var(--vh, 1vh) - 40px);
+}
+
+/* Where the backs come from: one image for the whole deck, or a second sheet cut by the same grid. Only the
+   picked one's controls are shown - the class is set on the section holding both. */
+.tune.editorModule .deckImagesBackModes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.tune.editorModule .deckImagesBackModes label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.tune.editorModule .deckImagesBackSheets,
+.tune.editorModule .deckImagesBackSheetMode .deckImagesSharedBack {
+  display: none;
+}
+
+.tune.editorModule .deckImagesBackSheetMode .deckImagesBackSheets {
+  display: block;
+}
+
+.tune.editorModule .deckImagesBackSheetHint {
+  margin-bottom: 8px;
+  text-align: left;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.tune.editorModule .cardBackSheetPreview b {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* "10 cards of 300 x 200 pixels, 160 x 107 on the table" is the most informative line in the panel, so it is
+   not shrunk into a footnote the way the hints above it are. */
+.tune.editorModule .cardFrontPreviewSummary {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+/* Only offered while the backs are cut out of a sheet, and next to the sheet of fronts it is paired with. */
+.tune.editorModule .deckImagesBackSheetButton {
+  display: none;
+}
+
+.tune.editorModule .goButton.deckImagesBackSheetMode .deckImagesBackSheetButton {
+  display: inline-flex;
 }
 
 .tune.editorModule .cardFrontPreview [type=number] {
   vertical-align: super;
   width: 50px;
+}
+
+/* Narrower than this the panel is barely wider than the picture, and side by side neither half is usable:
+   the picture shrinks to a thumbnail and every label of the settings beside it wraps over two lines. Give
+   every upload the layout a tall picture gets - picture on top, settings underneath. */
+@media (max-width: 500px) {
+  .tune.editorModule .cardFrontPreview {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tune.editorModule .cardFrontPreviewImage {
+    flex: 0 0 auto;
+    align-self: center;
+    max-width: 100%;
+  }
 }
 
 
@@ -362,6 +589,12 @@
   text-align: left;
   font-size: 12px;
   opacity: 0.7;
+}
+
+/* A whole sentence explaining why "Add to game" is off, so it takes the row above the buttons rather than a
+   column of single words beside them - and the button it asks for is then the nearest one below it. */
+.tune.editorModule .goButton .imagePairStatus {
+  flex-basis: 100%;
 }
 
 .tune.editorModule .imagePairStatus.imagePairMismatch {
@@ -518,6 +751,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: -moz-fit-content;
   width: fit-content;
   margin: 10px auto;
   padding: 10px;
@@ -540,20 +774,49 @@
 }
 
 
-.genericInput input, .genericInput textarea {
-  width: 200px;
-  min-width: 200px;
+.editorModule .genericInput {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 4px 0;
 }
-.genericInput textarea {
+.editorModule .genericInput input, .editorModule .genericInput textarea {
+  width: auto;
+  min-width: 0;
+  flex: 1 1 120px;
+}
+.editorModule .genericInput textarea {
   height: 200px;
 }
-.genericInputLabel {
-  display: inline-block;
+.editorModule .genericInputLabel {
+  flex: 0 1 132px;
   width: 132px;
   overflow-wrap: anywhere;
 }
-.genericInput > * {
-  vertical-align: top;
+.editorModule .genericInput select {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+.editorModule .genericAddPropertyRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.editorModule .genericAddPropertyRow input {
+  flex: 0 1 140px;
+  width: 140px;
+  min-width: 0;
+}
+
+.editorModule .genericAddPropertyRow button,
+.editorModule .suggestionListButton {
+  width: 28px;
+  min-width: 28px;
+  padding: 2px;
 }
 
 /* validation */
@@ -636,13 +899,20 @@
 
 /* undo */
 
+/* every row is a control: a comfortable target, and a hanging indent so the second line of a
+   wrapped row sits under its text instead of where the text of the next row starts */
 .undo.editorModule > .undoEntry {
-  padding: 2px;
-  color: var(--textDimColor1);
+  padding: 6px 4px 6px 1.8em;
+  text-indent: -1.4em;
+  color: var(--textHelpColor);
   cursor: pointer;
 }
 
-.undo.editorModule > .active.undoEntry {
+.undo.editorModule > .undoEntry:hover {
+  background: var(--backgroundHighlightColor2);
+}
+
+.undo.editorModule > .active.undoEntry, .undo.editorModule > .active.undoEntry:hover {
   color: var(--textColor);
   background: var(--backgroundHighlightColor1);
   cursor: unset;
@@ -720,6 +990,13 @@
 .image.editorModule td > label {
   white-space: pre;
   display: inline-block;
+}
+
+/* the WebP and PNG columns of a row that has neither - a sound, an SVG */
+.image.editorModule td.nothingToCompress {
+  text-align: center;
+  font-style: italic;
+  opacity: 0.7;
 }
 
 /* widgets */
@@ -1039,6 +1316,32 @@
   margin-top: 2px;
   padding: 4px 8px 4px 4px;
 }
+/* The deck shortcuts under the matches. A deck preview is a picture of cards,
+   so at the full 150px above the list it read as a statement ("this holder
+   takes cards") rather than as a button - they are thumbnails now, dimmed
+   until their match is in the list above and checked when it is. */
+.editorModule .dropTargetDeckShortcuts {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #8888;
+}
+.editorModule .dropTargetDecks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton {
+  width: 70px;
+  min-width: 70px;
+  height: 70px;
+  margin: 0;
+  border-width: 2px;
+  opacity: .45;
+}
+.editorModule .dropTargetDecks .widgetSelectionButton:hover,
+.editorModule .dropTargetDecks .widgetSelectionButton.selected {
+  opacity: 1;
+}
 /* deleting a stop is destructive, so it gets the shared red icon-button look
    (white glyph on dark red, darker on hover) from button[icon].red */
 .editorModule .lineStopList button.lineRemoveStop {
@@ -1295,6 +1598,14 @@
   fill: red;
 }
 
+.widgets.editorModule .widget-grid-item .widget-name svg {
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0 0 0 3px;
+}
+
 .widgets.editorModule li .actions {
   display: flex;
   align-items: center;
@@ -1434,12 +1745,6 @@ body.darkMode .widget-group-header {
     border: 1px solid #ccc;
     font-weight: normal;
     padding: 1px;
-}
-
-.widget-group-header .collapse-arrow, .widget-list-header .collapse-arrow {
-    width: 1.2em;
-    height: 1em;
-    text-align: center;
 }
 
 .widget-list .new-group-drop-target {
@@ -1639,7 +1944,7 @@ div.widget-name {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='20' viewBox='0 0 10 20'%3E%3Cpath d='M1,3 H9 M1,7 H9 M1,11 H9 M1,15 H9' stroke='%23888' stroke-width='2'/%3E%3C/svg%3E");
 }
 
-.widget-group-header .collapse-arrow {
+.widget-group-header .collapseArrow {
   margin-right: 5px;
 }
 
@@ -1657,4 +1962,224 @@ div.widget-name {
 
 .drag-over {
   background-color: #f0f0f0;
+}
+
+/* The framed tiles of the editor modules - the Game Settings ones and the Toolbox's legacy
+   mode advisory. The legacy mode and cursor tiles used to repeat this as inline styles on every
+   tile; it lives here now so every tile is framed the same way and follows theme changes. */
+.settings-tile {
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 4px;
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+.boardSizeSetting .boardSizeHeader {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeDescription {
+  font-size: 0.9em;
+}
+
+.boardSizeSetting .boardSizeInputs {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* so the preview stays next to the fields it previews instead of drifting off to the far
+     edge of a wide panel */
+  max-width: 480px;
+  margin-top: 12px;
+  gap: 12px;
+}
+
+/* the fields stay a tight cluster instead of stretching across the whole panel - a four digit
+   number does not need 500px, and the × and the swap button belong next to what they act on */
+.boardSizeSetting .boardSizeFields {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* the × between the two fields */
+.boardSizeSetting .boardSizeFields > span {
+  flex: 0 0 auto;
+  opacity: 0.7;
+  padding-bottom: 8px;
+}
+
+.boardSizeSetting .boardSizeFields > button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.boardSizeSetting .boardSizeField {
+  flex: 0 0 auto;
+  width: 7em;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.boardSizeSetting .boardSizeField label {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizeField input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* the shape the numbers describe, which is what the whole setting is about. The board the
+   room is on stays behind it as a dashed outline whenever the two differ, so it is obvious
+   whether the pending board is wider, taller or just bigger. */
+.boardSizeSetting .boardSizePreview {
+  flex: 0 0 auto;
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.boardSizeSetting .boardSizePreview > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+}
+
+.boardSizeSetting .boardSizePreviewCurrent {
+  border: 1px dashed var(--textColor);
+  opacity: 0.4;
+}
+
+.boardSizeSetting .boardSizePreviewPending {
+  border: 1px solid var(--wcMain);
+  background: var(--wcMain);
+  opacity: 0.35;
+}
+
+/* min-height so the tile does not jump every time the line is emptied mid-typing */
+.boardSizeSetting .boardSizeRatio {
+  margin-top: 6px;
+  min-height: 1.2em;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizePresetLabel {
+  margin-top: 10px;
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.boardSizeSetting .boardSizePresets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.boardSizeSetting .boardSizePresets button {
+  margin: 0;
+  font-size: 0.85em;
+}
+
+/* the preset the fields currently match - the buttons are already in the theme's blue, so
+   the ring has to be the text color to be visible on them */
+.boardSizeSetting .boardSizePresets button.active {
+  outline: 2px solid var(--textColor);
+  outline-offset: 1px;
+}
+
+.boardSizeSetting .boardSizeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* the messages come and go by whole lines, so the block keeps one line of space to stop the
+   tile from resizing under the pointer */
+.boardSizeSetting .boardSizeMessages {
+  margin-top: 10px;
+  min-height: 1.2em;
+  font-size: 0.9em;
+}
+
+/* only the range error blocks Apply, so only it gets the error red - the advisories used to
+   share it while Apply stayed enabled, which reads as "something is broken" for what is
+   advice. The dark mode variants are lighter: #950000 on the near black editor background
+   sits right at the readable edge. */
+.boardSizeSetting .boardSizeMessage {
+  margin-top: 4px;
+}
+
+.boardSizeSetting .boardSizeMessage.error {
+  color: var(--negativeInput);
+}
+
+.boardSizeSetting .boardSizeMessage.warning,
+.editorModule .legacyModeWarning,
+.editorModule .legacyModeMismatch {
+  color: #8a5300;
+}
+
+.boardSizeSetting .boardSizeMessage.success {
+  color: var(--positiveInput);
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.error {
+  color: #ff8f8f;
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.warning,
+body.darkMode .editorModule .legacyModeWarning,
+body.darkMode .editorModule .legacyModeMismatch {
+  color: #f0be5a;
+}
+
+body.darkMode .boardSizeSetting .boardSizeMessage.success {
+  color: #7ed07e;
+}
+
+.boardSizeSetting .boardSizeMessage button {
+  margin: 4px 0 0 0;
+  font-size: 1em;
+}
+
+/* widgets are saved in one game and added in another, so the toolbox says so when the two run
+   with different legacy modes - it shares the amber of the advisories above, since adding them
+   is still allowed. It is a framed tile like the ones in Game Settings so it does not read as a
+   footnote to the widget list it follows. */
+.editorModule .legacyModeWarning ul {
+  margin: 6px 0;
+}
+
+.editorModule .legacyModeWarning p {
+  margin: 0;
+}
+
+.editorModule .legacyModeWarningHeader {
+  font-weight: bold;
+}
+
+.editorModule .legacyModeWarningHeader::before {
+  content: 'warning';
+  font-family: "Material Symbols";
+  font-weight: normal;
+  font-size: 1.3em;
+  line-height: 0;
+  vertical-align: -3px;
+  margin-right: 6px;
+}
+
+.editorModule .widgetBufferLabel {
+  margin: 0;
 }

@@ -1,7 +1,8 @@
-import JSZip from 'jszip';
 import { BSON } from 'bson';
 
+import { expectNoLegacyModes } from './fileupdater-util.js';
 import TTS from '../../server/ttsimport.mjs';
+import Zip from '../../server/zip.mjs';
 
 // The importer only downloads images to read their dimensions, so the fixtures use
 // data URLs holding nothing but a PNG header: the tests never touch the network.
@@ -16,6 +17,7 @@ function png(width, height) {
 
 async function convert(save) {
   const widgets = (await TTS.fromBSON(BSON.serialize(save))).TTS['0.json'];
+  expectNoLegacyModes(widgets);
   delete widgets._meta;
   return widgets;
 }
@@ -172,6 +174,46 @@ describe('TTS import: decks', () => {
     const down = await convert(objects(Object.assign(deck('down', [ 100, 101 ]), { Transform: { posX: 0, posZ: 0, rotZ: 180 } })));
     expect(typed(down, 'card').map(c=>c.activeFace)).toEqual([ undefined, undefined ]);
   });
+
+  // A CustomDeck entry has either a sheet of individual backs (UniqueBack) or one back image for the whole
+  // deck, so a card type carries either "back" or "simpleBack" - never both. The back face may only hold the
+  // object reading the one its cards really have: an object for the other kind is never filled and renders
+  // as an empty transparent layer on every card of the deck.
+  const sheet = extra=>Object.assign({ FaceURL: png(300, 400), BackURL: png(300, 400), NumWidth: 1, NumHeight: 1 }, extra);
+  const customDeck = (GUID, CustomDeck, DeckIDs)=>({ Name: 'DeckCustom', GUID, Transform: { posX: 0, posZ: 0 }, DeckIDs, CustomDeck });
+  const backObjects = widgets=>typed(widgets, 'deck')[0].faceTemplates[0].objects;
+
+  it('puts one back image object on a deck sharing a single back image', async () => {
+    const widgets = await convert(objects(customDeck('shared', { 1: sheet() }, [ 100, 101 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value)).toEqual([ 'simpleBack' ]);
+    expect(widgets.shared.cardTypes[100].simpleBack).toBeTruthy();
+    expect(widgets.shared.cardTypes[100].back).toBe(undefined);
+  });
+
+  it('puts one tiled back image object on a deck with a back per card', async () => {
+    const widgets = await convert(objects(customDeck('unique', { 1: sheet({ UniqueBack: true }) }, [ 100, 101 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value)).toEqual([ 'back' ]);
+    // the backs come out of a sheet, so the back face reads its cell the way the front face does
+    expect(backObjects(widgets)[0].css['background-position']).toBe(typed(widgets, 'deck')[0].faceTemplates[1].objects[0].css['background-position']);
+    expect(widgets.unique.cardTypes[100].back).toBeTruthy();
+    expect(widgets.unique.cardTypes[100].simpleBack).toBe(undefined);
+  });
+
+  it('keeps both back image objects when one deck uses both kinds of back', async () => {
+    const widgets = await convert(objects(customDeck('mixed', { 1: sheet(), 2: sheet({ UniqueBack: true }) }, [ 100, 200 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value).sort()).toEqual([ 'back', 'simpleBack' ]);
+    expect(widgets.mixed.cardTypes[100].simpleBack).toBeTruthy();
+    expect(widgets.mixed.cardTypes[200].back).toBeTruthy();
+  });
+
+  it('leaves a deck without any back image with a back face to flip to', async () => {
+    const widgets = await convert(objects(customDeck('backless', { 1: sheet({ BackURL: '' }) }, [ 100, 101 ])));
+
+    expect(backObjects(widgets).map(o=>o.dynamicProperties.value)).toEqual([ 'simpleBack' ]);
+  });
 });
 
 describe('TTS import: stacks', () => {
@@ -188,15 +230,41 @@ describe('TTS import: stacks', () => {
   });
 });
 
+describe('TTS import: notecards', () => {
+  it('keeps the line breaks and the runs of spaces the author typed', async () => {
+    const widgets = await convert(objects(
+      { Name: 'Notecard', GUID: 'note', Transform: { posX: 0, posZ: 0 }, Nickname: 'Title', Description: 'a   b\nsecond line' }
+    ));
+
+    expect(widgets.note.html).toBe('<b>Title</b><br><br>a   b<br>second line');
+    expect(widgets.note.css).toContain('white-space: pre-wrap');
+  });
+});
+
 describe('TTS import: files', () => {
   it('converts a save from a workshop upload zip', async () => {
-    const zip = new JSZip();
-    zip.file('WorkshopUpload', '');
-    zip.file('save.json', JSON.stringify(objects(die('a', 0))));
+    const zip = await Zip.create({
+      'WorkshopUpload': '',
+      'save.json': JSON.stringify(objects(die('a', 0)))
+    });
 
-    const widgets = await TTS.fromZIP(await zip.generateAsync({ type: 'nodebuffer' }));
+    const widgets = await TTS.fromZIP(zip);
     expect(widgets.a.type).toBe('dice');
     expect(widgets._meta.info.importerTemp).toBe('TTS');
+  });
+
+  it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
+    // convert() checks the version and the round trip through FileUpdater for every
+    // conversion of this suite - this one holds the widgets the legacy modes look for
+    const widgets = await convert({
+      SaveName: 'test',
+      Hands: { Enable: true },
+      ObjectStates: [ die('a', 0), { Name: 'HandTrigger', GUID: 'h1', FogColor: 'Red' } ]
+    });
+
+    // the caption of the hand is what the legacy mode for holders without image support
+    // looks for in an old file - it would hide the very text the importer just wrote
+    expect(widgets.hand.text).toBe('Your hand');
   });
 
   it('keeps the widget IDs of two imports that run at the same time apart', async () => {
@@ -396,6 +464,18 @@ describe('TTS import: seats', () => {
 
     expect(typed(widgets, 'seat').map(s=>s.color)).toEqual([ '#da1917', '#118ed7' ]);
     expect(widgets.hand.type).toBe('holder');
+  });
+
+  it('gives the hand the drop shadow and the hidden cursors of a VirtualTabletop hand', async () => {
+    const widgets = await convert({
+      SaveName: 'test',
+      Hands: { Enable: true },
+      ObjectStates: [ die('a', 0), { Name: 'HandTrigger', GUID: 'h1', FogColor: 'Red' } ]
+    });
+
+    expect(widgets.hand.childrenPerOwner).toBe(true);
+    expect(widgets.hand.dropShadow).toBe(true);
+    expect(widgets.hand.hidePlayerCursors).toBe(true);
   });
 
   it('fits the seats onto the surface even with a hand zone per TTS color', async () => {

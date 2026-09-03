@@ -18,22 +18,97 @@ function setLibraryTypeTab(type) {
 
 const loadedLibraryImages = {};
 
-function loadJSZip() {
+function loadZipLibrary() {
   const node = document.createElement('script');
-  node.src = 'scripts/jszip';
+  node.src = 'scripts/fflate';
   $('head').appendChild(node);
 }
 
-async function waitForJSZip() {
-  while(typeof JSZip == 'undefined')
+async function waitForZipLibrary() {
+  while(typeof fflate == 'undefined')
     await sleep(50)
+}
+
+// fflate's callback API does the actual (de)compression in a web worker so that
+// uploading or building a big file doesn't freeze the UI. The worker is created from a
+// blob URL, which a content security policy can forbid, so both helpers fall back to
+// doing the work right here in that case - a frozen tab beats a broken upload. Whether
+// that is necessary is checked once instead of by trying, so that a broken zip file is
+// not unpacked a second time synchronously before its error is reported.
+let workersAvailable = null;
+function canUseWorkers() {
+  if(workersAvailable === null) {
+    try {
+      const url = URL.createObjectURL(new Blob([ '' ], { type: 'text/javascript' }));
+      new Worker(url).terminate();
+      URL.revokeObjectURL(url);
+      workersAvailable = true;
+    } catch(e) {
+      console.log('Zip files are (un)packed in the main thread because web workers are not available:', e.toString());
+      workersAvailable = false;
+    }
+  }
+  return workersAvailable;
+}
+
+async function unzipBuffer(buffer, keepEntry) {
+  const options = { filter: e=>keepEntry(e.name) };
+  if(!canUseWorkers())
+    return fflate.unzipSync(buffer, options);
+  return await new Promise((resolve, reject)=>fflate.unzip(buffer, options, (e, files)=>e ? reject(e) : resolve(files)));
+}
+
+async function zipBlob(files, compress) {
+  const options = { level: compress ? 6 : 0 };
+  if(!canUseWorkers())
+    return new Blob([ fflate.zipSync(files, options) ]);
+  return new Blob([ await new Promise((resolve, reject)=>fflate.zip(files, options, (e, data)=>e ? reject(e) : resolve(data))) ]);
+}
+
+// the index at the end of a zip file, which lists every entry along with the CRC-32 and
+// the size of its contents - that is what assets are named after, so knowing which assets
+// a file contains does not require decompressing (or even holding on to) any of them
+function zipIndex(buffer) {
+  const view = new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+
+  let end = buffer.length - 22;
+  while(end < 0 || view.getUint32(end, true) != 0x06054b50)
+    if(--end < 0 || buffer.length - end > 65558)
+      throw new Error('Could not find the index of the zip file.');
+
+  const entries = {};
+  let offset = view.getUint32(end + 16, true);
+  if(offset == 0xffffffff)
+    throw new Error('ZIP64 files are not supported.');
+  for(let i=view.getUint16(end + 8, true); i>0; --i) {
+    // without this, anything the walk does not understand yields plausible looking garbage
+    if(view.getUint32(offset, true) != 0x02014b50)
+      throw new Error('Could not read the index of the zip file.');
+    const nameLength = view.getUint16(offset + 28, true);
+    // filenames are UTF-8 if bit 11 of the flags is set and latin1 otherwise, same as fflate
+    const name = fflate.strFromU8(buffer.subarray(offset + 46, offset + 46 + nameLength), !(view.getUint16(offset + 8, true) & 2048));
+    const size = view.getUint32(offset + 24, true);
+    if(size == 0xffffffff)
+      throw new Error('ZIP64 files are not supported.');
+    entries[name] = { crc: view.getInt32(offset + 16, true), size };
+    offset += 46 + nameLength + view.getUint16(offset + 30, true) + view.getUint16(offset + 32, true);
+  }
+  return entries;
+}
+
+function toBase64(data) {
+  let binary = '';
+  for(let i=0; i<data.length; i+=32768)
+    binary += String.fromCharCode.apply(null, data.subarray(i, i+32768));
+  return btoa(binary);
 }
 
 async function resolveStateCollections(file, callback) {
   if(file.name.match(/\.vttc$/)) {
-    await waitForJSZip();
-    for(const [ filename, f ] of Object.entries((await JSZip.loadAsync(file)).files))
-      callback(new File([await f.async('blob')], filename));
+    await waitForZipLibrary();
+    const buffer = new Uint8Array(await file.arrayBuffer());
+    for(const [ filename, content ] of Object.entries(await unzipBuffer(buffer, name=>!name.match(/\/$/))))
+      callback(new File([ content ], filename));
   } else {
     callback(file);
   }
@@ -86,11 +161,15 @@ function addStateFile(f) {
 }
 
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
-  await waitForJSZip();
+  await waitForZipLibrary();
 
-  let zip = null;
+  const buffer = new Uint8Array(await sourceFile.arrayBuffer());
+
+  let entries = null;
+  let jsonFiles = null;
   try {
-    zip = await JSZip.loadAsync(sourceFile);
+    entries = zipIndex(buffer);
+    jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
   } catch(e) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
@@ -98,9 +177,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let json = null;
   const assets = {};
-  for(const [ filename, file ] of Object.entries(zip.files)) {
-    if(filename.match(/json$/)) {
-      const content = JSON.parse(await file.async('string'));
+  for(const [ filename, entry ] of Object.entries(entries)) {
+    if(jsonFiles[filename]) {
+      const content = JSON.parse(fflate.strFromU8(jsonFiles[filename]));
       if(!json) {
         json = content;
         if(json._meta)
@@ -109,8 +188,8 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       if(json._meta)
         json._meta.info.variants.push(content._meta.info);
     }
-    if(filename.match(/^\/?(user)?assets/) && file._data && file._data.crc32)
-      assets[file._data.crc32 + '_' + file._data.uncompressedSize] = filename;
+    if(filename.match(/^\/?(user)?assets/) && entry.size)
+      assets[entry.crc + '_' + entry.size] = filename;
   }
 
   if(json === null) {
@@ -124,8 +203,9 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     if(json._meta.info.image) {
       if(json._meta.info.image.match(/^http/)) {
         imageURL = json._meta.info.image;
-      } else if(zip.files[json._meta.info.image.substr(1)]) {
-        const image = await zip.file(json._meta.info.image.substr(1)).async('base64');
+      } else if(entries[json._meta.info.image.substr(1)]) {
+        const imageFile = json._meta.info.image.substr(1);
+        const image = toBase64((await unzipBuffer(buffer, name=>name == imageFile))[imageFile]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
             imageURL = `data:image/${type};base64,${image}`;
@@ -145,19 +225,24 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   let total = 0;
   let removed = 0;
+  const removedFiles = {};
   for(const asset in exist) {
     ++total;
     if(exist[asset]) {
       ++removed;
-      zip.remove(assets[asset]);
+      removedFiles[assets[asset]] = true;
     }
   }
 
   let blob = sourceFile;
   if(removed > total/2) {
-    zip.file('asset-map.json', JSON.stringify(assets));
     console.log(`Uploading ${sourceFile.name}: rebuilding zip file because ${removed}/${total} assets are already on the server.`);
-    blob = await zip.generateAsync({ type: 'blob', compression: total-removed < 5 ? 'DEFLATE' : 'STORE' });
+    // only a rebuild needs the contents of the file, so this is the first time it is
+    // unpacked - which means the source file, the kept entries and the new file are all in
+    // memory at once here, so this could be streamed entry by entry if that ever hurts
+    const files = await unzipBuffer(buffer, name=>!removedFiles[name] && !name.match(/\/$/));
+    files['asset-map.json'] = fflate.strToU8(JSON.stringify(assets));
+    blob = await zipBlob(files, total-removed < 5);
   }
 
   var req = new XMLHttpRequest();
@@ -250,6 +335,12 @@ async function saveState(e) {
   };
 }
 
+// the variants panel is otherwise an unlabelled empty card once the last variant is deleted, which
+// gives no hint that the game is not playable any more
+function updateEmptyVariantsHint() {
+  $('#emptyVariants').style.display = $('#variantsList .variant') ? 'none' : 'block';
+}
+
 function updateEmptyLibraryHint() {
   const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
   const hasPublicLibrary = Object.keys(config.libraries || {}).length > 0;
@@ -297,7 +388,7 @@ function updateLibraryFilter() {
         const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
         const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
         const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-        const aiMatch       = filters.ai       == 'Any' || (filters.ai === 'ai') === (dataset.usesaiimagery === '1');
+        const aiMatch       = filters.ai       == 'Any' || (filters.ai === 'ai') === (dataset.usesai === '1');
         callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch && aiMatch);
       }
     }
@@ -474,7 +565,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' linkedGame';
     if(state.savePlayers)
       entry.className += ' savedGame';
-    if(state.usesAIImagery)
+    if(usesAI(state))
       entry.className += ' has-ai-badge';
     if(Array.isArray(state.importerWarnings) && state.importerWarnings.length)
       entry.className += ' hasImportNotes';
@@ -489,7 +580,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     const aiBadge = $('.ai-badge', entry);
     if(aiBadge) {
-      toggleClass(aiBadge, 'hidden', !state.usesAIImagery);
+      toggleClass(aiBadge, 'hidden', !usesAI(state));
+      aiBadge.title = aiDisclosureText(state);
     }
 
     if(state.image) {
@@ -565,7 +657,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
-    entry.dataset.usesaiimagery = state.usesAIImagery ? '1' : '0';
+    entry.dataset.usesai = usesAI(state) ? '1' : '0';
 
     if(state.publicLibraryCategory)
       entry.dataset.type = state.publicLibraryCategory;
@@ -661,17 +753,21 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   if($('#stateDetailsOverlay').style.display != 'none' || $('#statesOverlay.withDetails')) {
     const stateID = $('#stateDetailsOverlay').dataset.id;
-    if(!states[stateID]) {
+    // the details are filled from the game's tile, so a game that the list does not show any more
+    // has no details to show either - it was either removed or lost its tile, like a public
+    // library game whose variants are all linked from the shelf by now
+    const entry = $(`#statesOverlay .roomState[data-id="${stateID}"]`);
+    if(!states[stateID] || !entry) {
       $('#closeDetails').click();
     } else if(!$('#stateDetailsOverlay').classList.contains('editing')) {
       if(!$('#statesOverlay.withDetails'))
         showOverlay();
-      fillStateDetails(states, states[stateID], $(`#statesOverlay .roomState[data-id="${stateID}"]`));
+      fillStateDetails(states, states[stateID], entry);
     }
   }
 
   $('#stateAddOverlay button[icon=upload]').onclick = function() {
-    loadJSZip();
+    loadZipLibrary();
     showStatesOverlay('statesOverlay');
     selectVTTfile(addStateFile);
   };
@@ -692,6 +788,21 @@ function fillImportNotes(warnings) {
   }
 }
 
+// Both AI disclosure flags share one badge and one library filter.
+function usesAI(state) {
+  return !!(state.usesAIImagery || state.usesAILayout);
+}
+
+// Tooltip of the shared AI badge - one line per disclosure that applies.
+function aiDisclosureText(state) {
+  const lines = [];
+  if(state.usesAIImagery)
+    lines.push('Uses AI generated imagery');
+  if(state.usesAILayout)
+    lines.push('Heavy use of AI for the layout');
+  return lines.join('\n');
+}
+
 function fillStateDetails(states, state, dom) {
   toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
   if(!detailsInSidebar)
@@ -710,7 +821,8 @@ function fillStateDetails(states, state, dom) {
   $('#showNameSimilar').checked = sn === true || sn === 'only similar';
   toggleClass($('#mainDetails'), 'noImage', !state.image);
   toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
-  toggleClass($('#mainDetails'), 'has-ai-badge', !!state.usesAIImagery);
+  toggleClass($('#mainDetails'), 'has-ai-badge', usesAI(state));
+  $('#mainImage .ai-badge').title = aiDisclosureText(state);
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
@@ -847,15 +959,18 @@ function fillStateDetails(states, state, dom) {
         variantID: [...$a('#stateDetailsOverlay .variant')].indexOf(vEntry)
       });
       removeFromDOM(vEntry);
+      updateEmptyVariantsHint();
     };
 
     $('#stateDetailsOverlay .variantsList').appendChild(vEntry);
+    updateEmptyVariantsHint();
     return vEntry;
   }
 
   $('#stateDetailsOverlay .variantsList').innerHTML = '';
   for(const variantID in state.variants)
     addVariant(variantID, state.variants[variantID]);
+  updateEmptyVariantsHint();
 
 
 
@@ -883,7 +998,7 @@ function fillStateDetails(states, state, dom) {
     enableEditing(vEntry, emptyVariant);
   };
   $('#variantAddOverlay button[icon=upload]').onclick = function(e) {
-    loadJSZip();
+    loadZipLibrary();
     selectVTTfile(function(f) {
       $('#stateDetailsOverlay').classList.add('uploading');
 
@@ -1052,7 +1167,25 @@ function fillStateDetails(states, state, dom) {
       showStatesOverlay(detailsOverlay);
     }
   };
-  $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
+  $('#stateDetailsOverlay .buttons [icon=save]').onclick = async function() {
+    // saving a game without a single variant left removes the game itself, so it asks the same
+    // question the delete button asks instead of doing that silently. in-progress games never get
+    // here: their details have no edit button (see the editable check in fillStateDetails)
+    if(!$('#variantsList .variant')) {
+      $('#statesButton').dataset.overlay = 'confirmOverlay';
+      // a public library game is only editable on a server that allows editing it, and there
+      // removing it deletes the game itself instead of just this room's shelf entry
+      const target = state.publicLibrary ? 'the public library of this server' : 'your game shelf';
+      if(!await confirmOverlay('Save without variants', `You deleted the last variant of this game. Saving now removes the whole game from ${target}. Are you sure?`, 'Delete game', 'Back to editing', 'delete', 'undo', 'red')) {
+        showStatesOverlay(detailsOverlay);
+        return;
+      }
+    }
+
+    // the variant list can have changed while the confirmation was open, so what the save does to
+    // the game is decided from the state it is actually saving
+    const removesGame = !$('#variantsList .variant');
+
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
     const main = $('#showName').checked, similar = $('#showNameSimilar').checked;
     meta.showName = main && similar ? true : !main && !similar ? false : main ? 'only main' : 'only similar';
@@ -1075,13 +1208,30 @@ function fillStateDetails(states, state, dom) {
       variantInput,
       variantOperationQueue
     });
+
+    // the removed game leaves no details to go back to, so this ends on the game shelf just like
+    // the details' delete button does - including taking the tile of the removed game with it
+    // instead of leaving it clickable until the server's meta update arrives
+    if(removesGame) {
+      removeFromDOM(dom);
+      updateEmptyLibraryHint();
+      if(!$('#statesList > div:nth-of-type(1) .roomState'))
+        $('#statesList > div:nth-of-type(1)').classList.add('empty');
+      showStatesOverlay('statesOverlay');
+    }
   };
 }
 
+// Whether the game details are shown as a sidebar next to the shelf instead of as an overlay of
+// their own. What that sidebar looks like comes from `@container roomArea ((min-width: 1421px) and
+// (min-height: 888px))` in states.css, so this has to measure the same box with the same numbers:
+// measuring the window instead claims a sidebar the CSS never gives a `display` in the band where
+// the board is smaller than the window, and clicking a game there does nothing at all.
+// Called from setScale(), i.e. every time the board is laid out - including when a game brings its
+// own board size along, which changes the container without any window resize.
 function setSidebar() {
-  const vw = Math.max(document.documentElement.clientWidth  || 0, window.innerWidth  || 0)
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-  const bigEnough = vw >= 1421 && vh >= 888;
+  const board = $('#roomArea').getBoundingClientRect();
+  const bigEnough = board.width >= 1421 && board.height >= 888;
 
   if(detailsInSidebar != bigEnough) {
     detailsInSidebar = bigEnough;
@@ -1232,10 +1382,9 @@ onLoad(function() {
       alert('Please enter a link.');
   });
 
-  window.addEventListener('resize', function() {
-    setSidebar();
-    updateFilterOverflow();
-  });
+  // setSidebar() is not called here: a resize reaches this listener before setScale() has given the
+  // board its new size, so it would decide on the old one - setScale() calls it itself instead.
+  window.addEventListener('resize', updateFilterOverflow);
   document.addEventListener('dragover', function(e) {
     if($('#statesOverlay').style.display == 'flex' && e.dataTransfer.types.includes('Files')) {
       e.preventDefault();
@@ -1246,7 +1395,7 @@ onLoad(function() {
   document.addEventListener('drop', function(e) {
     if(e.dataTransfer.files.length) {
       e.preventDefault();
-      loadJSZip();
+      loadZipLibrary();
       for(const file of e.dataTransfer.files)
         resolveStateCollections(file, addStateFile);
     }

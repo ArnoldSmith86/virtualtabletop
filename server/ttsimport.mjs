@@ -1,12 +1,31 @@
-import fs from 'fs';
-
 import CRC32 from 'crc-32';
-import JSZip from 'jszip';
-import fetch from 'node-fetch';
 import { BSON } from 'bson';
 
 import Config from './config.mjs';
+import { VERSION } from './fileupdater.mjs';
+import FileWriter from './filewriter.mjs';
 import Logging from './logging.mjs';
+import Zip from './zip.mjs';
+
+// node-fetch capped how much of a response it would buffer through its "size" option and
+// gave up once that was exceeded. Node's built-in fetch has no such limit, so the body is
+// read chunk by chunk and dropped at the same point - truncating it instead would hand
+// back half an image, which both callers would then treat as a whole one.
+async function fetchBuffer(url, options, maxBytes) {
+  const response = await fetch(url, options);
+  if(!response.body)
+    return Buffer.alloc(0);
+
+  const chunks = [];
+  let length = 0;
+  for await (const chunk of response.body) {
+    chunks.push(chunk);
+    length += chunk.length;
+    if(length > maxBytes)
+      throw new Error(`the response is bigger than ${maxBytes} bytes`);
+  }
+  return Buffer.concat(chunks, length);
+}
 
 // A TTS unit is about an inch, which is 50px on the VTT surface (a poker card is
 // 3.5 units / 160px high). TTS tables are much bigger than the VTT surface, so
@@ -154,8 +173,7 @@ async function imgSize(url, imp) {
   try {
     // only the first few KB are needed, but a host may ignore the Range header and
     // send the whole image - don't wait or buffer indefinitely for that
-    const r = await fetch(url, { headers: { 'Range': 'bytes=0-40000' }, signal: AbortSignal.timeout(15000), size: 1000000 });
-    const buffer = await r.buffer();
+    const buffer = await fetchBuffer(url, { headers: { 'Range': 'bytes=0-40000' }, signal: AbortSignal.timeout(15000) }, 1000000);
     if(buffer.toString('ascii', 1, 4) == 'PNG')
       return imgSizeCache[url] = [ buffer.readUInt32BE(16), buffer.readUInt32BE(20) ];
     for(let offset=4; offset<buffer.length; offset+=2) {
@@ -347,28 +365,9 @@ async function addDeck(o, imp, parent=null) {
       }
     },
     faceTemplates: [
-      {
-        objects: [{
-          type: 'image',
-          css: {
-            "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
-            "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
-          },
-          dynamicProperties: {
-            value: 'back',
-            width: 'width',
-            height: 'height'
-          }
-        },{
-          type: 'image',
-          color: 'transparent',
-          dynamicProperties: {
-            value: 'simpleBack',
-            width: 'width',
-            height: 'height'
-          }
-        }]
-      },
+      // The back face is filled in below: which of the two kinds of back image the deck uses is only known
+      // once its card types have been read.
+      { objects: [] },
       {
         objects: [{
           type: 'image',
@@ -417,6 +416,37 @@ async function addDeck(o, imp, parent=null) {
     if(!isFaceDown(o))
       widgets[`${id}-${cardID}-${i}`].activeFace = 1;
   }
+  // TTS stores a back image per CustomDeck entry, as a sheet of individual backs when UniqueBack is set and
+  // as a single image for the whole deck when it is not - so a card type carries either "back" or
+  // "simpleBack", never both. Adding an object for each of them regardless left every imported deck with a
+  // second, empty image object on its back face that no card type ever fills.
+  const usedByACardType = property=>Object.values(deck.cardTypes).some(cardType=>cardType[property]);
+  if(usedByACardType('back'))
+    deck.faceTemplates[0].objects.push({
+      type: 'image',
+      css: {
+        "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+        "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+      },
+      dynamicProperties: {
+        value: 'back',
+        width: 'width',
+        height: 'height'
+      }
+    });
+  // the fallback also covers a deck whose cards have no back image at all, which would otherwise end up with
+  // a back face without any object on it
+  if(usedByACardType('simpleBack') || !deck.faceTemplates[0].objects.length)
+    deck.faceTemplates[0].objects.push({
+      type: 'image',
+      color: 'transparent',
+      dynamicProperties: {
+        value: 'simpleBack',
+        width: 'width',
+        height: 'height'
+      }
+    });
+
   // widgets only holds the cards at this point - two of them still need a pile
   if(Object.keys(widgets).length > 1) {
     widgets[`${id}-pile`] = place(o, {
@@ -651,7 +681,8 @@ function addNotecard(o, imp, parent) {
     height: clamp(rows*15 + 16, 60, 500),
     movable: true,
     html: (title ? `<b>${escapeHTML(title)}</b><br>${body ? '<br>' : ''}` : '') + escapeHTML(body).replace(/\n/g, '<br>'),
-    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden'
+    // the text is escaped and joined with <br>, so the runs of spaces the author typed have to survive
+    css: 'background: #fdf8d8; color: #333333; border-radius: 4px; font-size: 13px; padding: 6px 8px; box-sizing: border-box; overflow-wrap: break-word; overflow: hidden; white-space: pre-wrap'
   };
 
   return { [widget.id]: place(o, widget) };
@@ -926,10 +957,9 @@ async function convertTTS(content, linkContent, workshop={}) {
   if(linkContent) {
     json = BSON.deserialize(linkContent);
   } else {
-    const zip = await JSZip.loadAsync(content);
-    for(var file in zip.files)
+    for(const file in Zip.list(content))
       if(file.match(/\.json$/))
-        json = JSON.parse(await zip.files[file].async('string'));
+        json = JSON.parse(await Zip.readString(content, file));
   }
 
   const imp = newImport();
@@ -973,7 +1003,9 @@ async function convertTTS(content, linkContent, workshop={}) {
       dropOffsetY: 14,
       stackOffsetX: 40,
       childrenPerOwner: true,
-      text: 'Hand', // an empty holder is a blank band otherwise
+      dropShadow: true,
+      hidePlayerCursors: true,
+      text: 'Your hand', // an empty holder is a blank band otherwise
       x: 50,
       y: 820,
       width: 1500,
@@ -1016,7 +1048,7 @@ async function convertTTS(content, linkContent, workshop={}) {
     Logging.log(`TTS import: ${warnings.length} import notes: ${warnings.join(' ')}`);
   }
 
-  widgets._meta = { info, version: 5 };
+  widgets._meta = { info, version: VERSION };
 
   return widgets;
 }
@@ -1061,10 +1093,10 @@ async function resolveLink(link) {
 async function storeThumbnail(url) {
   try {
     const request = `${url}${url.indexOf('?') > -1 ? '&' : '?'}imw=400&imh=400&ima=fit&impolicy=Letterbox`;
-    const content = Buffer.from(await (await fetch(request, { signal: AbortSignal.timeout(15000), size: 20000000 })).arrayBuffer());
+    const content = await fetchBuffer(request, { signal: AbortSignal.timeout(15000) }, 20000000);
     const asset = `${CRC32.buf(content)}_${content.length}`;
     if(!Config.resolveAsset(asset))
-      fs.writeFileSync(`${Config.directory('assets')}/${asset}`, content);
+      FileWriter.writeFileSync(`${Config.directory('assets')}/${asset}`, content);
     return `/assets/${asset}`;
   } catch(e) {
     Logging.log(`TTS import: could not store the workshop thumbnail ${url}: ${e.toString()}`);

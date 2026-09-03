@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 160 140"
+     width="160" height="140"
+     role="img"
+     aria-label="Fremdes Gebiet">
+
+  <defs>
+    <style>
+      .line { fill:none; stroke:#000; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; }
+      .thin { fill:none; stroke:#000; stroke-width:4; stroke-linecap:round; }
+    </style>
+  </defs>
+
+  <!-- ===== Region ===== -->
+  <g transform="translate(20,10)">
+    <!-- Regionen-Umriss -->
+    <path class="line"
+          d="M20 30
+             C45 5, 95 10, 115 40
+             C135 70, 120 110, 85 120
+             C50 130, 20 115, 15 90
+             C5 65, 5 50, 20 30 Z"/>
+
+    <!-- X = fremd / nicht mein -->
+    <path class="thin" d="M55 50 L85 80"/>
+    <path class="thin" d="M85 50 L55 80"/>
+  </g>
+
+</svg>

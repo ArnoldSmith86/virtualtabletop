@@ -1,6 +1,8 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
-import { startWebSocket, toServer } from './connection.js';
-
+import { checkForServerRestart, clientIsOutdated, editModeLoadFailed, editModeURL, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
+import { setCurrentOverlayId, getCurrentOverlayId, getEditMode } from './overlaystate.js';
+import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { updateContainerQueryFallback } from './containerQueryFallback.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -36,17 +38,30 @@ export function compareDropTarget(widget, t, exclude){
   return false;
 }
 
+// How dropLimit is read wherever it is enforced: a target holding currentCount
+// widgets takes count more only while that stays within the limit. currentCount
+// has to leave out the widget being dropped - putting one back where it already
+// is does not add to the count. Lines pass their number of stops instead of the
+// default children count, because that is what a line's limit bounds. Counting
+// the children is left until the limit turns out to be real: children() sorts
+// the child array, and the default -1 is what nearly every widget has.
+export function exceedsDropLimit(target, count = 1, currentCount = null) {
+  const limit = target.get('dropLimit');
+  if(!(limit > -1))
+    return false;
+  return (currentCount === null ? target.children().length : currentCount) + count > limit;
+}
+
 function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
       continue;
 
-    // if the holder has a drop limit and it's reached, skip the holder
-    if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
-      // don't skip it if the dragged widget is already its child
-      if(t.children().indexOf(widget) == -1)
-        continue;
+    // if the holder has a drop limit and it's reached, skip the holder -
+    // unless the dragged widget is already its child and just goes back in
+    if(exceedsDropLimit(t) && t.children().indexOf(widget) == -1)
+      continue;
 
     let isValid = compareDropTarget(widget, t);
 
@@ -72,17 +87,17 @@ function getValidDropTargets(widget, dragged = widget) {
   return targets;
 }
 
-function getMaxZ(layer) {
+export function getMaxZ(layer) {
   return maxZ[layer] || 0;
 }
 
-async function resetMaxZ(layer) {
+export async function resetMaxZ(layer) {
   maxZ[layer] = 0;
   for(const w of widgetFilter(w=>w.get('layer')==layer&&w.state.z).sort((a,b)=>a.get('z')-b.get('z')))
     await w.set('z', ++maxZ[layer]);
 }
 
-function updateMaxZ(layer, z) {
+export function updateMaxZ(layer, z) {
   maxZ[layer] = Math.max(maxZ[layer] || 0, z);
 }
 
@@ -96,22 +111,23 @@ export function showOverlay(id, forced) {
 
   if(id) {
     const style = $(`#${id}`).style;
-    const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
-    style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
+    style.display = !forced && style.display !== 'none' ? 'none' : 'flex';
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
+    setCurrentOverlayId(overlayActive ? id : null);
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
-    if(!isLoading)
-      toServer('mouse',{inactive:true})
   } else {
+    setCurrentOverlayId(null);
     overlayActive = false;
   }
   $('body').classList.toggle('overlayActive', overlayActive);
+  if(!isLoading)
+    toServer('mouse', { inactive: !!overlayActive, activeOverlay: getCurrentOverlayId(), editMode: getEditMode() });
 }
 
 export function showStatesOverlay(id) {
@@ -194,19 +210,44 @@ function setScale() {
   const h = window.innerHeight;
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
+  const targetW = viewportConfig.targetWidth;
+  const targetH = viewportConfig.targetHeight;
+  const targetAspect = targetW / targetH;
+
+  document.documentElement.style.setProperty('--roomWidth', `${targetW}px`);
+  document.documentElement.style.setProperty('--roomHeight', `${targetH}px`);
+
+  // the add widget overlay is laid out for the default board size, so it is scaled to fit into
+  // the room instead of being stretched to it - see #addOverlayContent in editmode.css. The header
+  // row is published from the same constant the widget positions are derived from; the value in
+  // layout.css is only what applies until this runs, like --roomWidth/--roomHeight next to it.
+  document.documentElement.style.setProperty('--addOverlayScale', addOverlayScale(viewportConfig));
+  document.documentElement.style.setProperty('--addOverlayHeaderHeight', `${ADD_OVERLAY_HEADER_HEIGHT}px`);
+
+  const layoutOptions = { toolbarHidden: $('body').className.match(/hiddenToolbar/) != null };
+
+  // set before measuring below - they decide where the module panel sits and how wide the sidebar
+  // is, and so how much room is left. Only in edit mode: in play mode there is neither a module
+  // panel nor a sidebar and game CSS shouldn't see them.
+  $('body').classList.remove('editModulesAbove', 'editModulesOverlay', 'narrowEditSidebar');
   if(edit || jeEnabled) {
-    const targetWidth = 1600 / zoom;
-    const targetHeight = 1000 / zoom;
+    $('body').classList.add(...calculateEditModuleClasses(w, h, viewportConfig));
+    toggleClass($('body'), 'narrowEditSidebar', isEditSidebarNarrow(w, h, viewportConfig));
+  }
+
+  if(edit || jeEnabled) {
+    const targetWidth = targetW / zoom;
+    const targetHeight = targetH / zoom;
     const availableRect = getAvailableRoomRectangle();
     const availableWidth = availableRect.right-availableRect.left;
     const availableHeight = availableRect.bottom-availableRect.top;
 
-    scale = availableWidth/availableHeight < 1600/1000 ? availableWidth/targetWidth : availableHeight/targetHeight;
+    scale = availableWidth/availableHeight < targetAspect ? availableWidth/targetWidth : availableHeight/targetHeight;
 
-    const offsetX = offset[0] + (1-zoom)/2*1600*scale/zoom;
-    const offsetY = offset[1] + (1-zoom)/2*1000*scale/zoom;
+    const offsetX = offset[0] + (1-zoom)/2*targetW*scale/zoom;
+    const offsetY = offset[1] + (1-zoom)/2*targetH*scale/zoom;
 
-    if(availableWidth/availableHeight < 1600/1000) {
+    if(availableWidth/availableHeight < targetAspect) {
       document.documentElement.style.setProperty('--editModeRoomLeft', (offsetX + availableRect.left) + 'px');
       document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top + (availableHeight-scale*targetHeight)/2) + 'px');
     } else {
@@ -214,28 +255,37 @@ function setScale() {
       document.documentElement.style.setProperty('--editModeRoomTop', (offsetY + availableRect.top) + 'px');
     }
     document.documentElement.style.setProperty('--roomZoom', zoom);
-  } else {
-    scale = w/h < 1600/1000 ? w/1600 : h/1000;
+    layoutOptions.scale = scale;
   }
-  $('body').classList.remove('wideToolbar');
-  $('body').classList.remove('horizontalToolbar');
-  if(w-scale*1600 + h-scale*1000 < 44) {
-    $('body').classList.add('aspectTooGood');
-    if(!$('body').className.match(/hiddenToolbar/))
-      scale = (w-44)/1600;
-  } else {
-    $('body').classList.remove('aspectTooGood');
-    if(w - scale*1600 > 200)
-      $('body').classList.add('wideToolbar');
-    else if(w/h < 1600/1000)
-      $('body').classList.add('horizontalToolbar');
-  }
+
+  const layout = calculateLayout(w, h, viewportConfig, layoutOptions);
+  scale = layout.scale;
+  for(const layoutClass of LAYOUT_CLASSES)
+    toggleClass($('body'), layoutClass, layoutClass == layout.layoutClass);
+  toggleClass($('body'), 'orientationMismatch', isOrientationMismatch(w, h, viewportConfig));
+
   document.documentElement.style.setProperty('--scale', scale);
   updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
+  // the board just changed size, which is what every container query in the overlays asks
+  // about - on a browser that has them this does nothing (see containerQueryFallback.js)
+  updateContainerQueryFallback();
+  setSidebar(); // the game details sidebar is a container query on the board, so it flips with it
   if(edit)
     scaleHasChanged(scale);
   refreshIgnoreZoomWidgets();
+}
+
+// Everything that has to happen when the board size changed, on top of viewportConfig
+// itself: setViewportSize decides whether it did, this applies it. Called from the state
+// message (serverstate.js) as well as from the meta message (legacymodes.js) - both carry
+// the game settings and either one can be the first to bring in a new board size.
+function applyViewportLayout() {
+  setScale();
+  // no widget changed, but pile handles are placed relative to the board edges
+  for(const w of widgets.values())
+    if(w.updateHandlePlacement)
+      w.updateHandlePlacement();
 }
 
 // Each toolbar layout (wide, narrow, horizontal and the one for aspectTooGood) has multiple
@@ -586,7 +636,9 @@ async function uploadAsset(multipleCallback, fileTypes) {
         alert(`Uploading failed: ${e.toString()}`);
         return null;
       });
-      multipleCallback(uploadPath, f.name)
+      // a file that failed to upload has no path to hand out - the callback would add an empty entry for it
+      if(uploadPath)
+        multipleCallback(uploadPath, f.name)
     }).catch(e=>{
       if(e.message !== 'File selection cancelled.')
         alert(`Error: ${e.toString()}`);
@@ -613,8 +665,11 @@ async function _uploadAsset(file) {
       body: file.content || file
     });
 
-    if(response.status == 413)
-      throw 'File is too big.';
+    if(response.status == 413) {
+      // the server answers with the actual size and the limit, but a proxy in between might not
+      const details = (await response.text().catch(_=>'')).trim();
+      throw `${/^[^<>]{1,200}$/.test(details) ? details : 'The file is too big.'} Scaling a picture down or saving it as a JPEG usually gets it under the limit.`;
+    }
     else if(!response.ok)
       throw `${response.status} - ${response.statusText}`;
 
@@ -638,7 +693,66 @@ function splitSVG(svg) {
 }
 
 const svgCache = {};
-function getSVG(url, replaces, callback) {
+// Images that turned out not to be SVGs once they were loaded. Their contents can't be
+// replaced, so they are used as they are instead of being wrapped into a broken data URL.
+const nonSVGCache = {};
+// Images that could not be read at all, and when that last happened. Unlike the two caches above
+// this is not an answer about the file - a server restart, a hiccup in the network or a CORS
+// rejection say nothing about what the file contains - so it expires and the next widget asking
+// for the image tries again. Remembering it permanently would cost a perfectly good SVG its
+// replacements for the rest of the session over a single missed request.
+const unreadableCache = {};
+// long enough not to refetch a CORS-blocked image on every CSS recomputation, short enough that
+// an image comes back on its own once whatever kept it from loading is over
+const UNREADABLE_RETRY_MS = 30000;
+// the one request per file every caller of fetchSVG() below waits for
+const svgFetchCache = {};
+
+// Loads an image and returns its text if it is an SVG whose contents can be replaced, null if it
+// is anything else. What decides that are the bytes of the file and not its name: an uploaded
+// asset is served from /assets/<hash>_<size> without any extension at all, so only the built-in
+// game pieces have a URL that says what they are. Rejects when the file can't be read - that says
+// nothing about what it is, so every caller decides for itself what to assume then. The SVG
+// replacement editor and the JSON editor ask the same question about the same file and go through
+// here too: one request answers all three, so they cannot end up disagreeing about a file.
+export function fetchSVG(url) {
+  // two spellings of the same path - '/i/x.svg' on a widget, 'i/x.svg' in the game piece picker -
+  // are one file, so what is asked for once is the mapped URL that is actually requested
+  const key = mapAssetURLs(url);
+  if(!svgFetchCache[key])
+    // a request that failed is not an answer worth keeping - drop it so the next caller retries
+    svgFetchCache[key] = loadSVG(url).catch(e=>{
+      delete svgFetchCache[key];
+      throw e;
+    });
+  return svgFetchCache[key];
+}
+
+async function loadSVG(url) {
+  const mappedURL = mapAssetURLs(url);
+  const response = await fetch(mappedURL);
+  if(!response.ok)
+    throw new Error(`Loading ${url} failed with status ${response.status}.`);
+  // /assets/<hash> and /i/** are served by vtt itself, so their content type can be trusted, and a
+  // bitmap saying so is the common case - no reason to pull a multi-megabyte PNG through the wire
+  // and decode it as text just to find no <svg> in it. Everywhere else the header is whatever a
+  // foreign host claims, and an SVG mislabeled as a bitmap used to work, so there the bytes decide.
+  const contentType = /^(assets|i)\//.test(mappedURL) ? response.headers.get('content-type') || '' : '';
+  if(contentType && !/svg|xml|text|octet-stream/i.test(contentType)) {
+    if(response.body && response.body.cancel)
+      response.body.cancel();
+    return null;
+  }
+  const text = await response.text();
+  return /<svg/i.test(text) ? text : null;
+}
+
+export function getSVG(url, replaces, callback) {
+  // like the cached SVG below this returns the finished value right away, so the callback - which
+  // exists to tell the widget that the file has arrived - isn't needed and isn't called
+  if(nonSVGCache[url])
+    return mapAssetURLs(url);
+
   if(typeof svgCache[url] == 'string') {
     const cacheKey = url + JSON.stringify(replaces);
     if(svgCache[cacheKey])
@@ -659,45 +773,115 @@ function getSVG(url, replaces, callback) {
     return svgCache[cacheKey];
   }
 
-  if(!svgCache[url]) {
+  // an image that can't be loaded is used as it is, which is all a browser needs anyway - an
+  // external image is blocked from fetch() by CORS but still displays fine as a background-image.
+  // That verdict is only kept until the retry delay is over, see unreadableCache above.
+  const unreadable = unreadableCache[url] > Date.now() - UNREADABLE_RETRY_MS;
+
+  if(!svgCache[url] && !unreadable) {
     svgCache[url] = [];
-    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
+    // fetchSVG resolves with the file's text or null, and rejects if it could not be read at all -
+    // three outcomes, so an unread file arrives here as undefined rather than as another null
+    fetchSVG(url).then(t=>t, _=>undefined).then(t=>{
       const callbacks = svgCache[url];
-      svgCache[url] = t;
+      delete svgCache[url];
+      if(t === undefined) {
+        unreadableCache[url] = Date.now();
+      } else {
+        delete unreadableCache[url];
+        if(t === null)
+          nonSVGCache[url] = true;
+        else
+          svgCache[url] = t;
+      }
       for(const [ c, r ] of callbacks)
         c(getSVG(url, r, _=>{}));
     });
   }
 
-  svgCache[url].push([ callback, replaces ]);
-  return '';
+  // a file still within its retry delay has no request to wait for
+  if(svgCache[url])
+    svgCache[url].push([ callback, replaces ]);
+  // while a retry is in flight the widget keeps displaying the URL it already has rather than
+  // blinking to nothing, and is told through its callback once the file did arrive after all
+  return unreadableCache[url] ? mapAssetURLs(url) : '';
 }
 
+// Decides what the user gets when the editor bundle did not load, by asking the server what it is:
+// a server that has been replaced means this page belongs to a build that is gone and reloads, a
+// server that does not answer at all is restarting and the click can simply be repeated once it is
+// back, and a server that is there and is still the build this page belongs to means the bundle
+// itself is at fault - a genuine defect, which has to reach the error report rather than be excused
+// as downtime. Resolves to false where edit mode is unavailable for now, throws where it is broken.
+async function editModeUnavailable(error) {
+  // kept out of the message on screen but not out of the console: whoever debugs a bundle that does
+  // not load needs the original failure, restart or not
+  console.error('Edit mode could not be loaded.', error);
+  editModeLoadFailed();
+
+  const serverAnswered = await checkForServerRestart();
+  if(clientIsOutdated()) {
+    showServerRestartOverlay();
+    // long enough for the message to be on screen before the reload takes the page away, so a click
+    // on the edit button does not just flash the whole app for no visible reason. The arrow keeps
+    // reload() on its Location: a timer calls what it is handed on the window, which throws.
+    setTimeout(_=>location.reload(), 1000);
+    return false;
+  }
+  if(!serverAnswered) {
+    // while the connection is down its own overlay is up and forced, so it stays and this one does
+    // not appear - which is the right way round: it already says the server is away, and unlike
+    // this one it goes when the server comes back
+    showOverlay('editModeUnavailableOverlay');
+    return false;
+  }
+
+  throw error;
+}
+
+// Resolves to whether edit mode is available: false means the editor could not be fetched, which
+// the user has been told about and can retry - the callers must not go on to use it.
 async function loadEditMode() {
   if(edit === null) {
-    edit = false;
-    Object.assign(window, {
-      $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
-      setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
-      toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
-      addWidgetLocal, updateWidgetId, removeWidgetLocal,
-      loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
-      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
-      html, formField,
-      Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
-      toHex, contrastAnyColor,
-      asArray, compute_ops,
-      eventCoords,
-      getCurrentGameSettings, legacyMode, getEnabledLegacyModes
-    });
     $('body').classList.add('loadingEditMode');
-    const editmode = await import('./edit.js');
-    $('body').classList.remove('loadingEditMode');
+    let editmode;
+    try {
+      edit = false;
+      Object.assign(window, {
+        $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, confirmOverlay, sleep, rand, shuffleArray,
+        setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
+        toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
+        addWidgetLocal, updateWidgetId, removeWidgetLocal,
+        loadZipLibrary, waitForZipLibrary, zipBlob,
+        generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
+        uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+        iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
+        enableEmojiVariantFlyouts, closeEmojiVariantFlyout, expandEmojiVariants, loadEmojiVariants,
+        config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+        viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
+        html, formField,
+        Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
+        toHex, contrastAnyColor,
+        asArray, compute_ops, positionNames, expressionError, expressionNames,
+        eventCoords,
+        getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
+      });
+
+      // The two halves of the client only know each other through the names handed over above, so
+      // a pair from two builds fails on the first name one of them does not have - which is why
+      // the bundle is asked for by build rather than by name alone.
+      editmode = await import(editModeURL());
+    } catch(e) {
+      edit = null;
+      return await editModeUnavailable(e);
+    } finally {
+      $('body').classList.remove('loadingEditMode');
+    }
+
     Object.assign(window, editmode);
     initializeEditMode(currentMetaData);
   }
+  return true;
 }
 
 window.addEventListener('keydown', async function(e) {
@@ -707,8 +891,7 @@ window.addEventListener('keydown', async function(e) {
       $('#editorToolbar button[icon=close]').click();
     } else if(edit === false) {
       $('#editButton').click();
-    } else {
-      await loadEditMode();
+    } else if(await loadEditMode()) {
       $('#editButton').click();
       if(!$('#editorSidebar button[icon=data_object].active'))
         $('#editorSidebar button[icon=data_object]').click();
@@ -717,7 +900,8 @@ window.addEventListener('keydown', async function(e) {
 });
 
 async function toggleEditMode() {
-  await loadEditMode();
+  if(!await loadEditMode())
+    return false;
   if(edit)
     $('body').classList.remove('edit');
   else
@@ -728,9 +912,20 @@ async function toggleEditMode() {
     openEditor();
   showOverlay();
   setScale();
+  return true;
 }
 
 onLoad(function() {
+  // overflow: clip does not create a scroll container, the overflow: hidden that browsers
+  // predating it fall back to (layout.css) does. Nothing ever wants to scroll the board, but
+  // scrollIntoView() - what the JSON editor uses to reveal a widget and the game shelf to reveal
+  // a state - scrolls every scrollable ancestor along with its target, which would slide the
+  // board out from under the toolbar with no scrollbar and no gesture to put it back.
+  if(!(window.CSS && CSS.supports && CSS.supports('overflow', 'clip')))
+    on('#roomArea', 'scroll', function() {
+      this.scrollTop = this.scrollLeft = 0;
+    });
+
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
   on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());
@@ -780,8 +975,20 @@ onLoad(function() {
     for(const tabButton of $a('.toolbarTab'))
       toggleClass(tabButton, 'active', tabButton == e.currentTarget);
 
-    if(e.currentTarget == $('#editButton') || edit)
-      toggleEditMode();
+    if(e.currentTarget == $('#editButton') || edit) {
+      // a tab that could not be opened - edit mode is fetched on demand and the server may be
+      // away - must not stay marked as the open one, or the next click on it counts as a click on
+      // the active tab and does nothing at all. What is on screen then belongs to no tab, so none
+      // of them is marked either.
+      const noTabIsOpen = _=>{
+        for(const tabButton of $a('.toolbarTab'))
+          tabButton.classList.remove('active');
+      };
+      toggleEditMode().then(opened=>opened || noTabIsOpen(), error=>{
+        noTabIsOpen();
+        throw error;
+      });
+    }
   });
 
   on('#activeGameButton', 'click', function() {
@@ -791,8 +998,8 @@ onLoad(function() {
   on('.toolbarButton', 'click', async function(e) {
     const overlay = e.currentTarget.dataset.overlay;
     if(overlay) {
-      if(overlay == 'addOverlay')
-        await loadEditMode();
+      if(overlay == 'addOverlay' && !await loadEditMode())
+        return;
 
       showOverlay(overlay);
       if(overlay == 'statesOverlay')
@@ -821,9 +1028,11 @@ onLoad(function() {
       // the returned promises reject when the browser denies the request (for
       // example inside an iframe without allowfullscreen) - don't treat that
       // as a client error
+      // compat-fallback api.Document.fullscreenElement: only read where requestFullscreen exists, the webkit branch below covers the rest
       if(!document.fullscreenElement)
         document.documentElement.requestFullscreen().catch(e=>console.warn(`Could not enter fullscreen mode: ${e.message}`));
       else
+        // compat-fallback api.Document.exitFullscreen: same branch, webkitExitFullscreen below
         document.exitFullscreen().catch(e=>console.warn(`Could not exit fullscreen mode: ${e.message}`));
     } else if(document.documentElement.webkitRequestFullscreen) {
       if(!document.webkitFullscreenElement)
@@ -834,6 +1043,10 @@ onLoad(function() {
   });
   on('#hideToolbarButton', 'click', function() {
     $('body').classList.add('hiddenToolbar');
+    setScale();
+  });
+  on('#showToolbarButton', 'click', function() {
+    $('body').classList.remove('hiddenToolbar');
     setScale();
   });
 
@@ -856,6 +1069,13 @@ onLoad(function() {
   onMessage('redirect', function(url) {
     window.location.href = `${url}#player:${encodeURIComponent(playerName)}:${encodeURIComponent(playerColor)}`;
   });
+
+  // the delay before the reload after a server restart spreads the clients over a few seconds,
+  // which is the server's concern and not the waiting player's
+  on('#reloadNowButton', 'click', _=>location.reload());
+
+  on('#editModeUnavailableOverlay button', 'click', _=>showOverlay());
+
   on('#returnOverlay button', 'click', function() {
     toServer('setRedirect', 'return');
   });
@@ -903,7 +1123,18 @@ window.onresize = function(event) {
 
 window.onkeyup = function(event) {
   if(event.key == 'Escape') {
-    if($('body.edit #editorSidebar button.active'))
+    // a picture opened at full size out of the deck wizard covers everything, so Escape takes it away first
+    if($('#editor > .cardPictureZoom'))
+      $('#editor > .cardPictureZoom').remove();
+    // the public library deck browser is opened on top of whatever opened it (the add widget overlay or the
+    // deck editor's Add New Deck dialog), so Escape closes the browser and not the thing behind it
+    else if($('#libraryDecksOverlay') && $('#libraryDecksOverlay').style.display != 'none')
+      $('#libraryDecksClose').click();
+    // the add widget overlay sits on top of the sidebar, so it goes next - without this the only
+    // way out of it was leaving edit mode altogether
+    else if($('#addOverlay') && $('#addOverlay').style.display != 'none')
+      showOverlay();
+    else if($('body.edit #editorSidebar button.active'))
       $('#editorSidebar button.active').click();
     else if(edit)
       $('#editorToolbar button[icon=close]').click();

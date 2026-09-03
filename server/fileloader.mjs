@@ -1,12 +1,13 @@
 import fs from 'fs';
-import fetch from 'node-fetch';
-import JSZip from 'jszip';
+import CRC32 from 'crc-32';
 
 import { VERSION } from './fileupdater.mjs';
 import PCIO from './pcioimport.mjs';
 import TTS from './ttsimport.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
+import Zip from './zip.mjs';
 
 const dirname = Config.directory('save') + '/links';
 const filename = dirname + '.json';
@@ -42,43 +43,48 @@ async function downloadLink(link) {
   if(response.status != 304) {
     currentLinkStatus.etag = response.headers.get('etag');
     let states = null;
+    const content = Buffer.from(await response.arrayBuffer());
     if(TTS.isTTSlink(link)) {
-      states = await TTS.fromBSON(await response.buffer(), link);
+      states = await TTS.fromBSON(content, link);
     } else {
-      states = await readStatesFromBuffer(await response.buffer(), true);
+      states = await readStatesFromBuffer(content, true);
     }
-    fs.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
+    FileWriter.writeFileSync(`${dirname}/${currentLinkStatus.filename}`, JSON.stringify(states));
   }
 
   linkStatus[link] = currentLinkStatus;
-  fs.writeFileSync(filename, JSON.stringify(linkStatus));
+  FileWriter.writeFileSync(filename, JSON.stringify(linkStatus));
 }
 
 async function readStatesFromBuffer(buffer, includeVariantNameList) {
-  const zip = await JSZip.loadAsync(buffer);
+  const entries = Zip.list(buffer);
 
-  if(zip.files['WorkshopUpload'])
+  if(entries['WorkshopUpload'] !== undefined)
     return { 'TTS': await readVariantsFromBuffer(buffer) };
-  if(zip.files['widgets.json'])
+  if(entries['widgets.json'] !== undefined)
     return { 'PCIO': await readVariantsFromBuffer(buffer) };
 
   const states = {};
-  for(const filename in zip.files) {
-    if(filename.match(/^[^\/]+\.json$/) && zip.files[filename]._data) {
+  for(const filename in entries) {
+    if(filename.match(/^[^\/]+\.json$/)) {
       const result = { 'VTT': await readVariantsFromBuffer(buffer) };
 
       if(includeVariantNameList) {
         result._variantNameList = {};
         let i = 0;
-        for(const name in zip.files)
+        for(const name in entries)
           if(name.match(/^[^\/]+\.json$/))
             result._variantNameList[name.substr(0, name.length-5)] = i++;
       }
 
       return result;
     }
-    if(filename.match(/\.(vtt|pcio)$/) && zip.files[filename]._data)
-      states[filename] = await readVariantsFromBuffer(await zip.files[filename].async('nodebuffer'));
+    if(filename.match(/\.(vtt|pcio)$/)) {
+      // the size comes from the zip index, so it has to be checked before unpacking
+      if(entries[filename] >= 104857600)
+        throw new Logging.UserError(403, `${filename} is bigger than 100 MiB.`);
+      states[filename] = await readVariantsFromBuffer((await Zip.read(buffer, [ filename ]))[filename]);
+    }
   }
   if(Object.keys(states).length == 0)
     throw new Logging.UserError(404, 'Did not find any JSON files in the ZIP file.');
@@ -161,19 +167,19 @@ async function readStatesFromLink(linkAndPath, includeVariantNameList) {
 }
 
 async function readVariantsFromBuffer(buffer) {
-  const zip = await JSZip.loadAsync(buffer);
-  if(Object.keys(zip.files).filter(f=>f.match(/WorkshopUpload/)).length) {
+  const entries = Zip.list(buffer);
+  if(Object.keys(entries).filter(f=>f.match(/WorkshopUpload/)).length) {
     return [ await TTS.fromZIP(buffer) ];
-  } else if(zip.files['widgets.json']) {
+  } else if(entries['widgets.json'] !== undefined) {
     return [ await PCIO(buffer) ];
   } else {
     const variants = [];
-    for(const filename in zip.files) {
+    for(const filename in entries) {
 
-      if(filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json' && zip.files[filename]._data) {
-        if(zip.files[filename]._data.uncompressedSize >= 20971520)
+      if(filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json') {
+        if(entries[filename] >= 20971520)
           throw new Logging.UserError(403, `${filename} is bigger than 20 MiB.`);
-        const variant = JSON.parse(await zip.files[filename].async('string'));
+        const variant = JSON.parse(await Zip.readString(buffer, filename));
         if(typeof variant._meta.version != 'number' || variant._meta.version > VERSION || variant._meta.version < 0)
           throw new Logging.UserError(403, `Found a valid JSON file but version ${variant._meta.version} is not supported. Please update your server.`);
         const isNumeric = filename.match(/^([0-9]+)\.json$/);
@@ -183,12 +189,13 @@ async function readVariantsFromBuffer(buffer) {
           variants.push(variant);
       }
 
-      if(filename.match(/^\/?assets/) && zip.files[filename]._data) {
-        if(zip.files[filename]._data.uncompressedSize >= 10485760)
+      if(filename.match(/^\/?assets/) && !filename.match(/\/$/)) {
+        if(entries[filename] >= 10485760)
           throw new Logging.UserError(403, `${filename} is bigger than 10 MiB.`);
-        const targetFile = zip.files[filename]._data.crc32 + '_' + zip.files[filename]._data.uncompressedSize;
+        const content = (await Zip.read(buffer, [ filename ]))[filename];
+        const targetFile = CRC32.buf(content) + '_' + content.length;
         if(!Config.resolveAsset(targetFile))
-          fs.writeFileSync(Config.directory('assets') + '/' + targetFile, await zip.files[filename].async('nodebuffer'));
+          FileWriter.writeFileSync(Config.directory('assets') + '/' + targetFile, content);
       }
 
     }

@@ -2,6 +2,8 @@
   --scale: 1;
   --roomWidth: 1600px;
   --roomHeight: 1000px;
+  --addOverlayScale: 1;
+  --addOverlayHeaderHeight: 90px;
   --roomTop: calc((calc(var(--vh, 1vh) * 100) - var(--roomHeight) * var(--scale)) / 2 - var(--toolbarSize) / 2);
   --roomLeft: 0px;
   --toolbarSize: 44px;
@@ -49,8 +51,152 @@ body.loadingEditMode * {
   cursor: wait;
 }
 
-#roomArea {
+/* the editor is fetched from the server the first time it is opened, which takes long enough to
+   need an answer to the click - and a wait cursor is not one on a touch device */
+body.loadingEditMode #editButton {
+  animation: loadingEditMode 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes loadingEditMode {
+  to {
+    opacity: 0.35;
+  }
+}
+
+/* The "this browser cannot run VirtualTabletop" message at the end of room.html. It is the only
+   thing on the page that has to render on a browser we do not support, so it stays on plain,
+   ancient CSS - no custom properties, no flexbox, no shorthand insets. Declaring no display keeps
+   the hidden attribute working; the nomodule script removes it. */
+.unsupportedBrowser {
   position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  overflow: auto;
+  /* vh rather than a fixed padding so the message sits optically centered on a desktop screen
+     instead of in the top eighth of it */
+  padding: 12vh 20px;
+  background: #484848;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* the one screen where the visitor most needs to know which site turned them away */
+.unsupportedBrowser img {
+  width: 260px;
+  max-width: 80%;
+  margin-bottom: 20px;
+}
+
+.unsupportedBrowser h1 {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.unsupportedBrowser p {
+  max-width: 600px;
+  margin: 16px auto;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* a version list is scanned, not read: one browser per line, left aligned, and the whole block
+   centered by the inline-block sitting in the centered text flow */
+.unsupportedBrowser ul {
+  display: inline-block;
+  margin: 16px auto;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* the reason and the URL are for a support thread, not for the visitor - they come after the fix */
+.unsupportedBrowser .unsupportedBrowserURL,
+.unsupportedBrowser .unsupportedBrowserReason {
+  font-size: 14px;
+  color: #cccccc;
+}
+
+.unsupportedBrowser .unsupportedBrowserURL span {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.unsupportedBrowser a {
+  color: #ffffff;
+}
+
+/* the only thing to click on the panel, so it has to look like it */
+#unsupportedBrowserContinue {
+  display: inline-block;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+
+/* dismissing the panel leaves this behind, so the explanation is not gone until a reload. Like the
+   panel it declares no display - position: fixed makes it a block box on its own, and anything
+   else here would beat the hidden attribute it starts out with. */
+.unsupportedBrowserReopen {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  z-index: 20;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  padding: 6px 12px;
+  background: #484848;
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* a phone held sideways has ~390px for a wordmark, a headline and six versions on six lines, so
+   there everything gives back what it can rather than pushing the one button below the fold */
+@media (max-height: 520px) {
+  .unsupportedBrowser {
+    padding: 12px 20px;
+  }
+
+  .unsupportedBrowser img {
+    width: 160px;
+    margin-bottom: 6px;
+  }
+
+  .unsupportedBrowser h1 {
+    font-size: 20px;
+    margin: 8px 0;
+  }
+
+  .unsupportedBrowser p {
+    margin: 8px auto;
+  }
+
+  .unsupportedBrowser ul {
+    margin: 8px auto;
+    line-height: 1.4;
+  }
+}
+
+/* the overlays are children of #roomArea, so their size is the board's, not the window's.
+   Their breakpoints are container queries against this box: as media queries they measured
+   the window, which only said something about how much room an overlay has back when every
+   board was 1600x1000. A square or portrait board now leaves a much smaller overlay in the
+   same window and would still have gotten the layout of a wide one.
+   Only for overlays that stay in here: an element the deck editor re-parents into #editor (the
+   symbol picker, its own dialogs) has no roomArea container left, and a @container rule on it
+   silently stops matching at any size - those keep their media queries. */
+#roomArea {
+  container: roomArea / size;
+  position: fixed;
+  /* hidden first for the browsers that predate clip: without it the board does not clip at all.
+     Unlike clip, hidden makes this a scroll container, so main.js pins it back to 0/0 there */
+  overflow: hidden;
   overflow: clip;
   width: calc(var(--roomWidth) * var(--scale));
   height: calc(var(--roomHeight) * var(--scale));
@@ -59,11 +205,14 @@ body.loadingEditMode * {
   z-index: 1;
 }
 
-@media (min-aspect-ratio: 1600/1000) {
-  body {
-    --roomTop: 0px;
-    --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
-  }
+/* the window is wider than the board, so the toolbar sits beside it - this used to be a
+   media query against the hardcoded 1600/1000 aspect ratio, but that is exactly what
+   setScale already decides when it picks the toolbar layout for the board's own size.
+   .edit is excluded explicitly: edit mode positions the room itself (editor/layout.css)
+   and would otherwise only win this on source order */
+body:not(.edit,.horizontalToolbar,.aspectTooGood) {
+  --roomTop: 0px;
+  --roomLeft: calc((100vw - var(--roomWidth) * var(--scale)) / 2 + var(--toolbarSize) / 2);
 }
 
 body.aspectTooGood {
@@ -75,29 +224,34 @@ body.aspectTooGood.hiddenToolbar {
   --roomLeft: calc((100vw - var(--scale) * var(--roomWidth)) / 2);
 }
 
-@media (orientation: portrait) {
-  body:not(.lightsOff,.jsonEdit) {
-    background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
-    background-size: calc(100% - 40px) calc(var(--roomTop) - 40px);
-    background-repeat: no-repeat;
-    background-position: 20px 20px;
-    height: 100vh;
-  }
-  body:not(.lightsOff,.jsonEdit)::after {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* the branding wash and the "rotate your device" hint above the board. This used to be
+   @media (orientation: portrait), which told a player with a portrait board in a portrait
+   window - the best fit there is - to rotate away from it. isOrientationMismatch decides it
+   from the board's own shape now, so only a landscape board asks to be turned landscape.
+   The heights are clamped because --roomTop goes negative on a board that nearly fills the
+   window, which dropped the declaration and left the text sliced across the board. */
+body.orientationMismatch:not(.lightsOff,.jsonEdit) {
+  background-image: linear-gradient(0deg, #484848e8, #484848e8), url(i/branding/logo.svg);
+  background-size: calc(100% - 40px) max(0px, calc(var(--roomTop) - 40px));
+  background-repeat: no-repeat;
+  background-position: 20px 20px;
+  height: 100vh;
+}
+body.orientationMismatch:not(.lightsOff,.jsonEdit)::after {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
-    bottom: 0;
-    height: calc(var(--roomTop) - 40px);
-    width: calc(100vw - 40px);
+  bottom: 0;
+  height: max(0px, calc(var(--roomTop) - 40px));
+  width: calc(100vw - 40px);
 
-    content: "Please rotate your device to landscape orientation and switch to fullscreen.";
-    margin: 20px;
-    font-size: 20px;
-    color: #fff2;
-  }
+  content: "Please rotate your device to landscape orientation and switch to fullscreen.";
+  margin: 20px;
+  font-size: 20px;
+  color: #fff2;
 }
 
 
@@ -159,6 +313,48 @@ body.aspectTooGood.hiddenToolbar {
 
     body.aspectTooGood.hiddenToolbar #toolbar {
       display: none;
+    }
+
+    /* hiding the toolbar used to be one way - with the board size configurable, aspectTooGood
+       is something a game can put every player in, so there has to be a way back. A thin strip
+       at the left edge, out of the way until it is hovered. */
+    #showToolbarButton {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      z-index: 3;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+
+      margin: 0;
+      padding: 0;
+      width: 10px;
+      height: 80px;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      background: var(--wcMain);
+      color: var(--wcFont);
+      opacity: 0.4;
+      overflow: hidden;
+      cursor: pointer;
+      transition: width 0.15s ease, opacity 0.15s ease;
+    }
+
+    #showToolbarButton::before {
+      font-size: 20px;
+      width: auto;
+    }
+
+    #showToolbarButton:hover, #showToolbarButton:focus-visible {
+      width: var(--toolbarSize);
+      opacity: 1;
+    }
+
+    /* edit mode hides the whole toolbar anyway, so there is nothing to bring back there */
+    body.aspectTooGood.hiddenToolbar:not(.edit) #showToolbarButton {
+      display: flex;
     }
 
     body.loading #toolbar, body.loading #toolbar * {
@@ -346,7 +542,6 @@ body.aspectTooGood.hiddenToolbar {
       background: var(--toolbarColor);
       box-shadow: 0 0 5px #0005;
       pointer-events: none;
-      transition: color 0.3s ease;   
     }
 
     body:not(.loading) .toolbarButton:hover .tooltip, body.wideToolbar .toolbarButton .tooltip {
@@ -415,7 +610,7 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     #playersButton::before {
-      content: '[users_settings]';
+      content: '[people]';
     }
 
     #editButton::before {
@@ -474,6 +669,11 @@ body.aspectTooGood.hiddenToolbar {
       content: '[hide_side_bar]';
     }
 
+    #feedbackButton::before {
+      content: 'feedback';
+      font-family: 'Material Symbols' !important;
+    }
+
     #aboutButton::before {
       content: '[vtt_logo]';
     }
@@ -486,6 +686,7 @@ body.aspectTooGood.hiddenToolbar {
 
     body.toolbarOverflow #toolbar {
       overflow-y: auto;
+      overflow-x: hidden;
       overflow-x: clip;
       scrollbar-width: none;
       padding-top: 0;
@@ -500,6 +701,7 @@ body.aspectTooGood.hiddenToolbar {
 
     body.horizontalToolbar.toolbarOverflow #toolbar {
       overflow-x: auto;
+      overflow-y: hidden;
       overflow-y: clip;
       padding-left: 0;
       padding-right: 0;
@@ -681,7 +883,8 @@ body.aspectTooGood.hiddenToolbar {
   flex-direction: column;
   padding: 5% 10%;
   box-sizing: border-box;
-  overflow: auto
+  overflow: auto;
+  z-index: 10;
 }
 
 .overlay h1 {
@@ -695,6 +898,16 @@ body.aspectTooGood.hiddenToolbar {
 
 .overlay tr:nth-child(even) {
   background: #00000022;
+}
+
+/* the stack is scrolled inside the overlay instead of stretching it. cqh, not vh: the overlay is
+   the board, which can be a lot shorter than the window - 40vh was taller than the whole overlay
+   on a wide board in a tall window */
+#clientErrorStack {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 40cqh;
+  overflow: auto;
 }
 
 div[icon] {
@@ -832,14 +1045,35 @@ body.edit:not(.hitTest) .widget.foreign, body.edit:not(.hitTest):not(.showHidden
   pointer-events: none;
 }
 
-.widget.limbo {
-  opacity: 0.5;
-  border: 5px dashed darkred;
+/* A widget whose game switches pointer events off in its css cannot be clicked at
+   all, which is exactly what the editor's list of widgets under the pointer is
+   there for - so the hit test gives every widget its events back for the length
+   of the scan. !important because that css is an inline style. A line keeps its
+   own box out of it: the box is only the bounding box of the drawn path, and
+   listing every line the pointer happens to be inside the box of would bury the
+   widgets that really are under it. */
+body.hitTest .widget:not(.line) {
+  pointer-events: auto !important;
 }
+
+.widget.limbo {
+  opacity: 0.7;
+  border: 2px dashed darkred;
+}
+/* the marker sits above the widget instead of in its content flow: it has to stay
+   readable on a 24px token and must not run into whatever the widget draws itself */
 .widget.limbo::before {
   content: 'Invalid Parent';
-  font-size: 16px;
-  color: darkred;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  padding: 0 4px;
+  border-radius: 2px;
+  background: darkred;
+  color: white;
+  font: bold 11px/1.4 sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 body:not(.edit) .widget.limbo {
@@ -866,8 +1100,7 @@ body:not(.edit) .widget.limbo {
   position: fixed;
   top: 5vh;
   left: 5vw;
-  transition: opacity 200ms ease;
-  transition-delay: 400ms, 400ms;
+  transition: opacity 200ms ease 400ms;
   transform-origin: top left;
   pointer-events: none;
 }
@@ -893,11 +1126,6 @@ button {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin: 1px;
-  transition: color 0.3s ease
-}
-
-button.playerChange .tooltip.playerChange {
-  color: yellow
 }
 
 button:hover {
@@ -921,6 +1149,7 @@ button[icon]::before {
   font-weight: normal;
   line-height: 1;
   width: 24px;
+  overflow: hidden;
   overflow: clip;
 }
 button[icon]:empty {
@@ -1445,6 +1674,8 @@ button[icon]:disabled:hover {
   line-height:19.6px;
   padding:16px 8px;
   position:relative;
+  -webkit-text-size-adjust:100%;
+  /* compat-fallback css.properties.text-size-adjust: 100% asks a browser that inflates text to leave it alone - one that never inflates it needs no asking */
   text-size-adjust:100%;
   font-style: italic;
   margin: 0;
@@ -1500,6 +1731,7 @@ button[icon]:disabled:hover {
 .inputstring input,
 .inputselect select
 {
+  -webkit-appearance: none;
   appearance: none;
   padding: 0 5px 0px 5px;
   margin: 0 0 0 0;
@@ -1752,6 +1984,7 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   border: 0px none transparent;
   background: transparent;
   -moz-appearance: textfield;
+  /* compat-fallback css.properties.appearance: the spin buttons this hides are hidden on WebKit by the ::-webkit-inner-spin-button rule below */
   appearance: textfield;
   margin: 0;
   color: black

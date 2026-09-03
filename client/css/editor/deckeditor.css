@@ -21,10 +21,8 @@
 
 /* On layouts where the module panel sits above the room or covers it entirely (see sidebar.css), it
    simply overlays the deck editor, so don't reserve width for it. */
-@media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20), (max-width: 1000px) and (min-aspect-ratio: 16/20) {
-  #editor.moduleActive #deckEditor {
-    right: var(--editSidebarWidth);
-  }
+body:is(.editModulesAbove, .editModulesOverlay) #editor.moduleActive #deckEditor {
+  right: var(--editSidebarWidth);
 }
 
 body.deckEditorActive #deckEditor {
@@ -152,6 +150,21 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   padding: 4px 6px;
   font-size: 12px;
   white-space: nowrap;
+}
+
+/* A write object always stores its text on the card, so it only exists as a per-card-type object: the
+   "Write box" button is part of the amber Card Type group and is not offered in the blue All Cards one -
+   and neither is the note explaining it. */
+.deckEditorAddGroupStatic #deckEditorAddWritable,
+.deckEditorAddGroupStatic .deckEditorAddModeNote {
+  display: none;
+}
+
+.deckEditorAddModeNote {
+  font-size: 11px;
+  line-height: 1.25;
+  opacity: 0.85;
+  white-space: normal;
 }
 
 #deckEditorHistory {
@@ -464,13 +477,30 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   z-index: 20;
 }
 
-/* Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
-   (pickSymbolKeepingOverlay), where the rule above no longer applies and it would render behind #deckEditor
-   (z-index 1). Float it over the whole editor instead: above the sidebar (2), the toolbar (3) and the
-   dialog it was opened from (20). */
+/* The public library's deck browser is moved into #editor as well (see initializeDOM), and #editor is not a
+   stacking context of its own - so without a z-index it ends up behind the very editor it is opened from
+   (#deckEditor is z-index: 1, the sidebar 2, the toolbar 3). */
+#editor > #libraryDecksOverlay {
+  z-index: 4;
+}
+
+/* Both pickers are opened from the JSON editor and the properties panel, which stay reachable while the deck
+   editor covers the play area, so they are moved into #editor (see initializeDOM) and the symbol picker is
+   left there when the deck editor closes (see close()) - from then on that is where edit mode opens it.
+   Opening the picker from an icon property inside one of the dialogs above parks it next to that dialog
+   instead (pickSymbolKeepingOverlay, which marks it with .symbolPickerAboveEditor) - same situation.
+   Neither spot gives them a box or a stacking order of their own, so .overlay's own 100%/100% makes them
+   cover the whole window and #roomArea (position: fixed, z-index 1) paints the board on top of the open
+   picker. Give them the deck editor's box instead - below the toolbar, beside the sidebar - and float them
+   above the sidebar (2), the toolbar (3) and the deck editor's dialogs (20). */
+#editor > #symbolPickerOverlay,
+#editor > #audioPickerOverlay,
 #symbolPickerOverlay.symbolPickerAboveEditor {
   position: fixed;
-  inset: 0;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
   width: auto;
   height: auto;
   z-index: 30;
@@ -778,6 +808,15 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   display: block;
 }
 
+/* Introduces the options of a group with what picking one of them does. Kept no louder than the
+   descriptions of the options it stands above. */
+.deckEditorNewDeckGroupNote {
+  margin-bottom: 8px;
+  font-size: 12px;
+  line-height: 1.35;
+  opacity: 0.7;
+}
+
 .deckEditorNewDeckModes {
   display: flex;
   flex-direction: column;
@@ -796,6 +835,50 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   grid-column: 2;
   font-size: 12px;
   opacity: 0.7;
+}
+
+/* The ways to build a custom deck differ mainly in what they expect to be uploaded, which a drawing of the
+   input says faster than the description below the label does - one card per picture against one picture
+   with the whole grid of cards on it. */
+.deckEditorNewDeckModesIllustrated label {
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+}
+
+.deckEditorNewDeckModesIllustrated label b,
+.deckEditorNewDeckModesIllustrated label span {
+  grid-column: 3;
+}
+
+.deckEditorNewDeckModeIcon {
+  grid-row: span 2;
+  width: 34px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  opacity: 0.7;
+}
+
+.deckEditorNewDeckModeIcon .deckEditorNewDeckModeIconFill {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* the cut lines of the sheet mode, and the back of a front/back pair */
+.deckEditorNewDeckModeIcon .deckEditorNewDeckModeIconCut {
+  stroke-dasharray: 2 2;
+}
+
+.deckEditorNewDeckModeIcon .deckEditorNewDeckModeIconBack {
+  opacity: 0.55;
+}
+
+/* compat-fallback css.selectors.has: a browser without :has() leaves every icon at the dimmed style it has when nothing is picked - the radio button next to it still says which mode is selected */
+.deckEditorNewDeckModesIllustrated label:has(input:checked) .deckEditorNewDeckModeIcon {
+  opacity: 1;
+  color: var(--VTTblue);
 }
 
 /* A group with a single way to create a deck (the blank one) needs no radio button - opening it is already
@@ -835,6 +918,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
 
 /* the reset button needs a holder to recall the cards into, so without one its option is off, not just
    greyed out while still looking ticked */
+/* compat-fallback css.selectors.has: a browser without :has() drops the rule and leaves the label at full opacity - the option it belongs to is disabled either way */
 .deckEditorNewDeckOptions label:has(input:disabled) {
   opacity: 0.5;
   cursor: default;
@@ -847,6 +931,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   opacity: 0.85;
 }
 
+/* compat-fallback css.selectors.has: a browser without :has() never shows this hint, which is what it did before the hint existed */
 .deckEditorNewDeckOptions:has(#deckEditorNewDeckHolder:not(:checked)) .deckEditorNewDeckOptionsHint {
   display: block;
 }
@@ -933,6 +1018,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   overflow: visible;
 }
 
+/* stays a media query: initializeDOM() re-parents this dialog into #editor, where it is positioned
+   against the viewport - a container query on #roomArea has no container to resolve against there */
 @media (max-width: 700px) {
   .deckEditorExportOptions {
     grid-template-columns: 1fr;
@@ -1006,6 +1093,17 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
 
 .deckEditorObjectPreviewInner .cardFaceObject {
   position: absolute;
+}
+
+/* The card the tree previews are cloned from while the main area shows the card defaults instead of a card
+   (previewSourceCard). It is in the document rather than in a detached node so the tiling CSS of a card cut out
+   of a sheet resolves to pixels, but it must never be visible or take part in the layout. */
+.deckEditorPreviewSource {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Image previews: the whole picture, contained and centered in the box. */
@@ -1409,6 +1507,13 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: pointer;
 }
 
+/* The global button:hover fill (layout.css) is more specific than the rule above, so without this the header
+   turned VTTblueDark on hover while its label stayed --textColor - black on navy, unreadable in light mode.
+   Highlight it with the theme's own lighter shade, which keeps the label readable in both themes. */
+.deckEditorGroupHeader:hover {
+  background: var(--backgroundHighlightColor2);
+}
+
 /* Focus ring like the Edit Widget sidebar's collapsible headers (propertyInputs.css), which this mirrors. */
 .deckEditorGroupHeader:focus-visible {
   outline: 2px solid var(--VTTblue);
@@ -1455,6 +1560,21 @@ body.deckEditorPanning #deckEditorMain * {
   font-size: 12px;
   opacity: 0.85;
   margin: 2px 5px 8px;
+}
+
+/* A section note that points out a problem with the current object (e.g. write boxes covering the whole card).
+   Amber on a tinted amber block, like the rest of the editor's emphasis: dark enough to read on the white
+   sidebar, and back to the brighter amber where the sidebar is dark. */
+.deckEditorSectionWarning {
+  opacity: 1;
+  color: #a35c00;
+  background: rgba(255, 193, 7, 0.18);
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+
+body.darkMode .deckEditorSectionWarning {
+  color: #ffb300;
 }
 
 /* Column headers over the binding rows; share the row layout but without the row's highlight background. */
@@ -1508,7 +1628,7 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 /* sidebarModules.css gives every genericInput field a fixed/minimum 200px width, which no longer fits next
-   to a 100px label plus the picker/trash buttons' reserved padding - the field wrapped to its own line
+   to the label column plus the picker/trash buttons' reserved padding - the field wrapped to its own line
    (see the reported layout bug). Let it flex to fill the row instead, one line, like the number rows. */
 #deckEditorSidebar .deckEditorProperties .genericInput input:not([type=checkbox]),
 #deckEditorSidebar .deckEditorProperties .genericInput textarea,
@@ -1668,6 +1788,59 @@ body.deckEditorPanning #deckEditorMain * {
   outline-offset: 1px;
 }
 
+/* A css/…CSS property is a text row like every other property, with the very declaration rows the Edit
+   Widgets tab uses (CssEditor, styled in propertyInputs.css under ".editorModule") opening below it - the
+   same shape as the image and color pickers above. The button sits where those sit, left of the trash. */
+#deckEditorSidebar .deckEditorProperties .deckEditorCssRow.hasDelete {
+  padding-right: 48px;
+}
+
+#deckEditorSidebar .deckEditorCssPickerButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+#deckEditorSidebar .deckEditorCssRow.hasDelete .deckEditorCssPickerButton {
+  right: 24px;
+}
+
+.deckEditorCssPickerButton[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
+}
+
+#deckEditorSidebar .deckEditorCssPickerButton.open {
+  background: var(--VTTblueDark);
+}
+
+/* the row's own value field: css, so monospace like the declaration rows it opens */
+#deckEditorSidebar .deckEditorCssRow input.cssRowText {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* the nested form is a list of class/selector sections, which no single line can hold - the field names
+   those sections instead of pretending they could be typed here */
+#deckEditorSidebar .deckEditorCssRow input.cssRowText.cssRowSections {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* the sections are already indented by the picker itself, so drop the module's right margin */
+#deckEditorSidebar .deckEditorPickerRow .collapsibleSection {
+  margin-right: 0;
+}
+
 #deckEditorShowAll.active {
   background: var(--VTTblueDark);
   color: #fff;
@@ -1783,7 +1956,7 @@ body.deckEditorPanning #deckEditorMain * {
   bottom: 0;
   text-align: center;
   font-size: 12px;
-  opacity: 0.7;
+  opacity: 0.9; /* it is the only hint that the big card is interactive, so it has to be readable */
   padding: 4px 10px;
   pointer-events: none;
 }
@@ -1803,6 +1976,34 @@ body.deckEditorPanning #deckEditorMain * {
   flex-shrink: 0;
 }
 
+/* A deck of 13 (let alone 52) card types is far wider than the strip, so it scrolls sideways - and since every
+   tile now carries its own card type's colors, the strip is the fastest way to find a type by sight, which it
+   can only be if it doesn't look like it ends where its box does. The platform draws an overlay scrollbar that
+   is invisible while the strip sits still, so fade out whichever edge still has tiles behind it (the classes
+   come from updateStripOverflow). Sticky flex items with a negative margin: pinned to the visible edge without
+   adding to the scrollable width, and above the preview cards' own z-index (1000000). */
+#deckEditorStrip.deckEditorStripMoreLeft::before,
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  content: '';
+  position: sticky;
+  flex: 0 0 48px;
+  align-self: stretch;
+  z-index: 1000002;
+  pointer-events: none;
+}
+
+#deckEditorStrip.deckEditorStripMoreLeft::before {
+  left: -10px; /* cancels the strip's own padding, so the fade reaches its edge */
+  margin-right: -53px; /* fade width plus the flex gap */
+  background: linear-gradient(to right, var(--backgroundColor), transparent);
+}
+
+#deckEditorStrip.deckEditorStripMoreRight::after {
+  right: -10px;
+  margin-left: -53px;
+  background: linear-gradient(to left, var(--backgroundColor), transparent);
+}
+
 .deckEditorStripCard {
   display: flex;
   flex-direction: column;
@@ -1820,8 +2021,15 @@ body.deckEditorPanning #deckEditorMain * {
   border-color: var(--backgroundHighlightColor1);
 }
 
+/* The tiles are as saturated as the card types they show, so an outline alone is easy to lose among them: the
+   selected tile also gets the plate and the bold label. */
 .deckEditorStripCard.selected {
   border-color: var(--textHighlightColor2);
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorStripCard.selected > span {
+  font-weight: bold;
 }
 
 .deckEditorStripCard.selectedInactive {

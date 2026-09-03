@@ -1,0 +1,59 @@
+#statusOverlay {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #0008;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 20; /* above .overlay (10) so connection warnings stay visible while an overlay is open */
+  --pulse-min: 0.4;
+  --pulse-max: 0.6;
+  transition: opacity 0.2s;
+}
+#statusOverlay.visible {
+  opacity: var(--pulse-max);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+#statusOverlay[data-state="message"],
+#statusOverlay[data-state="edit"],
+#statusOverlay[data-state="input"] {
+  --pulse-min: 0.6;
+  --pulse-max: 0.9;
+}
+#statusOverlay[data-state="bad"],
+#statusOverlay[data-state="reload"] {
+  --pulse-min: 0.6;
+  --pulse-max: 0.8;
+}
+#statusOverlay[data-state="reconnecting"] {
+  --pulse-min: 0.8;
+  --pulse-max: 1;
+}
+@keyframes statusPulse {
+  0%, 100% { opacity: var(--pulse-min); }
+  50% { opacity: var(--pulse-max); }
+}
+#statusOverlay .statusIcon {
+  font-family: "VTT-Symbols", "Material Symbols";
+  font-size: 20px;
+  color: #fff;
+}
+#statusOverlay .statusIcon:not([icon^="["]) {
+  font-family: "Material Symbols";
+}
+#statusOverlay .statusIcon[icon]::before {
+  content: attr(icon);
+}
+#statusOverlay .statusText {
+  font-size: 12px;
+  color: #fff;
+  white-space: nowrap;
+}
+#statusOverlay .statusText:empty {
+  display: none;
+}

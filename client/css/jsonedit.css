@@ -18,14 +18,12 @@
   --editorPaneWidth: 602px;
 }
 
-#jsonEditor.notHighEnough #jeWidgetLayers, #jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
+#jsonEditor.notHighEnough #jeLogWrapper, .jeLogNested {
   display: none;
 }
 
-#jsonEditor > *, #jeWidgetLayers > div {
-  background: var(--backgroundColor);
-}
 #jsonEditor > * {
+  background: var(--backgroundColor);
   color: var(--textColor);
   padding: 5px;
   margin: 0;
@@ -35,148 +33,16 @@
   box-sizing: border-box;
 }
 
-/*** Widget switcher (breadcrumbs, back/forward history, tree dropdown) ***/
-#jeWidgetSwitcher {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: calc(var(--commandPaneWidth) + 1px);
-  height: 40px;
-  display: none;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 6px 5px 0;
-  box-sizing: border-box;
-  border-bottom: 1px solid var(--backgroundHighlightColor1);
-  background: var(--backgroundColor);
-  z-index: 2;
+/* the selection bar sits above the JSON text inside the sidebar module - and
+   above the command pane too, so that it (and the dropdowns hanging off it) can
+   use the full width of a docked module */
+.editorModule #jeText, .editorModule #jeTextHighlight, .editorModule #jeCommands {
+  top: 40px;
 }
 
-/* only used inside the sidebar module; the legacy standalone editor has no room for it */
-.editorModule #jeWidgetSwitcher {
-  display: flex;
-}
-
-#jeWidgetSwitcher > button {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border: 0;
-  justify-content: center;
-}
-
-#jeWidgetSwitcher > button::before {
-  font-size: 20px;
-  width: auto;
-  margin: 0;
-}
-
-#jeWidgetSwitcher > button:disabled {
-  background-color: gray;
-  opacity: 0.5;
-}
-
-#jeWidgetSwitcher > button.active {
-  background-color: var(--VTTblueDark);
-  color: yellow;
-}
-
-#jeBreadcrumbs {
-  flex-grow: 1;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-#jeBreadcrumbs .jeCrumb {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 3ch;
-}
-
-#jeBreadcrumbs .jeCrumb[data-id] {
-  cursor: pointer;
-  color: var(--textHighlightColor1);
-}
-
-#jeBreadcrumbs .jeCrumb[data-id]:hover {
-  text-decoration: underline;
-}
-
-#jeBreadcrumbs .jeCrumbCurrent {
-  font-weight: bold;
-}
-
-#jeBreadcrumbs .jeCrumbSeparator {
-  font-family: 'Material Symbols';
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-#jeBreadcrumbs .jeCrumbEllipsis {
-  flex-shrink: 0;
-}
-
-#jeBreadcrumbs .jeCrumbInfo {
-  color: var(--textDimColor1);
-}
-
-#jeTreeContainer {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  max-height: 50vh;
-  overflow-y: auto;
-  background: var(--backgroundColor);
-  border: 1px solid var(--backgroundHighlightColor1);
-  border-top: none;
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-#jeWidgetSwitcher.treeVisible #jeTreeContainer {
-  display: block;
-}
-
-#jeTreeContainer #jeTree {
+.editorModule #jeCommands {
   height: auto;
 }
-
-#jePinTree {
-  display: none;
-}
-
-#jeWidgetSwitcher.treeVisible #jePinTree {
-  display: flex;
-}
-
-/* pinned: reserve space for the tree so it stays visible above the JSON;
-   percentages resolve against the module pane so short panes keep a usable JSON area */
-#jeWidgetSwitcher.treeVisible.treePinned {
-  height: max(40%, 140px);
-}
-
-#jeWidgetSwitcher.treeVisible.treePinned #jeTreeContainer {
-  top: 40px;
-  bottom: 0;
-  max-height: none;
-}
-
-#jeWidgetSwitcher.treeVisible.treePinned ~ #jeText,
-#jeWidgetSwitcher.treeVisible.treePinned ~ #jeTextHighlight {
-  top: max(40%, 140px);
-}
-
-.editorModule #jeText, .editorModule #jeTextHighlight {
-  top: 40px;
-}
-
-/*** End of widget switcher ***/
 
 /*** Tree and widget display/edit area ***/
 /**** CSS to set up the grid ****/
@@ -197,10 +63,6 @@
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   border-bottom: 1px solid white;
-}
-
-#jeMouseCoords {
-  margin: 5px;
 }
 
 #jeTree {
@@ -308,7 +170,7 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 }
 
 /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.jeNestedTree.active, .jeNestedTree.filterChildIncluded, .jeLogNested.active {
+.jeNestedTree.active, .jeLogNested.active {
   display: block;
 }
 
@@ -333,6 +195,11 @@ body.lightsOff .jeTreeExpander::before, body.lightsOff .jeTreeExpander-down::bef
 #jeText::selection {
   background-color: var(--backgroundHighlightColor1);
   -webkit-text-fill-color: var(--textColor);
+}
+
+/* the line a command with options is about to act on, marked while its dialog holds the cursor */
+#jeTextHighlight > .jeCommandLine {
+  background-color: var(--backgroundHighlightColor1);
 }
 
 /*** CSS to handle search box for tree widget ***/
@@ -374,7 +241,6 @@ i.htmlattr{ color: var(--textHighlightColor2); }
 i.htmlvalue{ color: var(--textHighlightColor5); }
 i.csskey  { color: var(--textHighlightColor5); }
 i.cssvalue{ color: var(--textHighlightColor7); }
-i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 
 /**** End color formatting ****/
 
@@ -393,6 +259,15 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 }
 /*** End compute operations CSS ***/
 
+/* the messages below the context breadcrumb are their own paragraphs - inline they
+   run into the breadcrumb, which the pane does not break by itself */
+#jeCommands .error {
+  display: block;
+  margin-top: 8px;
+  color: var(--textHighlightColor3);
+  font-weight: bold;
+}
+
 #jeCommands {
   position: absolute;
   top: 0;
@@ -404,119 +279,96 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
   flex-direction: column;
 }
 
-#jeWidgetLayers {
-  background: var(--backgroundColor);
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  right: 10px;
-  width: calc(var(--commandPaneWidth) - 34px);
-  border: 2px solid var(--VTTblue);
-  border-radius: 10px;
-  overflow: hidden;
-  padding: 5px;
-  white-space: normal;
-}
-
-#editor:hover #jeWidgetLayers, .editorModule:hover #jeWidgetLayers, body.usedTouch #jeWidgetLayers {
-  display: none;
-}
-
-#jeWidgetLayers > p {
-  font-size: 12px;
-  margin: 0;
-}
-
-#jeWidgetLayers > div {
-  display: flex;
-  align-items: center;
-  padding: 2px;
-  font-size: 12px;
-}
-
-#jeWidgetLayers > div.hidden {
-  display: none;
-}
-
-#jeWidgetLayers .key {
-  font-size: inherit;
-  line-height: inherit;
-  margin-bottom: 0.4375rem;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-  margin-top: 0.25rem;
-  padding: 0.1rem 0.2rem;
-  box-shadow: 0 0 #d9d9d9, 0 0px #d9d9d9, 0 1px #d9d9d9, 0 2px #d9d9d9, 0 3px #d9d9d9, 0 4px #d9d9d9, 0 5px #d9d9d9, 2px 2.5px 4px #adb5bd, 0 -1px 2.5px #adb5bd;
-  background-color: #fff;
-  border-color: #e6e6e6;
-  color: #343a40;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border: 1px solid #e6e6e6;
-  border-radius: 0.25rem;
-  display: inline-block;
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-weight: 400;
-  text-align: left;
-  transform: translate3d(0, 0, 5px);
-  transform-style: preserve-3d;
-  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
-  cursor: pointer;
-  user-select: none;
-}
-
-
-#jeWidgetLayers .key::after {
-  border-style: solid;
-  box-sizing: content-box;
-  content: '';
-  display: block;
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
-  border-color: #cccccc;
-  border-radius: 0.5rem;
-  border-width: 0.125rem;
-  bottom: -9px;
-  left: -0.3125rem;
-  right: -0.3125rem;
-  top: -3px;
-  transform: translate3d(0, 0, -3px);
-}
-
-#jeWidgetLayers .keyDetails {
-  margin-left: 4px;
-}
-
-#jeWidgetLayers .id {
-  color: var(--textHighlightColor1);
-  display: inline-block;
-}
-
-#jeWidgetLayers .type {
-  color: var(--textHighlightColor4);
-}
-
-#jeWidgetLayers .details {
-  color: var(--textHighlightColor3);
-  white-space: pre;
-  display: block;
-}
-
-#jeWidgetLayers .details:empty {
-  display: none;
-}
-
 body.jsonEdit #jsonEditor {
   display: block;
 }
 
 body.jsonEdit #jeTopButtons {
   margin-bottom: 10px;
+  flex: none;
 }
 
 body.jsonEdit #jeContextButtons {
   overflow: hidden auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* The panel of the "Show colors in SVG image" button, between the icon row and the property
+   buttons. A card of its own so the sentence it shows is read as the answer to that button and not
+   as part of the property list, and it takes at most half the pane and scrolls inside it: a deck of
+   playing cards can have 30 colors and more, which used to push the property buttons and the
+   panel's own close button off the screen. */
+#jeSVGColors {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  max-height: 50%;
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--overlayBackgroundColor);
+  color: var(--textColor);
+}
+
+#jeSVGColors .jeSVGColorsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  margin-bottom: 4px;
+}
+
+#jeSVGColors .jeSVGColorsClose {
+  border: 0;
+  background: none;
+  color: var(--textColor);
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+#jeSVGColors .jeSVGColorsBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden auto;
+}
+
+#jeSVGColors .jeSVGColorsMessage {
+  font-size: 12px;
+  color: var(--textHelpColor);
+}
+
+#jeSVGColors .jeSVGColorsURL {
+  font-size: 11px;
+  color: var(--textHelpColor);
+  overflow-wrap: anywhere;
+  margin-top: 4px;
+}
+
+#jeSVGColors .jeSVGColorsBody > button {
+  margin-top: 6px;
+}
+
+/* two columns of swatches at the width of the pane: a palette is compared, not read line by line */
+#jeSVGColors .jeSVGColorList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 4px;
+}
+
+#jeSVGColors .jeSVGColorList > button {
+  border: 1px solid #808080;
+  padding: 5px 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#jeSVGColors .jeSVGColorList > button.jeSVGColorMapped::after {
+  content: " ✓";
 }
 
 body.jsonEdit #jeContextButtons > button {
@@ -586,7 +438,15 @@ body.jsonEdit #toolbar {
   font-weight: bold;
 }
 
+/* The note explains an empty log, so it keys off the log holding nothing at all. A filter that
+   matches none of the entries dims them instead of removing them, so the log is not empty then and
+   the note stays away. */
+#jeLog:not(:empty) ~ .jeLogEmptyNote {
+  display: none;
+}
+
 .jeLogSkipped { color: var(--textDimColor1); }
+.jeLogFailed  { color: var(--textHighlightColor3); font-weight: bold; }
 .jeLogSummary { color: var(--textHighlightColor4); }
 .jeLogResult  { color: var(--textHighlightColor2); }
 .jeLogTime    { color: var(--textDimColor1); }
@@ -636,7 +496,7 @@ body.jsonEdit #toolbar {
 }
 
 .jeLogDetails {
-  word-break: break-all;
+  overflow-wrap: anywhere;
   margin-left: 20px;
   color: var(--textColor);
 }
@@ -647,12 +507,18 @@ body.jsonEdit #toolbar {
 }
 .jeLogOperation {
   margin-left: 20px;
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
-.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections, .jeLogProblems {
+.jeLogOriginal, .jeLogApplied, .jeLogVariables, .jeLogCollections {
   margin-left:20px;
   white-space: pre;
+  overflow-x: auto;
+}
+
+.jeLogProblems {
+  margin-left:20px;
+  white-space: pre-wrap;
 }
 
 [id=jeTopButtons] button {
@@ -677,22 +543,9 @@ body.jsonEdit #toolbar {
   opacity: 0.5;
 }
 
-/* For the zoom, edit, wide, highlight, and debug "on" states */
+/* For the zoom, edit, wide and debug "on" states */
 [id=jeTopButtons] button.onState {
   color: yellow
-}
-#je_toggleHighlight.onState {
-  position: relative;
-}
-#je_toggleHighlight.onState::before {
-  position: absolute;
-  height: 22px;
-  width: 17px;
-  content: '';
-  top: 1px;
-  left: 4px;
-  border: 2px solid yellow;
-  border-radius: 20%;
 }
 
 #jeCommands .context{
@@ -753,7 +606,7 @@ body.jsonEdit #toolbar {
   font-family: monospace;
   white-space: pre-wrap;
 }
-#jeContextButtons > button.jeHighlight, #jeContextButtons .jeEditorLineDesc mark {
+#jeContextButtons > button.jeHighlight, #jeContextButtons > button.jeCommandOwner, #jeContextButtons .jeEditorLineDesc mark {
   background-color: gold;
   color: black;
   font-weight: bold;
@@ -772,8 +625,6 @@ body.jsonEdit #toolbar {
 }
 #je_showWidget{
 }
-#je_reverseFkeys{
-}
 #je_addNewWidget{
   color: rgb(95, 167, 95);
 }
@@ -785,8 +636,6 @@ body.jsonEdit #toolbar {
 #je_editMode{
 }
 #je_openParent{
-}
-#je_toggleHighlight{
 }
 #je_toggleDebug{
 }
@@ -824,6 +673,30 @@ body.jsonEdit #toolbar {
   display: none;
 }
 
+#jeCommands #jeCommandOptions {
+  border-left: 3px solid gold;
+  padding: 2px 0 4px 6px;
+}
+
 #jeCommands #jeCommandOptions input[type="number"]{
-  width: 6ch;
+  width: 7ch;
+}
+
+#jeCommands #jeCommandOptions input:not([type="checkbox"]), #jeCommands #jeCommandOptions select {
+  padding: 4px 2px;
+}
+
+#jeCommands #jeCommandOptions label {
+  margin-right: 4px;
+}
+
+#jeCommands #jeCommandOptions button.cancel {
+  background: none;
+  border: 1px solid var(--VTTblue);
+  color: var(--textColor);
+}
+
+#jeCommands #jeCommandOptions button.cancel:hover {
+  background-color: var(--VTTblueDark);
+  color: white;
 }
