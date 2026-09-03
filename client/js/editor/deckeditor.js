@@ -4486,14 +4486,31 @@ const deckEditorCardSizes = [
   { label: 'Token',       width:  50, height:  50 }
 ];
 
-// The cardDefaults every deck creation flow builds on: cards that glide to wherever they are moved to
-// instead of jumping there. The class goes into cardDefaults, where removing it again is one line, and it
-// is appended to whatever the deck already asks for - a class of its own says how the cards look and has
-// to survive. It must not be appended to classes a dropTarget matches on, which compares them as one
-// whole string (see the chip stacks in editmode.js).
-function cardDefaultsWithTransition(cardDefaults) {
-  const classes = cardDefaults && cardDefaults.classes;
-  return Object.assign({}, cardDefaults, { classes: classes ? classes + ' transition' : 'transition' });
+// The classes a deck hands to every one of its cards, as a list.
+function cardDefaultsClassList(cardDefaults) {
+  return String(cardDefaults && cardDefaults.classes || '').split(/\s+/).filter(className=>className);
+}
+
+// Whether a deck's cards glide to wherever they are moved to instead of jumping there.
+function cardDefaultsHaveTransition(cardDefaults) {
+  return cardDefaultsClassList(cardDefaults).indexOf('transition') != -1;
+}
+
+// The cardDefaults every deck creation flow builds on: cards that glide. The class goes into cardDefaults,
+// where the deck panel's "Cards glide when they move" switch - and one line in the JSON editor - can take
+// it away again, and it is added to whatever the deck already asks for: a class of its own says how the
+// cards look and has to survive. It must not be added to classes a dropTarget matches on, which compares
+// them as one whole string (see the chip stacks in editmode.js).
+function cardDefaultsWithTransition(cardDefaults, transition=true) {
+  const classes = cardDefaultsClassList(cardDefaults).filter(className=>className != 'transition');
+  if(transition)
+    classes.push('transition');
+  const result = Object.assign({}, cardDefaults);
+  if(classes.length)
+    result.classes = classes.join(' ');
+  else
+    delete result.classes;
+  return result;
 }
 
 // The "Recall & Shuffle" button all deck creation flows put below their holder: it recalls the deck's cards,

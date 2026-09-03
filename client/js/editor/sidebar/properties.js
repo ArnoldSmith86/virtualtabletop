@@ -1280,6 +1280,10 @@ const editorTypeNames = {
   timer: 'Timer'
 };
 
+// The part of a drop target the match rows cannot show: every condition is an exact comparison of the
+// whole property, so a widget carrying more classes than the one asked for is not a match.
+const dropTargetMatchInfo = '<p>A condition matches only when the property is exactly the value given. <code>classes</code> holds the widget\'s whole class list, so a widget whose classes are <code>pokerChip transition</code> does not match <code>pokerChip</code>.</p>';
+
 // Explanations shown by the info buttons next to the curated inputs. The text
 // usually comes from the wiki summary of the property.
 const editorPropertyHints = {
@@ -7222,7 +7226,7 @@ class PropertiesModule extends SidebarModule {
       new TextInput(this, widget, 'User defined active classes', {
         property: 'classes',
         nullIfEmpty: true,
-        hint: 'Space separated list of CSS classes applied to the widget, like "transparent" for holders, "transition" to make the widget glide to a new position instead of jumping there, or classes defined in the room\'s custom css. Classes can also be triggered by some properties of the widget and be inherited from parent widgets.'
+        hint: 'Space separated list of CSS classes applied to the widget. Two of them come with VTT: "transparent" hides the frame of a holder, "transition" makes the widget glide to a new position instead of jumping there. Any other class is one the room\'s custom css defines. Classes can also be triggered by some properties of the widget and be inherited from parent widgets.'
       }).render(body);
 
       this.renderTriggeredClassesNote(widget, body);
@@ -9610,7 +9614,37 @@ class PropertiesModule extends SidebarModule {
     `);
     $('button', deckEditorButton).onclick = _=>deckEditor.open(widget.id);
     this.renderBasicSection(widget);
+    this.renderDeckCardsSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'cardDefaults', 'cardTypes', 'faceTemplates' ]);
+  }
+
+  // The cards of a deck are drawn in the deck editor, but whether they glide to where they are moved to is
+  // a property of them the pictures do not cover - and it lives in cardDefaults, which this panel otherwise
+  // never shows. Without a control here the class every new deck starts with could only be taken away again
+  // in the JSON editor.
+  renderDeckCardsSection(widget) {
+    this.addSubHeader('Cards');
+    const matchedBy = this.widgetsMatchingCardClasses(widget);
+    const glide = new CheckboxInput(this, widget, 'Glide when they move', {
+      listenTo: [ 'cardDefaults' ],
+      getValue: _=>cardDefaultsHaveTransition(widget.get('cardDefaults')),
+      setValue: on=>this.inputValueTransformed(widget, 'cardDefaults', current=>cardDefaultsWithTransition(current, on)),
+      hint: 'Cards of this deck glide to a new position over 300ms instead of jumping there, whether they are dealt, dragged or recalled. It puts the "transition" class into the deck\'s cardDefaults; a rule in the room\'s custom css can retime or replace it.'
+    }).render(this.moduleDOM);
+    if(matchedBy.length) {
+      $('input', glide).disabled = true;
+      glide.classList.add('disabledInput');
+      div(this.moduleDOM, 'pileHelp', `${html(matchedBy.join(', '))} accepts these cards by their classes, which are matched as one whole string - so gliding would have to be turned on there as well and is switched off here. The chip stacks the Add Widget overlay creates work that way.`);
+    }
+  }
+
+  // The widgets whose dropTarget filters for exactly the classes this deck's cards carry: adding a class to
+  // those cards would stop them fitting, so the deck keeps the classes it has.
+  widgetsMatchingCardClasses(widget) {
+    const classes = (widget.get('cardDefaults') || {}).classes;
+    if(!classes)
+      return [];
+    return widgetFilter(w=>asArray(w.get('dropTarget')).some(entry=>isObjectLike(entry) && entry.classes === classes)).map(w=>w.id);
   }
 
   // --- dice face editor ---
@@ -10263,7 +10297,7 @@ class PropertiesModule extends SidebarModule {
     // in the JSON editor - the shared dropTarget editor (the one the line widget
     // uses) says the same thing for every widget type, with the decks kept as
     // the shortcut for the case they cover.
-    propertyInfoButton(this.addSubHeader('Target widgets'), html('Which widgets can be dropped into this holder'));
+    propertyInfoButton(this.addSubHeader('Target widgets'), `<p>Which widgets can be dropped into this holder</p>${dropTargetMatchInfo}`);
     this.renderDropTargetEditor(widget, {
       label: '',
       emptyText: 'Nothing can be dropped into this holder - add a match to let widgets in.',
@@ -10678,7 +10712,7 @@ class PropertiesModule extends SidebarModule {
       value.type = 'text';
       value.className = 'dropTargetValue';
       value.placeholder = 'value';
-      value.title = 'The value that property has to have, compared as a whole - matching on classes means the widget\'s entire class list, like "pokerChip transition"';
+      value.title = 'The value that property has to have';
       value.value = conditionText(condition.value);
       property.onchange = value.onchange = _=>{
         condition.property = property.value;
@@ -11380,7 +11414,7 @@ class PropertiesModule extends SidebarModule {
     // What a line takes in - a widget dropped on the path becomes a stop of it,
     // matched the same way a holder matches its dropTarget. One name for it:
     // the section header carries the hint so the label does not repeat it.
-    propertyInfoButton(this.addSubHeader('Target widgets'), html('Which widgets become a stop when they are dropped onto the line'));
+    propertyInfoButton(this.addSubHeader('Target widgets'), `<p>Which widgets become a stop when they are dropped onto the line</p>${dropTargetMatchInfo}`);
     this.renderDropTargetEditor(widget, {
       edit: lineEdit,
       label: '',

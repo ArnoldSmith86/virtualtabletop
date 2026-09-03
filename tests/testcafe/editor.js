@@ -1413,6 +1413,21 @@ test('A new deck hands the transition class to its cards, a new chip stack leave
     .pressKey('esc')
     .expect(cardDefaultClasses('deck1D')).eql('transition')
     .expect(cardDuration('deck1_A_C')).eql('0.3s');
+
+  // the deck's own properties panel can take the class away again and put it back - it is not something only
+  // the JSON editor knows about
+  const glideSwitch = Selector('.editorModule .propertyInput.switchInput').withText('Glide when they move').find('label.switchbox');
+  await t
+    .click('#editButton') // the esc above left edit mode, where the deck widget is the only thing visible of it
+    .click('#editorSidebar [icon=tune]') // and closed the properties module the switch lives in
+    .click('#w_deck1D')
+    .expect(glideSwitch.exists).ok()
+    .click(glideSwitch)
+    .expect(cardDefaultClasses('deck1D')).notOk()
+    .expect(cardDuration('deck1_A_C')).eql('0s')
+    .click(glideSwitch)
+    .expect(cardDefaultClasses('deck1D')).eql('transition')
+    .expect(cardDuration('deck1_A_C')).eql('0.3s');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {

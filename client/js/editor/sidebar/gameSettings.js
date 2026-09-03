@@ -633,7 +633,7 @@ class GameSettingsModule extends SidebarModule {
     // Rules here are applied after the built-in stylesheet, so they win against a built-in class of the
     // same specificity - which is how a game changes what one of them does instead of inventing its own.
     const p2 = document.createElement('p');
-    p2.textContent = 'Rules here also override the built-in classes. Widgets with the "transition" class glide to a new position over 300ms, for example, which ".transition { transition: transform 600ms; }" slows down.';
+    p2.innerHTML = 'Rules here also override VTT\'s own classes. Widgets with the <code>transition</code> class glide to a new position over 300ms, for example, which <code>.transition { transition: transform 600ms; }</code> slows down.';
     target.append(p1, p2);
 
     const gameSettings = getCurrentGameSettings();
