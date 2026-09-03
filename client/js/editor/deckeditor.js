@@ -4500,8 +4500,11 @@ function cardDefaultsHaveTransition(cardDefaults) {
 // where the deck panel's "Cards glide when they move" switch - and one line in the JSON editor - can take
 // it away again, and it is added to whatever the deck already asks for: a class of its own says how the
 // cards look and has to survive. It must not be added to classes a dropTarget matches on, which compares
-// them as one whole string (see the chip stacks in editmode.js).
+// them as one whole string (see the chip stacks in editmode.js) - which is also why a class list that
+// already glides is handed back exactly as it was written instead of being rebuilt.
 function cardDefaultsWithTransition(cardDefaults, transition=true) {
+  if(transition && cardDefaultsHaveTransition(cardDefaults))
+    return Object.assign({}, cardDefaults);
   const classes = cardDefaultsClassList(cardDefaults).filter(className=>className != 'transition');
   if(transition)
     classes.push('transition');
