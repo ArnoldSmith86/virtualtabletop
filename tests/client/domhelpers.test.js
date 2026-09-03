@@ -1,23 +1,16 @@
-import { canBeStored, stringifyForDisplay } from '../../client/js/domhelpers.js';
+import { stringifyForDisplay } from '../../client/js/domhelpers.js';
 
 // A routine can build a value that contains itself (#1415). Such a value cannot be stored in a
 // property, but it still has to be printable - the routine log is where the user finds out.
 
 describe("Scenarios: Values that contain themselves", () => {
   describe("Given a value that can be serialized", () => {
-    test("Then canBeStored accepts it and stringifyForDisplay prints it", () => {
-      expect(canBeStored({ a: [ 1, 'two', null ] })).toBe(true);
+    test("Then stringifyForDisplay prints it", () => {
       expect(stringifyForDisplay({ a: [ 1, 'two', null ] })).toBe('{"a":[1,"two",null]}');
     });
   });
 
   describe("Given a value that contains itself", () => {
-    test("Then canBeStored rejects it", () => {
-      const value = {};
-      value.me = value;
-      expect(canBeStored(value)).toBe(false);
-    });
-
     test("Then stringifyForDisplay marks the place where the loop closes", () => {
       const value = {};
       value.me = value;
@@ -51,8 +44,7 @@ describe("Scenarios: Values that contain themselves", () => {
   });
 
   describe("Given a value that cannot be serialized for another reason", () => {
-    test("Then canBeStored rejects it and stringifyForDisplay explains why", () => {
-      expect(canBeStored({ big: BigInt(1) })).toBe(false);
+    test("Then stringifyForDisplay explains why", () => {
       expect(JSON.parse(stringifyForDisplay({ big: BigInt(1) })).error).toMatch(/BigInt/);
     });
   });

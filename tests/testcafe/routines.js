@@ -285,6 +285,31 @@ test('the recursion limit is reported in the routine that was clicked', async t 
   await t.expect(Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems').innerText).contains('nested inside each other');
 });
 
+// A routine waiting in DELAY has nothing running inside it, so it must not use up the nesting
+// budget - a game that keeps a few timer driven routines in flight would otherwise be refused an
+// ordinary click. (#1405)
+test('routines that are waiting do not use up the nesting limit', async t => {
+  await setRoomState({
+    park: { id: 'park', type: 'button', text: 'park', x: 800, y: 200, clickRoutine: [ { func: 'DELAY', milliseconds: 3000 } ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+
+  // more waiting routines than the nesting limit allows, none of them nested inside another
+  await ClientFunction(() => {
+    for(let i=0; i<300; i++)
+      widgets.get('park').evaluateRoutine('clickRoutine', {}, {});
+    return true;
+  })();
+  await t.wait(300); // long enough for all of them to have reached their DELAY
+
+  // the routines that are waiting hold the client's batch open, so the write stays local for now
+  await ClientFunction(() => widgets.get('go').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+  await t.expect(await ClientFunction(() => widgets.get('go').get('marked'))()).eql(true);
+});
+
 // Routines that overlap - one starts while another one is waiting in DELAY or INPUT - share the
 // client's batch counter, so every routine has to close exactly the batch it opened. Closing
 // everything down to the depth it saw when it started would close the batch of the routine that

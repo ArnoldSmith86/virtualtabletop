@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, canBeStored, stringifyForDisplay } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, stringifyForDisplay } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -50,6 +50,18 @@ const maxRoutineDepth = 250;
 let routineDepth = 0;
 let routineDepthProblem = null;
 let routineDepthProblemForOutermost = null;
+
+// A routine waiting in DELAY or INPUT has nothing running inside it, so it gives its level back for
+// as long as it waits. Otherwise a game that keeps a handful of timer driven routines in flight -
+// each of them legitimately waiting, none of them calling itself - would run into the nesting limit.
+async function whileSuspended(promise) {
+  --routineDepth;
+  try {
+    return await promise;
+  } finally {
+    ++routineDepth;
+  }
+}
 
 // wouldCreateParentCycle reads the parent of every widget it walks, which can come back into
 // getDefaultValue for a widget whose inherited parent is still being resolved. StateManaged's own
@@ -920,7 +932,7 @@ export class Widget extends StateManaged {
       batchEnd();
       if(!--routineDepth) {
         // Nothing is left that could report it - that happens when the routine that hit the limit
-        // was aborted by an exception, or when it ran next to another routine that was suspended in
+        // was aborted by an exception, or when every routine that is still alive is suspended in
         // DELAY or INPUT. The message names the routine it came from, so the console still tells
         // the whole story.
         for(const problem of [ routineDepthProblem, routineDepthProblemForOutermost ])
@@ -1404,7 +1416,7 @@ export class Widget extends StateManaged {
       if(a.func == 'DELAY') {
         setDefaults(a, { milliseconds: 0 });
         flushDelta();
-        await sleep(a.milliseconds);
+        await whileSuspended(sleep(a.milliseconds));
         if(routineLogging)
           jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
@@ -1639,7 +1651,7 @@ export class Widget extends StateManaged {
         try {
           const usePlayerSpecificOverlay = hasPlayerSpecificChooseField(a);
           const overlaysByPlayer = usePlayerSpecificOverlay ? Object.fromEntries(players.map((p, i)=>[ p, cloneInputOverlayForPlayer(a, p, i) ])) : null;
-          const results = await runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal });
+          const results = await whileSuspended(runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal }));
           if(isMulti) {
             // Return each field's value keyed by the player who entered it.
             for(const field of a.fields || []) {
@@ -1896,12 +1908,10 @@ export class Widget extends StateManaged {
           for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
             if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
               problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
-            } else if(key == 'parent' && value == widget.id) {
-              problems.push(`Skipping parent change of ${widget.id} to itself.`);
-            } else if(key == 'parent' && widget.wouldCreateParentCycle(value)) {
-              problems.push(`Skipping parent change of ${widget.id} to ${value}: ${value} is inside ${widget.id}.`);
             } else {
-              await widget.set(key, value);
+              const refused = await widget.set(key, value);
+              if(refused)
+                problems.push(`Skipping ${refused}.`);
             }
           }
         }
@@ -2080,14 +2090,9 @@ export class Widget extends StateManaged {
                 problems.push(`null value being appended, SET ignored`);
               } else {
                 const newValue = await compute(a.relation, null, w.get(String(a.property)), a.value);
-                if(a.property == 'parent' && newValue == w.id)
-                  problems.push(`Skipping parent change of ${w.id} to itself.`);
-                else if(a.property == 'parent' && w.wouldCreateParentCycle(newValue))
-                  problems.push(`Skipping parent change of ${w.id} to ${newValue}: ${newValue} is inside ${w.id}.`);
-                else if(!canBeStored(newValue))
-                  problems.push(`Skipping ${a.property} of ${w.id}: the value contains itself and can not be stored.`);
-                else
-                  await w.set(String(a.property), newValue);
+                const refused = await w.set(String(a.property), newValue);
+                if(refused)
+                  problems.push(`Skipping ${refused}.`);
               }
             }
           }
@@ -3030,12 +3035,15 @@ export class Widget extends StateManaged {
 
   // The parent invariant is enforced here so that every writer is safe by construction: a widget
   // that becomes its own ancestor cannot be rendered and sends every walk up the parent chain into
-  // infinite recursion. The call sites a user can reach check first so that they can report a
-  // problem in their own wording, this is the backstop for the ones that do not. (#1414, #684)
+  // infinite recursion. A refused write returns the reason for it, which the operations a user can
+  // reach turn into a problem entry. (#1414, #684)
   async set(property, value) {
     if(property == 'parent' && typeof value == 'string' && this.wouldCreateParentCycle(value)) {
-      console.log(`Not setting parent of ${this.id} to ${value}: ${value} is inside ${this.id}.`);
-      return;
+      const reason = value == this.id
+        ? `parent change of ${this.id} to itself`
+        : `parent change of ${this.id} to ${value}: ${value} is inside ${this.id}`;
+      console.log(`Skipping ${reason}.`);
+      return reason;
     }
     return await super.set(property, value);
   }

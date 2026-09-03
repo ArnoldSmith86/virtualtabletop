@@ -123,9 +123,10 @@ export class StateManaged {
     } catch(e) {
       // A routine can build a value that contains itself (e.g. "var a = ${a} push ${a}"). Such a
       // value can neither be stored nor sent to the server, so refuse the write instead of letting
-      // the exception tear down the client. (#1415)
+      // the exception tear down the client. Refusing returns the reason, so that a caller which can
+      // show it to the user does not have to serialize the value a second time. (#1415)
       console.log(`Not setting ${property} of ${this.get('id')}: ${e.toString()}`);
-      return;
+      return `${property} of ${this.get('id')}: the value contains itself and can not be stored`;
     }
     if(!this.state.inheritFrom && JSONvalue === JSON.stringify(this.getDefaultValue(property)))
       value = null;
@@ -134,8 +135,10 @@ export class StateManaged {
 
     if(property == 'z') {
       updateMaxZ(this.get('layer'), value);
-      if(value > 90000)
-        return await resetMaxZ(this.get('layer'));
+      if(value > 90000) {
+        await resetMaxZ(this.get('layer'));
+        return;
+      }
     }
 
     const oldValue = this.state[property];

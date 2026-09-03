@@ -1904,7 +1904,7 @@ function jeMultiParentProblem(state) {
     let value = state.parent;
     if(typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!state.widgets.includes(k)).length)
       value = value[id];
-    if(value !== undefined && widgets.has(id) && widgets.get(id).wouldCreateParentCycle(value))
+    if(value !== undefined && widgets.has(id) && widgets.get(id).get('parent') !== value && widgets.get(id).wouldCreateParentCycle(value))
       cycles.push(id);
   }
   return cycles.length ? `The given parent is inside ${cycles.join(', ')} itself, so using it would create a loop.` : null;
@@ -1913,14 +1913,15 @@ function jeMultiParentProblem(state) {
 async function jeApplyChangesMulti() {
   const parentCycles = [];
   const setValueIfNeeded = async function(widget, key, value) {
+    if(widget.get(key) === value)
+      return;
     // putting a widget inside itself breaks it beyond repair, so refuse it here just like the
     // single widget editor does
     if(key == 'parent' && widget.wouldCreateParentCycle(value)) {
       parentCycles.push(widget.get('id'));
       return;
     }
-    if(widget.get(key) !== value)
-      await widget.set(key, value);
+    await widget.set(key, value);
   };
 
   const currentState = JSON.parse(jeGetEditorContent());
