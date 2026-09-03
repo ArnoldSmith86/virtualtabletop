@@ -1364,7 +1364,55 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_dice2')
     .click('#w_dice2');
-  await compareState(t, 'f1b7028d28a75d5d0dd88a8380c1c4e2');
+  await compareState(t, 'a59b94e1ee5f2beef49f6fe5983ee5b3');
+});
+
+// The rule behind the transition class is the client's, so nothing in a save file pins it: a game that wants
+// gliding widgets only asks for the class. These are the three answers the rule gives.
+test('The transition class glides a widget over a duration --transitionDuration changes', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    plain: { id: 'plain', type: 'basic', x: 20, y: 20, width: 50, height: 50 },
+    glide: { id: 'glide', type: 'basic', x: 20, y: 100, width: 50, height: 50, classes: 'transition' },
+    slow:  { id: 'slow',  type: 'basic', x: 20, y: 180, width: 50, height: 50, classes: 'transition', css: '--transitionDuration: 1500ms' }
+  });
+  await ClientFunction(prepareClient)();
+
+  const durations = ClientFunction(ids => ids.map(id => getComputedStyle(document.getElementById('w_'+id)).transitionDuration));
+  await t
+    .expect(Selector('#w_slow').exists).ok()
+    .expect(durations([ 'plain', 'glide', 'slow' ])).eql([ '0s', '0.3s', '1.5s' ]);
+});
+
+// A widget the editor creates carrying a class it does not need is not free: compareDropTarget() compares
+// classes as one whole string, so a chip that says "pokerChip transition" no longer matches the stack's
+// dropTarget of "pokerChip" and cannot be put back. A state hash cannot see a drop target that stopped
+// matching, which is why the two halves are asserted here.
+test('A new deck hands the transition class to its cards, a new chip stack leaves its chips alone', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const cardDefaultClasses = ClientFunction(id => (widgets.get(id).get('cardDefaults') || {}).classes);
+  const cardDuration = ClientFunction(id => getComputedStyle(widgets.get(id).domElement).transitionDuration);
+  const dropTargetIDs = ClientFunction(id => widgets.get(id).validDropTargets().map(w => w.get('id')));
+
+  // the chip stack comes first: the holder of a card deck accepts every card, chips included, so its
+  // presence would hide whether the chip still matches the stack it belongs to
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-2D-chips')
+    .pressKey('esc')
+    .expect(cardDefaultClasses('chips1D')).eql('pokerChip')
+    .expect(dropTargetIDs('chips1C1')).eql([ 'chips1' ])
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-deck_K_S')
+    .pressKey('esc')
+    .expect(cardDefaultClasses('deck1D')).eql('transition')
+    .expect(cardDuration('deck1_A_C')).eql('0.3s');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
@@ -2295,7 +2343,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.pressKey('esc');          // closes the deck editor - and only the deck editor
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
-  await compareState(t, '08fd4fc28330d11cb0c32b07d01455be');
+  await compareState(t, '5904dc26cd93f0b3ef9634ded10bbf19');
 });
 
 test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {
@@ -2514,7 +2562,7 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
     .typeText('.textCardsCopies', '2', { replace: true })
     .click('#deckEditorNewDeckPanel .goButton [icon=add]')
     .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
-  await compareState(t, '56acdbdb0ac9ae1ff387bdbf3ffca089');
+  await compareState(t, '4079d9c5507c65d71441004f891cce75');
 });
 
 // The other way of cutting the typed text into cards: with a blank line as the separator a card's text keeps

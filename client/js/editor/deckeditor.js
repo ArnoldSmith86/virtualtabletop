@@ -4486,6 +4486,16 @@ const deckEditorCardSizes = [
   { label: 'Token',       width:  50, height:  50 }
 ];
 
+// The cardDefaults every deck creation flow builds on: cards that glide to wherever they are moved to
+// instead of jumping there. The class goes into cardDefaults, where removing it again is one line, and it
+// is appended to whatever the deck already asks for - a class of its own says how the cards look and has
+// to survive. It must not be appended to classes a dropTarget matches on, which compares them as one
+// whole string (see the chip stacks in editmode.js).
+function cardDefaultsWithTransition(cardDefaults) {
+  const classes = cardDefaults && cardDefaults.classes;
+  return Object.assign({}, cardDefaults, { classes: classes ? classes + ' transition' : 'transition' });
+}
+
 // The "Recall & Shuffle" button all deck creation flows put below their holder: it recalls the deck's cards,
 // flips them to their back and shuffles them. Offered as an option by the "Add New Deck" wizard.
 function deckResetButton(holderID, width, y) {
@@ -4555,7 +4565,7 @@ async function createStarterDeck(deckID, size, placement) {
     type: 'deck',
     id: dID
   }, placement.holder ? { parent: id, x: 12, y: 41 } : { x: 748 - 96, y: 400 }, {
-    cardDefaults: { classes: 'transition', width: cardWidth, height: cardHeight },
+    cardDefaults: cardDefaultsWithTransition({ width: cardWidth, height: cardHeight }),
     cardTypes: { 'type 1': {} },
     faceTemplates: [
       { objects: [ { type: 'image', x: 0, y: 0, width: cardWidth, height: cardHeight, color: VTTblue } ] },

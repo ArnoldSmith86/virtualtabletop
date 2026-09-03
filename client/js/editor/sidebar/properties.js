@@ -3768,9 +3768,7 @@ class PropertiesModule extends SidebarModule {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
 
-    // Cards of a new deck glide to wherever they are moved to instead of jumping there. It sits in
-    // cardDefaults so a game author can simply remove it again, or restyle .transition in the room CSS.
-    deck = Object.assign({}, deck, { cardDefaults: Object.assign({ classes: 'transition' }, deck.cardDefaults) });
+    deck = Object.assign({}, deck, { cardDefaults: cardDefaultsWithTransition(deck.cardDefaults) });
 
     // Match the public-library flow: a holder sized to the cards, a Recall & Shuffle button, the deck
     // centered in it and the cards stacked in a pile - rather than spreading loose cards across the table.
@@ -10680,7 +10678,7 @@ class PropertiesModule extends SidebarModule {
       value.type = 'text';
       value.className = 'dropTargetValue';
       value.placeholder = 'value';
-      value.title = 'The value that property has to have';
+      value.title = 'The value that property has to have, compared as a whole - matching on classes means the widget\'s entire class list, like "pokerChip transition"';
       value.value = conditionText(condition.value);
       property.onchange = value.onchange = _=>{
         condition.property = property.value;
