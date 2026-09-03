@@ -121,9 +121,14 @@ class DebugModule extends SidebarModule {
     this.updateValidation();
   }
 
-  // Leaving edit mode switches routine logging off (see closeEditor), which the panel itself does
-  // not notice - so a Debug module that is still open when edit mode is entered again switches it
-  // back on. Without this, the log stays empty until the module is closed and opened once more.
+  // Routines are only logged while this panel is open to show the log, so playing the game costs
+  // nothing - which is why the flag follows edit mode in both directions and not just the panel:
+  // a panel that is still open when the editor is closed and reopened has to log again.
+  onEditorClose() {
+    super.onEditorClose();
+    setJEroutineLogging(jeRoutineLogging = false);
+  }
+
   onEditorOpen() {
     super.onEditorOpen();
     if(this.moduleDOM)

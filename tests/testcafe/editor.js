@@ -3819,9 +3819,9 @@ test('the Debug module logs each operation of a routine with its result', async 
   await setEditorState(null);
 });
 
-// Routine logging is switched off while playing, so the panel that is still open when edit mode
-// comes back has to switch it on again - loading a game leaves edit mode on the way to the game
-// shelf, which is where an always-open Debug module used to end up logging nothing.
+// Routine logging follows edit mode, not just the panel: it is switched off while the game is
+// played so playing costs nothing, which leaves a Debug module that stays open across a round of
+// playing logging nothing at all once edit mode comes back.
 test('the Debug module logs again after edit mode was left and entered once more', async t => {
   await setRoomState({
     button: { id: 'button', type: 'button', clickRoutine: [ 'var roll = randInt 5 5' ] }
@@ -3830,21 +3830,32 @@ test('the Debug module logs again after edit mode was left and entered once more
   await setEditorState({ modules: { Debug: 'editorModuleTopLeft' } });
   await setName(t);
 
+  const runClickRoutine = ClientFunction(() => {
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  });
+  const loggedOperations = Selector('#jeLog .jeLogSummary');
+
   await t
+    .expect(Selector('#w_button').exists).ok('the room renders its widgets', { timeout: 30000 })
     .click('#editButton')
     .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok()
     .click('#editorToolbar [icon=close]')
-    .expect(Selector('body').hasClass('edit')).notOk()
+    .expect(Selector('body').hasClass('edit')).notOk();
+
+  // nothing is logged while the game is played, however long the panel has been open
+  await runClickRoutine();
+  await t.expect(loggedOperations.count).eql(0);
+
+  await t
     .click('#editButton')
+    .expect(Selector('body').hasClass('edit')).ok()
     .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
 
-  await ClientFunction(() => {
-    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
-  })();
+  await runClickRoutine();
 
   await t
     .expect(Selector('.jeLogEmptyNote').visible).notOk()
-    .expect(Selector('#jeLog .jeLogSummary').nth(0).innerText).eql('roll = randInt 5 5');
+    .expect(loggedOperations.nth(0).innerText).eql('roll = randInt 5 5');
 
   await setEditorState(null);
 });
