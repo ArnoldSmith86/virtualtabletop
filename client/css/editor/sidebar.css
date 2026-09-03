@@ -51,6 +51,22 @@ body.edit.darkMode #editorSidebar button.active {
   right: calc(var(--editSidebarWidth) - 2px);
 }
 
+#editorSidebar button[icon=tune],
+#editorSidebar button[icon=settings] {
+  text-align: left;
+  line-height: 0.8;
+}
+
+#editorSidebar button[icon=tune]::before,
+#editorSidebar button[icon=settings]::before {
+  margin-left: 0;
+}
+
+#editorSidebar button.active[icon=tune]::before,
+#editorSidebar button.active[icon=settings]::before {
+  left: 0;
+}
+
 #editorModules {
   display: none;
   position: absolute;
@@ -67,6 +83,13 @@ body.edit.darkMode #editorSidebar button.active {
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 2fr 1fr;
   grid-gap: 10px;
+}
+
+/* The module panel that opened itself (the first-run default, see renderSidebar) is sized to its content
+   instead of the stored 50/50 split, so the room stays the dominant thing on screen. Dropped again as soon
+   as a module is opened by hand or the resizer is dragged. min-width/max-width above still apply. */
+body.defaultEditorModuleWidth #editorModules {
+  width: min(420px, 35vw);
 }
 
 #editorModules ::-webkit-scrollbar-track {
@@ -245,62 +268,58 @@ body.lightsOff #editorModules {
   color: #f8f8f2;
 }
 
-/* iconify sidebar icons */
-@media (max-width: 1600px) {
-  :root {
-    --editSidebarWidth: 36px;
-  }
-  #editorSidebar button {
-    font-size: 0;
-    padding: 5px;
-  }
-  #editorSidebar button::before {
-    margin: 0;
-  }
-  #editorSidebar button span {
-    font-size: 13px;
-  }
+/* iconify sidebar icons - set by isEditSidebarNarrow() because the window width at which the
+   labels stop being affordable depends on the board's shape, which a media query can't know.
+   It used to be @media (max-width: 1600px), which took them away whenever the window was
+   narrower than a 16:10 board at full height, even where the room is limited by its height
+   and does not get any bigger without them. The module panel layouts below always iconify. */
+body.narrowEditSidebar {
+  --editSidebarWidth: 36px;
+}
+body.narrowEditSidebar #editorSidebar button {
+  font-size: 0;
+  padding: 5px;
+}
+body.narrowEditSidebar #editorSidebar button::before {
+  margin: 0;
+}
+body.narrowEditSidebar #editorSidebar button span {
+  font-size: 13px;
 }
 
-/* module above the room */
-@media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20) {
-  body.edit {
-    --editSidebarWidth: 36px;
-    --roomTop: calc(100 * var(--vh) - 1000px * var(--scale) / var(--roomZoom) + (1 - var(--roomZoom)) / 2 * 1000px * var(--scale) / var(--roomZoom));
-  }
-  #editorModules {
-    left: 0;
-    top: var(--editToolbarHeight);
-    right: var(--editSidebarWidth);
-    bottom: calc(1000px * var(--scale) / var(--roomZoom));
-    width: unset !important;
-    min-width: unset !important;
-    max-width: unset !important;
-    height: unset;
-  }
-  #editorModulesResizer {
-    display: none;
-  }
+/* module above the room - the classes below are set by calculateEditModuleClasses() because the window
+   shape they kick in at depends on the board's shape, which a media query can't know. They used to be two
+   media queries in this order, and just like those they can both be active at once - the overlay comes
+   second, so it still wins where they overlap. Both imply narrowEditSidebar, which is where the 36px
+   sidebar they leave room for comes from. */
+body.edit.editModulesAbove {
+  --roomTop: calc(100 * var(--vh) - var(--roomHeight) * var(--scale) / var(--roomZoom) + (1 - var(--roomZoom)) / 2 * var(--roomHeight) * var(--scale) / var(--roomZoom));
+}
+body.editModulesAbove #editorModules {
+  left: 0;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: calc(var(--roomHeight) * var(--scale) / var(--roomZoom));
+  width: unset !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  height: unset;
 }
 
 /* module as fullscreen overlay */
-@media (max-width: 1000px) and (min-aspect-ratio: 16/20) {
-  body.edit {
-    --editSidebarWidth: 36px;
-  }
-  #editorModules {
-    left: 0;
-    top: var(--editToolbarHeight);
-    right: var(--editSidebarWidth);
-    bottom: 0;
-    width: unset !important;
-    min-width: unset !important;
-    max-width: unset !important;
-    height: unset;
-  }
-  #editorModulesResizer {
-    display: none;
-  }
+body.editModulesOverlay #editorModules {
+  left: 0;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  width: unset !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  height: unset;
+}
+
+body:is(.editModulesAbove, .editModulesOverlay) #editorModulesResizer {
+  display: none;
 }
 
 #editorSidebar button {

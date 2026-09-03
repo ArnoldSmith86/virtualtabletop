@@ -11,13 +11,19 @@ else
   PREV_REF="$PREV_TAG"
 fi
 
+# Capture the log instead of piping it into grep -q: grep exiting early sends
+# SIGPIPE to git, which pipefail turns into a failed pipeline that looks like
+# an empty range and produced "no new commits" notes despite a month of commits.
+COMMITS=$(git log "$PREV_REF"..HEAD --reverse --format='- %s')
+echo "Release notes range: ${PREV_REF}..HEAD ($(git rev-list --count "$PREV_REF"..HEAD) commits)" >&2
+
 {
   echo "Changes since last month:"
   echo ""
-  if ! git log "$PREV_REF"..HEAD --format='%s' | grep -q .; then
+  if [[ -z "$COMMITS" ]]; then
     echo "_No new commits in this period._"
   else
-    git log "$PREV_REF"..HEAD --reverse --format='- %s' | GITHUB_REPOSITORY="$REPO" python3 -c "
+    printf '%s\n' "$COMMITS" | GITHUB_REPOSITORY="$REPO" python3 -c "
 import os, re, sys
 repo = os.environ['GITHUB_REPOSITORY']
 pat = re.compile(r'#(\d+)\b')

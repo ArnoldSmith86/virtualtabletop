@@ -1,4 +1,6 @@
-export const VERSION = 21;
+import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
+
+export const VERSION = 24;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -73,9 +75,30 @@ function hasPropertyCondition(properties, condition) {
 }
 
 function updateMeta(meta, v, state) {
-  v<18 && v18RoutineLegacyModes(meta, state);
-  v<19 && v19useIframeForHtmlCards(meta, state);
-  v<21 && v21DisableHolderImageWidget(meta, state);
+  updateLegacyModes(meta, v, state);
+}
+
+// Every legacy mode is enabled for games that were saved before the version that introduced
+// it and whose state trips its detector. Both facts live in LEGACY_MODES, so a new mode needs
+// no change here - see client/js/legacymoderegistry.js.
+function updateLegacyModes(meta, v, state) {
+  // a pre-v18 save cannot carry legacy modes of its own, but it can carry sibling game settings
+  if(v < 18)
+    meta.gameSettings = Object.assign({}, meta.gameSettings, { legacyModes: {} });
+
+  for(const [ name, mode ] of Object.entries(LEGACY_MODES))
+    if(v < mode.since && mode.detect(state))
+      legacyModesOf(meta)[name] = true;
+}
+
+// Created on demand so that a save which needs no legacy mode keeps the _meta shape it was
+// saved with. Missing objects are tolerated: hand-written saves and importer output do occur.
+function legacyModesOf(meta) {
+  if(!meta.gameSettings)
+    meta.gameSettings = {};
+  if(!meta.gameSettings.legacyModes)
+    meta.gameSettings.legacyModes = {};
+  return meta.gameSettings.legacyModes;
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -111,6 +134,8 @@ function updateProperties(properties, v, globalProperties) {
   v<15 && v15SkipTurnProperty(properties);
   v<17 && v17MaterialSymbols(properties);
   v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
+  v<22 && v22DragLimitNullSides(properties);
+  v<24 && v24ScoreboardEntryPane(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -136,6 +161,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<23 && v23SwapHandsToShift(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -503,6 +529,44 @@ function v16UpdateCountParameter(routine) {
   }
 }
 
+// SWAPHANDS passed the hands of the seats around the table; SHIFT does that and any
+// other cycle of holders, so the operation is written as the SHIFT it always was: its
+// seat filter becomes the list of entries and the order the widgets arrive in - which
+// SHIFT preserves by default - is spelled out the way SWAPHANDS left it.
+function v23SwapHandsToShift(routine) {
+  for(let i=routine.length-1; i>=0; --i) {
+    const operation = routine[i];
+    if(!operation || operation.func != 'SWAPHANDS')
+      continue;
+    operation.func = 'SHIFT';
+    // anything written down is read the same way by both operations, only leaving it
+    // out meant something else: SWAPHANDS handed the widgets over in the order they
+    // were created, SHIFT in the order of the holder they come from
+    if(operation.keepOrder === undefined)
+      operation.keepOrder = false;
+    const source = operation.source;
+    delete operation.source;
+    if(source === undefined || source === 'all')
+      continue;
+    if(typeof source == 'string') {
+      operation.holders = source;
+      continue;
+    }
+    // a written-out list used to be read as a collection, whose seats took part in
+    // seat index order - the order SHIFT gives a collection but not a written-out list
+    operation.holders = 'internal_swapHandsMigration';
+    routine.splice(i, 0, {
+      note: 'This was added by the automatic file migration because SHIFT passes the widgets along a list of holders in the order it is written in.',
+      func: 'SELECT',
+      type: 'seat',
+      property: 'id',
+      relation: 'in',
+      value: source,
+      collection: 'internal_swapHandsMigration'
+    });
+  }
+}
+
 function v17MaterialSymbols(properties) {
   for (const key in properties) {
     if (typeof properties[key] === 'object' && properties[key] !== null) {
@@ -511,25 +575,6 @@ function v17MaterialSymbols(properties) {
       properties[key] = properties[key].replace(/\b(material-icons(?:-(outlined|round|sharp|twotone))?)\b/g, "material-symbols");
     }
   }
-}
-
-function v18RoutineLegacyModes(meta, state) {
-  meta.gameSettings = { legacyModes: {} };
-
-  if(JSON.stringify(state).match(/"var |COMPUTE/)) {
-    meta.gameSettings.legacyModes.convertNumericVarParametersToNumbers = true;
-    meta.gameSettings.legacyModes.useOneAsDefaultForVarParameters = true;
-  }
-}
-
-function v19useIframeForHtmlCards(meta, state) {
-  for(const widget of Object.values(state))
-    if(widget.type == 'deck' && Array.isArray(widget.faceTemplates))
-      for(const face of widget.faceTemplates)
-        if(Array.isArray(face.objects))
-          for(const object of face.objects)
-            if(object.type == 'html')
-              return meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
 }
 
 function v20WhiteSpacePreWrapRoutineCheck(obj, globalProperties) {
@@ -600,14 +645,25 @@ function v20WhiteSpacePreWrap(properties, globalProperties) {
     properties.css = addWhiteSpacePreWrapToCss(properties.css);
 }
 
-function v21DisableHolderImageWidget(meta, state) {
-  for(const id in state) {
-    const properties = state[id];
-    if(properties && properties.type == 'holder') {
-      if(properties.image || properties.icon || properties.text || properties.textColor || properties.color || properties.svgReplaces) {
-        meta.gameSettings.legacyModes.disableHolderImageWidget = true;
-        return;
-      }
-    }
-  }
+// A side of dragLimit written as null used to be clamped with Math.max(null, x)
+// / Math.min(null, x), i.e. at 0. Now that a side can be an expression, one that
+// does not amount to a number is read as "no limit on that side" like a missing
+// one - so the 0 it always meant is written down instead.
+function v22DragLimitNullSides(properties) {
+  const limit = properties.dragLimit;
+  if(typeof limit != 'object' || limit === null || Array.isArray(limit))
+    return;
+  for(const key of [ 'minX', 'maxX', 'minY', 'maxY' ])
+    if(limit[key] === null)
+      limit[key] = 0;
+}
+
+// A click on a scoreboard always opened the edit pane, and the table only ever
+// showed the rounds that had been scored. Both are what scoreEntry 'pane' asks
+// for, while the new default 'auto' types into the clicked cell or opens the
+// keypad and carries a row for the round about to be played - so a board
+// written before the property existed says what it always did.
+function v24ScoreboardEntryPane(properties) {
+  if(properties.type == 'scoreboard' && properties.scoreEntry === undefined)
+    properties.scoreEntry = 'pane';
 }
