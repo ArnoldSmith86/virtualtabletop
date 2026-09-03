@@ -2364,7 +2364,11 @@ export class Widget extends StateManaged {
               }
 
               const property = w.get(mainProperty);
-              const oldValue = keyPath.length ? getNestedValue(property, keyPath) : property;
+              // the copy is taken before compute() so that a mutating relation (sort, reverse, pop, shift)
+              // works on it - mutating the live state would make w.set() see no change and skip both the
+              // delta to the other clients and the change routine
+              const copy     = keyPath.length && property !== null && typeof property == 'object' ? JSON.parse(JSON.stringify(property)) : property;
+              const oldValue = keyPath.length ? getNestedValue(copy, keyPath) : property;
               // a local relation: falling back to = for one widget must not change it for the next
               const relation = a.relation == '+' && oldValue == null ? '=' : a.relation;
               if(relation == '+' && a.value == null) {
@@ -2374,7 +2378,6 @@ export class Widget extends StateManaged {
                 if(!keyPath.length) {
                   await w.set(mainProperty, newValue);
                 } else {
-                  const copy = property !== null && typeof property == 'object' ? JSON.parse(JSON.stringify(property)) : property;
                   const where = `Property ${JSON.stringify(mainProperty)} of widget ${JSON.stringify(w.get('id'))}`;
                   const keyProblems = [];
                   const keyWarnings = [];

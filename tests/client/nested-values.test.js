@@ -149,6 +149,29 @@ describe("Scenarios: Reading and writing values inside widget properties", () =>
       expect(problems).toMatch(/^Warning: Property "css" of widget ".*": Key "default" was not an object - its value "color: red" was replaced\.$/m);
     });
 
+    test("Then a mutating relation works on a copy, so the change is not lost", async () => {
+      // sort/reverse/pop/shift mutate their argument - reading the old value out of the live state
+      // would leave nothing for w.set() to see, so no delta and no changeRoutine
+      const sortWidget = createWidget({
+        id: `${testName}-sort-widget`,
+        type: 'widget',
+        data: { list: [ 3, 1, 2 ] },
+        changeRoutine: [
+          { func: 'SELECT', property: 'id', value: testLabel.get('id') },
+          { func: 'SET', property: 'text', value: 'changed' }
+        ]
+      });
+      await testLabel.set('text', '');
+      await testWidget.set('clickRoutine', [
+        { func: 'SELECT', property: 'id', value: sortWidget.get('id') },
+        { func: 'SET', property: [ 'data', 'list' ], relation: 'sort' }
+      ]);
+      await testWidget.click();
+      expect(sortWidget.get('data')).toEqual({ list: [ 1, 2, 3 ] });
+      expect(testLabel.get('text')).toBe('changed');
+      removeWidget(sortWidget.get('id'));
+    });
+
     test("Then it refuses to write into the prototype chain", async () => {
       await run([
         { func: 'SET', property: [ 'cardTypes', '__proto__', 'polluted' ], value: 'yes' },
