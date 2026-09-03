@@ -95,6 +95,14 @@ describe("Scenarios: Reading and writing values inside widget properties", () =>
       expect(problems).toMatch(/^Warning: Property "css" of widget ".*" was not an object - its value "color: blue" was replaced\.$/m);
     });
 
+    test("Then it does not warn about an unset property that reads as an empty string", async () => {
+      const problems = await runCapturingProblems([
+        { func: 'SET', property: [ 'css', 'default', 'background' ], value: 'red' }
+      ], { css: '' });
+      expect(targetWidget.get('css')).toEqual({ default: { background: 'red' } });
+      expect(problems).not.toMatch(/was not an object/);
+    });
+
     test("Then it does not claim a replacement when the key is refused", async () => {
       const problems = await runCapturingProblems([
         { func: 'SET', property: [ 'cardTypes', '__proto__' ], value: 'yes' }
@@ -288,6 +296,60 @@ describe("Scenarios: Reading and writing values inside widget properties", () =>
         { func: 'LABEL', label: testLabel.get('id'), value: 'x${data.a.b.c}' }
       ]);
       expect(testLabel.get('text')).toBe('x');
+    });
+  });
+
+  describe("Given a routine that is being debugged", () => {
+    // the routine logger lives in the JSON editor, which is part of the room bundle and not
+    // loaded here - the summaries the operations write are collected through stubs
+    async function runCapturingSummaries(routine, targetProperties) {
+      const summaries = [];
+      const stubs = {
+        jeLoggingRoutineStart: ()=>{},
+        jeLoggingRoutineEnd: ()=>{},
+        jeLoggingRoutineNotLogged: ()=>{},
+        jeLoggingRoutineOperationStart: ()=>{},
+        jeLoggingRoutineOperationEnd: ()=>{},
+        jeLoggingRoutineOperationSummary: (definition, result)=>summaries.push(result ? `${definition} => ${result}` : definition)
+      };
+      Object.assign(window, stubs);
+      window.jeRoutineLogging = true;
+      try {
+        await run(routine, targetProperties);
+      } finally {
+        window.jeRoutineLogging = false;
+        for(const name in stubs)
+          delete window[name];
+      }
+      return summaries;
+    }
+
+    test("Then GET names the whole key path it read", async () => {
+      const summaries = await runCapturingSummaries([
+        { func: 'GET', variable: 'background', property: [ 'css', 'default', 'background' ] }
+      ], { css: { default: { background: '#6a4a9a' } } });
+      expect(summaries).toContain(`first of 'css.default.background' in 'DEFAULT' => var background = "#6a4a9a"`);
+    });
+
+    test("Then GET names the sub-property it aggregated", async () => {
+      const summaries = await runCapturingSummaries([
+        { func: 'GET', variable: 'total', property: [ 'counters', 'score' ], aggregation: 'sum' }
+      ], { counters: { score: 3 } });
+      expect(summaries).toContain(`sum of 'counters.score' in 'DEFAULT' => var total = 3`);
+    });
+
+    test("Then GET still names a plain property", async () => {
+      const summaries = await runCapturingSummaries([
+        { func: 'GET', variable: 'theID', property: 'id' }
+      ]);
+      expect(summaries).toContain(`first of 'id' in 'DEFAULT' => var theID = "${targetWidget.get('id')}"`);
+    });
+
+    test("Then SET names the whole key path it wrote", async () => {
+      const summaries = await runCapturingSummaries([
+        { func: 'SET', property: [ 'cardTypes', 0, 'color' ], value: 'red' }
+      ], { cardTypes: [ { color: 'blue' } ] });
+      expect(summaries).toContain(`'cardTypes[0].color' = "red" for widgets in 'DEFAULT'`);
     });
   });
 });

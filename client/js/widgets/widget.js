@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, getNestedValue, mapAssetURLs, mod, setNestedValue, timeToMS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, getNestedValue, mapAssetURLs, mod, propertyPathText, setNestedValue, timeToMS } from '../domhelpers.js';
 import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
@@ -1825,13 +1825,14 @@ export class Widget extends StateManaged {
 
       if(a.func == 'GET') {
         const propertyPath = asArray(a.property || 'id');
-        const mainProperty = String(propertyPath.shift());
+        const mainProperty = String(propertyPath[0]);
+        const keyPath      = propertyPath.slice(1);
 
         setDefaults(a, { variable: mainProperty, collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
         const collection = getCollection(a.collection);
         if(collection) {
 
-          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>getNestedValue(w.get(mainProperty), propertyPath))));
+          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>getNestedValue(w.get(mainProperty), keyPath))));
 
           if (a.skipMissing)
             c = c.filter(v=>v !== null && v !== undefined);
@@ -1872,7 +1873,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${propertyPathText(propertyPath)}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
 
@@ -2385,8 +2386,9 @@ export class Widget extends StateManaged {
                   if(keyProblems.length) {
                     problems.push(...keyProblems.map(p=>`${where}: ${p}`));
                   } else {
-                    // only report the replacement once it actually happened - a refused key changes nothing
-                    if(property !== null && typeof property != 'object')
+                    // only report the replacement once it actually happened - a refused key changes nothing.
+                    // An empty string is what an unset css/text/... reads as, so nothing is lost there.
+                    if(property !== null && property !== '' && typeof property != 'object')
                       problems.push(`Warning: ${where} was not an object - its value ${JSON.stringify(property)} was replaced.`);
                     problems.push(...keyWarnings.map(p=>`Warning: ${where}: ${p}`));
                     await w.set(mainProperty, newProperty);
@@ -2397,7 +2399,7 @@ export class Widget extends StateManaged {
           }
         }
         if(routineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
+          jeLoggingRoutineOperationSummary(`'${propertyPathText(propertyPath)}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
       }
 
       if(a.func == 'SHIFT') {

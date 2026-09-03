@@ -691,6 +691,23 @@ export function setNestedValue(object, path, value, problems=[], warnings=[]) {
   return container;
 }
 
+// Renders a property key path the way a routine author writes it, for log and problem messages:
+// [ 'css', 'default', 'background' ] becomes css.default.background. A key that is not a plain
+// identifier stays unambiguous in brackets: [ 'cardTypes', 0, 'color' ] becomes cardTypes[0].color, and
+// a key containing a dot or a space is quoted.
+export function propertyPathText(path) {
+  const keys = asArray(path);
+  return keys.map((key, index)=>{
+    const plainKey = String(key).match(/^[A-Za-z_$][A-Za-z0-9_$-]*$/);
+    // the property name itself is never ambiguous on its own, so it is only quoted once keys follow it
+    if(!index)
+      return plainKey || keys.length == 1 ? String(key) : `[${JSON.stringify(String(key))}]`;
+    if(typeof key == 'number' || isArrayIndex(key))
+      return `[${key}]`;
+    return plainKey ? `.${key}` : `[${JSON.stringify(String(key))}]`;
+  }).join('');
+}
+
 export function funhash(s) {
   for(var i = 0, h = 0xdeadbeef; i < s.length; i++)
   h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
