@@ -1384,6 +1384,52 @@ test('The transition class glides a widget over a duration --transitionDuration 
     .expect(durations([ 'plain', 'glide', 'slow' ])).eql([ '0s', '0.3s', '1.5s' ]);
 });
 
+// A card that is dealt onto a card it piles up with travels while the pile it lands in is being created, and
+// applying a delta re-attached the pile to the parent it was already in - which takes the card out of the DOM
+// with it and cancels the glide it just started. Only the move that creates the pile was affected, so a deal
+// onto an empty holder and the next one onto the finished pile both animate on either side of the fix.
+test('A card keeps gliding into a pile that the same move creates', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck:   { id: 'deck', type: 'deck', x: 20, y: 20, cardTypes: { plain: {} }, cardDefaults: { classes: 'transition' } },
+    source: { id: 'source', type: 'holder', x: 20, y: 200, dropTarget: { type: 'card' } },
+    target: { id: 'target', type: 'holder', x: 800, y: 200, dropTarget: { type: 'card' } },
+    card1:  { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    card2:  { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    card3:  { id: 'card3', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    deal:   { id: 'deal', type: 'button', x: 800, y: 500, text: 'deal', clickRoutine: [
+      { func: 'MOVE', from: 'source', to: 'target', count: 1 } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // a transition that is cancelled before the first frame is rendered reports no running animation and fires
+  // no event afterwards, so the cards are watched frame by frame from before the deal rather than sampled once
+  const watchGlides = ClientFunction(() => {
+    window.glidedCards = new Set();
+    const step = () => {
+      for(const card of document.querySelectorAll('.card'))
+        if(card.getAnimations().length)
+          window.glidedCards.add(card.id.replace('w_', ''));
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+  const glidedCards = ClientFunction(() => [ ...window.glidedCards ].sort());
+  const parentOf = ClientFunction(id => document.getElementById('w_'+id).parentElement.id);
+
+  await t.expect(Selector('#w_card3').exists).ok();
+  await watchGlides();
+  await t
+    .click('#w_deal')
+    .expect(glidedCards()).contains('card1')
+    .click('#w_deal')
+    .expect(parentOf('card2')).notEql('w_target') // the second card lands in a pile, not in the holder itself
+    .expect(glidedCards()).contains('card2')
+    .click('#w_deal')
+    .expect(glidedCards()).contains('card3');
+});
+
 // A widget the editor creates carrying a class it does not need is not free: compareDropTarget() compares
 // classes as one whole string, so a chip that says "pokerChip transition" no longer matches the stack's
 // dropTarget of "pokerChip" and cannot be put back. A state hash cannot see a drop target that stopped

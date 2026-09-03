@@ -281,15 +281,22 @@ export class Widget extends StateManaged {
       if(this.parent)
         this.parent.applyChildRemove(this);
 
-      newParent.appendChild(this.domElement);
-      if (fromTransform) {
-        // If we changed parents, we apply a transform to the previous location
-        // to allow for a smooth transition animation.
-        this.domElement.style.transform = fromTransform;
-        // Force style recalc to commit from transform and start a transition
-        // on applying the destination transform.
-        this.domElement.offsetTop;
-        this.domElement.style.transform = this.targetTransform;
+      // Taking the element out of the DOM and putting it back cancels the CSS
+      // transitions running on it and on everything below it, so a delta that
+      // names the parent the widget already sits in is left alone: a pile that
+      // is re-applied right after it was created would otherwise stop the cards
+      // that just started gliding into it.
+      if(this.domElement.parentElement !== newParent) {
+        newParent.appendChild(this.domElement);
+        if (fromTransform) {
+          // If we changed parents, we apply a transform to the previous location
+          // to allow for a smooth transition animation.
+          this.domElement.style.transform = fromTransform;
+          // Force style recalc to commit from transform and start a transition
+          // on applying the destination transform.
+          this.domElement.offsetTop;
+          this.domElement.style.transform = this.targetTransform;
+        }
       }
 
       if(delta.parent !== null && widgets.has(delta.parent)) {
