@@ -1430,6 +1430,29 @@ test('A card keeps gliding into a pile that the same move creates', async t => {
     .expect(glidedCards()).contains('card3');
 });
 
+// A widget that is moved out of a holder is parked on the top surface first, carrying a temporary transform
+// that keeps it where it was until its real one is written back. When the delta sends it to the top surface
+// itself the element is already there, so nothing about it moves in the DOM - but the transform still has to
+// be restored, or the widget stays drawn inside the holder it left on every client that watched it go.
+test('A widget whose routine only detaches it is drawn at its own coordinates', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 400, y: 300, width: 120, height: 120, dropTarget: {} },
+    child:  { id: 'child', type: 'basic', parent: 'holder', x: 0, y: 0, width: 50, height: 50 },
+    detach: { id: 'detach', type: 'button', x: 20, y: 500, text: 'detach', clickRoutine: [
+      { func: 'SET', collection: [ 'child' ], property: 'parent', value: null } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const transformOf = ClientFunction(id => getComputedStyle(document.getElementById('w_'+id)).transform);
+
+  await t
+    .expect(Selector('#w_child').exists).ok()
+    .click('#w_detach')
+    .expect(transformOf('child')).eql('matrix(1, 0, 0, 1, 0, 0)');
+});
+
 // A widget the editor creates carrying a class it does not need is not free: compareDropTarget() compares
 // classes as one whole string, so a chip that says "pokerChip transition" no longer matches the stack's
 // dropTarget of "pokerChip" and cannot be put back. A state hash cannot see a drop target that stopped

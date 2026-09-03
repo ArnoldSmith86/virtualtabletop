@@ -1282,7 +1282,7 @@ const editorTypeNames = {
 
 // The part of a drop target the match rows cannot show: every condition is an exact comparison of the
 // whole property, so a widget carrying more classes than the one asked for is not a match.
-const dropTargetMatchInfo = '<p>A condition matches only when the property is exactly the value given. <code>classes</code> holds the widget\'s whole class list, so a widget whose classes are <code>pokerChip transition</code> does not match <code>pokerChip</code>.</p>';
+const dropTargetMatchInfo = '<p>A condition compares the whole property to the value given; the one exception is <code>type: card</code>, which also accepts a deck. <code>classes</code> holds the widget\'s whole class list, so a widget whose classes are <code>pokerChip transition</code> does not match <code>pokerChip</code>.</p>';
 
 // Explanations shown by the info buttons next to the curated inputs. The text
 // usually comes from the wiki summary of the property.
