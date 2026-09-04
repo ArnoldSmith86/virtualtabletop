@@ -5509,11 +5509,13 @@ class PropertiesModule extends SidebarModule {
       const newID = idInput.value.trim();
       if(newID == oldID) {
         idInput.value = oldID;
+        fitToValue();
         return;
       }
       if(!newID) {
         alert('Widget id cannot be empty.');
         idInput.value = oldID;
+        fitToValue();
         return;
       }
       if(widgets.has(newID)) {

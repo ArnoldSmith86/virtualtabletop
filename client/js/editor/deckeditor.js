@@ -4293,14 +4293,27 @@ class DeckEditor {
     // set before the first await: the new deck exists partway through updateWidgetId, so a second change
     // event arriving while this runs must not start a rename of its own
     this.renamingDeck = true;
-    await this.flushPendingCommits(); // save pending edits onto the old deck first
-    const newState = JSON.parse(JSON.stringify(deck.state));
-    newState.id = newID;
-    batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} renamed deck ${oldID} to ${newID} in deck editor`);
-    await updateWidgetId(newState, oldID);
-    batchEnd();
-    this.renamingDeck = false;
+    let batched = false;
+    try {
+      await this.flushPendingCommits(); // save pending edits onto the old deck first
+      const newState = JSON.parse(JSON.stringify(deck.state));
+      newState.id = newID;
+      batchStart();
+      batched = true;
+      setDeltaCause(`${getPlayerDetails().playerName} renamed deck ${oldID} to ${newID} in deck editor`);
+      await updateWidgetId(newState, oldID);
+    } catch(error) {
+      // the tree still shows the id that was typed - put it back on the one the room actually has
+      alert(`Could not rename deck: ${error}`);
+      this.renderLeftSidebar();
+      return;
+    } finally {
+      // both have to be given back even when the rename threw: the editor ignores every delta while
+      // renamingDeck is set, and an open batch collects every later edit into a delta nothing sends
+      if(batched)
+        batchEnd();
+      this.renamingDeck = false;
+    }
     // Migrate the editor's per-deck tree state to the new id.
     for(const set of [ this.expandedDecks, this.collapsedDecks ])
       if(set.has(oldID)) { set.delete(oldID); set.add(newID); }

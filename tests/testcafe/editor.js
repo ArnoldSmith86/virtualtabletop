@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, expectEventually, getStateObject, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -546,6 +546,64 @@ test('The deck editor id field does not start a second rename when its change ev
     .expect(await t.getNativeDialogHistory()).eql([])
     .expect(ClientFunction(deckID=>widgets.has(deckID))(deckID)).notOk()
     .expect(Selector('.deckEditorTreeDeckId').value).eql('renamedDeck');
+  await t.pressKey('esc');
+});
+
+// updateWidgetId runs game-authored id routines, so it can throw halfway through a rename. What it must not
+// leave behind is the state the rename put up for its own duration: the editor ignores every delta while a
+// rename of its deck runs, and the delta batch it opened swallows every later edit until it is closed.
+test('A deck rename that throws leaves neither the deck editor nor its deltas stuck', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({});
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  const currentDeckID = ClientFunction(() => {
+    let id = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') id = w.get('id'); });
+    return id;
+  });
+  await t.expect(currentDeckID()).notEql(null, { timeout: 10000 });
+  const deckID = await currentDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#propertiesOpenDeckEditor')
+    .expect(Selector('.deckEditorTreeDeckId').exists).ok()
+    .click('.deckEditorTreeDeckId')
+    .wait(300);
+
+  // fail the rename where it hurts: after the batch was opened and with the deck already taken apart
+  await ClientFunction(() => {
+    window.originalUpdateWidgetId = window.updateWidgetId;
+    window.updateWidgetId = _=>Promise.reject(new Error('rename failed'));
+  })();
+  await t
+    .typeText('.deckEditorTreeDeckId', 'failedRename', { replace: true })
+    .pressKey('enter')
+    .wait(500);
+  await t.expect((await t.getNativeDialogHistory())[0].text).eql('Could not rename deck: Error: rename failed');
+  await t
+    .expect(Selector('.deckEditorTreeDeckId').value).eql(deckID)
+    .expect(Selector('.deckEditorTreeDeckId').hasAttribute('disabled')).notOk();
+
+  await ClientFunction(() => { window.updateWidgetId = window.originalUpdateWidgetId; })();
+  await t
+    .click('.deckEditorTreeDeckId') // the tree was redrawn, so let the click settle before typing into it
+    .wait(300)
+    .typeText('.deckEditorTreeDeckId', 'workingRename', { replace: true })
+    .pressKey('enter')
+    .expect(ClientFunction(()=>widgets.has('workingRename'))()).ok({ timeout: 10000 });
+  // the server seeing it is what tells an open batch from a closed one - a leaked one keeps the delta local
+  await expectEventually(t, async _=>Object.keys(await getStateObject()).includes('workingRename'), true,
+    'the rename after the failed one reaches the server');
   await t.pressKey('esc');
 });
 
