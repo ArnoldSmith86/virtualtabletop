@@ -64,6 +64,12 @@ final class AppState {
     log(text);
   }
 
+  /** A step that counts up, so it overwrites the line before it rather than filling the log. */
+  static synchronized void countingStep(String text) {
+    step = text;
+    progress(text);
+  }
+
   static synchronized void percent(int value) {
     percent = value;
     changed();

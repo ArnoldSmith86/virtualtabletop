@@ -186,7 +186,7 @@ final class Packages {
         total += count;
         if(current.size > 0 && (int)(total * 10 / current.size) != percent) {
           percent = (int)(total * 10 / current.size);
-          AppState.step("Downloading " + current.name + " " + current.version + " (" + percent * 10 + "%)");
+          AppState.countingStep("Downloading " + current.name + " " + current.version + " (" + percent * 10 + "%)");
           AppState.percent(percent * 10);
         }
       }

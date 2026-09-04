@@ -86,9 +86,12 @@ final class Env {
 
   /**
    * A command that runs one of the downloaded binaries. They are built for the Termux prefix, so
-   * everything they have compiled in - their libraries, git's helpers, templates and CA bundle -
-   * is pointed at this app's prefix through the environment. LD_LIBRARY_PATH wins over the
-   * RUNPATH the binaries carry, which is what makes them work outside of Termux at all.
+   * every path they have compiled in - their libraries, git's helpers, templates, attributes and
+   * config, and OpenSSL's configuration, modules and certificates - is pointed at this app's
+   * prefix through the environment. LD_LIBRARY_PATH wins over the RUNPATH the binaries carry,
+   * which is what makes them work outside of Termux at all. It is also what keeps the app away
+   * from Termux itself: an installed Termux owns those paths, and reading them from here is
+   * refused, which git only warns about but OpenSSL treats as an error.
    */
   static ProcessBuilder command(Context context, File directory, String... command) {
     ProcessBuilder builder = new ProcessBuilder(command);
@@ -112,10 +115,15 @@ final class Env {
     environment.put("GIT_EXEC_PATH", prefix + "/libexec/git-core");
     environment.put("GIT_TEMPLATE_DIR", prefix + "/share/git-core/templates");
     environment.put("GIT_CONFIG_NOSYSTEM", "1");
+    environment.put("GIT_ATTR_NOSYSTEM", "1");
     environment.put("GIT_TERMINAL_PROMPT", "0");
     environment.put("GIT_SSL_CAINFO", certificates);
     environment.put("CURL_CA_BUNDLE", certificates);
     environment.put("SSL_CERT_FILE", certificates);
+    environment.put("SSL_CERT_DIR", prefix + "/etc/tls/certs");
+    environment.put("OPENSSL_CONF", prefix + "/etc/tls/openssl.cnf");
+    environment.put("OPENSSL_MODULES", prefix + "/lib/ossl-modules");
+    environment.put("OPENSSL_ENGINES", prefix + "/lib/engines-3");
     return builder;
   }
 }
