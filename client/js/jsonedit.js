@@ -3305,6 +3305,10 @@ function jeFormatHTML(html, baseIndent) {
 // START routine logging
 
 let jeRoutineResetOnNextLog = true;
+// True while the newest thing in the log is the "logging resumed" note. Leaving and entering edit
+// mode again without anything being logged in between would otherwise stack up an identical note
+// for every round trip.
+let jeLoggingResumeNoted = false;
 let jeRoutineAutoReset = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
@@ -3316,6 +3320,7 @@ let jeHTMLStack = [];
 // again and resurrects what was just cleared.
 function jeLoggingClear() {
   jeLoggingHTML = '';
+  jeLoggingResumeNoted = false;
   for(const entry of jeHTMLStack)
     entry[0] = '';
 }
@@ -3376,6 +3381,7 @@ export function jeLoggingRoutineStart(widget, property, variables, byReference) 
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
+    jeLoggingResumeNoted = false;
   }
   // a routine that runs by reference works on the variables of the routine that started it, which
   // may have changed a built-in one by now - the enclosing routine's set still says what it started
@@ -3452,6 +3458,7 @@ export function jeLoggingRoutineNotLogged(widget, property) {
       ${routine} was already running when the Debug panel was opened, so it could not be recorded. Run it again to see its log.
     </div>
   `;
+  jeLoggingResumeNoted = false;
   jeLoggingRenderLog(jeLoggingHTML);
 }
 
@@ -3460,8 +3467,9 @@ export function jeLoggingRoutineNotLogged(widget, property) {
 // are still on screen are older than the last thing the user did - mark them instead of letting the
 // panel present them as the most recent interaction.
 function jeLoggingResumed() {
-  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog') || !jeLoggingHTML)
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog') || !jeLoggingHTML || jeLoggingResumeNoted)
     return;
+  jeLoggingResumeNoted = true;
   jeLoggingHTML += `
     <div class="jeLog jeLogNote">
       Logging resumed. Everything above is from before edit mode was left - what you did while playing was not logged.

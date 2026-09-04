@@ -3858,6 +3858,14 @@ test('the Debug module logs again after edit mode was left and entered once more
     // what is left on screen is older than the last thing the user did, so it says so
     .expect(Selector('#jeLog .jeLogNote').innerText).contains('Logging resumed');
 
+  // another round of playing says nothing new about the same stale entries
+  await t
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk()
+    .click('#editButton')
+    .expect(Selector('body').hasClass('edit')).ok()
+    .expect(Selector('#jeLog .jeLogNote').withText('Logging resumed').count).eql(1);
+
   await runClickRoutine();
 
   await t
