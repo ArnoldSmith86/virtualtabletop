@@ -8,12 +8,13 @@ function parseGameURL() {
     };
   }
 
-  const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
+  const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)(?:\/ROOM:([A-Za-z0-9_-]+))?$/);
   if(gameURLmatch) {
     if(gameURLmatch[2]) {
       return {
         type: 'user',
-        id: gameURLmatch[2]
+        id: gameURLmatch[2],
+        roomID: gameURLmatch[4]
       };
     } else {
       const folderMap = { game: 'games', tutorial: 'tutorials' };
@@ -21,7 +22,8 @@ function parseGameURL() {
       return {
         type: 'public',
         category: gameURLmatch[1],
-        id: `PL:${folder}:${gameURLmatch[3]}`
+        id: `PL:${folder}:${gameURLmatch[3]}`,
+        roomID: gameURLmatch[4]
       };
     }
   }
@@ -34,7 +36,7 @@ function checkForGameURL() {
       const state = await r.json();
 
       applyValuesToDOM($('#linkDetailsOverlay'), state);
-      $('#welcomeJoinRoom').value = state.emptyRoomID;
+      $('#welcomeJoinRoom').value = gameDetails.roomID || state.emptyRoomID;
 
       if(state.name) {
         $('#welcomePlayerName').value = playerName;
@@ -45,14 +47,18 @@ function checkForGameURL() {
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
         toggleClass($('#linkDetailsOverlay .star'),               'hidden',       gameDetails.type == 'user' || !state.stars);
         toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden',       gameDetails.type == 'public');
-        toggleClass($('#linkDetailsOverlay .mainStateImage'),     'has-ai-badge', !!state.usesAIImagery);
-        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden',       !state.usesAIImagery);
-        toggleClass($('#linkDetailsOverlay .ai-imagery-notice'),  'hidden',       !state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .mainStateImage'),     'has-ai-badge', usesAI(state));
+        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden',       !usesAI(state));
+        $('#linkDetailsOverlay .ai-badge').title = aiDisclosureText(state);
+        for(const notice of $a('#linkDetailsOverlay .ai-notice'))
+          toggleClass(notice, 'hidden', !state[notice.dataset.showfor]);
 
         let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
         document.title = `${state.name} - ${tabSuffix}`;
 
         showOverlay('linkDetailsOverlay');
+        if(gameDetails.roomID)
+          $('#welcomePlayButton').click();
       } else {
         checkForGameURL_showError('Game not found!');
       }
@@ -76,7 +82,6 @@ async function playButtonClick(updateProgress) {
   updateProgress('Joining room...');
   if(!$('#welcomeJoinRoom').value.match(/^[A-Za-z0-9_-]+$/))
     throw new Error('Invalid room name');
-  lastOverlay = 'linkDetailsOverlay';
   await joinRoom($('#welcomeJoinRoom').value);
   updateProgress('Adding game...');
   toServer('rename', { oldName: playerName, newName: $('#welcomePlayerName').value });

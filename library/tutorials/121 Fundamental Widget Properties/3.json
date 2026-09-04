@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 19,
+    "version": 22,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1764462779921,
+      "lastUpdate": 1787512070712,
       "showName": false,
       "skill": "",
       "description": "",
@@ -51,7 +51,7 @@
     "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 25px; ",
+    "css": "font-size: 25px; ; white-space: pre-wrap",
     "html": "The <b>z</b> property represents the vertical position of the widget in the room. Imageine the screen as 0 and the larger the value of <b>z</b>, the closer it is to your eyes. Generally a larger value <b>z</b> widget will appear to be over or on top of a lower value widget. However, the <b>layer</b> and <b>parent</b> properties play a significant role in determining which widgets are on top because <b>z</b> is based on the layer and parent. As a game developer, you almost never have to worry about <b>z</b> because VTT handles it for you. In fact, the <b>z</b> value changes frequently as players interact with widgets in the room.\n\nFor many games, you will not even have to modify <b>layer</b>. Each widget comes with a default layer that often works right out of the box. But if you need to modify things, you can change the default. For example this widget with the text on it is -3, but the default for a basic widget is 1. Values from about -10 to large positive numbers are allowed. However, you are probably not managing layers effectively if you need to go outside the range from about -5 to 5."
   },
   "button4": {
@@ -93,7 +93,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The pig and the hexagon above are both basic widgets. They both have the default <b>layer</b> of 1 and they do not have a parent. That means that whichever widget has the higher <b>z</b> value will be on top. Look at the pig and its <b>z</b> in the Editor. Start dragging it and notice how <b>z</b> increases by 1. Drag it over the hexagon and then look at the hexagon and drag it over the pig."
+    "html": "The pig and the hexagon above are both basic widgets. They both have the default <b>layer</b> of 1 and they do not have a parent. That means that whichever widget has the higher <b>z</b> value will be on top. Look at the pig and its <b>z</b> in the JSON Editor menu. Start dragging it and notice how <b>z</b> increases by 1. Drag it over the hexagon and then look at the hexagon and drag it over the pig. VTT manages <b>z</b> itself, so the Edit Widgets menu does not offer it."
   },
   "text2": {
     "id": "text2",

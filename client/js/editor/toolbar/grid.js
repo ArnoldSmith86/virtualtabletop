@@ -4,7 +4,18 @@ class GridButton extends PersistentToolbarToggleButton {
   }
 
   toggle(state) {
-  
+
+    // The deck editor draws its own fixed 5px grid over the card (see .deckEditorGrid); there the button just
+    // toggles that overlay, with no room-grid options popup. The full options popup stays for the main editor.
+    if(deckEditor.isOpen()) {
+      $('body').classList.remove('gridLines', 'gridLines33', 'gridLines25', 'gridLines20');
+      if(state) {
+        const gridMajor = Number(getComputedStyle(document.body).getPropertyValue('--gridMajor'));
+        $('body').classList.add(`gridLines${gridMajor === 0 ? '' : gridMajor}`);
+      }
+      return;
+    }
+
     if (state) {
       const gridMajor = Number(getComputedStyle(document.body).getPropertyValue('--gridMajor'));
       $('body').classList.toggle(`gridLines${gridMajor === 0 ? '' : gridMajor}`, state);
