@@ -491,14 +491,18 @@ test('The id input renaming a widget does not claim the id is taken when its cha
   await t
     .typeText('[aria-label="Widget id"]', 'other', { replace: true })
     .pressKey('enter');
-  await t.expect((await t.getNativeDialogHistory())[0].text).eql('A widget with the id "other" already exists.');
+  await t.expect((await t.getNativeDialogHistory())[0].text).eql('A widget with the id "other" already exists. Please choose a different id.');
   await t
     .expect(Selector('[aria-label="Widget id"]').value).eql('new')
     .expect(await widgetIDs()).eql([ 'new', 'other', 'waiter' ]);
 
   // the repeat arriving mid-rename: the new id exists at that point, so it is the one that used to alert
   await commitIdTwice('[aria-label="Widget id"]', 'renamed', Math.round(idRenameDelay / 3));
+  // the widget is out of the room while the rename runs, so the panel says what it is waiting for instead of
+  // falling back to the module that offers to add a widget
   await t
+    .expect(Selector('.renameInProgress').innerText).eql('Renaming new to renamed…')
+    .expect(Selector('.noSelectionButton').exists).notOk()
     .expect(Selector('#w_renamed').exists).ok({ timeout: 10000 })
     .wait(1000)
     .expect((await t.getNativeDialogHistory()).length).eql(1) // still only the one the taken id put there

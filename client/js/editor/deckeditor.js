@@ -2641,7 +2641,7 @@ class DeckEditor {
         const deckExpanded = !this.collapsedDecks.has(deck.id) && (isCurrent || this.expandedDecks.has(deck.id));
         // The current deck's id is editable inline; other decks show a plain label.
         const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTreeIcon icon=style></span>` + (isCurrent
-          ? `<input class=deckEditorTreeDeckId title="Edit the deck's id">`
+          ? `<input class=deckEditorTreeDeckId title="Edit the deck's id (Enter applies)">`
           : `<span class=deckEditorTreeLabel>${html(deck.id)}</span>`));
         if(isCurrent) {
           const idInput = $('.deckEditorTreeDeckId', deckRow);
@@ -2651,8 +2651,23 @@ class DeckEditor {
           idInput.onkeydown = e=>{ if(e.key == 'Enter') idInput.blur(); };
           // this.deckID rather than deck.id: the Widget object keeps the id it had, so a change event this
           // input sends a second time (browsers do that on the blur that follows the commit) would otherwise
-          // read as a fresh rename to the id the first one just created.
-          idInput.onchange = _=>{ const v = idInput.value.trim(); if(v && v != this.deckID) this.changeDeckId(v); else idInput.value = this.deckID; };
+          // read as a fresh rename to the id the first one just created. The field is disabled for the
+          // duration of the rename, so a commit typed while it runs is visibly refused rather than dropped.
+          idInput.onchange = async _=>{
+            const v = idInput.value.trim();
+            if(idInput.disabled)
+              return;
+            if(!v || v == this.deckID) {
+              idInput.value = this.deckID;
+              return;
+            }
+            idInput.disabled = true;
+            try {
+              await this.changeDeckId(v);
+            } finally {
+              idInput.disabled = false;
+            }
+          };
         }
         const deckSel = isCurrent && this.treeLevel == 'deck';
         deckRow.classList.toggle('selected', deckSel && this.activeArea == 'tree');
