@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 
 import { batchStart, batchEnd, flushDelta, receiveDelta, sendPropertyUpdate, widgets } from '../../client/js/serverstate.js';
+import { connectionStatus, resetDeltaMonitor, DELTA_CONFIRM_ICON_MS } from '../../client/js/deltamonitor.js';
 
 import { createWidget, removeWidget } from './client-util.js';
 
@@ -28,16 +29,22 @@ describe("Scenarios: Removing a widget mid-batch", () => {
     describe("When a property update for it is queued later in the same batch", () => {
       test("Then processing the batch does not throw and the widget stays removed", () => {
         const id = testWidget.get('id');
+        // every delta that goes out registers with the delta monitor, so its pending count
+        // tells whether the stray update was sent to the server or dropped
+        resetDeltaMonitor();
+        const sentDeltas = () => connectionStatus(Date.now() + DELTA_CONFIRM_ICON_MS).pendingCount;
 
         batchStart();
         sendPropertyUpdate(id, null); // queue removal, not yet flushed (still inside the batch)
         flushDelta(); // e.g. the DELAY action: force the removal to be applied now
         expect(widgets.has(id)).toBe(false);
+        expect(sentDeltas()).toBe(1); // the removal
 
         sendPropertyUpdate(id, 'text', 'stray update for an already-removed widget');
 
         expect(() => batchEnd()).not.toThrow();
         expect(widgets.has(id)).toBe(false);
+        expect(sentDeltas()).toBe(1); // the stray update was dropped, not sent to the server
       });
     });
   });
