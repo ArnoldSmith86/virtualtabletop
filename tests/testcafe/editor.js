@@ -3838,18 +3838,25 @@ test('the Debug module logs again after edit mode was left and entered once more
   await t
     .expect(Selector('#w_button').exists).ok('the room renders its widgets', { timeout: 30000 })
     .click('#editButton')
-    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok()
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+
+  await runClickRoutine();
+  await t.expect(loggedOperations.count).eql(1);
+
+  await t
     .click('#editorToolbar [icon=close]')
     .expect(Selector('body').hasClass('edit')).notOk();
 
   // nothing is logged while the game is played, however long the panel has been open
   await runClickRoutine();
-  await t.expect(loggedOperations.count).eql(0);
+  await t.expect(loggedOperations.count).eql(1);
 
   await t
     .click('#editButton')
     .expect(Selector('body').hasClass('edit')).ok()
-    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok()
+    // what is left on screen is older than the last thing the user did, so it says so
+    .expect(Selector('#jeLog .jeLogNote').innerText).contains('Logging resumed');
 
   await runClickRoutine();
 

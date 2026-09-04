@@ -3455,6 +3455,21 @@ export function jeLoggingRoutineNotLogged(widget, property) {
   jeLoggingRenderLog(jeLoggingHTML);
 }
 
+// Called when logging is switched back on because edit mode was opened again with the Debug panel
+// still displayed. Nothing that happened while the game was played was logged, so the entries that
+// are still on screen are older than the last thing the user did - mark them instead of letting the
+// panel present them as the most recent interaction.
+function jeLoggingResumed() {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog') || !jeLoggingHTML)
+    return;
+  jeLoggingHTML += `
+    <div class="jeLog jeLogNote">
+      Logging resumed. Everything above is from before edit mode was left - what you did while playing was not logged.
+    </div>
+  `;
+  jeLoggingRenderLog(jeLoggingHTML);
+}
+
 export function jeLoggingRoutineOperationStart(original, applied) {
   let fcn;
   if (typeof applied == 'string')
