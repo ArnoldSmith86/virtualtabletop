@@ -1,19 +1,21 @@
 import fs from 'fs';
 
-import JSZip from 'jszip';
-import fetch from 'node-fetch';
 import FileLoader from './fileloader.mjs';
 import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
+import FileWriter from './filewriter.mjs';
 import { randomHue } from '../client/js/color.js';
+import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js/calculateLayout.js';
 import Statistics from './statistics.mjs';
+import Zip from './zip.mjs';
 
 export default class Room {
   players = [];
   state = {};
   deltaID = 0;
   lastStatisticsDeltaID = 0;
+  lastMouseState = new Map();
 
   constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
@@ -27,10 +29,19 @@ export default class Room {
     }, 5000);
   }
 
+  addLocalPlayer(addingPlayer, playerName) {
+    playerName = typeof playerName == 'string' ? playerName.trim() : '';
+    if(!playerName || this.state._meta.players[playerName])
+      return;
+    this.state._meta.players[playerName] = this.newPlayerColor();
+    this.sendMetaUpdate();
+  }
+
   addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
     clearTimeout(this.unloadTimeout);
     this.players.push(player);
+    player.send('sessionID', player.sessionID);
 
     if(!this.state._meta.players[player.name])
       this.state._meta.players[player.name] = this.newPlayerColor();
@@ -42,6 +53,14 @@ export default class Room {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
     } else {
       player.send('state', this.state);
+      // only the activity status is meaningful for somebody who just joined - replaying the whole
+      // mouse state would show every other player's cursor as active or even pressed at a position
+      // that can be minutes old
+      for(const other of this.players) {
+        const mouseState = this.lastMouseState.get(other);
+        if(other != player && mouseState)
+          player.send('mouse', { player: other.name, mouseState: { inactive: true, editMode: mouseState.editMode, activeOverlay: mouseState.activeOverlay } });
+      }
     }
 
     if(this.traceIsEnabled()) {
@@ -157,6 +176,13 @@ export default class Room {
             this.state._meta.states[stateID].variants[newVariantID] = variantMeta;
           else if(type != 'link' || meta.importerTemp)
             delete this.state._meta.states[stateID].variants[newVariantID].link;
+          // The import report belongs to the game, not to one of its variants.
+          // stateID comes from the request, so writing through it must not be
+          // able to reach Object.prototype.
+          if(meta.importerWarnings && stateID != '__proto__') {
+            const gameMeta = this.state._meta.states[stateID];
+            gameMeta.importerWarnings = [ ...new Set((gameMeta.importerWarnings || []).concat(meta.importerWarnings)) ];
+          }
           if(!this.state._meta.states[stateID].attribution)
             this.state._meta.states[stateID].attribution = meta.attribution;
           if(meta.attribution && meta.attribution != this.state._meta.states[stateID].attribution)
@@ -275,26 +301,25 @@ export default class Room {
 
     for(const state of Object.values(states))
       for(const [ i, variant ] of Object.entries(state))
-        fs.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
+        FileWriter.writeFileSync(`${Config.directory('save')}/states/${this.id}--TEMPSTATE--${filenameSuffix}--${i}.json`, JSON.stringify(variant));
 
     return filenameSuffix;
   }
 
   async download(stateID, variantID) {
     const includeAssets = true;
-    const zip = new JSZip();
+    const files = {};
 
     if(!stateID && !variantID) {
       for(const sID in this.state._meta.states) {
         const state = await this.download(sID);
-        zip.file(state.name, state.content);
+        files[state.name] = state.content;
       }
 
-      const zipBuffer = await zip.generateAsync({type:'nodebuffer'});
       return {
         name: this.id + '.vttc',
         type: 'application/zip',
-        content: zipBuffer
+        content: await Zip.create(files)
       };
     }
     if(!this.state._meta.states[stateID])
@@ -316,14 +341,14 @@ export default class Room {
       Object.assign(state._meta.info, state._meta.info.variants[vID]);
       this.unsetMetadataForWritingFile(state._meta.info);
 
-      zip.file(`${vID}.json`, JSON.stringify(state, null, '  '));
+      files[`${vID}.json`] = JSON.stringify(state, null, '  ');
       if(includeAssets)
         for(const asset of this.getAssetList(state))
           if(Config.resolveAsset(asset.substr(8)))
-            zip.file(asset.substr(1), fs.readFileSync(Config.resolveAsset(asset.substr(8))));
+            files[asset.substr(1)] = fs.readFileSync(Config.resolveAsset(asset.substr(8)));
     }
 
-    const zipBuffer = await zip.generateAsync({type:'nodebuffer', compression: 'DEFLATE'});
+    const zipBuffer = await Zip.create(files, true);
 
     let name = s.name + '.vtt';
     if(s.savePlayers)
@@ -339,8 +364,12 @@ export default class Room {
   editState(player, id, meta, variantInput, variantOperationQueue) {
     const variants = this.state._meta.states[id].variants;
 
+    // reordering parks a save file under a name of its own while the variants it swaps with move.
+    // variants are addressed by their numeric index, so a non-numeric name cannot collide with one
+    const tempVariantID = '--TEMP--';
+
     const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
-      if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
+      if(oldVariantID == tempVariantID && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != tempVariantID && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
         this.moveFile(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
     };
 
@@ -363,16 +392,16 @@ export default class Room {
 
       if(o.operation == 'up') {
         if(o.variantID) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID-1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID-1);
+          renameVariantFile(id, tempVariantID, o.variantID-1);
 
           variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=1; i<variants.length; ++i)
             renameVariantFile(id, i, i-1);
-          renameVariantFile(id, player.name, variants.length-1);
+          renameVariantFile(id, tempVariantID, variants.length-1);
 
           variants.push(variants.shift());
         }
@@ -380,16 +409,16 @@ export default class Room {
 
       if(o.operation == 'down') {
         if(o.variantID < variants.length-1) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID+1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID+1);
+          renameVariantFile(id, tempVariantID, o.variantID+1);
 
           variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=variants.length-2; i>=0; --i)
             renameVariantFile(id, i, i+1);
-          renameVariantFile(id, player.name, 0);
+          renameVariantFile(id, tempVariantID, 0);
 
           variants.unshift(variants.pop());
         }
@@ -404,6 +433,17 @@ export default class Room {
         variants.splice(o.variantID, 1);
       }
 
+    }
+
+    // a game is nothing but its variants, and the save files of the deleted ones are already gone -
+    // keeping the metadata of a game without a single variant would leave an entry that the game
+    // list has nothing to show for and that nobody can reach again. removeState refuses public
+    // library games on servers that do not allow editing them, so the game can survive the call -
+    // its metadata is then updated like in any other edit.
+    if(!variants.length) {
+      this.removeState(player, id);
+      if(!this.state._meta.states[id])
+        return;
     }
 
     for(const variantID in variantInput)
@@ -534,8 +574,10 @@ export default class Room {
       this.migrateBrokenSaveWithoutVersion();
       await this.updateLinkedStates();
       this.removeInvalidPublicLibraryLinks(player);
+      this.removeStatesWithoutVariants(player);
 
       this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
+      this.normalizeGameSettings(this.state._meta.gameSettings);
       this.broadcast('state', this.state);
     } else {
       let newState = emptyState;
@@ -734,11 +776,14 @@ export default class Room {
   }
 
   mouseMove(player, mouseState) {
+    this.lastMouseState.set(player, mouseState);
     this.broadcast('mouse', { player: player.name, mouseState });
   }
 
   moveFile(source, target) {
-    fs.copyFileSync(source, target, fs.constants.COPYFILE_FICLONE);
+    if(source == target)
+      return;
+    FileWriter.copyFileSync(source, target);
     fs.unlinkSync(source);
   }
 
@@ -769,6 +814,11 @@ export default class Room {
       }
     }
     delta.id = ++this.deltaID;
+
+    if(delta.deltaSendId) {
+      player.send('deltaConfirm', { id: delta.deltaSendId });
+      delete delta.deltaSendId;
+    }
 
     if(this.waitingForDeltaFromPlayer == player) {
       delete this.waitingForDeltaFromPlayer;
@@ -835,17 +885,35 @@ export default class Room {
       const operations = [];
       for(const [ variantID, variant ] of Object.entries(state.variants))
         if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
-          operations.push({ operation: 'delete', variantID });
+          operations.push({ operation: 'delete', variantID: +variantID });
+      // deleting a variant shifts every later one down by one index, so the queue runs from the last
+      // dead link to the first - that way each operation still addresses the variant it was collected for
+      operations.reverse();
       if(operations.length)
         this.editState(player, id, state, state.variants, operations);
     }
+  }
+
+  playerIsReferencedInWidgets(playerName) {
+    return Object.values(this.state).some(w=>[ w.owner, w.player, w.artist ].some(v=>Array.isArray(v) ? v.indexOf(playerName) != -1 : v == playerName));
+  }
+
+  // a player the game still points at can be removed too - the client warns about what stays
+  // behind, and those widgets pick the name up again as soon as a player uses it
+  removeLocalPlayer(removingPlayer, playerName) {
+    if(this.players.filter(p=>p.name == playerName).length)
+      return;
+    delete this.state._meta.players[playerName];
+    this.sendMetaUpdate();
   }
 
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
 
+    this.lastMouseState.delete(player);
     this.players = this.players.filter(e => e != player);
+    this.cleanupInputForPlayer(player);
     if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
       if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
         delete this.state._meta.players[player.name];
@@ -856,7 +924,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    if(stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+    if(String(stateID).match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
       return;
 
     for(const variantID in this.state._meta.states[stateID].variants) {
@@ -865,17 +933,18 @@ export default class Room {
         fs.unlinkSync(savefile);
     }
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       this.state._meta.states[stateID].variants = [];
       this.writePublicLibraryAssetsToFilesystem(stateID);
 
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, '/assets'));
-      fs.rmdirSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''));
+      // removes the assets directory along with anything else left in the game directory, like a
+      // temporary file from a write that was interrupted
+      fs.rmSync(this.variantFilename(stateID, 0).replace(/\/[0-9]+\.json$/, ''), { recursive: true, force: true });
     }
 
     delete this.state._meta.states[stateID];
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       delete Room.publicLibrary;
       this.publicLibraryUpdatedCallback();
     } else {
@@ -883,19 +952,206 @@ export default class Room {
     }
   }
 
-  renamePlayer(renamingPlayer, oldName, newName) {
-    if(oldName == newName)
+  // older versions kept a game whose last variant was deleted, leaving an entry with an empty
+  // variant list that the game list has nothing to show for, so it can neither be played nor
+  // deleted. Public library games are left alone - their variants come from the filesystem and are
+  // emptied for a moment while their game directory is removed.
+  removeStatesWithoutVariants(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states))
+      if(!String(id).match(/^PL:/) && !Object.keys(state.variants || {}).length)
+        this.removeState(player, id);
+  }
+
+  renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
+    newName = typeof newName == 'string' ? newName.trim() : '';
+    if(oldName == newName || !newName)
+      return;
+
+    const renamedSessions = this.players.filter(p=>p.name == oldName && (sessionID == null || p.sessionID == sessionID));
+    if(sessionID != null && !renamedSessions.length)
+      return;
+
+    // refuse taking the name of a connected player who is part of the game (seat, owner, artist) -
+    // it would secretly reveal that player's hand
+    if(this.players.some(p=>p.name == newName) && this.playerIsReferencedInWidgets(newName))
       return;
 
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
-    this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
-    delete this.state._meta.players[oldName];
+    if(this.state._meta.players[newName] === undefined)
+      this.state._meta.players[newName] = sessionID == null ? this.state._meta.players[oldName] : this.newPlayerColor();
 
-    for(const player of this.players)
-      if(player.name == oldName)
-        player.rename(newName);
+    for(const player of renamedSessions)
+      player.rename(newName);
+
+    // when only a single session is renamed (split/view), the old player stays available for the other sessions -
+    // except for abandoned guest entries which the disconnect cleanup would no longer catch under the new name
+    if(sessionID == null)
+      delete this.state._meta.players[oldName];
+    else if(oldName.match(/^Guest/) && !this.players.filter(p=>p.name == oldName).length && !this.playerIsReferencedInWidgets(oldName))
+      delete this.state._meta.players[oldName];
+
+    if(updateWidgets)
+      this.renamePlayerInWidgets(oldName, newName);
 
     this.sendMetaUpdate();
+  }
+
+  renamePlayerInWidgets(oldName, newName) {
+    const delta = { s: {} };
+    for(const widgetID in this.state) {
+      if(widgetID == '_meta')
+        continue;
+      const changes = {};
+      for(const property of [ 'owner', 'player', 'artist' ]) {
+        const value = this.state[widgetID][property];
+        if(value === oldName)
+          changes[property] = newName;
+        else if(Array.isArray(value) && value.includes(oldName))
+          changes[property] = [...new Set(value.map(p=>p === oldName ? newName : p))];
+      }
+      if(Object.keys(changes).length) {
+        Object.assign(this.state[widgetID], changes);
+        delta.s[widgetID] = changes;
+      }
+    }
+    if(Object.keys(delta.s).length) {
+      delta.id = ++this.deltaID;
+      this.broadcast('delta', delta);
+    }
+  }
+
+  // Input sessions are tracked by the Player *connection*, not by name, so a
+  // rename mid-input doesn't lose a target. The name the initiator used to
+  // address each target is remembered and echoed back so the initiating
+  // client (which keys its own session by name) still recognizes the result.
+  requestInput(player, args) {
+    // Dedupe names (the same connection can only show one overlay) and resolve
+    // each to a connection.
+    const requested = [ ...new Set(args.targets || []) ];
+    const targets = requested.map(name=>({ name, player: this.players.find(p=>p.name === name) }));
+    // If any requested target is unreachable, cancel the whole session rather
+    // than silently dropping them — otherwise the initiator waits on a name
+    // that can never answer. This matches the one-cancel-cancels-all rule.
+    if(targets.some(t=>!t.player)) {
+      player.send('inputResult', { sessionID: args.sessionID, cancelled: true });
+      return;
+    }
+    this.inputRequests = this.inputRequests || Object.create(null);
+    this.inputRequests[args.sessionID] = { from: player, remaining: targets };
+    for(const target of targets) {
+      const overlay = args.overlaysByTarget && args.overlaysByTarget[target.name] || args.overlay;
+      const collections = args.collectionsByTarget && args.collectionsByTarget[target.name] || args.collections;
+      target.player.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay, variables: args.variables, collections });
+    }
+  }
+
+  inputResult(player, args) {
+    const request = this.inputRequests && this.inputRequests[args.sessionID];
+    const target = request && request.remaining.find(t=>t.player === player);
+    if(request && request.from)
+      request.from.send('inputResult', { sessionID: args.sessionID, player: target ? target.name : player.name, cancelled: args.cancelled, variables: args.variables, collections: args.collections });
+    if(request) {
+      request.remaining = request.remaining.filter(t=>t.player !== player);
+      // A single cancellation ends the whole session: close the other targets
+      // right here (the initiator's abortInput would arrive too late).
+      if(args.cancelled) {
+        for(const t of request.remaining)
+          t.player.send('hideInput', { sessionID: args.sessionID });
+        delete this.inputRequests[args.sessionID];
+      } else {
+        if(!request.remaining.length)
+          delete this.inputRequests[args.sessionID];
+        // Move the player who just answered into the "waiting for the rest"
+        // overlay by dropping them from the block's waitingFor list.
+        this.removeFromInputBlock(args.sessionID, target ? target.name : player.name);
+      }
+    }
+  }
+
+  // The initiator aborted the input: tell every pending target to close it.
+  abortInput(player, args) {
+    const request = this.inputRequests && this.inputRequests[args.sessionID];
+    if(!request || request.from !== player)
+      return;
+    for(const t of request.remaining)
+      t.player.send('hideInput', { sessionID: args.sessionID });
+    delete this.inputRequests[args.sessionID];
+  }
+
+  // A waiting player pressed cancel on the block overlay: tell the initiator.
+  cancelInput(player, args) {
+    const block = (this.inputBlocks || {})[args.blockID];
+    if(block && block.from)
+      block.from.send('inputCancelled', { sessionID: args.blockID });
+  }
+
+  cleanupInputForPlayer(player) {
+    for(const sessionID in (this.inputRequests || {})) {
+      const request = this.inputRequests[sessionID];
+      if(request.from === player) {
+        // Initiator left: close any overlays its targets are still showing.
+        for(const t of request.remaining)
+          t.player.send('hideInput', { sessionID });
+        delete this.inputRequests[sessionID];
+      } else if(request.remaining.some(t=>t.player === player)) {
+        // A target left: cancel the whole session and free the others.
+        if(request.from)
+          request.from.send('inputResult', { sessionID, player: player.name, cancelled: true });
+        for(const t of request.remaining)
+          if(t.player !== player)
+            t.player.send('hideInput', { sessionID });
+        delete this.inputRequests[sessionID];
+      }
+    }
+    for(const blockID in (this.inputBlocks || {})) {
+      if(this.inputBlocks[blockID].from === player) {
+        delete this.inputBlocks[blockID];
+        for(const p of this.players)
+          p.send('inputBlock', { blockID, show: false });
+      }
+    }
+  }
+
+  inputBlock(player, args) {
+    this.inputBlocks = this.inputBlocks || Object.create(null);
+    if(args.show) {
+      this.inputBlocks[args.blockID] = { from: player, header: args.header, waitingFor: args.waitingFor || [] };
+      this.sendInputBlock(args.blockID);
+    } else {
+      delete this.inputBlocks[args.blockID];
+      for(const p of this.players)
+        p.send('inputBlock', { blockID: args.blockID, show: false });
+    }
+  }
+
+  // Show the "waiting for input" overlay to everyone who is not currently being
+  // waited on. As players answer they drop out of waitingFor, so a player who
+  // just confirmed their own overlay now sees the waiting overlay (with its
+  // cancel button) for the players who still have not answered.
+  sendInputBlock(blockID) {
+    const block = this.inputBlocks && this.inputBlocks[blockID];
+    if(!block)
+      return;
+    for(const p of this.players)
+      if(!block.waitingFor.includes(p.name))
+        p.send('inputBlock', { blockID, show: true, waitingFor: block.waitingFor, header: block.header });
+  }
+
+  // Drop a player who has answered from a block's waitingFor list and refresh
+  // the overlay so they (and anyone else no longer waited on) now see it.
+  removeFromInputBlock(blockID, name) {
+    const block = this.inputBlocks && this.inputBlocks[blockID];
+    if(!block)
+      return;
+    block.waitingFor = block.waitingFor.filter(n => n !== name);
+    if(block.waitingFor.length)
+      this.sendInputBlock(blockID);
+  }
+
+  // The initiator answered its own (local) overlay while others are still
+  // pending; move it into the waiting overlay too.
+  inputBlockAnswered(player, args) {
+    this.removeFromInputBlock(args.sessionID, player.name);
   }
 
   roomFilename() {
@@ -991,13 +1247,35 @@ export default class Room {
   }
 
   sendMetaUpdate() {
-    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
+    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name), sessions: this.players.map(p=>({ sessionID: p.sessionID, player: p.name })) });
+  }
+
+  // The board size decides how everyone in the room renders the game and it is written
+  // to the game file, so it gets normalized wherever it enters the room - through the
+  // Board Settings panel, a loaded game file or a hand edited save. The client applies
+  // the same function to what it receives, so the file can never end up describing a
+  // board that nobody is playing on.
+  normalizeGameSettings(gameSettings, player) {
+    if(!gameSettings || gameSettings.boardSize === undefined)
+      return;
+
+    const boardSize = normalizeBoardSize(gameSettings.boardSize);
+    const changed = !boardSize || boardSize.width != gameSettings.boardSize.width || boardSize.height != gameSettings.boardSize.height;
+
+    if(boardSize)
+      gameSettings.boardSize = boardSize;
+    else
+      delete gameSettings.boardSize;
+
+    if(changed && player)
+      player.send('error', `The board size has to be between ${MIN_BOARD_SIZE} and ${MAX_BOARD_SIZE} - using ${boardSize ? `${boardSize.width}x${boardSize.height}` : 'the default'} instead.`);
   }
 
   setGameSettings(player, gameSettings) {
     const oldLegacyModes = this.state._meta.gameSettings?.legacyModes || {};
     const newLegacyModes = gameSettings.legacyModes || {};
-  
+
+    this.normalizeGameSettings(gameSettings, player);
     this.state._meta.gameSettings = gameSettings;
     this.sendMetaUpdate();
 
@@ -1038,13 +1316,12 @@ export default class Room {
 
         let zipBuffer = '';
         if(!isReturn || this.state._meta.returnState) {
-          const zip = new JSZip();
-          zip.file(`${this.id}.json`, JSON.stringify(this.state, null, '  '));
+          const files = { [`${this.id}.json`]: JSON.stringify(this.state, null, '  ') };
           for(const asset in assetStatus)
             if(!assetStatus[asset] && Config.resolveAsset(asset))
-              zip.file('assets/' + asset, fs.readFileSync(Config.resolveAsset(asset)));
+              files['assets/' + asset] = fs.readFileSync(Config.resolveAsset(asset));
 
-          zipBuffer = await zip.generateAsync({type:'nodebuffer'});
+          zipBuffer = await Zip.create(files);
         }
 
         const putResult = await fetch(targetServer.url + '/moveServer/' + this.id + '/' + (isReturn ? 'RETURN' : encodeURIComponent(Config.get('externalURL'))) + '/' + (targetServer.return ? 'true' : 'false'), {
@@ -1077,6 +1354,7 @@ export default class Room {
       gameSettings = (this.state._meta || {}).gameSettings || { legacyModes: {} };
     }
     this.state._meta = meta;
+    this.normalizeGameSettings(gameSettings);
     this.state._meta.gameSettings = gameSettings;
 
     if(delayForGameStartRoutine) {
@@ -1213,7 +1491,7 @@ export default class Room {
 
     for(const usedAsset in usedAssets)
       if(!savedAssets[usedAsset])
-        fs.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
+        FileWriter.copyFileSync(Config.resolveAsset(usedAsset), assetsDir + '/' + usedAsset);
   }
 
   writePublicLibraryMetaToFilesystem(stateID, meta) {
@@ -1229,7 +1507,7 @@ export default class Room {
 
       state._meta.info.lastUpdate = +new Date();
 
-      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
+      FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(state, null, '  '));
     }
 
     this.writePublicLibraryAssetsToFilesystem(stateID);
@@ -1254,13 +1532,13 @@ export default class Room {
 
     copy._meta.info.lastUpdate = +new Date();
 
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
   writeStateToFilesystem(stateID, variantID, state) {
     const copy = {...state};
     copy._meta = { version: copy._meta.version, gameSettings: copy._meta.gameSettings };
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+    FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
   writeToFilesystem() {
@@ -1269,7 +1547,7 @@ export default class Room {
       if(id.match(/^PL:/))
         delete copy._meta.states[id];
     const json = JSON.stringify(copy);
-    fs.writeFileSync(this.roomFilename(), json);
+    FileWriter.writeFileSync(this.roomFilename(), json);
   }
 
   variantFilename(stateID, variantID) {

@@ -3400,42 +3400,206 @@
       "preview": "symbol:format_h1"
     },
     {
-      "name": "Horizontal Rule",
-      "id": "horizontalRule",
+      "name": "Line (with stops)",
+      "description": "A straight line with a drop spot at each end - drop a piece onto a stop and it snaps to it. Move, curve or rotate the line and the stops follow.",
+      "id": "line",
       "widgets": [
         {
-          "id": "horizontalRule",
-          "x": 1300,
-          "y": 325,
-          "width": 200,
-          "height": 0,
-          "borderRadius": "3px",
-          "z": 26,
-          "css": {
-            "border": "3px solid #666"
-          }
+          "type": "line",
+          "id": "line",
+          "x": 1310,
+          "y": 420,
+          "width": 220,
+          "height": 40,
+          "lineStart": {
+            "x": 10,
+            "y": 20
+          },
+          "lineEnd": {
+            "x": 210,
+            "y": 20
+          },
+          "stops": [
+            {
+              "widget": "lineS0",
+              "position": 0
+            },
+            {
+              "widget": "lineS1",
+              "position": 1
+            }
+          ]
+        },
+        {
+          "type": "holder",
+          "id": "lineS0",
+          "parent": "line",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "x": -10,
+          "y": 0,
+          "width": 40,
+          "height": 40,
+          "borderRadius": 20,
+          "dropTarget": {
+            "type": null
+          },
+          "dropOffsetX": 2,
+          "dropOffsetY": 2
+        },
+        {
+          "type": "holder",
+          "id": "lineS1",
+          "parent": "line",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "lineS0",
+          "x": 190,
+          "y": 0
         }
       ],
-      "preview": "i/icons/width.svg"
+      "preview": "i/icons/line.svg"
     },
     {
-      "name": "Vertical Rule",
-      "id": "verticalRule",
+      "name": "Divider",
+      "description": "A plain line without stops - the horizontal or vertical rule to separate areas of the table. Rotate it, curve it or restyle it however you like.",
+      "id": "divider",
       "widgets": [
         {
-          "id": "verticalRule",
-          "x": 1535,
-          "y": 190,
-          "width": 0,
-          "height": 200,
-          "borderRadius": "3px",
-          "z": 27,
-          "css": {
-            "border": "3px solid #666"
-          }
+          "type": "line",
+          "id": "divider",
+          "x": 1290,
+          "y": 315,
+          "width": 220,
+          "height": 20,
+          "lineStart": {
+            "x": 10,
+            "y": 10
+          },
+          "lineEnd": {
+            "x": 210,
+            "y": 10
+          },
+          "lineWidth": 4
         }
       ],
-      "preview": "i/icons/height.svg"
+      "preview": "i/icons/divider.svg"
+    },
+    {
+      "name": "Circle",
+      "description": "A plain circle outline without stops - resize it into an oval or restyle it like any other line.",
+      "id": "circle",
+      "widgets": [
+        {
+          "type": "line",
+          "id": "circle",
+          "x": 1300,
+          "y": 500,
+          "width": 100,
+          "height": 100,
+          "lineShape": "ellipse",
+          "lineStart": {
+            "x": 10,
+            "y": 10
+          },
+          "lineEnd": {
+            "x": 90,
+            "y": 90
+          },
+          "lineWidth": 4
+        }
+      ],
+      "preview": "i/icons/circle_hollow.svg"
+    },
+    {
+      "name": "Ring (with stops)",
+      "description": "A circle with four drop spots spaced around it - drop a piece onto a stop and it snaps to it. Add or move stops to build a round track.",
+      "id": "ring",
+      "widgets": [
+        {
+          "type": "line",
+          "id": "ring",
+          "x": 1420,
+          "y": 495,
+          "width": 130,
+          "height": 130,
+          "lineShape": "ellipse",
+          "lineStart": {
+            "x": 15,
+            "y": 15
+          },
+          "lineEnd": {
+            "x": 115,
+            "y": 115
+          },
+          "stops": [
+            {
+              "widget": "ringS0",
+              "position": 0
+            },
+            {
+              "widget": "ringS1",
+              "position": 0.25
+            },
+            {
+              "widget": "ringS2",
+              "position": 0.5
+            },
+            {
+              "widget": "ringS3",
+              "position": 0.75
+            }
+          ]
+        },
+        {
+          "type": "holder",
+          "id": "ringS0",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "x": 45,
+          "y": -5,
+          "width": 40,
+          "height": 40,
+          "borderRadius": 20,
+          "dropTarget": {
+            "type": null
+          },
+          "dropOffsetX": 2,
+          "dropOffsetY": 2
+        },
+        {
+          "type": "holder",
+          "id": "ringS1",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "ringS0",
+          "x": 95,
+          "y": 45
+        },
+        {
+          "type": "holder",
+          "id": "ringS2",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "ringS0",
+          "x": 45,
+          "y": 95
+        },
+        {
+          "type": "holder",
+          "id": "ringS3",
+          "parent": "ring",
+          "fixedParent": true,
+          "movableInEdit": false,
+          "inheritFrom": "ringS0",
+          "x": -5,
+          "y": 45
+        }
+      ],
+      "preview": "i/icons/ring.svg"
     },
     {
       "name": "Basic Widget",
@@ -4478,8 +4642,10 @@
       "widgets": [
         "heading",
         "label",
-        "horizontalRule",
-        "verticalRule"
+        "divider",
+        "line",
+        "circle",
+        "ring"
       ],
       "collapsed": true
     },

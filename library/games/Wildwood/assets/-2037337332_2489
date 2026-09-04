@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 160 150"
+     width="160" height="150"
+     role="img"
+     aria-label="Kleiner Kreis mit fünf gestapelten Scheiben, ohne hintere Halbellipse">
+
+  <defs>
+    <style>
+      .slot {
+        fill: none;
+        stroke: #000;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .disk {
+        fill: none;
+        stroke: #000;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+
+  <!-- ===== Unterer Kreis / Slot (klein & geschlossen) ===== -->
+  <g transform="translate(40,98)">
+    <ellipse class="slot" cx="40" cy="18" rx="40" ry="14"/>
+  </g>
+
+  <!-- ===== Gestapelte Scheiben IM Kreis (5 Stück) ===== -->
+  <g transform="translate(48,48)">
+
+    <!-- Eine Scheibe: 
+         - obere Kante NUR vorne als Ellipsenbogen (A)
+         - Seitenkanten links/rechts
+         - vorderer Bodenbogen -->
+    <!-- Scheiben-Geometrie: xL=16, xR=48, yTop=10, yBot=22 -->
+
+    <!-- Scheibe 1 -->
+    <g transform="translate(0,0)">
+      <!-- vorderer Bogen der oberen Ellipse (nur halbe Ellipse) -->
+      <path class="disk" d="M16 10 A16 6 0 0 1 48 10"/>
+      <path class="disk" d="M16 10 L16 22"/>
+      <path class="disk" d="M48 10 L48 22"/>
+      <path class="disk" d="M16 22 C20 28, 44 28, 48 22"/>
+    </g>
+
+    <!-- Scheibe 2 -->
+    <g transform="translate(0,12)">
+      <path class="disk" d="M16 10 A16 6 0 0 1 48 10"/>
+      <path class="disk" d="M16 10 L16 22"/>
+      <path class="disk" d="M48 10 L48 22"/>
+      <path class="disk" d="M16 22 C20 28, 44 28, 48 22"/>
+    </g>
+
+    <!-- Scheibe 3 -->
+    <g transform="translate(0,24)">
+      <path class="disk" d="M16 10 A16 6 0 0 1 48 10"/>
+      <path class="disk" d="M16 10 L16 22"/>
+      <path class="disk" d="M48 10 L48 22"/>
+      <path class="disk" d="M16 22 C20 28, 44 28, 48 22"/>
+    </g>
+
+    <!-- Scheibe 4 -->
+    <g transform="translate(0,36)">
+      <path class="disk" d="M16 10 A16 6 0 0 1 48 10"/>
+      <path class="disk" d="M16 10 L16 22"/>
+      <path class="disk" d="M48 10 L48 22"/>
+      <path class="disk" d="M16 22 C20 28, 44 28, 48 22"/>
+    </g>
+
+    <!-- Scheibe 5 -->
+    <g transform="translate(0,48)">
+      <path class="disk" d="M16 10 A16 6 0 0 1 48 10"/>
+      <path class="disk" d="M16 10 L16 22"/>
+      <path class="disk" d="M48 10 L48 22"/>
+      <path class="disk" d="M16 22 C20 28, 44 28, 48 22"/>
+    </g>
+
+  </g>
+
+</svg>

@@ -1,10 +1,132 @@
 let muted = false;
 let unmuteVol = 30;
 
+let audioPickerLoad = null;
+let audioPickerPreview = null;
+let audioPickerFinish = null;
+
+// Builds the list of bundled Kenney sound effects (see assets/audio/audio.json)
+// once and wires up the search box. Mirrors loadSymbolPicker in symbols.js.
+// The load is memoized in a promise so concurrent callers all wait for the same
+// fetch+build instead of racing on a half-built list.
+export async function loadAudioPicker() {
+  if(!audioPickerLoad) {
+    audioPickerLoad = (async function() {
+      const audioPickerData = await (await fetch('i/audio/audio.json')).json();
+      let list = '';
+      for(const [ category, { directory, sounds } ] of Object.entries(audioPickerData)) {
+        list += `<h2 data-category="${directory}">${category}</h2>`;
+        for(const sound of sounds) {
+          const url = `/i/audio/${directory}/${sound}.mp3`;
+          // search on the pack directory and the sound name only, not the display
+          // category, so e.g. "dice" matches dice sounds and not every card/chip.
+          const keywords = `${directory} ${sound}`.toLowerCase().replace(/[-_/]+/g, ' ');
+          list += `<div class="audioEntry" data-category="${directory}" data-url="${url}" data-keywords="${keywords}"><button icon="play_arrow" class="audioPreview"></button><span>${sound}</span></div>`;
+        }
+      }
+      $('#audioList').innerHTML = list;
+
+      $('#audioPickerOverlay input').onkeyup = function() {
+        // the same separator flattening as the keywords above, so typing a name
+        // the way it is shown ("dice-throw") searches the same words it indexed
+        const text = regexEscape($('#audioPickerOverlay input').value.toLowerCase().replace(/[-_/]+/g, ' '));
+        const visibleCategories = {};
+        for(const entry of $a('#audioList .audioEntry')) {
+          const match = !!entry.dataset.keywords.match(text);
+          toggleClass(entry, 'hidden', !match);
+          if(match)
+            visibleCategories[entry.dataset.category] = true;
+        }
+        // keep the header of any category that still has visible sounds so results
+        // stay grouped and labelled instead of collapsing into a flat list.
+        for(const title of $a('#audioList h2'))
+          toggleClass(title, 'hidden', !visibleCategories[title.dataset.category]);
+      };
+    })().catch(e => { audioPickerLoad = null; throw e; }); // allow retry on failure
+  }
+  await audioPickerLoad;
+}
+
+function stopAudioPickerPreview() {
+  if(audioPickerPreview) {
+    audioPickerPreview.audio.pause();
+    audioPickerPreview.entry.classList.remove('playing');
+    audioPickerPreview = null;
+  }
+}
+
+// Opens the sound picker and resolves with the selected /i/audio/… path (or null
+// when cancelled). Used by the JSON editor for AUDIO source and clickSound.
+export async function pickAudio(closeOverlay=true) {
+  if($('#statesButton').dataset.overlay == 'audioPickerOverlay')
+    $('#statesButton').dataset.overlay = detailsOverlay;
+
+  await loadAudioPicker();
+  return new Promise(resolve => {
+    // one way out for every way of leaving the picker (a sound, the close
+    // button, or the editor cancelling it), so none of them forgets to stop a
+    // running preview or leaves the overlay up
+    const finish = function(sound) {
+      audioPickerFinish = null;
+      stopAudioPickerPreview();
+      if(closeOverlay)
+        showOverlay(null);
+      resolve(sound);
+    };
+    audioPickerFinish = finish;
+
+    showOverlay('audioPickerOverlay');
+    $('#audioPickerOverlay').scrollTop = 0;
+    $('#audioPickerOverlay input').value = '';
+    $('#audioPickerOverlay input').focus();
+    $('#audioPickerOverlay input').onkeyup();
+
+    $('#audioPickerOverlay [icon=close]').onclick = _=>finish(null);
+
+    for(const entry of $a('#audioList .audioEntry')) {
+      $('.audioPreview', entry).onclick = function(e) {
+        e.stopPropagation();
+        const wasThisEntry = audioPickerPreview && audioPickerPreview.entry == entry;
+        stopAudioPickerPreview();
+        if(wasThisEntry)
+          return; // clicking the playing entry again stops it
+        const audio = new Audio(mapAssetURLs(entry.dataset.url));
+        audioPickerPreview = { audio, entry };
+        entry.classList.add('playing');
+        audio.onended = function() {
+          entry.classList.remove('playing');
+          if(audioPickerPreview && audioPickerPreview.entry == entry)
+            audioPickerPreview = null;
+        };
+        audio.play().catch(()=>{});
+      };
+      entry.onclick = _=>finish(entry.dataset.url);
+    }
+  });
+}
+
+// Closes a sound picker that is still open and resolves it with nothing. The
+// editor calls this when the widget being edited changes: whoever opened the
+// picker edits that widget, so its result would be written to a widget that is
+// no longer on screen.
+export function cancelAudioPicker() {
+  if(audioPickerFinish)
+    audioPickerFinish(null);
+}
+
 export let audioContext;
 const events = ['mousedown', 'keydown', 'touchstart'];
 let audioBufferObj = {}
 let audioSettings = {};
+
+// Safari only dropped the prefix in 14.1; before that `new AudioContext()` is a ReferenceError
+// on the first click anywhere in the room, so every game sound is lost. Everything below already
+// checks whether there is a context, so a browser with neither constructor just stays silent.
+const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+
+function createAudioContext() {
+  return AudioContextConstructor ? new AudioContextConstructor() : undefined;
+}
 
 events.forEach(event => {
   document.addEventListener(event, initializeAudioContext, { once: true });
@@ -12,7 +134,7 @@ events.forEach(event => {
 // Initialize AudioContext after user event
 function initializeAudioContext() {
   if (!audioContext) {
-    audioContext = new AudioContext();
+    audioContext = createAudioContext();
   }
 }
 
@@ -75,7 +197,7 @@ onMessage('audio', async function(args) {
     try {
       if (audioContext) {
         audioContext.close();
-        audioContext = new AudioContext();
+        audioContext = createAudioContext();
       }
     } catch (err) {
       console.error(`Error resetting audio context: ${err.message}`);

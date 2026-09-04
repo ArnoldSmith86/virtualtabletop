@@ -47,6 +47,9 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
       button.classList.remove('visualProgress');
       button.classList.add('green');
     } catch(e) {
+      // the button label is the only other place this error shows up, and it is reset again a
+      // few seconds later - so log it as well to leave a stack trace behind in the console
+      console.error(e);
       button.setAttribute('icon', 'error');
       button.innerText = e.toString();
       button.classList.remove('progress');
@@ -64,16 +67,20 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
   };
 }
 
-async function shareURL(url) {
+// returns how the URL was passed on so callers can tell the user what happened
+export async function shareURL(url) {
   try {
+    // compat-fallback api.Navigator.share: a browser without it throws here and the URL goes to the clipboard instead
     await navigator.share({ url });
   } catch(e) {
     try {
       await navigator.clipboard.writeText(url);
+      return 'clipboard';
     } catch(e) {
       throw new Error('Could not share or copy URL.');
     }
   }
+  return 'share';
 }
 
 // uses a progressButton with a custom handler that shares a URL
@@ -108,6 +115,15 @@ export function rand() {
   if(typeof traceRandom == 'function')
     traceRandom(number);
   return number;
+}
+
+// converts "minutes:seconds" or "minutes:seconds.fraction" strings to milliseconds
+// (rounded to the nearest millisecond); returns any other value unchanged
+export function timeToMS(value) {
+  const match = typeof value == 'string' && value.match(/^(-?)(\d+):(\d+(?:\.\d+)?)$/);
+  if(match)
+    return (match[1] ? -1 : 1) * Math.round((+match[2]*60 + +match[3])*1000);
+  return value;
 }
 
 export function regexEscape(string) {

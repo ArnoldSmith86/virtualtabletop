@@ -9,8 +9,10 @@ let jeStateNow = null;
 let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
-let jeFKeyOrderDescending = 1;
 let jeIsSVG = {};
+// how long an image that could not be read stays remembered as unreadable, in step with the retry
+// the engine does for the same file (UNREADABLE_RETRY_MS in main.js)
+const jeSVGRetryDelay = 30000;
 let jeWidgetHighlighting = true;
 let jeDebugViewing = null;
 let jeInMacroExecution = false;
@@ -27,11 +29,6 @@ let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
 let jeIgnoreBlurOnce = false;
-let jeWidgetHistory = [];
-let jeWidgetHistoryIndex = -1;
-let jeWidgetHistoryNavigating = false;
-let jeMultiSelectedCountCache = null;
-const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
   shift: false,
@@ -87,15 +84,24 @@ if (w.type=="seat" && w.player==null) {
 
 const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'index*', 'owner#', 'x*', 'y*', 'width*', 'height*', 'borderRadius', 'scale', 'rotation#', 'layer', 'z', 'inheritChildZ#', 'movable*', 'movableInEdit*#' ];
 
+// whether a file is an SVG is decided by fetchSVG() (main.js) - the same call
+// the engine and the SVG replacements editor make, so the three cannot disagree
+// about the same file. It also spares decoding a whole bitmap as text just to
+// find no <svg> in it, and does not call a PNG that happens to contain the
+// three bytes "svg" somewhere an SVG. A file that could not be read at all is
+// answered with undefined: that says nothing about what the file is, so it must
+// not be remembered as a verdict - fetchSVG() retries such a file as well.
 async function checkIfSVG(url) {
   try {
-    const response = await fetch(url);
-    if (!response.ok) return false;
-    const text = await response.text();
-    return /svg/i.test(text);
+    return (await fetchSVG(url)) !== null;
   } catch (e) {
-    return false;
+    return undefined;
   }
+}
+
+// true while a "write" face object of a deck is selected - a box players can type into while playing
+function jeIsWriteFaceObject() {
+  return jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].type == 'write';
 }
 
 const jeCommands = [
@@ -175,16 +181,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_reverseFkeys',
-    name: 'Reverse order of F-key shortcuts',
-    icon:  _=>jeFKeyOrderDescending ==1 ? '[arrow_down]' : '[arrow_up]',
-    forceKey: 'K',
-    call: async function() {
-      jeFKeyOrderDescending = -jeFKeyOrderDescending;
-      jeShowCommands();
-    }
-  },
-  {
     id: 'je_duplicateWidget',
     name: 'Duplicate widget',
     icon: '[auto_awesome]',
@@ -196,8 +192,9 @@ const jeCommands = [
       { label: 'Copy using inheritFrom', type: 'checkbox', value: false },
       { label: 'Inherit properties',     type: 'string', value: '' },
       { label: 'Copy recursively',       type: 'checkbox', value: true  },
-      { label: 'X offset',               type: 'number',   value: 0,   min: -1600, max: 1600 },
-      { label: 'Y offset',               type: 'number',   value: 0,   min: -1000, max: 1000 },
+      // getters because jeCommands is built at load time, before the game's viewport is known
+      { label: 'X offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetWidth  }, get max() { return viewportConfig.targetWidth  } },
+      { label: 'Y offset',               type: 'number',   value: 0,   get min() { return -viewportConfig.targetHeight }, get max() { return viewportConfig.targetHeight } },
       { label: '# Copies X',             type: 'number',   value: 1,   min:     0, max:  100 },
       { label: '# Copies Y',             type: 'number',   value: 0,   min:     0, max:  100 }
     ],
@@ -217,18 +214,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_toggleHighlight',
-    name: 'Toggle widget highlighting',
-    icon: 'flashlight_on',
-    forceKey: 'H',
-    classes: _=> jeWidgetHighlighting ? ' onState' : '',
-    call: async function() {
-      jeWidgetHighlighting = ! jeWidgetHighlighting;
-      jeShowCommands();
-      jeHighlightWidgets();
-    }
-  },
-  {
     id: 'je_SVGColors',
     name: 'Show colors in SVG image',
     icon: 'colors',
@@ -238,14 +223,32 @@ const jeCommands = [
       if (typeof jeIsSVG[url] === 'boolean') return jeIsSVG[url];
       if (url.match(/\.svg$/i))
         return true;
-      checkIfSVG(mapAssetURLs(url)).then(result => {
-        jeIsSVG[url] = result;
-        jeShowCommands();
-      });
+      // Only a definite answer is remembered as a verdict - a file that could not be read says
+      // nothing about what it is, and fetchSVG() retries it. What is remembered for such a file is
+      // *when* it failed, because the buttons are redrawn by plenty of things - every keystroke in
+      // the JSON pane among them - and a dead URL would otherwise cost one failing request each.
+      // While the request is in flight the url is marked as being asked about, so a failure that
+      // redraws the buttons cannot ask for the file again without ever stopping.
+      if (jeIsSVG[url] === undefined || jeIsSVG[url].failedAt < Date.now() - jeSVGRetryDelay) {
+        jeIsSVG[url] = 'pending';
+        checkIfSVG(url).then(result => {
+          if (typeof result === 'boolean') {
+            jeIsSVG[url] = result;
+            jeShowCommands();
+          } else {
+            jeIsSVG[url] = { failedAt: Date.now() };
+          }
+        });
+      }
       return false;
     },
-    call: async function(options) {  
-      jeSVGColors();
+    call: async function(options) {
+      // pressing the button again closes the panel it opened, so it is never left without a way out
+      const panel = $('#jeSVGColors');
+      if (panel)
+        panel.querySelector('.jeSVGColorsClose').click();
+      else
+        jeSVGColors();
     }
   },
   /* Now the context-dependent stuff */
@@ -273,9 +276,7 @@ const jeCommands = [
       
       // Get current indentation from the JSON structure
       // Find the line with the property key
-      const aO = getSelection().anchorOffset;
-      const fO = getSelection().focusOffset;
-      const s = Math.min(aO, fO);
+      const s = jeCursorOffsets()[0];
       const v = jeGetEditorContent();
       const lines = v.split('\n');
       
@@ -508,17 +509,35 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
-      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', opacity: null, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null, hoverOpacity: null };
-      if(Array.isArray(jeGetValueAt('icon'))) {
-        const current = jeGetValueAt('icon');
-        const name = current[jeGetKeyAfter('icon')];
-        current[jeGetKeyAfter('icon')] = newValue;
-        await jeSetValueAt('icon', current, name);
+      // fill in the default advanced options while keeping whatever is already
+      // set (name/scale/color/...), then put the cursor back on the icon name
+      const defaults = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', opacity: null, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null, hoverOpacity: null };
+      const expand = current => {
+        const isObject = typeof current == 'object' && current !== null;
+        const merged = isObject ? Object.assign({}, defaults, current) : Object.assign({}, defaults);
+        const name = isObject ? current.name : current;
+        merged.name = '###SELECT ME###';
+        return { merged, name: typeof name == 'undefined' ? '' : name };
+      };
+      const icon = jeGetValueAt('icon');
+      if(Array.isArray(icon)) {
+        const index = jeGetKeyAfter('icon');
+        const { merged, name } = expand(icon[index]);
+        icon[index] = merged;
+        await jeSetValueAt('icon', icon, name);
       } else {
-        await jeSetValueAt('icon', newValue, jeGetValueAt('icon'));
+        const { merged, name } = expand(icon);
+        await jeSetValueAt('icon', merged, name);
       }
     },
-    show: _=>typeof jeGetValueAt('icon') == 'string' || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'string'
+    show: _=>{
+      const icon = jeGetValueAt('icon');
+      if(Array.isArray(icon)) {
+        const element = icon[jeGetKeyAfter('icon')];
+        return typeof element == 'string' || typeof element == 'object' && element !== null;
+      }
+      return typeof icon == 'string' || typeof icon == 'object' && icon !== null;
+    }
   },
   {
     id: 'je_iconToString',
@@ -542,6 +561,18 @@ const jeCommands = [
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
     call: async function() {
       const a = await uploadAsset();
+      if(a) {
+        jeInsert(null, jeGetLastKey(), a);
+        await jeApplyChanges();
+      }
+    }
+  },
+  {
+    id: 'je_audioPicker',
+    name: 'pick a sound from the sound picker',
+    context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
+    call: async function() {
+      const a = await pickAudio();
       if(a) {
         jeInsert(null, jeGetLastKey(), a);
         await jeApplyChanges();
@@ -1000,6 +1031,30 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_writeTemplate',
+    name: 'write template',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects',
+    call: async function() {
+      // inset a bit and only as tall as a few lines: a card can not be dragged or flipped by its text box,
+      // so there has to be some card left around it for the player to grab. The placeholder is what tells a
+      // player the card can be written on - without it an empty text box is blank.
+      jeStateNow.faceTemplates[+jeContext[2]].objects.push({
+        type: 'write',
+        placeholder: 'write here…',
+        x: 10,
+        y: 10,
+        fontSize: 14,
+        textAlign: 'left',
+        width: (jeStateNow.cardDefaults && jeStateNow.cardDefaults.width || 103) - 20,
+        height: 60,
+        dynamicProperties: {
+          value: '###SELECT ME###'
+        }
+      });
+      jeSetAndSelect('note');
+    }
+  },
+  {
     id: 'je_inputField',
     name: 'add field',
     context: '^.* ↦ \\(INPUT\\) ↦ fields',
@@ -1049,6 +1104,56 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_editable',
+    name: 'editable',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].editable = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_placeholder',
+    name: 'placeholder',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && !jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].placeholder = '###SELECT ME###';
+      jeSetAndSelect('');
+    }
+  },
+  {
+    id: 'je_spellCheck',
+    name: 'spellCheck',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].spellCheck = '###SELECT ME###';
+      jeSetAndSelect(true);
+    }
+  },
+  {
+    id: 'je_backgroundColor',
+    name: 'backgroundColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].backgroundColor = '###SELECT ME###';
+      jeSetAndSelect('transparent');
+    }
+  },
+  {
+    id: 'je_borderColor',
+    name: 'borderColor',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    show: _=>jeIsWriteFaceObject() && jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor === undefined,
+    call: async function() {
+      jeStateNow.faceTemplates[+jeContext[2]].objects[+jeContext[4]].borderColor = '###SELECT ME###';
+      jeSetAndSelect('#000000');
+    }
+  },
+  {
     id: 'je_dynamicProperties',
     name: 'dynamicProperties',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
@@ -1091,8 +1196,7 @@ const jeCommands = [
       else
         delete pointer[jeContext[jeContext.length-1]];
 
-      const oldStart = getSelection().anchorOffset;
-      const oldEnd   = getSelection().focusOffset;
+      const [ oldStart, oldEnd ] = jeCursorOffsets();
       jeSet(JSON.stringify(jeStateNow, null, '  '));
       jeSelect(oldStart, oldEnd, true);
     },
@@ -1359,6 +1463,7 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Line(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
   widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
@@ -1366,8 +1471,8 @@ function jeAddCommands() {
   widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
-  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
-  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
+  jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result', collection: 'result' });
+  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6', count: 1 });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
@@ -1377,19 +1482,19 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
-  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "" } );
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "", player: null, block: false, randomRotation: 5 } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
+  jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, z: 0, snapToGrid: true, resetOwner: true });
   jeAddRoutineOperationCommands('RECALL', { owned: true, inHolder: true, holder: null, excludeCollection: null, byDistance: false });
   jeAddRoutineOperationCommands('RESET', { property: 'resetProperties' });
   jeAddRoutineOperationCommands('ROTATE', { count: 1, angle: 90, mode: 'add', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###', random: false});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+  jeAddRoutineOperationCommands('SHIFT', { holders: null, widgets: 'all', interval: 1, direction: 'forward', wrap: true, keepOrder: true });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
@@ -1419,12 +1524,18 @@ function jeAddCommands() {
   jeAddGridCommand('offsetX', 0);
   jeAddGridCommand('offsetY', 0);
   jeAddGridCommand('rotation', 0);
+  jeAddConditionCommands('grid', '^[^ ]* ↦ grid ↦ [0-9]+', _=>jeStateNow.grid[+jeContext[2]]);
 
   jeAddLimitCommand('minX', 0);
   jeAddLimitCommand('minY', 0);
   // Default max limits are computed dynamically.
   jeAddLimitCommand('maxX');
   jeAddLimitCommand('maxY');
+  // which point of the widget the limit is about: 0.5 is its middle, i.e. the
+  // value that is wanted often enough to be the one the button inserts
+  jeAddLimitCommand('alignX', 0.5);
+  jeAddLimitCommand('alignY', 0.5);
+  jeAddConditionCommands('limit', '^[^ ]* ↦ dragLimit', _=>jeStateNow.dragLimit);
 
   // Default values computed dynamically.
   jeAddResetPropertiesCommand('parent');
@@ -1487,7 +1598,10 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(SHUFFLE\\) ↦ mode', [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ]);
-  jeAddEnumCommands('^.*\\(SWAPHANDS\\) ↦ direction', [ 'forward', 'backward', 'random']);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ widgets', [ 'all', 'top' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ direction', [ 'forward', 'backward', 'random' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ wrap', [ true, false ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ keepOrder', [ true, false ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
@@ -1498,6 +1612,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
+  jeAddEnumCommands('^scoreboard ↦ scoreEntry',['auto', 'keypad', 'pane', 'type']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -1520,7 +1635,7 @@ function jeAddAlignmentCommands() {
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
-      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? viewportConfig.targetWidth : viewportConfig.targetHeight);
       jeStateNow[key] = '###SELECT ME###';
       jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
     }
@@ -1751,10 +1866,43 @@ function jeAddLimitCommand(key, value) {
       jeStateNow.dragLimit[key] = '###SELECT ME###';
       let limit = value;
       if (key == 'maxX')
-        limit = 1600 - w.get('width');
+        limit = viewportConfig.targetWidth - w.get('width');
       else if (key == 'maxY')
-        limit = 1000 - w.get('height');
+        limit = viewportConfig.targetHeight - w.get('height');
       jeSetAndSelect(limit);
+    }
+  });
+}
+
+// Neither the area a widget can be dragged in nor the area a snap grid applies
+// to has to be a rectangle: a condition is an inequality in x and y (the
+// position being judged, in the same coordinates as the four sides next to it)
+// that the drag keeps true, respectively that the grid needs to apply. A widget
+// property is read as ${PROPERTY name}. The starting point is the half-plane
+// below the diagonal - short, and it shows the syntax. The second command turns
+// one condition into the list of them that a shape needs more than one
+// inequality for. `owner` is a function because the object the buttons write
+// into is looked up again on every click (a grid entry is one of an array).
+function jeAddConditionCommands(idPrefix, context, owner) {
+  const object = _=>typeof owner() == "object" && owner() !== null ? owner() : null;
+  jeCommands.push({
+    id: idPrefix + '_condition',
+    name: 'add condition',
+    context,
+    show: _=>!!object() && object().condition === undefined,
+    call: async function() {
+      object().condition = '###SELECT ME###';
+      jeSetAndSelect('y > x');
+    }
+  });
+  jeCommands.push({
+    id: idPrefix + '_condition_add',
+    name: 'add another condition',
+    context,
+    show: _=>!!object() && object().condition !== undefined,
+    call: async function() {
+      object().condition = asArray(object().condition).concat([ '###SELECT ME###' ]);
+      jeSetAndSelect('x > y');
     }
   });
 }
@@ -1791,7 +1939,10 @@ function jeAddResetPropertiesCommand(key) {
 
 function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
-    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
+    // lineOriginalRotation is a valid global property but only meaningful while a
+    // line rotates one of its stops, so it gets no per-widget-type insert button
+    // (it would be noise on every type).
+    if(property != 'typeClasses' && property != 'lineOriginalRotation' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   if(type != 'card' && type != 'pile') {
@@ -1851,6 +2002,11 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
 }
 
 async function jeApplyChanges() {
+  // while the state is only semantically wrong the commands keep editing the text, but the
+  // room is never handed a state it cannot load - including by the commands that apply their
+  // own change instead of going through the gated call in clickButton
+  if(jeJSONerror)
+    return;
   if(jeMode == 'multi')
     return await jeApplyChangesMulti();
 
@@ -1901,12 +2057,12 @@ async function jeApplyChangesMulti() {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
-    const widgets = jeMultiSelectedWidgets();
-    const widgetIDs = widgets.map(w=>w.get('id'));
+    const selection = jeMultiSelectedWidgets();
+    const widgetIDs = selection.map(w=>w.get('id'));
     for(const key in currentState) {
       if(key != 'widgets') {
-        for(const w of widgets) {
-          if(typeof currentState[key] != 'object' || currentState[key] === null || Object.keys(currentState[key]).filter(k=>!widgetIDs.includes(k)).length)
+        for(const w of selection) {
+          if(!jeMultiValueIsPerWidget(currentState[key], widgetIDs))
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
             await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
@@ -2011,8 +2167,19 @@ async function jeCallCommand(command) {
 function jeCommandOptions() {
   const div = document.createElement('div');
   div.id = 'jeCommandOptions';
-  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
-  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  const name = typeof jeCommandWithOptions.name == 'function' ? jeCommandWithOptions.name() : jeCommandWithOptions.name;
+  div.innerHTML = `<b>${html(String(name))} options:</b><div></div><button>Go</button><button class=cancel>Cancel</button>`;
+
+  // the options belong to the command button that was clicked, so they open right below it and that
+  // button is marked. Opening them above the list instead would push the whole list down, away
+  // from the pointer that just clicked into it.
+  const button = $(`#jeContextButtons > [id="${jeCommandWithOptions.id}"]`);
+  if(button) {
+    button.classList.add('jeCommandOwner');
+    button.parentElement.insertBefore(div, button.nextSibling);
+  } else {
+    $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  }
 
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
@@ -2021,6 +2188,10 @@ function jeCommandOptions() {
     if(firstInput)
       firstInput.focus();
   }
+
+  // the command list scrolls, so options opening near its bottom edge would have their buttons cut
+  // off. 'nearest' scrolls only in that case, which keeps the list still in the common one
+  div.scrollIntoView({ block: 'nearest' });
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
     const options = {};
@@ -2051,11 +2222,26 @@ export async function jeClick(widget, e) {
   }
 }
 
+// The offsets getSelection() reports are indices into whichever node holds the selection, so
+// they only describe the editor while the editor holds it. Clicking a command button - or
+// typing into the option fields of a command that has some - moves the selection out of
+// #jeText, so the position the editor was last at is remembered here and used instead. Every
+// read of the editor cursor goes through this, which keeps that memory up to date.
+let jeLastCursorOffsets = [ 0, 0 ];
+
+function jeCursorOffsets() {
+  const selection = getSelection();
+  // both ends have to sit in the text node #jeText holds: a selection dragged out of the editor
+  // reports its two ends in different nodes, and one anchored on #jeText itself counts child
+  // nodes rather than characters - neither pair says where the cursor is in the JSON
+  const text = $('#jeText').firstChild;
+  if(text && selection.anchorNode === text && selection.focusNode === text)
+    jeLastCursorOffsets = [ Math.min(selection.anchorOffset, selection.focusOffset), Math.max(selection.anchorOffset, selection.focusOffset) ];
+  return jeLastCursorOffsets;
+}
+
 function jeCursorStateGet() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
   const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
   const currentLine = linesUntilCursor.pop();
@@ -2068,6 +2254,7 @@ function jeCursorStateGet() {
   return {
     scroll: $('#jeText').scrollTop,
     currentLine,
+    lineNumber: linesUntilCursor.length,
     defaultValueToAdd,
     sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
     start: s-linesUntilCursor.join('\n').length,
@@ -2078,17 +2265,41 @@ function jeCursorStateGet() {
 function jeCursorStateSet(state) {
   const v = jeGetEditorContent();
   const lines = v.split('\n');
+  // moving the selection focuses the editor, which must not happen while a command's options are
+  // being typed into: a change arriving from another player would else pull the caret out of the
+  // option field and the next keystroke would land in the JSON. The position is only remembered
+  // then, which is where the commands read it from anyway.
+  const restore = function(start, end) {
+    const options = $('#jeCommandOptions');
+    if(options && options.contains(document.activeElement))
+      jeLastCursorOffsets = [ start, end ];
+    else
+      jeSelect(start, end);
+  };
   let offset = 0;
   let linesFound = 0;
+  let lineRestored = false;
   for(const line of lines) {
     if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
-      jeSelect(offset + state.start - 1, offset + state.end - 1);
+      restore(offset + state.start - 1, offset + state.end - 1);
+      lineRestored = true;
       break;
     } else {
       offset += line.length + 1;
     }
   }
+  // a command that rewrites the very line the cursor sits on - shift on "x" for example - leaves
+  // no line to match it by, so the cursor falls back to the same line number. Without that it ends
+  // up nowhere and the next command runs on the top of the JSON instead of on the property the
+  // panel still offers commands for.
+  if(!lineRestored && lines[state.lineNumber] !== undefined) {
+    const lineStart = lines.slice(0, state.lineNumber).reduce((total, line)=>total + line.length + 1, 0);
+    const lineEnd = lineStart + lines[state.lineNumber].length;
+    const inLine = offsetInLine=>Math.max(lineStart, Math.min(lineEnd, lineStart + offsetInLine - 1));
+    restore(inLine(state.start), inLine(state.end));
+  }
   $('#jeText').scrollTop = state.scroll;
+  jeMarkCommandLine();
 }
 
 const jeCursorStateStorage = {};
@@ -2122,7 +2333,6 @@ function jeSelectWidget(widget, addToSelection) {
     jeStateBefore = jePreProcessText(jsonString);
     jeSet(jePreProcessText(jsonString, false));
     editPanel.style.setProperty('--treeHeight', "20%");
-    jeAddWidgetToHistory(widget.id);
   }
 
   if(newCursorState)
@@ -2131,7 +2341,7 @@ function jeSelectWidget(widget, addToSelection) {
   jeCenterSelection();
 
   jeGetContext();
-  jeUpdateWidgetSwitcher();
+  updateSelectionBars();
 }
 
 function jeSelectWidgetMulti(widget) {
@@ -2161,7 +2371,7 @@ function jeSelectSetMulti(widgets) {
   jeMode = 'multi';
   jeUpdateMulti();
   jeGetContext();
-  jeUpdateWidgetSwitcher();
+  updateSelectionBars();
 }
 
 function jeMultiSelectedWidgets() {
@@ -2186,6 +2396,66 @@ function jeMultiSelectedWidgets() {
   return selected;
 }
 
+// In the multi-selection editor a property is either one value that goes to all
+// selected widgets or an object that maps each selected widget id to its own.
+function jeMultiValueIsPerWidget(value, widgetIDs) {
+  return typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!widgetIDs.includes(k)).length;
+}
+
+// Pairs every value the multi-selection state gives for a property with the widget
+// it belongs to, or with null where one value goes to the whole selection. Gathering
+// the ids of the selection means running its search terms, so the shared case is
+// answered without doing that.
+function jeMultiPropertyEntries(state, property) {
+  const value = state[property];
+  if(typeof value != 'object' || value === null)
+    return [ [ null, value ] ];
+  const widgetIDs = jeMultiSelectedWidgets().map(w=>w.get('id'));
+  if(!jeMultiValueIsPerWidget(value, widgetIDs))
+    return [ [ null, value ] ];
+  return Object.entries(value);
+}
+
+// The properties of a multi-selection whose value has to name a widget in the room,
+// with the message for the first one that does not.
+function jeMultiWidgetReferenceError(state) {
+  // gathering the selection means running its search terms, so a state without either
+  // property is answered without doing that
+  let cardIDs = null;
+  const goesToACard = widgetID => {
+    if(cardIDs === null)
+      cardIDs = new Set(jeMultiSelectedWidgets().filter(w=>w.get('type') == 'card').map(w=>w.get('id')));
+    return widgetID === null ? cardIDs.size > 0 : cardIDs.has(widgetID);
+  };
+  for(const [ property, label ] of [ [ 'parent', 'Parent' ], [ 'deck', 'Deck' ] ]) {
+    if(state[property] === undefined)
+      continue;
+    for(const [ widgetID, value ] of jeMultiPropertyEntries(state, property)) {
+      // deck names a deck on a card - on anything else it is an ordinary property
+      // that happens to be called deck
+      if(property == 'deck' && !goesToACard(widgetID))
+        continue;
+      // null is applied by deleting the property: a widget without a parent belongs to the
+      // room, while a card without a deck is dropped on the next load like a missing one
+      if(value === undefined || (value === null && property != 'deck'))
+        continue;
+      const forWidget = widgetID === null ? '' : ` (widget "${widgetID}")`;
+      // an object arrives here either as a value that is no ID at all, or as a
+      // per-widget object whose keys do not match the selection - which makes the
+      // whole object the one value the selection shares
+      if(value !== null && typeof value == 'object')
+        return widgetID === null
+          ? `${label} has to be a widget ID, or an object with one entry per selected widget.`
+          : `${label} has to be a widget ID${forWidget}.`;
+      if(!widgets.has(value))
+        return `${label} ${value} does not exist${forWidget}.`;
+      if(property == 'deck' && !widgets.get(value).get('cardTypes'))
+        return `Given widget ${value} is not a deck or doesn't define cardTypes${forWidget}.`;
+    }
+  }
+  return null;
+}
+
 function jeSelectedIDs() {
   if(!jeStateNow)
     return [];
@@ -2207,16 +2477,29 @@ function jeCenterSelection() {
   jeHighlightWidgets();
 }
 
+// The toggle for this sits in the selection bar, which every module that edits
+// the selection carries - so it has to answer for a plain room selection as well
+// as for whatever the JSON editor is showing.
 function jeHighlightWidgets() {
-  const selectedIDs = jeSelectedIDs();
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
   for(const [ id, w ] of widgets)
     w.setHighlighted(jeWidgetHighlighting && selectedIDs.indexOf(id) != -1);
+}
+
+function jeWidgetHighlightingEnabled() {
+  return jeWidgetHighlighting;
+}
+
+function jeToggleWidgetHighlighting() {
+  jeWidgetHighlighting = !jeWidgetHighlighting;
+  jeHighlightWidgets();
+  updateSelectionBars();
 }
 
 function jeSVGColors() {
   const div = document.createElement('div');
   div.id = 'jeSVGColors';
-  div.innerHTML = `<b>SVG Colors:</b><div></div><button>Close</button>`;
+  div.innerHTML = `<div class="jeSVGColorsHeader"><b>SVG colors</b><button class="jeSVGColorsClose" title="Close">✕</button></div><div class="jeSVGColorsBody"></div>`;
   $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
 
   // Reinsert the div because it gets removed
@@ -2224,57 +2507,124 @@ function jeSVGColors() {
     if (!document.querySelector('#jeSVGColors')) {
       $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
     }
+    closeIfImageChanged();
   });
   const jeCommands = document.querySelector('#jeCommands');
   if (jeCommands) {
     observer.observe(jeCommands, { childList: true, subtree: false });
   }
 
-  // Extract and display SVG colors
-  fetch(mapAssetURLs(jeStateNow.image))
-  .then(response => response.text())
-  .then(svg => {
-    const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
-    const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
-    const colors = [...new Set(uniqueColors)];
-    const colorsDiv = div.querySelector('div');
-    if (colorsDiv) {
-      colorsDiv.innerHTML = colors.map(color => {
-        const backgroundColor = color === 'currentColor' ? 'black' : color;
-        const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
-        return `<button style="width: 100%; background-color: ${backgroundColor}; color: ${textColor}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
-      }).join('');
+  const body = div.querySelector('.jeSVGColorsBody');
+  const image = jeStateNow.image;
 
-      // Create the buttons
-      const buttons = colorsDiv.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          if (!jeStateNow.svgReplaces) {
-            jeStateNow.svgReplaces = {};
-          }
-          const color = this.getAttribute('data-color');
-          if (!(color in jeStateNow.svgReplaces)) {
-            jeStateNow.svgReplaces[color] = "###SELECT ME###";
-            jeSetAndSelect("");
-          }
-        });
-      });
+  // Whatever the panel has to say instead of colors, followed by the URL it is about: the panel is
+  // a narrow column and the image property it answers for is easily scrolled out of the JSON pane.
+  function sayInPanel(text, offerRetry) {
+    body.innerHTML = '';
+    const message = document.createElement('div');
+    message.className = 'jeSVGColorsMessage';
+    message.textContent = text;
+    const url = document.createElement('div');
+    url.className = 'jeSVGColorsURL';
+    url.textContent = url.title = image;
+    body.append(message, url);
+    if (offerRetry) {
+      const retry = document.createElement('button');
+      retry.textContent = 'Try again';
+      // fetchSVG() forgets a request that failed, so this really does ask for the file again
+      retry.addEventListener('click', loadColors);
+      body.appendChild(retry);
     }
-  });
+  }
 
-  $a('#jeSVGColors button')[0].addEventListener('click', function () {
+  // the text of a swatch has to stay readable on the color itself, and contrastAnyColor() reads a
+  // six digit hex: a short form or an alpha channel would go through a canvas it cannot answer for
+  // and come back as black on every swatch
+  function opaqueHex(color) {
+    const short = color.match(/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])[0-9a-fA-F]?$/);
+    return short ? `#${short[1]}${short[1]}${short[2]}${short[2]}${short[3]}${short[3]}` : color.slice(0, 7);
+  }
+
+  function showColors(colors) {
+    body.innerHTML = `<div class="jeSVGColorList">` + colors.map(color => {
+      const backgroundColor = color === 'currentColor' ? 'black' : color;
+      const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(opaqueHex(color), 1);
+      const title = color === 'currentColor' ? ` title="Inherits the widget's text color"` : '';
+      return `<button style="background-color: ${backgroundColor}; color: ${textColor};" data-color="${color}"${title}>${color}</button>`;
+    }).join('') + `</div>`;
+
+    // Create the buttons
+    const buttons = body.querySelectorAll('button');
+    // a color that already has an svgReplaces entry is checked off, so working through a long
+    // palette shows what is left instead of looking the same after every click
+    const markMapped = _=>buttons.forEach(button => button.classList.toggle('jeSVGColorMapped', !!jeStateNow.svgReplaces && button.getAttribute('data-color') in jeStateNow.svgReplaces));
+    markMapped();
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        // a color of one file has no business in another widget's svgReplaces
+        if (!jeStateNow || jeStateNow.image !== image)
+          return;
+        if (!jeStateNow.svgReplaces) {
+          jeStateNow.svgReplaces = {};
+        }
+        const color = this.getAttribute('data-color');
+        if (!(color in jeStateNow.svgReplaces)) {
+          jeStateNow.svgReplaces[color] = "###SELECT ME###";
+          jeSetAndSelect("");
+        }
+        markMapped();
+      });
+    });
+  }
+
+  // Extract and display SVG colors. The file comes from fetchSVG() (main.js), the one request per
+  // image the engine and the SVG replacements editor go through as well: it answers with the file's
+  // text, with null for a file that turned out not to be an SVG, and rejects when the file could not
+  // be read at all - a cross-origin image blocked by CORS, a server that is not answering, a URL
+  // that 404s. Every outcome gets a sentence in the panel, including an SVG that simply uses no hex
+  // colors, so it never sits empty looking like it is still loading. An unhandled rejection here is
+  // treated as a client crash and takes the whole session down with the error overlay.
+  function loadColors() {
+    sayInPanel('Loading the image …');
+    fetchSVG(image).then(svg => {
+      if (svg === null)
+        return sayInPanel('The file behind this URL is not an SVG - the server answered with something else - so it has no colors that could be replaced.');
+      // longest first, so #33aabbcc is one color and not #33aabb followed by nothing
+      const hexColorRegex = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})\b|currentColor/g;
+      const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
+      const colors = [...new Set(uniqueColors)];
+      if (!colors.length)
+        return sayInPanel('This SVG paints itself with named colors like red, with rgb() values or from a <style> block. Only hex colors such as #3366cc can be replaced.');
+      showColors(colors);
+    }).catch(_=>sayInPanel('This image could not be loaded, so the colors it uses could not be listed. Check the URL, then try again.', true));
+  }
+  loadColors();
+
+  // The panel answers for one file, so it goes away as soon as the widget is showing another one -
+  // otherwise it keeps listing the colors of the file it was opened with, names that file in its
+  // messages and retries that file. Reloading it instead would request one URL per keystroke while
+  // the image property is being typed, each prefix of it a URL of its own.
+  function closeIfImageChanged() {
+    if (jeStateNow && jeStateNow.image !== image)
+      closePanel();
+  }
+
+  let classObserver;
+  const closePanel = function() {
     div.remove();
     observer.disconnect();
-  });
+    if (classObserver)
+      classObserver.disconnect();
+  };
+  div.querySelector('.jeSVGColorsClose').addEventListener('click', closePanel);
 
-  // Close the color viewer if the widget is deselected
-  const widgetDiv = document.querySelector(`#w_${jeStateNow.id}`);
+  // Close the color viewer if the widget is deselected. The widget's DOM id is escaped, so it is
+  // asked for its element rather than looked up by the id as it is written in the JSON.
+  const widgetDiv = jeWidget && jeWidget.domElement;
   if (widgetDiv) {
-    const classObserver = new MutationObserver(() => {
-      if (!widgetDiv.classList.contains('selectedInEdit')) {
-        div.remove();
-        classObserver.disconnect();
-      }
+    classObserver = new MutationObserver(() => {
+      if (!widgetDiv.classList.contains('selectedInEdit'))
+        closePanel();
     });
     classObserver.observe(widgetDiv, { attributes: true, attributeFilter: ['class'] });
   }
@@ -2376,6 +2726,7 @@ function jeColorize() {
   }
   $('#jeTextHighlight').innerHTML = out.join('');
   $('#editor').style.setProperty('--linenumbers-digits', Math.floor(Math.log10(nr)+1));
+  jeMarkCommandLine();
 }
 
 /* Displaying and controlling tree subpane of edit area */
@@ -2384,7 +2735,9 @@ const isNodeCollapsed = {};
 function jeDisplayTree() {
   const allWidgets = Array.from(widgets.values());
   const oldFilterValue = $('#jeWidgetSearchBox') && $('#jeWidgetSearchBox').value;
-  $('#jeTree').innerHTML = '<div><input id="jeWidgetSearchBox" placeholder="🔍 Filter"><button>Collapse</button></div><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
+  // the tree is also shown from sidebar modules other than the JSON one, which leave jeStateNow at whatever they last saw
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
+  $('#jeTree').innerHTML = '<div><input id="jeWidgetSearchBox" placeholder="🔍 Filter"><button>Collapse</button></div><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, selectedIDs) + '</ul>';
 
   treeNodes = {};
   for(const dom of $a('#jeTree .key'))
@@ -2393,16 +2746,14 @@ function jeDisplayTree() {
   // Add handlers to tree elements to display widget contents
   on('.jeTreeExpander', 'click', function(e) {
     if(e.target.classList.contains('jeTreeExpander')) {
-      $('.nested', e.target.parentElement).classList.toggle('active');
-      e.target.classList.toggle('jeTreeExpander-down');
-      isNodeCollapsed[e.target.parentNode.dataset.filter] = !e.target.classList.contains('jeTreeExpander-down');
+      jeToggleTreeNode(e.target, !e.target.classList.contains('jeTreeExpander-down'));
       e.stopImmediatePropagation();
     }
   });
 
   // Add handler to search box to display widget list
   on('#jeWidgetSearchBox', 'input', jeDisplayFilteredWidgets);
-  on('#jeWidgetSearchBox + button', 'click', e=>$a('.jeTreeExpander-down').forEach(e=>e.click()));
+  on('#jeWidgetSearchBox + button', 'click', e=>$a('#jeTree .jeTreeExpander-down').forEach(expander=>jeToggleTreeNode(expander, false)));
 
   on('.jeTreeWidget', 'click', function(e) {
     const widget = widgets.get($('.key', e.currentTarget).innerText);
@@ -2424,6 +2775,52 @@ function jeDisplayTree() {
   }
 }
 
+// Opening and closing a branch, for the arrow of the tree and for the keys of
+// the selection bar alike. The collapsed state is remembered per widget, so a
+// tree that is rebuilt - or opened again in another module - comes back the way
+// it was left.
+function jeToggleTreeNode(expander, open) {
+  if(!expander || !expander.classList.contains('jeTreeExpander') || expander.classList.contains('jeTreeExpander-down') == open)
+    return;
+  jeSetTreeNodeOpen(expander, open);
+  isNodeCollapsed[expander.parentNode.dataset.filter] = !open;
+}
+
+// Showing and hiding a branch without saying anything about what the user wants
+// to see: this is what the filter uses to bring the branches that hold a match
+// into view.
+function jeSetTreeNodeOpen(expander, open) {
+  if(!expander || !expander.classList.contains('jeTreeExpander') || expander.classList.contains('jeTreeExpander-down') == open)
+    return;
+  $('.nested', expander.parentElement).classList.toggle('active', open);
+  expander.classList.toggle('jeTreeExpander-down', open);
+}
+
+// A branch is collapsed if the user left it that way - and a pile, whose cards
+// nobody wants to scroll past, also if it was never touched at all.
+function jeTreeNodeIsCollapsed(filter, widget) {
+  return isNodeCollapsed[filter] !== undefined ? isNodeCollapsed[filter] : !!widget && widget.get('type') == 'pile';
+}
+
+// Bringing the selected widgets into view: what somebody opening the tree is
+// looking for is almost always the widget the editor is already on. A row inside
+// a collapsed branch has no box at all, so the branches on the way down to it are
+// opened before it is scrolled to.
+function jeScrollTreeToSelection() {
+  const selectedIDs = jeEnabled ? jeSelectedIDs() : selectedWidgets.map(w=>w.id);
+  let firstRow = null;
+  for(const node of $a('#jeTree li.jeTreeWidget')) {
+    if(selectedIDs.indexOf(node.dataset.id) == -1)
+      continue;
+    for(let list = node.parentElement; list && list.id != 'jeTree'; list = list.parentElement)
+      if(list.classList.contains('jeNestedTree'))
+        jeToggleTreeNode(list.previousElementSibling, true);
+    firstRow = firstRow || $('.key', node);
+  }
+  if(firstRow)
+    firstRow.scrollIntoView({ block: 'nearest' });
+}
+
 function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
   function colored(str, kind) {
     return `<i class=${kind}>${html(str)}</i>`
@@ -2436,7 +2833,7 @@ function jeDisplayTreeAddWidgets(allWidgets, parent, selectedIDs) {
     const filter = html(widget.get('id')+(widget.get('type')||'basic')+(widget.get('cardType')||'')).toLowerCase();
     const filterText = `data-filter="${filter}"`;
     const idText = `data-id="${widget.get('id')}"`;
-    const isCollapsed = isNodeCollapsed[filter] || widget.get('type')=='pile';
+    const isCollapsed = jeTreeNodeIsCollapsed(filter, widget);
 
     if(children)
       result += `<li ${filterText} ${idText} class="jeTreeWidget"><span class="jeTreeWidget ${isSelected} jeTreeExpander ${isCollapsed ? '' : 'jeTreeExpander-down'}">`;
@@ -2461,7 +2858,10 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/)) {
+  const id = String(widget.get('id'));
+  // extras are only helpful on generated IDs (random four characters or a
+  // type/piece prefix plus a number), not on IDs an author chose
+  if(id.match(/^[0-9a-z]{4}$/) || (type ? id.startsWith(type) && id.substr(type.length).match(/^[0-9]+$/) : id.match(/^[a-z]+[0-9]+$/))) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))
@@ -2493,8 +2893,20 @@ function jeDisplayFilteredWidgets(e) {
   const propertyFilter = $('#jeWidgetSearchBox').value.match(/^([a-zA-Z0-9_-]+):([a-zA-Z0-9_-]*)$/);
   for(const previousParent of $a('#jeTree .filterChildIncluded'))
     previousParent.classList.remove('filterChildIncluded');
+
+  // An empty filter matches every widget, so carrying on would mark every branch
+  // as one that holds a match and open the whole tree. Instead the tree goes
+  // back to the shape the user left it in.
+  if(!subtext) {
+    for(const node of $a('#jeTree li.jeTreeWidget')) {
+      node.classList.remove('filterIncluded', 'filterNotIncluded');
+      jeSetTreeNodeOpen(node.firstElementChild, !jeTreeNodeIsCollapsed(node.dataset.filter, widgets.get(node.dataset.id)));
+    }
+    return;
+  }
+
   for(const node of $a('#jeTree li.jeTreeWidget')) {
-    let nodeMatchesFilter = !subtext || node.dataset.filter && node.dataset.filter.includes(subtext);
+    let nodeMatchesFilter = !!node.dataset.filter && node.dataset.filter.includes(subtext);
     if(propertyFilter) {
       const value = String(widgets.get(node.dataset.id).get(propertyFilter[1])).toLowerCase();
       if(!propertyFilter[2] && value != 'null' && value != '' || propertyFilter[2] && value.includes(propertyFilter[2]))
@@ -2502,174 +2914,22 @@ function jeDisplayFilteredWidgets(e) {
     }
     node.classList.toggle('filterIncluded', nodeMatchesFilter);
     node.classList.toggle('filterNotIncluded', !nodeMatchesFilter);
+    // The branches on the way to a match are opened for real instead of being
+    // forced open by CSS: that way their arrow tells the truth, and one click on
+    // it - or one ← - folds the branch away again while the filter still stands.
     if(nodeMatchesFilter)
       for(let parent=node.parentElement; parent.classList.contains('jeTreeWidget') || parent.classList.contains('jeNestedTree'); parent=parent.parentElement)
-        parent.classList.add('filterChildIncluded');
+        if(parent.classList.contains('jeNestedTree'))
+          jeSetTreeNodeOpen(parent.previousElementSibling, true);
+        else
+          parent.classList.add('filterChildIncluded');
   }
 }
 
 /* End of tree subpane control */
 
-/* Widget switcher (breadcrumbs, back/forward history, tree dropdown) */
-
-let jeBreadcrumbWidget = null; // widget whose ancestry chain is currently shown in breadcrumbs
-
-function jeAddWidgetToHistory(id) {
-  if(jeWidgetHistoryNavigating || jeWidgetHistory[jeWidgetHistoryIndex] === id)
-    return;
-  jeWidgetHistory = jeWidgetHistory.slice(0, jeWidgetHistoryIndex + 1);
-  jeWidgetHistory.push(id);
-  if(jeWidgetHistory.length > 100)
-    jeWidgetHistory.shift();
-  jeWidgetHistoryIndex = jeWidgetHistory.length - 1;
-}
-
-function jeHistoryCanNavigate(direction) {
-  for(let i = jeWidgetHistoryIndex + direction; i >= 0 && i < jeWidgetHistory.length; i += direction)
-    if(widgets.has(jeWidgetHistory[i]))
-      return true;
-  return false;
-}
-
-function jeHistoryNavigate(direction) {
-  let index = jeWidgetHistoryIndex + direction;
-  while(index >= 0 && index < jeWidgetHistory.length && !widgets.has(jeWidgetHistory[index]))
-    index += direction;
-  if(index < 0 || index >= jeWidgetHistory.length)
-    return;
-
-  jeWidgetHistoryIndex = index;
-  jeWidgetHistoryNavigating = true;
-  setSelection([ widgets.get(jeWidgetHistory[index]) ]);
-  jeWidgetHistoryNavigating = false;
-}
-
-// Check if ancestor is an ancestor of descendant in the widget tree
-function jeIsAncestorOf(ancestor, descendant) {
-  const seen = new Set();
-  for(let w = descendant; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
-    seen.add(w);
-    if(w === ancestor)
-      return true;
-  }
-  return false;
-}
-
-function jeUpdateWidgetSwitcher() {
-  if(!$('#jeWidgetSwitcher'))
-    return;
-
-  $('#jeNavBack').disabled = !jeHistoryCanNavigate(-1);
-  $('#jeNavForward').disabled = !jeHistoryCanNavigate(1);
-
-  // Determine which widget's ancestry chain to show in breadcrumbs
-  // Keep showing the same chain until selecting a widget outside it
-  let displayWidget = jeBreadcrumbWidget;
-  if(jeMode == 'widget' && jeWidget && widgets.has(jeWidget.id)) {
-    if(!displayWidget || !widgets.has(displayWidget.id) || !jeIsAncestorOf(jeWidget, displayWidget)) {
-      // jeWidget is not in the ancestry of the breadcrumb widget, update to its chain
-      displayWidget = jeBreadcrumbWidget = jeWidget;
-    }
-  } else {
-    displayWidget = jeBreadcrumbWidget = null;
-  }
-
-  const separator = '<span class=jeCrumbSeparator>chevron_right</span>';
-  let breadcrumbsHTML = '';
-  if(jeMode == 'widget' && displayWidget && widgets.has(displayWidget.id)) {
-    const chain = [];
-    const seen = new Set();
-    for(let w = displayWidget; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
-      seen.add(w);
-      chain.unshift(w);
-    }
-    const crumbs = chain.slice(-3).map(w => {
-      if(w != jeWidget)
-        return `<span class=jeCrumb data-id="${html(w.id)}">${html(w.id)}</span>`;
-      else
-        return `<span class="jeCrumb jeCrumbCurrent">${html(w.id)}</span>`;
-    });
-    if(chain.length > 3)
-      crumbs.unshift('<span class=jeCrumbEllipsis>…</span>');
-    breadcrumbsHTML = crumbs.join(separator);
-  } else if(jeMode == 'multi') {
-    // jeStateNow is null while the edited JSON is invalid; cache the count because this runs on every delta
-    let count = 'multiple';
-    if(jeStateNow && Array.isArray(jeStateNow.widgets)) {
-      const key = JSON.stringify(jeStateNow.widgets);
-      if(!jeMultiSelectedCountCache || jeMultiSelectedCountCache.key !== key) {
-        try {
-          jeMultiSelectedCountCache = { key, count: jeMultiSelectedWidgets().length };
-        } catch(e) {
-          jeMultiSelectedCountCache = { key, count: 'multiple' };
-        }
-      }
-      count = jeMultiSelectedCountCache.count;
-    }
-    breadcrumbsHTML = `<span class=jeCrumbInfo>${count} widgets selected</span>`;
-  } else if(jeMode == 'macro') {
-    breadcrumbsHTML = '<span class=jeCrumbInfo>macro</span>';
-  } else {
-    breadcrumbsHTML = '<span class=jeCrumbInfo>no widget selected</span>';
-  }
-  $('#jeBreadcrumbs').innerHTML = breadcrumbsHTML;
-
-  on('#jeBreadcrumbs .jeCrumb[data-id]', 'click', function(e) {
-    const widget = widgets.get(e.currentTarget.dataset.id);
-    if(widget)
-      setSelection([ widget ]);
-  });
-}
-
-function jeTreeIsVisible() {
-  return !!$('#jeWidgetSwitcher.treeVisible');
-}
-
-function jeTreeIsPinned() {
-  return localStorage.getItem('jeTreePinned') == 'true';
-}
-
-function jeSetTreePinned(pinned) {
-  localStorage.setItem('jeTreePinned', pinned);
-  $('#jeWidgetSwitcher').classList.toggle('treePinned', pinned);
-  $('#jePinTree').classList.toggle('active', pinned);
-}
-
-function jeToggleTreeDropdown(forceClose, focusSearch) {
-  const open = !forceClose && !jeTreeIsVisible();
-  $('#jeWidgetSwitcher').classList.toggle('treeVisible', open);
-  $('#jeShowTree').classList.toggle('active', open);
-  if(open) {
-    jeSetTreePinned(jeTreeIsPinned());
-    $('#jeTreeContainer').append($('#jeTree'));
-    jeDisplayTree();
-    if(focusSearch)
-      $('#jeWidgetSearchBox').focus();
-  } else {
-    $('#jeEditArea').append($('#jeTree'));
-  }
-}
-
-function jeInitWidgetSwitcher() {
-  on('#jeNavBack', 'click', _=>jeHistoryNavigate(-1));
-  on('#jeNavForward', 'click', _=>jeHistoryNavigate(1));
-  on('#jeShowTree', 'click', _=>jeToggleTreeDropdown(false, true));
-  on('#jePinTree', 'click', _=>jeSetTreePinned(!jeTreeIsPinned()));
-
-  // unless pinned, close the dropdown when a widget is picked in the tree (capture so it runs despite stopPropagation)
-  $('#jeTreeContainer').addEventListener('click', function(e) {
-    if(!jeTreeIsPinned() && !e.shiftKey && !e.target.classList.contains('jeTreeExpander') && e.target.closest('.jeTreeWidget'))
-      jeToggleTreeDropdown(true);
-  }, true);
-}
-
-/* End of widget switcher */
-
 function jeGetContext() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
@@ -2741,7 +3001,7 @@ function jeGetContext() {
   }
 
   // make sure the context actually exists in the widget
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     let pointer = jeStateNow;
     for(let i=1; i<keys.length; ++i) {
       if(pointer[keys[i]] === undefined) {
@@ -2755,7 +3015,7 @@ function jeGetContext() {
   // insert the operation type as a virtual key so commands can check which operation they're in
   try {
     for(let i=1; i<keys.length-1; ++i) {
-      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror) {
+      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONisUnparsed()) {
         const operation = jeGetValue(keys.slice(1, i+2), true);
         const func = typeof operation == 'string' && operation.match(/^var/) ? 'var expression' : operation.func;
         keys.splice(i+2, 0, '(' + (func || String(keys.slice(0, i+2))) + ')');
@@ -2770,10 +3030,16 @@ function jeGetContext() {
     try {
       jeStateNow = JSON.parse(v);
 
-      if(!Array.isArray(jeStateNow.widgets))
+      if(!Array.isArray(jeStateNow.widgets)) {
         jeJSONerror = 'Key widgets is not an array.';
-      else
-        jeJSONerror = null;
+      } else {
+        // the same checks the single widget mode does above - a parent no widget in
+        // the room has would leave the whole selection in limbo, a deck no widget in
+        // the room has leaves the card without faces and drops it on the next load.
+        // While the widgets array itself is being edited, the values still describe
+        // the previous selection, so there is nothing to check yet.
+        jeJSONerror = keys[1] == 'widgets' ? null : jeMultiWidgetReferenceError(jeStateNow);
+      }
     } catch(e) {
       jeStateNow = null;
       jeJSONerror = e;
@@ -2805,7 +3071,7 @@ function jeGetValue(context, all) {
 }
 
 function jeInsert(context, key, value) {
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     let pointer = jeGetValue(context);
     pointer[key] = '###SELECT ME###';
     jeSetAndSelect(value);
@@ -3045,12 +3311,59 @@ let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
+// Empty the log. Operations of a routine that is currently running have the log so far saved on
+// jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
+// again and resurrects what was just cleared.
+function jeLoggingClear() {
+  jeLoggingHTML = '';
+  for(const entry of jeHTMLStack)
+    entry[0] = '';
+}
+
 function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+// The built-in variables of the routines that are currently running, one entry per routine on the
+// stack - the innermost one belongs to the routine the operation being logged is part of. They
+// hold the value the routine started with, so they are identical in every operation of it and are
+// shown behind their own expander while the variables the routine actually works with stay at the
+// top of the pane. A routine that assigns a built-in name keeps that variable among its own,
+// because its value then differs from the one the routine started with.
+let jeLoggingEngineVariableStack = [];
+
+function jeLoggingEngineVariables(variables) {
+  const fromEngine = {};
+  for(const name in predefinedVariableDescriptions)
+    if(name in variables)
+      fromEngine[name] = variables[name];
+  return fromEngine;
+}
+
+function jeLoggingVariables(variables) {
+  const fromEngine = jeLoggingEngineVariableStack[0] || {};
+  const own = {};
+  const engine = {};
+  for(const name in variables) {
+    const untouched = name in fromEngine && JSON.stringify(variables[name]) === JSON.stringify(fromEngine[name]);
+    (untouched ? engine : own)[name] = variables[name];
+  }
+  const ownBlock = Object.keys(own).length ?
+        `<div class="jeLogVariables"><h3>Variables afterwards</h3>${jeLoggingJSON(own)}</div>` : '';
+  const engineBlock = Object.keys(engine).length ?
+        `<div class="jeLogDetails">
+            <div class="jeExpander">
+              <span class="jeLogName">Built-in variables</span>
+            </div>
+            <div class="jeLogNested">
+              <div class="jeLogVariables">${jeLoggingJSON(engine)}</div>
+            </div>
+          </div>` : '';
+  return ownBlock + engineBlock;
+}
+
+export function jeLoggingRoutineStart(widget, property, variables, byReference) {
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
       jeRoutineResetOnNextLog = false;
@@ -3058,52 +3371,88 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
     jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-          <span class="jeLogWidget">${widget.get('id')}</span>
-          <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+          <span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo;
+          <span class="jeLogProperty">${html(typeof property == 'string' ? property : '--custom--')}</span>
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
   }
+  // a routine that runs by reference works on the variables of the routine that started it, which
+  // may have changed a built-in one by now - the enclosing routine's set still says what it started
+  // with, so it is what applies here as well
+  jeLoggingEngineVariableStack.unshift(byReference
+    ? jeLoggingEngineVariableStack[0] || {}
+    : jeLoggingEngineVariables(variables));
   ++jeLoggingDepth;
 }
 
 export function jeLoggingRoutineEnd(variables, collections) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  if(!jeLoggingDepth)
+    return; // defensive: unmatched End, should not happen since #2672
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  jeLoggingEngineVariableStack.shift();
   --jeLoggingDepth;
-  if(!jeLoggingDepth) {
-    $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
+  if(!jeLoggingDepth)
+    jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
+}
 
-    // Make it so clicking on the arrows expands the subtree
-    const expanders = document.getElementsByClassName('jeExpander');
-    let i;
-    for (i=0; i < expanders.length; i++) {
-      expanders[i].addEventListener('click', function() {
-        this.classList.toggle('jeExpander-down');
-        this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
-        if(this.classList.contains('jeExpander-down')) {
-          this.classList.add('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
-        } else {
-          this.classList.remove('manuallyExpanded');
-          this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
-        }
-      });
-    }
-    // Make expander arrows that are parents of nodes with problems show up red.
-    const problems = document.getElementsByClassName('jeLogHasProblems');
-    for (i=0; i<problems.length; i++) {
-      let node = problems[i];
-      while (node && node.id != 'jeLog') {
-        if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
-          node.firstElementChild.classList.remove('jeExpander');
-          node.firstElementChild.classList.add('jeRedExpander')
-        }
-        node = node.parentNode;
+// Put the log into the panel. Everything that depends on the rendered DOM (the expander click
+// handlers and the filter) has to be applied again afterwards, so all rendering goes through here.
+function jeLoggingRenderLog(logHTML) {
+  $('#jeLog').innerHTML = logHTML;
+
+  // Make it so clicking on the arrows expands the subtree
+  const expanders = document.getElementsByClassName('jeExpander');
+  let i;
+  for (i=0; i < expanders.length; i++) {
+    expanders[i].addEventListener('click', function() {
+      this.classList.toggle('jeExpander-down');
+      this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
+      if(this.classList.contains('jeExpander-down')) {
+        this.classList.add('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+      } else {
+        this.classList.remove('manuallyExpanded');
+        this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
       }
+    });
+  }
+  // Make expander arrows that are parents of nodes with problems show up red.
+  const problems = document.getElementsByClassName('jeLogHasProblems');
+  for (i=0; i<problems.length; i++) {
+    let node = problems[i];
+    while (node && node.id != 'jeLog') {
+      if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
+        node.firstElementChild.classList.remove('jeExpander');
+        node.firstElementChild.classList.add('jeRedExpander')
+      }
+      node = node.parentNode;
     }
   }
+
   if($('#jeLogFilter') && $('#jeLogFilter').value)
     jeLoggingFilterLog($('#jeLogFilter').value);
+}
+
+// Called instead of jeLoggingRoutineEnd when logging was switched on while the routine was already
+// running (e.g. the Debug module was opened while the routine waited for an INPUT). That routine
+// cannot be logged retroactively, so leave a note explaining the gap instead of showing nothing.
+export function jeLoggingRoutineNotLogged(widget, property) {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
+    return;
+  if(jeRoutineResetOnNextLog) {
+    jeLoggingHTML = '';
+    jeRoutineResetOnNextLog = false;
+  }
+  const routine = typeof property == 'string'
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo; <span class="jeLogProperty">${html(property)}</span>`
+    : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
+  jeLoggingHTML += `
+    <div class="jeLog jeLogNote">
+      ${routine} was already running when the Debug panel was opened, so it could not be recorded. Run it again to see its log.
+    </div>
+  `;
+  jeLoggingRenderLog(jeLoggingHTML);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {
@@ -3127,6 +3476,11 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
     collDisplay[name] = collections[name].map(w=>`${html(w.get('id'))} (${html(w.get('type')||'basic')})`);
 
   const savedHTML = jeHTMLStack.shift();
+  if(!savedHTML) {
+    // defensive: unmatched End, should not happen since #2672. Nothing to close.
+    jeRoutineResult = '';
+    return;
+  }
   const original = savedHTML[1];
   const originalText = jeLoggingJSON(original);
   const applied = savedHTML[2];
@@ -3140,7 +3494,7 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
             <span class="jeLogName">Problems</span>
           </div>
           <div class="jeLogNested">
-            <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
+            <div class="jeLogProblems">${problems.map(p=>html(typeof p == 'string' ? p : JSON.stringify(p))).join('\n')}</div>
           </div>
         </div>` : '';
   const originalOp = originalText.length ?
@@ -3155,31 +3509,36 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
            <div class="jeLogNested">
              ${originalOp}
              ${appliedOp}
-             <h3></h3>
            </div>
          </div>` : '';
+
+  const deltaText = jeLoggingJSON(getDelta().s);
+  const collectionsBlock = Object.keys(collDisplay).length ?
+        `<div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>` : '';
+  const deltaBlock = deltaText.length ?
+        `<div class="jeLogVariables"><h3>Delta afterwards</h3>${deltaText}</div>` : '';
+  const opState = `${jeLoggingVariables(variables)}${collectionsBlock}${deltaBlock}`;
+  const opStateBlock = opState.length ?
+        `<div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Variables, collections and delta afterwards</span>
+          </div>
+          <div class="jeLogNested">
+            ${opState}
+          </div>
+        </div>` : '';
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
-        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} ${problems.length ? '<span class="jeLogFailed">failed</span>' : ''} <span class="jeLogTime" title="how long this operation took">(${+new Date() - startTime}ms)</span>
       </div>
       <div class="jeLogNested">
         ${opProblems}
         ${opOperation}
         ${jeLoggingHTML}
-        <div class="jeLogDetails">
-          <div class="jeExpander">
-            <span class="jeLogName">Variables, collections and delta afterwards</span>
-          </div>
-          <div class="jeLogNested">
-            <div class="jeLogVariables"    ><h3>Variables afterwards</h3>${jeLoggingJSON(variables   )}</div>
-            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay )}</div>
-            <div class="jeLogVariables"        ><h3>Delta afterwards</h3>${jeLoggingJSON(getDelta().s)}</div>
-            <h3></h3>
-          </div>
-        </div>
+        ${opStateBlock}
       </div>
     </div>
   `;
@@ -3225,16 +3584,13 @@ function jeLoggingFilterLog(filter) {
 // END routine logging
 
 function jeNewline() {
-  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const s = jeCursorOffsets()[0];
   const match = jeGetEditorContent().substr(0,s).match(/( *)[^\n]*$/);
   jePasteText('\n' + match[1], false);
 }
 
 function jePasteText(text, select) {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   jeSetEditorContent(v.substr(0, s) + text + v.substr(e));
@@ -3460,6 +3816,8 @@ function jeSetAndSelect(replaceBy, insideString) {
 }
 
 function jeSetEditorContent(content) {
+  // the remembered offsets index the text that is replaced here, so they say nothing afterwards
+  jeLastCursorOffsets = [ 0, 0 ];
   $('#jeText').textContent = content.replace(/\u00a0/g, ' ');
 }
 
@@ -3468,6 +3826,15 @@ function jeMatchCommandName(name, filter) {
   const words = name.toLowerCase().split(/\s+/);
   const filterWords = filter.toLowerCase().split(/\s+/);
   return filterWords.every(fw => words.some(w => w.startsWith(fw)));
+}
+
+// A parse error leaves nothing to work with. A state that parsed and was only
+// rejected for what it says - a parent that does not exist, an ID already in use -
+// still has a valid object behind it, so the context can be resolved against it and
+// the commands that would fix it stay available and keep inserting. Only handing the
+// state to the room waits for the message to go away.
+function jeJSONisUnparsed() {
+  return jeJSONerror instanceof Error;
 }
 
 function jeShowCommands() {
@@ -3506,7 +3873,7 @@ function jeShowCommands() {
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
+    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONisUnparsed()) && (!command.show || command.show())) {
       const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
       if(activeCommands[title] === undefined)
         activeCommands[title] = [];
@@ -3519,7 +3886,7 @@ function jeShowCommands() {
     commandText += `<div id="var_results"></div>\n`;
   }
 
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
 
     const sortByName = function(a, b) {
@@ -3686,11 +4053,11 @@ function jeShowCommands() {
   commandText += `\n\n${html(context)}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
-      commandText += `\nCtrl-Space: go to error\n`;
-    commandText += `\n<i class=error>${html(String(jeJSONerror))}</i>\n`;
+      commandText += `\n<div>Ctrl-Space: go to error</div>\n`;
+    commandText += `\n<div class=error>${html(String(jeJSONerror))}</div>\n`;
   }
   if(jeCommandError)
-    commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
+    commandText += `\n<div class=error>Last command failed: ${html(String(jeCommandError))}</div>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n<pre>${html(jeSecondaryWidget)}</pre>\n`;
   commandText += `</div>`;
@@ -3826,8 +4193,7 @@ function jeShowCommands() {
       }
     } else if (jeContext && jeContext[jeContext.length - 1] == '(var expression)') {
       const v = jeGetEditorContent();
-      const aO = getSelection().anchorOffset;
-      const s = Math.min(aO, getSelection().focusOffset);
+      const s = jeCursorOffsets()[0];
       const before = v.substr(0, s);
       const after = v.substr(s);
       const newContent = before + sample + after;
@@ -3851,6 +4217,20 @@ function jeShowCommands() {
 
   if(jeCommandWithOptions)
     jeCommandOptions();
+  jeMarkCommandLine();
+}
+
+// A command with options runs on the line the cursor was left on, which no longer shows a caret
+// once the dialog has taken the selection - so that line is marked while the dialog is open.
+function jeMarkCommandLine() {
+  for(const line of $a('#jeTextHighlight > .jeCommandLine'))
+    line.classList.remove('jeCommandLine');
+  if(!jeCommandWithOptions)
+    return;
+  const content = jeGetEditorContent();
+  const line = $a('#jeTextHighlight > .jeTextLine')[content.substr(0, jeCursorOffsets()[0]).split('\n').length - 1];
+  if(line)
+    line.classList.add('jeCommandLine');
 }
 
 let editPanel = null;
@@ -3882,7 +4262,6 @@ function jeInitTree() {
 export function jeToggle() {
   if(jeEnabled === null) {
     jeInitTree();
-    jeInitWidgetSwitcher();
     jeAddCommands();
     jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
@@ -3890,7 +4269,7 @@ export function jeToggle() {
   }
   jeEnabled = !jeEnabled;
   setJEenabled(jeEnabled);
-  jeLoggingHTML = '';
+  jeLoggingClear();
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
     if(jeWidget && !widgets.has(jeWidget.id))
@@ -3912,7 +4291,7 @@ function jeEmpty() {
 
   jeSet('');
   jeShowCommands();
-  jeUpdateWidgetSwitcher();
+  updateSelectionBars();
 }
 
 const clickButton = async function(event) {
@@ -3926,76 +4305,14 @@ const clickButton = async function(event) {
   }
 }
 
-let widgetCoordCache = null;
-
 function jeInitEventListeners() {
   window.addEventListener('mousemove', function(e) {
     if(!jeEnabled)
       return;
     const surfaceRect = $('#topSurface').getBoundingClientRect();
-    const scaleX = 1600 / surfaceRect.width;
-    const scaleY = 1000 / surfaceRect.height;
 
-    jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
-    jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);
-
-    if(jeMouseButtonIsDown)
-      return;
-
-    if(!widgetCoordCache) {
-      widgetCoordCache = [];
-      for(const widget of widgets.values()) {
-        const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
-        coords.r = coords.x + widget.get('width');
-        coords.b = coords.y + widget.get('height');
-        coords.widget = widget;
-        widgetCoordCache.push(coords);
-      }
-    }
-
-    // Adding hitTest makes foreign elements temporarily hittable.
-    document.body.classList.add('hitTest');
-    let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
-    document.body.classList.remove('hitTest');
-
-    hoveredWidgets.sort(function(w1,w2) {
-      const hiddenParent =  function(widget) {
-        return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
-      };
-      const w1card = w1.get('type') == 'card';
-      const w2card = w2.get('type') == 'card';
-      const w1foreign = !w1card && hiddenParent(w1);
-      const w2foreign =  !w2card && hiddenParent(w2);
-      const w1normal = !w1foreign && !w1card;
-      const w2normal = !w2foreign && !w2card;
-      return ((w1card && w2card) || (w1foreign && w2foreign) || (w1normal && w2normal)) ?
-        jeFKeyOrderDescending*(w2.calculateZ() - w1.calculateZ()) :
-        ((w1card && !w2card) || (w1foreign && w2normal)) ? 1 : -1;
-    });
-
-    for(let i=1; i<=11; ++i) {
-      const hotkey = i>=4 ? i+1 : i;
-      if(hoveredWidgets[i-1]) {
-        jeWidgetLayers[hotkey] = hoveredWidgets[i-1];
-        var deck = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `deck: ${hoveredWidgets[i-1].get('deck')} ` : "";
-        var cardType = `${hoveredWidgets[i-1].get('type')}` == 'card' ? `\ncardType: ${hoveredWidgets[i-1].get('cardType')}` : "";
-        $(`#jeWidgetLayer${hotkey} .id`).textContent = hoveredWidgets[i-1].get('id');
-        $(`#jeWidgetLayer${hotkey} .type`).textContent = hoveredWidgets[i-1].get('type') || 'basic';
-        $(`#jeWidgetLayer${hotkey} .details`).textContent = `${deck}${cardType}`;
-        $(`#jeWidgetLayer${hotkey}`).classList.remove('hidden');
-      } else {
-        delete jeWidgetLayers[hotkey];
-        $(`#jeWidgetLayer${hotkey}`).classList.add('hidden');
-      }
-    }
-
-    $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
-
-    if((surfaceRect.left <= e.clientX && e.clientX <= surfaceRect.right && surfaceRect.top <= e.clientY && e.clientY <= surfaceRect.bottom)) {
-      $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
-    } else {
-      $('#jeMouseCoords').innerHTML = ""
-    }
+    jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * viewportConfig.targetWidth  / surfaceRect.width);
+    jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * viewportConfig.targetHeight / surfaceRect.height);
   });
 
   window.addEventListener('mousedown', _=>jeMouseButtonIsDown = jeEnabled);
@@ -4031,24 +4348,6 @@ function jeInitEventListeners() {
           jeSelect(+locationPostion[1], +locationPostion[1], true);
       }
     }
-
-    const functionKey = e.key.match(/F([0-9]+)/);
-    if(functionKey && jeWidgetLayers[+functionKey[1]]) {
-      e.preventDefault();
-      if(e.ctrlKey) {
-        let id = jeWidgetLayers[+functionKey[1]].get('id');
-        if(jeContext[jeContext.length-1] == '"null"')
-          id = `"${id}"`;
-        jePasteText(id, true);
-      } else if(e.shiftKey) {
-        if(selectedWidgets.includes(jeWidgetLayers[+functionKey[1]]))
-          setSelection(selectedWidgets.filter(w=>w!=jeWidgetLayers[+functionKey[1]]));
-        else
-          setSelection([ jeWidgetLayers[+functionKey[1]] ].concat(selectedWidgets));
-      } else {
-        setSelection([ jeWidgetLayers[+functionKey[1]] ]);
-      }
-    }
   });
 
   on('#jeText', 'paste', function(e) {
@@ -4067,7 +4366,7 @@ function jeInitEventListeners() {
       e.preventDefault();
       e.stopPropagation();
       const direction = e.key == 'ArrowLeft' ? -1 : 1;
-      if (jeHistoryCanNavigate(direction)) {
+      if (selectionBarHistoryCanNavigate(direction)) {
         // close the search overlay that Tab opened; we're navigating instead
         if (jeTabSearchActive) {
           jeTabSearchActive = false;
@@ -4076,7 +4375,7 @@ function jeInitEventListeners() {
           jeTabArrowKeysUsed = false;
         }
         jeIgnoreBlurOnce = true;
-        jeHistoryNavigate(direction);
+        selectionBarHistoryNavigate(direction);
         jeShowCommands();
         $('#jeText').focus();
       }

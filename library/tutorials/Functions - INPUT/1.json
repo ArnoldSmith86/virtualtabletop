@@ -1,6 +1,119 @@
 {
+  "zjgm4": {
+    "id": "zjgm4",
+    "z": 22811,
+    "parent": "button2",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "x": -100,
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "width": 300,
+    "html": "<b>player</b>: The button above demonstrates assigning the INPUT task to a particular player. Sit in the first two seats in different browsers instances. Have the player in the top seat click the button. The INPUT overlay will appear for the player in the second seat. <b>block</b> is the default <i>false</i> for this so there is no blocking message."
+  },
+  "zjgm5": {
+    "id": "zjgm5",
+    "z": 22811,
+    "parent": "button1",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "width": 500,
+    "x": -50,
+    "html": "<b>block</b>: Open this tutorial in another browser or in incognito mode in the same browser. Click the button above to see how the block message appears to the player not clicking the button. Note that the message appears to all players, whether or not they are in a seat. If one of the other players presses the &quotCancel&quot button, it has the same effect as if the player cancelled their own overlay (the routine immediately ends). A player with the block message can refresh the room or click on another menu item like Game Shelf and then return to the Active Game and the block overlay will be gone."
+  },
+  "title": {
+    "id": "title",
+    "x": 300,
+    "y": -2,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Functions: INPUT (Other Players)",
+    "width": 1000
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Two parameters of INPUT can optionally be used to interact with the display of users other than the one that clicked the button (or otherwise triggered the routine). <b>block</b>, when set to true, will display an overlay on other players' screens letting them know that the game is waiting on input from a player or players. This message covers the entire screen and prevents any interaction with game widgets. <b>player</b> can be set to an individual <i>playerName</i> or to an array of <i>playerName</i>s. Each listed player will see the overlay prompting a response."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 250,
+    "y": 250,
+    "z": 22838,
+    "text": "block",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "block": true,
+        "fields": [
+          {
+            "type": "title",
+            "text": "Block demonstration"
+          },
+          {
+            "type": "checkbox",
+            "label": "Check or uncheck this box",
+            "variable": "checkbox",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      }
+    ]
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 867,
+    "y": 250,
+    "z": 22829,
+    "clickRoutine": [
+      {
+        "func": "GET",
+        "collection": [
+          "seat2"
+        ],
+        "property": "player",
+        "variable": "inputPlayer"
+      },
+      {
+        "func": "INPUT",
+        "player": "${inputPlayer}",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Player demo: ${inputPlayer}"
+          },
+          {
+            "type": "checkbox",
+            "label": "Check or uncheck this box",
+            "variable": "checkbox",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      }
+    ],
+    "text": "1 player"
+  },
   "_meta": {
-    "version": 20,
+    "version": 21,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -14,7 +127,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1773426013188,
+      "lastUpdate": 1787464636966,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -25,174 +138,187 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "Choose",
+      "variant": "Other Players",
       "language": "en-US",
       "players": "1"
     }
   },
-  "8fr3": {
-    "id": "8fr3",
-    "y": -2,
-    "width": 900,
-    "height": 60,
-    "z": 74,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 59px;text-align:center",
-    "text": "Functions: INPUT (`Choose` Field)",
-    "x": 350
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "y": 271,
+    "x": 9
   },
-  "406b": {
-    "id": "406b",
-    "x": 108,
-    "width": 1400,
-    "height": 150,
-    "layer": -3,
-    "z": 129,
-    "css": "font-size: 25px; ",
-    "text": "The 'choose' field option for the INPUT function allows the display of graphical elements. The display can show either widgets or all the possible faces of widgets with faces. The player then makes one or more selections. The results are stored in either a variable, a collection, or both and are shown in the white areas in the bottom right.",
-    "y": 80,
-    "movable": false,
-    "movableInEdit": false
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "y": 335,
+    "index": 2,
+    "x": 9
   },
-  "label1": {
-    "id": "label1",
-    "x": 1425,
-    "y": 697,
-    "height": 20,
-    "text": "Variable",
-    "css": {
-      "font-size": "20px"
-    },
-    "z": 22813,
-    "movable": false
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "y": 399,
+    "index": 3,
+    "x": 9
   },
-  "label2": {
-    "id": "label2",
-    "x": 1425,
-    "y": 847,
-    "height": 20,
-    "text": "Collection",
-    "css": {
-      "font-size": "20px"
-    },
-    "z": 22813,
-    "movable": false
-  },
-  "variable": {
-    "id": "variable",
-    "x": 1337,
-    "y": 730,
-    "width": 250,
-    "borderRadius": 8,
-    "css": {
-      "background": "white",
-      "border": "1px solid black"
-    },
-    "movable": false
-  },
-  "collection": {
-    "id": "collection",
-    "x": 1337,
-    "y": 876,
-    "width": 250,
-    "borderRadius": 8,
-    "movable": false,
-    "css": {
-      "background": "white",
-      "border": "1px solid black"
-    }
-  },
-  "choosebutton1": {
+  "button3": {
     "type": "button",
-    "id": "choosebutton1",
-    "x": 85,
+    "id": "button3",
+    "x": 1262,
     "y": 250,
-    "z": 22838,
+    "z": 22829,
     "clickRoutine": [
       {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "player",
+        "variable": "inputPlayer"
+      },
+      {
         "func": "INPUT",
+        "player": "${inputPlayer}",
         "fields": [
           {
             "type": "title",
-            "text": "Cards from demoHolder"
+            "text": "Player array demo"
           },
           {
-            "type": "subtitle",
-            "text": "Select up to 3"
-          },
+            "type": "checkbox",
+            "label": "Check or uncheck this box",
+            "variable": "checkbox",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      }
+    ],
+    "text": "player array"
+  },
+  "zjgm6": {
+    "id": "zjgm6",
+    "z": 22811,
+    "parent": "button3",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "x": -100,
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "width": 400,
+    "html": "<b>player</b>: The button above demonstrates assigning the INPUT task to an array of players. Sit in at least two seats in different browsers instances. The INPUT overlay will appear for each player. A blocking message showing the remaining players still making a choice will appear after pressing the &quotGo&quot button because <b>block</b> is <i>true</i>. The results are stored as an object in a form like {&quotplayerName1&quot: value1, &quotplayerName2&quot: value2}, which you can see using the Edit Mode Debug option."
+  },
+  "button4": {
+    "type": "button",
+    "id": "button4",
+    "x": 250,
+    "y": 681,
+    "z": 22838,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "recallButton"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3"
+        ],
+        "count": 5
+      },
+      {
+        "func": "FOREACH",
+        "in": "${activePlayers}",
+        "loopRoutine": [
           {
-            "type": "choose",
-            "holder": [
-              "demoHolder"
-            ],
-            "collection": "thisCollection",
-            "variable": "thisVariable",
-            "max": 3
+            "func": "SELECT",
+            "type": "card",
+            "property": "owner",
+            "value": "${value}",
+            "collection": "owned${key}",
+            "sortBy": {
+              "key": "cardType",
+              "reverse": false
+            }
           }
         ]
       },
       {
-        "func": "SET",
-        "collection": [
-          "variable"
-        ],
-        "property": "text",
-        "value": "${thisVariable}"
-      },
-      "var array = []",
-      {
-        "func": "FOREACH",
-        "collection": "thisCollection",
-        "loopRoutine": [
+        "func": "INPUT",
+        "block": true,
+        "player": "${activePlayers}",
+        "fields": [
           {
-            "func": "GET",
-            "property": "id"
+            "type": "title",
+            "text": "Choose 1 card to pass"
           },
-          "var array = ${array} + ${id}"
+          {
+            "type": "choose",
+            "variable": "passedCards",
+            "source": {
+              "0": "owned0",
+              "1": "owned1"
+            },
+            "collection": {
+              "0": "selected0",
+              "1": "selected1"
+            },
+            "min": 1,
+            "max": 1
+          }
         ]
       },
       {
-        "func": "SET",
-        "collection": [
-          "collection"
-        ],
-        "property": "text",
-        "value": "${array}"
+        "func": "MOVE",
+        "collection": "selected0",
+        "to": "seat2"
+      },
+      {
+        "func": "MOVE",
+        "collection": "selected1",
+        "to": "seat1"
       }
     ],
-    "text": "Holder"
+    "text": "player choose"
   },
-  "viswB": {
-    "id": "viswB",
-    "parent": "cardHolder",
+  "zjgm7": {
+    "id": "zjgm7",
+    "z": 22811,
+    "parent": "button4",
     "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "y": 90,
+    "height": 20,
+    "movable": false,
     "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ]
+    "width": 950,
+    "html": "<b>choose</b>: Using a <i>choose</i> field adds additional complexity since each player may be presented different options and each selection may result in a collection of different widgets. Player specific properties can be keyed by a numeric index in the player array. This works for both the options the player sees and the collection returned from the player's selections. In the button above, note the use of objects with numbered keys for the <i>source</i> and <i>collection</i> parameters. The numbers correspond to the position in the <i>${activePlayers}</i> array and not the seat index. Sit in the first 2 seats above and watch how each player selectes from their own cards to have one card swap between them. To move entire hands around, use the <b>SHIFT</b> function.",
+    "x": -100
   },
-  "viswD": {
+  "75g0P": {
+    "type": "pile",
+    "id": "75g0P",
+    "parent": "deckHolder",
+    "width": 103,
+    "height": 160
+  },
+  "75g0D": {
     "type": "deck",
-    "id": "viswD",
-    "parent": "cardHolder",
+    "id": "75g0D",
+    "parent": "deckHolder",
     "x": 12,
     "y": 41,
     "cardTypes": {
@@ -700,575 +826,421 @@
       }
     ]
   },
-  "visw_A_C": {
-    "id": "visw_A_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_A_C": {
+    "id": "75g0_A_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 01",
-    "z": 611
+    "z": 961
   },
-  "visw_2_C": {
-    "id": "visw_2_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_2_C": {
+    "id": "75g0_2_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 02",
-    "z": 606
+    "z": 982
   },
-  "visw_3_C": {
-    "id": "visw_3_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_3_C": {
+    "id": "75g0_3_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 03",
-    "z": 590
+    "z": 994
   },
-  "visw_4_C": {
-    "id": "visw_4_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_4_C": {
+    "id": "75g0_4_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 04",
-    "z": 592
+    "z": 967
   },
-  "visw_5_C": {
-    "id": "visw_5_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_5_C": {
+    "id": "75g0_5_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 05",
-    "z": 607
+    "z": 963
   },
-  "visw_6_C": {
-    "id": "visw_6_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_6_C": {
+    "id": "75g0_6_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 06",
-    "z": 580
+    "z": 992
   },
-  "visw_7_C": {
-    "id": "visw_7_C",
-    "deck": "viswD",
+  "75g0_7_C": {
+    "id": "75g0_7_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 07",
-    "z": 1,
-    "parent": "pko1",
-    "activeFace": 1
+    "z": 983
   },
-  "visw_8_C": {
-    "id": "visw_8_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_8_C": {
+    "id": "75g0_8_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 08",
-    "z": 599
+    "z": 950
   },
-  "visw_9_C": {
-    "id": "visw_9_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_9_C": {
+    "id": "75g0_9_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 09",
-    "z": 601
+    "z": 973
   },
-  "visw_T_C": {
-    "id": "visw_T_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_T_C": {
+    "id": "75g0_T_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 10",
-    "z": 609
+    "z": 951
   },
-  "visw_J_C": {
-    "id": "visw_J_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_J_C": {
+    "id": "75g0_J_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 2J",
-    "z": 587
+    "z": 960
   },
-  "visw_Q_C": {
-    "id": "visw_Q_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_Q_C": {
+    "id": "75g0_Q_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 605
+    "z": 947
   },
-  "visw_K_C": {
-    "id": "visw_K_C",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_K_C": {
+    "id": "75g0_K_C",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "C 4K",
-    "z": 583
+    "z": 944
   },
-  "visw_A_D": {
-    "id": "visw_A_D",
-    "deck": "viswD",
+  "75g0_A_D": {
+    "id": "75g0_A_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 01",
-    "z": 3,
-    "x": 90,
-    "y": 14,
-    "parent": "hand",
-    "owner": "Somebody",
-    "activeFace": 1
+    "z": 948
   },
-  "visw_2_D": {
-    "id": "visw_2_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_2_D": {
+    "id": "75g0_2_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 02",
-    "z": 574
+    "z": 974
   },
-  "visw_3_D": {
-    "id": "visw_3_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_3_D": {
+    "id": "75g0_3_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 03",
-    "z": 610
+    "z": 964
   },
-  "visw_4_D": {
-    "id": "visw_4_D",
-    "deck": "viswD",
+  "75g0_4_D": {
+    "id": "75g0_4_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 04",
-    "z": 2,
-    "x": 50,
-    "y": 14,
-    "parent": "hand",
-    "owner": "Somebody",
-    "activeFace": 1
+    "z": 956
   },
-  "visw_5_D": {
-    "id": "visw_5_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_5_D": {
+    "id": "75g0_5_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 05",
-    "z": 594
+    "z": 953
   },
-  "visw_6_D": {
-    "id": "visw_6_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_6_D": {
+    "id": "75g0_6_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 06",
-    "z": 577
+    "z": 993
   },
-  "visw_7_D": {
-    "id": "visw_7_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_7_D": {
+    "id": "75g0_7_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 07",
-    "z": 602
+    "z": 977
   },
-  "visw_8_D": {
-    "id": "visw_8_D",
-    "deck": "viswD",
+  "75g0_8_D": {
+    "id": "75g0_8_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 08",
-    "z": 3,
-    "parent": "pko1",
-    "activeFace": 1
+    "z": 957
   },
-  "visw_9_D": {
-    "id": "visw_9_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_9_D": {
+    "id": "75g0_9_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 09",
-    "z": 597
+    "z": 981
   },
-  "visw_T_D": {
-    "id": "visw_T_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_T_D": {
+    "id": "75g0_T_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 10",
-    "z": 598
+    "z": 988
   },
-  "visw_J_D": {
-    "id": "visw_J_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_J_D": {
+    "id": "75g0_J_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 2J",
-    "z": 586
+    "z": 945
   },
-  "visw_Q_D": {
-    "id": "visw_Q_D",
-    "deck": "viswD",
+  "75g0_Q_D": {
+    "id": "75g0_Q_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 5,
-    "x": 170,
-    "y": 14,
-    "parent": "hand",
-    "owner": "Somebody",
-    "activeFace": 1
+    "z": 987
   },
-  "visw_K_D": {
-    "id": "visw_K_D",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_K_D": {
+    "id": "75g0_K_D",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "D 4K",
-    "z": 576
+    "z": 986
   },
-  "visw_A_H": {
-    "id": "visw_A_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_A_H": {
+    "id": "75g0_A_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 01",
-    "z": 591
+    "z": 943
   },
-  "visw_2_H": {
-    "id": "visw_2_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_2_H": {
+    "id": "75g0_2_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 02",
-    "z": 584
+    "z": 966
   },
-  "visw_3_H": {
-    "id": "visw_3_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_3_H": {
+    "id": "75g0_3_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 03",
-    "z": 573
+    "z": 965
   },
-  "visw_4_H": {
-    "id": "visw_4_H",
-    "deck": "viswD",
+  "75g0_4_H": {
+    "id": "75g0_4_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 04",
-    "z": 4,
-    "x": 130,
-    "y": 14,
-    "parent": "hand",
-    "owner": "Somebody",
-    "activeFace": 1
+    "z": 970
   },
-  "visw_5_H": {
-    "id": "visw_5_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_5_H": {
+    "id": "75g0_5_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 05",
-    "z": 596
+    "z": 989
   },
-  "visw_6_H": {
-    "id": "visw_6_H",
-    "deck": "viswD",
+  "75g0_6_H": {
+    "id": "75g0_6_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 06",
-    "z": 6,
-    "parent": "pko1",
-    "activeFace": 1
+    "z": 979
   },
-  "visw_7_H": {
-    "id": "visw_7_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_7_H": {
+    "id": "75g0_7_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 07",
-    "z": 575
+    "z": 955
   },
-  "visw_8_H": {
-    "id": "visw_8_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_8_H": {
+    "id": "75g0_8_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 08",
-    "z": 589
+    "z": 972
   },
-  "visw_9_H": {
-    "id": "visw_9_H",
-    "deck": "viswD",
+  "75g0_9_H": {
+    "id": "75g0_9_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 09",
-    "z": 725,
-    "parent": "qq7a"
+    "z": 952
   },
-  "visw_T_H": {
-    "id": "visw_T_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_T_H": {
+    "id": "75g0_T_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 10",
-    "z": 593
+    "z": 971
   },
-  "visw_J_H": {
-    "id": "visw_J_H",
-    "deck": "viswD",
+  "75g0_J_H": {
+    "id": "75g0_J_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 2J",
-    "z": 4,
-    "parent": "pko1",
-    "activeFace": 1
+    "z": 946
   },
-  "visw_Q_H": {
-    "id": "visw_Q_H",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_Q_H": {
+    "id": "75g0_Q_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 600
+    "z": 990
   },
-  "visw_K_H": {
-    "id": "visw_K_H",
-    "deck": "viswD",
+  "75g0_K_H": {
+    "id": "75g0_K_H",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "H 4K",
-    "z": 5,
-    "parent": "pko1",
-    "activeFace": 1
+    "z": 949
   },
-  "visw_A_S": {
-    "id": "visw_A_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_A_S": {
+    "id": "75g0_A_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 01",
-    "z": 603
+    "z": 975
   },
-  "visw_2_S": {
-    "id": "visw_2_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_2_S": {
+    "id": "75g0_2_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 02",
-    "z": 608
+    "z": 991
   },
-  "visw_3_S": {
-    "id": "visw_3_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_3_S": {
+    "id": "75g0_3_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 03",
-    "z": 585
+    "z": 959
   },
-  "visw_4_S": {
-    "id": "visw_4_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_4_S": {
+    "id": "75g0_4_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 04",
-    "z": 581
+    "z": 985
   },
-  "visw_5_S": {
-    "id": "visw_5_S",
-    "deck": "viswD",
+  "75g0_5_S": {
+    "id": "75g0_5_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 05",
-    "z": 6,
-    "x": 210,
-    "y": 14,
-    "parent": "hand",
-    "owner": "Somebody",
-    "activeFace": 1
+    "z": 984
   },
-  "visw_6_S": {
-    "id": "visw_6_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_6_S": {
+    "id": "75g0_6_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 06",
-    "z": 604
+    "z": 978
   },
-  "visw_7_S": {
-    "id": "visw_7_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_7_S": {
+    "id": "75g0_7_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 07",
-    "z": 588
+    "z": 968
   },
-  "visw_8_S": {
-    "id": "visw_8_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_8_S": {
+    "id": "75g0_8_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 08",
-    "z": 582
+    "z": 962
   },
-  "visw_9_S": {
-    "id": "visw_9_S",
-    "deck": "viswD",
+  "75g0_9_S": {
+    "id": "75g0_9_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 09",
-    "z": 2,
-    "parent": "pko1",
-    "activeFace": 1
+    "z": 980
   },
-  "visw_T_S": {
-    "id": "visw_T_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_T_S": {
+    "id": "75g0_T_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 10",
-    "z": 578
+    "z": 954
   },
-  "visw_J_S": {
-    "id": "visw_J_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_J_S": {
+    "id": "75g0_J_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 2J",
-    "z": 595
+    "z": 958
   },
-  "visw_Q_S": {
-    "id": "visw_Q_S",
-    "parent": "qq7a",
-    "deck": "viswD",
+  "75g0_Q_S": {
+    "id": "75g0_Q_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 579
+    "z": 976
   },
-  "visw_K_S": {
-    "id": "visw_K_S",
-    "deck": "viswD",
+  "75g0_K_S": {
+    "id": "75g0_K_S",
+    "parent": "75g0P",
+    "deck": "75g0D",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1,
-    "x": 10,
-    "y": 14,
-    "parent": "hand",
-    "owner": "Somebody",
-    "activeFace": 1
-  },
-  "cardHolder": {
-    "type": "holder",
-    "id": "cardHolder",
-    "x": 524,
-    "y": 759,
-    "dropTarget": {
-      "type": "card"
-    }
-  },
-  "qq7a": {
-    "type": "pile",
-    "width": 103,
-    "height": 160,
-    "id": "qq7a",
-    "z": 692,
-    "parent": "cardHolder"
-  },
-  "demoHolder": {
-    "type": "holder",
-    "id": "demoHolder",
-    "x": 660,
-    "y": 761,
-    "z": 130
-  },
-  "pko1": {
-    "type": "pile",
-    "width": 103,
-    "height": 160,
-    "id": "pko1",
-    "z": 698,
-    "parent": "demoHolder"
-  },
-  "choosebutton2": {
-    "type": "button",
-    "id": "choosebutton2",
-    "x": 410,
-    "y": 250,
-    "z": 22838,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "suit",
-        "value": "S",
-        "collection": "spades"
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Spade cards from the entire room"
-          },
-          {
-            "type": "subtitle",
-            "text": "Select 1"
-          },
-          {
-            "type": "choose",
-            "source": "spades",
-            "variable": "thisVariable",
-            "propertyOverride": {
-              "activeFace": 1
-            },
-            "label": "The 6 is pre-selected, but you can change it.",
-            "value": "visw_6_S",
-            "collection": "thisCollection",
-            "scale": 0.8
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "variable"
-        ],
-        "property": "text",
-        "value": "${thisVariable}"
-      },
-      "var array = []",
-      {
-        "func": "FOREACH",
-        "collection": "thisCollection",
-        "loopRoutine": [
-          {
-            "func": "GET",
-            "property": "id"
-          },
-          "var array = ${array} + ${id}"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "collection"
-        ],
-        "property": "text",
-        "value": "${array}"
-      }
-    ],
-    "text": "Collection"
-  },
-  "explain1": {
-    "id": "explain1",
-    "x": 4,
-    "y": 350,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "This takes the cards from the demoHolder and displays them on the INPUT pop-up. The player can select up to 3 cards because the 'max' parameter is set at 3. The cards are displayed in the same order (top down) from the holder."
-  },
-  "explain2": {
-    "id": "explain2",
-    "x": 329,
-    "y": 350,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "This creates a collection of all spade cards. Because max is not specified, the player only picks one. The six of spades is pre-selected because its id is specified in the 'value' parameter. The cards in the holder are face down so the 'propertyOverride' parameter is used. Finally, the `scale` parameter is also used to reduce the size of the cards in the overlay."
+    "z": 969
   },
   "hand": {
     "type": "holder",
@@ -1284,385 +1256,31 @@
     "childrenPerOwner": true,
     "dropShadow": true,
     "hidePlayerCursors": true,
-    "x": 794,
-    "y": 766,
-    "width": 450,
+    "x": 1150,
+    "y": 820,
+    "width": 400,
     "height": 180,
     "id": "hand"
   },
-  "seat1": {
-    "type": "seat",
-    "id": "seat1",
-    "x": 796,
-    "y": 694
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 8,
+    "y": 462,
+    "dropTarget": {
+      "type": "card"
+    }
   },
-  "seat2": {
-    "type": "seat",
-    "id": "seat2",
-    "x": 1075,
-    "y": 694,
-    "index": 2,
-    "player": "Somebody",
-    "color": "#af00aa"
-  },
-  "choosebutton3": {
+  "recallButton": {
     "type": "button",
-    "id": "choosebutton3",
-    "x": 744,
-    "y": 250,
-    "z": 22838,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "owner",
-        "value": "${PROPERTY player OF seat2}",
-        "collection": "handCards",
-        "sortBy": {
-          "key": "z",
-          "reverse": false
-        }
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Cards in seat2's hand"
-          },
-          {
-            "type": "subtitle",
-            "text": "View only"
-          },
-          {
-            "type": "choose",
-            "collection": "thisCollection",
-            "source": "handCards",
-            "variable": "thisVariable",
-            "max": 0
-          }
-        ],
-        "cancelButtonIcon": null,
-        "cancelButtonText": null,
-        "confirmButtonText": "Finished"
-      }
-    ],
-    "text": "Collection View Only"
-  },
-  "choosebutton4": {
-    "type": "button",
-    "id": "choosebutton4",
-    "x": 1069,
-    "y": 250,
-    "z": 22838,
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Pick a dice face"
-          },
-          {
-            "type": "subtitle",
-            "text": "The dice will be set to the face you choose"
-          },
-          {
-            "type": "choose",
-            "source": [
-              "dice1"
-            ],
-            "mode": "faces",
-            "faces": [
-              1,
-              3,
-              5
-            ],
-            "variable": "thisVariable",
-            "collection": "thisCollection"
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "property": "activeFace",
-        "value": "${thisVariable}",
-        "collection": [
-          "dice1"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "variable"
-        ],
-        "property": "text",
-        "value": "${thisVariable}"
-      },
-      "var array = []",
-      {
-        "func": "FOREACH",
-        "collection": "thisCollection",
-        "loopRoutine": [
-          {
-            "func": "GET",
-            "property": "id"
-          },
-          "var array = ${array} + ${id}"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "collection"
-        ],
-        "property": "text",
-        "value": "${array}"
-      }
-    ],
-    "text": "Faces of 1 Widget"
-  },
-  "explain3": {
-    "id": "explain3",
-    "x": 988,
-    "y": 350,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "This uses the mode 'faces' and one widget. The player can see the even faces and choose one. Only the even faces are shown because the 'faces' property is an array of the even faces. Notice the difference in output between the variable and the collection."
-  },
-  "explain4": {
-    "id": "explain4",
-    "x": 663,
-    "y": 350,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "This makes a collection of the cards owned by the player in seat2 ('Somebody'). You can view these cards, but cannot do anything with them. This collection sorts the cards in z order so they are displayed in the order they are in the hand."
-  },
-  "dice1": {
-    "type": "dice",
-    "id": "dice1",
-    "x": 1265,
-    "y": 776,
-    "z": 45,
-    "activeFace": [
-      {
-        "widget": "dice1",
-        "face": "3"
-      },
-      {
-        "widget": "dice2",
-        "face": "1"
-      },
-      {
-        "widget": "dice2",
-        "face": "6"
-      },
-      {
-        "widget": "dice2",
-        "face": "9"
-      }
-    ],
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ],
-    "rollCount": 4
-  },
-  "dice2": {
-    "type": "dice",
-    "id": "dice2",
-    "x": 1264,
-    "y": 853,
-    "z": 22814,
-    "faces": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12
-    ],
-    "pipSymbols": false,
-    "shape3d": true
-  },
-  "choosebutton5": {
-    "type": "button",
-    "id": "choosebutton5",
-    "x": 1384,
-    "y": 250,
-    "z": 22838,
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Pick 4 dice faces"
-          },
-          {
-            "type": "subtitle",
-            "text": "Choose from one or both dice"
-          },
-          {
-            "type": "choose",
-            "source": [
-              "dice1",
-              "dice2"
-            ],
-            "mode": "faces",
-            "variable": "thisVariable",
-            "collection": "thisCollection",
-            "max": 4,
-            "min": 2
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "variable"
-        ],
-        "property": "text",
-        "value": "${thisVariable}"
-      },
-      "var array = []",
-      {
-        "func": "FOREACH",
-        "collection": "thisCollection",
-        "loopRoutine": [
-          {
-            "func": "GET",
-            "property": "id"
-          },
-          "var array = ${array} + ${id}"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "collection"
-        ],
-        "property": "text",
-        "value": "${array}"
-      }
-    ],
-    "text": "Faces of 2 Widgets"
-  },
-  "explain5": {
-    "id": "explain5",
-    "x": 1303,
-    "y": 350,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "This uses the mode 'faces' and two widgets. The player can see all of the faces. This button also uses the 'min' parameter to force the player to choose at least 2 faces. While you can create this type of option, notice the complicated variable output. Open the JSON Editor and view the text property to see the details."
-  },
-  "choosebutton6": {
-    "type": "button",
-    "id": "choosebutton6",
-    "x": 85,
-    "y": 652,
-    "z": 22838,
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Cards from tokenHolder"
-          },
-          {
-            "type": "subtitle",
-            "text": "Select 1"
-          },
-          {
-            "type": "choose",
-            "holder": [
-              "tokenHolder"
-            ],
-            "collection": "thisCollection",
-            "variable": "thisVariable",
-            "max": 1
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "${thisVariable}"
-        ],
-        "property": "parent",
-        "value": "seatToken${seatIndex}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "variable"
-        ],
-        "property": "text",
-        "value": "${thisVariable}"
-      },
-      "var array = []",
-      {
-        "func": "FOREACH",
-        "collection": "thisCollection",
-        "loopRoutine": [
-          {
-            "func": "GET",
-            "property": "id"
-          },
-          "var array = ${array} + ${id}"
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "collection"
-        ],
-        "property": "text",
-        "value": "${array}"
-      }
-    ],
-    "text": "Seat Token"
-  },
-  "explain6": {
-    "id": "explain6",
-    "x": 4,
-    "y": 752,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "Sit in seat1, then click the button above. You will be given a chance to choose an icon to represent you and it will be positioned near your seat."
-  },
-  "pi61B": {
-    "id": "pi61B",
-    "parent": "tokenHolder",
+    "id": "recallButton",
+    "parent": "deckHolder",
     "fixedParent": true,
-    "y": 71,
+    "y": 171.36,
     "width": 111,
     "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
     "movableInEdit": false,
+    "text": "Recall & Shuffle",
     "clickRoutine": [
       {
         "func": "RECALL",
@@ -1677,123 +1295,6 @@
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
       }
-    ],
-    "x": -28
-  },
-  "ayshD": {
-    "type": "deck",
-    "id": "ayshD",
-    "x": 4,
-    "y": 4,
-    "cardDefaults": {
-      "width": 50,
-      "height": 50,
-      "logoColor": "#1f5ca6",
-      "shapeColor": "#ffffff80"
-    },
-    "cardTypes": {
-      "Blue": {
-        "shade": "blue",
-        "shape": "/i/icons/circle.svg"
-      },
-      "Red": {
-        "shade": "red",
-        "shape": "/i/icons/property.svg"
-      },
-      "Green": {
-        "shade": "green",
-        "shape": "/i/icons/hexagon_horizontal.svg"
-      },
-      "Orange": {
-        "shade": "orange",
-        "shape": "/i/icons/auto_awesome.svg"
-      }
-    },
-    "faceTemplates": [
-      {
-        "border": 1,
-        "radius": 8,
-        "objects": [
-          {
-            "type": "image",
-            "width": 50,
-            "height": 50,
-            "svgReplaces": {
-              "currentColor": "shapeColor"
-            },
-            "dynamicProperties": {
-              "color": "shade",
-              "value": "shape"
-            }
-          }
-        ]
-      }
-    ],
-    "z": 774,
-    "parent": "tokenHolder"
-  },
-  "h17l": {
-    "deck": "ayshD",
-    "type": "card",
-    "cardType": "Blue",
-    "id": "h17l",
-    "z": 848,
-    "parent": "fbz1"
-  },
-  "axsw": {
-    "deck": "ayshD",
-    "type": "card",
-    "cardType": "Red",
-    "id": "axsw",
-    "z": 849,
-    "parent": "fbz1"
-  },
-  "1ofm": {
-    "deck": "ayshD",
-    "type": "card",
-    "cardType": "Green",
-    "id": "1ofm",
-    "z": 847,
-    "parent": "fbz1"
-  },
-  "e2ta": {
-    "deck": "ayshD",
-    "type": "card",
-    "cardType": "Orange",
-    "id": "e2ta",
-    "z": 846,
-    "parent": "fbz1"
-  },
-  "fbz1": {
-    "type": "pile",
-    "width": 50,
-    "height": 50,
-    "id": "fbz1",
-    "z": 800,
-    "parent": "tokenHolder"
-  },
-  "tokenHolder": {
-    "type": "holder",
-    "id": "tokenHolder",
-    "x": 428,
-    "y": 856,
-    "width": 52,
-    "height": 52,
-    "dropTarget": {
-      "type": "card"
-    }
-  },
-  "seatToken1": {
-    "type": "holder",
-    "id": "seatToken1",
-    "x": 856,
-    "y": 640,
-    "width": 52,
-    "height": 52,
-    "z": 131,
-    "classes": "transparent",
-    "dropTarget": {
-      "deck": "tokens"
-    }
+    ]
   }
 }

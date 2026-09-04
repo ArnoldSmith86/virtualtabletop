@@ -1,7 +1,11 @@
-import { toServer } from './connection.js';
+import { toServer, onMessage, onConnectionClose } from './connection.js';
+import { setConnectionState, setStatusMessage, updateStatus } from './overlays/status.js';
+import { connectionClosed, connectionStatus, deltaConfirmed, deltaSent, monitorTick, stateReceived } from './deltamonitor.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
+import { setViewportSize } from './calculateLayout.js';
 import { dropTargets } from './main.js';
+import { playerName } from './overlays/players.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
@@ -15,6 +19,7 @@ let delta = { s: {} };
 let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
+let nextDeltaSendId = 0;
 let overlayShownForEmptyRoom = false;
 
 let triggerGameStartRoutineOnNextStateLoad = false;
@@ -42,16 +47,20 @@ function applyCustomCss(gameSettings) {
   }
 }
 
-function generateUniqueWidgetID() {
+// derivedIDs is passed by composite widgets that build their child IDs from the
+// base ID (deck1B, deck1P, deck1_A_C, ...): a base is only accepted when none of
+// those is taken either, so adding a composite never overwrites another widget.
+function generateUniqueWidgetID(type, derivedIDs) {
   let id;
+  let i = 1;
   do {
-    id = rand().toString(36).substring(3, 7);
-  } while (widgets.has(id));
+    id = type ? type + i++ : rand().toString(36).substring(3, 7);
+  } while (widgets.has(id) || derivedIDs && derivedIDs(id).some(derived=>widgets.has(String(derived))));
   return id;
 }
 
-export function addWidget(widget, instance) {
-  if(widget.parent && !widgets.has(widget.parent)) {
+export function addWidget(widget, instance, allowMissingParent) {
+  if(widget.parent && !widgets.has(widget.parent) && !allowMissingParent) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
     deferredChildren[widget.parent].push(widget);
@@ -94,6 +103,8 @@ export function addWidget(widget, instance) {
     w = new Holder(id);
   } else if(widget.type == 'label') {
     w = new Label(id);
+  } else if(widget.type == 'line') {
+    w = new Line(id);
   } else if(widget.type == 'pile') {
     w = new Pile(id);
   } else if(widget.type == 'scoreboard') {
@@ -122,14 +133,21 @@ export function addWidget(widget, instance) {
       addWidget(c);
   delete deferredCards[widget.id];
 
+  // a widget that was deferred more than once (its parent changed while it was
+  // waiting) is only added by the first of those parents that shows up
   for(const c of deferredChildren[widget.id] || [])
-    addWidget(c);
+    if(!widgets.has(c.id))
+      addWidget(c);
   delete deferredChildren[widget.id];
 }
 
-async function addWidgetLocal(widget) {
+// useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
+// creation) so live gameplay keeps random IDs - type-based IDs are an
+// authoring/edit-mode convenience and give no benefit during play, while
+// sequential IDs would raise the collision risk between concurrent clients.
+async function addWidgetLocal(widget, useTypeBasedID = true) {
   if (!widget.id)
-    widget.id = generateUniqueWidgetID();
+    widget.id = generateUniqueWidgetID(useTypeBasedID ? widget.type : undefined);
   else
     widget.id = String(widget.id);
 
@@ -165,12 +183,16 @@ async function updateWidgetId(widget, oldID) {
   const children = Widget.prototype.children.call(widgets.get(oldID)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==oldID);
 
+  // a rename is a remove+re-add of the same state under a new id, not a real
+  // removal - let onChildRemove/onChildAdd tell it apart from an actual detach
+  widgets.get(oldID).isBeingRenamed = true;
+
   for(const child of children)
     sendPropertyUpdate(child.get('id'), 'parent', null);
   for(const card of cards)
     sendPropertyUpdate(card.get('id'), 'deck', null);
   await removeWidgetLocal(oldID, true);
-  
+
   const id = await addWidgetLocal(widget);
 
   // Restore children
@@ -206,6 +228,10 @@ async function updateWidgetId(widget, oldID) {
     if(originalDropTarget != JSON.stringify(dropTarget))
       await t.set('dropTarget', dropTarget);
   }
+
+  // Keep the stop lists of lines pointing at the renamed widget
+  for(const line of widgetFilter(w=>w.get('type') == 'line'))
+    await line.renameStop(oldID, id);
 
   // Update references in routines
   const updateParam = function(a, func, param) {
@@ -458,7 +484,10 @@ function getDelta() {
 function sendRawDelta(delta) {
   receiveDelta(delta);
   delta.id = deltaID;
+  delta.deltaSendId = ++nextDeltaSendId;
+  deltaSent(delta.deltaSendId);
   toServer('delta', delta);
+  refreshConnectionStatus();
 }
 
 function receiveDeltaFromServer(delta) {
@@ -471,6 +500,9 @@ function receiveStateFromServer(args) {
 
   // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
   currentGameSettings = args._meta.gameSettings || {};
+  // the board size has to be in place before the widgets below are created (pile handles
+  // are placed relative to the board edges), but the layout is applied once they are there
+  const boardSizeChanged = setViewportSize(currentGameSettings.boardSize);
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
@@ -478,6 +510,10 @@ function receiveStateFromServer(args) {
   for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();
   widgets.clear();
+  // whatever an earlier delta deferred waits for a room that does not exist anymore:
+  // keeping it would add a second copy of a widget this state contains
+  deferredChildren = {};
+  deferredCards = {};
   dropTargets.clear();
   maxZ = {};
   StateManaged.globalUpdateListeners = {};
@@ -494,20 +530,51 @@ function receiveStateFromServer(args) {
     }
   }
 
+  // Whatever still waits for a parent here waits for a widget the state does not
+  // contain, or for one that is itself still waiting. Only the former go onto the
+  // surface in limbo instead of being dropped - edit mode outlines them as "Invalid
+  // Parent", so they can be found and given a real parent rather than silently
+  // disappearing from the room. Their own descendants follow through the regular
+  // deferred handling once they are there, so the hierarchy below an orphan survives
+  // no matter in which order the widgets appear in the state.
+  const deferredIDs = new Set();
+  for(const children of Object.values(deferredChildren))
+    for(const widget of children)
+      deferredIDs.add(widget.id);
+  for(const parentID of Object.keys(deferredChildren)) {
+    if(deferredIDs.has(parentID))
+      continue;
+    for(const widget of deferredChildren[parentID] || []) {
+      console.error(`Widget "${widget.id}" is in limbo because its parent "${parentID}" does not exist!`);
+      addWidget(widget, undefined, true);
+    }
+    delete deferredChildren[parentID];
+  }
+
+  // a parent chain that closes into a cycle has no widget that could be added first
+  for(const [ parentID, children ] of Object.entries(deferredChildren))
+    for(const widget of children)
+      console.error(`Could not add widget "${widget.id}" because its parent "${parentID}" could not be added!`);
+  deferredChildren = {};
+
   if(Object.keys(deferredCards).length) {
     for(const [ deckID, widgets ] of Object.entries(deferredCards))
       for(const widget of widgets)
         console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
     deferredCards = {};
   }
-  if(Object.keys(deferredChildren).length) {
-    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
-      for(const widget of widgets)
-        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
-    deferredChildren = {};
-  }
+
+  // before resetZoomAndPan, which clamps the pan against the board size and the scale
+  if(boardSizeChanged)
+    applyViewportLayout();
 
   resetZoomAndPan();
+
+  // a fresh state makes all unconfirmed deltas moot - tell the player when some were reverted
+  const changesLost = stateReceived();
+  if(changesLost && !isLoading)
+    setStatusMessage('Connection restored. Your last changes could not be saved.', 'link');
+  refreshConnectionStatus();
 
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
@@ -594,11 +661,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 
 function sendDelta() {
   if(!batchDepth) {
-    if(deltaChanged) {
-      receiveDelta(delta);
-      delta.id = deltaID;
-      toServer('delta', delta);
-    }
+    if(deltaChanged)
+      sendRawDelta(delta);
     delta = { s: {} };
     deltaChanged = false;
   }
@@ -625,13 +689,284 @@ export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
+function refreshConnectionStatus(status = connectionStatus()) {
+  setConnectionState(status.pendingCount, status.state, status.msUntilReload);
+  updateStatus();
+}
+
+// --- Remote & multi-player INPUT ------------------------------------------
+// INPUT with a `player` parameter shows the overlay on the listed player(s)
+// and sends each player's result back to the initiating client, which keeps
+// running the routine. When `player` is a list, the fields' variables come
+// back keyed by player name (e.g. choosing cards to pass in Hearts).
+// A `block` parameter shows every other player a "waiting for input" overlay
+// (with a cancel button) while the input is pending.
+
+// A per-page-load token keeps session IDs unique even between two clients that
+// happen to share a player name. Uses crypto instead of the seeded game RNG:
+// session IDs are transport-level identifiers, not game state, so they must
+// not consume rand() (would break test determinism) nor be predictable.
+// (crypto.randomUUID is secure-context-only and unavailable e.g. behind the
+// TestCafe proxy, so build the token from getRandomValues instead.)
+const inputClientToken = Array.from(crypto.getRandomValues(new Uint8Array(16)), b=>b.toString(16).padStart(2, '0')).join('');
+let inputSessionCounter = 0;
+// Keyed by session IDs that may originate from another client, so use
+// null-prototype objects to avoid __proto__/constructor key surprises.
+const inputSessions = Object.create(null);       // initiator side: sessionID -> session
+const remoteInputHandles = Object.create(null);  // target side:    sessionID -> overlay handle
+
+function serializeCollections(collections) {
+  const ids = {};
+  for(const c in (collections || {}))
+    ids[c] = (collections[c] || []).map(w=>w && w.get('id')).filter(Boolean);
+  return ids;
+}
+
+function resolveCollections(ids) {
+  const collections = {};
+  for(const c in (ids || {}))
+    collections[c] = (ids[c] || []).map(id=>widgets.get(id)).filter(Boolean);
+  return collections;
+}
+
+function referencedChooseCollections(overlay, collections) {
+  const referenced = {};
+  for(const field of overlay.fields || []) {
+    if(field.type != 'choose' || field.holder)
+      continue;
+    const source = field.source || 'DEFAULT';
+    if(typeof source == 'string' && Array.isArray(collections[source]))
+      referenced[source] = collections[source];
+  }
+  return referenced;
+}
+
+// Run an INPUT for one or more players. `showLocal` (optional) is called when
+// the initiator itself is among the players; it shows the overlay locally and
+// resolves to { variables, collections }. Resolves to a map
+// playerName -> { variables, collections }, or rejects if the input is
+// cancelled (by a target, by the initiator or via the block overlay).
+export function runInput({ widgetID, overlay, overlaysByPlayer, players, variables, collections, showLocal }) {
+  const sessionID = `${inputClientToken}-${++inputSessionCounter}`;
+  const remoteTargets = players.filter(p=>p && p!==playerName);
+  const includeSelf = players.includes(playerName);
+  const collectionIDs = serializeCollections(collections);
+  const collectionIDsByPlayer = overlaysByPlayer ? Object.fromEntries(remoteTargets.map(p=>[ p, serializeCollections(referencedChooseCollections(overlaysByPlayer[p] || overlay, collections)) ])) : null;
+
+  return new Promise((resolve, reject) => {
+    const session = {
+      remaining: new Set([ ...remoteTargets, ...(includeSelf ? [ playerName ] : []) ]),
+      results: {},
+      block: !!overlay.block,
+      hasRemote: remoteTargets.length > 0,
+      localAbort: null,
+      done: false
+    };
+    inputSessions[sessionID] = session;
+
+    const cleanup = ()=>{
+      session.done = true;
+      delete inputSessions[sessionID];
+      if(session.block)
+        endInputBlock(sessionID);
+    };
+
+    session.complete = ()=>{
+      if(session.done || session.remaining.size)
+        return;
+      const results = session.results;
+      cleanup();
+      resolve(results);
+    };
+
+    session.cancel = ()=>{
+      if(session.done)
+        return;
+      cleanup();
+      if(session.hasRemote)
+        toServer('abortInput', { sessionID });
+      if(session.localAbort)
+        session.localAbort();
+      reject(new Error('INPUT cancelled'));
+    };
+
+    if(session.block)
+      startInputBlock(sessionID, players, overlay.header);
+
+    if(includeSelf && showLocal) {
+      showLocal(abort=>{ session.localAbort = abort; })
+        .then(result=>{
+          if(session.done)
+            return;
+          session.results[playerName] = result;
+          session.remaining.delete(playerName);
+          // The initiator answered its own overlay; if others are still pending
+          // and we're blocking, join the "waiting for the rest" overlay.
+          if(session.block && session.remaining.size)
+            toServer('inputBlockAnswered', { sessionID });
+          session.complete();
+        })
+        .catch(()=>session.cancel());
+    }
+
+    if(remoteTargets.length) {
+      flushDelta();
+      toServer('requestInput', { sessionID, widgetID, overlay, overlaysByTarget: overlaysByPlayer, variables, collections: collectionIDs, collectionsByTarget: collectionIDsByPlayer, targets: remoteTargets });
+    }
+
+    if(!session.remaining.size)
+      session.complete();
+  });
+}
+
+// Target side: show the requested overlay and send the result back.
+async function receiveShowInput(args) {
+  const widget = widgets.get(args.widgetID);
+  // Refuse if the widget is gone or the player is already busy with another
+  // input overlay (their own or an earlier session) — clobbering the open
+  // overlay would let one click resolve both with the wrong data.
+  const busy = Object.keys(remoteInputHandles).length || $('#activeGameButton').dataset.overlay === 'buttonInputOverlay';
+  if(!widget || busy) {
+    toServer('inputResult', { sessionID: args.sessionID, cancelled: true });
+    return;
+  }
+  const collections = resolveCollections(args.collections);
+  // Mirror evaluateRoutine's getCollection: an array source becomes a named
+  // collection built from those widget IDs, so `choose` fields with an array
+  // `source` work on remote clients too.
+  const getCollection = source=>{
+    if(Array.isArray(collections[source]))
+      return source;
+    if(Array.isArray(source)) {
+      collections['$remoteSource'] = widgetFilter(w=>source.indexOf(w.id) != -1);
+      return '$remoteSource';
+    }
+    return 'DEFAULT';
+  };
+  const handle = { aborted: false };
+  remoteInputHandles[args.sessionID] = handle;
+  try {
+    const result = await widget.showInputOverlay(args.overlay, widgets, args.variables || {}, collections, getCollection, [], handle);
+    delete remoteInputHandles[args.sessionID];
+    if(!handle.aborted)
+      toServer('inputResult', { sessionID: args.sessionID, cancelled: false, variables: result.variables, collections: serializeCollections(result.collections) });
+  } catch(e) {
+    delete remoteInputHandles[args.sessionID];
+    if(!handle.aborted)
+      toServer('inputResult', { sessionID: args.sessionID, cancelled: true });
+  }
+}
+
+// Target side: the initiator (or a cancel) asked us to close the overlay.
+function receiveHideInput(args) {
+  const handle = remoteInputHandles[args.sessionID];
+  if(handle) {
+    handle.aborted = true;
+    delete remoteInputHandles[args.sessionID];
+    if(handle.abort)
+      handle.abort();
+  }
+}
+
+// Initiator side: a player's result (or cancellation) came back.
+function receiveInputResult(args) {
+  const session = inputSessions[args.sessionID];
+  if(!session)
+    return;
+  if(args.cancelled) {
+    session.cancel();
+    return;
+  }
+  session.results[args.player] = { variables: args.variables || {}, collections: resolveCollections(args.collections) };
+  session.remaining.delete(args.player);
+  session.complete();
+}
+
+// Initiator side: someone pressed cancel on the block overlay.
+function receiveInputCancelled(args) {
+  const session = inputSessions[args.sessionID];
+  if(session)
+    session.cancel();
+}
+
+// --- INPUT block overlay --------------------------------------------------
+const activeInputBlocks = new Map();
+
+function startInputBlock(sessionID, waitingFor, header) {
+  toServer('inputBlock', { blockID: sessionID, show: true, waitingFor, header });
+}
+
+function endInputBlock(sessionID) {
+  toServer('inputBlock', { blockID: sessionID, show: false });
+}
+
+function receiveInputBlock(args) {
+  if(args.show)
+    activeInputBlocks.set(args.blockID, args);
+  else
+    activeInputBlocks.delete(args.blockID);
+  updateInputBlockOverlay();
+}
+
+function updateInputBlockOverlay() {
+  const shown = $('#inputBlockOverlay').style.display != 'none';
+  if(!activeInputBlocks.size) {
+    if(shown)
+      showOverlay(null);
+    return;
+  }
+  const lines = [];
+  for(const block of activeInputBlocks.values()) {
+    const names = (block.waitingFor || []).join(', ');
+    lines.push((block.header ? block.header + ' — ' : '') + `Waiting for input from ${names}…`);
+  }
+  $('#inputBlockText').textContent = lines.join('\n');
+  // Don't steal the screen from a player who is filling in their own input
+  // overlay, and only toggle showOverlay when actually transitioning to shown
+  // (showOverlay flips visibility if the overlay is already open).
+  if(!shown && $('#activeGameButton').dataset.overlay !== 'buttonInputOverlay')
+    showOverlay('inputBlockOverlay');
+}
+
+// Cancel every input the local player is currently waiting on.
+function cancelInputBlocks() {
+  for(const blockID of activeInputBlocks.keys())
+    toServer('cancelInput', { blockID });
+}
+
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
+  onMessage('deltaConfirm', function(args) {
+    if(args && args.id)
+      deltaConfirmed(args.id);
+    refreshConnectionStatus();
+  });
   onMessage('state', receiveStateFromServer);
+  onMessage('showInput', receiveShowInput);
+  onMessage('hideInput', receiveHideInput);
+  onMessage('inputResult', receiveInputResult);
+  onMessage('inputCancelled', receiveInputCancelled);
+  onMessage('inputBlock', receiveInputBlock);
+  if($('#inputBlockCancel'))
+    $('#inputBlockCancel').addEventListener('click', cancelInputBlocks);
   onMessage('meta', (args) => {
     if(args.meta) {
       applyCustomCss(args.meta.gameSettings);
     }
   });
+  onConnectionClose(function() {
+    connectionClosed();
+    refreshConnectionStatus();
+  });
+  // only this tick may trigger the reload: it is the one that notices a suspended tab
+  setInterval(function() {
+    const status = monitorTick();
+    if(!status)
+      return;
+    if(status.reload)
+      location.reload();
+    else
+      refreshConnectionStatus(status);
+  }, 500);
   setScale();
 });
