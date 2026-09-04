@@ -74,15 +74,22 @@ async function whileSuspended(promise) {
 }
 
 // Problems found outside the routine interpreter - a pile that could not be created, a drop into a
-// holder that is gone. A routine that is running takes them over so that they appear in its log
-// next to its own problems; a drag or a plain click has only the console to report to. (#1402, #1504)
+// holder that is gone. A caller that is an operation hands in the problems array of its own routine;
+// for the rest, a routine that happens to be running takes them over so that they appear in its log
+// next to its own problems, and a drag or a plain click has only the console to report to. (#1402, #1504)
 const problemsFromOutsideRoutines = [];
-function reportProblem(message) {
-  if(routineDepth)
+function reportProblem(message, problems) {
+  if(problems)
+    problems.push(message);
+  else if(routineDepth)
     problemsFromOutsideRoutines.push(message);
   else
     console.log(message);
 }
+
+// The onPileCreation values that already failed to produce a pile, so that the cards they belong to
+// do not report the same problem again on every single update.
+const reportedPileCreationFailures = new Set();
 
 // wouldCreateParentCycle reads the parent of every widget it walks, which can come back into
 // getDefaultValue for a widget whose inherited parent is still being resolved. StateManaged's own
@@ -663,7 +670,7 @@ export class Widget extends StateManaged {
       // it was created instead of going into a widget that is gone. (#1504)
       const parentWidget = parent && widgets.has(parent) ? widgets.get(parent) : null;
       if(parent && !parentWidget)
-        reportProblem(`Widget ${parent} disappeared while ${this.get('id')} was being cloned into it.`);
+        reportProblem(`Widget ${parent} disappeared while ${this.get('id')} was being cloned into it.`, problems);
 
       // use moveToHolder so that CLONE triggers onEnter and similar features
       cWidget.movedByButton = problems != null;
@@ -2148,19 +2155,21 @@ export class Widget extends StateManaged {
               if(target.get('hand') && target.get('player')) {
                 if(widgets.has(target.get('hand'))) {
                   const targetHand = widgets.get(target.get('hand'));
+                  let wasMoved = true;
                   await applyFlip();
                   if (targetHand == source) {
                     // cards are already in hand: only an owner update is needed
                     await c.set('owner', target.get('player'));
                   } else {
                     c.targetPlayer = target.get('player');
-                    await c.moveToHolder(targetHand);
+                    wasMoved = await c.moveToHolder(targetHand, problems);
                     delete c.targetPlayer;
                   }
                   await c.bringToFront();
                   if(targetHand.get('type') == 'holder')
                     await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
-                  ++moved;
+                  if(wasMoved)
+                    ++moved;
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                 }
@@ -2169,8 +2178,8 @@ export class Widget extends StateManaged {
               }
             } else {
               await applyFlip();
-              await c.moveToHolder(target);
-              ++moved;
+              if(await c.moveToHolder(target, problems))
+                ++moved;
             }
             delete c.movedByButton;
           }
@@ -2275,7 +2284,7 @@ export class Widget extends StateManaged {
                   if(c.get('_ancestor') == holder && !c.get('owner'))
                     await c.bringToFront();
                   else
-                    await c.moveToHolder(widgets.get(holder));
+                    await c.moveToHolder(widgets.get(holder), problems);
                 }
               }
             } else {
@@ -3089,16 +3098,18 @@ export class Widget extends StateManaged {
     );
   }
 
-  async moveToHolder(holder) {
+  // Returns whether the widget was moved, so that a caller counting its moves does not count the
+  // ones that were refused.
+  async moveToHolder(holder, problems) {
     if(this.inRemovalQueue)
-      return;
+      return false;
 
     // A routine that moves several widgets one after another looks the holder up once per widget,
     // and every move it makes can run game logic that removes it in between - so by the time this
     // widget's turn comes there may be nothing left to move it into. (#1504)
     if(!holder || !widgets.has(holder.get('id'))) {
-      reportProblem(`Could not move ${this.id} into ${holder ? holder.get('id') : 'a holder'} because it does not exist.`);
-      return;
+      reportProblem(`Could not move ${this.id} into ${holder ? holder.get('id') : 'a holder'} because it does not exist.`, problems);
+      return false;
     }
 
     await this.bringToFront();
@@ -3109,6 +3120,7 @@ export class Widget extends StateManaged {
 
     await this.set('owner',  null);
     await this.set('parent', holder.get('id'));
+    return true;
   }
 
   async moveStart() {
@@ -3999,7 +4011,12 @@ export class Widget extends StateManaged {
           // without a deck, for example - yields no pile. Handing the cards to it anyway put them in
           // limbo, from where the next update tried to pile them up again, forever. (#1402)
           if(pileId === null) {
-            reportProblem(`Could not create a pile for ${this.id} and ${widgetID}. Check the onPileCreation property of ${this.id}.`);
+            // the two cards stay where they are and stay within pileSnapRange, so every later update
+            // of either of them tries the same pile again - only the first attempt is worth reading
+            if(!reportedPileCreationFailures.has(thisOnPileCreationJSON)) {
+              reportedPileCreationFailures.add(thisOnPileCreationJSON);
+              reportProblem(`Could not create a pile for ${this.id} and ${widgetID}. Check the onPileCreation property of ${this.id}.`);
+            }
             break;
           }
           await widget.set('parent', pileId);

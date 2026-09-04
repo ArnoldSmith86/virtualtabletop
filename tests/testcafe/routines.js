@@ -575,6 +575,10 @@ test('an onPileCreation that cannot create a pile leaves the cards where they ar
   await expectEventually(t, ()=>widgetProperty('card2', 'parent'), null);
   await t.expect(Object.keys(JSON.parse(await getState())).filter(id=>id != '_meta').sort()).eql([ 'card1', 'card2', 'deck', 'go' ]);
 
+  // a drag has no routine to report to, so the reason ends up in the console
+  const consoleMessages = await t.getBrowserConsoleMessages();
+  await t.expect((consoleMessages.log || []).join('\n')).contains('Check the onPileCreation property of');
+
   // the client is still there and reacts to the next click
   await t.click('#w_go');
   await expectEventually(t, markedWidgets, [ 'go' ]);
@@ -639,6 +643,33 @@ test('a widget removed while it is being dragged ends the drag instead of the cl
   await t.drag('#w_child', 250, 150, { speed: 0.4 });
 
   await expectEventually(t, async ()=>JSON.parse(await getState()).group || null, null);
+  await t.expect(Selector('#clientErrorOverlay').visible).notOk();
+
+  // the client is still there and reacts to the next click
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+});
+
+// The same widget, removed while the drag is still starting: moveStart() sets 'dragging', the
+// routine reacting to that removes the widget, and the moves that arrived in the meantime used to
+// resume into it after the wait. (#2317)
+test('a widget removed while the drag is starting ends the drag instead of the client', async t => {
+  await setRoomState({
+    group: { id: 'group', type: 'basic', x: 100, y: 100, width: 300, height: 300, movable: true, draggingChangeRoutine: [
+      { func: 'SELECT', property: 'id', value: 'child' },
+      { func: 'SET', property: 'parent', value: null },
+      { func: 'SELECT', property: 'id', value: 'group' },
+      { func: 'DELETE' },
+      { func: 'DELAY', milliseconds: 300 } // moveStart waits here while further mousemoves are delivered
+    ] },
+    child: { id: 'child', type: 'basic', parent: 'group', x: 20, y: 20, width: 100, height: 100, movable: false },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.drag('#w_child', 250, 150, { speed: 0.2 });
+
+  await expectEventually(t, async ()=>JSON.parse(await getState()).group || null, null, undefined, 4000);
   await t.expect(Selector('#clientErrorOverlay').visible).notOk();
 
   // the client is still there and reacts to the next click

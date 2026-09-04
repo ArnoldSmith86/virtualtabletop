@@ -210,12 +210,13 @@ async function handleInput(name, e, dragTarget) {
         delete mouseStatus[target.id];
         const timeSinceStart = +new Date() - ms.start;
         const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
-        if(ms.status != 'initial' && ms.moveTarget && !dragTargetGone(ms)) {
+        if(ms.status != 'initial' && ms.moveTarget) {
           setDeltaCause(`${playerName} dragged ${widget.id}`);
           // let every mousemove that is still being processed finish first so that the
           // drop happens after the last one instead of racing with it
           await ms.dragChain;
-          await ms.moveTarget.moveEnd(coords, ms.localAnchor);
+          if(!dragTargetGone(ms))
+            await ms.moveTarget.moveEnd(coords, ms.localAnchor);
         }
         if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
           let editClickHandled = false;
@@ -258,8 +259,6 @@ async function handleInput(name, e, dragTarget) {
         if(isFirstMove)
           ms.status = 'moving';
         ms.coords = coords;
-        if(dragTargetGone(ms))
-          ms.moveTarget = null;
         if(ms.moveTarget) {
           setDeltaCause(`${playerName} dragged ${widget.id}`);
           // Mouse events are handled asynchronously, so several of them can be in
@@ -273,8 +272,15 @@ async function handleInput(name, e, dragTarget) {
             // widget visibly lags behind the cursor.
             if(!isFirstMove && ms.coords !== coords)
               return;
+            // The widget can leave the room at any of these awaits - moveStart() sets 'dragging',
+            // which runs game logic that is free to remove it - so every one of them is followed by
+            // the check instead of it being made once before the move is queued.
+            if(dragTargetGone(ms))
+              return;
             if(isFirstMove)
               await ms.moveTarget.moveStart();
+            if(dragTargetGone(ms))
+              return;
             await ms.moveTarget.move(coords, ms.localAnchor);
           }).catch(error => {
             // keep the chain resolvable - a rejected one would make every later move

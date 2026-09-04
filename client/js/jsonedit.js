@@ -655,11 +655,12 @@ const jeCommands = [
     context: '^deck ↦ cardTypes ↦ [^"↦]+',
     call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
-      await addWidgetLocal(card);
-      if(jeStateNow.parent)
-        await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
-      else
-        await widgets.get(card.id).updatePiles();
+      if(await addWidgetLocal(card)) {
+        if(jeStateNow.parent)
+          await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+        else
+          await widgets.get(card.id).updatePiles();
+      }
     }
   },
   {
@@ -670,11 +671,12 @@ const jeCommands = [
     call: async function() {
       for(const cardType in jeStateNow.cardTypes) {
         const card = { deck:jeStateNow.id, type:'card', cardType };
-        await addWidgetLocal(card);
-        if(jeStateNow.parent)
-          await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
-        else
-          await widgets.get(card.id).updatePiles();
+        if(await addWidgetLocal(card)) {
+          if(jeStateNow.parent)
+            await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+          else
+            await widgets.get(card.id).updatePiles();
+        }
       }
     }
   },
@@ -828,7 +830,7 @@ const jeCommands = [
         const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
         for(let i=0; i<targetCount-currentCount; ++i) {
           const cardId = await addWidgetLocal({ deck:jeStateNow.id, type:'card', cardType:id });
-          if(jeStateNow.parent)
+          if(cardId && jeStateNow.parent)
             await widgets.get(cardId).moveToHolder(widgets.get(jeStateNow.parent));
         }
         for(let i=0; i<currentCount-targetCount; ++i) {

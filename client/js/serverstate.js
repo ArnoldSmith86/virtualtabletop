@@ -203,6 +203,14 @@ async function updateWidgetId(widget, oldID) {
 
   const id = await addWidgetLocal(widget);
 
+  // A rename is a remove followed by a re-add, so a refused re-add leaves nothing to rename to.
+  // The children and cards keep the top level removeWidgetLocal() put them on rather than being
+  // pointed at an ID that names no widget.
+  if(id === null) {
+    console.error(`Renaming ${oldID} to ${widget.id} failed, the widget is gone.`);
+    return;
+  }
+
   // Restore children
   for(const child of children)
     sendPropertyUpdate(child.get('id'), 'parent', id);
