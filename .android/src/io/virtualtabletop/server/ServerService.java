@@ -26,11 +26,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Runs the server for as long as the notification is up. It is a foreground service so that
- * Android leaves it alone while players are connected, and it is what the Quit button talks to.
+ * Runs the server, and the installer, for as long as the notification is up. Both are foreground
+ * work with a wake lock so that Android leaves them alone while players are connected or while an
+ * update is downloading, and this is what the Quit button talks to.
  */
-public class ServerService extends Service {
+public class ServerService extends Service implements AppState.Listener {
   static final String ACTION_START = "io.virtualtabletop.server.START";
+  static final String ACTION_UPDATE = "io.virtualtabletop.server.UPDATE";
   static final String ACTION_QUIT = "io.virtualtabletop.server.QUIT";
 
   private static final int NOTIFICATION = 1;
@@ -43,6 +45,8 @@ public class ServerService extends Service {
   private Process server;
   private PowerManager.WakeLock wakeLock;
   private BroadcastReceiver networkReceiver;
+  private boolean updating;
+  private String shown = "";
 
   static boolean isRunning() {
     return running;
@@ -57,6 +61,8 @@ public class ServerService extends Service {
     String action = intent == null ? null : intent.getAction();
     if(ACTION_QUIT.equals(action))
       quit();
+    else if(ACTION_UPDATE.equals(action))
+      update();
     else if(!running)
       start();
     return START_NOT_STICKY;
@@ -69,8 +75,60 @@ public class ServerService extends Service {
 
   @Override
   public void onDestroy() {
-    shutDown();
+    shutDown(null);
     super.onDestroy();
+  }
+
+  /**
+   * Runs the installer here rather than in the activity: it takes minutes, and a plain thread in
+   * an app the user has switched away from is suspended when the screen goes off and killed when
+   * the system needs the memory, which is what turns a long download into a failed one.
+   */
+  private void update() {
+    if(updating || AppState.isWorking())
+      return;
+    updating = true;
+    shown = "";
+    startForeground(NOTIFICATION, notification());
+    keepAwake("virtualtabletop:update");
+    AppState.listen(this, true);
+    Installer.start(this, new Runnable() {
+      @Override
+      public void run() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+          @Override
+          public void run() {
+            updated();
+          }
+        });
+      }
+    });
+  }
+
+  private void updated() {
+    updating = false;
+    AppState.listen(this, false);
+    if(running) {
+      notifyNow();
+      return;
+    }
+    letSleep();
+    stopForeground(true);
+    stopSelf();
+    AppState.changed();
+  }
+
+  /** Keeps the notification on what the installer is doing at the moment. */
+  @Override
+  public void stateChanged() {
+    if(updating && !shown.equals(AppState.step()))
+      notifyNow();
+  }
+
+  private void notifyNow() {
+    shown = AppState.step();
+    NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+    manager.notify(NOTIFICATION, notification());
   }
 
   private void start() {
@@ -79,9 +137,7 @@ public class ServerService extends Service {
     startForeground(NOTIFICATION, notification());
     AppState.step("Starting the server on " + url);
 
-    PowerManager power = (PowerManager)getSystemService(Context.POWER_SERVICE);
-    wakeLock = power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "virtualtabletop:server");
-    wakeLock.acquire();
+    keepAwake("virtualtabletop:server");
 
     networkReceiver = new BroadcastReceiver() {
       @Override
@@ -146,43 +202,61 @@ public class ServerService extends Service {
     }, "server").start();
   }
 
-  /** Asks the server to shut down and gives it time to write the rooms out. */
-  private void shutDown() {
-    Process process = server;
+  /**
+   * Asks the server to shut down and gives it time to write the rooms out. The waiting happens on
+   * a thread of its own: it takes seconds, and every caller of this is on the one thread that
+   * draws the screen.
+   */
+  private void shutDown(final Runnable whenDown) {
+    final Process process = server;
     server = null;
-    if(process == null)
+    if(process == null) {
+      done(whenDown);
       return;
+    }
 
     AppState.step("Shutting the server down");
-    int pid = readPid();
-    if(pid > 0) {
-      try {
-        Os.kill(pid, OsConstants.SIGTERM);
-      } catch(ErrnoException e) {
-        AppState.log("The server could not be signalled: " + e.getMessage());
-      }
-      for(int waited = 0; waited < SHUTDOWN_MILLISECONDS && isAlive(process); waited += 100) {
-        try {
-          Thread.sleep(100);
-        } catch(InterruptedException e) {
-          break;
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        int pid = readPid();
+        // the pid is the shell the server was started through, and a pid of a process that has
+        // already been reaped can belong to something else by now
+        if(pid > 0 && isAlive(process)) {
+          try {
+            Os.kill(pid, OsConstants.SIGTERM);
+          } catch(ErrnoException e) {
+            AppState.log("The server could not be signalled: " + e.getMessage());
+          }
+          for(int waited = 0; waited < SHUTDOWN_MILLISECONDS && isAlive(process); waited += 100) {
+            try {
+              Thread.sleep(100);
+            } catch(InterruptedException e) {
+              break;
+            }
+          }
         }
+        if(isAlive(process))
+          process.destroy();
+        done(whenDown);
       }
-    }
-    if(isAlive(process))
-      process.destroy();
+    }, "shutdown").start();
+  }
+
+  private static void done(Runnable whenDown) {
+    if(whenDown != null)
+      new Handler(Looper.getMainLooper()).post(whenDown);
   }
 
   private void quit() {
-    shutDown();
-    stop();
-    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+    shutDown(new Runnable() {
       @Override
       public void run() {
+        stop();
         MainActivity.close();
         System.exit(0);
       }
-    }, 200);
+    });
   }
 
   private void stop() {
@@ -191,13 +265,27 @@ public class ServerService extends Service {
       unregisterReceiver(networkReceiver);
       networkReceiver = null;
     }
-    if(wakeLock != null && wakeLock.isHeld())
-      wakeLock.release();
-    wakeLock = null;
-    shutDown();
+    shutDown(null);
+    if(updating)
+      return;
+    letSleep();
     stopForeground(true);
     stopSelf();
     AppState.changed();
+  }
+
+  private void keepAwake(String tag) {
+    if(wakeLock != null && wakeLock.isHeld())
+      return;
+    PowerManager power = (PowerManager)getSystemService(Context.POWER_SERVICE);
+    wakeLock = power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, tag);
+    wakeLock.acquire();
+  }
+
+  private void letSleep() {
+    if(wakeLock != null && wakeLock.isHeld())
+      wakeLock.release();
+    wakeLock = null;
   }
 
   /** Keeps the notification on the address players have to type in when the network changes. */
@@ -226,17 +314,28 @@ public class ServerService extends Service {
       builder.setPriority(Notification.PRIORITY_LOW);
     }
 
-    Intent share = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, url);
-    return builder
+    builder
         .setSmallIcon(R.drawable.ic_notification)
         .setColor(getColor(R.color.vtt_blue))
-        .setContentTitle(getString(R.string.notification_title))
-        .setContentText(url)
-        .setStyle(new Notification.BigTextStyle().bigText(url))
         .setContentIntent(activity(0, new Intent(this, MainActivity.class)))
         .setOngoing(true)
         .setShowWhen(false)
-        .setVisibility(Notification.VISIBILITY_PUBLIC)
+        .setVisibility(Notification.VISIBILITY_PUBLIC);
+
+    if(updating && !running) {
+      String step = AppState.step();
+      return builder
+          .setContentTitle(getString(R.string.notification_updating))
+          .setContentText(step)
+          .setStyle(new Notification.BigTextStyle().bigText(step))
+          .build();
+    }
+
+    Intent share = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, url);
+    return builder
+        .setContentTitle(getString(R.string.notification_title))
+        .setContentText(url)
+        .setStyle(new Notification.BigTextStyle().bigText(url))
         .addAction(R.drawable.ic_open, getString(R.string.open),
             activity(1, new Intent(Intent.ACTION_VIEW, Uri.parse(url))))
         .addAction(R.drawable.ic_share, getString(R.string.share),

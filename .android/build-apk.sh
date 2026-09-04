@@ -35,6 +35,8 @@ ANDROID_JAR="$PLATFORM/android.jar"
 KEYSTORE="$HERE/keystore.jks"
 PASSWORD="virtualtabletop"
 VERSION="$(git -C "$HERE/.." rev-parse --short HEAD 2>/dev/null || echo nogit)"
+# the number of commits, so that a newer build also looks newer to Android
+CODE="$(git -C "$HERE/.." rev-list --count HEAD 2>/dev/null || echo 1)"
 OUTPUT="$HERE/out/VirtualTabletop-$VERSION.apk"
 
 echo "Building VirtualTabletop $VERSION with $(basename "$BUILD_TOOLS") against $(basename "$PLATFORM")"
@@ -49,6 +51,7 @@ mkdir -p build/generated build/classes build/dex out
   -I "$ANDROID_JAR" \
   --manifest AndroidManifest.xml \
   --java build/generated \
+  --version-code "$CODE" \
   --version-name "$VERSION" \
   build/resources.zip
 

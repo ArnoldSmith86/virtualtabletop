@@ -11,6 +11,7 @@
   <string name="share_title">VirtualTabletop room</string>
   <string name="notification_channel">Server</string>
   <string name="notification_title">VirtualTabletop is running</string>
+  <string name="notification_updating">VirtualTabletop is updating</string>
   <string name="state_not_installed">Not installed yet</string>
   <string name="hint_not_installed">Update downloads Node.js, git and VirtualTabletop. It needs an internet connection once - after that the server runs offline.</string>
   <string name="state_updating">Updating</string>

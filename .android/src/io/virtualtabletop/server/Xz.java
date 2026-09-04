@@ -10,8 +10,10 @@ import java.util.Arrays;
  * and therefore of every package this app installs - is compressed. Android has no xz decoder in
  * its API and the app deliberately ships no libraries, so this is how the packages get unpacked.
  *
- * The integrity check at the end of a block is skipped: a package is verified through the SHA-256
- * the repository index states for it before it is unpacked at all.
+ * The check value at the end of a block is skipped - a package is verified through the SHA-256 the
+ * repository index states for it before it is unpacked at all - but the number of bytes a block
+ * says it holds is compared against what came out of it, so a decoding error cannot pass as a
+ * shorter file.
  */
 final class Xz extends InputStream {
   private static final int LZMA2_FILTER = 0x21;
@@ -26,6 +28,8 @@ final class Xz extends InputStream {
   private final InputStream in;
   private int checkSize;
   private long blockBytes;
+  private long blockOutput;
+  private long blockOutputExpected;
   private boolean blockDone;
   private boolean streamDone;
 
@@ -93,6 +97,7 @@ final class Xz extends InputStream {
     int count = Math.min(length, dictionaryPosition - dictionaryStart);
     System.arraycopy(dictionary, dictionaryStart, buffer, offset, count);
     dictionaryStart += count;
+    blockOutput += count;
     return count;
   }
 
@@ -149,8 +154,7 @@ final class Xz extends InputStream {
     int[] position = { 2 };
     if((flags & 0x40) != 0)
       readVariableLength(header, position);
-    if((flags & 0x80) != 0)
-      readVariableLength(header, position);
+    blockOutputExpected = (flags & 0x80) != 0 ? readVariableLength(header, position) : -1;
     if(readVariableLength(header, position) != LZMA2_FILTER)
       throw new IOException("unsupported xz filter");
     if(readVariableLength(header, position) != 1)
@@ -168,9 +172,14 @@ final class Xz extends InputStream {
     resetDictionary();
     chunkRemaining = 0;
     blockBytes = 0;
+    blockOutput = 0;
   }
 
   private void endBlock() throws IOException {
+    // everything a finished block decoded to has been handed out by now, so this is where the
+    // size the block header states can be held against it
+    if(blockOutputExpected >= 0 && blockOutput != blockOutputExpected)
+      throw new IOException("the block decoded to " + blockOutput + " bytes instead of " + blockOutputExpected);
     skipFully((int)((4 - blockBytes % 4) % 4) + checkSize);
     blockDone = false;
     readBlockHeader();

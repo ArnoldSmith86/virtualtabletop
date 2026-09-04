@@ -1,7 +1,9 @@
 name: Android APK (builds the app that runs the server on a phone)
 
-# The ubuntu runners ship a JDK and the Android SDK, so .android/build-apk.sh needs nothing else.
-# The APK is attached to the run so it can be installed without a local SDK.
+# The ubuntu runners ship a JDK, xz and the Android SDK, so .android/build-apk.sh needs nothing
+# else and the xz decoder can be tested here - the rest of the app needs a phone. The APK is
+# attached to the run so it can be installed without a local SDK. Every run signs with a key of
+# its own, so two artifacts cannot be installed over each other.
 on:
   workflow_dispatch:
   push:
@@ -22,6 +24,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Test the xz decoder against the xz command line tool
+      run: |
+        javac -d .android/out/test .android/src/io/virtualtabletop/server/Xz.java .android/test/io/virtualtabletop/server/XzTest.java
+        java -cp .android/out/test io.virtualtabletop.server.XzTest
     - name: Build the APK
       run: .android/build-apk.sh
     - name: Attach the APK to the run

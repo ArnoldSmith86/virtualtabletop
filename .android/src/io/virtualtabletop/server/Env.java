@@ -50,10 +50,15 @@ final class Env {
     return new File(prefix(context), "lib/node_modules/npm/bin/npm-cli.js");
   }
 
+  /** written once the dependencies are in, because a half installed node_modules exists too */
+  static File installed(Context context) {
+    return new File(prefix(context), "var/ready");
+  }
+
   static boolean isInstalled(Context context) {
     return binary(context, "node").canExecute()
         && new File(repository(context), "server.mjs").isFile()
-        && new File(repository(context), "node_modules").isDirectory();
+        && installed(context).isFile();
   }
 
   /** The name this device has in the package repository, null when it is not built for. */

@@ -187,6 +187,7 @@ final class Packages {
         if(current.size > 0 && (int)(total * 10 / current.size) != percent) {
           percent = (int)(total * 10 / current.size);
           AppState.step("Downloading " + current.name + " " + current.version + " (" + percent * 10 + "%)");
+          AppState.percent(percent * 10);
         }
       }
     } finally {
@@ -195,7 +196,11 @@ final class Packages {
     }
 
     String checksum = hexadecimal(digest.digest());
-    if(current.sha256 != null && !current.sha256.equalsIgnoreCase(checksum))
+    // the index is the only thing vouching for a package that is about to be unpacked and run,
+    // so an entry without a checksum is an error rather than a package that skips the check
+    if(current.sha256 == null)
+      throw new IOException(current.name + " is offered without a checksum");
+    if(!current.sha256.equalsIgnoreCase(checksum))
       throw new IOException(current.name + " does not match the checksum of the repository");
   }
 

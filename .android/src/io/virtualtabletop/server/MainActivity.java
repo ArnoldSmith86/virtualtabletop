@@ -61,7 +61,8 @@ public class MainActivity extends Activity implements AppState.Listener {
     update.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Installer.start(MainActivity.this);
+        startService(new Intent(MainActivity.this, ServerService.class).setAction(ServerService.ACTION_UPDATE));
+        render();
       }
     });
 
@@ -90,13 +91,13 @@ public class MainActivity extends Activity implements AppState.Listener {
   protected void onResume() {
     super.onResume();
     shown = this;
-    AppState.listen(this);
+    AppState.listen(this, true);
     render();
   }
 
   @Override
   protected void onPause() {
-    AppState.listen(null);
+    AppState.listen(this, false);
     super.onPause();
   }
 
@@ -140,7 +141,11 @@ public class MainActivity extends Activity implements AppState.Listener {
     start.setEnabled(installed && !running && !working);
     update.setEnabled(!running && !working);
     quit.setEnabled(!working);
+    int percent = AppState.percent();
     progress.setVisibility(working ? View.VISIBLE : View.GONE);
+    progress.setIndeterminate(percent == AppState.UNKNOWN);
+    if(percent != AppState.UNKNOWN)
+      progress.setProgress(percent);
 
     // as long as nothing has been run, the console holds the introduction instead of output
     String output = AppState.log();

@@ -104,6 +104,10 @@ final class Deb {
         write(in, size, target, mode);
         skipFully(in, padded(size) - size);
         continue;
+      } else {
+        // dropping an entry silently would install a package with files simply missing, and the
+        // first sign of that would be a puzzling error out of git or node much later
+        throw new IOException("unsupported tar entry '" + type + "' for " + name);
       }
       skipFully(in, padded(size));
     }
