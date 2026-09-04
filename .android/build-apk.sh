@@ -17,14 +17,15 @@ if [[ ! -d "$SDK" ]]; then
 fi
 
 BUILD_TOOLS="$(ls -d "$SDK"/build-tools/* 2>/dev/null | sort -V | tail -1)"
-PLATFORM="$(ls -d "$SDK"/platforms/android-[0-9]* 2>/dev/null | sort -V | tail -1)"
+# only released platforms, so a preview one lying around in the SDK is not built against
+PLATFORM="$(ls -d "$SDK"/platforms/android-* 2>/dev/null | grep -E '/android-[0-9]+$' | sort -V | tail -1)"
 if [[ -z "$BUILD_TOOLS" || -z "$PLATFORM" ]]; then
   echo "The SDK has no build tools or no platform. Install them with:"
   echo "  sdkmanager 'build-tools;34.0.0' 'platforms;android-34'"
   exit 1
 fi
 
-API="$(basename "$PLATFORM" | sed 's/[^0-9]//g')"
+API="$(basename "$PLATFORM" | sed 's/android-//')"
 if [[ "$API" -lt 28 ]]; then
   echo "The newest platform in the SDK is $(basename "$PLATFORM"), the app needs android-28 or newer."
   exit 1
