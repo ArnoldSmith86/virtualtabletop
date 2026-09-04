@@ -76,7 +76,6 @@ class DebugModule extends SidebarModule {
 
   button_clearButton() {
     jeLoggingClear();
-    $('#jeLog').innerHTML = '';
   }
 
   button_clearCheckbox() {
@@ -131,7 +130,9 @@ class DebugModule extends SidebarModule {
 
   onEditorOpen() {
     super.onEditorOpen();
-    if(this.moduleDOM) {
+    // Keyed on the flag actually being off rather than on onEditorClose() having run: edit mode can
+    // also be left in ways that never reach it, and then nothing was missed and nothing is stale.
+    if(this.moduleDOM && !jeRoutineLogging) {
       setJEroutineLogging(jeRoutineLogging = true);
       jeLoggingResumed();
     }

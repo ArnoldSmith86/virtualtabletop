@@ -3875,6 +3875,51 @@ test('the Debug module logs again after edit mode was left and entered once more
   await setEditorState(null);
 });
 
+test('the Debug module does not keep unmarked entries when the JSON module clears the log', async t => {
+  await setRoomState({
+    button: { id: 'button', type: 'button', clickRoutine: [ 'var roll = randInt 5 5' ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft', JSON: 'editorModuleBottomLeft' } });
+  await setName(t);
+
+  const runClickRoutine = ClientFunction(() => {
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  });
+  const loggedOperations = Selector('#jeLog .jeLogSummary');
+
+  await t
+    .expect(Selector('#w_button').exists).ok('the room renders its widgets', { timeout: 30000 })
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok()
+    .expect(Selector('#editorModuleBottomLeft.data_object').exists).ok();
+
+  await runClickRoutine();
+  await t.expect(loggedOperations.count).eql(1);
+
+  await t
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk();
+
+  await runClickRoutine();
+
+  // the JSON editor empties the log when edit mode toggles it, so nothing older is left behind to
+  // be mistaken for the interaction that just happened
+  await t
+    .click('#editButton')
+    .expect(Selector('body').hasClass('edit')).ok()
+    .expect(loggedOperations.count).eql(0)
+    .expect(Selector('.jeLogEmptyNote').visible).ok();
+
+  await runClickRoutine();
+
+  await t
+    .expect(loggedOperations.count).eql(1)
+    .expect(loggedOperations.nth(0).innerText).eql('roll = randInt 5 5');
+
+  await setEditorState(null);
+});
+
 // drags a selection rectangle around the given widgets - the events go to the
 // window, where the editor listens for them, so they need no element to start
 // from. A rectangle around a single widget is treated like a click on it, which

@@ -3315,14 +3315,18 @@ let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
-// Empty the log. Operations of a routine that is currently running have the log so far saved on
-// jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
-// again and resurrects what was just cleared.
+// Empty the log, both the buffer and what is on screen - a buffer that no longer matches the panel
+// leaves entries on display that look current while nothing knows about them any more. Operations
+// of a routine that is currently running have the log so far saved on jeHTMLStack, so that has to
+// be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it again and resurrects what was
+// just cleared.
 function jeLoggingClear() {
   jeLoggingHTML = '';
   jeLoggingResumeNoted = false;
   for(const entry of jeHTMLStack)
     entry[0] = '';
+  if($('#jeLog'))
+    $('#jeLog').innerHTML = '';
 }
 
 function jeLoggingJSON(obj) {
@@ -3470,12 +3474,16 @@ function jeLoggingResumed() {
   if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog') || !jeLoggingHTML || jeLoggingResumeNoted)
     return;
   jeLoggingResumeNoted = true;
-  jeLoggingHTML += `
+  const note = `
     <div class="jeLog jeLogNote">
       Logging resumed. Everything above is from before edit mode was left - what you did while playing was not logged.
     </div>
   `;
-  jeLoggingRenderLog(jeLoggingHTML);
+  jeLoggingHTML += note;
+  // Appended instead of rendered from the buffer: a re-render collapses the entries the user
+  // expanded before going off to play, which is the very log this note belongs to. The note carries
+  // no expanders and sits outside .jeLogNested, so neither the click handlers nor the filter apply.
+  $('#jeLog').insertAdjacentHTML('beforeend', note);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {
