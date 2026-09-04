@@ -40,6 +40,7 @@ public class ServerService extends Service implements AppState.Listener {
   private static final int SHUTDOWN_MILLISECONDS = 5000;
 
   private static boolean running;
+  private static boolean installing;
   private static String url = "";
 
   private Process server;
@@ -50,6 +51,11 @@ public class ServerService extends Service implements AppState.Listener {
 
   static boolean isRunning() {
     return running;
+  }
+
+  /** whether the run going on right now is the first installation rather than an update */
+  static boolean isInstalling() {
+    return installing;
   }
 
   static String url() {
@@ -88,6 +94,8 @@ public class ServerService extends Service implements AppState.Listener {
     if(updating || AppState.isWorking())
       return;
     updating = true;
+    // what the button said when it was pressed, so that the notification says the same
+    installing = !Env.isInstalled(this);
     shown = "";
     startForeground(NOTIFICATION, notification());
     keepAwake("virtualtabletop:update");
@@ -325,7 +333,7 @@ public class ServerService extends Service implements AppState.Listener {
     if(updating && !running) {
       String step = AppState.step();
       return builder
-          .setContentTitle(getString(R.string.notification_updating))
+          .setContentTitle(getString(installing ? R.string.notification_installing : R.string.notification_updating))
           .setContentText(step)
           .setStyle(new Notification.BigTextStyle().bigText(step))
           .build();

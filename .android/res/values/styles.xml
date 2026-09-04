@@ -5,7 +5,7 @@
     <item name="android:colorPrimaryDark">@color/vtt_blue_dark</item>
     <item name="android:colorAccent">@color/vtt_blue_light</item>
     <item name="android:windowBackground">@color/background</item>
-    <item name="android:statusBarColor">@color/vtt_blue_dark</item>
+    <item name="android:statusBarColor">@color/surface</item>
     <item name="android:navigationBarColor">@color/background</item>
     <item name="android:textColorPrimary">@color/text</item>
   </style>

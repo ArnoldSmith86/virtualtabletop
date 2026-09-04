@@ -100,14 +100,14 @@ Make the file executable (`chmod +x VirtualTabletop-*.AppImage`) and run it.
 <details>
     <summary><b>📱 Android</b></summary>
 
-You can use an Android phone as the server and play with any devices offline by using its wifi hotspot.
+An Android phone can be the server itself, so everyone plays on their own devices over the phone's WiFi or its hotspot - offline, with no other computer involved.
 
-There is a small app for it in [.android](.android/README.md): one button downloads Node.js, git and VirtualTabletop, one starts the server, and while it runs a notification shows the address of the `vtt` room to open or share. Build the APK with `.android/build-apk.sh` or take it from a run of the `Android APK` workflow.
+Download **[VirtualTabletop.apk](https://github.com/ArnoldSmith86/virtualtabletop/raw/main/.android/VirtualTabletop.apk)** and open it on the phone; Android asks once whether the browser or file manager may install it.
 
-Or do it by hand with [Termux](https://termux.dev/):
+- **Install** fetches Node.js, git and VirtualTabletop. This is the only step that needs an internet connection, and it takes about 750 MB.
+- **Start server** runs the server on the phone. A notification then shows the address the other devices open, and offers to share it.
 
-- Install and open https://termux.dev/ on your Android device.
-- Run `curl -L is.gd/vttandroid | sh`.
+[.android/README.md](.android/README.md) says how it works, how to build the APK yourself and what it does instead of [Termux](https://termux.dev/).
 
 </details>
 

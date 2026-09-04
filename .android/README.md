@@ -4,14 +4,25 @@ A small app that turns an Android phone into a VirtualTabletop server: it fetche
 and this repository once, then runs the server offline and shows the address of the `vtt` room in
 a notification, so everyone in the same WiFi - or connected to the phone's hotspot - can play.
 
-It automates what the Termux instructions in the main README do by hand, without needing Termux.
+It does by itself what the Termux instructions used to describe by hand, without needing Termux.
+
+The built app is committed as [`VirtualTabletop.apk`](VirtualTabletop.apk), which is what the
+Android section of the main README links to. Refresh it whenever anything under `.android/`
+changes:
+
+    ANDROID_HOME=~/Android/Sdk .android/build-apk.sh
+    cp .android/out/VirtualTabletop-*.apk .android/VirtualTabletop.apk
+
+Everyone who builds signs with a self-signed key of their own, so a refreshed APK usually cannot
+be installed over the one before it - uninstall first. Committing `keystore.jks` (or keeping it
+somewhere the release comes from) would be what makes updates install over each other.
 
 ## Using it
 
 | Button | What it does |
 | --- | --- |
-| **Update** | Installs or updates git, Node.js and the clone, then runs `npm install --omit=dev`. The only step that needs a connection. It runs in the foreground service with a wake lock, so it keeps going while the screen is off, and it can be pressed again to carry on after a lost connection. |
-| **Start server** | Runs `node server.mjs` in a foreground service. Enabled once Update has finished. |
+| **Install**, **Update** once it is installed | Installs or updates git, Node.js and the clone, then runs `npm install --omit=dev`. The only step that needs a connection. It runs in the foreground service with a wake lock, so it keeps going while the screen is off, and it can be pressed again to carry on after a lost connection. |
+| **Start server** | Runs `node server.mjs` in a foreground service. Enabled once the installation has finished. |
 | **Quit** | Shuts the server down (the rooms are saved) and closes the app. |
 
 While the server runs, the notification shows `http://<address>:8272/vtt` with three actions:
@@ -58,7 +69,7 @@ each other - uninstall the old one first, or build locally where `keystore.jks` 
   that broke, so the app does not take it in one piece: it clones with `--filter=blob:none`, which
   is a few megabytes, and then fills the file contents in with `git sparse-checkout add`, a group
   of directories of about a thousand files at a time. Every group that arrived stays in the clone,
-  so pressing **Update** again continues where it stopped. The last group turns the checkout back
+  so pressing the button again continues where it stopped. The last group turns the checkout back
   into an ordinary one (`sparse-checkout disable`), which is also what tells a later update that
   the clone is complete.
 * **What is verified.** Each package is checked against the SHA-256 the repository index states,

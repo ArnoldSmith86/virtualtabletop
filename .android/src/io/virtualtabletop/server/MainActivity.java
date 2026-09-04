@@ -122,12 +122,15 @@ public class MainActivity extends Activity implements AppState.Listener {
     boolean running = ServerService.isRunning();
     boolean working = AppState.isWorking();
     boolean installed = Env.isInstalled(this);
+    // while a run is going on the marker it reads from is away for a moment, so the wording
+    // follows what the run set out to do rather than the state of the moment
+    boolean first = working ? ServerService.isInstalling() : !installed;
 
     if(running) {
       state.setText(R.string.server_running);
       detail.setText(ServerService.url());
     } else if(working) {
-      state.setText(R.string.state_updating);
+      state.setText(first ? R.string.state_installing : R.string.state_updating);
       detail.setText(AppState.step());
     } else if(installed) {
       state.setText(R.string.state_ready);
@@ -139,6 +142,7 @@ public class MainActivity extends Activity implements AppState.Listener {
 
     start.setText(running ? R.string.server_running : R.string.start_server);
     start.setEnabled(installed && !running && !working);
+    update.setText(first ? R.string.install : R.string.update);
     update.setEnabled(!running && !working);
     quit.setEnabled(!working);
     int percent = AppState.percent();
