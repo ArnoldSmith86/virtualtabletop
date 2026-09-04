@@ -427,6 +427,40 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   await t.expect(result.y).notEql(200);
 });
 
+// Committing a widget id and then blurring the input can hand the same change event to the client twice -
+// Chrome does that once the rename has replaced the widget under the input. The second one must not be read
+// as an attempt to take the id that the first one just created.
+test('The id input renaming a widget does not claim the id is taken when its change event repeats', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    old: { id: 'old', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_old')
+    .expect(Selector('[aria-label="Widget id"]').exists).ok();
+
+  // the input the rename is typed into: the panel draws a new one for the renamed widget, so a repeated
+  // change event is one this element sends after the widget it was drawn for is gone
+  await ClientFunction(() => { window.renamedIdInput = document.querySelector('[aria-label="Widget id"]'); })();
+
+  await t
+    .typeText('[aria-label="Widget id"]', 'new', { replace: true })
+    .pressKey('enter')
+    .expect(Selector('#w_new').exists).ok();
+
+  await ClientFunction(() => window.renamedIdInput.dispatchEvent(new Event('change', { bubbles: true })))();
+  await t.wait(500);
+
+  await t.expect(await t.getNativeDialogHistory()).eql([]);
+  await t.expect(await ClientFunction(()=>Array.from(widgets.keys()))()).eql([ 'new' ]);
+});
+
 test('Dice faces have their own icon, image scale and CSS controls', async t => {
   // Keep this at the narrow layout from the review so the controls remain
   // useful in the smallest supported properties sidebar.

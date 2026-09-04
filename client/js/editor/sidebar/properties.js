@@ -5475,8 +5475,13 @@ class PropertiesModule extends SidebarModule {
     idInput.title = options.title || 'Rename widget';
     idInput.setAttribute('aria-label', options.ariaLabel || 'Widget id');
 
+    // The id the input stands for. The Widget object it was created from keeps the id it had when it was
+    // renamed, so this is what tells a repeated change event - a browser fires one when the input is blurred
+    // after its value was already committed - from a second, real rename.
+    let currentID = widget.id;
+
     idInput.onchange = async () => {
-      const oldID = widget.id;
+      const oldID = currentID;
       const newID = idInput.value.trim();
       if(newID == oldID) {
         idInput.value = oldID;
@@ -5500,6 +5505,7 @@ class PropertiesModule extends SidebarModule {
         const state = JSON.parse(JSON.stringify(widget.state));
         state.id = newID;
         await updateWidgetId(state, oldID);
+        currentID = newID;
         const renamedWidget = widgets.get(newID);
         if(renamedWidget && options.onRenamed)
           options.onRenamed(renamedWidget);
@@ -5514,7 +5520,7 @@ class PropertiesModule extends SidebarModule {
 
     idInput.onkeydown = event => {
       if(event.key == 'Escape') {
-        idInput.value = widget.id;
+        idInput.value = currentID;
         idInput.blur();
       }
     };
