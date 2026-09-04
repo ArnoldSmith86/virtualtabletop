@@ -93,9 +93,13 @@ class DebugModule extends SidebarModule {
   }
 
   button_validationProblem(problem) {
-    if(!jeEnabled)
+    // selecting the widget is useful on its own - the JSON editor is not always open
+    const widget = widgets.get(problem.widget);
+    if(widget)
+      setSelection([widget]);
+
+    if(!jeEnabled || !widget || !problem.property.length)
       return;
-    setSelection([widgets.get(problem.widget)]);
     const property = [...problem.property];
     const lastProperty = property.pop();
     let currentParent = jeStateNow;
@@ -159,11 +163,12 @@ class DebugModule extends SidebarModule {
         <span class="validation-time"></span>
       </div>
       <div class="success">No validation problems found!</div>
+      <div class="validation-summary"></div>
       <table class="validation-table">
         <thead>
           <tr>
             <th>Widget</th>
-            <th>Property</th>
+            <th>Location</th>
             <th>Message</th>
           </tr>
         </thead>
@@ -215,25 +220,48 @@ class DebugModule extends SidebarModule {
       if (timeSpan) timeSpan.textContent = `Validation took ${Math.round(validationTime)}ms - click to run now`;
     }
     
+    const success = $('.staticErrors .success', this.moduleDOM);
+    const summary = $('.staticErrors .validation-summary', this.moduleDOM);
+    const table = $('.staticErrors .validation-table', this.moduleDOM);
+
     if (problems.length === 0) {
-      const success = $('.staticErrors .success', this.moduleDOM);
-      const table = $('.staticErrors .validation-table', this.moduleDOM);
       if (success) success.style.display = 'block';
+      if (summary) summary.style.display = 'none';
       if (table) table.style.display = 'none';
     } else {
-      const success = $('.staticErrors .success', this.moduleDOM);
-      const table = $('.staticErrors .validation-table', this.moduleDOM);
       const tbody = $('.staticErrors .validation-table tbody', this.moduleDOM);
       if (success) success.style.display = 'none';
-      if (table) table.style.display = 'block';
+      if (summary) {
+        summary.style.display = 'block';
+        summary.textContent = `${problems.length} validation problem${problems.length == 1 ? '' : 's'} found:`;
+      }
+      if (table) table.style.display = '';
       if (tbody) tbody.innerHTML = '';
+      const cell = text=>{
+        const td = document.createElement('td');
+        td.textContent = text;
+        return td;
+      };
       for (const problem of problems) {
         const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${problem.widget || '-'}</td>
-          <td>${problem.property && problem.property.length > 0 ? problem.property.join('.') : '-'}</td>
-          <td>${problem.message}</td>
-        `;
+        // widget IDs, property names and messages come from the game file - build the cells as text
+        // nodes so that a widget called '<img src=x onerror=...>' cannot run script here
+        row.appendChild(cell(problem.widget || '-'));
+        const path = document.createElement('td');
+        if (problem.property && problem.property.length > 0) {
+          // allow the path to wrap at its dots instead of mid-segment
+          problem.property.forEach((segment, i)=>{
+            if (i) {
+              path.appendChild(document.createTextNode('.'));
+              path.appendChild(document.createElement('wbr'));
+            }
+            path.appendChild(document.createTextNode(String(segment)));
+          });
+        } else {
+          path.textContent = '-';
+        }
+        row.appendChild(path);
+        row.appendChild(cell(problem.message));
         if (tbody) tbody.appendChild(row);
         row.addEventListener('click', e=>this.button_validationProblem(problem));
       }

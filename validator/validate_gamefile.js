@@ -37,7 +37,7 @@ const validators = {
         return validateRoutine(v,context,propertyPath);
     },
     positiveNumber: v=>typeof v === 'number' && v >= 0 || 'positive number expected',
-    property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || p.customProperties.includes(v) || `property '${v}' not found`,
+    property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || p.customProperties.includes(v) || (p.customPropertyPatterns || []).some(pattern=>new RegExp(pattern).test(v)) || `'${v}' is read but nothing ever sets it - check for a typo`,
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
     collectionOrAll: (v,p,propertyPath)=>v === 'all' || validators.inCollection(v,p,propertyPath),
@@ -46,6 +46,14 @@ const validators = {
 };
 
 const FACE_OBJECT_COMMON_PROPS = ['type', 'x', 'y', 'width', 'height', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'value', 'note'];
+
+// Properties the engine provides for reading but that are never stored in a widget's state.
+// Keep in sync with readOnlyProperties in client/js/widgets/widget.js and _totals in client/js/widgets/scoreboard.js.
+const READ_ONLY_PROPERTIES = [
+    '_absoluteRotation', '_absoluteScale', '_absoluteX', '_absoluteY', '_ancestor',
+    '_centerAbsoluteX', '_centerAbsoluteY', '_localOriginAbsoluteX', '_localOriginAbsoluteY',
+    '_totals'
+];
 
 const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
@@ -1062,8 +1070,19 @@ function customWidgetChecks(widget, widgets, problems) {
     }
 }
 
+// Collects, in a single pass over the game file:
+//   used     - every property name that is read or written anywhere (drives the "unused property" warning)
+//   defined  - every property name that a widget declares or that a routine writes (drives the "never set" check)
+//   patterns - regexes for written property names that are built at runtime, like "score_${player}"
 function getCustomPropertyUsage(data) {
     const customProperties = new Set();
+    const definedCustomProperties = new Set(READ_ONLY_PROPERTIES);
+    const definedCustomPropertyPatterns = new Set();
+    // Names of properties holding a RESET map; the keys inside such a map are written by RESET.
+    const resetPropertyNames = new Set();
+    // Regex sources for RESET map names built at runtime, like "resetProperties${boardNum}".
+    const resetPropertyPatterns = new Set();
+    // Subset of definedCustomProperties that widgets declare directly - used to resolve interpolated reads.
     const declaredCustomProperties = new Set();
     const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
     const canvasPropertyRegex = /^c[0-9]+$/;
@@ -1081,37 +1100,84 @@ function getCustomPropertyUsage(data) {
 
     for (const [, widget] of widgetEntries) {
         for (const prop of Object.keys(widget)) {
-            if (isCustomWidgetProperty(widget, prop))
+            if (isCustomWidgetProperty(widget, prop)) {
                 declaredCustomProperties.add(prop);
+                definedCustomProperties.add(prop);
+            }
+        }
+
+        if(getWidgetType(widget) === 'Deck') {
+            for(const properties of [
+                widget.cardDefaults,
+                ...Object.values(widget.cardTypes || {}),
+                ...(Array.isArray(widget.faceTemplates) ? widget.faceTemplates.map(template=>template && template.properties) : [])
+            ])
+                if(typeof properties === 'object' && properties !== null)
+                    for(const prop of Object.keys(properties))
+                        definedCustomProperties.add(prop);
         }
     }
 
-    function addPropertyPatternMatches(value) {
+    // Turns an interpolated name like "score_${player}" into the source of /^score_.*$/, or returns
+    // null if the name is static. A name with fewer than two static characters ("${propName}") would
+    // match anything; for a written name that is the safe reading (some property does get written, we
+    // just cannot tell which), for a read name it is not (it would mark every property as used and
+    // hide real warnings). Patterns are kept as strings because validation contexts get cloned via JSON.
+    function interpolatedPropertyPattern(value, isDefinition = false) {
         if (typeof value !== 'string' || !value.includes('${'))
-            return;
+            return null;
 
         const staticParts = value.split(placeholderRegex);
         const staticCharCount = staticParts.reduce((sum, part) => sum + part.length, 0);
         if (staticCharCount < 2)
+            return isDefinition ? '^.*$' : null;
+
+        return '^' + staticParts.map(escapeRegex).join('.*') + '$';
+    }
+
+    function addPropertyPatternMatches(value) {
+        const pattern = interpolatedPropertyPattern(value);
+        if (!pattern)
             return;
 
-        const pattern = '^' + staticParts
-            .map(escapeRegex)
-            .join('.*') + '$';
         const interpolatedPattern = new RegExp(pattern);
-
         for (const prop of declaredCustomProperties) {
             if (interpolatedPattern.test(prop))
                 customProperties.add(prop);
         }
     }
 
-    function addPropertyUsage(value) {
+    // A written property name that is interpolated becomes a pattern so that static reads of a name
+    // it could produce are accepted, instead of only the literal "score_${player}" string.
+    function addPropertyDefinition(value) {
+        if (typeof value !== 'string')
+            return;
+
+        const pattern = interpolatedPropertyPattern(value, true);
+        if (pattern)
+            definedCustomPropertyPatterns.add(pattern);
+        else
+            definedCustomProperties.add(value);
+    }
+
+    // RESET reads its map off the widget, so an interpolated name has to be matched against the
+    // names the widgets actually declare instead of being looked up literally.
+    function addResetPropertyName(value) {
+        const pattern = interpolatedPropertyPattern(value, true);
+        if (pattern)
+            resetPropertyPatterns.add(pattern);
+        else
+            resetPropertyNames.add(value);
+    }
+
+    function addPropertyUsage(value, isDefinition = false) {
         const property = typeof value === 'string' ? value : Array.isArray(value) ? value[0] : null;
         if (typeof property !== 'string')
             return;
 
         customProperties.add(property);
+        if(isDefinition)
+            addPropertyDefinition(property);
         addPropertyPatternMatches(property);
     }
 
@@ -1143,7 +1209,13 @@ function getCustomPropertyUsage(data) {
             });
             return;
         }
-        
+
+        // operations that write a property also write it when they rely on their default property name
+        if (obj.func === 'SCORE' && obj.property === undefined)
+            addPropertyUsage('score', true);
+        if (obj.func === 'RESET' && obj.property === undefined)
+            resetPropertyNames.add('resetProperties');
+
         for (const [key, value] of Object.entries(obj)) {
             // Check for ${PROPERTY xxx} syntax
             extractPropertyFromSyntax(value);
@@ -1208,14 +1280,20 @@ function getCustomPropertyUsage(data) {
                     addPropertyUsage(value);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
                     addPropertyUsage(value);
+                    addResetPropertyName(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
                     addPropertyUsage(value);
                 } else if (func === 'SCORE' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    // SCORE writes the property on every matching seat
+                    addPropertyUsage(value, true);
+                } else if (func === 'CLONE' && key === 'properties' && typeof value === 'object' && value !== null) {
+                    // CLONE applies these properties to the widgets it creates
+                    for (const propName of Object.keys(value))
+                        addPropertyUsage(propName, true);
                 } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
                     addPropertyUsage(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    addPropertyUsage(value, true);
                 }
             }
 
@@ -1229,11 +1307,30 @@ function getCustomPropertyUsage(data) {
         // Scan widget properties
         scanForProperties(widget);
 
-        if(widget.type === 'scoreboard')
+        if(widget.type === 'scoreboard') {
             customProperties.add(widget.scoreProperty || 'score');
+            definedCustomProperties.add(widget.scoreProperty || 'score');
+        }
     }
-    
-    return [...customProperties];
+
+    // RESET writes every key of the maps it resets, so those keys are definitions as well
+    const resetPropertyRegexes = [...resetPropertyPatterns].map(pattern=>new RegExp(pattern));
+    for (const [, widget] of widgetEntries) {
+        for (const [name, resetMap] of Object.entries(widget)) {
+            if(typeof resetMap !== 'object' || resetMap === null || Array.isArray(resetMap))
+                continue;
+            if(!resetPropertyNames.has(name) && !resetPropertyRegexes.some(regex=>regex.test(name)))
+                continue;
+            for (const prop of Object.keys(resetMap))
+                definedCustomProperties.add(prop);
+        }
+    }
+
+    return {
+        used: [...customProperties],
+        defined: [...definedCustomProperties],
+        patterns: [...definedCustomPropertyPatterns]
+    };
 }
 
 function validateGameFile(data, checkMeta) {
@@ -1249,8 +1346,9 @@ function validateGameFile(data, checkMeta) {
         return problems;
     }
     
-    // Get all custom properties used in the game file
-    const customProperties = getCustomPropertyUsage(data);
+    // Get all custom properties used in the game file. Reads are valid only for properties that are
+    // declared on a widget or written by a routine (customPropertyPatterns covers dynamic names).
+    const { used: customProperties, defined: definedCustomProperties, patterns: customPropertyPatterns } = getCustomPropertyUsage(data);
     const calledCustomRoutines = [];
     
     // Check for _meta
@@ -1390,7 +1488,7 @@ function validateGameFile(data, checkMeta) {
                     validator = getRoutineValidator({widgetID: 1, property: 1, oldValue: 1, value: 1}, {widget: 1}, false);
 
                 if (typeof validator === 'function') {
-                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties, calledCustomRoutines}, [prop]);
+                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties: definedCustomProperties, customPropertyPatterns, calledCustomRoutines}, [prop]);
                     if (Array.isArray(result)) {
                         // Validator returned an array of problems
                         problems.push(...result);
@@ -1423,7 +1521,7 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue) && !calledCustomRoutines.includes(propName) && !propName.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
-                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
+                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties: definedCustomProperties, customPropertyPatterns, calledCustomRoutines };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
                 problems.push({
                     widget: key,
