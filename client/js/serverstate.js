@@ -474,8 +474,9 @@ function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   const topSurface = $('#topSurface');
+  const removed = new Set();
   for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
-    widget.applyRemoveRecursive();
+    widget.applyRemoveRecursive(removed);
   widgets.clear();
   dropTargets.clear();
   maxZ = {};

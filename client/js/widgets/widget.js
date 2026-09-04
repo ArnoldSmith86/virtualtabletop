@@ -354,9 +354,13 @@ export class Widget extends StateManaged {
     this.globalUpdateListenersUnregister();
   }
 
-  applyRemoveRecursive() {
+  applyRemoveRecursive(removed=new Set()) {
+    // tracking the already removed widgets keeps tearing down the room terminating even if the child graph became cyclic
+    if(removed.has(this))
+      return;
+    removed.add(this);
     for(const child of Widget.prototype.children.call(this)) // use Widget.children even for holders so it doesn't filter
-      child.applyRemoveRecursive();
+      child.applyRemoveRecursive(removed);
     this.applyRemove();
   }
 
@@ -2539,6 +2543,9 @@ export class Widget extends StateManaged {
   }
 
   async onChildAdd(child, oldParentID) {
+    // a child that already is an ancestor would close a cycle in the child graph which recursive walks like applyRemoveRecursive could not terminate on
+    if(this.ancestors().includes(child))
+      return;
     this.childArray = this.childArray.filter(c=>c!=child);
     this.childArray.push(child);
     await this.onChildAddAlign(child, oldParentID);
@@ -2605,14 +2612,15 @@ export class Widget extends StateManaged {
     return this;
   }
 
-  renderReadonlyCopy(propertyOverride, target, includeChildren=false, isChild=false) {
+  renderReadonlyCopy(propertyOverride, target, includeChildren=false, isChild=false, copied=new Set()) {
     const newID = generateUniqueWidgetID();
     const newWidget = new this.constructor(newID);
     newWidget.renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target, isChild);
+    copied.add(this);
     if(includeChildren)
       for(const child of widgetFilter(w=>w.get('parent') == this.id))
-        if(this.get('type') != 'holder' || !compareDropTarget(child, this) || includeChildren == 'all')
-          child.renderReadonlyCopy({}, newWidget.domElement, includeChildren, true);
+        if(!copied.has(child) && (this.get('type') != 'holder' || !compareDropTarget(child, this) || includeChildren == 'all'))
+          child.renderReadonlyCopy({}, newWidget.domElement, includeChildren, true, copied);
     return newWidget;
   }
 

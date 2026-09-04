@@ -1308,7 +1308,14 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       return l.substr(0, l.length-zs-1) + String.fromCharCode(l.charCodeAt(l.length-zs-1)+1) + [...Array(zs)].map(l=>'A').join('');
   };
 
-  const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
+  // on a cyclic parent chain a copy can end up as the child of a source widget that is copied later, so the copies are never cloned again themselves
+  const createdIDs = new Set();
+
+  const clone = async function(widget, recursive, newParent, xOffset, yOffset, copied=new Set()) {
+    if(copied.has(widget)) // a cyclic parent chain would make the recursive copy revisit the same source widgets forever
+      return [];
+    copied.add(widget);
+
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
     if(inheritFrom) {
@@ -1376,11 +1383,12 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
         problems.push(`Could not add duplicate of card ${widget.id} with non-existent cardType ${currentWidget.cardType}.`);
     } else {
       const currentId = await addWidgetLocal(currentWidget);
+      createdIDs.add(currentId);
 
       const clonedWidgets = [ widgets.get(currentId) ];
       if(recursive)
-        for(const child of widgetFilter(w=>w.get('parent')==widget.id))
-          clonedWidgets.push(...await clone(child, true, currentId, 0, 0));
+        for(const child of widgetFilter(w=>w.get('parent')==widget.id && !createdIDs.has(w.get('id'))))
+          clonedWidgets.push(...await clone(child, true, currentId, 0, 0, copied));
 
       return clonedWidgets;
     }

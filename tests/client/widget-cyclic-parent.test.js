@@ -8,17 +8,22 @@ import { removeWidgetLocal, widgets } from '../../client/js/serverstate.js';
 // following the 'parent' property must terminate instead of recursing forever.
 //
 // Most tests manufacture the cycle directly in each widget's state because the
-// parent-walk guards are independent of geometry. The runtime graph regression
-// applies the same parent changes through applyDelta().
+// parent-walk guards are independent of geometry. The runtime graph regressions
+// apply the same parent changes through applyDelta() and set() instead, because
+// both have to keep the parent/childArray graph acyclic.
 
 describe("Cyclic parent chains", () => {
   const testName = "cyclic-parent";
   let w1, w2, w3;
+  let copyCount = 0;
 
   beforeEach(() => {
     window.jeRoutineLogging = false;
     window.removeWidgetLocal = removeWidgetLocal;
     window.dropTargets = dropTargets;
+    window.generateUniqueWidgetID = ()=>`${testName}-copy-${++copyCount}`;
+    // the widget classes are globals provided by main.js at runtime, none of the test widgets is a card
+    window.Card = class Card {};
     w1 = createWidget({ id: `${testName}-1`, type: "widget" });
     w2 = createWidget({ id: `${testName}-2`, type: "widget" });
     w3 = createWidget({ id: `${testName}-3`, type: "widget" });
@@ -82,6 +87,32 @@ describe("Cyclic parent chains", () => {
     expect(() => w1.applyRemoveRecursive()).not.toThrow();
     widgets.delete(w1.get('id'));
     widgets.delete(w2.get('id'));
+  });
+
+  test("setting a cyclic parent keeps the runtime child graph acyclic", async () => {
+    delete w1.state.parent;
+    delete w2.state.parent;
+
+    await w2.set('parent', w1.get('id'));
+    await w1.set('parent', w2.get('id'));
+
+    expect(w1.get('parent')).toBe(w2.get('id'));
+    expect(w2.get('parent')).toBe(w1.get('id'));
+    // the edge closing the cycle is not linked into the child graph on the client that set the property either
+    expect(w1.childArray).toEqual([ w2 ]);
+    expect(w2.childArray).toEqual([]);
+
+    // replacing the room state tears every top level widget down recursively
+    const removed = new Set();
+    for(const w of [ w1, w2 ])
+      expect(() => w.applyRemoveRecursive(removed)).not.toThrow();
+    widgets.delete(w1.get('id'));
+    widgets.delete(w2.get('id'));
+  });
+
+  test("recursive readonly copies terminate on a cyclic parent chain", () => {
+    for(const w of [ w1, w3 ])
+      expect(() => w.renderReadonlyCopy({}, document.body, 'all').domElement.remove()).not.toThrow();
   });
 
   test("DELETE terminates on cyclic parent state", async () => {
