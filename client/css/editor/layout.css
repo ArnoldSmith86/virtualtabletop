@@ -61,6 +61,9 @@ body {
      stay on one line instead of stepping up and down between them. */
   --routineChipHeight: 22px;
 
+  /* dimmed, but still comfortably readable - for text that explains something */
+  --textDimColor2: #6b6b6b;
+
   color-scheme: light;
   --gridSize: 25px;
   --gridColor: #c0c0c0;
@@ -97,6 +100,8 @@ body.edit.darkMode {
   --routineNumberColor: #40e0d0;
   --routineBlankColor: red;
   --routineActiveCardColor: #626262;
+
+  --textDimColor2: #8a8a8a;
 
   color-scheme: dark;
 }
