@@ -885,6 +885,76 @@ function scalePreviewToFit(preview, rendered) {
 // re-renders so reselecting the widget returns to the face you were editing
 const expandedFaceByWidgetId = new Map();
 
+// which entry of a widget's context menu the editor has open, as the path of
+// indices leading to it ("2.0" is the first entry of the third entry's
+// submenu) - kept across re-renders like the open face
+const expandedContextMenuEntryByWidgetId = new Map();
+
+function rotationStepsSet(value) {
+  return typeof value == 'number' || (Array.isArray(value) && value.length > 0);
+}
+
+// the engine reads a number as the size of one rotation step and a list as
+// the rotations to offer, so the input shows the two as "45" and "0, 90, 180"
+function rotationStepsText(value) {
+  if(value === null || value === undefined || propertyInputIsMulti(value))
+    return value === undefined ? null : value;
+  return Array.isArray(value) ? value.join(', ') : value;
+}
+
+// undefined while the text is not a rotation step value yet ("abc", "45,x");
+// a comma keeps the list form even for one number, since [90] means "only
+// 90°" while 90 means "in steps of 90°"
+function rotationStepsFromText(value) {
+  if(value === null || value === undefined || String(value).trim() === '')
+    return null;
+  if(typeof value == 'number')
+    return value;
+  const parts = String(value).split(',').map(part=>part.trim()).filter(part=>part !== '');
+  const numbers = parts.map(Number);
+  if(!parts.length || numbers.some(number=>!Number.isFinite(number)))
+    return undefined;
+  return String(value).indexOf(',') == -1 ? numbers[0] : numbers;
+}
+
+// the entries the engine would show: contextMenu is a list of them, anything
+// else is as good as none
+function contextMenuEntryList(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function contextMenuOptionsObject(value) {
+  return isObjectLike(value) ? value : {};
+}
+
+// whether a right-click opens the popup: entries, rotation steps or preview
+// settings (even empty ones) do that - hasPopupTriggers in contextmenu.js
+function contextMenuPopupOpens(widget) {
+  return isObjectLike(widget.get('contextMenuOptions')) || rotationStepsSet(widget.get('rotationSteps')) || contextMenuEntryList(widget.get('contextMenu')).length > 0;
+}
+
+// the routines a menu entry can run: the widget's own routine properties
+function widgetRoutineNames(widget) {
+  const state = isObjectLike(widget.state) ? widget.state : {};
+  return Object.keys(state).filter(property=>property.match(/Routine$/) && Array.isArray(state[property])).sort();
+}
+
+// the structure of a menu without its values: the rows are rebuilt when this
+// changes and update themselves otherwise
+function contextMenuShape(entries) {
+  return contextMenuEntryList(entries).map(entry=>isObjectLike(entry) ? (Array.isArray(entry.menu) ? contextMenuShape(entry.menu) : 0) : null);
+}
+
+// what the button of an entry does, for the row head - a submenu wins over a
+// routine the way it does in the popup
+function contextMenuEntrySummary(entry, widget) {
+  if(Array.isArray(entry.menu) && entry.menu.length)
+    return `opens a submenu with ${entry.menu.length} entr${entry.menu.length == 1 ? 'y' : 'ies'}`;
+  if(typeof entry.routine == 'string' && entry.routine)
+    return Array.isArray(widget.get(entry.routine)) ? `runs ${entry.routine}` : `${entry.routine} does not exist - the button is disabled`;
+  return 'no routine yet - the button is disabled';
+}
+
 // id shared by all throwaway face preview copies, so the per-id bookkeeping
 // the Widget constructor does (stylesheets, inheritance) is reused instead of
 // accumulating one dead entry per redraw. It must not look like a real widget.
@@ -1350,7 +1420,10 @@ const editorPropertyHints = {
   precision: 'How often the displayed timer value refreshes.',
   start: 'Timer start value in milliseconds.',
   end: 'Optional timer end value in milliseconds.',
-  milliseconds: 'The timer\'s current value in milliseconds.'
+  milliseconds: 'The timer\'s current value in milliseconds.',
+  rotationSteps: 'Rotate buttons in the right-click popup: a number rotates by that many degrees, a list offers exactly those rotations.',
+  contextMenu: 'The buttons of the right-click popup, each running a routine of this widget or opening a submenu.',
+  contextMenuOptions: 'How the right-click popup previews the widget: factor, title, color, image and widget.'
 };
 
 // Curated per-type inputs, rendered by renderInputs. Per type:
@@ -4559,7 +4632,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'inheritChildZ', 'movable', 'movableInEdit', 'width', 'height', 'scale', 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'display', 'hidePlayerCursors', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'hoverInheritVisibleForSeat', 'inheritFrom', 'grid', 'dragLimit', 'overlap', 'ignoreOnLeave', 'rotationSteps', 'contextMenu', 'contextMenuOptions' ].concat(extra);
   }
 
   // whether the edited widget - or, for a multi-selection, any of the widgets
@@ -5646,6 +5719,22 @@ class PropertiesModule extends SidebarModule {
         slider: false,
         infoText: 'Show a bigger copy of the widget while the mouse is over it (or on right click), scaled by this factor. 0 turns it off.'
       });
+      // a number or a list, which the property stores as a number or an array;
+      // text that is neither is marked and writes nothing
+      const rotationSteps = new NumberOrTextInput(this, widget, 'Rotation steps', {
+        listenTo: [ 'rotationSteps' ],
+        getValue: _=>rotationStepsText(widgetOwnValue(widget, 'rotationSteps')),
+        setValue: value=>{
+          const steps = rotationStepsFromText(value);
+          rotationSteps.input.classList.toggle('inputError', steps === undefined);
+          if(steps !== undefined)
+            this.inputValueUpdated(widget, 'rotationSteps', steps);
+        },
+        nullIfEmpty: true,
+        placeholder: 'none',
+        hint: 'Lets players turn the widget from the right-click popup (see the Context menu section): a number like 45 adds two buttons that rotate it by that many degrees, a list like 0, 90, 180, 270 offers exactly those rotations. Leave it empty to offer no rotation.'
+      });
+      rotationSteps.render(body);
       this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body, {
         infoText: 'Keep the widget at its own size while the rest of the room is zoomed in or out.'
       });
@@ -5670,11 +5759,12 @@ class PropertiesModule extends SidebarModule {
     }, null, `${widget.id}:generic`, {
       renderSummary: summary => {
         const update = w => summary.textContent = this.interactionSummary(w);
-        for(const property of [ 'clickable', 'clickSound', 'enlarge', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
+        for(const property of [ 'clickable', 'clickSound', 'enlarge', 'rotationSteps', 'ignoreZoom', 'overlap', 'ignoreOnLeave', 'hidePlayerCursors', 'display' ])
           this.addPropertyListener(widget, property, update);
       }
     });
 
+    this.renderContextMenuSection(widget);
     this.renderAssociatedWidgetsSection(widget);
   }
 
@@ -5706,6 +5796,7 @@ class PropertiesModule extends SidebarModule {
     add('clickable', 'clickable', value=>value ? null : 'not clickable');
     add('clickSound', 'click sound', value=>propertyInputValueSet(value) ? `sound ${soundName(value)}` : null);
     add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
+    add('rotationSteps', 'rotation steps', value=>Array.isArray(value) && value.length ? `${value.length} rotations` : typeof value == 'number' ? `rotates ${value}°` : null);
     add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
     add('overlap', 'overlap', value=>value === false ? 'no overlap' : null);
     add('ignoreOnLeave', 'ignore on leave', value=>value ? 'ignores on leave' : null);
@@ -5716,6 +5807,503 @@ class PropertiesModule extends SidebarModule {
       add('display', 'display', value=>value === false ? 'edit mode only' : null);
 
     return parts.join(' · ');
+  }
+
+  // --- context menu ---
+
+  // Editor for the right-click popup (contextmenu.js): the buttons of the
+  // contextMenu property, which run routines of the widget or open submenus,
+  // and the preview settings of contextMenuOptions. The popup opens once a
+  // widget has entries, rotation steps (Interaction & display) or preview
+  // settings - the switch at the top covers the last case.
+  renderContextMenuSection(widget) {
+    // the menu is a per-widget tree of entries; merging trees across a
+    // selection has no safe common value, so this stays single-widget (like
+    // the snap grid)
+    if(widget.isMulti)
+      return;
+
+    this.renderCollapsibleSection('Context menu', true, body=>{
+      div(body, 'contextMenuHelp', 'Right-clicking or long-touching the widget opens a popup with a bigger preview of it. The entries below become buttons in that popup; rotation steps (Interaction & display) add rotate buttons to it.');
+
+      const popupSwitch = new CheckboxInput(this, widget, 'Popup on right-click', {
+        listenTo: [ 'contextMenuOptions', 'contextMenu', 'rotationSteps' ],
+        getValue: _=>contextMenuPopupOpens(widget),
+        // on: keep the settings there are (an empty object is enough to open
+        // it); off: drop them, which is what closes a preview-only popup
+        setValue: value=>this.inputValueUpdated(widget, 'contextMenuOptions', value ? contextMenuOptionsObject(widgetOwnValue(widget, 'contextMenuOptions')) : null),
+        hint: 'Whether a right-click (or a long touch) on the widget opens the popup. Menu entries and rotation steps open it on their own, so this switch decides about a popup that shows nothing but the preview. Switching it off discards the preview settings below.'
+      }).render(body);
+      // entries and rotation steps open the popup whatever the switch says, so
+      // it is locked while they exist rather than pretending to turn it off
+      const lockSwitch = w=>{
+        const locked = contextMenuEntryList(w.get('contextMenu')).length > 0 || rotationStepsSet(w.get('rotationSteps'));
+        $('input', popupSwitch).disabled = locked;
+        popupSwitch.title = locked ? 'The popup opens because the widget has menu entries or rotation steps' : '';
+      };
+      this.addPropertyListener(widget, 'contextMenu', lockSwitch);
+      this.addPropertyListener(widget, 'rotationSteps', lockSwitch);
+
+      div(body, 'propSetTitle', 'Menu entries');
+      this.renderContextMenuEntries(widget, body);
+
+      div(body, 'propSetTitle contextMenuPreviewTitle', 'Preview');
+      this.renderContextMenuPreviewOptions(widget, body);
+    }, null, `${widget.id}:contextMenu`, {
+      renderSummary: summary => {
+        const update = w => summary.textContent = this.contextMenuSummary(w);
+        for(const property of [ 'contextMenu', 'contextMenuOptions', 'rotationSteps' ])
+          this.addPropertyListener(widget, property, update);
+      }
+    });
+  }
+
+  // one line for the collapsed header, naming only what the popup has - a
+  // widget without one gets no summary at all
+  contextMenuSummary(widget) {
+    const parts = [];
+    const entries = contextMenuEntryList(widget.get('contextMenu'));
+    if(entries.length)
+      parts.push(`${entries.length} entr${entries.length == 1 ? 'y' : 'ies'}`);
+    const steps = widget.get('rotationSteps');
+    if(Array.isArray(steps) && steps.length)
+      parts.push(`${steps.length} rotations`);
+    else if(typeof steps == 'number')
+      parts.push(`rotates ${steps}°`);
+    const options = contextMenuOptionsObject(widget.get('contextMenuOptions'));
+    if(typeof options.factor == 'number')
+      parts.push(`preview ×${options.factor}`);
+    const images = asArray(options.image || []);
+    if(images.length)
+      parts.push(`${images.length} image${images.length == 1 ? '' : 's'}`);
+    const shown = asArray(options.widget || []);
+    if(shown.length)
+      parts.push(`shows ${shown.join(', ')}`);
+    if(!parts.length && contextMenuPopupOpens(widget))
+      parts.push('preview only');
+    return parts.join(' · ');
+  }
+
+  contextMenuEntries(widget) {
+    return contextMenuEntryList(widgetOwnValue(widget, 'contextMenu'));
+  }
+
+  // a deep copy to change and write back: an entry deep in a submenu is still
+  // one value of the contextMenu property
+  editableContextMenu(widget) {
+    return JSON.parse(JSON.stringify(this.contextMenuEntries(widget)));
+  }
+
+  // the list a path of indices leads into: [] is the top level, [2] the
+  // submenu of the third entry - null when there is no such submenu
+  contextMenuListAt(entries, path) {
+    let list = entries;
+    for(const index of path)
+      list = list && isObjectLike(list[index]) && Array.isArray(list[index].menu) ? list[index].menu : null;
+    return list;
+  }
+
+  contextMenuEntryAt(widget, path) {
+    const list = this.contextMenuListAt(this.contextMenuEntries(widget), path.slice(0, -1));
+    const entry = list && list[path[path.length - 1]];
+    return isObjectLike(entry) ? entry : null;
+  }
+
+  setContextMenu(widget, entries) {
+    this.inputValueUpdated(widget, 'contextMenu', entries);
+  }
+
+  // change the entry at path in a copy of the menu and write the copy back
+  updateContextMenuEntry(widget, path, change) {
+    const entries = this.editableContextMenu(widget);
+    const list = this.contextMenuListAt(entries, path.slice(0, -1));
+    const entry = list && list[path[path.length - 1]];
+    if(!isObjectLike(entry))
+      return;
+    change(entry);
+    this.setContextMenu(widget, entries);
+  }
+
+  // a new button runs the click routine when the widget has one, otherwise the
+  // first routine it has - and names the click routine when it has none, which
+  // the row then reports as missing
+  newContextMenuEntry(widget) {
+    const routines = widgetRoutineNames(widget);
+    return { text: 'Action', routine: routines.indexOf('clickRoutine') != -1 || !routines.length ? 'clickRoutine' : routines[0] };
+  }
+
+  renderContextMenuEntries(widget, target) {
+    const list = div(target, 'contextMenuEntries');
+
+    const addEntry = document.createElement('button');
+    addEntry.setAttribute('icon', 'add');
+    addEntry.className = 'green contextMenuAddEntry';
+    addEntry.textContent = 'Add entry';
+    addEntry.onclick = _=>{
+      const entries = this.editableContextMenu(widget);
+      entries.push(this.newContextMenuEntry(widget));
+      expandedContextMenuEntryByWidgetId.set(widget.id, String(entries.length - 1));
+      this.setContextMenu(widget, entries);
+    };
+    target.appendChild(addEntry);
+
+    // rebuilding drops focus, so only do it when the shape of the menu changed
+    // (an entry or submenu added, removed or reordered), when another entry
+    // was opened or when the routines the dropdowns offer changed - editing a
+    // value keeps the rows and lets the inputs update themselves
+    const signature = _=>JSON.stringify([ contextMenuShape(this.contextMenuEntries(widget)), expandedContextMenuEntryByWidgetId.get(widget.id), widgetRoutineNames(widget) ]);
+    let lastSignature = null;
+    let rebuild = _=>{};
+
+    // the rows register the property listeners of their inputs, so they are
+    // built through renderRebuildable - it drops the ones of the generation it
+    // replaces instead of leaving them to fire on every later delta
+    this.renderRebuildable(rebuildRows=>{
+      rebuild = rebuildRows;
+      const scrollTop = this.moduleDOM.scrollTop;
+      lastSignature = signature();
+      list.innerHTML = '';
+      if(!this.contextMenuEntries(widget).length)
+        div(list, 'contextMenuHelp', 'No buttons yet.');
+      this.renderContextMenuEntryRows(widget, [], list, rebuildRows);
+      this.moduleDOM.scrollTop = scrollTop;
+    });
+
+    this.addPropertyListener(widget, 'contextMenu', _=>{
+      if(signature() !== lastSignature)
+        rebuild();
+    });
+    // a routine added or removed under Automations changes what the dropdowns
+    // offer; a delta listener because that property may not have existed when
+    // the widget was selected
+    this.addDeltaListener(state=>{
+      if(state && state[widget.id] && Object.keys(state[widget.id]).some(property=>property.match(/Routine$/)) && signature() !== lastSignature)
+        rebuild();
+    });
+  }
+
+  renderContextMenuEntryRows(widget, parentPath, container, rebuild) {
+    const entries = this.contextMenuListAt(this.contextMenuEntries(widget), parentPath) || [];
+    entries.forEach((entry, index)=>this.renderContextMenuEntryRow(widget, parentPath.concat(index), entries.length, container, rebuild));
+  }
+
+  renderContextMenuEntryRow(widget, path, count, container, rebuild) {
+    const key = path.join('.');
+    const index = path[path.length - 1];
+    const parentPath = path.slice(0, -1);
+    // an entry stays open while one of its submenu's entries is the open one
+    const openKey = expandedContextMenuEntryByWidgetId.get(widget.id);
+    const expanded = typeof openKey == 'string' && (openKey === key || openKey.startsWith(`${key}.`));
+
+    const row = div(container, `contextMenuEntry${expanded ? ' expanded' : ''}`);
+    row.dataset.entry = key;
+    const head = div(row, 'contextMenuEntryHead');
+
+    // the engine skips an entry that is no object; the row says so and only
+    // offers to remove it
+    if(!this.contextMenuEntryAt(widget, path)) {
+      div(head, 'contextMenuEntryBroken', 'This entry is not an object. Fix it in the JSON editor or remove it.');
+      const actions = div(head, 'contextMenuEntryActions');
+      this.renderContextMenuRemoveButton(widget, path, actions);
+      return;
+    }
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'contextMenuEntryToggle';
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.title = expanded ? 'Close this entry' : 'Edit this entry';
+    toggle.onclick = _=>{
+      expandedContextMenuEntryByWidgetId.set(widget.id, expanded ? (parentPath.length ? parentPath.join('.') : null) : key);
+      rebuild();
+    };
+    head.appendChild(toggle);
+
+    renderCollapseArrow(toggle, !expanded);
+    const iconHost = div(toggle, 'contextMenuEntryIcon');
+    const info = div(toggle, 'contextMenuEntryInfo');
+    const title = div(info, 'contextMenuEntryTitle');
+    const summary = div(info, 'contextMenuEntrySummary');
+    this.addPropertyListener(widget, 'contextMenu', w=>{
+      const entry = this.contextMenuEntryAt(w, path) || {};
+      iconHost.innerHTML = '';
+      // the chevron is what the popup shows for an entry without an icon
+      renderIconChip(propertyInputValueSet(entry.icon) ? entry.icon : 'chevron_right', iconHost);
+      title.textContent = typeof entry.text == 'string' && entry.text !== '' ? entry.text : '(no text)';
+      summary.textContent = contextMenuEntrySummary(entry, w);
+    });
+
+    const actions = div(head, 'contextMenuEntryActions');
+    this.renderFaceOrderControls(actions, index, count, (from, to)=>{
+      const entries = this.editableContextMenu(widget);
+      const list = this.contextMenuListAt(entries, parentPath);
+      if(!list || to < 0 || to >= list.length)
+        return;
+      list.splice(to, 0, list.splice(from, 1)[0]);
+      if(expandedContextMenuEntryByWidgetId.get(widget.id) === key)
+        expandedContextMenuEntryByWidgetId.set(widget.id, parentPath.concat(to).join('.'));
+      this.setContextMenu(widget, entries);
+    }, 'entry');
+    this.renderContextMenuRemoveButton(widget, path, actions);
+
+    if(expanded)
+      this.renderContextMenuEntryBody(widget, path, row, rebuild);
+  }
+
+  renderContextMenuRemoveButton(widget, path, target) {
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.className = 'red';
+    remove.title = 'Remove this entry';
+    remove.onclick = _=>{
+      const entries = this.editableContextMenu(widget);
+      const list = this.contextMenuListAt(entries, path.slice(0, -1));
+      if(!list)
+        return;
+      list.splice(path[path.length - 1], 1);
+      expandedContextMenuEntryByWidgetId.set(widget.id, null);
+      this.setContextMenu(widget, entries);
+    };
+    target.appendChild(remove);
+  }
+
+  renderContextMenuEntryBody(widget, path, row, rebuild) {
+    const body = div(row, 'contextMenuEntryBody');
+    const inputs = div(body, 'contextMenuEntryInputs');
+    // pickers open below the inputs so opening one never moves them around
+    const pickerGroup = { target: div(body, 'contentMediaPickers'), current: null };
+
+    const valueOf = property=>{
+      const entry = this.contextMenuEntryAt(widget, path) || {};
+      return entry[property] === undefined ? null : entry[property];
+    };
+    // an emptied text stays as "" (a button without text is still a button),
+    // an emptied optional value leaves the entry
+    const inputOptions = (property, extra)=>Object.assign({
+      listenTo: [ 'contextMenu' ],
+      pickerGroup,
+      getValue: _=>valueOf(property),
+      setValue: value=>this.updateContextMenuEntry(widget, path, entry=>{
+        if(value === null || value === undefined || (value === '' && property != 'text'))
+          delete entry[property];
+        else
+          entry[property] = value;
+      })
+    }, extra);
+
+    new TextInput(this, widget, 'Text', inputOptions('text', {
+      placeholder: 'Button text',
+      hint: 'The text on the button.'
+    })).render(inputs);
+    new IconInput(this, widget, 'Icon', inputOptions('icon', {
+      hint: 'Shown on the button in front of the text. Without one the button shows a chevron.'
+    })).render(inputs);
+    new SelectInput(this, widget, 'Routine', inputOptions('routine', {
+      choices: [ { value: null, text: 'no routine' } ].concat(widgetRoutineNames(widget).map(name=>({ value: name, text: name }))),
+      hint: 'The routine of this widget that clicking the button runs; it can use previewIndex to learn which image or widget the popup was showing. Routines are written under Automations. A button with neither a routine nor a submenu is shown disabled; with a submenu, the button opens that instead.'
+    })).render(inputs);
+    new ColorInput(this, widget, 'Color', inputOptions('color', {
+      hint: 'Background color of the button. The text takes whichever of black and white contrasts with it.'
+    })).render(inputs);
+    new TextInput(this, widget, 'Description', inputOptions('description', {
+      placeholder: 'none',
+      hint: 'Adds an (i) button next to the entry that shows this text when clicked.'
+    })).render(inputs);
+
+    const submenu = div(body, 'contextMenuSubmenu');
+    const menu = valueOf('menu');
+    if(Array.isArray(menu)) {
+      div(submenu, 'propSetTitle', 'Submenu');
+      const rows = div(submenu, 'contextMenuEntries');
+      this.renderContextMenuEntryRows(widget, path, rows, rebuild);
+      const submenuActions = div(submenu, 'contextMenuSubmenuActions');
+
+      const addEntry = document.createElement('button');
+      addEntry.setAttribute('icon', 'add');
+      addEntry.className = 'green contextMenuAddSubmenuEntry';
+      addEntry.textContent = 'Add submenu entry';
+      addEntry.onclick = _=>this.updateContextMenuEntry(widget, path, entry=>{
+        entry.menu.push(this.newContextMenuEntry(widget));
+        expandedContextMenuEntryByWidgetId.set(widget.id, path.concat(entry.menu.length - 1).join('.'));
+      });
+      submenuActions.appendChild(addEntry);
+
+      const removeMenu = document.createElement('button');
+      removeMenu.setAttribute('icon', 'delete');
+      removeMenu.className = 'red contextMenuRemoveSubmenu';
+      removeMenu.textContent = 'Remove submenu';
+      removeMenu.title = 'Remove the submenu and all its entries, so the button runs its routine again';
+      removeMenu.onclick = _=>this.updateContextMenuEntry(widget, path, entry=>delete entry.menu);
+      submenuActions.appendChild(removeMenu);
+    } else {
+      const addMenu = document.createElement('button');
+      addMenu.setAttribute('icon', 'subdirectory_arrow_right');
+      addMenu.className = 'contextMenuAddSubmenu';
+      addMenu.textContent = 'Add submenu';
+      addMenu.title = 'Make the button open another list of buttons instead of running a routine';
+      addMenu.onclick = _=>this.updateContextMenuEntry(widget, path, entry=>{
+        entry.menu = [ this.newContextMenuEntry(widget) ];
+        expandedContextMenuEntryByWidgetId.set(widget.id, path.concat(0).join('.'));
+      });
+      submenu.appendChild(addMenu);
+    }
+  }
+
+  // the preview settings of contextMenuOptions: each input writes its key
+  // into the object and takes it out again when emptied - the object itself
+  // stays, since it is what keeps a preview-only popup open
+  renderContextMenuPreviewOptions(widget, target) {
+    const optionsOf = w=>contextMenuOptionsObject(widgetOwnValue(w, 'contextMenuOptions'));
+    const setOption = (key, value)=>{
+      const options = Object.assign({}, optionsOf(widget));
+      if(value === null || value === undefined || value === '' || (Array.isArray(value) && !value.length))
+        delete options[key];
+      else
+        options[key] = value;
+      this.inputValueUpdated(widget, 'contextMenuOptions', options);
+    };
+    const inputOptions = (key, extra)=>Object.assign({
+      listenTo: [ 'contextMenuOptions' ],
+      getValue: _=>{
+        const value = optionsOf(widget)[key];
+        return value === undefined ? null : value;
+      },
+      setValue: value=>setOption(key, value)
+    }, extra);
+
+    // what the preview falls back to is the widget's enlarge factor (when it
+    // is a number) or 2 - getPopupOptions in contextmenu.js
+    const factorOptions = inputOptions('factor', {
+      min: 0.1,
+      nullIfEmpty: true,
+      placeholder: '2',
+      hint: 'How many times its size the widget is shown at in the popup. Without a value the preview uses the Enlarge factor, or 2 when there is none.'
+    });
+    const factor = new NumberInput(this, widget, 'Size factor', factorOptions);
+    factor.render(target);
+    this.addPropertyListener(widget, 'enlarge', w=>{
+      const enlarge = w.get('enlarge');
+      factorOptions.placeholder = String(typeof enlarge == 'number' ? enlarge : 2);
+      factor.applyUpdate(factor.getValue());
+    });
+
+    new TextInput(this, widget, 'Title', inputOptions('title', {
+      nullIfEmpty: true,
+      placeholder: 'none',
+      hint: 'A heading shown above the popup.'
+    })).render(target);
+    new ColorInput(this, widget, 'Background', inputOptions('color', {
+      default: '#1f5ca6',
+      hint: 'Background color of the popup; its buttons take a contrasting text color.'
+    })).render(target);
+
+    this.renderContextMenuImages(widget, target, optionsOf, setOption);
+    this.renderContextMenuWidgets(widget, target, optionsOf, setOption);
+  }
+
+  // the images the popup shows instead of the widget; more than one adds
+  // previous/next buttons to the popup
+  renderContextMenuImages(widget, target, optionsOf, setOption) {
+    const images = w=>asArray(optionsOf(w).image || []).filter(image=>typeof image == 'string');
+    const host = div(target, 'contextMenuImages');
+    const inputs = [];
+    let openLast = false;
+
+    let rebuild = _=>{};
+    this.renderRebuildable(rebuildRows=>{
+      rebuild = rebuildRows;
+      host.innerHTML = '';
+      inputs.length = 0;
+      const list = images(widget);
+      list.forEach((image, index)=>{
+        const row = div(host, 'contextMenuImageRow');
+        const input = new ImageInput(this, widget, index == 0 ? 'Images' : '', {
+          listenTo: [ 'contextMenuOptions' ],
+          getValue: _=>images(widget)[index] === undefined ? null : images(widget)[index],
+          setValue: value=>{
+            const next = images(widget);
+            next[index] = value === null ? '' : value;
+            setOption('image', next);
+          },
+          hint: index == 0 ? 'Pictures the popup shows instead of the widget. With more than one, the popup gets previous/next buttons and the routine of a menu entry receives the shown one as previewIndex.' : undefined
+        });
+        input.render(row);
+        inputs.push(input);
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'close');
+        remove.className = 'contextMenuImageRemove';
+        remove.title = 'Remove this image';
+        remove.onclick = _=>{
+          const next = images(widget);
+          next.splice(index, 1);
+          setOption('image', next);
+        };
+        row.appendChild(remove);
+      });
+
+      const add = document.createElement('button');
+      add.setAttribute('icon', 'add');
+      add.className = 'contextMenuAddImage';
+      add.textContent = list.length ? 'Add image' : 'Show images instead of the widget';
+      add.onclick = _=>{
+        openLast = true;
+        setOption('image', images(widget).concat(['']));
+      };
+      host.appendChild(add);
+
+      // a new row is empty, so its picker opens right away
+      if(openLast && inputs.length) {
+        openLast = false;
+        inputs[inputs.length - 1].openPicker();
+      }
+    });
+
+    let lastCount = images(widget).length;
+    this.addPropertyListener(widget, 'contextMenuOptions', w=>{
+      const count = images(w).length;
+      if(count != lastCount) {
+        lastCount = count;
+        rebuild();
+      }
+    });
+  }
+
+  // the widgets the popup shows instead of this one, typed as ids or picked in
+  // the room; more than one adds previous/next buttons to the popup
+  renderContextMenuWidgets(widget, target, optionsOf, setOption) {
+    const ids = w=>asArray(optionsOf(w).widget || []).filter(id=>typeof id == 'string' && id !== '');
+    const wrap = div(target, 'propertyInput contextMenuWidgets');
+
+    const label = document.createElement('label');
+    label.textContent = 'Widgets';
+    propertyInfoButton(label, html('Other widgets the popup shows instead of this one, by id. With more than one, the popup gets previous/next buttons and the routine of a menu entry receives the shown one as previewIndex.'));
+    label.classList.add('hasHint');
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'contextMenuWidgetsInput';
+    input.placeholder = 'none';
+    input.value = ids(widget).join(', ');
+    input.onchange = _=>setOption('widget', input.value.split(',').map(id=>id.trim()).filter(id=>id !== ''));
+    wrap.appendChild(input);
+
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
+      title: 'Choose the widgets to show',
+      pickerKey: 'contextMenuWidget',
+      multiple: true,
+      getSelectedIDs: _=>ids(widget),
+      apply: selected=>setOption('widget', selected),
+      onClear: _=>setOption('widget', null),
+      clearLabel: 'Show the widget itself'
+    });
+    wrap.appendChild(popoutControls.popout);
+
+    this.addPropertyListener(widget, 'contextMenuOptions', w=>{
+      if(document.activeElement !== input)
+        input.value = ids(w).join(', ');
+      popoutControls.refresh();
+    });
   }
 
   // --- snap grid ---
@@ -10097,19 +10685,19 @@ class PropertiesModule extends SidebarModule {
   // triangles are the ones the line stop rows use (.lineStopOrder), which read
   // as one control of two halves rather than as two more icon buttons beside
   // the delete one.
-  renderFaceOrderControls(target, index, count, moveFace) {
+  renderFaceOrderControls(target, index, count, moveFace, noun = 'face') {
     const controls = div(target, 'faceOrderControls');
 
     const up = document.createElement('button');
     up.innerText = '▲';
-    up.title = 'Move this face up';
+    up.title = `Move this ${noun} up`;
     up.disabled = index == 0;
     up.onclick = _=>moveFace(index, index - 1);
     controls.appendChild(up);
 
     const down = document.createElement('button');
     down.innerText = '▼';
-    down.title = 'Move this face down';
+    down.title = `Move this ${noun} down`;
     down.disabled = index == count - 1;
     down.onclick = _=>moveFace(index, index + 1);
     controls.appendChild(down);
