@@ -22,13 +22,25 @@ let selectionBarStack = [];         // widgets under the pointer, topmost first
 let selectionBarStackFromTouch = false; // ... or under the finger that tapped, see selectionBarWhere
 let selectionBarCoords = null;      // pointer position in room coordinates
 let selectionBarPointer = null;
+let selectionBarPointerInRoom = false;
 let selectionBarScanTimer = null;
 let selectionBarListening = false;
 let selectionBarKeyboardBar = null; // the bar whose dropdown the arrow keys walk
 let selectionBarSwallowEscapeUp = false;
 let selectionBarTabHeld = false;    // Tab+Left / Tab+Right walk the history
+let selectionBarPeekActive = false; // the peek key is down, see selectionBarPeekStart
+let selectionBarPeekBar = null;     // the bar whose list the peek opened and has to close again
+let selectionBarPeekArmTimer = null;
+let selectionBarPeekArmed = false;  // the key has been held long enough to mean the list, see selectionBarPeekArm
+let selectionBarPeekBlocked = false; // ... or it turned out to be the first half of a chord after all
+let selectionBarPeekRestPoint = null; // the spot the peeked list stops on, see selectionBarPeekSettle
+let selectionBarScanFrame = null;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
+const SELECTION_BAR_PEEK_KEY = 'Control'; // held down, the list opens and follows the pointer without that delay
+const SELECTION_BAR_PEEK_ARM_DELAY = 200; // ms the peek key has to be held before the list drops, see selectionBarPeekArm
+// what a peeked list answers to itself - any other key makes the keystroke a chord
+const SELECTION_BAR_PEEK_KEYS = [ 'Control', 'Shift', 'Alt', 'Meta', 'Escape', 'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight' ];
 
 // Alt+click needs a mouse and a modifier key, so it is not something to advise
 // on a tablet - the list works there and is the only way in.
@@ -147,8 +159,7 @@ function selectionBarSetStack(stack) {
 // is the stack the bar should be showing - otherwise the list can say "nothing
 // under the pointer" right next to a drill readout counting five of them.
 function selectionBarAdoptStack(stack, clientX, clientY) {
-  clearTimeout(selectionBarScanTimer);
-  selectionBarScanTimer = null;
+  selectionBarCancelScan();
   selectionBarStackFromTouch = false; // the drill is an Alt+click, so a mouse took this one
   selectionBarPointer = { x: clientX, y: clientY };
   selectionBarSetStack(stack);
@@ -200,6 +211,27 @@ function selectionBarIsActive() {
   return !!selectionBars.length && document.body.classList.contains('edit');
 }
 
+function selectionBarCancelScan() {
+  clearTimeout(selectionBarScanTimer);
+  selectionBarScanTimer = null;
+  if(selectionBarScanFrame !== null) {
+    cancelAnimationFrame(selectionBarScanFrame);
+    selectionBarScanFrame = null;
+  }
+}
+
+// While the peek key is held the list follows the pointer itself rather than the
+// spot it came to rest on, so the scan runs on every move - at most once per
+// frame, since what it costs is a hit test of the whole document.
+function selectionBarScanNextFrame() {
+  if(selectionBarScanFrame !== null)
+    return;
+  selectionBarScanFrame = requestAnimationFrame(function() {
+    selectionBarScanFrame = null;
+    selectionBarScan();
+  });
+}
+
 function selectionBarScan(fromTouch) {
   if(!selectionBarIsActive() || !selectionBarPointer)
     return;
@@ -241,13 +273,44 @@ function selectionBarInstallListeners() {
     if(!selectionBarIsActive())
       return;
     selectionBarSetPointerCoords(e.clientX, e.clientY);
+    const wasInRoom = selectionBarPointerInRoom;
+    selectionBarPointerInRoom = selectionBarPointerIsInRoom(e.target);
     if(e.buttons)
       return;
-    clearTimeout(selectionBarScanTimer);
-    selectionBarScanTimer = null;
-    if(!selectionBarPointerIsInRoom(e.target))
+    selectionBarCancelScan();
+    if(!selectionBarPointerInRoom) {
+      // the list stops following the pointer that has left the room, and what it
+      // says about itself changes with that: from out here its rows are what the
+      // pointer can reach, and the key on it is the modifier again
+      if(selectionBarPeekActive && wasInRoom)
+        selectionBarPeekSettle();
       return;
+    }
     selectionBarPointer = { x: e.clientX, y: e.clientY };
+    // The key is very often already down by the time the pointer gets here:
+    // putting the caret on a line of the JSON text leaves the pointer over the
+    // editor, and holding the key there and then moving onto the room is the
+    // whole gesture. So the pointer arriving in the room opens the list too -
+    // the modifier state a mouse event carries says whether the key is down,
+    // whether or not its keydown ever reached the page. Only opening is done
+    // here: what closes the list is the key coming up, and a move that reports
+    // no modifier while it is still held would take it away mid-gesture. A key
+    // that is still down after it turned out to be a chord arms nothing, and the
+    // list then goes on being taken where the pointer rests like any other: the
+    // stack the count and the function keys are read off must not freeze for as
+    // long as somebody keeps a finger on Ctrl.
+    if(!selectionBarPeekActive && e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      selectionBarPeekArm();
+    if(selectionBarPeekActive) {
+      selectionBarScanNextFrame();
+      // the spot the pointer stops on is the stack the list is read at, and the
+      // one it goes back to when the pointer leaves for a row, see selectionBarPeekSettle
+      selectionBarScanTimer = setTimeout(function() {
+        selectionBarScanTimer = null;
+        selectionBarPeekNoteRestPoint();
+      }, SELECTION_BAR_SCAN_DELAY);
+      return;
+    }
     selectionBarScanTimer = setTimeout(function() {
       selectionBarScanTimer = null;
       selectionBarScan();
@@ -266,8 +329,7 @@ function selectionBarInstallListeners() {
     if(!selectionBarIsActive() || e.touches.length != 1)
       return;
     selectionBarSetPointerCoords(e.touches[0].clientX, e.touches[0].clientY);
-    clearTimeout(selectionBarScanTimer);
-    selectionBarScanTimer = null;
+    selectionBarCancelScan();
     if(!selectionBarPointerIsInRoom(e.target))
       return;
     selectionBarPointer = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -281,6 +343,67 @@ function selectionBarInstallListeners() {
       selectionBarSetPointerCoords(e.touches[0].clientX, e.touches[0].clientY);
   }, true);
 
+  // A list the peek key is holding open answers to the arrows and Enter even
+  // where the keyboard belongs to a text field, and those keys have to be taken
+  // on the way down: #jeText turns an Enter into a newline in its own handler,
+  // so a keystroke claimed only on the way back up would have edited the JSON
+  // before the row it picked was ever selected. Escape is left where it was - it
+  // reaches the list whatever owns the keyboard, and everything else in the page
+  // that watches for it still gets to see it.
+  window.addEventListener('keydown', function(e) {
+    if(!selectionBarIsActive() || selectionBarKeyboardIsFree())
+      return;
+    if([ 'ArrowUp', 'ArrowDown', 'Enter' ].indexOf(e.key) == -1)
+      return;
+    selectionBarSyncPeek(e); // a key nobody is holding any more owns nothing
+    if(selectionBarPeekedListBar() && selectionBarHandleDropdownKey(e))
+      e.stopImmediatePropagation();
+  }, true);
+
+  // The wheel walks the peeked list the way the arrows do - the hand holding the
+  // key is already on the mouse. The room zooms to the cursor on a turn of the
+  // wheel, so while the key holds the list open that zoom gives way: what the
+  // gesture is aimed at is the list of what lies under the pointer. Capture
+  // phase and stopPropagation, since the zoom listens on #roomArea on the way
+  // back up.
+  window.addEventListener('wheel', function(e) {
+    if(!selectionBarIsActive() || !selectionBarPeekActive)
+      return;
+    if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      return selectionBarPeekRelease();
+    const bar = selectionBarPeekedListBar();
+    if(!bar || !e.deltaY)
+      return;
+    e.preventDefault();
+    e.stopPropagation();
+    selectionBarStepStack(bar, e.deltaY > 0 ? 1 : -1);
+  }, { capture: true, passive: false });
+
+  // The middle button finishes what the wheel started: it takes the row the
+  // wheel and the arrows are on, which is what Enter does on it - so the whole
+  // gesture can be made by the hand that is already on the mouse, without the
+  // pointer ever leaving the widget it is reading. Only a row the keys have
+  // actually stepped to is taken; a middle press that was aimed at no row is
+  // left alone, since in edit mode that is the press that plays a widget.
+  // Capture phase, so the room's own input handling never sees it - and its
+  // default with it, which is the autoscroll of a middle press on Windows and
+  // the primary-selection paste of one on X11.
+  window.addEventListener('mousedown', function(e) {
+    if(e.button != 1 || !selectionBarIsActive() || !selectionBarPeekActive)
+      return;
+    if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      return selectionBarPeekRelease();
+    const bar = selectionBarPeekedListBar();
+    const widget = bar && selectionBarStack[bar.stackKeyIndex];
+    // out on a row of the list the pointer has a row of its own to click, and
+    // the button means there whatever it means anywhere else in the editor
+    if(!widget || !selectionBarPointerIsInRoom(e.target))
+      return;
+    e.preventDefault();
+    e.stopPropagation();
+    selectionBarPickCursorRow(bar, widget, e.shiftKey);
+  }, true);
+
   // F1, F2, F3, F6 ... F12 pick the rows of the list without opening it - the
   // keys the panel this replaces was built around. Ctrl pastes the id into the
   // JSON editor, which only means anything while that one is open.
@@ -289,6 +412,7 @@ function selectionBarInstallListeners() {
       selectionBarTabHeld = true;
     if(!selectionBarIsActive())
       return;
+    selectionBarSyncPeek(e);
     if(selectionBarHandleHistoryKey(e))
       return;
     if(selectionBarHandleDropdownKey(e))
@@ -298,7 +422,7 @@ function selectionBarInstallListeners() {
     if(!widget)
       return;
     e.preventDefault();
-    if(e.ctrlKey && jeEnabled)
+    if(selectionBarPeekKeyIsModifier(e) && jeEnabled)
       jePasteText(jeContext[jeContext.length-1] == '"null"' ? `"${widget.id}"` : widget.id, true);
     else if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
       setSelection(selectedWidgets.filter(w=>w!=widget));
@@ -317,14 +441,22 @@ function selectionBarInstallListeners() {
     // there), so the release has to be seen before it does
     if(e.key == 'Tab')
       selectionBarTabHeld = false;
+    selectionBarSyncPeek(e);
     if(e.key == 'Escape' && selectionBarSwallowEscapeUp) {
       selectionBarSwallowEscapeUp = false;
       e.stopImmediatePropagation();
     }
   }, true);
 
-  // switching windows while Tab is down never delivers its keyup
-  window.addEventListener('blur', _=>selectionBarTabHeld = false);
+  // Switching windows while a key is down never delivers its keyup - and an
+  // Escape whose keyup is owed to nobody must not eat the next one: Ctrl+Escape
+  // opens the Start menu on Windows, so the release of the very keystroke that
+  // closed a dropdown can be the one that never arrives.
+  window.addEventListener('blur', function() {
+    selectionBarTabHeld = false;
+    selectionBarSwallowEscapeUp = false;
+    selectionBarPeekRelease();
+  });
 
   // A click in the editor's own panels that is not in a bar means the user has
   // moved on to something else in the sidebar - and a dropdown covers the very
@@ -337,6 +469,145 @@ function selectionBarInstallListeners() {
     if(e.target.closest('#editorSidebar, #editorModules, #editorModuleInOverlay'))
       selectionBarCloseDropdowns();
   }, true);
+}
+
+/* Peeking at the stack with a key held down */
+
+// The list costs a click to open and takes the stack where the pointer came to
+// rest, which is a step and a wait more than the fixed function-key panel it
+// replaces: that one stood permanently in the JSON editor and followed every
+// mouse move. Holding Ctrl brings that back for as long as the key is down -
+// the list opens, follows the pointer without waiting for it to settle, and goes
+// away again with the key. A list that was already open is only made live: it
+// belongs to whoever opened it. The key and the pointer being in the room are
+// two halves of one condition and either can arrive last, so both the key going
+// down and the pointer coming in open the list.
+function selectionBarPeekStart() {
+  // Where the pointer is is the whole condition, the way it was for the panel
+  // this list replaces: that one was up whenever the pointer was in the room and
+  // hid as soon as it moved over the editor, and it did not care where the
+  // keyboard was - reading a widget's name while the caret sits in the JSON text
+  // area is the case it was there for. Outside the room the key does nothing at
+  // all: a dropdown covers the panel it hangs in, so a Ctrl+click in the sidebar
+  // - which is how a module is docked in the lower slot - must not have the list
+  // drop onto what it was aimed at.
+  if(selectionBarPeekActive || !selectionBarPointerInRoom)
+    return;
+  if(document.body.classList.contains('overlayActive') || document.body.classList.contains('deckEditorActive'))
+    return;
+  selectionBarPrune();
+  selectionBarPeekActive = true;
+
+  if(!selectionBars.some(bar=>bar.options.stack && bar.dom.classList.contains('stackVisible'))) {
+    // The two dropdowns share the space below the bar, so putting the list
+    // where the tree is means taking the tree down. That tree is something
+    // somebody opened and is working in - the keyboard can be in its filter
+    // box, and it comes back scrolled to the selection rather than to wherever
+    // it was left - and a key that gets tapped all day long must not be able to
+    // do that to it. So the list goes to a bar that is not showing one, which
+    // with two docked modules can be the other one; where every bar is showing
+    // its tree the key only makes the stack follow the pointer, and the count on
+    // the button and the widget the function keys address are live either way.
+    const free = selectionBars.filter(bar=>bar.options.stack && !bar.dom.classList.contains('treeVisible'));
+    const bar = free.indexOf(selectionBarKeyboardBar) != -1 ? selectionBarKeyboardBar : free[0];
+    if(bar) {
+      selectionBarPeekBar = bar;
+      selectionBarToggleStack(bar, false, true);
+    }
+  }
+  // whatever the last resting scan found can be a room and a pointer position
+  // ago, and the point of the key is that the list says what is under the
+  // pointer now
+  selectionBarScan();
+  selectionBarPeekNoteRestPoint(); // the pointer is standing still on this one, that is what armed the key
+}
+
+// A spot with nothing under it is not one the list can be read at, so it is not
+// one to stop on either: the empty space around the board is the last thing the
+// pointer crosses on its way out of the room.
+function selectionBarPeekNoteRestPoint() {
+  if(selectionBarStack.length)
+    selectionBarPeekRestPoint = selectionBarPointer;
+}
+
+// A pointer on its way to a row of the list crosses everything that lies between
+// the widget it was reading and the panel - the rest of the room, and the empty
+// space around the board - and a list that followed it all the way there would
+// arrive showing that instead, with the row that was aimed at gone from under
+// the click. What the pointer last came to rest on is what the list was read at,
+// so that is the stack it stops on when the pointer leaves the room.
+function selectionBarPeekSettle() {
+  if(selectionBarPeekRestPoint)
+    selectionBarPointer = selectionBarPeekRestPoint;
+  // the rows change back and the help line with them: a list that has stopped
+  // following the pointer says so rather than going on claiming to follow it
+  selectionBarScan();
+}
+
+function selectionBarPeekStop() {
+  if(!selectionBarPeekActive)
+    return;
+  selectionBarPeekActive = false;
+  selectionBarCancelScan();
+  const bar = selectionBarPeekBar;
+  selectionBarPeekBar = null;
+  selectionBarPrune();
+  if(bar && bar.dom.isConnected)
+    selectionBarToggleStack(bar, true, true);
+  updateSelectionBars(); // a list that stays open says what the keys do, and that just changed
+}
+
+// Ctrl also starts Ctrl+Z, Ctrl+J, Ctrl+S and every other chord of the editor,
+// and the pointer is usually over the room while those are typed - a list the
+// width of the panel must not drop over it and snap shut again for the length of
+// a keystroke. So the key has to be held for a moment before the list appears: a
+// chord is over long before that, a hold is not. Once the key has been held that
+// long it stays armed, so the other order - key first, pointer into the room
+// afterwards - opens the list the moment the pointer arrives.
+function selectionBarPeekArm() {
+  if(selectionBarPeekBlocked || selectionBarPeekActive || selectionBarPeekArmTimer !== null)
+    return;
+  if(selectionBarPeekArmed)
+    return selectionBarPeekStart();
+  selectionBarPeekArmTimer = setTimeout(function() {
+    selectionBarPeekArmTimer = null;
+    selectionBarPeekArmed = true;
+    selectionBarPeekStart();
+  }, SELECTION_BAR_PEEK_ARM_DELAY);
+}
+
+function selectionBarPeekCancelArm() {
+  clearTimeout(selectionBarPeekArmTimer);
+  selectionBarPeekArmTimer = null;
+}
+
+// The keystroke turned out to be a chord, or the list was dismissed with Escape:
+// either way the key is still down, and it must not bring the list back until it
+// has been let go of and pressed again.
+function selectionBarPeekBlock() {
+  selectionBarPeekBlocked = true;
+  selectionBarPeekCancelArm();
+  selectionBarPeekStop();
+}
+
+function selectionBarPeekRelease() {
+  selectionBarPeekBlocked = false;
+  selectionBarPeekArmed = false;
+  selectionBarPeekRestPoint = null;
+  selectionBarPeekCancelArm();
+  selectionBarPeekStop();
+}
+
+// Whether the peek should be up is read off the event in hand rather than
+// remembered from a keydown: a keyup lost to an OS-level menu or shortcut would
+// otherwise leave the list latched open and scanning every frame, and the next
+// keystroke that reports the key as up puts it away.
+function selectionBarSyncPeek(e) {
+  if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+    return selectionBarPeekRelease();
+  if(e.type == 'keydown' && SELECTION_BAR_PEEK_KEYS.indexOf(e.key) == -1 && !/^F\d+$/.test(e.key))
+    return selectionBarPeekBlock();
+  selectionBarPeekArm();
 }
 
 /* Walking the history */
@@ -411,6 +682,17 @@ function selectionBarKeyboardIsFree() {
   return !focused.isContentEditable && !focused.matches('input:not([type=button]), textarea, select');
 }
 
+// The list the peek key is holding open, when that is the dropdown the keys are
+// on: opening it hands it the keyboard, so it is the one selectionBarKeyboardDropdown
+// finds - with two modules docked the bar the peek landed in can be the one that
+// is not showing its tree, and there the keys stay with that tree.
+function selectionBarPeekedListBar() {
+  if(!selectionBarPeekActive)
+    return null;
+  const dropdown = selectionBarKeyboardDropdown();
+  return dropdown && dropdown.kind == 'stack' ? dropdown.bar : null;
+}
+
 function selectionBarCloseDropdown(dropdown) {
   const button = dropdown.kind == 'stack' ? dropdown.bar.stackButton : dropdown.bar.treeButton;
   const focusWasInside = document.activeElement && dropdown.bar.dom.contains(document.activeElement);
@@ -424,10 +706,26 @@ function selectionBarCloseDropdown(dropdown) {
     button.focus();
 }
 
+// Ctrl is what pastes the id of a row into the JSON editor, and it is also what
+// holds the peeked list open - so while it is doing that it is not read as a
+// modifier at all. Which of the two the key is is decided by where the pointer
+// is, and by nothing else: over the room the key belongs to the peek, and on a
+// row of the list - or anywhere else outside the room - it is the modifier it
+// always was. Reading it off the pointer rather than off whether a list is up
+// keeps the same keystroke meaning the same thing throughout a hold, which the
+// arm delay would otherwise have made a race.
+function selectionBarPeekKeyIsModifier(e) {
+  return e.ctrlKey && !selectionBarPointerInRoom;
+}
+
 // Escape closes the open dropdown, the arrow keys step through it and Enter
 // picks what they landed on. Returns true when the key was used up.
 function selectionBarHandleDropdownKey(e) {
-  if(e.ctrlKey || e.metaKey || e.altKey)
+  // Ctrl+Z and every other chord of the editor reaches it untouched. A list the
+  // key is holding open is the exception: it is the peek key then, so the keys
+  // the list answers to are its own - including with the pointer on a row, where
+  // the key is the modifier for a click but the list is still the peeked one.
+  if((selectionBarPeekKeyIsModifier(e) && !selectionBarPeekActive) || e.metaKey || e.altKey)
     return false;
   if([ 'Escape', 'ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Enter' ].indexOf(e.key) == -1)
     return false;
@@ -443,12 +741,21 @@ function selectionBarHandleDropdownKey(e) {
 
   if(e.key == 'Escape') {
     selectionBarCloseDropdown(dropdown);
+    // a list Escape has just put away must not come straight back on the next
+    // mouse move while the key that opened it is still held
+    if(e.getModifierState(SELECTION_BAR_PEEK_KEY))
+      selectionBarPeekBlock();
     selectionBarSwallowEscapeUp = true;
     e.preventDefault();
     return true;
   }
 
-  if(!selectionBarKeyboardIsFree())
+  // The arrows and Enter go back to whatever owns the keyboard: they move the
+  // caret in the JSON text area and step every number input in the editor. A
+  // list the peek key is holding open is the exception - the caret sitting in a
+  // line of JSON is the posture the key gets held in, so that list would
+  // otherwise be the one list its own keys never reach.
+  if(!selectionBarKeyboardIsFree() && !selectionBarPeekedListBar())
     return false;
 
   const step = e.key == 'ArrowDown' ? 1 : e.key == 'ArrowUp' ? -1 : 0;
@@ -473,17 +780,24 @@ function selectionBarHandleDropdownKey(e) {
     const widget = dropdown.kind == 'stack' ? selectionBarStack[dropdown.bar.stackKeyIndex] : widgets.get(dropdown.bar.treeKeyID);
     if(!widget)
       return false;
-    if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
-      setSelection(selectedWidgets.filter(w=>w!=widget));
-    else if(e.shiftKey)
-      setSelection([ widget ].concat(selectedWidgets));
-    else
-      dropdown.bar.options.onPick(widget);
+    selectionBarPickCursorRow(dropdown.bar, widget, e.shiftKey);
     e.preventDefault();
     return true;
   }
 
   return false;
+}
+
+// Taking the row the keys landed on: Enter, and the middle mouse button while
+// the peek key holds the list open. Shift with either adds the widget to the
+// selection or takes it out again, the way shift-clicking a row does.
+function selectionBarPickCursorRow(bar, widget, add) {
+  if(add && selectedWidgets.indexOf(widget) != -1)
+    setSelection(selectedWidgets.filter(w=>w!=widget));
+  else if(add)
+    setSelection([ widget ].concat(selectedWidgets));
+  else
+    bar.options.onPick(widget);
 }
 
 function selectionBarResetStackCursor() {
@@ -748,6 +1062,11 @@ function selectionBarRenderStack(bar) {
 
   bar.stackCount.textContent = selectionBarStack.length || '';
 
+  // A bar showing its tree keeps it, so there the peek has no list to show and
+  // the count in the corner of the button is the only thing that moves - which
+  // reads as a key that does nothing. The button it belongs to says so instead.
+  bar.stackButton.classList.toggle('peeking', selectionBarPeekActive && !bar.dom.classList.contains('stackVisible'));
+
   if(!bar.dom.classList.contains('stackVisible'))
     return;
 
@@ -766,11 +1085,29 @@ function selectionBarRenderStack(bar) {
   // carried that sentence permanently, and a tooltip is no place for it. A
   // finger has neither the modifiers nor the keys, so a list it filled is only
   // told the one thing it can do.
+  // The keys are the same either way, so only the first line differs: a list the
+  // pointer is towing along has moved on by the time the pointer has travelled
+  // to one of its rows, so it names the keys rather than sending anyone clicking.
+  // Once the pointer has left the room the list is standing still and its rows
+  // are back within reach, so it says what a list that is not moving says.
+  // Escape reaches the list whatever owns the keyboard, and so do the arrows and
+  // Enter while the peek key holds it open - the wheel and the middle button
+  // with them, since the hand that holds the key is on the mouse. A list nobody
+  // is holding open leaves those keys to the text field that owns them, so the
+  // line only offers what will answer.
+  const peeked = selectionBarPeekedListBar() === bar;
+  const keyHelp = peeked
+    ? '<br>↑ ↓ or the wheel step through the list, Enter or the middle mouse button selects, Esc closes it.'
+    : selectionBarKeyboardIsFree()
+    ? '<br>↑ ↓ step through the list, Enter selects, Esc closes it.'
+    : '<br>Esc closes it.';
+  const following = selectionBarPeekActive && selectionBarPointerInRoom;
   if(selectionBarStack.length)
     div(bar.stackList, 'selectionBarStackHelp', selectionBarStackFromTouch
       ? 'Tap a row to select that widget.'
-      : 'Click to select, shift-click to add to the selection, or press the key shown.'
-        + '<br>↑ ↓ step through the list, Enter selects, Esc closes it.');
+      : following
+      ? 'Following the pointer while Ctrl is held - the key shown selects, Shift with it adds.' + keyHelp
+      : 'Click to select, shift-click to add to the selection, or press the key shown.' + keyHelp);
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 10 ? `F${index+3}` : '';
@@ -787,12 +1124,13 @@ function selectionBarRenderStack(bar) {
     // tooltip carries them - together with the id, which can be cut off too once
     // there is nothing left to give
     row.title = `${widget.id}${notes ? ` - ${notes}` : ''} - z ${widget.calculateZ()}`
-              + ' - click to select, shift-click to add to the selection';
+              + ' - click to select, shift-click to add to the selection'
+              + (jeEnabled ? '\nCtrl+click pastes the id into the JSON text' : '');
     row.onmouseenter = _=>widget.domElement.classList.add('selectionBarHover');
     row.onmouseleave = _=>widget.domElement.classList.remove('selectionBarHover');
     row.onclick = function(e) {
       selectionBarClearHover();
-      if(e.ctrlKey && jeEnabled)
+      if(selectionBarPeekKeyIsModifier(e) && jeEnabled)
         jePasteText(jeContext[jeContext.length-1] == '"null"' ? `"${widget.id}"` : widget.id, true);
       else if(e.shiftKey && selectedWidgets.indexOf(widget) != -1)
         setSelection(selectedWidgets.filter(w=>w!=widget));
@@ -804,7 +1142,9 @@ function selectionBarRenderStack(bar) {
   }
 
   if(!selectionBarStack.length)
-    div(bar.stackList, 'selectionBarStackEmpty', 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.');
+    div(bar.stackList, 'selectionBarStackEmpty', following
+      ? 'Nothing under the pointer - move it over a widget while Ctrl is held.'
+      : 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.');
 
   selectionBarRenderStackCursor(bar);
 }
@@ -824,7 +1164,9 @@ function selectionBarRenderDrill(bar) {
     : '';
 }
 
-function selectionBarToggleStack(bar, forceClose) {
+// transient is a list that is only up while a key is held: it must not become
+// the dropdown that comes back with the module the next time it is opened.
+function selectionBarToggleStack(bar, forceClose, transient) {
   if(!bar.options.stack)
     return;
   const open = !forceClose && !bar.dom.classList.contains('stackVisible');
@@ -835,7 +1177,8 @@ function selectionBarToggleStack(bar, forceClose) {
   else
     selectionBarClearHover(); // the keyboard cursor outlines its row's widget, and the list is about to be gone
   bar.stackKeyIndex = -1;
-  selectionBarStoreState({ stackOpen: open });
+  if(!transient)
+    selectionBarStoreState({ stackOpen: open });
   bar.dom.classList.toggle('stackVisible', open);
   bar.stackButton.classList.toggle('active', open);
   selectionBarRenderStack(bar);
@@ -957,7 +1300,7 @@ function renderSelectionBar(target, options = {}) {
     bar.treeButton = selectionBarButton(bar.dom, 'account_tree', 'The widget tree of the room', _=>selectionBarToggleTree(bar, false, true));
   if(options.stack) {
     const stackTitle = 'The widgets under the pointer, or where you last tapped'
-                     + (selectionBarCanAltClick() ? ' - Alt+click in the room steps through them' : '');
+                     + (selectionBarCanAltClick() ? '\nHold Ctrl to open the list and have it follow the pointer.\nAlt+click in the room steps through them.' : '');
     bar.stackButton = selectionBarButton(bar.dom, 'layers', stackTitle, _=>selectionBarToggleStack(bar));
     bar.stackCount = document.createElement('span');
     bar.stackCount.className = 'selectionBarStackCount';
@@ -1036,11 +1379,12 @@ function selectionBarDeltaReceived(delta) {
 // be left on a widget while the game is played, and the rows and F keys of a
 // stack from another session must not still point somewhere.
 function selectionBarResetStack() {
-  clearTimeout(selectionBarScanTimer);
-  selectionBarScanTimer = null;
+  selectionBarPeekRelease();
+  selectionBarCancelScan();
   selectionBarStack = [];
   selectionBarResetStackCursor();
   selectionBarPointer = null;
+  selectionBarPointerInRoom = false;
   selectionBarSetPointerCoords(null);
   selectionBarClearHover();
   updateSelectionBars();
