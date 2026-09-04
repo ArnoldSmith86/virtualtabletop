@@ -19,12 +19,12 @@
       "bgg": "https://boardgamegeek.com/boardgame/1406/monopoly",
       "rules": "https://www.hasbro.com/common/instruct/00009.pdf",
       "ruleText": "Move around a 40-space loop, buy the spaces you land on and collect rent from the other players. A space nobody buys is auctioned off to the highest bidder. Owning every space of one colour doubles the rent and lets you build houses and hotels out of the bank’s limited supply, which multiplies it further. Taxes, chance cards, community cards and jail get in the way. A player who cannot pay hands everything to the player who bankrupted them; the last one solvent wins.",
-      "helpText": "<div>Everyone takes a seat on the right, then somebody presses <b>NEW GAME</b>. Each player starts with 1500 and a token on START. The arrow on START shows which way the tokens travel.</div><div><br></div><div><b>ROLL</b> throws both dice and walks your token around the board for you, and the space you land on lights up. Passing START pays 200 automatically.</div><div><br></div><div>Landing on a free street, depot or works opens a Buy/Pass dialog that names the space and lists its rent. If the price is more than you are holding, the dialog offers to raise the money first: mortgage a property or sell buildings and you can still buy it. Pass on it - or stay short - and it goes under the hammer: everybody still in the game is asked for a bid in seat order, a bidder who runs out of cash can mortgage or sell in the middle of the auction and carry on bidding, a pass drops you out, and the last bidder left buys the space at their own bid, which can be far below the printed price. Landing on a space somebody else owns pays the rent automatically - including the doubled rent for a complete colour, the depot ladder (25/50/100/200) and the 4x/10x dice multiplier for the works.</div><div><br></div><div>The bank owns <b>32 houses and 12 hotels</b> and not one more; the counter under the seat list shows what is still in the box. When the bank runs out of houses nobody can build another one until somebody sells, and a hotel only comes back down to 4 houses while 4 houses are free.</div><div><br></div><div><b>Click any space</b> to see what it is. Your own spaces open a dialog that shows the buildings, the mortgage state and the rent due, and lets you build a house or a hotel (you need the whole colour, and buildings have to go up and come down evenly), mortgage it, lift a mortgage, or hand it to another player.</div><div><br></div><div>The round plate in the outer corner of a space carries the owner’s own token symbol in the owner’s colour; a greyed-out plate with a red ring means the space is mortgaged. Each seat row shows how many spaces that player holds, their cash, and a key when they are holding a leave-jail-free card.</div><div><br></div><div>Rolling a double lets you roll again; three doubles in a row send you to jail. <b>LEAVE JAIL</b> spends a saved card or pays 50, and after three failed attempts the bail is paid for you.</div><div><br></div><div><b>RAISE CASH</b> lists everything you own that the bank will pay for - each line says what it brings in - and lets you mortgage properties and sell buildings one after another until you have enough. It is there whenever you want it, and the same list opens by itself when a purchase or a bid is out of reach. <b>PAY A PLAYER</b> settles trades and debts by hand. <b>RETIRE</b> is for when you cannot pay: it asks who broke you, sells your buildings back to the bank at half price and hands your cash and all of your property to that player - or back to the bank if nobody in particular bankrupted you. The last player still solvent wins.</div><div><br></div><div><b>RULES CHECK</b> turns the rule enforcement off and on. With it off there is no auction when somebody passes on a space, and nobody is stopped from rolling out of turn, building without the full colour, building past the bank’s supply or spending money they do not have - handy for house rules, for fixing a mistake or for setting up a position. Everything stays automated either way, and you can always pick up a token and drag it to another space by hand.</div>",
+      "helpText": "<div>Everyone takes a seat on the right, then somebody presses <b>NEW GAME</b>. Each player starts with 1500 and a token on START. The arrow on START shows which way the tokens travel.</div><div><br></div><div><b>ROLL</b> throws both dice and walks your token around the board for you, and the space you land on lights up. Passing START pays 200 automatically.</div><div><br></div><div>Landing on a free street, depot or works opens a Buy/Pass dialog that names the space and lists its rent. If the price is more than you are holding, the dialog offers to raise the money first: mortgage a property or sell buildings and you can still buy it. Pass on it - or stay short - and it goes under the hammer: everybody still in the game is asked for a bid in seat order, a bidder who runs out of cash can mortgage or sell in the middle of the auction and carry on bidding, a pass drops you out, and the last bidder left buys the space at their own bid, which can be far below the printed price. Landing on a space somebody else owns pays the rent automatically - including the doubled rent for a complete colour, the depot ladder (25/50/100/200) and the 4x/10x dice multiplier for the works. Two Chance cards walk you on to the <b>nearest depot</b>, where the owner collects double the usual rent, and one to the <b>nearest works</b>, where the dice are thrown again and the owner collects ten times that throw.</div><div><br></div><div>The bank owns <b>32 houses and 12 hotels</b> and not one more; the counter under the seat list shows what is still in the box. When the bank runs out of houses nobody can build another one until somebody sells, and a hotel only comes back down to 4 houses while 4 houses are free.</div><div><br></div><div><b>Click any space</b> to see what it is. Your own spaces open a dialog that shows the buildings, the mortgage state and the rent due, and lets you build a house or a hotel (you need the whole colour, and buildings have to go up and come down evenly), mortgage it, lift a mortgage, or hand it to another player.</div><div><br></div><div>The round plate in the outer corner of a space carries the owner’s own token symbol in the owner’s colour; a greyed-out plate with a red ring means the space is mortgaged. Each seat row shows how many spaces that player holds, their cash, and a key when they are holding a leave-jail-free card.</div><div><br></div><div>Rolling a double lets you roll again; three doubles in a row send you to jail. <b>LEAVE JAIL</b> spends a saved card or pays 50, and after three failed attempts the bail is paid for you.</div><div><br></div><div><b>RAISE CASH</b> lists everything you own that the bank will pay for - each line says what it brings in - and lets you mortgage properties and sell buildings one after another until you have enough. It is there whenever you want it, and the same list opens by itself when a purchase or a bid is out of reach. <b>PAY A PLAYER</b> settles trades and debts by hand. <b>RETIRE</b> is for when you cannot pay: it asks who broke you, sells your buildings back to the bank at half price and hands your cash and all of your property to that player - or back to the bank if nobody in particular bankrupted you. The last player still solvent wins.</div><div><br></div><div><b>RULES CHECK</b> turns the rule enforcement off and on. With it off there is no auction when somebody passes on a space, and nobody is stopped from rolling out of turn, building without the full colour, building past the bank’s supply or spending money they do not have - handy for house rules, for fixing a mistake or for setting up a position. Everything stays automated either way, and you can always pick up a token and drag it to another space by hand.</div>",
       "attribution": "<div>Layout, board, cards, routines and all of the text of this game were written by the VirtualTabletop AI agent (GitHub account <b>VTT-AI-Agent</b>, an automated contributor run for this project) and are released to the Public Domain under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>.</div><div><br></div><div><b>AI disclosure.</b> This game is AI generated. The board layout, the routines, the card texts and the descriptive text in this metadata were produced by Anthropic’s Claude model <i>claude-opus-5</i> running as Claude Code (<a href=\"https://claude.com/claude-code\">https://claude.com/claude-code</a>), from the instruction “add a new game to the VirtualTabletop public library that plays like Monopoly – read the library guidelines, match the conventions of existing library games, automate setup, dealing, movement, rent and scoring, and keep the board text-free”, followed by several rounds of review and revision. No AI generated imagery is used anywhere in the game.</div><div><br></div><div><b>No uploaded artwork.</b> Every symbol on the board, on the tokens, on the buttons and on the cards comes from the icon sets that VirtualTabletop already ships, so the game contains no external references and no image files to compress.</div><div><br></div><div>11 symbols come from the VirtualTabletop symbol set (<code>/i/icons</code>) and 2 from the VirtualTabletop 3D game pieces (<code>/i/game-pieces</code>). Both are part of VirtualTabletop itself and are covered by its own licence (<a href=\"https://github.com/ArnoldSmith86/virtualtabletop/blob/main/LICENSE\">GPL-3.0</a>):</div><div><br></div><div><b>VirtualTabletop symbols</b></div><div>&nbsp;&nbsp;- arrow left <code>/i/icons/arrow_left.svg</code></div><div>&nbsp;&nbsp;- close circle <code>/i/icons/close_circle.svg</code></div><div>&nbsp;&nbsp;- coin 3d <code>/i/icons/coin_3d.svg</code></div><div>&nbsp;&nbsp;- die <code>/i/icons/die.svg</code></div><div>&nbsp;&nbsp;- house <code>/i/icons/house.svg</code></div><div>&nbsp;&nbsp;- locked <code>/i/icons/locked.svg</code></div><div>&nbsp;&nbsp;- property <code>/i/icons/property.svg</code></div><div>&nbsp;&nbsp;- property off <code>/i/icons/property_off.svg</code></div><div>&nbsp;&nbsp;- restart <code>/i/icons/restart.svg</code></div><div>&nbsp;&nbsp;- skip next <code>/i/icons/skip_next.svg</code></div><div>&nbsp;&nbsp;- unlocked <code>/i/icons/unlocked.svg</code></div><div><br></div><div><b>VirtualTabletop 3D game pieces</b></div><div>&nbsp;&nbsp;- Building 3D <code>/i/game-pieces/3D/Building-3D.svg</code></div><div>&nbsp;&nbsp;- House 3D <code>/i/game-pieces/3D/House-3D.svg</code></div><div><br></div><div>The remaining 48 icons come from <a href=\"https://game-icons.net\">game-icons.net</a> and are available under <a href=\"https://creativecommons.org/licenses/by/3.0/\">CC BY 3.0</a>:</div><div><br></div><div><b>Caro Asercion</b></div><div>&nbsp;&nbsp;- Clock Tower <a href=\"https://game-icons.net/1x1/caro-asercion/clock-tower.html\">https://game-icons.net/1x1/caro-asercion/clock-tower.html</a></div><div>&nbsp;&nbsp;- Subway Train <a href=\"https://game-icons.net/1x1/caro-asercion/subway-train.html\">https://game-icons.net/1x1/caro-asercion/subway-train.html</a></div><div>&nbsp;&nbsp;- Water Mill <a href=\"https://game-icons.net/1x1/caro-asercion/water-mill.html\">https://game-icons.net/1x1/caro-asercion/water-mill.html</a></div><div><br></div><div><b>Delapouite</b></div><div>&nbsp;&nbsp;- Arch Bridge <a href=\"https://game-icons.net/1x1/delapouite/arch-bridge.html\">https://game-icons.net/1x1/delapouite/arch-bridge.html</a></div><div>&nbsp;&nbsp;- Bank <a href=\"https://game-icons.net/1x1/delapouite/bank.html\">https://game-icons.net/1x1/delapouite/bank.html</a></div><div>&nbsp;&nbsp;- Barn <a href=\"https://game-icons.net/1x1/delapouite/barn.html\">https://game-icons.net/1x1/delapouite/barn.html</a></div><div>&nbsp;&nbsp;- Block House <a href=\"https://game-icons.net/1x1/delapouite/block-house.html\">https://game-icons.net/1x1/delapouite/block-house.html</a></div><div>&nbsp;&nbsp;- Cargo Ship <a href=\"https://game-icons.net/1x1/delapouite/cargo-ship.html\">https://game-icons.net/1x1/delapouite/cargo-ship.html</a></div><div>&nbsp;&nbsp;- Castle <a href=\"https://game-icons.net/1x1/delapouite/castle.html\">https://game-icons.net/1x1/delapouite/castle.html</a></div><div>&nbsp;&nbsp;- Church <a href=\"https://game-icons.net/1x1/delapouite/church.html\">https://game-icons.net/1x1/delapouite/church.html</a></div><div>&nbsp;&nbsp;- City Car <a href=\"https://game-icons.net/1x1/delapouite/city-car.html\">https://game-icons.net/1x1/delapouite/city-car.html</a></div><div>&nbsp;&nbsp;- Control Tower <a href=\"https://game-icons.net/1x1/delapouite/control-tower.html\">https://game-icons.net/1x1/delapouite/control-tower.html</a></div><div>&nbsp;&nbsp;- Cowboy Boot <a href=\"https://game-icons.net/1x1/delapouite/cowboy-boot.html\">https://game-icons.net/1x1/delapouite/cowboy-boot.html</a></div><div>&nbsp;&nbsp;- Direction Signs <a href=\"https://game-icons.net/1x1/delapouite/direction-signs.html\">https://game-icons.net/1x1/delapouite/direction-signs.html</a></div><div>&nbsp;&nbsp;- Factory <a href=\"https://game-icons.net/1x1/delapouite/factory.html\">https://game-icons.net/1x1/delapouite/factory.html</a></div><div>&nbsp;&nbsp;- Family House <a href=\"https://game-icons.net/1x1/delapouite/family-house.html\">https://game-icons.net/1x1/delapouite/family-house.html</a></div><div>&nbsp;&nbsp;- Greenhouse <a href=\"https://game-icons.net/1x1/delapouite/greenhouse.html\">https://game-icons.net/1x1/delapouite/greenhouse.html</a></div><div>&nbsp;&nbsp;- Hospital <a href=\"https://game-icons.net/1x1/delapouite/hospital.html\">https://game-icons.net/1x1/delapouite/hospital.html</a></div><div>&nbsp;&nbsp;- Huts Village <a href=\"https://game-icons.net/1x1/delapouite/huts-village.html\">https://game-icons.net/1x1/delapouite/huts-village.html</a></div><div>&nbsp;&nbsp;- Lighthouse <a href=\"https://game-icons.net/1x1/delapouite/lighthouse.html\">https://game-icons.net/1x1/delapouite/lighthouse.html</a></div><div>&nbsp;&nbsp;- Louvre Pyramid <a href=\"https://game-icons.net/1x1/delapouite/louvre-pyramid.html\">https://game-icons.net/1x1/delapouite/louvre-pyramid.html</a></div><div>&nbsp;&nbsp;- Observatory <a href=\"https://game-icons.net/1x1/delapouite/observatory.html\">https://game-icons.net/1x1/delapouite/observatory.html</a></div><div>&nbsp;&nbsp;- Oil Pump <a href=\"https://game-icons.net/1x1/delapouite/oil-pump.html\">https://game-icons.net/1x1/delapouite/oil-pump.html</a></div><div>&nbsp;&nbsp;- Park Bench <a href=\"https://game-icons.net/1x1/delapouite/park-bench.html\">https://game-icons.net/1x1/delapouite/park-bench.html</a></div><div>&nbsp;&nbsp;- Party Popper <a href=\"https://game-icons.net/1x1/delapouite/party-popper.html\">https://game-icons.net/1x1/delapouite/party-popper.html</a></div><div>&nbsp;&nbsp;- Pay Money <a href=\"https://game-icons.net/1x1/delapouite/pay-money.html\">https://game-icons.net/1x1/delapouite/pay-money.html</a></div><div>&nbsp;&nbsp;- Post Office <a href=\"https://game-icons.net/1x1/delapouite/post-office.html\">https://game-icons.net/1x1/delapouite/post-office.html</a></div><div>&nbsp;&nbsp;- Prisoner <a href=\"https://game-icons.net/1x1/delapouite/prisoner.html\">https://game-icons.net/1x1/delapouite/prisoner.html</a></div><div>&nbsp;&nbsp;- Receive Money <a href=\"https://game-icons.net/1x1/delapouite/receive-money.html\">https://game-icons.net/1x1/delapouite/receive-money.html</a></div><div>&nbsp;&nbsp;- Sailboat <a href=\"https://game-icons.net/1x1/delapouite/sailboat.html\">https://game-icons.net/1x1/delapouite/sailboat.html</a></div><div>&nbsp;&nbsp;- Saloon <a href=\"https://game-icons.net/1x1/delapouite/saloon.html\">https://game-icons.net/1x1/delapouite/saloon.html</a></div><div>&nbsp;&nbsp;- Shop <a href=\"https://game-icons.net/1x1/delapouite/shop.html\">https://game-icons.net/1x1/delapouite/shop.html</a></div><div>&nbsp;&nbsp;- Sitting Dog <a href=\"https://game-icons.net/1x1/delapouite/sitting-dog.html\">https://game-icons.net/1x1/delapouite/sitting-dog.html</a></div><div>&nbsp;&nbsp;- Steam Locomotive <a href=\"https://game-icons.net/1x1/delapouite/steam-locomotive.html\">https://game-icons.net/1x1/delapouite/steam-locomotive.html</a></div><div>&nbsp;&nbsp;- Theater <a href=\"https://game-icons.net/1x1/delapouite/theater.html\">https://game-icons.net/1x1/delapouite/theater.html</a></div><div>&nbsp;&nbsp;- Two Coins <a href=\"https://game-icons.net/1x1/delapouite/two-coins.html\">https://game-icons.net/1x1/delapouite/two-coins.html</a></div><div><br></div><div><b>Lorc</b></div><div>&nbsp;&nbsp;- Cat <a href=\"https://game-icons.net/1x1/lorc/cat.html\">https://game-icons.net/1x1/lorc/cat.html</a></div><div>&nbsp;&nbsp;- Crown <a href=\"https://game-icons.net/1x1/lorc/crown.html\">https://game-icons.net/1x1/lorc/crown.html</a></div><div>&nbsp;&nbsp;- Cut Diamond <a href=\"https://game-icons.net/1x1/lorc/cut-diamond.html\">https://game-icons.net/1x1/lorc/cut-diamond.html</a></div><div>&nbsp;&nbsp;- Handcuffs <a href=\"https://game-icons.net/1x1/lorc/handcuffs.html\">https://game-icons.net/1x1/lorc/handcuffs.html</a></div><div>&nbsp;&nbsp;- Key <a href=\"https://game-icons.net/1x1/lorc/key.html\">https://game-icons.net/1x1/lorc/key.html</a></div><div>&nbsp;&nbsp;- Light Bulb <a href=\"https://game-icons.net/1x1/lorc/light-bulb.html\">https://game-icons.net/1x1/lorc/light-bulb.html</a></div><div>&nbsp;&nbsp;- Return Arrow <a href=\"https://game-icons.net/1x1/lorc/return-arrow.html\">https://game-icons.net/1x1/lorc/return-arrow.html</a></div><div>&nbsp;&nbsp;- Top Hat <a href=\"https://game-icons.net/1x1/lorc/top-hat.html\">https://game-icons.net/1x1/lorc/top-hat.html</a></div><div>&nbsp;&nbsp;- Uncertainty <a href=\"https://game-icons.net/1x1/lorc/uncertainty.html\">https://game-icons.net/1x1/lorc/uncertainty.html</a></div><div><br></div><div><b>Sbed</b></div><div>&nbsp;&nbsp;- Water Drop <a href=\"https://game-icons.net/1x1/sbed/water-drop.html\">https://game-icons.net/1x1/sbed/water-drop.html</a></div><div><br></div><div><b>Skoll</b></div><div>&nbsp;&nbsp;- Airplane <a href=\"https://game-icons.net/1x1/skoll/airplane.html\">https://game-icons.net/1x1/skoll/airplane.html</a></div><div>&nbsp;&nbsp;- Open Treasure Chest <a href=\"https://game-icons.net/1x1/skoll/open-treasure-chest.html\">https://game-icons.net/1x1/skoll/open-treasure-chest.html</a></div><div><br></div><div>The library preview image is a rendering of this game’s own board, made with a screenshot of the room, and is released to the Public Domain under CC0.</div>",
       "usesAIImagery": false,
       "variant": "",
       "variantImage": "",
-      "lastUpdate": 1787961600000
+      "lastUpdate": 1788480000000
     }
   },
   "board": {
@@ -8646,7 +8646,7 @@
       "c6": {
         "img": "/i/game-icons.net/delapouite/steam-locomotive.svg",
         "txt": "",
-        "cap": "Advance to the rail depot",
+        "cap": "Take the train to the rail depot",
         "act": "goto",
         "val": 5,
         "tint": "#8a6d1f",
@@ -8698,20 +8698,20 @@
         "pile": "chancePile"
       },
       "c12": {
-        "img": "/i/game-icons.net/skoll/airplane.svg",
-        "txt": "",
-        "cap": "Advance to the airport depot",
-        "act": "goto",
-        "val": 35,
+        "img": "/i/game-icons.net/delapouite/railway.svg",
+        "txt": "x2",
+        "cap": "Advance to the nearest rail depot - double rent",
+        "act": "nearst",
+        "val": 0,
         "tint": "#8a6d1f",
         "pile": "chancePile"
       },
       "c13": {
-        "img": "/i/game-icons.net/sbed/water-drop.svg",
-        "txt": "",
-        "cap": "Advance to the water works",
-        "act": "goto",
-        "val": 28,
+        "img": "/i/game-icons.net/delapouite/power-generator.svg",
+        "txt": "x10",
+        "cap": "Advance to the nearest works - throw and pay 10x",
+        "act": "nearut",
+        "val": 0,
         "tint": "#8a6d1f",
         "pile": "chancePile"
       },
@@ -8726,15 +8726,6 @@
         "val2": 100
       },
       "c15": {
-        "img": "/i/game-icons.net/lorc/light-bulb.svg",
-        "txt": "+100",
-        "cap": "You won a crossword competition",
-        "act": "get",
-        "val": 100,
-        "tint": "#8a6d1f",
-        "pile": "chancePile"
-      },
-      "c16": {
         "img": "/i/game-icons.net/delapouite/louvre-pyramid.svg",
         "txt": "",
         "cap": "Advance to the glass pyramid",
@@ -8974,7 +8965,7 @@
     "id": "chanceDeck_16",
     "type": "card",
     "deck": "chanceDeck",
-    "cardType": "c16",
+    "cardType": "c12",
     "parent": "chancePile",
     "activeFace": 0
   },
@@ -9043,8 +9034,8 @@
       "c7": {
         "img": "/i/game-icons.net/delapouite/receive-money.svg",
         "txt": "+20",
-        "cap": "Collect 20 from every player",
-        "act": "getall",
+        "cap": "Income tax refund",
+        "act": "get",
         "val": 20,
         "tint": "#1d3d7d",
         "pile": "chestPile"
@@ -9060,10 +9051,10 @@
       },
       "c9": {
         "img": "/i/game-icons.net/delapouite/pay-money.svg",
-        "txt": "-40",
+        "txt": "-50",
         "cap": "School fees",
         "act": "pay",
-        "val": 40,
+        "val": 50,
         "tint": "#1d3d7d",
         "pile": "chestPile"
       },
@@ -11957,7 +11948,8 @@
             "arguments": {
               "seat": "${seat}",
               "pos": "${pos}",
-              "dice": "${dice}"
+              "dice": "${dice}",
+              "cardRent": "${cardRent}"
             }
           }
         ]
@@ -12289,7 +12281,8 @@
                       "pos": "${pos}",
                       "dice": "${dice}",
                       "own": "${own}",
-                      "cell": "${cell}"
+                      "cell": "${cell}",
+                      "cardRent": "${cardRent}"
                     }
                   }
                 ]
@@ -12308,7 +12301,8 @@
           "pos": "${pos}",
           "cell": "${cell}",
           "own": "${own}",
-          "dice": "${dice}"
+          "dice": "${dice}",
+          "cardRent": "${cardRent}"
         },
         "variable": "rent"
       },
@@ -12333,12 +12327,31 @@
         },
         "variable": "nm"
       },
+      "var note = ''",
+      {
+        "func": "IF",
+        "operand1": "${cardRent}",
+        "relation": "==",
+        "operand2": "st2",
+        "thenRoutine": [
+          "var note = ' - double, as the card says'"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${cardRent}",
+        "relation": "==",
+        "operand2": "ut10",
+        "thenRoutine": [
+          "var note = ' - ten times the throw, as the card says'"
+        ]
+      },
       {
         "func": "CALL",
         "widget": "eng",
         "routine": "logRoutine",
         "arguments": {
-          "msg": "${pn} pays ${on} ${rent} rent for ${nm}"
+          "msg": "${pn} pays ${on} ${rent} rent for ${nm}${note}"
         }
       }
     ],
@@ -12637,7 +12650,140 @@
             "arguments": {
               "seat": "${seat}",
               "pos": "${val}",
-              "dice": 7
+              "dice": 7,
+              "cardRent": ""
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${act}",
+        "relation": "==",
+        "operand2": "nearst",
+        "thenRoutine": [
+          "var cur = ${PROPERTY pos OF $seat}",
+          {
+            "func": "CALL",
+            "widget": "eng",
+            "routine": "nearestRoutine",
+            "arguments": {
+              "pos": "${cur}",
+              "kind": "station"
+            },
+            "variable": "dest"
+          },
+          {
+            "func": "CALL",
+            "widget": "eng",
+            "routine": "gotoRoutine",
+            "arguments": {
+              "seat": "${seat}",
+              "dest": "${dest}",
+              "collect": true
+            },
+            "variable": "gone"
+          },
+          {
+            "func": "CALL",
+            "widget": "eng",
+            "routine": "landRoutine",
+            "arguments": {
+              "seat": "${seat}",
+              "pos": "${dest}",
+              "dice": 7,
+              "cardRent": "st2"
+            }
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${act}",
+        "relation": "==",
+        "operand2": "nearut",
+        "thenRoutine": [
+          "var cur = ${PROPERTY pos OF $seat}",
+          {
+            "func": "CALL",
+            "widget": "eng",
+            "routine": "nearestRoutine",
+            "arguments": {
+              "pos": "${cur}",
+              "kind": "util"
+            },
+            "variable": "dest"
+          },
+          {
+            "func": "CALL",
+            "widget": "eng",
+            "routine": "gotoRoutine",
+            "arguments": {
+              "seat": "${seat}",
+              "dest": "${dest}",
+              "collect": true
+            },
+            "variable": "gone"
+          },
+          "var ucell = 'b' + ${dest}",
+          "var uown = ${PROPERTY ownedBy OF $ucell}",
+          "var umg = ${PROPERTY mortgaged OF $ucell}",
+          "var other = ${uown} != ${seat}",
+          "var charge = ${uown} && ${other}",
+          "var charge = ${charge} && !${umg}",
+          "var thrown = 7",
+          {
+            "func": "IF",
+            "condition": "${charge}",
+            "thenRoutine": [
+              {
+                "func": "CLICK",
+                "collection": [
+                  "die1",
+                  "die2"
+                ],
+                "mode": "ignoreAll"
+              },
+              {
+                "func": "DELAY",
+                "milliseconds": 850
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "die1"
+                ],
+                "property": "value",
+                "variable": "u1"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "die2"
+                ],
+                "property": "value",
+                "variable": "u2"
+              },
+              "var thrown = ${u1} + ${u2}",
+              {
+                "func": "CALL",
+                "widget": "eng",
+                "routine": "logRoutine",
+                "arguments": {
+                  "msg": "${nm} throws ${thrown} for the works"
+                }
+              }
+            ]
+          },
+          {
+            "func": "CALL",
+            "widget": "eng",
+            "routine": "landRoutine",
+            "arguments": {
+              "seat": "${seat}",
+              "pos": "${dest}",
+              "dice": "${thrown}",
+              "cardRent": "ut10"
             }
           }
         ]
@@ -12665,7 +12811,8 @@
             "arguments": {
               "seat": "${seat}",
               "pos": "${dst}",
-              "dice": 7
+              "dice": 7,
+              "cardRent": ""
             }
           }
         ]
@@ -12882,7 +13029,8 @@
             "arguments": {
               "seat": "${s}",
               "pos": "${np}",
-              "dice": "${sum}"
+              "dice": "${sum}",
+              "cardRent": ""
             }
           },
           "var stillFree = ${PROPERTY inJail OF $s}",
@@ -13054,7 +13202,8 @@
         "arguments": {
           "seat": "${s}",
           "pos": "${np2}",
-          "dice": "${sum}"
+          "dice": "${sum}",
+          "cardRent": ""
         }
       }
     ],
@@ -13391,7 +13540,8 @@
               "pos": "${pos}",
               "cell": "${cell}",
               "own": "${own}",
-              "dice": 7
+              "dice": 7,
+              "cardRent": ""
             },
             "variable": "now"
           },
@@ -15010,7 +15160,16 @@
         "thenRoutine": [
           "var f = ${nOwn} - 1",
           "var f = 2 ** ${f}",
-          "var rent = 25 * ${f}"
+          "var rent = 25 * ${f}",
+          {
+            "func": "IF",
+            "operand1": "${cardRent}",
+            "relation": "==",
+            "operand2": "st2",
+            "thenRoutine": [
+              "var rent = ${rent} * 2"
+            ]
+          }
         ]
       },
       {
@@ -15021,14 +15180,25 @@
         "thenRoutine": [
           {
             "func": "IF",
-            "operand1": "${nOwn}",
-            "relation": ">=",
-            "operand2": 2,
+            "operand1": "${cardRent}",
+            "relation": "==",
+            "operand2": "ut10",
             "thenRoutine": [
               "var rent = ${dice} * 10"
             ],
             "elseRoutine": [
-              "var rent = ${dice} * 4"
+              {
+                "func": "IF",
+                "operand1": "${nOwn}",
+                "relation": ">=",
+                "operand2": 2,
+                "thenRoutine": [
+                  "var rent = ${dice} * 10"
+                ],
+                "elseRoutine": [
+                  "var rent = ${dice} * 4"
+                ]
+              }
             ]
           }
         ]
@@ -16037,7 +16207,42 @@
         ]
       }
     ],
-    "aucAct": "bid"
+    "aucAct": "bid",
+    "nearestRoutine": [
+      "var T = ${PROPERTY sType OF eng}",
+      "var cur = ${pos}",
+      "var dest = -1",
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          40
+        ],
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${dest}",
+            "relation": "<",
+            "operand2": 0,
+            "thenRoutine": [
+              "var cur = ${cur} + 1",
+              "var cur = ${cur} % 40",
+              "var t = ${T.$cur}",
+              {
+                "func": "IF",
+                "operand1": "${t}",
+                "relation": "==",
+                "operand2": "${kind}",
+                "thenRoutine": [
+                  "var dest = ${cur}"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "var result = ${dest}"
+    ]
   },
   "tableBg": {
     "id": "tableBg",
