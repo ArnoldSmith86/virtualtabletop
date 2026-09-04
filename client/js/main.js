@@ -1115,6 +1115,8 @@ function setJEenabled(v) {
 
 function setJEroutineLogging(v) {
   jeRoutineLogging = v;
+  if(v)
+    forgetReportedProblems();
 }
 
 window.onresize = function(event) {

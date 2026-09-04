@@ -3490,6 +3490,24 @@ export function jeLoggingRoutineNotLogged(widget, property) {
   jeLoggingRenderLog(jeLoggingHTML);
 }
 
+// A problem that was found outside of any routine - an automatic pile that could not be created, a
+// drop into a holder that is gone. There is no logged operation to hang it on, so it becomes an
+// entry of its own rather than a console line the panel never shows.
+export function jeLoggingProblemNote(message) {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
+    return;
+  if(jeRoutineResetOnNextLog) {
+    jeLoggingHTML = '';
+    jeRoutineResetOnNextLog = false;
+  }
+  jeLoggingHTML += `
+    <div class="jeLog jeLogNote jeLogProblemNote">
+      ${html(message)}
+    </div>
+  `;
+  jeLoggingRenderLog(jeLoggingHTML);
+}
+
 export function jeLoggingRoutineOperationStart(original, applied) {
   let fcn;
   if (typeof applied == 'string')
@@ -3565,13 +3583,15 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
           </div>
         </div>` : '';
 
+  // An operation that failed opens itself as well, so that the pre-expanded Problems block below is
+  // on screen instead of sitting inside a collapsed parent.
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
-      <div class="jeExpander">
+      <div class="jeExpander${problems.length ? ' jeExpander-down' : ''}">
         <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} ${problems.length ? '<span class="jeLogFailed">failed</span>' : ''} <span class="jeLogTime" title="how long this operation took">(${+new Date() - startTime}ms)</span>
       </div>
-      <div class="jeLogNested">
+      <div class="jeLogNested${problems.length ? ' active' : ''}">
         ${opProblems}
         ${opOperation}
         ${jeLoggingHTML}

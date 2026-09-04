@@ -582,6 +582,15 @@ test('an onPileCreation that cannot create a pile leaves the cards where they ar
   // the client is still there and reacts to the next click
   await t.click('#w_go');
   await expectEventually(t, markedWidgets, [ 'go' ]);
+
+  // opening the routine log is what an author does after nothing happened, so trying it again there
+  // has to say why - the message is not swallowed as a repeat of the one nobody was watching for
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+  await ClientFunction(() => widgets.get('card2').updatePiles().then(_=>true))();
+  await t.expect(Selector('#jeLog .jeLogProblemNote').innerText).contains('Check the onPileCreation property of');
 });
 
 // Creating the clone runs every routine listening on 'id', which can remove the holder the clone
@@ -613,7 +622,9 @@ test('a holder that disappears while a widget is cloned into it is reported', as
   await ClientFunction(() => widgets.get('clone').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
 
   // the holder being gone is a problem the game author can read, not an exception from a lookup
-  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('disappeared while source was being cloned into it');
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains(`disappeared while 'source' was being cloned into it`);
+  // the operation that failed opens itself, so the explanation is readable without expanding it
+  await t.expect(Selector('#jeLog .jeLogProblems').visible).ok();
   await t.expect(Selector('#jeLog .jeLogProblems').innerText).notContains('Exception:');
   // the routine runs to its end and the clone stays on the table
   await expectEventually(t, markedWidgets, [ 'go' ]);
@@ -704,7 +715,8 @@ test('moving into a holder that is gone leaves the widget where it is', async t 
 
   await ClientFunction(() => widgets.get('move').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
 
-  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('because it does not exist');
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('because that holder no longer exists');
+  await t.expect(Selector('#jeLog .jeLogProblems').visible).ok();
   // the card that is left stays in the holder it came from instead of getting an invalid parent
   await expectEventually(t, ()=>widgetProperty('card1', 'parent'), 'source');
 });

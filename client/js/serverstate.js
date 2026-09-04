@@ -144,26 +144,33 @@ export function addWidget(widget, instance, allowMissingParent) {
 // creation) so live gameplay keeps random IDs - type-based IDs are an
 // authoring/edit-mode convenience and give no benefit during play, while
 // sequential IDs would raise the collision risk between concurrent clients.
-async function addWidgetLocal(widget, useTypeBasedID = true) {
+// A caller that reports a refusal itself hands in a problems array to collect the reason in;
+// without one it goes wherever reportProblem() puts a problem found outside a routine.
+async function addWidgetLocal(widget, useTypeBasedID = true, problems = null) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID(useTypeBasedID ? widget.type : undefined);
   else
     widget.id = String(widget.id);
 
   if(widget.parent && !widgets.has(widget.parent)) {
-    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
+    reportProblem(`Refusing to add widget '${widget.id}': there is no widget '${widget.parent}' to use as its parent.`, problems);
     return null;
   }
 
   // A card is only a card together with its deck: addWidget() holds one whose deck is missing back
   // until that deck arrives, which for a widget created here never happens - it would wait forever.
+  if(widget.type == 'card' && !widget.deck) {
+    reportProblem(`Refusing to add card '${widget.id}': it names no deck to take its cardTypes from.`, problems);
+    return null;
+  }
+
   if(widget.type == 'card' && (!widgets.has(widget.deck) || widgets.get(widget.deck).get('type') != 'deck')) {
-    console.error(`Refusing to add widget ${widget.id} with invalid deck ${widget.deck}.`);
+    reportProblem(`Refusing to add card '${widget.id}': '${widget.deck}' is not a deck in this room.`, problems);
     return null;
   }
 
   if(widget.type == 'card' && !widgets.get(widget.deck).get('cardTypes')[widget.cardType]) {
-    console.error(`Refusing to add widget ${widget.id} with invalid cardType ${widget.cardType}.`);
+    reportProblem(`Refusing to add card '${widget.id}': deck '${widget.deck}' has no cardType '${widget.cardType}'.`, problems);
     return null;
   }
 
@@ -173,7 +180,7 @@ async function addWidgetLocal(widget, useTypeBasedID = true) {
     // Only an ID the room actually has is of any use to the caller: one that names nothing ends up
     // in a parent property, where it puts the child in limbo instead of into a widget.
     if(!widgets.has(widget.id)) {
-      console.error(`Refusing to add widget ${widget.id}.`);
+      reportProblem(`Refusing to add widget '${widget.id}': it could not be created - check its type and properties.`, problems);
       return null;
     }
   }
@@ -207,7 +214,7 @@ async function updateWidgetId(widget, oldID) {
   // The children and cards keep the top level removeWidgetLocal() put them on rather than being
   // pointed at an ID that names no widget.
   if(id === null) {
-    console.error(`Renaming ${oldID} to ${widget.id} failed, the widget is gone.`);
+    alert(`Renaming '${oldID}' to '${widget.id}' failed: the widget could not be added back under its new id and is gone. Its children and cards are on the top level now.`);
     return;
   }
 
