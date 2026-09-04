@@ -1045,6 +1045,26 @@
             "text": "Are you sure you want to reset the board and swap colors?"
           },
           {
+            "type": "select",
+            "label": "Starting position",
+            "variable": "setup",
+            "value": "${PROPERTY setup}",
+            "options": [
+              {
+                "value": "standard",
+                "text": "♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜  classic"
+              },
+              {
+                "value": "random",
+                "text": "🎲  Chess960 / Fischer Random - random"
+              },
+              {
+                "value": "number",
+                "text": "#  Chess960 / Fischer Random - by number"
+              }
+            ]
+          },
+          {
             "type": "checkbox",
             "label": "Delete pieces that were manually added?",
             "value": "${PROPERTY keep}",
@@ -1057,6 +1077,12 @@
         "collection": "thisButton",
         "property": "keep",
         "value": "${keep}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "setup",
+        "value": "${setup}"
       },
       "// SWAP PLAYERS",
       "var whitePlayer = ${PROPERTY player OF White Seat}",
@@ -1126,6 +1152,230 @@
           "Black Score"
         ]
       },
+      "// STARTING POSITION",
+      "// the back rank is described by its Chess960 number - 518 is the classic line-up",
+      "var position = 518",
+      {
+        "func": "IF",
+        "operand1": "${setup}",
+        "operand2": "random",
+        "thenRoutine": [
+          "var position = randRange 0 960"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${setup}",
+        "operand2": "number",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Chess960 / Fischer Random"
+              },
+              {
+                "type": "subtitle",
+                "text": "Every number from 0 to 959 is one of the 960 possible starting positions. 518 is the classic one."
+              },
+              {
+                "type": "number",
+                "label": "#",
+                "variable": "position",
+                "value": "${PROPERTY position}",
+                "min": 0,
+                "max": 959
+              }
+            ]
+          },
+          "var position = max ${position} 0",
+          "var position = min ${position} 959",
+          "var position = floor ${position}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "position",
+        "value": "${position}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Position Number"
+        ],
+        "property": "text",
+        "value": "#${position}"
+      },
+      "// BACK RANK",
+      "// bishops, queen and the knight/rook/king pattern are derived from the position number",
+      {
+        "func": "VAR",
+        "variables": {
+          "files": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "darkFiles": [
+            "A",
+            "C",
+            "E",
+            "G"
+          ],
+          "lightFiles": [
+            "B",
+            "D",
+            "F",
+            "H"
+          ],
+          "patterns": [
+            "NNRKR",
+            "NRNKR",
+            "NRKNR",
+            "NRKRN",
+            "RNNKR",
+            "RNKNR",
+            "RNKRN",
+            "RKNNR",
+            "RKNRN",
+            "RKRNN"
+          ],
+          "place": {},
+          "free": [],
+          "rest": [],
+          "rooks": 0,
+          "knights": 0
+        }
+      },
+      "var rank = ${position}",
+      "var lightBishop = ${rank} % 4",
+      "var rank = ${rank} / 4",
+      "var rank = floor ${rank}",
+      "var darkBishop = ${rank} % 4",
+      "var rank = ${rank} / 4",
+      "var rank = floor ${rank}",
+      "var queen = ${rank} % 6",
+      "var rank = ${rank} / 6",
+      "var rank = floor ${rank}",
+      "var lightFile = ${lightFiles.$lightBishop}",
+      "var darkFile = ${darkFiles.$darkBishop}",
+      "var place.$lightFile = 'Bishop F'",
+      "var place.$darkFile = 'Bishop C'",
+      {
+        "func": "FOREACH",
+        "in": "${files}",
+        "loopRoutine": [
+          "var isLight = ${value} == ${lightFile}",
+          "var isDark = ${value} == ${darkFile}",
+          "var isBishop = ${isLight} || ${isDark}",
+          {
+            "func": "IF",
+            "condition": "${isBishop}",
+            "elseRoutine": [
+              "var free = push ${value}"
+            ]
+          }
+        ]
+      },
+      "var queenFile = ${free.$queen}",
+      "var place.$queenFile = 'Queen'",
+      {
+        "func": "FOREACH",
+        "in": "${free}",
+        "loopRoutine": [
+          "var isQueen = ${value} == ${queenFile}",
+          {
+            "func": "IF",
+            "condition": "${isQueen}",
+            "elseRoutine": [
+              "var rest = push ${value}"
+            ]
+          }
+        ]
+      },
+      "var pattern = ${patterns.$rank}",
+      {
+        "func": "FOREACH",
+        "in": "${rest}",
+        "loopRoutine": [
+          "var piece = ${pattern.$key}",
+          {
+            "func": "IF",
+            "operand1": "${piece}",
+            "operand2": "K",
+            "thenRoutine": [
+              "var place.$value = 'King'"
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${piece}",
+                "operand2": "R",
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${rooks}",
+                    "thenRoutine": [
+                      "var place.$value = 'Rook H'"
+                    ],
+                    "elseRoutine": [
+                      "var place.$value = 'Rook A'"
+                    ]
+                  },
+                  "var rooks = ${rooks} + 1"
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${knights}",
+                    "thenRoutine": [
+                      "var place.$value = 'Knight G'"
+                    ],
+                    "elseRoutine": [
+                      "var place.$value = 'Knight B'"
+                    ]
+                  },
+                  "var knights = ${knights} + 1"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": "${files}",
+        "loopRoutine": [
+          "var piece = ${place.$value}",
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "White ${piece}"
+          },
+          {
+            "func": "SET",
+            "property": "home",
+            "value": "${value}1"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "Black ${piece}"
+          },
+          {
+            "func": "SET",
+            "property": "home",
+            "value": "${value}8"
+          }
+        ]
+      },
       "// PIECES",
       {
         "func": "SELECT",
@@ -1173,7 +1423,20 @@
       "--wcBorder": "#888",
       "color": "#000"
     },
-    "keep": true
+    "keep": true,
+    "setup": "standard",
+    "position": 518
+  },
+  "Position Number": {
+    "type": "label",
+    "id": "Position Number",
+    "x": 160,
+    "y": 348,
+    "z": 10,
+    "width": 80,
+    "height": 30,
+    "css": "font-size: 22px; text-align: center; color: #666",
+    "text": "#518"
   },
   "White Score": {
     "type": "label",
@@ -1309,20 +1572,19 @@
       "year": "1475",
       "mode": "vs",
       "time": "60",
-      "type": "file",
-      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&amp;picture=chess-king\n\nThe game file itself was created by ArnoldSmith86 and is hereby released to the public domain by CC0.",
-      "lastUpdate": 1698188353510,
+      "attribution": "Library image is CC0 Public Domain:\nhttps://www.publicdomainpictures.net/en/view-image.php?image=44722&picture=chess-king\n\nThe pieces are Unicode chess characters rendered by VTT itself, no image files are used for them.\n\nThe game file itself was created by ArnoldSmith86, extended with the Chess960 set-up by VTT-AI-Agent, and is hereby released to the public domain by CC0.",
+      "lastUpdate": 1788112800000,
       "showName": true,
       "skill": "",
-      "description": "",
+      "description": "The classic two-player battle of pawns, knights, bishops, rooks, queens and kings on the 64 squares - checkmate the enemy king to win. The Next Game button also sets up Chess960 (Fischer Random): pick a random starting position or any of the 960 numbered ones and the back rank rearranges itself, bishops on opposite colors and the king between the rooks. Pieces are moved by hand, while capturing, turn passing and setting up a new game are automatic.",
       "similarImage": "",
-      "similarName": "",
+      "similarName": "Chess",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "",
+      "helpText": "Both players click a seat (Black plays from the top, White from the bottom). Drag a piece onto an occupied square and the piece that was standing there moves to its owner's capture row, the square is highlighted and the turn passes to the other seat. Nothing is ever refused: check, en passant, castling and promotion are up to the players.\n\nNext Game clears the board, swaps the colors and scores of the two seats and asks for the starting position: the classic line-up, a random Chess960 / Fischer Random position, or a Chess960 position of your choice. All 960 positions are numbered from 0 to 959 (the classic one is 518), so both players can agree on a number; the number in play is shown below the button. Chess960 always gives the bishops opposite colors and puts the king between the two rooks, and its castling ends with king and rook on the same squares as in classic chess.\n\nAdd Piece puts a copy of any piece on the table - for a promotion or for setting up a study - and lets you choose which way it faces. The checkbox in the Next Game dialog removes those extra pieces again. The + and - buttons next to each seat keep the match score in steps of half a point.",
       "variantImage": "",
       "variant": "",
-      "language": "",
+      "language": "en-US",
       "players": "2"
     }
   },
