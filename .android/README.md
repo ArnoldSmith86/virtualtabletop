@@ -45,7 +45,10 @@ The `Android APK` workflow builds it on demand and attaches the result to the ru
 * **Where the binaries come from.** Termux is the only project that builds Node.js and git for
   Android, so the app installs its packages (`git`, `nodejs-lts`, `npm` and their dependencies)
   straight from `packages.termux.dev`, checking each one against the SHA-256 of the repository
-  index. Together they are about 35 MB, the clone and `node_modules` another 200 MB.
+  index. Together they are about 35 MB, the clone and `node_modules` another 750 MB.
+* **What is cloned.** Only the tip of `main`, shallow and single-branch and without tags. The
+  clone keeps no reflog and prunes right away, so an update replaces that one snapshot instead of
+  piling up the ones before it.
 * **Making them run outside of Termux.** The packages are built for
   `/data/data/com.termux/files/usr` and are unpacked into the app's own prefix instead. Every path
   they carry compiled in is pointed back at that prefix through the environment (`Env.command`):

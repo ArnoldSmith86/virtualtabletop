@@ -2,10 +2,13 @@ package io.virtualtabletop.server;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.util.Linkify;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -139,11 +142,18 @@ public class MainActivity extends Activity implements AppState.Listener {
     quit.setEnabled(!working);
     progress.setVisibility(working ? View.VISIBLE : View.GONE);
 
-    log.setText(AppState.log());
+    // as long as nothing has been run, the console holds the introduction instead of output
+    String output = AppState.log();
+    final boolean introduction = output.length() == 0;
+    log.setTypeface(introduction ? Typeface.DEFAULT : Typeface.MONOSPACE);
+    log.setTextSize(TypedValue.COMPLEX_UNIT_SP, introduction ? 14 : 11);
+    // only the introduction is linkified - running it over every log update would be wasteful
+    log.setAutoLinkMask(introduction ? Linkify.WEB_URLS : 0);
+    log.setText(introduction ? getText(R.string.introduction) : output);
     logScroll.post(new Runnable() {
       @Override
       public void run() {
-        logScroll.fullScroll(View.FOCUS_DOWN);
+        logScroll.fullScroll(introduction ? View.FOCUS_UP : View.FOCUS_DOWN);
       }
     });
   }

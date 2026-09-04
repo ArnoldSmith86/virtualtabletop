@@ -66,6 +66,7 @@
         android:typeface="monospace"
         android:textColor="@color/text_dim"
         android:textSize="11sp"
+        android:lineSpacingExtra="3sp"
         android:textIsSelectable="true"/>
   </ScrollView>
 

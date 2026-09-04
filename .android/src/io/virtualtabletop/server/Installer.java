@@ -96,13 +96,16 @@ final class Installer implements Runnable {
     String git = Env.binary(context, "git").getAbsolutePath();
     if(new File(clone, ".git").isDirectory()) {
       AppState.step("Pulling VirtualTabletop");
-      run(clone, git, "fetch", "--depth", "1", "origin", Env.BRANCH);
+      run(clone, git, "fetch", "--depth", "1", "--no-tags", "origin", Env.BRANCH);
       run(clone, git, "reset", "--hard", "FETCH_HEAD");
       // shallow fetches leave the objects of the previous state behind
       run(clone, git, "gc", "--auto", "--quiet");
     } else {
       AppState.step("Cloning VirtualTabletop");
-      run(context.getFilesDir(), git, "clone", "--depth", "1", "--single-branch",
+      // the phone holds one snapshot of one branch: no other branch, no tag, no history, and
+      // without a reflog nothing keeps the snapshot an update replaces from being pruned
+      run(context.getFilesDir(), git, "clone", "-c", "core.logAllRefUpdates=false",
+          "-c", "gc.pruneExpire=now", "--depth", "1", "--single-branch", "--no-tags",
           "--branch", Env.BRANCH, Env.REPOSITORY, clone.getAbsolutePath());
     }
   }
