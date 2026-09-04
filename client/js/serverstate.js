@@ -155,19 +155,28 @@ async function addWidgetLocal(widget, useTypeBasedID = true) {
     return null;
   }
 
-  if(widget.type == 'card' && widget.deck && !widgets.has(widget.deck)) {
+  // A card is only a card together with its deck: addWidget() holds one whose deck is missing back
+  // until that deck arrives, which for a widget created here never happens - it would wait forever.
+  if(widget.type == 'card' && (!widgets.has(widget.deck) || widgets.get(widget.deck).get('type') != 'deck')) {
     console.error(`Refusing to add widget ${widget.id} with invalid deck ${widget.deck}.`);
     return null;
   }
 
-  if(widget.type == 'card' && widget.deck && !widgets.get(widget.deck).get('cardTypes')[widget.cardType]) {
+  if(widget.type == 'card' && !widgets.get(widget.deck).get('cardTypes')[widget.cardType]) {
     console.error(`Refusing to add widget ${widget.id} with invalid cardType ${widget.cardType}.`);
     return null;
   }
 
   const isNewWidget = !widgets.has(widget.id);
-  if(isNewWidget)
+  if(isNewWidget) {
     addWidget(widget);
+    // Only an ID the room actually has is of any use to the caller: one that names nothing ends up
+    // in a parent property, where it puts the child in limbo instead of into a widget.
+    if(!widgets.has(widget.id)) {
+      console.error(`Refusing to add widget ${widget.id}.`);
+      return null;
+    }
+  }
   sendPropertyUpdate(widget.id, widget);
   sendDelta();
   batchStart();
@@ -359,7 +368,7 @@ function receiveDelta(delta) {
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined)
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined && widgets.has(widgetID))
       widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
@@ -414,7 +423,9 @@ function addDeltaEntryToUndoProtocol(delta) {
         undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
     } else if(delta.s[widgetID].id) {
       undoDelta[widgetID] = null;
-    } else {
+    } else if(widgets.has(widgetID)) {
+      // a property update can name a widget the room no longer has, when something kept writing to
+      // it after it was removed - there is no state left to undo back to, so it gets no entry
       undoDelta[widgetID] = {};
       for(const property in delta.s[widgetID]) {
         undoDelta[widgetID][property] = widgets.get(widgetID).unalteredState[property];

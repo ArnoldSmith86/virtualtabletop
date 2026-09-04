@@ -73,6 +73,17 @@ async function whileSuspended(promise) {
   }
 }
 
+// Problems found outside the routine interpreter - a pile that could not be created, a drop into a
+// holder that is gone. A routine that is running takes them over so that they appear in its log
+// next to its own problems; a drag or a plain click has only the console to report to. (#1402, #1504)
+const problemsFromOutsideRoutines = [];
+function reportProblem(message) {
+  if(routineDepth)
+    problemsFromOutsideRoutines.push(message);
+  else
+    console.log(message);
+}
+
 // wouldCreateParentCycle reads the parent of every widget it walks, which can come back into
 // getDefaultValue for a widget whose inherited parent is still being resolved. StateManaged's own
 // inheritance guard is released by then, so the check keeps its own re-entrancy set. (#684)
@@ -647,15 +658,22 @@ export class Widget extends StateManaged {
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
 
+      // The parent was there when this started, but creating the clone runs every routine that
+      // listens on 'id' - one of those can have removed it by now, and the clone then stays where
+      // it was created instead of going into a widget that is gone. (#1504)
+      const parentWidget = parent && widgets.has(parent) ? widgets.get(parent) : null;
+      if(parent && !parentWidget)
+        reportProblem(`Widget ${parent} disappeared while ${this.get('id')} was being cloned into it.`);
+
       // use moveToHolder so that CLONE triggers onEnter and similar features
       cWidget.movedByButton = problems != null;
-      if(parent)
-        await cWidget.moveToHolder(widgets.get(parent));
+      if(parentWidget)
+        await cWidget.moveToHolder(parentWidget);
       if(inheritFrom)
         await cWidget.set('inheritFrom', inheritFrom);
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-      if(!parent || !widgets.get(parent).get('alignChildren')) {
+      if(!parentWidget || !parentWidget.get('alignChildren')) {
         await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
         await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
         await cWidget.updatePiles();
@@ -1277,9 +1295,10 @@ export class Widget extends StateManaged {
         // was aborted by an exception, or when every routine that is still alive is suspended in
         // DELAY or INPUT. The message names the routine it came from, so the console still tells
         // the whole story.
-        for(const problem of [ routineDepthProblem, routineDepthProblemForOutermost ])
+        for(const problem of [ ...problemsFromOutsideRoutines, routineDepthProblem, routineDepthProblemForOutermost ])
           if(problem)
             console.log(problem);
+        problemsFromOutsideRoutines.length = 0;
         routineDepthProblem = routineDepthProblemForOutermost = null;
       }
     }
@@ -2859,6 +2878,9 @@ export class Widget extends StateManaged {
         }
       }
 
+      while(problemsFromOutsideRoutines.length)
+        problems.push(problemsFromOutsideRoutines.shift());
+
       if(routineDepthProblem) {
         problems.push(routineDepthProblem);
         routineDepthProblem = null;
@@ -3070,6 +3092,14 @@ export class Widget extends StateManaged {
   async moveToHolder(holder) {
     if(this.inRemovalQueue)
       return;
+
+    // A routine that moves several widgets one after another looks the holder up once per widget,
+    // and every move it makes can run game logic that removes it in between - so by the time this
+    // widget's turn comes there may be nothing left to move it into. (#1504)
+    if(!holder || !widgets.has(holder.get('id'))) {
+      reportProblem(`Could not move ${this.id} into ${holder ? holder.get('id') : 'a holder'} because it does not exist.`);
+      return;
+    }
 
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
@@ -3965,6 +3995,13 @@ export class Widget extends StateManaged {
           if(thisOwner !== null)
             pile.owner = thisOwner;
           const pileId = await addWidgetLocal(pile, false); // runtime path: keep random IDs
+          // An onPileCreation that does not describe a widget the client can build - "type": "card"
+          // without a deck, for example - yields no pile. Handing the cards to it anyway put them in
+          // limbo, from where the next update tried to pile them up again, forever. (#1402)
+          if(pileId === null) {
+            reportProblem(`Could not create a pile for ${this.id} and ${widgetID}. Check the onPileCreation property of ${this.id}.`);
+            break;
+          }
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);

@@ -551,3 +551,129 @@ test('a routine finishing while another one is waiting keeps the client sending'
   await ClientFunction(() => widgets.get('go').set('marked', true).then(_=>true))();
   await expectEventually(t, markedWidgets, [ 'first', 'go', 'second' ]);
 });
+
+// Acting on a widget that is gone, or on one that was never created, is the other way the client
+// used to die: a lookup came back undefined at a moment when the code assumed a live widget, or an
+// ID was handed out for a widget that does not exist. (#1402, #1504, #2317)
+
+// "type": "card" without a deck describes nothing the client can create, so the pile was never
+// added - but its ID was handed back anyway, the cards were parented to it, and updating them
+// asked for the next pile, forever. (#1402)
+test('an onPileCreation that cannot create a pile leaves the cards where they are', async t => {
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', x: 200, y: 100, onPileCreation: { type: 'card' } },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', x: 600, y: 100, onPileCreation: { type: 'card' } },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.dragToElement('#w_card2', '#w_card1', { speed: 0.4 });
+
+  // no pile was created and neither card was handed to one
+  await expectEventually(t, ()=>widgetProperty('card1', 'parent'), null);
+  await expectEventually(t, ()=>widgetProperty('card2', 'parent'), null);
+  await t.expect(Object.keys(JSON.parse(await getState())).filter(id=>id != '_meta').sort()).eql([ 'card1', 'card2', 'deck', 'go' ]);
+
+  // the client is still there and reacts to the next click
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+});
+
+// Creating the clone runs every routine listening on 'id', which can remove the holder the clone
+// was meant to go into between the check and the move. (#1504)
+test('a holder that disappears while a widget is cloned into it is reported', async t => {
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 400, width: 300, height: 300 },
+    source: { id: 'source', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
+    watcher: { id: 'watcher', type: 'basic', x: 1200, y: 100, idGlobalUpdateRoutine: [
+      { func: 'SELECT', property: 'id', value: 'holder' },
+      { func: 'DELETE' },
+      { func: 'DELAY', milliseconds: 1 } // the removal reaches the room while CLONE is still running
+    ] },
+    clone: { id: 'clone', type: 'button', text: 'clone', x: 800, y: 400, clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'source' },
+      { func: 'CLONE', properties: { parent: 'holder' } },
+      { func: 'SELECT', property: 'id', value: 'go' },
+      { func: 'SET', property: 'marked', value: true }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('clone').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  // the holder being gone is a problem the game author can read, not an exception from a lookup
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('disappeared while source was being cloned into it');
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).notContains('Exception:');
+  // the routine runs to its end and the clone stays on the table
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+  await expectEventually(t, async ()=>Object.values(JSON.parse(await getState())).filter(w=>w.clonedFrom == 'source').length, 1);
+});
+
+// A drag holds on to the widget it moves, which is not necessarily the one that was pressed: a
+// press on a fixed child drags its movable ancestor. Game logic reacting to the move can remove
+// that ancestor, and everything the drag did afterwards wrote to a widget the room no longer had -
+// which took the client down in the undo protocol. (#2317)
+test('a widget removed while it is being dragged ends the drag instead of the client', async t => {
+  await setRoomState({
+    group: { id: 'group', type: 'basic', x: 100, y: 100, width: 300, height: 300, movable: true },
+    child: { id: 'child', type: 'basic', parent: 'group', x: 20, y: 20, width: 100, height: 100, movable: false },
+    watcher: { id: 'watcher', type: 'basic', x: 1200, y: 700, xGlobalUpdateRoutine: [
+      { func: 'IF', condition: '${widgetID} == "group"', thenRoutine: [
+        { func: 'SELECT', property: 'id', value: 'child' },
+        { func: 'SET', property: 'parent', value: null },
+        { func: 'SELECT', property: 'id', value: 'group' },
+        { func: 'DELETE' }
+      ] }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.drag('#w_child', 250, 150, { speed: 0.4 });
+
+  await expectEventually(t, async ()=>JSON.parse(await getState()).group || null, null);
+  await t.expect(Selector('#clientErrorOverlay').visible).notOk();
+
+  // the client is still there and reacts to the next click
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+});
+
+// A routine that moves several widgets one after another looks the holder up once per widget, and
+// every move it makes can run game logic that removes it in between. The widgets that are left
+// used to be handed to a holder that is gone, which put them in limbo. (#1504)
+test('moving into a holder that is gone leaves the widget where it is', async t => {
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+    source: { id: 'source', type: 'holder', x: 50, y: 100, width: 700, height: 180 },
+    target: { id: 'target', type: 'holder', x: 50, y: 600, width: 700, height: 180, enterRoutine: [
+      { func: 'SELECT', property: 'id', value: 'target' },
+      { func: 'DELETE' },
+      { func: 'DELAY', milliseconds: 1 } // the removal reaches the room while MOVE is still running
+    ] },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    move: { id: 'move', type: 'button', text: 'move', x: 800, y: 400, clickRoutine: [
+      { func: 'MOVE', from: 'source', to: 'target', count: 2 }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('move').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('because it does not exist');
+  // the card that is left stays in the holder it came from instead of getting an invalid parent
+  await expectEventually(t, ()=>widgetProperty('card1', 'parent'), 'source');
+});

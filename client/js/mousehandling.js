@@ -43,6 +43,13 @@ function eventCoords(name, e) {
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
+// The widget a drag holds on to can leave the room while the drag is still running - another
+// player deletes it, or game logic reacting to the move itself does. Everything the drag would
+// still do to it writes to a widget the room no longer has, so it lets go of it instead. (#2317)
+function dragTargetGone(ms) {
+  return ms.moveTarget && widgets.get(ms.moveTarget.get('id')) !== ms.moveTarget;
+}
+
 // Finish a drag whose mouseup never reached the drag handling below, because one
 // of the checks in handleInput() returned before it. The widget would otherwise
 // stay detached from its holder and flagged as being dragged for every player
@@ -56,7 +63,7 @@ async function endDrag(target) {
   delete mouseStatus[target.id];
 
   // while the state is being replaced the dragged widget may already be gone
-  if(isLoading || ms.status == 'initial' || !ms.moveTarget || widgets.get(ms.moveTarget.get('id')) !== ms.moveTarget)
+  if(isLoading || ms.status == 'initial' || !ms.moveTarget || dragTargetGone(ms))
     return;
 
   batchStart();
@@ -203,7 +210,7 @@ async function handleInput(name, e, dragTarget) {
         delete mouseStatus[target.id];
         const timeSinceStart = +new Date() - ms.start;
         const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
-        if(ms.status != 'initial' && ms.moveTarget) {
+        if(ms.status != 'initial' && ms.moveTarget && !dragTargetGone(ms)) {
           setDeltaCause(`${playerName} dragged ${widget.id}`);
           // let every mousemove that is still being processed finish first so that the
           // drop happens after the last one instead of racing with it
@@ -251,6 +258,8 @@ async function handleInput(name, e, dragTarget) {
         if(isFirstMove)
           ms.status = 'moving';
         ms.coords = coords;
+        if(dragTargetGone(ms))
+          ms.moveTarget = null;
         if(ms.moveTarget) {
           setDeltaCause(`${playerName} dragged ${widget.id}`);
           // Mouse events are handled asynchronously, so several of them can be in
