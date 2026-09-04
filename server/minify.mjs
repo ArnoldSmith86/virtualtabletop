@@ -98,6 +98,7 @@ const CLIENT_CSS = [
 
   'client/css/overlays/misc.css',
   'client/css/overlays/players.css',
+  'client/css/overlays/rooms.css',
   'client/css/overlays/states.css',
   'client/css/overlays/serverrestart.css',
   'client/css/overlays/status.css',
@@ -151,6 +152,7 @@ const CLIENT_JS = [
   'client/js/audio.js',
 
   'client/js/overlays/players.js',
+  'client/js/overlays/rooms.js',
   'client/js/overlays/states.js',
   'client/js/overlays/welcome.js',
 

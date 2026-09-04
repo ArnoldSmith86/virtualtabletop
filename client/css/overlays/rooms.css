@@ -1,0 +1,228 @@
+#roomsOverlay {
+  padding: 2% 5%;
+}
+
+/* flex items shrink to fit the overlay by default, which squeezes/hides
+   these sections instead of letting the overlay scroll to show them */
+#roomsOverlay > .heading, #roomsOverlay > #roomsList, #roomsOverlay > #roomsCollectionBox {
+  flex-shrink: 0;
+}
+
+#roomsList {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+#emptyRoomsList {
+  display: none;
+  font-style: italic;
+  color: black;
+}
+
+.roomTile {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px #00000077;
+  background: var(--roomColor);
+  user-select: none;
+}
+
+.roomTile.currentRoom {
+  box-shadow: 0 0 10px 4px var(--VTTblue);
+}
+
+.roomTile > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.roomTile.noImage > img {
+  display: none;
+}
+
+.roomTile .details {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 36px;
+  color: white;
+  text-shadow: 0 0 3px #000;
+}
+
+.roomTile .details h3 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1em;
+  padding: 8px 8px 5px 8px;
+  margin: 0;
+  background: #00000061;
+  overflow-wrap: anywhere;
+}
+
+.roomTile .details h4 {
+  font-style: italic;
+  font-weight: 700;
+  font-size: .8rem;
+  padding: 3px 8px 4px 8px;
+  margin: 0;
+  background: #00000061;
+}
+
+.roomTile .roomPlayers {
+  position: absolute;
+  top: 32px;
+  left: 6px;
+  right: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.roomTile .roomPlayers span {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .75rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0 3px #000;
+  background: #555;
+  border-radius: 8px;
+  padding: 0 6px;
+}
+
+.roomTile .roomIcons {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  color: white;
+  text-shadow: 1px 1px 2px #444;
+}
+
+.roomTile .roomIcons .hidden {
+  display: none;
+}
+
+.roomTile .switchButton {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 36px;
+  margin: 0;
+  border-radius: 0 0 10px 10px;
+  justify-content: center;
+}
+
+.roomTile .switchButton:disabled {
+  background: #888;
+}
+
+.roomTile .menuButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  margin: 0;
+  padding: 2px;
+  background: #ffffffcc;
+  color: var(--VTTblue);
+  border-radius: 50%;
+}
+
+.roomTile .menuButton:hover {
+  background: #ffffff;
+}
+
+.roomTile .roomMenu {
+  position: absolute;
+  top: 34px;
+  right: 4px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px #00000077;
+  padding: 4px;
+}
+
+.roomTile .roomMenu.hidden {
+  display: none;
+}
+
+.roomTile .roomMenu button {
+  margin: 2px 0;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+#roomsCollectionBox {
+  margin-bottom: 20px;
+}
+
+#roomsCollectionBox h2 {
+  margin-top: 0;
+}
+
+#roomsCollectionBox input {
+  width: 100%;
+  max-width: 400px;
+  font-family: monospace;
+  padding: 6px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#roomsCollectionBox .buttons {
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+#passwordOverlay {
+  justify-content: center;
+  align-items: center;
+}
+
+#passwordOverlay .wrongPassword {
+  display: none;
+  color: #b00020;
+  font-weight: bold;
+}
+
+#passwordOverlay input {
+  font-size: 20px;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+#passwordOverlay button.cancel.hidden {
+  display: none;
+}
+
+body.roomLocked #statesButton, body.roomEditingDisabled #editButton {
+  display: none;
+}
+
+/* the server answers these with a 403 in a protected room, so they are not offered */
+body.roomContentProtected #stateDetailsOverlay .buttons [icon=download],
+body.roomContentProtected #stateDetailsOverlay .buttons [icon=link] {
+  display: none;
+}
+
+/* while the password prompt is up, the toolbar must not be usable to dismiss it */
+body.passwordPrompt #toolbar {
+  pointer-events: none;
+}
