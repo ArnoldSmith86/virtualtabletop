@@ -4486,6 +4486,36 @@ const deckEditorCardSizes = [
   { label: 'Token',       width:  50, height:  50 }
 ];
 
+// The classes a deck hands to every one of its cards, as a list.
+function cardDefaultsClassList(cardDefaults) {
+  return String(cardDefaults && cardDefaults.classes || '').split(/\s+/).filter(className=>className);
+}
+
+// Whether a deck's cards glide to wherever they are moved to instead of jumping there.
+function cardDefaultsHaveTransition(cardDefaults) {
+  return cardDefaultsClassList(cardDefaults).indexOf('transition') != -1;
+}
+
+// The cardDefaults every deck creation flow builds on: cards that glide. The class goes into cardDefaults,
+// where the deck panel's "Cards glide when they move" switch - and one line in the JSON editor - can take
+// it away again, and it is added to whatever the deck already asks for: a class of its own says how the
+// cards look and has to survive. It must not be added to classes a dropTarget matches on, which compares
+// them as one whole string (see the chip stacks in editmode.js) - which is also why a class list that
+// already glides is handed back exactly as it was written instead of being rebuilt.
+function cardDefaultsWithTransition(cardDefaults, transition=true) {
+  if(transition && cardDefaultsHaveTransition(cardDefaults))
+    return Object.assign({}, cardDefaults);
+  const classes = cardDefaultsClassList(cardDefaults).filter(className=>className != 'transition');
+  if(transition)
+    classes.push('transition');
+  const result = Object.assign({}, cardDefaults);
+  if(classes.length)
+    result.classes = classes.join(' ');
+  else
+    delete result.classes;
+  return result;
+}
+
 // The "Recall & Shuffle" button all deck creation flows put below their holder: it recalls the deck's cards,
 // flips them to their back and shuffles them. Offered as an option by the "Add New Deck" wizard.
 function deckResetButton(holderID, width, y) {
@@ -4555,7 +4585,7 @@ async function createStarterDeck(deckID, size, placement) {
     type: 'deck',
     id: dID
   }, placement.holder ? { parent: id, x: 12, y: 41 } : { x: 748 - 96, y: 400 }, {
-    cardDefaults: { width: cardWidth, height: cardHeight },
+    cardDefaults: cardDefaultsWithTransition({ width: cardWidth, height: cardHeight }),
     cardTypes: { 'type 1': {} },
     faceTemplates: [
       { objects: [ { type: 'image', x: 0, y: 0, width: cardWidth, height: cardHeight, color: VTTblue } ] },

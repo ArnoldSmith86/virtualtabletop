@@ -1401,7 +1401,139 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_dice2')
     .click('#w_dice2');
-  await compareState(t, '3878b15bd31f8ad1d0972a20b69d7ea5');
+  await compareState(t, 'a59b94e1ee5f2beef49f6fe5983ee5b3');
+});
+
+// The rule behind the transition class is the client's, so nothing in a save file pins it: a game that wants
+// gliding widgets only asks for the class. These are the three answers the rule gives.
+test('The transition class glides a widget over a duration --transitionDuration changes', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    plain: { id: 'plain', type: 'basic', x: 20, y: 20, width: 50, height: 50 },
+    glide: { id: 'glide', type: 'basic', x: 20, y: 100, width: 50, height: 50, classes: 'transition' },
+    slow:  { id: 'slow',  type: 'basic', x: 20, y: 180, width: 50, height: 50, classes: 'transition', css: '--transitionDuration: 1500ms' }
+  });
+  await ClientFunction(prepareClient)();
+
+  const durations = ClientFunction(ids => ids.map(id => getComputedStyle(document.getElementById('w_'+id)).transitionDuration));
+  await t
+    .expect(Selector('#w_slow').exists).ok()
+    .expect(durations([ 'plain', 'glide', 'slow' ])).eql([ '0s', '0.3s', '1.5s' ]);
+});
+
+// A card that is dealt onto a card it piles up with travels while the pile it lands in is being created, and
+// applying a delta re-attached the pile to the parent it was already in - which takes the card out of the DOM
+// with it and cancels the glide it just started. Only the move that creates the pile was affected, so a deal
+// onto an empty holder and the next one onto the finished pile both animate on either side of the fix.
+test('A card keeps gliding into a pile that the same move creates', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck:   { id: 'deck', type: 'deck', x: 20, y: 20, cardTypes: { plain: {} }, cardDefaults: { classes: 'transition' } },
+    source: { id: 'source', type: 'holder', x: 20, y: 200, dropTarget: { type: 'card' } },
+    target: { id: 'target', type: 'holder', x: 800, y: 200, dropTarget: { type: 'card' } },
+    card1:  { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    card2:  { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    card3:  { id: 'card3', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
+    deal:   { id: 'deal', type: 'button', x: 800, y: 500, text: 'deal', clickRoutine: [
+      { func: 'MOVE', from: 'source', to: 'target', count: 1 } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // a transition that is cancelled before the first frame is rendered reports no running animation and fires
+  // no event afterwards, so the cards are watched frame by frame from before the deal rather than sampled once
+  const watchGlides = ClientFunction(() => {
+    window.glidedCards = new Set();
+    const step = () => {
+      for(const card of document.querySelectorAll('.card'))
+        if(card.getAnimations().length)
+          window.glidedCards.add(card.id.replace('w_', ''));
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+  const glidedCards = ClientFunction(() => [ ...window.glidedCards ].sort());
+  const parentOf = ClientFunction(id => document.getElementById('w_'+id).parentElement.id);
+
+  await t.expect(Selector('#w_card3').exists).ok();
+  await watchGlides();
+  await t
+    .click('#w_deal')
+    .expect(glidedCards()).contains('card1')
+    .click('#w_deal')
+    .expect(parentOf('card2')).notEql('w_target') // the second card lands in a pile, not in the holder itself
+    .expect(glidedCards()).contains('card2')
+    .click('#w_deal')
+    .expect(glidedCards()).contains('card3');
+});
+
+// A widget that is moved out of a holder is parked on the top surface first, carrying a temporary transform
+// that keeps it where it was until its real one is written back. When the delta sends it to the top surface
+// itself the element is already there, so nothing about it moves in the DOM - but the transform still has to
+// be restored, or the widget stays drawn inside the holder it left on every client that watched it go.
+test('A widget whose routine only detaches it is drawn at its own coordinates', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 400, y: 300, width: 120, height: 120, dropTarget: {} },
+    child:  { id: 'child', type: 'basic', parent: 'holder', x: 0, y: 0, width: 50, height: 50 },
+    detach: { id: 'detach', type: 'button', x: 20, y: 500, text: 'detach', clickRoutine: [
+      { func: 'SET', collection: [ 'child' ], property: 'parent', value: null } ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const transformOf = ClientFunction(id => getComputedStyle(document.getElementById('w_'+id)).transform);
+
+  await t
+    .expect(Selector('#w_child').exists).ok()
+    .click('#w_detach')
+    .expect(transformOf('child')).eql('matrix(1, 0, 0, 1, 0, 0)');
+});
+
+// A widget the editor creates carrying a class it does not need is not free: compareDropTarget() compares
+// classes as one whole string, so a chip that says "pokerChip transition" no longer matches the stack's
+// dropTarget of "pokerChip" and cannot be put back. A state hash cannot see a drop target that stopped
+// matching, which is why the two halves are asserted here.
+test('A new deck hands the transition class to its cards, a new chip stack leaves its chips alone', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const cardDefaultClasses = ClientFunction(id => (widgets.get(id).get('cardDefaults') || {}).classes);
+  const cardDuration = ClientFunction(id => getComputedStyle(widgets.get(id).domElement).transitionDuration);
+  const dropTargetIDs = ClientFunction(id => widgets.get(id).validDropTargets().map(w => w.get('id')));
+
+  // the chip stack comes first: the holder of a card deck accepts every card, chips included, so its
+  // presence would hide whether the chip still matches the stack it belongs to
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-2D-chips')
+    .pressKey('esc')
+    .expect(cardDefaultClasses('chips1D')).eql('pokerChip')
+    .expect(dropTargetIDs('chips1C1')).eql([ 'chips1' ])
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-deck_K_S')
+    .pressKey('esc')
+    .expect(cardDefaultClasses('deck1D')).eql('transition')
+    .expect(cardDuration('deck1_A_C')).eql('0.3s');
+
+  // the deck's own properties panel can take the class away again and put it back - it is not something only
+  // the JSON editor knows about
+  const glideSwitch = Selector('.editorModule .propertyInput.switchInput').withText('Glide when they move').find('label.switchbox');
+  await t
+    .click('#editButton') // the esc above left edit mode, where the deck widget is the only thing visible of it
+    .click('#editorSidebar [icon=tune]') // and closed the properties module the switch lives in
+    .click('#w_deck1D')
+    .expect(glideSwitch.exists).ok()
+    .click(glideSwitch)
+    .expect(cardDefaultClasses('deck1D')).notOk()
+    .expect(cardDuration('deck1_A_C')).eql('0s')
+    .click(glideSwitch)
+    .expect(cardDefaultClasses('deck1D')).eql('transition')
+    .expect(cardDuration('deck1_A_C')).eql('0.3s');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
@@ -1446,7 +1578,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#deckEditorTreeDelete')                   // delete the just-added (current) face
     .pressKey('esc') // closes the deck editor, since no face object is selected at this point
     .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
-  await compareState(t, '58a003635d5de3dca9db433bf7862c09');
+  await compareState(t, '37fe748a394f5a132255e27e6db76cf3');
 });
 
 // Both the object form of the css property and the css of an html face object are put into a style element
@@ -1558,7 +1690,7 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
     .pressKey('esc');
-  await compareState(t, 'd052dc1c0a50f93896325518bee01ac8');
+  await compareState(t, '252a788d6293626108c2b98ad1789b7d');
 });
 
 test('The symbol picker says an image-only search found nothing', async t => {
@@ -2011,7 +2143,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
     .click('#deckEditorRedo')                 // restore and then remove it again to exercise redo without changing the old final state
     .click('#deckEditorUndo')
     .pressKey('esc');
-  await compareState(t, '261ba6765efc84b628f1d62ba7e679d6');
+  await compareState(t, '7ef83e2dd103ebf9aee47ad826501803');
 });
 
 test('Deck editor: remote update preserves an unrelated pending edit', async t => {
@@ -2069,7 +2201,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   await t
     .expect(getEditedValues(deckID)).eql({ text: 'Pending local edit', receivedProperty: 'Remote value' })
     .pressKey('esc');
-  await compareState(t, 'c6db1d55c7f0bc9fe6f061f61662d046');
+  await compareState(t, 'b10bc909499a3eb29ca43c74fc34bce8');
 });
 
 // Two different fields edited within one debounce window, then a structural action right after, must stay
@@ -2142,7 +2274,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
     .click('#deckEditorUndo') // reverts only the fontSize edit
     .expect(getTextObject(deckID)).eql({ value: 'RapidValue', fontSize: 20 })
     .pressKey('esc');
-  await compareState(t, '5aa7273ddccb7e6f55a8a57715e83437');
+  await compareState(t, 'f9090c713dc230a6b077bf0f219aa493');
 });
 
 // Regression test for the crash reported on switching games while a deck was being edited (the previously
@@ -2332,7 +2464,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.pressKey('esc');          // closes the deck editor - and only the deck editor
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
-  await compareState(t, 'a3826d837df312e2612e461c40a1bf15');
+  await compareState(t, '5904dc26cd93f0b3ef9634ded10bbf19');
 });
 
 test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {
@@ -2551,7 +2683,7 @@ test('Deck editor: add a deck of text cards from the new deck wizard', async t =
     .typeText('.textCardsCopies', '2', { replace: true })
     .click('#deckEditorNewDeckPanel .goButton [icon=add]')
     .expect(Selector('#deckEditorStrip .deckEditorStripCard').count).eql(3); // the wizard's deck is now open
-  await compareState(t, 'bac90198761e33be360df604952691bd');
+  await compareState(t, '4079d9c5507c65d71441004f891cce75');
 });
 
 // The other way of cutting the typed text into cards: with a blank line as the separator a card's text keeps
