@@ -25,9 +25,12 @@ function hasRotationSteps(widget) {
   return typeof s === 'number' || (Array.isArray(s) && s.length > 0);
 }
 
+// whether the popup offers anything to click, so that it has to stay open after the button is released
 function hasButtons(widget) {
   const menu = currentMenu !== null ? currentMenu : widget.get('contextMenu');
-  return hasRotationSteps(widget) || (Array.isArray(menu) && menu.length > 0);
+  const opts = getPopupOptions(widget);
+  const hasNavigation = (opts.image && opts.image.length > 1) || (opts.widget && opts.widget.length > 1);
+  return hasRotationSteps(widget) || (Array.isArray(menu) && menu.length > 0) || !!hasNavigation;
 }
 
 function hasPopupTriggers(widget) {
@@ -130,7 +133,8 @@ function copyWidgetToPreview(widget, previewEl) {
     previewEl.innerHTML = '';
     previewEl.className = 'contextMenuPreview';
     previewEl.removeAttribute('data-id');
-    previewEl.style.cssText = '';
+    // fills the preview box so the picture is fitted into it instead of overflowing onto the buttons below
+    previewEl.style.cssText = 'width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
     const img = document.createElement('img');
     img.alt = '';
     img.style.maxWidth = '100%';
@@ -473,6 +477,12 @@ export function closeContextMenu() {
   hideDescriptionPopover();
   const popup = $(`#${CONTEXT_POPUP_ID}`);
   if (popup) popup.classList.add('hidden');
+  // the preview is a copy of the widget's DOM, ids included - not something to keep around while hidden
+  const previewEl = $(`#${CONTEXT_PREVIEW_ID}`);
+  if (previewEl) {
+    previewEl.innerHTML = '';
+    previewEl.removeAttribute('data-id');
+  }
   const styleEl = $('#contextMenuStyle');
   if (styleEl) removeFromDOM(styleEl);
 }

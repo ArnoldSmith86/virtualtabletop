@@ -1160,6 +1160,44 @@ function customWidgetChecks(widget, widgets, problems) {
     }
 }
 
+// Every routine name a context menu button can run: from contextMenu widget properties, from the
+// menus written into CONTEXTMENU operations anywhere in the file (including routines nobody calls
+// yet) and from the widget properties CONTEXTMENU operations name as their menu source.
+function getContextMenuRoutines(data) {
+    const routines = new Set();
+    const menuProperties = new Set([ 'contextMenu' ]);
+    const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
+
+    const addEntries = entries => {
+        for (const entry of entries) {
+            if (entry && typeof entry.routine === 'string')
+                routines.add(entry.routine);
+            if (entry && Array.isArray(entry.menu))
+                addEntries(entry.menu);
+        }
+    };
+    const scanOperations = obj => {
+        if (typeof obj !== 'object' || obj === null)
+            return;
+        if (!Array.isArray(obj) && obj.func === 'CONTEXTMENU') {
+            if (Array.isArray(obj.contextMenu))
+                addEntries(obj.contextMenu);
+            if (typeof obj.property === 'string')
+                menuProperties.add(obj.property);
+        }
+        for (const value of Object.values(obj))
+            scanOperations(value);
+    };
+
+    for (const [, widget] of widgetEntries)
+        scanOperations(widget);
+    for (const [, widget] of widgetEntries)
+        for (const property of menuProperties)
+            if (Array.isArray(widget[property]))
+                addEntries(widget[property]);
+    return [...routines];
+}
+
 function getCustomPropertyUsage(data) {
     const customProperties = new Set();
     const declaredCustomProperties = new Set();
@@ -1331,19 +1369,11 @@ function getCustomPropertyUsage(data) {
 
         if(widget.type === 'scoreboard')
             customProperties.add(widget.scoreProperty || 'score');
-
-        const addContextMenuRoutines = entries => {
-            for (const entry of entries) {
-                if (entry && typeof entry.routine === 'string')
-                    customProperties.add(entry.routine);
-                if (entry && Array.isArray(entry.menu))
-                    addContextMenuRoutines(entry.menu);
-            }
-        };
-        if (Array.isArray(widget.contextMenu))
-            addContextMenuRoutines(widget.contextMenu);
     }
-    
+
+    for (const routine of getContextMenuRoutines(data))
+        customProperties.add(routine);
+
     return [...customProperties];
 }
 
@@ -1363,6 +1393,7 @@ function validateGameFile(data, checkMeta) {
     // Get all custom properties used in the game file
     const customProperties = getCustomPropertyUsage(data);
     const calledCustomRoutines = [];
+    const contextMenuRoutines = getContextMenuRoutines(data);
     
     // Check for _meta
     if (checkMeta && !data._meta) {
@@ -1529,13 +1560,17 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue) && !calledCustomRoutines.includes(propName) && !propName.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
-                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
+                // a routine a context menu button runs is called, even when the menu sits in a
+                // CONTEXTMENU operation that the validation above never reached; it receives previewIndex
+                const fromContextMenu = contextMenuRoutines.includes(propName);
+                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables, ...(fromContextMenu ? { previewIndex: 1 } : {})}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
-                problems.push({
-                    widget: key,
-                    property: [propName],
-                    message: 'Routine is not being called'
-                });
+                if (!fromContextMenu)
+                    problems.push({
+                        widget: key,
+                        property: [propName],
+                        message: 'Routine is not being called'
+                    });
                 problems.push(...routineProblems);
             }
         }
