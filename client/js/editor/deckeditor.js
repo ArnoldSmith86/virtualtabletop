@@ -3566,17 +3566,34 @@ class DeckEditor {
     return [ ...new Set(this.fonts.filter(font=>font && font.family).map(font=>String(font.family))) ];
   }
 
-  // The families the client itself ships. Read back from the document instead of being listed here, so the
-  // dropdown cannot drift away from what fonts.css declares. The symbol and emoji fonts are left out: they
-  // draw glyphs, not text, and are picked through the symbol pickers.
+  // The families the client itself ships. Read back from the @font-face rules of the document instead of
+  // being listed here, so the dropdown cannot drift away from what fonts.css declares. The style elements a
+  // deck adds for its imported fonts are skipped: those families belong to that deck and go away with it.
+  // The symbol and emoji fonts are left out too - they draw glyphs, not text, and are picked through the
+  // symbol pickers.
   builtInFontFamilies() {
     const symbolFonts = [ 'VTT-Symbols', 'Material Symbols', 'Material Symbols NoFill', 'Noto Emoji' ];
     const imported = this.deckFontFamilies();
     const families = new Set();
-    for(const face of document.fonts || []) {
-      const family = String(face.family).replace(/^["']|["']$/g, '');
-      if(symbolFonts.indexOf(family) == -1 && imported.indexOf(family) == -1)
-        families.add(family);
+    const collect = rules=>{
+      for(const rule of rules || []) {
+        if(rule.cssRules)
+          collect(rule.cssRules); // an @media or @container the declarations sit in
+        if(!(rule instanceof CSSFontFaceRule))
+          continue;
+        const family = String(rule.style.getPropertyValue('font-family')).replace(/^["']|["']$/g, '');
+        if(family && symbolFonts.indexOf(family) == -1 && imported.indexOf(family) == -1)
+          families.add(family);
+      }
+    };
+    for(const sheet of document.styleSheets) {
+      if(sheet.ownerNode && String(sheet.ownerNode.id || '').startsWith('FONTS_'))
+        continue;
+      try {
+        collect(sheet.cssRules);
+      } catch(e) {
+        continue; // a stylesheet of another origin does not hand out its rules
+      }
     }
     return [ ...families ].sort();
   }
@@ -3752,17 +3769,23 @@ class DeckEditor {
       div(target, 'deckEditorFontEmpty').textContent = `${matches.length-shown.length} more fonts match - type more of the name to narrow it down.`;
   }
 
-  // Choosing a family in the list downloads its regular style so the preview shows the real thing. The files
-  // are stored under their checksum, so looking at a font a second time costs nothing.
+  // The style a family is previewed in and always downloaded with: Regular, unless the family does not have
+  // one (a handful only come as Bold or as Italic), in which case the first style it does offer stands in.
+  forcedFontStyle(styles) {
+    return styles.indexOf('400') != -1 ? '400' : styles[0];
+  }
+
+  // Choosing a family in the list loads that style so the preview shows the real thing. The preview route
+  // does not store anything, so looking through the catalog leaves nothing behind on the server.
   async selectGoogleFont(font) {
-    this.fontSelection = { family: font.family, styles: font.styles, chosen: [ '400' ] };
+    const forced = this.forcedFontStyle(font.styles);
+    this.fontSelection = { family: font.family, styles: font.styles, chosen: [ forced ], forced };
     this.renderFontOverlay();
     this.setFontStatus(`Loading ${font.family}…`);
     try {
-      const fonts = await this.importGoogleFont(font.family, [ '400' ]);
+      await this.setFontPreview(font.family, forced);
       if(!this.fontSelection || this.fontSelection.family != font.family)
         return;
-      this.setFontPreview(fonts);
       this.setFontStatus('');
     } catch(e) {
       this.setFontStatus(String(e.message || e));
@@ -3777,22 +3800,28 @@ class DeckEditor {
     return await response.json();
   }
 
-  // The @font-face of the font being looked at, declared for the editor only - the deck gets it when it is
-  // actually added, so browsing the catalog does not change the game.
-  setFontPreview(fonts) {
-    const existing = $('#deckEditorFontPreviewStyle');
-    if(existing)
-      existing.remove();
+  // The font being looked at, loaded for the editor only - the deck gets it when it is actually added, so
+  // browsing the catalog changes neither the game nor what the server stores. It is registered under a name
+  // of its own so a family the deck already carries keeps being drawn from the deck's own files.
+  async setFontPreview(family, style) {
     const preview = $('#deckEditorFontPreview');
-    if(!fonts || !fonts.length) {
-      preview.style.fontFamily = '';
-      return;
+    if(this.fontPreviewFace) {
+      document.fonts.delete(this.fontPreviewFace);
+      this.fontPreviewFace = null;
     }
-    const style = document.createElement('style');
-    style.id = 'deckEditorFontPreviewStyle';
-    style.textContent = fonts.map(font=>`@font-face { font-family: "${font.family}"; src: url("${mapAssetURLs(font.src)}"); font-weight: ${font.weight}; font-style: ${font.style}; }`).join('\n');
-    $('head').appendChild(style);
-    preview.style.fontFamily = `"${fonts[0].family}"`;
+    preview.style.fontFamily = '';
+    if(!family)
+      return;
+    const response = await fetch(`api/googleFonts/${encodeURIComponent(family)}/preview?styles=${encodeURIComponent(style)}`);
+    if(!response.ok)
+      throw new Error(await response.text());
+    const face = new FontFace(`${family} (preview)`, await response.arrayBuffer());
+    await face.load();
+    if(!this.fontSelection || this.fontSelection.family != family)
+      return;
+    this.fontPreviewFace = face;
+    document.fonts.add(face);
+    preview.style.fontFamily = `"${family} (preview)"`;
   }
 
   setFontStatus(message) {
@@ -3800,7 +3829,8 @@ class DeckEditor {
   }
 
   // The styles of the chosen family, as checkboxes: every style is a font file of its own that the game has
-  // to carry, so only the ones a card actually needs are downloaded. Regular is always part of it.
+  // to carry, so only the ones a card actually needs are downloaded. The style the preview uses is always
+  // part of it.
   renderFontDetails() {
     const target = $('#deckEditorFontStyles');
     target.innerHTML = '';
@@ -3820,7 +3850,7 @@ class DeckEditor {
       const box = document.createElement('input');
       box.type = 'checkbox';
       box.checked = selection.chosen.indexOf(style) != -1;
-      box.disabled = style == '400';
+      box.disabled = style == selection.forced;
       box.onchange = _=>{
         selection.chosen = selection.chosen.filter(chosen=>chosen != style);
         if(box.checked)

@@ -55,17 +55,30 @@ describe('the @font-face rules a deck declares for its imported fonts', () => {
 });
 
 describe('the font of a face object', () => {
-  test('is the family name it is set to', () => {
-    expect(cardFaceObjectFont({ font: 'Lobster Two' })).toEqual('Lobster Two');
-    expect(cardFaceObjectFont({ font: 'Lobster, serif' })).toEqual('Lobster, serif');
+  test('is the family name it is set to, quoted', () => {
+    expect(cardFaceObjectFont({ font: 'Lobster Two' })).toEqual('"Lobster Two"');
+    expect(cardFaceObjectFont({ font: 'Lobster, serif' })).toEqual('"Lobster", serif');
+  });
+
+  // an unquoted family has to be a sequence of css identifiers, so a browser throws the whole declaration
+  // away for the families whose name contains a word starting with a digit
+  test('quotes families a browser would not accept unquoted', () => {
+    expect(cardFaceObjectFont({ font: 'Press Start 2P' })).toEqual('"Press Start 2P"');
+    expect(cardFaceObjectFont({ font: 'Exo 2, Baloo 2, monospace' })).toEqual('"Exo 2", "Baloo 2", monospace');
+  });
+
+  test('leaves the keywords that stand for a font rather than name one alone', () => {
+    expect(cardFaceObjectFont({ font: 'serif' })).toEqual('serif');
+    expect(cardFaceObjectFont({ font: 'Lobster, SANS-SERIF' })).toEqual('"Lobster", SANS-SERIF');
   });
 
   test('is empty when the object does not name one', () => {
     expect(cardFaceObjectFont({})).toEqual('');
     expect(cardFaceObjectFont({ font: '' })).toEqual('');
+    expect(cardFaceObjectFont({ font: ' , ' })).toEqual('');
   });
 
   test('can not add declarations of its own to the box it styles', () => {
-    expect(cardFaceObjectFont({ font: 'Lobster; display: none' })).toEqual('Lobster display: none');
+    expect(cardFaceObjectFont({ font: 'Lobster; display: none' })).toEqual('"Lobster display: none"');
   });
 });

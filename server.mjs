@@ -355,6 +355,19 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  // Looking at a family in the picker: the file is streamed through without being stored, so browsing
+  // the catalog does not leave a font file in the assets for every family that was clicked.
+  router.get('/api/googleFonts/:family/preview', function(req, res, next) {
+    (async function() {
+      const styles = String(req.query.styles || '400').split(',');
+      const face = (await GoogleFonts.fontFaces(req.params.family, styles))[0];
+      const content = await GoogleFonts.download(face.url);
+      res.setHeader('Content-Type', 'font/ttf');
+      res.setHeader('Cache-Control', 'max-age=3600');
+      res.send(content);
+    })().catch(next);
+  });
+
   // Importing a family: the font files are downloaded here and stored as normal assets, so the game
   // carries its fonts the way it carries its pictures and no player's browser ever asks Google for
   // them. Answers with the @font-face descriptors of what was stored.

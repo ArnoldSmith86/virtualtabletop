@@ -12,6 +12,10 @@ const FILE_HOST = 'https://fonts.gstatic.com/';
 
 const CATALOG_MAX_AGE = 24*60*60*1000;
 
+// The biggest font file that is downloaded at all - the same cap the upload of an asset has. Only the CJK
+// families come anywhere near it, and one of those is not something a game should carry around.
+const FILE_MAX_SIZE = 10*1024*1024;
+
 // The styles a text can select with font-weight/font-style alone, in the order the catalog names
 // them. Everything else Google offers (the intermediate weights of a family) would need css beyond
 // what an imported font is for.
@@ -120,7 +124,12 @@ export async function download(url) {
   const response = await fetch(url).catch(_=>null);
   if(!response || !response.ok)
     throw new Logging.UserError(502, 'Downloading a font file from Google Fonts failed.');
-  return Buffer.from(await response.arrayBuffer());
+  if(+response.headers.get('content-length') > FILE_MAX_SIZE)
+    throw new Logging.UserError(400, 'That font file is too big to be used in a game.');
+  const content = Buffer.from(await response.arrayBuffer());
+  if(content.length > FILE_MAX_SIZE)
+    throw new Logging.UserError(400, 'That font file is too big to be used in a game.');
+  return content;
 }
 
 export default { families, parseFamilies, isValidFamily, stylesheetURL, fontFaces, parseFontFaces, download, STYLES };
