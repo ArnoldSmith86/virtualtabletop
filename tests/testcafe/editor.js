@@ -3819,6 +3819,107 @@ test('the Debug module logs each operation of a routine with its result', async 
   await setEditorState(null);
 });
 
+// Routine logging follows edit mode, not just the panel: it is switched off while the game is
+// played so playing costs nothing, which leaves a Debug module that stays open across a round of
+// playing logging nothing at all once edit mode comes back.
+test('the Debug module logs again after edit mode was left and entered once more', async t => {
+  await setRoomState({
+    button: { id: 'button', type: 'button', clickRoutine: [ 'var roll = randInt 5 5' ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const runClickRoutine = ClientFunction(() => {
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  });
+  const loggedOperations = Selector('#jeLog .jeLogSummary');
+
+  await t
+    .expect(Selector('#w_button').exists).ok('the room renders its widgets', { timeout: 30000 })
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok();
+
+  await runClickRoutine();
+  await t.expect(loggedOperations.count).eql(1);
+
+  await t
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk();
+
+  // nothing is logged while the game is played, however long the panel has been open
+  await runClickRoutine();
+  await t.expect(loggedOperations.count).eql(1);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('body').hasClass('edit')).ok()
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok()
+    // what is left on screen is older than the last thing the user did, so it says so
+    .expect(Selector('#jeLog .jeLogNote').innerText).contains('Logging resumed');
+
+  // another round of playing says nothing new about the same stale entries
+  await t
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk()
+    .click('#editButton')
+    .expect(Selector('body').hasClass('edit')).ok()
+    .expect(Selector('#jeLog .jeLogNote').withText('Logging resumed').count).eql(1);
+
+  await runClickRoutine();
+
+  await t
+    .expect(Selector('.jeLogEmptyNote').visible).notOk()
+    .expect(loggedOperations.nth(0).innerText).eql('roll = randInt 5 5');
+
+  await setEditorState(null);
+});
+
+test('the Debug module does not keep unmarked entries when the JSON module clears the log', async t => {
+  await setRoomState({
+    button: { id: 'button', type: 'button', clickRoutine: [ 'var roll = randInt 5 5' ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { Debug: 'editorModuleTopLeft', JSON: 'editorModuleBottomLeft' } });
+  await setName(t);
+
+  const runClickRoutine = ClientFunction(() => {
+    return widgets.get('button').evaluateRoutine('clickRoutine', {}, {}).then(()=>{});
+  });
+  const loggedOperations = Selector('#jeLog .jeLogSummary');
+
+  await t
+    .expect(Selector('#w_button').exists).ok('the room renders its widgets', { timeout: 30000 })
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.pest_control').exists).ok()
+    .expect(Selector('#editorModuleBottomLeft.data_object').exists).ok();
+
+  await runClickRoutine();
+  await t.expect(loggedOperations.count).eql(1);
+
+  await t
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk();
+
+  await runClickRoutine();
+
+  // the JSON editor empties the log when edit mode toggles it, so nothing older is left behind to
+  // be mistaken for the interaction that just happened
+  await t
+    .click('#editButton')
+    .expect(Selector('body').hasClass('edit')).ok()
+    .expect(loggedOperations.count).eql(0)
+    .expect(Selector('.jeLogEmptyNote').visible).ok();
+
+  await runClickRoutine();
+
+  await t
+    .expect(loggedOperations.count).eql(1)
+    .expect(loggedOperations.nth(0).innerText).eql('roll = randInt 5 5');
+
+  await setEditorState(null);
+});
+
 // drags a selection rectangle around the given widgets - the events go to the
 // window, where the editor listens for them, so they need no element to start
 // from. A rectangle around a single widget is treated like a click on it, which
