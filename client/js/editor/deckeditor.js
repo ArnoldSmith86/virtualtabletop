@@ -2649,7 +2649,10 @@ class DeckEditor {
           // Clicking the field still selects the deck node (so the tree toolbar acts on the deck); the caret is
           // restored below after the resulting re-render so typing isn't interrupted. Enter/blur commits the id.
           idInput.onkeydown = e=>{ if(e.key == 'Enter') idInput.blur(); };
-          idInput.onchange = _=>{ const v = idInput.value.trim(); if(v && v != deck.id) this.changeDeckId(v); else idInput.value = deck.id; };
+          // this.deckID rather than deck.id: the Widget object keeps the id it had, so a change event this
+          // input sends a second time (browsers do that on the blur that follows the commit) would otherwise
+          // read as a fresh rename to the id the first one just created.
+          idInput.onchange = _=>{ const v = idInput.value.trim(); if(v && v != this.deckID) this.changeDeckId(v); else idInput.value = this.deckID; };
         }
         const deckSel = isCurrent && this.treeLevel == 'deck';
         deckRow.classList.toggle('selected', deckSel && this.activeArea == 'tree');
@@ -4265,17 +4268,19 @@ class DeckEditor {
     newID = String(newID).trim();
     const deck = this.deck();
     const oldID = this.deckID;
-    if(!deck || !newID || newID == oldID)
+    if(this.renamingDeck || !deck || !newID || newID == oldID)
       return;
     if(widgets.has(newID)) {
       alert(`A widget with the id "${newID}" already exists. Please choose a different deck id.`);
       this.renderLeftSidebar();
       return;
     }
+    // set before the first await: the new deck exists partway through updateWidgetId, so a second change
+    // event arriving while this runs must not start a rename of its own
+    this.renamingDeck = true;
     await this.flushPendingCommits(); // save pending edits onto the old deck first
     const newState = JSON.parse(JSON.stringify(deck.state));
     newState.id = newID;
-    this.renamingDeck = true;
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} renamed deck ${oldID} to ${newID} in deck editor`);
     await updateWidgetId(newState, oldID);

@@ -5481,6 +5481,8 @@ class PropertiesModule extends SidebarModule {
     let currentID = widget.id;
 
     idInput.onchange = async () => {
+      if(idInput.disabled) // a rename started by an earlier event of this input is still running
+        return;
       const oldID = currentID;
       const newID = idInput.value.trim();
       if(newID == oldID) {
@@ -5499,17 +5501,20 @@ class PropertiesModule extends SidebarModule {
       }
 
       idInput.disabled = true;
+      const state = JSON.parse(JSON.stringify((widgets.get(oldID) || widget).state));
+      state.id = newID;
+      // the new id already exists partway through the rename, so the input stands for it from here on rather
+      // than only once the rename has finished
+      currentID = newID;
       batchStart();
       try {
         setDeltaCause(`${getPlayerDetails().playerName} renamed widget ${oldID} to ${newID} in editor`);
-        const state = JSON.parse(JSON.stringify(widget.state));
-        state.id = newID;
         await updateWidgetId(state, oldID);
-        currentID = newID;
         const renamedWidget = widgets.get(newID);
         if(renamedWidget && options.onRenamed)
           options.onRenamed(renamedWidget);
       } catch(error) {
+        currentID = oldID;
         alert(`Could not rename widget: ${error}`);
         idInput.value = oldID;
       } finally {
