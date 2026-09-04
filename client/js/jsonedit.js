@@ -462,6 +462,31 @@ const jeCommands = [
     show: _=>jeGetValueAt('objects')[jeGetKeyAfter('objects')].type == 'icon'
   },
   {
+    id: 'je_faceObjectFont',
+    name: 'font',
+    context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
+    call: async function() {
+      jeGetValueAt('objects')[jeGetKeyAfter('objects')].font = '###SELECT ME###';
+      jeSetAndSelect(((jeStateNow.fonts || [])[0] || {}).family || 'Roboto');
+      await jeApplyChanges();
+    },
+    show: function() {
+      const object = jeGetValueAt('objects')[jeGetKeyAfter('objects')];
+      return object && object.font === undefined && [ 'text', 'write', 'html' ].indexOf(object.type || 'text') != -1;
+    }
+  },
+  {
+    // Fonts are files the game has to carry, so they are imported rather than typed: this opens the deck
+    // editor's Google Fonts dialog on this deck, which downloads the font and fills in the "fonts" list.
+    id: 'je_deckFonts',
+    name: 'import a font from Google Fonts',
+    context: '^deck( ↦ fonts( ↦ .*)?)?$',
+    call: async function() {
+      await deckEditor.open(jeStateNow.id);
+      await deckEditor.openFontOverlay([]);
+    }
+  },
+  {
     id: 'je_symbolPickerCustom',
     name: 'upload a custom icon asset',
     context: '^.* ↦ icon( ↦ |$)',

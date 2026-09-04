@@ -10,6 +10,7 @@ class Deck extends Widget {
       cardDefaults: {},
       cardTypes: {},
       faceTemplates: [],
+      fonts: [],
       borderRadius: '50%'
     });
 
@@ -24,7 +25,9 @@ class Deck extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined) {
+    if(delta.fonts !== undefined)
+      this.applyFonts();
+    if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined || delta.fonts !== undefined) {
       for(const cardID in this.cards) {
         const card = this.cards[cardID];
 
@@ -49,6 +52,31 @@ class Deck extends Widget {
     }
   }
 
+  // The web fonts this deck brought along, as @font-face rules in a style element of its own. A font
+  // family is global to the document once it is declared, so the families a deck imports can be used
+  // by its own cards through their "font" and "css", and by any other widget of the game as well.
+  applyFonts() {
+    const existing = $(`#FONTS_${this.cssScope}`);
+    if(existing)
+      removeFromDOM(existing);
+
+    const rules = this.fontFaceCSS();
+    if(!rules)
+      return;
+
+    const style = document.createElement('style');
+    style.id = `FONTS_${this.cssScope}`;
+    style.appendChild(document.createTextNode(rules));
+    $('head').appendChild(style);
+  }
+
+  applyRemove() {
+    super.applyRemove();
+    const style = $(`#FONTS_${this.cssScope}`);
+    if(style)
+      removeFromDOM(style);
+  }
+
   cardPropertyGet(cardType, face, property) {
     const thisFaceTemplates = this.get('faceTemplates');
     const thisCardTypes = this.get('cardTypes');
@@ -58,6 +86,21 @@ class Deck extends Widget {
       return thisFaceTemplates[face].properties[property];
 
     return this.get('cardDefaults')[property];
+  }
+
+  fontFaceCSS() {
+    const fonts = this.get('fonts');
+    if(!Array.isArray(fonts))
+      return '';
+    return fonts.filter(font=>font && font.family && font.src).map(font=>{
+      // both values end up inside a css rule, so anything that could close it and start something
+      // else of its own is dropped rather than escaped
+      const family = String(font.family).replace(/[;{}"'\\]/g, '').trim();
+      const src = mapAssetURLs(String(font.src).replace(/[;{}"'()\\]/g, '').trim());
+      const weight = String(font.weight || 400).replace(/[^0-9]/g, '') || '400';
+      const style = font.style == 'italic' ? 'italic' : 'normal';
+      return family && src ? `@font-face { font-family: "${family}"; src: url("${src}"); font-weight: ${weight}; font-style: ${style}; font-display: swap; }` : '';
+    }).join('\n');
   }
 
   getFaceProperties(face) {

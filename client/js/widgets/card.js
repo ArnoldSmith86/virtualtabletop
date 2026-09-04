@@ -18,6 +18,14 @@ function plainTextEditable() {
   return plainTextEditableSupport;
 }
 
+// The "font" of a face object, ready to be put behind "font-family:". It is a family name (or a list of
+// them), so anything that could close the declaration and start another one is dropped rather than escaped.
+// The family has to be declared somewhere the document can see it - client/css/fonts.css ships a handful,
+// and a deck declares the web fonts listed in its "fonts" property (see Deck.fontFaceCSS).
+export function cardFaceObjectFont(object) {
+  return object.font ? String(object.font).replace(/[;{}"'\\]/g, '').trim() : '';
+}
+
 export class Card extends Widget {
   constructor(id) {
     super(id);
@@ -201,6 +209,9 @@ export class Card extends Widget {
             const y = face.border ? object.y-face.border : object.y;
             let css = object.css ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
             css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+            const font = cardFaceObjectFont(object);
+            if(font)
+              css += `; font-family: ${font}`;
             css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
             if(typeof object.display !== 'undefined' && !object.display)
               css += '; display: none';
@@ -246,8 +257,11 @@ export class Card extends Widget {
                 // nested CSS style rules.
                 const css = object['css'];
                 const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
+                // A frame is its own document, so the fonts the deck imported have to be declared in it
+                // again - the styles of the page around it do not reach inside.
+                const deckFonts = this.deck ? this.deck.fontFaceCSS() : '';
                 const html = `<!DOCTYPE html>\n` +
-                    `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
+                    `<html><head><link rel="stylesheet" href="fonts.css"><style>${deckFonts}html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: ${font ? `${font}, ` : ''}'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
                     `</style></head><body class="${object.classes || ""}">${mapAssetURLs(content)}</body></html>`;
                 objectDiv.srcdoc = html;
               } else {
