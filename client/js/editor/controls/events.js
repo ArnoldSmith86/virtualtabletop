@@ -373,6 +373,21 @@ class EventsEditor {
     this.onChange('cardDefaults', Object.keys(next).length ? next : undefined);
   }
 
+  // What the assistant answered, written onto the widget. Recorded before
+  // anything renders, because rendering is what marks the operations it changed
+  // and writes the note above them - here and on every re-render after it.
+  applyAiRoutine(entry, routine, result) {
+    const before = this.routineSource(entry.target)[entry.property];
+    delete this.routineEditors[entry.key]; // it keeps its own copy of the old one
+    this.expandedEvents[entry.key] = true; // land on the result rather than a closed card
+    aiApplyResult(this.widget.get('id'), entry.key, before, routine, result, entry.property,
+      _=>this.setRoutine(entry, routine));
+    this.render();
+    // the routine can be further down the panel than the answer is tall, and the
+    // popup has just closed - without this nothing on screen has changed
+    aiScrollToResult(this.domElement.querySelector('.ai-routine-note'));
+  }
+
   onPropertyChange() {
     // update existing editors in place (a no-op for echoes of our own edits)
     // and re-render the section so added/removed handlers appear
@@ -448,6 +463,8 @@ class EventsEditor {
       });
       headerDOM.append(jsonButton);
 
+      aiRoutineButton(headerDOM, this.widget, entry, _=>this.routineSource(target)[property], (routine, result)=>this.applyAiRoutine(entry, routine, result));
+
       const removeButton = document.createElement('span');
       removeButton.className = 'material-symbols events-editor-remove';
       removeButton.textContent = 'delete';
@@ -486,6 +503,7 @@ class EventsEditor {
           this.routineEditors[key].registerChangeListener(v=>this.setRoutine(entry, JSON.parse(JSON.stringify(v))));
         }
         contentDOM.append(this.routineEditors[key].domElement);
+        aiShowResultNote(contentDOM, this.routineEditors[key]);
       }
     }
 
@@ -509,6 +527,22 @@ class EventsEditor {
       popup.show();
     });
     addButton.className = 'events-editor-add';
+
+    aiAddRoutineButton(this.domElement, source=>{
+      const existing = {};
+      for(const target of targets)
+        existing[target] = routinePropertiesIn(this.routineSource(target));
+      // which routine to write is picked with the same popup "add routine" uses.
+      // The routine itself is only made once there is something to put in it:
+      // giving up on the assistant, or an answer that never comes, would
+      // otherwise leave an empty routine behind on the widget.
+      const popup = new AddEventPopup(source, existing, (property, target)=>{
+        const entry = { property, target, key: routineEntryKey(property, target) };
+        new AiRoutinePopup(source, this.widget, entry, _=>this.routineSource(target)[property],
+          (routine, result)=>this.applyAiRoutine(entry, routine, result)).show();
+      }, widgetTypeOf(this.widget));
+      popup.show();
+    });
 
     this.renderPropertyAutomations();
   }
