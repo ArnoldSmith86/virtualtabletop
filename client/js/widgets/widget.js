@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, mod, stringifyForDis
 import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, liveWidget, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -672,14 +672,14 @@ export class Widget extends StateManaged {
     }
     delete clone.parent;
     delete clone.inheritFrom;
-    const newID = await addWidgetLocal(clone, false); // runtime path: keep random IDs
+    const newID = await addWidgetLocal(clone, false, problems); // runtime path: keep random IDs
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
 
       // The parent was there when this started, but creating the clone runs every routine that
       // listens on 'id' - one of those can have removed it by now, and the clone then stays where
       // it was created instead of going into a widget that is gone. (#1504)
-      const parentWidget = parent && widgets.has(parent) ? widgets.get(parent) : null;
+      const parentWidget = parent ? liveWidget(parent) : null;
       if(parent && !parentWidget)
         reportProblem(`Widget '${parent}' disappeared while '${this.get('id')}' was being cloned into it.`, problems);
 
@@ -3112,26 +3112,40 @@ export class Widget extends StateManaged {
   // Returns whether the widget was moved, so that a caller counting its moves does not count the
   // ones that were refused.
   async moveToHolder(holder, problems) {
-    if(this.inRemovalQueue)
-      return false;
-
     // A routine that moves several widgets one after another looks the holder up once per widget,
-    // and every move it makes can run game logic that removes it in between - so by the time this
-    // widget's turn comes there may be nothing left to move it into. (#1504)
-    if(!holder || !widgets.has(holder.get('id'))) {
+    // and every property written below runs whatever the game listens for - so the holder can be
+    // gone before this widget's turn comes, and either it or this widget can go in between any two
+    // of the steps. That is why the pair is checked after each of them and not once at the
+    // start; a holder that removeWidgetLocal() has only queued counts as gone. (#1504)
+    const cannotMove = ()=> {
+      if(this.inRemovalQueue || this.isBeingRemoved)
+        return true;
+      if(holder && liveWidget(holder.get('id')) === holder)
+        return false;
       reportProblem(holder
         ? `Could not move '${this.id}' into '${holder.get('id')}' because that holder no longer exists.`
         : `Could not move '${this.id}' because the holder it should go into is gone.`, problems);
+      return true;
+    };
+
+    if(cannotMove())
       return false;
-    }
 
     await this.bringToFront();
+    if(cannotMove())
+      return false;
+
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
     if(this.currentParent != holder)
       await this.checkParent(true);
+    if(cannotMove())
+      return false;
 
     await this.set('owner',  null);
+    if(cannotMove())
+      return false;
+
     await this.set('parent', holder.get('id'));
     return true;
   }

@@ -601,8 +601,7 @@ test('a holder that disappears while a widget is cloned into it is reported', as
     source: { id: 'source', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
     watcher: { id: 'watcher', type: 'basic', x: 1200, y: 100, idGlobalUpdateRoutine: [
       { func: 'SELECT', property: 'id', value: 'holder' },
-      { func: 'DELETE' },
-      { func: 'DELAY', milliseconds: 1 } // the removal reaches the room while CLONE is still running
+      { func: 'DELETE' }
     ] },
     clone: { id: 'clone', type: 'button', text: 'clone', x: 800, y: 400, clickRoutine: [
       { func: 'SELECT', property: 'id', value: 'source' },
@@ -629,6 +628,41 @@ test('a holder that disappears while a widget is cloned into it is reported', as
   // the routine runs to its end and the clone stays on the table
   await expectEventually(t, markedWidgets, [ 'go' ]);
   await expectEventually(t, async ()=>Object.values(JSON.parse(await getState())).filter(w=>w.clonedFrom == 'source').length, 1);
+});
+
+// The routines listening on 'id' are told about the widget that was just created, and one of them
+// deleting it again is a legitimate thing for a game to do. Its ID kept naming a widget until that
+// removal was sent, so it was handed back to the caller, which parented into it. (#1504)
+test('a widget deleted by the routine reacting to its creation is not handed back', async t => {
+  await setRoomState({
+    source: { id: 'source', type: 'basic', x: 100, y: 100, width: 100, height: 100 },
+    holder: { id: 'holder', type: 'holder', x: 100, y: 400, width: 300, height: 300 },
+    watcher: { id: 'watcher', type: 'basic', x: 1200, y: 100, idGlobalUpdateRoutine: [
+      { func: 'SELECT', property: 'clonedFrom', value: 'source' },
+      { func: 'DELETE' }
+    ] },
+    clone: { id: 'clone', type: 'button', text: 'clone', x: 800, y: 400, clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'source' },
+      { func: 'CLONE', properties: { parent: 'holder' } },
+      { func: 'SELECT', property: 'id', value: 'go' },
+      { func: 'SET', property: 'marked', value: true }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('clone').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('it was removed again while it was being created');
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).notContains('Exception:');
+  // the routine runs to its end and the room is left with exactly the widgets it started with
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+  await t.expect(Object.keys(JSON.parse(await getState())).filter(id=>id != '_meta').sort()).eql([ 'clone', 'go', 'holder', 'source', 'watcher' ]);
 });
 
 // A drag holds on to the widget it moves, which is not necessarily the one that was pressed: a
@@ -697,8 +731,7 @@ test('moving into a holder that is gone leaves the widget where it is', async t 
     source: { id: 'source', type: 'holder', x: 50, y: 100, width: 700, height: 180 },
     target: { id: 'target', type: 'holder', x: 50, y: 600, width: 700, height: 180, enterRoutine: [
       { func: 'SELECT', property: 'id', value: 'target' },
-      { func: 'DELETE' },
-      { func: 'DELAY', milliseconds: 1 } // the removal reaches the room while MOVE is still running
+      { func: 'DELETE' }
     ] },
     card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },
     card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source' },

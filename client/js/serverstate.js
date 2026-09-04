@@ -187,10 +187,26 @@ async function addWidgetLocal(widget, useTypeBasedID = true, problems = null) {
   sendPropertyUpdate(widget.id, widget);
   sendDelta();
   batchStart();
-  if(isNewWidget)
-    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
-      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
+  if(isNewWidget) {
+    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || []) {
+      // Any of these routines is free to select the new widget and delete it again. The ones after
+      // it would be told about a creation that no longer stands, so they get nothing rather than a
+      // collection holding an entry the room does not have.
+      const newWidget = liveWidget(widget.id);
+      if(!newWidget)
+        break;
+      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ newWidget ] });
+    }
+  }
   batchEnd();
+
+  // A widget that did not survive its own creation is as useless to the caller as one that was
+  // never created: its ID keeps naming something until the removal is sent, so handing it back is
+  // exactly what puts the caller's children in limbo once it is.
+  if(isNewWidget && !liveWidget(widget.id)) {
+    reportProblem(`Refusing to add widget '${widget.id}': it was removed again while it was being created.`, problems);
+    return null;
+  }
   return widget.id;
 }
 
@@ -657,6 +673,15 @@ function removeWidget(widgetID) {
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+}
+
+// The widget an ID names, if it is still a part of the room. removeWidgetLocal() only marks a
+// widget and records its null delta - it stays in `widgets` until the batch around it is sent - so
+// asking whether the room has an ID also finds widgets that are already on their way out. Anything
+// parented into one of those lands in limbo the moment that batch ends.
+export function liveWidget(widgetID) {
+  const widget = widgets.get(widgetID);
+  return widget && !widget.isBeingRemoved && !widget.inRemovalQueue ? widget : null;
 }
 
 async function removeWidgetLocal(widgetID, keepChildren) {
