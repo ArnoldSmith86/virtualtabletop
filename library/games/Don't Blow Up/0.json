@@ -1,297 +1,2329 @@
 {
-  "hand": {
-    "id": "hand",
-    "x": 50,
-    "y": 700,
+  "cats": {
+    "type": "deck",
+    "parent": "Draw",
+    "x": 8,
+    "y": 8,
     "z": 1,
+    "cardDefaults": {
+      "width": 205,
+      "height": 292,
+      "ignoreOnLeave": true
+    },
+    "cardTypes": {
+      "boom": {
+        "name": "Boom Cat",
+        "action": "Show it at once. Hide it with a Laser Pointer or you are out.",
+        "flavor": "It was a lovely rug.",
+        "icon": "lorc/mushroom-cloud",
+        "tint1": "#7d0c18",
+        "tint2": "#e8622a",
+        "ink": "#fff3d6",
+        "family": "boom",
+        "copies": "x4",
+        "exploding": true,
+        "defuse": false,
+        "sortOrder": 0
+      },
+      "defuse": {
+        "name": "Laser Pointer",
+        "action": "Survive a Boom Cat, then hide it back in the deck.",
+        "flavor": "Distraction: 100% effective.",
+        "icon": "lorc/laser-blast",
+        "tint1": "#053b31",
+        "tint2": "#12a37c",
+        "ink": "#e6fff5",
+        "family": "power",
+        "copies": "x6",
+        "exploding": false,
+        "defuse": true,
+        "sortOrder": 1
+      },
+      "nope": {
+        "name": "Nope",
+        "action": "Cancel the card another player just played.",
+        "flavor": "Absolutely not.",
+        "icon": "lorc/interdiction",
+        "tint1": "#0e1836",
+        "tint2": "#2f57b8",
+        "ink": "#dce8ff",
+        "family": "power",
+        "copies": "x5",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 2
+      },
+      "peek": {
+        "name": "Peek",
+        "action": "Secretly look at the top three cards of the deck.",
+        "flavor": "The future smells like tuna.",
+        "icon": "lorc/crystal-ball",
+        "tint1": "#2a0f4d",
+        "tint2": "#7b3fd4",
+        "ink": "#f0e2ff",
+        "family": "power",
+        "copies": "x5",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 3
+      },
+      "favor": {
+        "name": "Favor",
+        "action": "A player of your choice hands you one of their cards.",
+        "flavor": "Give it. Give it now.",
+        "icon": "darkzaitzev/robber-hand",
+        "tint1": "#3a2409",
+        "tint2": "#c07f2a",
+        "ink": "#fff0d8",
+        "family": "power",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 4
+      },
+      "skip": {
+        "name": "Skip",
+        "action": "End your turn without drawing a card.",
+        "flavor": "Busy. Napping.",
+        "icon": "lorc/walking-boot",
+        "tint1": "#063640",
+        "tint2": "#1e93a8",
+        "ink": "#e2fbff",
+        "family": "power",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 5
+      },
+      "attack": {
+        "name": "Attack",
+        "action": "End your turn. The next player takes two turns.",
+        "flavor": "Ankles are fair game.",
+        "icon": "delapouite/claws",
+        "tint1": "#42062c",
+        "tint2": "#bd2a70",
+        "ink": "#ffe3f2",
+        "family": "power",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 6
+      },
+      "shuffle": {
+        "name": "Shuffle",
+        "action": "Shuffle the draw pile.",
+        "flavor": "Chaos, but tidy.",
+        "icon": "faithtoken/card-random",
+        "tint1": "#141643",
+        "tint2": "#4a4ecb",
+        "ink": "#e4e6ff",
+        "family": "power",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 7
+      },
+      "cat-loaf": {
+        "name": "Loaf Cat",
+        "action": "No power on its own. Collect matching cats.",
+        "flavor": "Legs? Never heard of them.",
+        "icon": "lorc/sliced-bread",
+        "tint1": "#ffe0b0",
+        "tint2": "#efa53a",
+        "ink": "#4a2a06",
+        "family": "cat",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 8
+      },
+      "cat-beans": {
+        "name": "Toe Beans",
+        "action": "No power on its own. Collect matching cats.",
+        "flavor": "Do not touch. Touching them anyway.",
+        "icon": "lorc/paw-heart",
+        "tint1": "#ffd6e6",
+        "tint2": "#f181ab",
+        "ink": "#5c1030",
+        "family": "cat",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 9
+      },
+      "cat-void": {
+        "name": "Void Cat",
+        "action": "No power on its own. Collect matching cats.",
+        "flavor": "Two eyes. No cat.",
+        "icon": "delapouite/floating-ghost",
+        "tint1": "#d6ddff",
+        "tint2": "#8291de",
+        "ink": "#1d2358",
+        "family": "cat",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 10
+      },
+      "cat-chonk": {
+        "name": "Chonk Cat",
+        "action": "No power on its own. Collect matching cats.",
+        "flavor": "He is not fat, he is fluffy.",
+        "icon": "delapouite/cupcake",
+        "tint1": "#ccf5e4",
+        "tint2": "#5fc9a1",
+        "ink": "#0b3c2c",
+        "family": "cat",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 11
+      },
+      "cat-yowl": {
+        "name": "Yowl Cat",
+        "action": "No power on its own. Collect matching cats.",
+        "flavor": "3 a.m. concert. Every night.",
+        "icon": "delapouite/boombox",
+        "tint1": "#fff3b4",
+        "tint2": "#f0cf39",
+        "ink": "#4b3c03",
+        "family": "cat",
+        "copies": "x4",
+        "exploding": false,
+        "defuse": false,
+        "sortOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 14,
+        "objects": [
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "width": 205,
+            "height": 292,
+            "css": {
+              "body": {
+                "width": "205px",
+                "height": "292px",
+                "border-radius": "14px",
+                "overflow": "hidden",
+                "background": "radial-gradient(circle at 50% 34%, #4b2b63 0%, #2a1740 46%, #150c22 100%)",
+                "box-shadow": "inset 0 0 0 3px #f2c14e, inset 0 0 0 7px rgba(0,0,0,.45), inset 0 0 34px rgba(0,0,0,.65)"
+              },
+              ".paws": {
+                "position": "absolute",
+                "left": "0",
+                "top": "0",
+                "right": "0",
+                "bottom": "0",
+                "background-image": "url('/i/game-icons.net/lorc/paw-print.svg')",
+                "background-size": "34px 34px",
+                "background-repeat": "repeat",
+                "opacity": ".10",
+                "filter": "invert(1)"
+              },
+              ".ring": {
+                "position": "absolute",
+                "left": "32px",
+                "top": "58px",
+                "width": "141px",
+                "height": "141px",
+                "border-radius": "50%",
+                "background": "radial-gradient(circle, rgba(242,193,78,.30) 0%, rgba(242,193,78,0) 70%)"
+              },
+              ".cat": {
+                "position": "absolute",
+                "left": "40px",
+                "top": "66px",
+                "width": "125px",
+                "height": "125px",
+                "background": "#f2c14e",
+                "-webkit-mask": "url('/i/game-icons.net/lorc/cat.svg') center/contain no-repeat",
+                "mask": "url('/i/game-icons.net/lorc/cat.svg') center/contain no-repeat"
+              },
+              ".spark": {
+                "position": "absolute",
+                "left": "126px",
+                "top": "36px",
+                "width": "54px",
+                "height": "54px",
+                "background": "#e8622a",
+                "-webkit-mask": "url('/i/game-icons.net/lorc/mushroom-cloud.svg') center/contain no-repeat",
+                "mask": "url('/i/game-icons.net/lorc/mushroom-cloud.svg') center/contain no-repeat"
+              },
+              ".t": {
+                "position": "absolute",
+                "left": "0",
+                "right": "0",
+                "top": "206px",
+                "text-align": "center",
+                "font-family": "'Creepster', cursive",
+                "font-size": "27px",
+                "line-height": "28px",
+                "color": "#f2c14e",
+                "letter-spacing": "1px",
+                "text-shadow": "0 2px 0 rgba(0,0,0,.6)"
+              },
+              ".s": {
+                "position": "absolute",
+                "left": "0",
+                "right": "0",
+                "top": "266px",
+                "text-align": "center",
+                "font-family": "'Roboto Condensed', sans-serif",
+                "font-size": "10px",
+                "letter-spacing": "3px",
+                "color": "rgba(246,239,226,.45)",
+                "text-transform": "uppercase"
+              }
+            },
+            "value": "<div class=\"paws\"></div><div class=\"ring\"></div><div class=\"cat\"></div><div class=\"spark\"></div><div class=\"t\">DON'T<br>BLOW UP</div><div class=\"s\">keep calm - stay fluffy</div>"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 14,
+        "properties": {
+          "enlarge": 2
+        },
+        "objects": [
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "width": 205,
+            "height": 292,
+            "css": {
+              "body": {
+                "width": "205px",
+                "height": "292px",
+                "border-radius": "14px",
+                "overflow": "hidden",
+                "background": "linear-gradient(158deg, ${PROPERTY tint1} 0%, ${PROPERTY tint2} 100%)",
+                "box-shadow": "inset 0 0 0 2px rgba(255,255,255,.28), inset 0 0 26px rgba(0,0,0,.28)"
+              },
+              ".weave": {
+                "position": "absolute",
+                "left": "0",
+                "top": "0",
+                "right": "0",
+                "bottom": "0",
+                "background-image": "repeating-linear-gradient(135deg, rgba(255,255,255,.075) 0 2px, rgba(255,255,255,0) 2px 9px)"
+              },
+              ".halo": {
+                "position": "absolute",
+                "left": "22px",
+                "top": "36px",
+                "width": "161px",
+                "height": "161px",
+                "border-radius": "50%",
+                "background": "radial-gradient(circle, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 68%)"
+              },
+              ".chip": {
+                "position": "absolute",
+                "left": "8px",
+                "top": "8px",
+                "width": "48px",
+                "height": "48px",
+                "border-radius": "12px",
+                "background": "rgba(0,0,0,.22)",
+                "box-shadow": "inset 0 0 0 1px rgba(255,255,255,.22)"
+              },
+              ".ci": {
+                "position": "absolute",
+                "left": "15px",
+                "top": "15px",
+                "width": "34px",
+                "height": "34px",
+                "background": "${PROPERTY ink}",
+                "-webkit-mask": "url('/i/game-icons.net/${PROPERTY icon}.svg') center/contain no-repeat",
+                "mask": "url('/i/game-icons.net/${PROPERTY icon}.svg') center/contain no-repeat"
+              },
+              ".copies": {
+                "position": "absolute",
+                "right": "12px",
+                "top": "12px",
+                "font-family": "'Roboto Condensed', sans-serif",
+                "font-size": "13px",
+                "font-weight": "700",
+                "color": "${PROPERTY ink}",
+                "opacity": ".7",
+                "letter-spacing": ".5px"
+              },
+              ".plate": {
+                "position": "absolute",
+                "left": "8px",
+                "right": "8px",
+                "top": "186px",
+                "bottom": "8px",
+                "border-radius": "10px",
+                "background": "rgba(0,0,0,.24)",
+                "box-shadow": "inset 0 0 0 1px rgba(255,255,255,.18)"
+              },
+              ".name": {
+                "position": "absolute",
+                "left": "10px",
+                "right": "10px",
+                "top": "192px",
+                "text-align": "center",
+                "font-family": "'Creepster', cursive",
+                "font-size": "25px",
+                "line-height": "27px",
+                "color": "${PROPERTY ink}",
+                "letter-spacing": "1px",
+                "text-shadow": "0 2px 0 rgba(0,0,0,.35)"
+              },
+              ".act": {
+                "position": "absolute",
+                "left": "16px",
+                "right": "16px",
+                "top": "224px",
+                "text-align": "center",
+                "font-family": "'Roboto Condensed', sans-serif",
+                "font-size": "11.5px",
+                "line-height": "13px",
+                "color": "${PROPERTY ink}",
+                "opacity": ".92"
+              },
+              ".fla": {
+                "position": "absolute",
+                "left": "12px",
+                "right": "12px",
+                "bottom": "12px",
+                "text-align": "center",
+                "font-family": "'Handwriting', cursive",
+                "font-size": "11px",
+                "line-height": "12px",
+                "color": "${PROPERTY ink}",
+                "opacity": ".62"
+              }
+            },
+            "value": "<div class=\"weave\"></div><div class=\"halo\"></div><div class=\"chip\"></div><div class=\"ci\"></div><div class=\"copies\">${PROPERTY copies}</div><div class=\"plate\"></div><div class=\"name\">${PROPERTY name}</div><div class=\"act\">${PROPERTY action}</div><div class=\"fla\">${PROPERTY flavor}</div>"
+          },
+          {
+            "type": "icon",
+            "x": 30,
+            "y": 44,
+            "width": 145,
+            "height": 145,
+            "size": 145,
+            "dynamicProperties": {
+              "value": "icon",
+              "color": "ink"
+            }
+          }
+        ]
+      }
+    ],
+    "id": "cats"
+  },
+  "c01": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "boom",
+    "parent": "Draw",
+    "z": 1,
+    "id": "c01"
+  },
+  "c02": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "boom",
+    "parent": "Draw",
+    "z": 2,
+    "id": "c02"
+  },
+  "c03": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "boom",
+    "parent": "Draw",
+    "z": 3,
+    "id": "c03"
+  },
+  "c04": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "boom",
+    "parent": "Draw",
+    "z": 4,
+    "id": "c04"
+  },
+  "c05": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "defuse",
+    "parent": "Draw",
+    "z": 5,
+    "id": "c05"
+  },
+  "c06": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "defuse",
+    "parent": "Draw",
+    "z": 6,
+    "id": "c06"
+  },
+  "c07": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "defuse",
+    "parent": "Draw",
+    "z": 7,
+    "id": "c07"
+  },
+  "c08": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "defuse",
+    "parent": "Draw",
+    "z": 8,
+    "id": "c08"
+  },
+  "c09": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "defuse",
+    "parent": "Draw",
+    "z": 9,
+    "id": "c09"
+  },
+  "c10": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "defuse",
+    "parent": "Draw",
+    "z": 10,
+    "id": "c10"
+  },
+  "c11": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "nope",
+    "parent": "Draw",
+    "z": 11,
+    "id": "c11"
+  },
+  "c12": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "nope",
+    "parent": "Draw",
+    "z": 12,
+    "id": "c12"
+  },
+  "c13": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "nope",
+    "parent": "Draw",
+    "z": 13,
+    "id": "c13"
+  },
+  "c14": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "nope",
+    "parent": "Draw",
+    "z": 14,
+    "id": "c14"
+  },
+  "c15": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "nope",
+    "parent": "Draw",
+    "z": 15,
+    "id": "c15"
+  },
+  "c16": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "peek",
+    "parent": "Draw",
+    "z": 16,
+    "id": "c16"
+  },
+  "c17": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "peek",
+    "parent": "Draw",
+    "z": 17,
+    "id": "c17"
+  },
+  "c18": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "peek",
+    "parent": "Draw",
+    "z": 18,
+    "id": "c18"
+  },
+  "c19": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "peek",
+    "parent": "Draw",
+    "z": 19,
+    "id": "c19"
+  },
+  "c20": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "peek",
+    "parent": "Draw",
+    "z": 20,
+    "id": "c20"
+  },
+  "c21": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "favor",
+    "parent": "Draw",
+    "z": 21,
+    "id": "c21"
+  },
+  "c22": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "favor",
+    "parent": "Draw",
+    "z": 22,
+    "id": "c22"
+  },
+  "c23": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "favor",
+    "parent": "Draw",
+    "z": 23,
+    "id": "c23"
+  },
+  "c24": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "favor",
+    "parent": "Draw",
+    "z": 24,
+    "id": "c24"
+  },
+  "c25": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "skip",
+    "parent": "Draw",
+    "z": 25,
+    "id": "c25"
+  },
+  "c26": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "skip",
+    "parent": "Draw",
+    "z": 26,
+    "id": "c26"
+  },
+  "c27": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "skip",
+    "parent": "Draw",
+    "z": 27,
+    "id": "c27"
+  },
+  "c28": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "skip",
+    "parent": "Draw",
+    "z": 28,
+    "id": "c28"
+  },
+  "c29": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "attack",
+    "parent": "Draw",
+    "z": 29,
+    "id": "c29"
+  },
+  "c30": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "attack",
+    "parent": "Draw",
+    "z": 30,
+    "id": "c30"
+  },
+  "c31": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "attack",
+    "parent": "Draw",
+    "z": 31,
+    "id": "c31"
+  },
+  "c32": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "attack",
+    "parent": "Draw",
+    "z": 32,
+    "id": "c32"
+  },
+  "c33": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "shuffle",
+    "parent": "Draw",
+    "z": 33,
+    "id": "c33"
+  },
+  "c34": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "shuffle",
+    "parent": "Draw",
+    "z": 34,
+    "id": "c34"
+  },
+  "c35": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "shuffle",
+    "parent": "Draw",
+    "z": 35,
+    "id": "c35"
+  },
+  "c36": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "shuffle",
+    "parent": "Draw",
+    "z": 36,
+    "id": "c36"
+  },
+  "c37": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-loaf",
+    "parent": "Draw",
+    "z": 37,
+    "id": "c37"
+  },
+  "c38": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-loaf",
+    "parent": "Draw",
+    "z": 38,
+    "id": "c38"
+  },
+  "c39": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-loaf",
+    "parent": "Draw",
+    "z": 39,
+    "id": "c39"
+  },
+  "c40": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-loaf",
+    "parent": "Draw",
+    "z": 40,
+    "id": "c40"
+  },
+  "c41": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-beans",
+    "parent": "Draw",
+    "z": 41,
+    "id": "c41"
+  },
+  "c42": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-beans",
+    "parent": "Draw",
+    "z": 42,
+    "id": "c42"
+  },
+  "c43": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-beans",
+    "parent": "Draw",
+    "z": 43,
+    "id": "c43"
+  },
+  "c44": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-beans",
+    "parent": "Draw",
+    "z": 44,
+    "id": "c44"
+  },
+  "c45": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-void",
+    "parent": "Draw",
+    "z": 45,
+    "id": "c45"
+  },
+  "c46": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-void",
+    "parent": "Draw",
+    "z": 46,
+    "id": "c46"
+  },
+  "c47": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-void",
+    "parent": "Draw",
+    "z": 47,
+    "id": "c47"
+  },
+  "c48": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-void",
+    "parent": "Draw",
+    "z": 48,
+    "id": "c48"
+  },
+  "c49": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-chonk",
+    "parent": "Draw",
+    "z": 49,
+    "id": "c49"
+  },
+  "c50": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-chonk",
+    "parent": "Draw",
+    "z": 50,
+    "id": "c50"
+  },
+  "c51": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-chonk",
+    "parent": "Draw",
+    "z": 51,
+    "id": "c51"
+  },
+  "c52": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-chonk",
+    "parent": "Draw",
+    "z": 52,
+    "id": "c52"
+  },
+  "c53": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-yowl",
+    "parent": "Draw",
+    "z": 53,
+    "id": "c53"
+  },
+  "c54": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-yowl",
+    "parent": "Draw",
+    "z": 54,
+    "id": "c54"
+  },
+  "c55": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-yowl",
+    "parent": "Draw",
+    "z": 55,
+    "id": "c55"
+  },
+  "c56": {
+    "type": "card",
+    "deck": "cats",
+    "cardType": "cat-yowl",
+    "parent": "Draw",
+    "z": 56,
+    "id": "c56"
+  },
+  "table": {
+    "x": 0,
+    "y": 0,
+    "width": 1600,
+    "height": 1000,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "html": "<div class=\"p\"></div><div class=\"v\"></div>",
+    "css": {
+      "default": {
+        "background": "radial-gradient(ellipse at 50% 6%, #4a2a63 0%, #29193f 42%, #140d21 100%)"
+      },
+      "${THIS} .p": {
+        "position": "absolute",
+        "left": "0",
+        "top": "0",
+        "right": "0",
+        "bottom": "0",
+        "background-image": "url('/i/game-icons.net/lorc/paw-print.svg')",
+        "background-size": "96px 96px",
+        "background-repeat": "repeat",
+        "filter": "invert(1)",
+        "opacity": ".028"
+      },
+      "${THIS} .v": {
+        "position": "absolute",
+        "left": "0",
+        "top": "0",
+        "right": "0",
+        "bottom": "0",
+        "box-shadow": "inset 0 0 240px rgba(0,0,0,.75)"
+      }
+    },
+    "id": "table"
+  },
+  "title": {
+    "x": 40,
+    "y": 10,
+    "width": 640,
+    "height": 74,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "html": "<div class=\"t\">Don't Blow Up</div><div class=\"s\">a game of cats, cards and very poor life choices</div>",
+    "css": {
+      "default": {
+        "background": "transparent"
+      },
+      "${THIS} .t": {
+        "font-family": "'Creepster', cursive",
+        "font-size": "42px",
+        "line-height": "44px",
+        "color": "#f2c14e",
+        "letter-spacing": "1px",
+        "text-shadow": "0 3px 0 rgba(0,0,0,.55), 0 0 26px rgba(242,193,78,.35)"
+      },
+      "${THIS} .s": {
+        "font-family": "'Handwriting', cursive",
+        "font-size": "15px",
+        "margin-top": "2px",
+        "color": "rgba(246,239,226,.55)"
+      }
+    },
+    "id": "title"
+  },
+  "banner": {
+    "type": "label",
+    "x": 700,
+    "y": 18,
+    "width": 630,
+    "height": 58,
+    "layer": -5,
+    "text": "Sit down, then press New Game.",
+    "css": {
+      "background": "transparent",
+      "border": "none",
+      "color": "#f2c14e",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "21px",
+      "text-align": "center",
+      "line-height": "26px",
+      "text-shadow": "0 2px 6px rgba(0,0,0,.7)",
+      "resize": "none",
+      "overflow": "hidden",
+      "pointer-events": "none"
+    },
+    "id": "banner"
+  },
+  "seat1": {
+    "type": "seat",
+    "index": 1,
+    "x": 45,
+    "y": 96,
+    "width": 280,
+    "height": 72,
+    "turn": true,
+    "css": {
+      "background": "rgba(255,255,255,.93)",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "20px"
+    },
+    "id": "seat1"
+  },
+  "badge1": {
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -15,
+    "y": -15,
+    "width": 38,
+    "height": 38,
+    "borderRadius": 100,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0",
+    "css": {
+      "font-size": "17px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#2a1740",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-weight": "700",
+      "background": "#f2c14e",
+      "border": "2px solid #2a1740",
+      "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+    },
+    "ownerGlobalUpdateRoutine": [
+      "var mySeat = ${PROPERTY parent}",
+      "var dead = ${PROPERTY skipTurn OF $mySeat}",
+      {
+        "func": "IF",
+        "operand1": "${dead}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#ffe3e3",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#a11f28",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ],
+        "elseRoutine": [
+          "var COUNT = 0",
+          {
+            "func": "COUNT",
+            "holder": "${PROPERTY hand OF $mySeat}",
+            "owner": "${PROPERTY player OF $mySeat}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#2a1740",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#f2c14e",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ]
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "skipTurnGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "id": "badge1"
+  },
+  "seat2": {
+    "type": "seat",
+    "index": 2,
+    "x": 355,
+    "y": 96,
+    "width": 280,
+    "height": 72,
+    "turn": false,
+    "css": {
+      "background": "rgba(255,255,255,.93)",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "20px"
+    },
+    "id": "seat2"
+  },
+  "badge2": {
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -15,
+    "y": -15,
+    "width": 38,
+    "height": 38,
+    "borderRadius": 100,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0",
+    "css": {
+      "font-size": "17px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#2a1740",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-weight": "700",
+      "background": "#f2c14e",
+      "border": "2px solid #2a1740",
+      "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+    },
+    "ownerGlobalUpdateRoutine": [
+      "var mySeat = ${PROPERTY parent}",
+      "var dead = ${PROPERTY skipTurn OF $mySeat}",
+      {
+        "func": "IF",
+        "operand1": "${dead}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#ffe3e3",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#a11f28",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ],
+        "elseRoutine": [
+          "var COUNT = 0",
+          {
+            "func": "COUNT",
+            "holder": "${PROPERTY hand OF $mySeat}",
+            "owner": "${PROPERTY player OF $mySeat}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#2a1740",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#f2c14e",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ]
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "skipTurnGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "id": "badge2"
+  },
+  "seat3": {
+    "type": "seat",
+    "index": 3,
+    "x": 665,
+    "y": 96,
+    "width": 280,
+    "height": 72,
+    "turn": false,
+    "css": {
+      "background": "rgba(255,255,255,.93)",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "20px"
+    },
+    "id": "seat3"
+  },
+  "badge3": {
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -15,
+    "y": -15,
+    "width": 38,
+    "height": 38,
+    "borderRadius": 100,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0",
+    "css": {
+      "font-size": "17px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#2a1740",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-weight": "700",
+      "background": "#f2c14e",
+      "border": "2px solid #2a1740",
+      "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+    },
+    "ownerGlobalUpdateRoutine": [
+      "var mySeat = ${PROPERTY parent}",
+      "var dead = ${PROPERTY skipTurn OF $mySeat}",
+      {
+        "func": "IF",
+        "operand1": "${dead}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#ffe3e3",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#a11f28",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ],
+        "elseRoutine": [
+          "var COUNT = 0",
+          {
+            "func": "COUNT",
+            "holder": "${PROPERTY hand OF $mySeat}",
+            "owner": "${PROPERTY player OF $mySeat}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#2a1740",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#f2c14e",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ]
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "skipTurnGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "id": "badge3"
+  },
+  "seat4": {
+    "type": "seat",
+    "index": 4,
+    "x": 975,
+    "y": 96,
+    "width": 280,
+    "height": 72,
+    "turn": false,
+    "css": {
+      "background": "rgba(255,255,255,.93)",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "20px"
+    },
+    "id": "seat4"
+  },
+  "badge4": {
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -15,
+    "y": -15,
+    "width": 38,
+    "height": 38,
+    "borderRadius": 100,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0",
+    "css": {
+      "font-size": "17px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#2a1740",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-weight": "700",
+      "background": "#f2c14e",
+      "border": "2px solid #2a1740",
+      "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+    },
+    "ownerGlobalUpdateRoutine": [
+      "var mySeat = ${PROPERTY parent}",
+      "var dead = ${PROPERTY skipTurn OF $mySeat}",
+      {
+        "func": "IF",
+        "operand1": "${dead}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#ffe3e3",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#a11f28",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ],
+        "elseRoutine": [
+          "var COUNT = 0",
+          {
+            "func": "COUNT",
+            "holder": "${PROPERTY hand OF $mySeat}",
+            "owner": "${PROPERTY player OF $mySeat}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#2a1740",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#f2c14e",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ]
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "skipTurnGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "id": "badge4"
+  },
+  "seat5": {
+    "type": "seat",
+    "index": 5,
+    "x": 1285,
+    "y": 96,
+    "width": 280,
+    "height": 72,
+    "turn": false,
+    "css": {
+      "background": "rgba(255,255,255,.93)",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "20px"
+    },
+    "id": "seat5"
+  },
+  "badge5": {
+    "parent": "seat5",
+    "fixedParent": true,
+    "x": -15,
+    "y": -15,
+    "width": 38,
+    "height": 38,
+    "borderRadius": 100,
+    "layer": 2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "text": "0",
+    "css": {
+      "font-size": "17px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#2a1740",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-weight": "700",
+      "background": "#f2c14e",
+      "border": "2px solid #2a1740",
+      "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+    },
+    "ownerGlobalUpdateRoutine": [
+      "var mySeat = ${PROPERTY parent}",
+      "var dead = ${PROPERTY skipTurn OF $mySeat}",
+      {
+        "func": "IF",
+        "operand1": "${dead}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#ffe3e3",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#a11f28",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ],
+        "elseRoutine": [
+          "var COUNT = 0",
+          {
+            "func": "COUNT",
+            "holder": "${PROPERTY hand OF $mySeat}",
+            "owner": "${PROPERTY player OF $mySeat}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "${COUNT}"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": {
+              "font-size": "17px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "color": "#2a1740",
+              "font-family": "'Roboto Condensed', sans-serif",
+              "font-weight": "700",
+              "background": "#f2c14e",
+              "border": "2px solid #2a1740",
+              "box-shadow": "0 2px 8px rgba(0,0,0,.5)"
+            }
+          }
+        ]
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "skipTurnGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "id": "badge5"
+  },
+  "legend": {
+    "x": 40,
+    "y": 190,
+    "width": 390,
+    "height": 344,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "html": "<div class=\"h\">Discard matching cats</div><div class=\"r\"><div class=\"ic\"><span class=\"pw\"></span><span class=\"pw\"></span></div><div class=\"ar\"></div><div class=\"tx\">take a <b>random</b> card from a player</div></div><div class=\"r\"><div class=\"ic\"><span class=\"pw\"></span><span class=\"pw\"></span><span class=\"pw\"></span></div><div class=\"ar\"></div><div class=\"tx\"><b>name</b> a card and take it</div></div><div class=\"r\"><div class=\"ic\"><span class=\"pw\"></span><span class=\"pw\"></span><span class=\"pw\"></span><span class=\"pw\"></span><span class=\"pw\"></span></div><div class=\"ar\"></div><div class=\"tx\">five <b>different</b> cats: take one from the discard pile</div></div><div class=\"f\">Use the Steal button - or just do it by hand.</div>",
+    "css": {
+      "default": {
+        "background": "rgba(14,9,24,0.55)",
+        "border": "1px solid rgba(255,255,255,0.13)",
+        "border-radius": "18px",
+        "box-shadow": "0 10px 30px rgba(0,0,0,.35)"
+      },
+      "${THIS} .h": {
+        "font-family": "'Creepster', cursive",
+        "font-size": "22px",
+        "color": "#f2c14e",
+        "text-align": "center",
+        "padding": "12px 10px 6px"
+      },
+      "${THIS} .r": {
+        "display": "flex",
+        "align-items": "center",
+        "gap": "10px",
+        "padding": "10px 16px"
+      },
+      "${THIS} .ic": {
+        "display": "flex",
+        "gap": "3px",
+        "min-width": "116px"
+      },
+      "${THIS} .pw": {
+        "width": "20px",
+        "height": "20px",
+        "background": "#f2c14e",
+        "display": "inline-block",
+        "-webkit-mask": "url('/i/game-icons.net/lorc/paw-print.svg') center/contain no-repeat",
+        "mask": "url('/i/game-icons.net/lorc/paw-print.svg') center/contain no-repeat"
+      },
+      "${THIS} .ar": {
+        "width": "22px",
+        "height": "16px",
+        "flex": "0 0 22px",
+        "background": "rgba(246,239,226,.5)",
+        "-webkit-mask": "url('/i/game-icons.net/delapouite/fast-forward-button.svg') center/contain no-repeat",
+        "mask": "url('/i/game-icons.net/delapouite/fast-forward-button.svg') center/contain no-repeat"
+      },
+      "${THIS} .tx": {
+        "font-family": "'Roboto Condensed', sans-serif",
+        "font-size": "14px",
+        "line-height": "16px",
+        "color": "#f6efe2",
+        "opacity": ".88"
+      },
+      "${THIS} .f": {
+        "font-family": "'Handwriting', cursive",
+        "font-size": "13px",
+        "color": "rgba(246,239,226,.5)",
+        "text-align": "center",
+        "padding": "10px 16px 0"
+      }
+    },
+    "id": "legend"
+  },
+  "drawLabel": {
+    "x": 470,
+    "y": 190,
+    "width": 221,
+    "height": 32,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "html": "<div class=\"l\">Draw</div>",
+    "css": {
+      "default": {
+        "background": "transparent"
+      },
+      "${THIS} .l": {
+        "font-family": "'Creepster', cursive",
+        "font-size": "22px",
+        "text-align": "center",
+        "color": "#f2c14e",
+        "letter-spacing": "2px",
+        "text-shadow": "0 2px 0 rgba(0,0,0,.5)"
+      }
+    },
+    "id": "drawLabel"
+  },
+  "discardLabel": {
+    "x": 735,
+    "y": 190,
+    "width": 221,
+    "height": 32,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "html": "<div class=\"l\">Discard</div>",
+    "css": {
+      "default": {
+        "background": "transparent"
+      },
+      "${THIS} .l": {
+        "font-family": "'Creepster', cursive",
+        "font-size": "22px",
+        "text-align": "center",
+        "color": "#9fd6c4",
+        "letter-spacing": "2px",
+        "text-shadow": "0 2px 0 rgba(0,0,0,.5)"
+      }
+    },
+    "id": "discardLabel"
+  },
+  "boomLabel": {
+    "x": 1000,
+    "y": 190,
+    "width": 221,
+    "height": 32,
+    "layer": -5,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "html": "<div class=\"l\">Danger Zone</div>",
+    "css": {
+      "default": {
+        "background": "transparent"
+      },
+      "${THIS} .l": {
+        "font-family": "'Creepster', cursive",
+        "font-size": "22px",
+        "text-align": "center",
+        "color": "#f08a5d",
+        "letter-spacing": "2px",
+        "text-shadow": "0 2px 0 rgba(0,0,0,.5)"
+      }
+    },
+    "id": "boomLabel"
+  },
+  "Draw": {
     "type": "holder",
+    "x": 470,
+    "y": 226,
+    "width": 221,
+    "height": 308,
+    "layer": -3,
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "preventPiles": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "css": {
+      "background": "rgba(255,255,255,.045)",
+      "border": "2px dashed rgba(242,193,78,.45)",
+      "box-shadow": "inset 0 0 30px rgba(0,0,0,.35)"
+    },
+    "id": "Draw"
+  },
+  "Discard": {
+    "type": "holder",
+    "x": 735,
+    "y": 226,
+    "width": 221,
+    "height": 308,
+    "layer": -3,
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "preventPiles": true,
     "onEnter": {
       "activeFace": 1
     },
-    "onLeave": {
-      "activeFace": 0
+    "css": {
+      "background": "rgba(255,255,255,.045)",
+      "border": "2px dashed rgba(159,214,196,.45)",
+      "box-shadow": "inset 0 0 30px rgba(0,0,0,.35)"
     },
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "stackOffsetX": 40,
-    "inheritChildZ": true,
-    "childrenPerOwner": true,
-    "width": 1500,
-    "height": 300,
-    "dropShadow": true,
-    "hidePlayerCursors": true
+    "id": "Discard"
   },
-  "pile3162_label": {
-    "id": "pile3162_label",
-    "x": -21.3,
-    "y": -40,
-    "width": 255.6,
-    "height": 40,
-    "type": "label",
-    "text": "Draw",
+  "Boom": {
+    "type": "holder",
+    "x": 1000,
+    "y": 226,
+    "width": 221,
+    "height": 308,
+    "layer": -3,
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "preventPiles": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": {
+      "background": "rgba(232,98,42,.10)",
+      "border": "2px dashed rgba(240,138,93,.75)",
+      "box-shadow": "inset 0 0 30px rgba(0,0,0,.35)"
+    },
+    "id": "Boom"
+  },
+  "Stash": {
+    "type": "holder",
+    "x": 200,
+    "y": -420,
+    "width": 221,
+    "height": 308,
+    "preventPiles": true,
+    "id": "Stash"
+  },
+  "Out": {
+    "type": "holder",
+    "x": 460,
+    "y": -420,
+    "width": 221,
+    "height": 308,
+    "preventPiles": true,
+    "id": "Out"
+  },
+  "Temp": {
+    "type": "holder",
+    "x": 720,
+    "y": -420,
+    "width": 221,
+    "height": 308,
+    "preventPiles": true,
+    "id": "Temp"
+  },
+  "status": {
+    "x": 1250,
+    "y": 190,
+    "width": 310,
+    "height": 344,
+    "layer": -5,
+    "movable": false,
     "movableInEdit": false,
-    "parent": "Draw",
-    "css": "font-size: 30px; "
+    "clickable": false,
+    "drawCount": 56,
+    "bombCount": 0,
+    "riskPct": 0,
+    "turnPlayer": "-",
+    "turnsLeft": 1,
+    "html": "<div class=\"h\">Table status</div><div class=\"row\"><span class=\"k\">Now playing</span><span class=\"v\">${PROPERTY turnPlayer}</span></div><div class=\"row\"><span class=\"k\">Turns to take</span><span class=\"v\">${PROPERTY turnsLeft}</span></div><div class=\"row\"><span class=\"k\">Cards in the deck</span><span class=\"v\">${PROPERTY drawCount}</span></div><div class=\"row\"><span class=\"k\">Exploding cats left</span><span class=\"v hot\">${PROPERTY bombCount}</span></div><div class=\"barwrap\"><div class=\"bar\"></div></div><div class=\"cap\">chance the next card goes boom: ${PROPERTY riskPct}%</div>",
+    "css": {
+      "default": {
+        "background": "rgba(14,9,24,0.55)",
+        "border": "1px solid rgba(255,255,255,0.13)",
+        "border-radius": "18px",
+        "box-shadow": "0 10px 30px rgba(0,0,0,.35)"
+      },
+      "${THIS} .h": {
+        "font-family": "'Creepster', cursive",
+        "font-size": "22px",
+        "color": "#f2c14e",
+        "text-align": "center",
+        "padding": "12px 10px 8px"
+      },
+      "${THIS} .row": {
+        "display": "flex",
+        "justify-content": "space-between",
+        "align-items": "baseline",
+        "padding": "7px 18px",
+        "font-family": "'Roboto Condensed', sans-serif"
+      },
+      "${THIS} .k": {
+        "font-size": "14px",
+        "color": "rgba(246,239,226,.62)"
+      },
+      "${THIS} .v": {
+        "font-size": "20px",
+        "font-weight": "700",
+        "color": "#f6efe2"
+      },
+      "${THIS} .hot": {
+        "color": "#ff9166"
+      },
+      "${THIS} .barwrap": {
+        "margin": "14px 18px 0",
+        "height": "14px",
+        "border-radius": "8px",
+        "background": "rgba(0,0,0,.35)",
+        "overflow": "hidden",
+        "box-shadow": "inset 0 0 0 1px rgba(255,255,255,.12)"
+      },
+      "${THIS} .bar": {
+        "height": "100%",
+        "width": "${PROPERTY riskPct}%",
+        "background": "linear-gradient(90deg,#f2c14e,#e8622a)",
+        "box-shadow": "0 0 12px rgba(232,98,42,.7)"
+      },
+      "${THIS} .cap": {
+        "font-family": "'Handwriting', cursive",
+        "font-size": "13px",
+        "color": "rgba(246,239,226,.55)",
+        "text-align": "center",
+        "padding": "10px 14px 0"
+      }
+    },
+    "id": "status",
+    "parentGlobalUpdateRoutine": [
+      "var a = ${value} == 'Draw'",
+      "var b = ${oldValue} == 'Draw'",
+      "var c = ${a} || ${b}",
+      {
+        "func": "IF",
+        "operand1": "${c}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "refreshRoutine",
+            "widget": "engine"
+          }
+        ]
+      }
+    ],
+    "turnGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "engine"
+      }
+    ]
   },
-  "card23253": {
-    "id": "card23253",
-    "z": 31982,
-    "type": "card",
-    "cardType": "type-ek04.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card15165": {
-    "id": "card15165",
-    "z": 31962,
-    "type": "card",
-    "cardType": "type-ek05.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card22803": {
-    "id": "card22803",
-    "z": 31978,
-    "type": "card",
-    "cardType": "type-ek06.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card26999": {
-    "id": "card26999",
-    "z": 32004,
-    "type": "card",
-    "cardType": "type-ek07.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card11059": {
-    "id": "card11059",
-    "z": 31980,
-    "type": "card",
-    "cardType": "type-ek08.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card27677": {
-    "id": "card27677",
-    "z": 32002,
-    "type": "card",
-    "cardType": "type-ek14.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card9856": {
-    "id": "card9856",
-    "z": 31961,
-    "type": "card",
-    "cardType": "type-ek17.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card24768": {
-    "id": "card24768",
-    "z": 31958,
-    "type": "card",
-    "cardType": "type-ek20.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card12125": {
-    "id": "card12125",
-    "z": 31964,
-    "type": "card",
-    "cardType": "type-ek25.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card15879": {
-    "id": "card15879",
-    "z": 31991,
-    "type": "card",
-    "cardType": "type-ek37.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "card20066": {
-    "id": "card20066",
-    "z": 32001,
-    "type": "card",
-    "cardType": "type-ek38.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "c5c27622-7100-4a81-be82-3cc027e51011": {
-    "id": "c5c27622-7100-4a81-be82-3cc027e51011",
-    "z": 31986,
-    "type": "card",
-    "cardType": "type-ek05.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "a421eec9-709e-4dd9-98ba-e00dc520c22b": {
-    "id": "a421eec9-709e-4dd9-98ba-e00dc520c22b",
-    "z": 31959,
-    "type": "card",
-    "cardType": "type-ek05.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "05fbbde7-2bc0-4dcc-904c-eacce6e770a4": {
-    "id": "05fbbde7-2bc0-4dcc-904c-eacce6e770a4",
-    "z": 31972,
-    "type": "card",
-    "cardType": "type-ek05.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "e4f3fbd3-506a-4734-9150-feb45c1a6ec9": {
-    "id": "e4f3fbd3-506a-4734-9150-feb45c1a6ec9",
-    "z": 31994,
-    "type": "card",
-    "cardType": "type-ek06.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "c988b47c-68f3-4059-ae22-d1fccf4ad7a0": {
-    "id": "c988b47c-68f3-4059-ae22-d1fccf4ad7a0",
-    "z": 31966,
-    "type": "card",
-    "cardType": "type-ek06.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "594d1c05-d5ce-4ce6-85fe-1da2ea07fe85": {
-    "id": "594d1c05-d5ce-4ce6-85fe-1da2ea07fe85",
-    "z": 31995,
-    "type": "card",
-    "cardType": "type-ek06.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "8b577789-82e6-4ae7-87cf-14322c863695": {
-    "id": "8b577789-82e6-4ae7-87cf-14322c863695",
-    "z": 31975,
-    "type": "card",
-    "cardType": "type-ek04.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "915104fb-a556-4803-b629-c93d846ef84f": {
-    "id": "915104fb-a556-4803-b629-c93d846ef84f",
-    "z": 31965,
-    "type": "card",
-    "cardType": "type-ek04.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "7b842d9c-ef5a-493d-bdc7-b9737a17b3e8": {
-    "id": "7b842d9c-ef5a-493d-bdc7-b9737a17b3e8",
-    "z": 32007,
-    "type": "card",
-    "cardType": "type-ek04.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "8e6dd333-1dae-4b6d-828e-534a4581fdc3": {
-    "id": "8e6dd333-1dae-4b6d-828e-534a4581fdc3",
-    "z": 31988,
-    "type": "card",
-    "cardType": "type-ek07.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "28ce9ea8-035d-4323-acdc-dc1152fe6af1": {
-    "id": "28ce9ea8-035d-4323-acdc-dc1152fe6af1",
-    "z": 31983,
-    "type": "card",
-    "cardType": "type-ek07.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "68cb0148-27c7-454a-bad7-c194ca9ff97c": {
-    "id": "68cb0148-27c7-454a-bad7-c194ca9ff97c",
-    "z": 31999,
-    "type": "card",
-    "cardType": "type-ek07.jpg",
-    "parent": "vayp",
-    "deck": "Main Deck"
-  },
-  "af4ccbbf-c270-408d-a0ea-6359a62d6418": {
-    "id": "af4ccbbf-c270-408d-a0ea-6359a62d6418",
-    "z": 31974,
-    "type": "card",
-    "cardType": "type-ek08.jpg",
-    "parent": "vayp",
-    "deck": "Main Deck"
-  },
-  "317b2748-e67a-4139-844f-211dc0665d59": {
-    "id": "317b2748-e67a-4139-844f-211dc0665d59",
-    "z": 32000,
-    "type": "card",
-    "cardType": "type-ek08.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "aaa5e05c-c803-4064-b245-e7ecc6a1e23f": {
-    "id": "aaa5e05c-c803-4064-b245-e7ecc6a1e23f",
-    "z": 31968,
-    "type": "card",
-    "cardType": "type-ek08.jpg",
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "5569f967-792d-4588-a6a5-e9fcd6b09f98_label": {
-    "id": "5569f967-792d-4588-a6a5-e9fcd6b09f98_label",
-    "x": -21.3,
-    "y": -40,
-    "width": 255.6,
-    "height": 40,
-    "type": "label",
-    "text": "Discard",
+  "engine": {
+    "x": 1060,
+    "y": -420,
+    "width": 60,
+    "height": 60,
+    "movable": false,
     "movableInEdit": false,
-    "parent": "Discard",
-    "css": "font-size: 30px; "
+    "clickable": false,
+    "turnsLeft": 1,
+    "refreshRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "Draw",
+        "collection": "dp"
+      },
+      {
+        "func": "COUNT",
+        "collection": "dp",
+        "variable": "nCards"
+      },
+      {
+        "func": "SELECT",
+        "source": "dp",
+        "property": "exploding",
+        "value": true,
+        "collection": "bombs"
+      },
+      {
+        "func": "COUNT",
+        "collection": "bombs",
+        "variable": "nBombs"
+      },
+      "var pct = 0",
+      {
+        "func": "IF",
+        "operand1": "${nCards}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "var pct = ${nBombs} / ${nCards}",
+          "var pct = ${pct} * 100",
+          "var pct = round ${pct}"
+        ]
+      },
+      "var curPlayer = '-'",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "cur",
+        "max": 1
+      },
+      {
+        "func": "COUNT",
+        "collection": "cur",
+        "variable": "nCur"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nCur}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "cur",
+            "property": "player",
+            "variable": "curPlayer",
+            "aggregation": "first"
+          }
+        ]
+      },
+      "var turns = ${PROPERTY turnsLeft OF engine}",
+      {
+        "func": "SET",
+        "collection": [
+          "status"
+        ],
+        "property": "drawCount",
+        "value": "${nCards}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "status"
+        ],
+        "property": "bombCount",
+        "value": "${nBombs}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "status"
+        ],
+        "property": "riskPct",
+        "value": "${pct}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "status"
+        ],
+        "property": "turnPlayer",
+        "value": "${curPlayer}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "status"
+        ],
+        "property": "turnsLeft",
+        "value": "${turns}"
+      }
+    ],
+    "endTurnRoutine": [
+      "var t = ${PROPERTY turnsLeft OF engine}",
+      "var t = ${t} - 1",
+      {
+        "func": "IF",
+        "operand1": "${t}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "engine"
+            ],
+            "property": "turnsLeft",
+            "value": "${t}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "engine"
+            ],
+            "property": "turnsLeft",
+            "value": 1
+          },
+          {
+            "func": "TURN",
+            "turnCycle": "forward"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "engine"
+      }
+    ],
+    "checkWinnerRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "seated"
+      },
+      {
+        "func": "SELECT",
+        "source": "seated",
+        "property": "skipTurn",
+        "relation": "!=",
+        "value": true,
+        "collection": "alive"
+      },
+      {
+        "func": "COUNT",
+        "collection": "alive",
+        "variable": "nAlive"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nAlive}",
+        "relation": "<=",
+        "operand2": 1,
+        "thenRoutine": [
+          "var winner = 'Nobody'",
+          {
+            "func": "IF",
+            "operand1": "${nAlive}",
+            "relation": "==",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": "alive",
+                "property": "player",
+                "variable": "winner",
+                "aggregation": "first"
+              }
+            ]
+          },
+          {
+            "func": "LABEL",
+            "label": "banner",
+            "value": "${winner} is the last cat standing!"
+          },
+          {
+            "func": "AUDIO",
+            "source": "/i/audio/music/jingles_STEEL00.mp3",
+            "maxVolume": 0.7
+          },
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "${winner} survives!"
+              },
+              {
+                "type": "text",
+                "text": "Everybody else is a small crater. Press New Game for another round."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "Nine lives well spent"
+          }
+        ]
+      }
+    ],
+    "eliminateRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "value": "${seat}",
+        "collection": "deadSeat",
+        "max": 1
+      },
+      "var deadPlayer = ${PROPERTY player OF $seat}",
+      {
+        "func": "SET",
+        "collection": "deadSeat",
+        "property": "skipTurn",
+        "value": true
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "hand",
+        "collection": "vh"
+      },
+      {
+        "func": "SELECT",
+        "source": "vh",
+        "property": "owner",
+        "value": "${deadPlayer}",
+        "collection": "vh"
+      },
+      {
+        "func": "MOVE",
+        "collection": "vh",
+        "to": "Discard",
+        "count": "all",
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "Boom",
+        "collection": "bc"
+      },
+      {
+        "func": "MOVE",
+        "collection": "bc",
+        "to": "Out",
+        "count": "all"
+      },
+      {
+        "func": "LABEL",
+        "label": "banner",
+        "value": "${deadPlayer} exploded. Bye!"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "engine"
+        ],
+        "property": "turnsLeft",
+        "value": 1
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      },
+      {
+        "func": "CALL",
+        "routine": "checkWinnerRoutine",
+        "widget": "engine"
+      },
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "engine"
+      }
+    ],
+    "id": "engine"
   },
-  "bggs": {
-    "type": "card",
-    "cardType": "type-ek31.jpg",
-    "id": "bggs",
-    "z": 31970,
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "8g32": {
-    "type": "card",
-    "cardType": "type-ek40.jpg",
-    "id": "8g32",
-    "z": 31957,
-    "deck": "Main Deck",
-    "parent": "vayp"
-  },
-  "Reset Button": {
+  "newGame": {
     "type": "button",
-    "id": "Reset Button",
-    "x": 1499,
-    "width": 100,
-    "height": 32,
-    "z": 6678,
+    "x": 1360,
+    "y": 16,
+    "width": 200,
+    "height": 60,
+    "layer": -1,
+    "text": "New Game",
+    "icon": "delapouite/card-exchange",
     "clickRoutine": [
       {
         "func": "SELECT",
         "type": "seat",
         "property": "player",
         "relation": "!=",
-        "value": ""
+        "value": "",
+        "collection": "seated"
       },
       {
         "func": "COUNT",
+        "collection": "seated",
         "variable": "players"
       },
-      "var lessThan5 = ${players} < 5",
-      "var lessThan4 = ${players} < 4",
-      "var lessThan3 = ${players} < 3",
+      {
+        "func": "IF",
+        "operand1": "${players}",
+        "relation": "<",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Not enough cats"
+              },
+              {
+                "type": "text",
+                "text": "At least two players have to sit down before a new game can be dealt."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Deal a new game?"
+              },
+              {
+                "type": "text",
+                "text": "Every card is collected, shuffled and dealt again for the ${players} seated players. Everyone gets 7 cards plus one Laser Pointer, and one exploding cat less than there are players goes into the deck."
+              }
+            ],
+            "confirmButtonText": "Deal them",
+            "cancelButtonText": "Not yet"
+          },
+          {
+            "func": "CALL",
+            "routine": "setupRoutine"
+          }
+        ]
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#7a1f2a",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#f2c14e",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "setupRoutine": [
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "seated"
+      },
+      {
+        "func": "COUNT",
+        "collection": "seated",
+        "variable": "players"
+      },
       "var kittens = ${players} - 1",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "type",
+        "value": "seat",
+        "collection": "allSeats"
+      },
+      {
+        "func": "SET",
+        "collection": "allSeats",
+        "property": "skipTurn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "allSeats",
+        "property": "turn",
+        "value": false
+      },
       {
         "func": "RECALL",
         "holder": "Draw"
@@ -302,643 +2334,718 @@
         "face": 0
       },
       {
-        "func": "SHUFFLE",
-        "holder": "Draw"
-      },
-      {
         "func": "SELECT",
+        "type": "card",
         "property": "defuse",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "value": "Temp"
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "Temp"
+        "value": true,
+        "collection": "defuses"
       },
       {
         "func": "MOVE",
-        "from": "Temp",
-        "to": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4",
-          "seat5"
+        "collection": "defuses",
+        "to": "Stash",
+        "count": "all"
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "exploding",
+        "value": true,
+        "collection": "booms"
+      },
+      {
+        "func": "MOVE",
+        "collection": "booms",
+        "to": "Out",
+        "count": "all"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      "var seatIDs = []",
+      {
+        "func": "FOREACH",
+        "collection": "seated",
+        "loopRoutine": [
+          "var seatIDs = push ${widgetID}"
         ]
       },
       {
         "func": "MOVE",
-        "from": "Temp",
-        "to": "Draw",
-        "count": 2
-      },
-      {
-        "func": "MOVE",
-        "from": "Temp",
-        "to": "Draw",
-        "count": 0,
-        "skip": "${lessThan4}"
-      },
-      {
-        "func": "SELECT",
-        "property": "exploding",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "value": "Out"
+        "from": "Draw",
+        "to": "${seatIDs}",
+        "count": 7,
+        "face": 1
       },
       {
         "func": "SHUFFLE",
-        "holder": "Draw"
+        "holder": "Stash"
       },
       {
         "func": "MOVE",
-        "from": "Draw",
-        "to": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4",
-          "seat5"
-        ],
-        "count": 7
+        "from": "Stash",
+        "to": "${seatIDs}",
+        "count": 1,
+        "face": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "Stash",
+        "to": "Draw",
+        "count": "all",
+        "face": 0
       },
       {
         "func": "MOVE",
         "from": "Out",
         "to": "Draw",
-        "count": "${kittens}"
+        "count": "${kittens}",
+        "face": 0
       },
       {
         "func": "SHUFFLE",
         "holder": "Draw"
       },
       {
+        "func": "SET",
+        "collection": [
+          "engine"
+        ],
+        "property": "turnsLeft",
+        "value": 1
+      },
+      {
         "func": "TURN",
         "turnCycle": "random"
+      },
+      {
+        "func": "AUDIO",
+        "source": "/i/audio/casino/card-fan-1.mp3",
+        "maxVolume": 0.7
+      },
+      {
+        "func": "LABEL",
+        "label": "banner",
+        "value": "${players} players, ${kittens} exploding cats. Good luck."
+      },
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "engine"
       }
     ],
-    "text": "Reset",
-    "y": 3
+    "id": "newGame"
   },
-  "Exploding Kitten Button": {
+  "drawButton": {
     "type": "button",
-    "id": "Exploding Kitten Button",
-    "x": 1104,
-    "y": 536,
-    "width": 100,
-    "height": 60,
-    "z": 6687,
+    "x": 470,
+    "y": 544,
+    "width": 221,
+    "height": 58,
+    "layer": -1,
+    "text": "Draw",
+    "icon": "quoting/card-play",
     "clickRoutine": [
       {
-        "func": "COUNT",
-        "holder": "Draw"
+        "func": "IF",
+        "operand1": "${seatID}",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Take a seat first"
+              },
+              {
+                "type": "text",
+                "text": "Click one of the seats at the top of the table, then try again."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "drawRoutine"
+          }
+        ]
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#10704f",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#39d29b",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "drawRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "Draw",
+        "collection": "top",
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        },
+        "max": 1
       },
-      "var COUNT = ${COUNT} + 1",
+      {
+        "func": "COUNT",
+        "collection": "top",
+        "variable": "got"
+      },
+      {
+        "func": "IF",
+        "operand1": "${got}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "The deck is empty"
+              },
+              {
+                "type": "text",
+                "text": "Nothing left to draw. Somebody has been very lucky."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "GET",
+            "collection": "top",
+            "property": "exploding",
+            "variable": "isBoom",
+            "aggregation": "first"
+          },
+          {
+            "func": "IF",
+            "operand1": "${isBoom}",
+            "relation": "==",
+            "operand2": true,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "top",
+                "to": "Boom",
+                "face": 1
+              },
+              {
+                "func": "AUDIO",
+                "source": "/i/audio/scifi/explosionCrunch_000.mp3",
+                "maxVolume": 0.8
+              },
+              {
+                "func": "LABEL",
+                "label": "banner",
+                "value": "BOOM! ${playerName} pulled an exploding cat!"
+              },
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "BOOM!"
+                  },
+                  {
+                    "type": "text",
+                    "text": "You drew an exploding cat. Play a Laser Pointer and hide the cat back in the deck - or leave the game in several pieces."
+                  },
+                  {
+                    "type": "select",
+                    "label": "So?",
+                    "variable": "boomChoice",
+                    "options": [
+                      {
+                        "value": "defuse",
+                        "text": "I have a Laser Pointer - let me hide it",
+                        "selected": true
+                      },
+                      {
+                        "value": "out",
+                        "text": "I have nothing. I am out."
+                      }
+                    ]
+                  }
+                ],
+                "cancelButtonText": null,
+                "cancelButtonIcon": null,
+                "confirmButtonText": "Gulp"
+              },
+              {
+                "func": "IF",
+                "operand1": "${boomChoice}",
+                "relation": "==",
+                "operand2": "out",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "eliminateRoutine",
+                    "widget": "engine",
+                    "arguments": {
+                      "seat": "${seatID}"
+                    }
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "banner",
+                    "value": "${playerName} has to hide that cat back in the deck..."
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "collection": "top",
+                "to": "${seatID}",
+                "face": 1
+              },
+              {
+                "func": "AUDIO",
+                "source": "/i/audio/casino/card-place-1.mp3",
+                "maxVolume": 0.5,
+                "player": "${playerName}"
+              },
+              {
+                "func": "CALL",
+                "routine": "endTurnRoutine",
+                "widget": "engine"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "drawButton"
+  },
+  "takeDiscard": {
+    "type": "button",
+    "x": 735,
+    "y": 544,
+    "width": 221,
+    "height": 58,
+    "layer": -1,
+    "text": "Take 1",
+    "icon": "quoting/card-pickup",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatID}",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Take a seat first"
+              },
+              {
+                "type": "text",
+                "text": "Click one of the seats at the top of the table, then try again."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "pickRoutine"
+          }
+        ]
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#155e4c",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#9fd6c4",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "pickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "Discard",
+        "collection": "disc",
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        }
+      },
+      {
+        "func": "COUNT",
+        "collection": "disc",
+        "variable": "nDisc"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nDisc}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Nothing here"
+              },
+              {
+                "type": "text",
+                "text": "The discard pile is empty."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Take one card from the discard pile"
+              },
+              {
+                "type": "subtitle",
+                "text": "Normally this costs five different cat cards."
+              },
+              {
+                "type": "choose",
+                "source": "disc",
+                "propertyOverride": {
+                  "activeFace": 1
+                },
+                "max": 1,
+                "variable": "pickedCard",
+                "collection": "picked"
+              }
+            ],
+            "confirmButtonText": "Take it",
+            "cancelButtonText": "Cancel"
+          },
+          {
+            "func": "MOVE",
+            "collection": "picked",
+            "to": "${seatID}",
+            "face": 1
+          },
+          {
+            "func": "AUDIO",
+            "source": "/i/audio/casino/card-place-1.mp3",
+            "maxVolume": 0.5
+          },
+          {
+            "func": "LABEL",
+            "label": "banner",
+            "value": "${playerName} fished a card out of the discard pile."
+          }
+        ]
+      }
+    ],
+    "id": "takeDiscard"
+  },
+  "hideBomb": {
+    "type": "button",
+    "x": 1000,
+    "y": 544,
+    "width": 221,
+    "height": 58,
+    "layer": -1,
+    "text": "Defuse",
+    "icon": "lorc/laser-blast",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "Boom",
+        "collection": "bomb"
+      },
+      {
+        "func": "COUNT",
+        "collection": "bomb",
+        "variable": "nBomb"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nBomb}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "No cat to hide"
+              },
+              {
+                "type": "text",
+                "text": "There is no exploding cat in the Danger Zone right now."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "hideRoutine"
+          }
+        ]
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#8a3a12",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#f08a5d",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "hideRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "Draw",
+        "collection": "dp"
+      },
+      {
+        "func": "COUNT",
+        "collection": "dp",
+        "variable": "nCards"
+      },
+      "var maxPos = ${nCards} + 1",
       {
         "func": "INPUT",
-        "header": "Exploding Kitten",
         "fields": [
           {
+            "type": "title",
+            "text": "Hide the exploding cat"
+          },
+          {
+            "type": "text",
+            "text": "Slide it back into the deck wherever you like. Nobody else sees where. 1 means right on top."
+          },
+          {
             "type": "number",
-            "label": "At which position should the Exploding Kittens card be in the draw pile (1 is on top and ${COUNT} is on bottom)?",
-            "variable": "position",
+            "label": "Position from the top",
+            "variable": "pos",
             "value": 1,
             "min": 1,
-            "max": "${COUNT}"
+            "max": "${maxPos}"
+          },
+          {
+            "type": "switch",
+            "label": "Also discard one Laser Pointer from my hand",
+            "variable": "useDefuse",
+            "value": "on"
+          }
+        ],
+        "confirmButtonText": "Hide it",
+        "cancelButtonText": "Cancel"
+      },
+      "var above = ${pos} - 1",
+      {
+        "func": "IF",
+        "operand1": "${above}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "Draw",
+            "to": "Temp",
+            "count": "${above}"
           }
         ]
       },
-      "var isFirst = ${position} == 1",
-      "var realPosition = ${position} - 1",
       {
-        "func": "MOVE",
-        "from": "Draw",
-        "to": "Temp",
-        "skip": "${isFirst}",
-        "count": "${realPosition}"
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "Boom",
+        "collection": "bomb"
       },
       {
         "func": "MOVE",
-        "from": "Discard",
+        "collection": "bomb",
         "to": "Draw",
+        "count": "all",
         "face": 0
       },
       {
         "func": "MOVE",
         "from": "Temp",
-        "count": 100,
-        "to": "Draw"
+        "to": "Draw",
+        "count": "all",
+        "face": 0
+      },
+      {
+        "func": "IF",
+        "operand1": "${useDefuse}",
+        "relation": "==",
+        "operand2": "on",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "hand",
+            "collection": "mh"
+          },
+          {
+            "func": "SELECT",
+            "source": "mh",
+            "property": "owner",
+            "value": "${playerName}",
+            "collection": "mh"
+          },
+          {
+            "func": "SELECT",
+            "source": "mh",
+            "property": "defuse",
+            "value": true,
+            "collection": "md",
+            "max": 1
+          },
+          {
+            "func": "MOVE",
+            "collection": "md",
+            "to": "Discard",
+            "face": 1
+          }
+        ]
+      },
+      {
+        "func": "AUDIO",
+        "source": "/i/audio/interface/confirmation_001.mp3",
+        "maxVolume": 0.6
+      },
+      {
+        "func": "LABEL",
+        "label": "banner",
+        "value": "${playerName} hid the cat somewhere in the deck. Sleep well."
+      },
+      {
+        "func": "CALL",
+        "routine": "endTurnRoutine",
+        "widget": "engine"
       }
     ],
-    "text": "Defuse"
+    "id": "hideBomb"
   },
-  "Shuffle Button": {
+  "sortHand": {
     "type": "button",
-    "id": "Shuffle Button",
-    "x": 320,
-    "z": 6686,
-    "clickRoutine": [
-      {
-        "func": "SHUFFLE",
-        "holder": "Draw"
-      }
-    ],
-    "text": "Shuffle",
-    "width": 100,
-    "height": 60,
-    "y": 536
-  },
-  "Draw": {
-    "type": "holder",
-    "id": "Draw",
-    "x": 390,
-    "y": 266,
-    "width": 213,
-    "height": 300,
-    "z": 6003
-  },
-  "Temp": {
-    "type": "holder",
-    "id": "Temp",
-    "x": 464.5,
-    "y": -435,
-    "z": 5997,
-    "width": 213,
-    "height": 300
-  },
-  "Discard": {
-    "type": "holder",
-    "id": "Discard",
-    "x": 926,
-    "y": 266,
-    "width": 213,
-    "height": 300,
-    "z": 6002
-  },
-  "Out": {
-    "type": "holder",
-    "id": "Out",
-    "width": 213,
-    "height": 300,
-    "z": 5996,
-    "x": 240.5,
-    "y": -435
-  },
-  "Main Deck": {
-    "type": "deck",
-    "id": "Main Deck",
-    "parent": "Draw",
-    "x": 13,
-    "y": 44,
-    "z": 2537,
-    "cardDefaults": {
-      "pilesWith": {
-        "name": "card"
-      },
-      "width": 205,
-      "height": 292,
-      "ignoreOnLeave": true
-    },
-    "cardTypes": {
-      "type-ek04.jpg": {
-        "name": "Melon",
-        "action": "nothing",
-        "filler": true,
-        "image": "/assets/-102677534_5497",
-        "sortOrder": 8
-      },
-      "type-ek05.jpg": {
-        "name": "Taco",
-        "action": "nothing",
-        "filler": true,
-        "image": "/assets/992705680_1816",
-        "sortOrder": 9
-      },
-      "type-ek06.jpg": {
-        "name": "Hairy",
-        "action": "nothing",
-        "filler": true,
-        "image": "/assets/-2079250882_1091",
-        "sortOrder": 10
-      },
-      "type-ek07.jpg": {
-        "name": "Beard",
-        "action": "nothing",
-        "filler": true,
-        "image": "/assets/1759739171_1326",
-        "sortOrder": 11
-      },
-      "type-ek08.jpg": {
-        "name": "Rainbow",
-        "action": "nothing",
-        "filler": true,
-        "image": "/assets/658295769_1038",
-        "sortOrder": 12
-      },
-      "type-ek14.jpg": {
-        "name": "Peek",
-        "action": "use the Peek button to look at the next three cards - press it again to put them back",
-        "image": "/assets/-1694193877_1439",
-        "sortOrder": 3
-      },
-      "type-ek17.jpg": {
-        "name": "Shuffle",
-        "action": "use the Shuffle button to shuffle the draw pile",
-        "image": "/assets/1640093657_2284",
-        "sortOrder": 7
-      },
-      "type-ek20.jpg": {
-        "name": "Nope",
-        "action": "undo the last played card by another player",
-        "image": "/assets/1704241044_818",
-        "sortOrder": 2
-      },
-      "type-ek25.jpg": {
-        "name": "Favor",
-        "action": "ask another player for a card of their choice",
-        "image": "/assets/451028571_3081",
-        "sortOrder": 4
-      },
-      "type-ek31.jpg": {
-        "name": "Defuse",
-        "action": "survive an explosion\nput the explosion on the discard pile and use the Defuse button",
-        "image": "/assets/-1331901266_1380",
-        "defuse": true,
-        "sortOrder": 1
-      },
-      "type-ek37.jpg": {
-        "name": "Skip",
-        "action": "end your turn without drawing a card",
-        "image": "/assets/-8031558_1359",
-        "sortOrder": 5
-      },
-      "type-ek38.jpg": {
-        "name": "Attack",
-        "action": "don't draw a card; the next player takes two turns",
-        "image": "/assets/-210113206_1459",
-        "sortOrder": 6
-      },
-      "type-ek40.jpg": {
-        "name": "Explode",
-        "action": "show this card immediately and use defuse or lose the game",
-        "image": "/assets/339700929_3444",
-        "exploding": true,
-        "sortOrder": 0
-      }
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "darkred",
-            "value": "/assets/-1590880098_1431",
-            "width": 205,
-            "height": 292
-          }
-        ],
-        "border": false,
-        "radius": 8
-      },
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "white",
-            "value": "",
-            "width": 205,
-            "height": 292
-          },
-          {
-            "type": "image",
-            "x": 36,
-            "y": 8,
-            "color": "white",
-            "width": 165,
-            "height": 252,
-            "dynamicProperties": {
-              "value": "image"
-            }
-          },
-          {
-            "type": "image",
-            "x": 2,
-            "y": 2,
-            "color": "transparent",
-            "width": 36,
-            "height": 36,
-            "dynamicProperties": {
-              "value": "image"
-            }
-          },
-          {
-            "type": "text",
-            "x": 0,
-            "y": 100,
-            "fontSize": 20,
-            "textAlign": "center",
-            "width": 40,
-            "rotation": -90,
-            "css": "color: grey",
-            "dynamicProperties": {
-              "value": "name"
-            }
-          },
-          {
-            "type": "text",
-            "x": 40,
-            "y": 220,
-            "fontSize": 12,
-            "textAlign": "center",
-            "width": 155,
-            "dynamicProperties": {
-              "value": "action"
-            }
-          }
-        ],
-        "border": false,
-        "radius": 8,
-        "properties": {
-          "enlarge": 2
-        }
-      }
-    ]
-  },
-  "jh2z": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek20.jpg",
-    "id": "jh2z",
-    "z": 31955,
-    "parent": "vayp"
-  },
-  "nc3p": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek20.jpg",
-    "id": "nc3p",
-    "z": 31997,
-    "parent": "vayp"
-  },
-  "x9w0": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek20.jpg",
-    "id": "x9w0",
-    "z": 31987,
-    "parent": "vayp"
-  },
-  "i72s": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek20.jpg",
-    "id": "i72s",
-    "z": 31971,
-    "parent": "vayp"
-  },
-  "xr4z": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek37.jpg",
-    "id": "xr4z",
-    "z": 31985,
-    "parent": "vayp"
-  },
-  "e97i": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek37.jpg",
-    "id": "e97i",
-    "z": 31976,
-    "parent": "vayp"
-  },
-  "uufh": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek37.jpg",
-    "id": "uufh",
-    "z": 31954,
-    "parent": "vayp"
-  },
-  "eaiz": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek31.jpg",
-    "id": "eaiz",
-    "z": 31963,
-    "parent": "vayp"
-  },
-  "zqr4": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek31.jpg",
-    "id": "zqr4",
-    "z": 31981,
-    "parent": "vayp"
-  },
-  "3t4l": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek31.jpg",
-    "id": "3t4l",
-    "z": 31979,
-    "parent": "vayp"
-  },
-  "87iw": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek31.jpg",
-    "id": "87iw",
-    "z": 31992,
-    "parent": "vayp"
-  },
-  "3jnd": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek31.jpg",
-    "id": "3jnd",
-    "z": 32003,
-    "parent": "vayp"
-  },
-  "szzq": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek38.jpg",
-    "id": "szzq",
-    "z": 31952,
-    "parent": "vayp"
-  },
-  "in9g": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek38.jpg",
-    "id": "in9g",
-    "z": 31990,
-    "parent": "vayp"
-  },
-  "ta1n": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek25.jpg",
-    "id": "ta1n",
-    "z": 31984,
-    "parent": "vayp"
-  },
-  "5yu3": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek25.jpg",
-    "id": "5yu3",
-    "z": 32005,
-    "parent": "vayp"
-  },
-  "vizr": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek25.jpg",
-    "id": "vizr",
-    "z": 31996,
-    "parent": "vayp"
-  },
-  "s4vy": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek14.jpg",
-    "id": "s4vy",
-    "z": 31969,
-    "parent": "vayp"
-  },
-  "4ymh": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek14.jpg",
-    "id": "4ymh",
-    "z": 31960,
-    "parent": "vayp"
-  },
-  "8n14": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek14.jpg",
-    "id": "8n14",
-    "z": 32006,
-    "parent": "vayp"
-  },
-  "l4c4": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek14.jpg",
-    "id": "l4c4",
-    "z": 31989,
-    "parent": "vayp"
-  },
-  "05j3": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek40.jpg",
-    "id": "05j3",
-    "z": 31993,
-    "parent": "vayp"
-  },
-  "6hpg": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek40.jpg",
-    "id": "6hpg",
-    "z": 31977,
-    "parent": "vayp"
-  },
-  "x7hy": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek40.jpg",
-    "id": "x7hy",
-    "z": 31973,
-    "parent": "vayp"
-  },
-  "udt5": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek38.jpg",
-    "id": "udt5",
-    "z": 31956,
-    "parent": "vayp"
-  },
-  "l8ez": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek17.jpg",
-    "id": "l8ez",
-    "z": 31953,
-    "parent": "vayp"
-  },
-  "ity5": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek17.jpg",
-    "id": "ity5",
-    "z": 31967,
-    "parent": "vayp"
-  },
-  "6hat": {
-    "deck": "Main Deck",
-    "type": "card",
-    "cardType": "type-ek17.jpg",
-    "id": "6hat",
-    "z": 31998,
-    "parent": "vayp"
-  },
-  "_meta": {
-    "version": 14,
-    "info": {
-      "name": "Don't Blow Up",
-      "image": "/assets/1599847053_3509",
-      "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/172225/exploding-kittens",
-      "year": "2015",
-      "mode": "vs",
-      "time": "15",
-      "attribution": "The room layout is public domain (CC0) by ArnoldSmith86.\n\nAll other images are CC-BY from game-icons.net:\n\nhttps://game-icons.net/1x1/lorc/mushroom-cloud.html\nhttps://game-icons.net/1x1/lorc/pincers.html\nhttps://game-icons.net/1x1/lorc/crystal-ball.html\nhttps://game-icons.net/1x1/lorc/run.html\nhttps://game-icons.net/1x1/lorc/interdiction.html\nhttps://game-icons.net/1x1/delapouite/pineapple.html\nhttps://game-icons.net/1x1/lorc/rainbow-star.html\nhttps://game-icons.net/1x1/lorc/beard.html\nhttps://game-icons.net/1x1/lorc/comb.html\nhttps://game-icons.net/1x1/delapouite/tacos.html\nhttps://game-icons.net/1x1/faithtoken/card-random.html\nhttps://game-icons.net/1x1/darkzaitzev/robber-hand.html\nhttps://game-icons.net/1x1/lorc/sword-clash.html\nhttps://game-icons.net/1x1/lorc/cat.html",
-      "similarName": "Exploding Kittens",
-      "description": "Take turns drawing cards, using card powers to avoid getting the explosion card. First player to get explosion card loses.",
-      "showName": true,
-      "lastUpdate": 1698258036205,
-      "skill": "",
-      "similarImage": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "Play as many cards as you want to. End your turn by drawing a card.<div><br></div><div>Be the last player standing after everyone else exploded.</div><div><br></div><div>Discard two of a kind to draw a card from an opponent.</div><div><br></div><div>Discard three of a kind to steal a specific card (for example a Defuse) from an opponent.</div><div><br></div><div>Discard five different cards to pick a card from the Discard pile.</div>",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-5",
-      "similarDesigner": "Matthew Inman, Elan Lee, Shane Small"
-    }
-  },
-  "Peek": {
-    "type": "button",
-    "id": "Peek",
-    "x": 578,
-    "y": 536,
-    "width": 100,
-    "height": 60,
-    "z": 6691,
-    "text": "Peek",
+    "x": 40,
+    "y": 616,
+    "width": 205,
+    "height": 64,
+    "layer": -1,
+    "text": "Sort",
+    "icon": "lorc/poker-hand",
     "clickRoutine": [
       {
         "func": "SELECT",
         "type": "card",
-        "property": "parent",
+        "property": "_ancestor",
+        "value": "hand",
+        "collection": "myHand"
+      },
+      {
+        "func": "SELECT",
+        "source": "myHand",
+        "property": "owner",
+        "value": "${playerName}",
+        "collection": "myHand"
+      },
+      {
+        "func": "SORT",
+        "collection": "myHand",
+        "key": "sortOrder"
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#2b1b40",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#f2c14e",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "id": "sortHand"
+  },
+  "peek": {
+    "type": "button",
+    "x": 259,
+    "y": 616,
+    "width": 205,
+    "height": 64,
+    "layer": -1,
+    "text": "Peek 3",
+    "icon": "lorc/crystal-ball",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
         "value": "Draw",
+        "collection": "peekC",
         "sortBy": {
           "key": "z",
           "reverse": true
@@ -946,400 +3053,746 @@
         "max": 3
       },
       {
-        "func": "INPUT",
-        "fields": [
+        "func": "COUNT",
+        "collection": "peekC",
+        "variable": "nPeek"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nPeek}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
           {
-            "type": "title",
-            "text": "Peeking at next 3 cards"
-          },
-          {
-            "type": "subtitle",
-            "text": "Cards shown in order with top card first."
-          },
-          {
-            "type": "choose",
-            "propertyOverride": {
-              "activeFace": 1
-            },
-            "max": 0,
-            "scale": 0.9
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "The deck is empty"
+              },
+              {
+                "type": "text",
+                "text": "There is no future to look at."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
           }
         ],
-        "cancelButtonText": null,
-        "cancelButtonIcon": null,
-        "confirmButtonText": "Done Peeking"
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "The next cards"
+              },
+              {
+                "type": "subtitle",
+                "text": "Top card first. Only you can see this."
+              },
+              {
+                "type": "choose",
+                "source": "peekC",
+                "propertyOverride": {
+                  "activeFace": 1
+                },
+                "max": 0,
+                "scale": 0.9,
+                "variable": "peeked"
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "Seen enough"
+          },
+          {
+            "func": "LABEL",
+            "label": "banner",
+            "value": "${playerName} peeked into the future."
+          }
+        ]
       }
-    ]
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#2b1b40",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#f2c14e",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "id": "peek"
   },
-  "Pick": {
+  "shuffleDeck": {
     "type": "button",
-    "id": "Pick",
-    "x": 858,
-    "y": 536,
-    "width": 100,
-    "height": 60,
-    "z": 6691,
-    "text": "Pick 1",
+    "x": 478,
+    "y": 616,
+    "width": 205,
+    "height": 64,
+    "layer": -1,
+    "text": "Shuffle",
+    "icon": "faithtoken/card-random",
     "clickRoutine": [
       {
+        "func": "SHUFFLE",
+        "holder": "Draw"
+      },
+      {
+        "func": "FLIP",
+        "holder": "Draw",
+        "face": 0
+      },
+      {
+        "func": "AUDIO",
+        "source": "/i/audio/casino/card-shove-1.mp3",
+        "maxVolume": 0.6
+      },
+      {
+        "func": "LABEL",
+        "label": "banner",
+        "value": "${playerName} shuffled the deck. Nobody knows anything any more."
+      },
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "engine"
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#2b1b40",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#f2c14e",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "id": "shuffleDeck"
+  },
+  "takeCard": {
+    "type": "button",
+    "x": 697,
+    "y": 616,
+    "width": 205,
+    "height": 64,
+    "layer": -1,
+    "text": "Steal",
+    "icon": "darkzaitzev/robber-hand",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${seatID}",
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Take a seat first"
+              },
+              {
+                "type": "text",
+                "text": "Click one of the seats at the top of the table, then try again."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "takeRoutine"
+          }
+        ]
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#6a4410",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#e0a542",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "takeRoutine": [
+      {
         "func": "SELECT",
-        "type": "card",
-        "property": "parent",
-        "value": "Discard",
-        "sortBy": {
-          "key": "z",
-          "reverse": true
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "others"
+      },
+      {
+        "func": "SELECT",
+        "source": "others",
+        "property": "id",
+        "relation": "!=",
+        "value": "${seatID}",
+        "collection": "others"
+      },
+      {
+        "func": "SELECT",
+        "source": "others",
+        "property": "skipTurn",
+        "relation": "!=",
+        "value": true,
+        "collection": "others"
+      },
+      {
+        "func": "COUNT",
+        "collection": "others",
+        "variable": "nOthers"
+      },
+      {
+        "func": "IF",
+        "operand1": "${nOthers}",
+        "relation": "==",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Nobody to bother"
+              },
+              {
+                "type": "text",
+                "text": "There is no other player left to take a card from."
+              }
+            ],
+            "cancelButtonText": null,
+            "cancelButtonIcon": null,
+            "confirmButtonText": "OK"
+          }
+        ],
+        "elseRoutine": [
+          "var opts = []",
+          {
+            "func": "FOREACH",
+            "collection": "others",
+            "loopRoutine": [
+              "var o = {}",
+              "var pn = ${PROPERTY player OF $widgetID}",
+              "var o.value = ${widgetID}",
+              "var o.text = ${pn}",
+              "var opts = push ${o}"
+            ]
+          },
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Take a card"
+              },
+              {
+                "type": "subtitle",
+                "text": "Discard the matching cards first - this button only moves the card."
+              },
+              {
+                "type": "select",
+                "label": "From which player",
+                "variable": "victimSeat",
+                "options": "${opts}"
+              },
+              {
+                "type": "select",
+                "label": "How",
+                "variable": "method",
+                "options": [
+                  {
+                    "value": "favor",
+                    "text": "They choose a card for me (Favor)",
+                    "selected": true
+                  },
+                  {
+                    "value": "random",
+                    "text": "I grab a random card (two matching cats)"
+                  },
+                  {
+                    "value": "named",
+                    "text": "I name a card (three matching cats)"
+                  }
+                ]
+              },
+              {
+                "type": "select",
+                "label": "Named card (only for the third option)",
+                "variable": "wanted",
+                "options": [
+                  {
+                    "value": "defuse",
+                    "text": "Laser Pointer",
+                    "selected": true
+                  },
+                  {
+                    "value": "nope",
+                    "text": "Nope"
+                  },
+                  {
+                    "value": "peek",
+                    "text": "Peek"
+                  },
+                  {
+                    "value": "favor",
+                    "text": "Favor"
+                  },
+                  {
+                    "value": "skip",
+                    "text": "Skip"
+                  },
+                  {
+                    "value": "attack",
+                    "text": "Attack"
+                  },
+                  {
+                    "value": "shuffle",
+                    "text": "Shuffle"
+                  },
+                  {
+                    "value": "cat-loaf",
+                    "text": "Loaf Cat"
+                  },
+                  {
+                    "value": "cat-beans",
+                    "text": "Toe Beans"
+                  },
+                  {
+                    "value": "cat-void",
+                    "text": "Void Cat"
+                  },
+                  {
+                    "value": "cat-chonk",
+                    "text": "Chonk Cat"
+                  },
+                  {
+                    "value": "cat-yowl",
+                    "text": "Yowl Cat"
+                  }
+                ]
+              }
+            ],
+            "confirmButtonText": "Do it",
+            "cancelButtonText": "Cancel"
+          },
+          "var victimPlayer = ${PROPERTY player OF $victimSeat}",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "hand",
+            "collection": "vh"
+          },
+          {
+            "func": "SELECT",
+            "source": "vh",
+            "property": "owner",
+            "value": "${victimPlayer}",
+            "collection": "vh"
+          },
+          {
+            "func": "COUNT",
+            "collection": "vh",
+            "variable": "nvh"
+          },
+          {
+            "func": "IF",
+            "operand1": "${nvh}",
+            "relation": "==",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Empty paws"
+                  },
+                  {
+                    "type": "text",
+                    "text": "${victimPlayer} has no cards left to give."
+                  }
+                ],
+                "cancelButtonText": null,
+                "cancelButtonIcon": null,
+                "confirmButtonText": "OK"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${method}",
+                "relation": "==",
+                "operand2": "favor",
+                "thenRoutine": [
+                  {
+                    "func": "INPUT",
+                    "player": "${victimPlayer}",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "${playerName} asks you for a card"
+                      },
+                      {
+                        "type": "choose",
+                        "source": "vh",
+                        "propertyOverride": {
+                          "activeFace": 1
+                        },
+                        "max": 1,
+                        "variable": "givenCard",
+                        "collection": "take"
+                      }
+                    ],
+                    "cancelButtonText": null,
+                    "cancelButtonIcon": null,
+                    "confirmButtonText": "Hand it over"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${method}",
+                    "relation": "==",
+                    "operand2": "random",
+                    "thenRoutine": [
+                      {
+                        "func": "SELECT",
+                        "source": "vh",
+                        "property": "type",
+                        "value": "card",
+                        "collection": "take",
+                        "max": 1,
+                        "random": true
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "SELECT",
+                        "source": "vh",
+                        "property": "cardType",
+                        "value": "${wanted}",
+                        "collection": "take",
+                        "max": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "COUNT",
+                "collection": "take",
+                "variable": "nTake"
+              },
+              {
+                "func": "IF",
+                "operand1": "${nTake}",
+                "relation": "==",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "banner",
+                    "value": "${victimPlayer} had nothing for ${playerName}."
+                  },
+                  {
+                    "func": "INPUT",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Nothing happened"
+                      },
+                      {
+                        "type": "text",
+                        "text": "${victimPlayer} does not have that card (or did not pick one)."
+                      }
+                    ],
+                    "cancelButtonText": null,
+                    "cancelButtonIcon": null,
+                    "confirmButtonText": "OK"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "MOVE",
+                    "collection": "take",
+                    "to": "${seatID}",
+                    "face": 1
+                  },
+                  {
+                    "func": "AUDIO",
+                    "source": "/i/audio/casino/card-place-1.mp3",
+                    "maxVolume": 0.5
+                  },
+                  {
+                    "func": "LABEL",
+                    "label": "banner",
+                    "value": "${playerName} took a card from ${victimPlayer}."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "takeCard"
+  },
+  "nope": {
+    "type": "button",
+    "x": 916,
+    "y": 616,
+    "width": 205,
+    "height": 64,
+    "layer": -1,
+    "text": "NOPE!",
+    "icon": "lorc/interdiction",
+    "clickRoutine": [
+      {
+        "func": "AUDIO",
+        "source": "/i/audio/interface/error_004.mp3",
+        "maxVolume": 0.9
+      },
+      {
+        "func": "LABEL",
+        "label": "banner",
+        "value": "NOPE! - ${playerName}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "banner"
+        ],
+        "property": "css",
+        "value": {
+          "background": "transparent",
+          "border": "none",
+          "color": "#ff5f5f",
+          "font-family": "'Creepster', cursive",
+          "font-size": "38px",
+          "text-align": "center",
+          "line-height": "50px",
+          "text-shadow": "0 0 22px rgba(255,60,60,.8)",
+          "resize": "none",
+          "overflow": "hidden",
+          "pointer-events": "none"
         }
       },
       {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Pick 1 card from discard pile"
-          },
-          {
-            "type": "choose",
-            "propertyOverride": {
-              "activeFace": 1
-            },
-            "max": 1
-          }
+        "func": "DELAY",
+        "milliseconds": 1500
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "banner"
         ],
-        "cancelButtonText": "Cancel",
-        "confirmButtonText": "Confirm Choice"
-      },
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "Temp"
-      },
-      {
-        "func": "MOVE",
-        "from": "Temp",
-        "to": "${seatID}"
-      }
-    ]
-  },
-  "72akC": {
-    "id": "72akC",
-    "parent": "seat1",
-    "fixedParent": true,
-    "x": -20,
-    "y": -20,
-    "width": 30,
-    "height": 30,
-    "borderRadius": 100,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "css": {
-      "font-size": "18px",
-      "display": "flex",
-      "align-items": "center",
-      "justify-content": "center",
-      "color": "#6d6d6d",
-      "background": "#e4e4e4",
-      "border": "2px solid #999999"
-    },
-    "text": 0,
-    "ownerGlobalUpdateRoutine": [
-      "var parent = ${PROPERTY parent}",
-      "var COUNT = 0",
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY hand OF $parent}",
-        "owner": "${PROPERTY player OF $parent}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "text",
-        "value": "${COUNT}"
+        "property": "css",
+        "value": {
+          "background": "transparent",
+          "border": "none",
+          "color": "#f2c14e",
+          "font-family": "'Roboto Condensed', sans-serif",
+          "font-size": "21px",
+          "text-align": "center",
+          "line-height": "26px",
+          "text-shadow": "0 2px 6px rgba(0,0,0,.7)",
+          "resize": "none",
+          "overflow": "hidden",
+          "pointer-events": "none"
+        }
       }
     ],
-    "playerGlobalUpdateRoutine": [
-      {
-        "func": "CALL",
-        "routine": "ownerGlobalUpdateRoutine",
-        "widget": "${PROPERTY id}"
-      }
-    ]
-  },
-  "73akC": {
-    "id": "73akC",
-    "parent": "seat2",
-    "fixedParent": true,
-    "x": -20,
-    "y": -20,
-    "width": 30,
-    "height": 30,
-    "borderRadius": 100,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
+    "borderRadius": 14,
     "css": {
-      "font-size": "18px",
-      "display": "flex",
-      "align-items": "center",
-      "justify-content": "center",
-      "color": "#6d6d6d",
-      "background": "#e4e4e4",
-      "border": "2px solid #999999"
+      "--wcMain": "#7a1f2a",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#ff8b8b",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
     },
-    "text": 0,
-    "ownerGlobalUpdateRoutine": [
-      "var parent = ${PROPERTY parent}",
-      "var COUNT = 0",
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY hand OF $parent}",
-        "owner": "${PROPERTY player OF $parent}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "text",
-        "value": "${COUNT}"
-      }
-    ],
-    "playerGlobalUpdateRoutine": [
-      {
-        "func": "CALL",
-        "routine": "ownerGlobalUpdateRoutine",
-        "widget": "${PROPERTY id}"
-      }
-    ]
+    "id": "nope"
   },
-  "74akC": {
-    "id": "74akC",
-    "parent": "seat3",
-    "fixedParent": true,
-    "x": -20,
-    "y": -20,
-    "width": 30,
-    "height": 30,
-    "borderRadius": 100,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "css": {
-      "font-size": "18px",
-      "display": "flex",
-      "align-items": "center",
-      "justify-content": "center",
-      "color": "#6d6d6d",
-      "background": "#e4e4e4",
-      "border": "2px solid #999999"
-    },
-    "text": 0,
-    "ownerGlobalUpdateRoutine": [
-      "var parent = ${PROPERTY parent}",
-      "var COUNT = 0",
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY hand OF $parent}",
-        "owner": "${PROPERTY player OF $parent}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "text",
-        "value": "${COUNT}"
-      }
-    ],
-    "playerGlobalUpdateRoutine": [
-      {
-        "func": "CALL",
-        "routine": "ownerGlobalUpdateRoutine",
-        "widget": "${PROPERTY id}"
-      }
-    ]
-  },
-  "75akC": {
-    "id": "75akC",
-    "parent": "seat4",
-    "fixedParent": true,
-    "x": -20,
-    "y": -20,
-    "width": 30,
-    "height": 30,
-    "borderRadius": 100,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "css": {
-      "font-size": "18px",
-      "display": "flex",
-      "align-items": "center",
-      "justify-content": "center",
-      "color": "#6d6d6d",
-      "background": "#e4e4e4",
-      "border": "2px solid #999999"
-    },
-    "text": 0,
-    "ownerGlobalUpdateRoutine": [
-      "var parent = ${PROPERTY parent}",
-      "var COUNT = 0",
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY hand OF $parent}",
-        "owner": "${PROPERTY player OF $parent}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "text",
-        "value": "${COUNT}"
-      }
-    ],
-    "playerGlobalUpdateRoutine": [
-      {
-        "func": "CALL",
-        "routine": "ownerGlobalUpdateRoutine",
-        "widget": "${PROPERTY id}"
-      }
-    ]
-  },
-  "76akC": {
-    "id": "76akC",
-    "parent": "seat5",
-    "fixedParent": true,
-    "x": -20,
-    "y": -20,
-    "width": 30,
-    "height": 30,
-    "borderRadius": 100,
-    "movable": false,
-    "movableInEdit": false,
-    "clickable": false,
-    "css": {
-      "font-size": "18px",
-      "display": "flex",
-      "align-items": "center",
-      "justify-content": "center",
-      "color": "#6d6d6d",
-      "background": "#e4e4e4",
-      "border": "2px solid #999999"
-    },
-    "text": 0,
-    "ownerGlobalUpdateRoutine": [
-      "var parent = ${PROPERTY parent}",
-      "var COUNT = 0",
-      {
-        "func": "COUNT",
-        "holder": "${PROPERTY hand OF $parent}",
-        "owner": "${PROPERTY player OF $parent}"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "text",
-        "value": "${COUNT}"
-      }
-    ],
-    "playerGlobalUpdateRoutine": [
-      {
-        "func": "CALL",
-        "routine": "ownerGlobalUpdateRoutine",
-        "widget": "${PROPERTY id}"
-      }
-    ]
-  },
-  "seat1": {
-    "type": "seat",
-    "id": "seat1",
-    "x": 216,
-    "y": 50,
-    "hideWhenUnused": true
-  },
-  "seat2": {
-    "type": "seat",
-    "id": "seat2",
-    "x": 450,
-    "y": 50,
-    "z": 1,
-    "hideWhenUnused": true,
-    "index": 2,
-    "turn": true
-  },
-  "seat3": {
-    "type": "seat",
-    "id": "seat3",
-    "x": 685,
-    "y": 50,
-    "z": 2,
-    "hideWhenUnused": true,
-    "index": 3
-  },
-  "seat4": {
-    "type": "seat",
-    "id": "seat4",
-    "x": 920,
-    "y": 50,
-    "z": 3,
-    "hideWhenUnused": true,
-    "index": 4
-  },
-  "seat5": {
-    "type": "seat",
-    "id": "seat5",
-    "index": 5,
-    "x": 1155,
-    "y": 50,
-    "z": 4,
-    "hideWhenUnused": true
-  },
-  "Turn": {
+  "endTurn": {
     "type": "button",
-    "id": "Turn",
-    "x": 1449,
-    "y": 632,
-    "width": 100,
-    "height": 60,
-    "z": 6686,
-    "text": "Turn",
-    "clickRoutine": [
-      {
-        "func": "TURN"
-      }
-    ]
-  },
-  "Sort": {
-    "type": "button",
-    "id": "Sort",
-    "x": 50,
-    "y": 632,
-    "width": 100,
-    "height": 60,
-    "z": 6686,
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "hand"
-      },
-      {
-        "func": "SELECT",
-        "source": "DEFAULT",
-        "property": "owner",
-        "value": "${playerName}"
-      },
-      {
-        "func": "SORT",
-        "collection": "DEFAULT",
-        "key": "sortOrder"
-      }
-    ],
-    "text": "Sort"
-  },
-  "vayp": {
-    "type": "pile",
-    "parent": "Draw",
-    "x": 4,
-    "y": 4,
+    "x": 1135,
+    "y": 616,
     "width": 205,
-    "height": 292,
-    "id": "vayp"
+    "height": 64,
+    "layer": -1,
+    "text": "Pass",
+    "icon": "lorc/walking-boot",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "banner",
+        "value": "${playerName} skipped out."
+      },
+      {
+        "func": "CALL",
+        "routine": "endTurnRoutine",
+        "widget": "engine"
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#0f5866",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#5fd0e0",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "id": "endTurn"
+  },
+  "attack": {
+    "type": "button",
+    "x": 1354,
+    "y": 616,
+    "width": 205,
+    "height": 64,
+    "layer": -1,
+    "text": "Attack",
+    "icon": "delapouite/claws",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "engine"
+        ],
+        "property": "turnsLeft",
+        "value": 1
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "engine"
+        ],
+        "property": "turnsLeft",
+        "value": 2
+      },
+      {
+        "func": "AUDIO",
+        "source": "/i/audio/impact/impactBell_heavy_000.mp3",
+        "maxVolume": 0.7
+      },
+      {
+        "func": "LABEL",
+        "label": "banner",
+        "value": "Attack! The next player has to take two turns."
+      },
+      {
+        "func": "CALL",
+        "routine": "refreshRoutine",
+        "widget": "engine"
+      }
+    ],
+    "borderRadius": 14,
+    "css": {
+      "--wcMain": "#6b1244",
+      "--wcMainOH": "#432a63",
+      "--wcBorder": "#ff7cc0",
+      "--wcBorderOH": "#f6efe2",
+      "--wcFont": "#f6efe2",
+      "--wcFontOH": "#ffffff",
+      "font-family": "'Roboto Condensed', sans-serif",
+      "font-size": "15px",
+      "font-weight": "700",
+      "letter-spacing": ".3px",
+      "box-shadow": "0 6px 16px rgba(0,0,0,.45)"
+    },
+    "id": "attack"
+  },
+  "hand": {
+    "type": "holder",
+    "x": 40,
+    "y": 690,
+    "width": 1520,
+    "height": 308,
+    "z": 1,
+    "layer": -3,
+    "dropOffsetX": 12,
+    "dropOffsetY": 8,
+    "stackOffsetX": 92,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "preventPiles": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": {
+      "background": "rgba(255,255,255,.05)",
+      "border": "1px solid rgba(255,255,255,.16)",
+      "box-shadow": "inset 0 0 40px rgba(0,0,0,.35)"
+    },
+    "id": "hand"
+  },
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Don't Blow Up",
+      "image": "/assets/1236149984_41814",
+      "rules": "",
+      "ruleText": "<div>The deck is full of cards that let you avoid, delay and sabotage - and of exploding cats. On your turn you may play any number of cards and then you must draw one. Draw an exploding cat and you are out of the game, unless you can play a Laser Pointer, which lets you secretly slide the cat back into the deck anywhere you like.</div><div><br></div><div>Cat cards have no power on their own, but two matching cats let you take a random card from another player, three matching cats let you name the card you take, and five different cats let you pick any card out of the discard pile.</div><div><br></div><div>There is always one exploding cat less in the deck than there are players, so the game always ends with exactly one survivor.</div>",
+      "bgg": "https://boardgamegeek.com/boardgame/172225/exploding-kittens",
+      "year": "2015",
+      "mode": "vs",
+      "time": "15",
+      "players": "2-5",
+      "skill": "Low",
+      "language": "en-US",
+      "showName": true,
+      "description": "Take turns drawing cards until somebody pulls an exploding cat. Skips, attacks, peeks and stolen cards let you push the danger onto everybody else, and a Laser Pointer lets you survive one explosion and hide the cat back in the deck. The last player who has not blown up wins.",
+      "helpText": "<div><b>Goal</b>: do not draw an exploding cat. The last player who has not blown up wins.</div><div><br></div><div><b>Setting up</b>: everybody sits down, then somebody presses <b>New Game</b>. That collects every card, deals seven cards plus one Laser Pointer to each player, shuffles one exploding cat less than there are players into the deck and picks a random starting player. Nothing has to be placed by hand.</div><div><br></div><div><b>A turn</b>: play as many cards from your hand as you like by dragging them onto the discard pile, then press <b>Draw</b>. That takes the top card of the deck into your hand and passes the turn. If the card is an exploding cat it is put face up in the Danger Zone for everybody to see and you are asked whether you can defuse it.</div><div><br></div><div><b>The buttons</b> (all optional - you can always move cards by hand):</div><div>&bull; <b>Draw</b> - draw the top card of the deck and end your turn.</div><div>&bull; <b>Defuse</b> - after a Laser Pointer: choose secretly where in the deck the exploding cat goes back, optionally discarding your Laser Pointer, and end your turn.</div><div>&bull; <b>Take 1</b> - pick a card out of the discard pile (the five different cats combo).</div><div>&bull; <b>Peek 3</b> - look at the top three cards, only you see them.</div><div>&bull; <b>Shuffle</b> - shuffle the draw pile.</div><div>&bull; <b>Steal</b> - choose a player and whether they pick a card for you (Favor), you take a random one (two matching cats) or you name one (three matching cats).</div><div>&bull; <b>Pass</b> - end your turn without drawing, for a Skip.</div><div>&bull; <b>Attack</b> - end your turn and make the next player take two turns.</div><div>&bull; <b>NOPE!</b> - just noise and drama when you cancel somebody's card.</div><div>&bull; <b>Sort</b> - tidy up your own cards.</div><div><br></div><div>The panel on the right always shows whose turn it is, how many turns they still owe, how many cards are left and how many exploding cats are still hiding in them. The badge on each seat shows that player's hand size, and turns into a red X when they have blown up.</div><div><br></div><div>Nothing is enforced: the table never refuses a move, so house rules and corrections are always possible by dragging cards around.</div>",
+      "attribution": "<div><b>Card and board art</b>: all icons are from the icon set that ships with VirtualTabletop, taken from game-icons.net and used under the Creative Commons Attribution 3.0 licence (https://creativecommons.org/licenses/by/3.0/). Icons by Lorc (https://lorcblog.blogspot.com/): mushroom-cloud, laser-blast, interdiction, crystal-ball, walking-boot, sliced-bread, paw-heart, paw-print, cat. Icons by Delapouite (https://delapouite.com/): claws, cupcake, boombox, floating-ghost, card-exchange, fast-forward-button. Icon by Faithtoken (https://ionattack.com/): card-random. Icon by DarkZaitzev (https://www.deviantart.com/darkzaitzev): robber-hand. Icons by Quoting: card-play, card-pickup. Icon by Lorc: poker-hand. Full list and licence: https://game-icons.net/ </div><div><br></div><div><b>Sounds</b>: the bundled VirtualTabletop sound library by Kenney (https://kenney.nl), released under CC0 / public domain.</div><div><br></div><div><b>Fonts</b>: Creepster and Roboto Condensed (SIL Open Font License / Apache 2.0) and the Brandon-style handwriting face, all part of the fonts that ship with VirtualTabletop.</div><div><br></div><div><b>Everything else</b> - the room layout, the card design and CSS, all routines and the square library preview image - was written for this game and is released to the public domain under CC0. It was authored by Anthropic's Claude (https://claude.com/claude-code) working as an automated contributor: the card faces and the preview image are hand-written HTML/CSS drawing the icons listed above, rendered to WebP with a headless browser. No image-generating AI model was used and no AI-generated imagery is contained in this game.</div><div><br></div><div>The original version of this room was created by ArnoldSmith86 and released to the public domain (CC0).</div>",
+      "similarName": "Exploding Kittens",
+      "similarDesigner": "Matthew Inman, Elan Lee, Shane Small",
+      "similarImage": "",
+      "similarAwards": "",
+      "variant": "",
+      "variantImage": "",
+      "lastUpdate": 1786308060945
+    }
   }
 }
