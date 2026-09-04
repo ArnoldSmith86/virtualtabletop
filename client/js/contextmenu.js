@@ -1,4 +1,4 @@
-import { $, $a, removeFromDOM, escapeID, unescapeID, onLoad, asArray, mapAssetURLs } from './domhelpers.js';
+import { $, $a, removeFromDOM, unescapeID, onLoad, asArray, mapAssetURLs } from './domhelpers.js';
 import { widgets, batchStart, batchEnd, setDeltaCause } from './serverstate.js';
 import { playerName } from './overlays/players.js';
 import { contrastAnyColor } from './color.js';
@@ -42,6 +42,8 @@ function reactsToRightClick(widget) {
   return hasPopupTriggers(widget) || Array.isArray(widget.get('rightClickRoutine'));
 }
 
+// the widgets under a point, topmost first - including the ones the open popup covers, so that
+// holding the button and moving over a fan of cards previews one after the other
 function widgetsAtPoint(clientX, clientY) {
   document.body.classList.add('hitTest');
   const els = document.elementsFromPoint(clientX, clientY);
@@ -62,17 +64,10 @@ function ensurePopup() {
   return $(`#${CONTEXT_POPUP_ID}`);
 }
 
+// how big one room pixel is on screen: the layout scale times the zoom level
 function getRoomScale() {
-  const scaleV = getComputedStyle(document.documentElement).getPropertyValue('--scale').trim();
-  const scaleN = parseFloat(scaleV);
-  const scale = isNaN(scaleN) ? 1 : scaleN;
-  if (document.body.classList.contains('zoom2x')) {
-    const zoomV = getComputedStyle(document.documentElement).getPropertyValue('--zoom').trim();
-    const zoomN = parseFloat(zoomV);
-    const zoom = isNaN(zoomN) ? 1 : zoomN;
-    return scale * zoom;
-  }
-  return scale;
+  const cssNumber = name => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 1;
+  return cssNumber('--scale') * cssNumber('--zoom');
 }
 
 function getPopupOptions(widget) {
@@ -181,13 +176,13 @@ function copyWidgetToPreview(widget, previewEl) {
     const clonedTextareas = [...$a('textarea', previewEl)];
     for (const i in originalTextareas)
       if (clonedTextareas[i]) clonedTextareas[i].value = originalTextareas[i].value;
-    const wStyle = $(`#STYLES_${escapeID(id)}`);
+    const wStyle = $(`#STYLES_${sourceWidget.cssScope}`);
     let styleEl = $('#contextMenuStyle');
     if (styleEl) removeFromDOM(styleEl);
     if (wStyle) {
       styleEl = document.createElement('style');
       styleEl.id = 'contextMenuStyle';
-      styleEl.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`, `#${CONTEXT_PREVIEW_ID}`)));
+      styleEl.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${sourceWidget.cssScope}`, `#${CONTEXT_PREVIEW_ID}`)));
       $('head').appendChild(styleEl);
     }
     wrap.appendChild(previewEl);
@@ -368,11 +363,8 @@ function renderContextMenuButtons(widget, colEl, popupContrastColor) {
       };
     } else if (hasRoutine) {
       btn.onclick = async () => {
-        batchStart();
-        setDeltaCause(`${playerName} context action ${routine} on ${widget.id}`);
-        await widget.evaluateRoutine(routine, { previewIndex: enlargePreviewIndex }, {});
-        batchEnd();
         closeContextMenu();
+        await runRoutine(widget, routine, `${playerName} context action ${routine} on ${widget.id}`, { previewIndex: enlargePreviewIndex });
       };
     }
     colEl.appendChild(row);
@@ -415,9 +407,21 @@ function positionPopupBackground(widget, popup) {
   bg.style.top = `${top}px`;
 }
 
-function openContextMenu(widget, menuOverride) {
+// batchEnd() has to run even if the routine throws: a leaked batch stops this client from syncing
+async function runRoutine(widget, routine, cause, variables = {}) {
+  batchStart();
+  try {
+    setDeltaCause(cause);
+    await widget.evaluateRoutine(routine, variables, {});
+  } finally {
+    batchEnd();
+  }
+}
+
+function openContextMenu(widget, menuOverride, overrides = null) {
   currentWidget = widget;
   enlargePreviewIndex = 0;
+  optionOverrides = overrides;
   currentMenu = menuOverride !== undefined ? (Array.isArray(menuOverride) ? menuOverride : []) : (widget.get('contextMenu') || []);
   const popup = ensurePopup();
   const opts = getPopupOptions(widget);
@@ -458,8 +462,7 @@ function applyPopupContrastColors(popup) {
 
 export function openContextMenuWithMenu(widget, menu, overrides) {
   if (!widget || !Array.isArray(menu)) return;
-  optionOverrides = overrides && typeof overrides === 'object' ? overrides : null;
-  openContextMenu(widget, menu);
+  openContextMenu(widget, menu, overrides && typeof overrides === 'object' ? overrides : null);
 }
 
 export function closeContextMenu() {
@@ -489,17 +492,16 @@ function updateHoveredWidget(clientX, clientY) {
     openContextMenu(w);
 }
 
-// walks from the innermost widget outwards so cards fall through to their holder/pile
+// the topmost widget under the pointer reacts; one that reacts to nothing lets the ones below it
+// (like the holder of a card) have the right-click instead
 function handleWidgetContextMenu(e) {
-  for (let el = e.target; el; el = el.parentNode) {
-    if (!el.id || el.id.slice(0, 2) !== 'w_' || !widgets.has(unescapeID(el.id.slice(2))))
-      continue;
-    const widget = widgets.get(unescapeID(el.id.slice(2)));
+  // a long touch fires this too, after the widget's own timer has already reacted to it
+  if (longTouchHandled)
+    return true;
 
+  for (const widget of widgetsAtPoint(e.clientX, e.clientY)) {
     if (Array.isArray(widget.get('rightClickRoutine'))) {
-      batchStart();
-      setDeltaCause(`${playerName} right-clicked ${widget.id}`);
-      widget.evaluateRoutine('rightClickRoutine', {}, {}).then(() => batchEnd());
+      runRoutine(widget, 'rightClickRoutine', `${playerName} right-clicked ${widget.id}`);
       return true;
     }
 
@@ -592,9 +594,7 @@ export function onLongTouch(widget) {
   if (Array.isArray(widget.get('rightClickRoutine'))) {
     longTouchHandled = true;
     widget.domElement.classList.add('longtouch');
-    batchStart();
-    setDeltaCause(`${playerName} long-touched ${widget.id}`);
-    widget.evaluateRoutine('rightClickRoutine', {}, {}).then(() => batchEnd());
+    runRoutine(widget, 'rightClickRoutine', `${playerName} long-touched ${widget.id}`);
     return;
   }
 
@@ -661,6 +661,10 @@ onLoad(function() {
       return;
     }
     if (!e.target.closest('.contextMenuPopupBg') && !e.target.closest(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`))
+      closeContextMenu();
+  });
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && isPopupOpen())
       closeContextMenu();
   });
   window.addEventListener('resize', () => {

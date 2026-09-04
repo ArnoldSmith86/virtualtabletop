@@ -605,6 +605,39 @@ const routineOperationMetadata = {
     },
     definesCollection: 'collection'
   },
+  CONTEXTMENU: {
+    description: 'Show a popup menu next to a widget',
+    // the engine shows the popup on the first widget of the collection only, and the
+    // menu comes from one of two places: written into the operation, or read from a
+    // property of that widget - which is what tells the two ways of working apart
+    variants: [
+      { id: 'inline', label: 'Show a popup menu', fixed: [ 'property' ],
+        apply: operation=>{ delete operation.property; if(!Array.isArray(operation.contextMenu)) operation.contextMenu = []; },
+        template: 'Show a popup on the first of {collection} with the menu {contextMenu}{{title}}{{factor}}{{color}}{{image}}{{widget}}' },
+      { id: 'property', label: 'Show a popup menu stored in a property', fixed: [ 'property' ],
+        match: (v, isSet)=>isSet('property') && isLiteralText(v('property')) && v('property') !== '',
+        apply: operation=>{ delete operation.contextMenu; operation.property = 'contextMenu'; },
+        template: 'Show a popup on the first of {collection} with the menu in its property {property}{{title}}{{factor}}{{color}}{{image}}{{widget}}' }
+    ],
+    clauses: [
+      { id: 'title', label: 'a title', template: ', titled {title}' },
+      { id: 'factor', label: 'how much bigger the preview is', template: ', with the widget shown {factor} times its size', add: { factor: 2 } },
+      { id: 'color', label: 'a background color', template: ', on a {color} background', add: { color: '#1f5ca6' } },
+      { id: 'image', label: 'a picture instead of the widget', template: ', showing the image {image}' },
+      { id: 'widget', label: 'another widget instead', template: ', showing {widget} instead of the widget itself' }
+    ],
+    newOperation: { func: 'CONTEXTMENU', contextMenu: [] },
+    parameters: {
+      collection: { type: 'collection', default: 'DEFAULT', display: pickedWidgets },
+      contextMenu: { type: 'json', default: null, hint: 'menu entries', display: value=>Array.isArray(value) ? (value.length ? `${value.length} entr${value.length == 1 ? 'y' : 'ies'}` : 'no entries yet') : null },
+      property: { type: 'property', default: null },
+      title: { type: 'string', default: null, display: quotedText },
+      factor: { type: 'number', default: null },
+      color: { type: 'color', default: null },
+      image: { type: 'json', default: null, hint: 'image url(s)', display: value=>typeof value == 'string' ? value : listWords(value) },
+      widget: { type: 'widgets', default: null }
+    }
+  },
   COUNT: {
     description: 'Count widgets',
     variants: [
@@ -4029,7 +4062,7 @@ const routineOperationGroups = [
   { title: 'Move and order widgets', funcs: [ 'MOVE', 'MOVEXY', 'RECALL', 'SHIFT', 'SHUFFLE', 'SORT' ] },
   { title: 'Add, change and remove widgets', funcs: [ 'SET', 'FLIP', 'ROTATE', 'LABEL', 'CANVAS', 'CLONE', 'DELETE', 'RESET' ] },
   { title: 'The game and its players', funcs: [ 'SCORE', 'TURN', 'TIMER' ] },
-  { title: 'Talk to the players', funcs: [ 'AUDIO', 'INPUT', 'UPLOAD' ] },
+  { title: 'Talk to the players', funcs: [ 'AUDIO', 'INPUT', 'CONTEXTMENU', 'UPLOAD' ] },
   { title: 'Steer the routine', funcs: [ 'IF', 'FOREACH', 'CALL', 'CLICK', 'DELAY', '//' ] }
 ];
 

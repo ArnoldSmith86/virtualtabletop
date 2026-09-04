@@ -1554,6 +1554,7 @@ export class Widget extends StateManaged {
             if (a.image !== undefined && a.image !== null) overrides.image = a.image;
             if (a.widget !== undefined && a.widget !== null) overrides.widget = a.widget;
             const hasOverrides = Object.keys(overrides).length > 0;
+            // deferred past the click that ran this routine, which would otherwise close the popup right away
             setTimeout(() => openContextMenuWithMenu(targetWidget, menu, hasOverrides ? overrides : undefined), 0);
           }
         }

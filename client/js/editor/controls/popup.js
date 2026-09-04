@@ -2568,6 +2568,24 @@ function commonInfoTopic(topicName) {
       </pre>
     `, tutorial: 'functions-click' };
   }
+  if(topicName == 'CONTEXTMENU') {
+    return { info: `
+      <pre>
+      This function opens the right-click popup next to the first widget of a collection, with a menu of buttons that run routines of that widget. It does not wait for the player: the routine carries on while the popup is open. A button's routine can open another popup, which is how submenu structures are built.
+
+      Parameters:
+
+      collection: collection - the popup is shown for the first widget in it (defaults to DEFAULT collection).
+      contextMenu: array - the menu entries to show. Each entry is an object with text, routine (the name of a routine of the widget) and optionally icon, color, description and menu (a submenu). Either this or property is required.
+      property: property name - the widget property holding the menu entries, as an alternative to writing them into the operation (e.g. contextMenu).
+      title: text - a title shown above the popup.
+      factor: number - how many times its size the widget is shown at in the preview (defaults to the widget's enlarge property or 2).
+      color: color - the background color of the popup.
+      image: URL or array of URLs - shows a picture instead of the widget; an array adds previous/next buttons and the routine of a menu entry receives the shown index as previewIndex.
+      widget: widget id or array of ids - shows another widget instead; an array adds previous/next buttons like image.
+      </pre>
+    ` };
+  }
   if(topicName == 'CLONE' || topicName == 'DELETE') {
     return { info: `
       <pre>
