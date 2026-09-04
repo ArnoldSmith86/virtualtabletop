@@ -70,6 +70,13 @@
   margin: 10px 5px 15px;
 }
 
+/* the panel while a rename is in flight: an in-between state, not an offer to
+   do something, so it stays quiet and gets no buttons */
+.editorModule .renameInProgress {
+  color: var(--textHelpColor, #666);
+  font-style: italic;
+}
+
 .editorModule .noSelectionButton {
   display: flex;
   align-items: center;
@@ -1234,6 +1241,10 @@
   border-bottom: 1px dashed currentColor;
   border-radius: 2px;
   background: transparent;
+}
+.editorModule .lineStopList input.lineStopIdInput:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }
 .editorModule .lineStopList input.lineStopIdInput:hover {
   background: var(--backgroundHighlightColor1);

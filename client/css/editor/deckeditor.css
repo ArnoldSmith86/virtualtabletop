@@ -383,7 +383,9 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   white-space: nowrap;
 }
 
-/* The current deck's id is an inline editable field that blends into the row until hovered/focused. */
+/* The current deck's id is an inline editable field. It carries the same dashed underline as the widget
+   header's id input, because without one the only editable row of the tree looks exactly like the face and
+   object rows around it; the full box appears on hover/focus. */
 .deckEditorTreeDeckId {
   flex: 1;
   min-width: 0;
@@ -392,18 +394,28 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   color: inherit;
   background: transparent;
   border: 1px solid transparent;
+  border-bottom: 1px dashed currentColor;
   border-radius: 4px;
-  padding: 0 3px;
+  padding: 3px;
   margin: 0;
 }
 
 .deckEditorTreeDeckId:hover {
   border-color: rgba(128, 128, 128, 0.4);
+  border-bottom-style: solid;
 }
 
 .deckEditorTreeDeckId:focus {
   outline: none;
   border-color: var(--VTTblue);
+  border-bottom-style: solid;
+}
+
+/* disabled for the duration of a rename, so a second id typed while one runs is
+   refused where the user can see it */
+.deckEditorTreeDeckId:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 /* Unified add / copy / delete (+ show areas) toolbar, at the top of the left sidebar. */
