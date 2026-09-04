@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+    <!-- crown -->
+    <path d="M16 18 L13 6 L24 13 L32 2 L40 13 L51 6 L48 18 Z"/>
+    <!-- grove square -->
+    <rect x="18" y="30" width="28" height="28" rx="2"/>
+    <!-- all four highlighted corners -->
+    <circle cx="18" cy="30" r="4" fill="#000"/>
+    <circle cx="46" cy="30" r="4" fill="#000"/>
+    <circle cx="18" cy="58" r="4" fill="#000"/>
+    <circle cx="46" cy="58" r="4" fill="#000"/>
+</svg>

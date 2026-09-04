@@ -1,0 +1,45 @@
+<svg viewBox="0 0 660 240" width="660" height="240" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, serif">
+<rect x="2" y="2" width="656" height="236" rx="10" fill="none" stroke="#000" stroke-width="2.5"/>
+ 
+  <!-- column dividers -->
+<line x1="220" y1="16" x2="220" y2="224" stroke="#000" stroke-width="1"/>
+<line x1="440" y1="16" x2="440" y2="224" stroke="#000" stroke-width="1"/>
+ 
+  <!-- ===== COL 1: HOARDS ===== -->
+<text x="111" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#000">HOARDS</text>
+<g fill="#000" stroke="none">
+<rect x="33" y="67" width="14" height="14" rx="2"/>
+<text x="196" y="78" text-anchor="end" font-size="22">1 VP</text>
+ 
+    <rect x="33" y="99" width="14" height="14" rx="2"/><rect x="53" y="99" width="14" height="14" rx="2"/>
+<text x="196" y="110" text-anchor="end" font-size="22">3 VP</text>
+ 
+    <rect x="33" y="131" width="14" height="14" rx="2"/><rect x="53" y="131" width="14" height="14" rx="2"/><rect x="73" y="131" width="14" height="14" rx="2"/>
+<text x="196" y="142" text-anchor="end" font-size="22">6 VP</text>
+ 
+    <rect x="33" y="163" width="14" height="14" rx="2"/><rect x="53" y="163" width="14" height="14" rx="2"/><rect x="73" y="163" width="14" height="14" rx="2"/><rect x="93" y="163" width="14" height="14" rx="2"/>
+<text x="196" y="174" text-anchor="end" font-size="22">10 VP</text>
+</g>
+<text x="111" y="206" text-anchor="middle" font-size="18" fill="#000">collect matching stashes</text>
+ 
+  <!-- ===== COL 2: ROUND QUESTS ===== -->
+<text x="330" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#000">QUESTS</text>
+<g font-size="21" fill="#000">
+<text x="240" y="70">• Most groves</text>
+<text x="240" y="100">• Most beetles</text>
+<text x="240" y="130">• Most burrows</text>
+<text x="240" y="160">• Most dens</text>
+<text x="240" y="190">• Most berries</text>
+</g>
+<text x="330" y="218" text-anchor="middle" font-size="17" fill="#000">one per round · ties: no one</text>
+ 
+  <!-- ===== COL 3: BONUS VP ===== -->
+<text x="550" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#000">BONUS VP</text>
+<g font-size="22" fill="#000">
+<text x="550" y="84" text-anchor="middle">★ +1 VP</text>
+<text x="550" y="110" text-anchor="middle" font-size="18">per VP-symbol stash</text>
+ 
+    <text x="550" y="166" text-anchor="middle">★ +1 VP</text>
+<text x="550" y="192" text-anchor="middle" font-size="18">per captured trophy</text>
+</g>
+</svg>

@@ -5475,8 +5475,18 @@ class PropertiesModule extends SidebarModule {
     idInput.title = options.title || 'Rename widget';
     idInput.setAttribute('aria-label', options.ariaLabel || 'Widget id');
 
+    // the rename replaces the widget object, so the id the field stands for is
+    // kept here instead of read back from the widget it was created for - and
+    // a browser may commit the same edit twice (a change event on Enter and
+    // another one when the field loses focus), which must not start a second
+    // rename that then finds the new id taken by the first one
+    let currentID = widget.id;
+    let renaming = false;
+
     idInput.onchange = async () => {
-      const oldID = widget.id;
+      if(renaming)
+        return;
+      const oldID = currentID;
       const newID = idInput.value.trim();
       if(newID == oldID) {
         idInput.value = oldID;
@@ -5493,13 +5503,15 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
+      renaming = true;
       idInput.disabled = true;
       batchStart();
       try {
         setDeltaCause(`${getPlayerDetails().playerName} renamed widget ${oldID} to ${newID} in editor`);
-        const state = JSON.parse(JSON.stringify(widget.state));
+        const state = JSON.parse(JSON.stringify((widgets.get(oldID) || widget).state));
         state.id = newID;
         await updateWidgetId(state, oldID);
+        currentID = newID;
         const renamedWidget = widgets.get(newID);
         if(renamedWidget && options.onRenamed)
           options.onRenamed(renamedWidget);
@@ -5507,6 +5519,7 @@ class PropertiesModule extends SidebarModule {
         alert(`Could not rename widget: ${error}`);
         idInput.value = oldID;
       } finally {
+        renaming = false;
         batchEnd();
         idInput.disabled = false;
       }
@@ -5514,7 +5527,7 @@ class PropertiesModule extends SidebarModule {
 
     idInput.onkeydown = event => {
       if(event.key == 'Escape') {
-        idInput.value = widget.id;
+        idInput.value = currentID;
         idInput.blur();
       }
     };
@@ -11688,11 +11701,11 @@ class PropertiesModule extends SidebarModule {
       title: 'Add property',
       suggestions: Object.keys(widget.defaults || {}).filter(property=>
         [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 &&
-        !/Routine$/.test(property) && !Object.hasOwn(widget.state, property)
+        !/Routine$/.test(property) && !this.isPropertyDeclaredOnWidget(widget, property)
       ).sort(),
       nativeSuggestionButtonOnly: true,
       onAdd: property=>{
-        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
+        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || this.isPropertyDeclaredOnWidget(widget, property))
           return false;
         this.inputValueUpdated(widget, property, '');
         this.onSelectionChangedWhileActive([ widget ]);

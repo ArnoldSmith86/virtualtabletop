@@ -1,4 +1,6 @@
-import { toServer } from './connection.js';
+import { toServer, onMessage, onConnectionClose } from './connection.js';
+import { setConnectionState, setStatusMessage, updateStatus } from './overlays/status.js';
+import { connectionClosed, connectionStatus, deltaConfirmed, deltaSent, monitorTick, stateReceived } from './deltamonitor.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { setViewportSize } from './calculateLayout.js';
@@ -16,6 +18,7 @@ let delta = { s: {} };
 let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
+let nextDeltaSendId = 0;
 let overlayShownForEmptyRoom = false;
 
 let triggerGameStartRoutineOnNextStateLoad = false;
@@ -55,8 +58,8 @@ function generateUniqueWidgetID(type, derivedIDs) {
   return id;
 }
 
-export function addWidget(widget, instance) {
-  if(widget.parent && !widgets.has(widget.parent)) {
+export function addWidget(widget, instance, allowMissingParent) {
+  if(widget.parent && !widgets.has(widget.parent) && !allowMissingParent) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
     deferredChildren[widget.parent].push(widget);
@@ -129,8 +132,11 @@ export function addWidget(widget, instance) {
       addWidget(c);
   delete deferredCards[widget.id];
 
+  // a widget that was deferred more than once (its parent changed while it was
+  // waiting) is only added by the first of those parents that shows up
   for(const c of deferredChildren[widget.id] || [])
-    addWidget(c);
+    if(!widgets.has(c.id))
+      addWidget(c);
   delete deferredChildren[widget.id];
 }
 
@@ -483,7 +489,10 @@ function getDelta() {
 function sendRawDelta(delta) {
   receiveDelta(delta);
   delta.id = deltaID;
+  delta.deltaSendId = ++nextDeltaSendId;
+  deltaSent(delta.deltaSendId);
   toServer('delta', delta);
+  refreshConnectionStatus();
 }
 
 function receiveDeltaFromServer(delta) {
@@ -506,6 +515,10 @@ function receiveStateFromServer(args) {
   for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();
   widgets.clear();
+  // whatever an earlier delta deferred waits for a room that does not exist anymore:
+  // keeping it would add a second copy of a widget this state contains
+  deferredChildren = {};
+  deferredCards = {};
   dropTargets.clear();
   maxZ = {};
   StateManaged.globalUpdateListeners = {};
@@ -522,17 +535,38 @@ function receiveStateFromServer(args) {
     }
   }
 
+  // Whatever still waits for a parent here waits for a widget the state does not
+  // contain, or for one that is itself still waiting. Only the former go onto the
+  // surface in limbo instead of being dropped - edit mode outlines them as "Invalid
+  // Parent", so they can be found and given a real parent rather than silently
+  // disappearing from the room. Their own descendants follow through the regular
+  // deferred handling once they are there, so the hierarchy below an orphan survives
+  // no matter in which order the widgets appear in the state.
+  const deferredIDs = new Set();
+  for(const children of Object.values(deferredChildren))
+    for(const widget of children)
+      deferredIDs.add(widget.id);
+  for(const parentID of Object.keys(deferredChildren)) {
+    if(deferredIDs.has(parentID))
+      continue;
+    for(const widget of deferredChildren[parentID] || []) {
+      console.error(`Widget "${widget.id}" is in limbo because its parent "${parentID}" does not exist!`);
+      addWidget(widget, undefined, true);
+    }
+    delete deferredChildren[parentID];
+  }
+
+  // a parent chain that closes into a cycle has no widget that could be added first
+  for(const [ parentID, children ] of Object.entries(deferredChildren))
+    for(const widget of children)
+      console.error(`Could not add widget "${widget.id}" because its parent "${parentID}" could not be added!`);
+  deferredChildren = {};
+
   if(Object.keys(deferredCards).length) {
     for(const [ deckID, widgets ] of Object.entries(deferredCards))
       for(const widget of widgets)
         console.error(`Could not add card "${widget.id}" because its deck "${deckID}" does not exist!`);
     deferredCards = {};
-  }
-  if(Object.keys(deferredChildren).length) {
-    for(const [ deckID, widgets ] of Object.entries(deferredChildren))
-      for(const widget of widgets)
-        console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
-    deferredChildren = {};
   }
 
   // before resetZoomAndPan, which clamps the pan against the board size and the scale
@@ -540,6 +574,12 @@ function receiveStateFromServer(args) {
     applyViewportLayout();
 
   resetZoomAndPan();
+
+  // a fresh state makes all unconfirmed deltas moot - tell the player when some were reverted
+  const changesLost = stateReceived();
+  if(changesLost && !isLoading)
+    setStatusMessage('Connection restored. Your last changes could not be saved.', 'link');
+  refreshConnectionStatus();
 
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
@@ -626,11 +666,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 
 function sendDelta() {
   if(!batchDepth) {
-    if(deltaChanged) {
-      receiveDelta(delta);
-      delta.id = deltaID;
-      toServer('delta', delta);
-    }
+    if(deltaChanged)
+      sendRawDelta(delta);
     delta = { s: {} };
     deltaChanged = false;
   }
@@ -651,6 +688,11 @@ export function sendPropertyUpdate(widgetID, property, value) {
 
 export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
+}
+
+function refreshConnectionStatus(status = connectionStatus()) {
+  setConnectionState(status.pendingCount, status.state, status.msUntilReload);
+  updateStatus();
 }
 
 // --- Remote & multi-player INPUT ------------------------------------------
@@ -895,6 +937,11 @@ function cancelInputBlocks() {
 
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
+  onMessage('deltaConfirm', function(args) {
+    if(args && args.id)
+      deltaConfirmed(args.id);
+    refreshConnectionStatus();
+  });
   onMessage('state', receiveStateFromServer);
   onMessage('showInput', receiveShowInput);
   onMessage('hideInput', receiveHideInput);
@@ -908,5 +955,19 @@ onLoad(function() {
       applyCustomCss(args.meta.gameSettings);
     }
   });
+  onConnectionClose(function() {
+    connectionClosed();
+    refreshConnectionStatus();
+  });
+  // only this tick may trigger the reload: it is the one that notices a suspended tab
+  setInterval(function() {
+    const status = monitorTick();
+    if(!status)
+      return;
+    if(status.reload)
+      location.reload();
+    else
+      refreshConnectionStatus(status);
+  }, 500);
   setScale();
 });
