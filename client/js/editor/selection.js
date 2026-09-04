@@ -248,6 +248,9 @@ function selectionChanged(previousSelection, newSelection) {
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
 
+  // a click on part of a smart clone selects the clone as a whole
+  const selectionToApply = smartCloneProcessSelection(newSelectedWidgets);
+
   // Whatever the editor has open belongs to the widget that was being edited, so
   // moving on to another one takes it along: the sound library is an overlay
   // that outlives the editor it was opened from (it does not cover the sidebar,
@@ -261,11 +264,11 @@ function setSelection(newSelectedWidgets) {
   // link something else than the editor moving on, so it ends with its popup.
   endWidgetPickerWithoutTarget();
   const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
-                        && selectionChanged(previousSelectedWidgets, newSelectedWidgets);
+                        && selectionChanged(previousSelectedWidgets, selectionToApply);
   if(editorMovedOn)
     cancelAudioPicker();
 
-  selectedWidgets = newSelectedWidgets;
+  selectedWidgets = selectionToApply;
 
   // before the modules are notified: the panels they build carry a selection bar
   // that shows where in the history the editor now is
@@ -335,6 +338,7 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
@@ -346,6 +350,8 @@ function receiveStateFromServer(state) {
   // The selection survives leaving edit mode, so this happens while playing too.
   deckEditorStateReplaced();
   endDrill();
+  // the smart clone source map is built from the widgets, which the new state replaced
+  smartCloneInit();
   setSelection([]);
   for(const module of sidebarModules)
     module.onStateReceived(state);
