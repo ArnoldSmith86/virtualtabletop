@@ -1,0 +1,31 @@
+name: Android APK (builds the app that runs the server on a phone)
+
+# The ubuntu runners ship a JDK and the Android SDK, so .android/build-apk.sh needs nothing else.
+# The APK is attached to the run so it can be installed without a local SDK.
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths: [ '.android/**', '.github/workflows/android-apk.yml' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ '.android/**', '.github/workflows/android-apk.yml' ]
+
+concurrency:
+  group: android-apk-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Android APK
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Build the APK
+      run: .android/build-apk.sh
+    - name: Attach the APK to the run
+      uses: actions/upload-artifact@v4
+      with:
+        name: VirtualTabletop-android
+        path: .android/out/*.apk

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">VirtualTabletop</string>
+  <string name="logo_description">VirtualTabletop</string>
+  <string name="update">Update</string>
+  <string name="start_server">Start server</string>
+  <string name="server_running">Server running</string>
+  <string name="quit">Quit</string>
+  <string name="open">Open</string>
+  <string name="share">Share</string>
+  <string name="share_title">VirtualTabletop room</string>
+  <string name="notification_channel">Server</string>
+  <string name="notification_title">VirtualTabletop is running</string>
+  <string name="state_not_installed">Not installed yet</string>
+  <string name="hint_not_installed">Update downloads Node.js, git and VirtualTabletop. It needs an internet connection once - after that the server runs offline.</string>
+  <string name="state_updating">Updating</string>
+  <string name="state_ready">Ready to play</string>
+  <string name="hint_ready">Start the server and open the room on any device in the same network.</string>
+</resources>

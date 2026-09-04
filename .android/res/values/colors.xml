@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the colors client/css/layout.css uses -->
+<resources>
+  <color name="vtt_blue">#1f5ca6</color>
+  <color name="vtt_blue_dark">#0d2f5e</color>
+  <color name="vtt_blue_light">#a9c6e8</color>
+  <color name="background">#484848</color>
+  <color name="surface">#3d3d3d</color>
+  <color name="console">#2b2b2b</color>
+  <color name="text">#f0f0f0</color>
+  <color name="text_dim">#a0a0a0</color>
+  <color name="disabled">#5a5a5a</color>
+  <color name="negative">#e06060</color>
+</resources>
