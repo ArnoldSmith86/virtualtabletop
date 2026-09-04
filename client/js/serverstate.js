@@ -672,12 +672,8 @@ export function sendPropertyUpdate(widgetID, property, value) {
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
   } else {
-    if(delta.s[widgetID] === undefined) {
-      // widget was removed (e.g. by a routine flushing a DELETE via DELAY) before this stray property update was queued; drop it
-      if(!widgets.has(widgetID))
-        return;
+    if(delta.s[widgetID] === undefined)
       delta.s[widgetID] = {};
-    }
     if(delta.s[widgetID] !== null)
       delta.s[widgetID][property] = value;
   }
