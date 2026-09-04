@@ -61,6 +61,17 @@ describe('server/zip.mjs', function() {
     }
   });
 
+  // the shortest input for which fflate's streaming deflate emits a back reference that
+  // points in front of the start of the stream, making the entry impossible to inflate
+  const brokenByFflate = Buffer.from([ 1, 0, 0, 0, 1, 0, 0, 191, 0, 1, 0, 0, 0 ]);
+
+  test('deflates entries into a stream that can be inflated again', async function() {
+    const zip = await Zip.create({ 'assets/1_13': brokenByFflate }, true);
+    const entry = (await Zip.read(zip, [ 'assets/1_13' ]))['assets/1_13'];
+
+    expect(Buffer.compare(Buffer.from(entry), brokenByFflate)).toEqual(0);
+  });
+
   test('keeps the event loop running while packing', async function() {
     let ticks = 0;
     const ticker = setInterval(()=>++ticks, 1);
