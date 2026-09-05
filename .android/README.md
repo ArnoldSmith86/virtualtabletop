@@ -19,16 +19,20 @@ somewhere the release comes from) would be what makes updates install over each 
 
 ## Using it
 
+The card at the top says what is going on; the big button below the console is always the next
+step rather than the state, which is what makes the first launch a single obvious press.
+
 | Button | What it does |
 | --- | --- |
-| **Install**, **Update** once it is installed | Installs or updates git, Node.js and the clone, then runs `npm install --omit=dev`. The only step that needs a connection. It runs in the foreground service with a wake lock, so it keeps going while the screen is off, and it can be pressed again to carry on after a lost connection. |
-| **Start server** | Runs `node server.mjs` in a foreground service. Enabled once the installation has finished. It says *Starting the server* until the server reports the port it listens on, and hands out the address after that. |
-| **Quit** | Shuts the server down (the rooms are saved) and closes the app. |
+| **Install**, then **Start server**, then **Open** | The one big button. *Install* fetches git, Node.js and the clone and runs `npm install --omit=dev` - the only step that needs a connection, running in the foreground service with a wake lock so it keeps going while the screen is off, and pressing it again after a lost connection carries on. *Start server* runs `node server.mjs`; the card says *Starting the server* until the server reports the port it listens on. *Open* hands the address to the browser. |
+| **Update** / **Share** | The outline button next to *Quit*. It updates an existing installation, and offers the address to any other app while the server runs. Before the first installation there is nothing to update, so it is not there. |
+| **Quit** | Shuts the server down (the rooms are saved) and closes the app. While players are connected or a download is running it asks first. |
 
-While the server runs, the notification shows `http://<address>:8272/vtt` with three actions:
-**Open** hands the address to the browser, **Share** to any other app, and **Quit** stops
-everything. The address is the hotspot's when tethering is on and the WiFi one otherwise, and the
-server is restarted on the new one when the phone changes network.
+While the server runs, the notification shows `http://<address>:8272/vtt` with the same three
+actions the screen offers: **Open** hands the address to the browser, **Share** to any other app,
+and **Quit** stops everything; while something is downloading it shows how far it has come. The
+address is the hotspot's when tethering is on and the WiFi one otherwise, and the server is
+restarted on the new one when the phone changes network.
 
 Rooms are saved outside of the clone (in `save/` next to it), so they survive every update.
 
@@ -101,6 +105,10 @@ each other - uninstall the old one first, or build locally where `keystore.jks` 
 * **Devices.** The repository builds every package for `aarch64`, `arm`, `x86_64` and `i686`, so
   `arm64-v8a`, `armeabi-v7a`, `x86_64` and `x86` devices and emulators are all covered. A device
   whose ABI is none of those is told that instead of installing anything.
+* **A screen that survives a rotation.** The logo is given a height rather than the screen's
+  width (`values/dimens.xml`, and a smaller one in `values-land/`), so a wide and short screen
+  does not turn it into a banner that pushes the console and the buttons off the bottom. The
+  console is the only part that grows and shrinks with the room that is left.
 * **When the server counts as running.** Node takes a few seconds to come up on a phone, and it
   can still fail on the way - an occupied port, a half finished installation. The app therefore
   says *Starting the server* until the server has printed that it is listening, and only then

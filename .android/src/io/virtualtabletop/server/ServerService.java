@@ -423,11 +423,14 @@ public class ServerService extends Service implements AppState.Listener {
 
     if(!running && (updating || starting)) {
       String step = AppState.step();
+      int percent = AppState.percent();
       int title = !updating ? R.string.notification_starting
           : installing ? R.string.notification_installing : R.string.notification_updating;
+      // the install is meant to run with the screen off, so how far it has come belongs here
       return builder
           .setContentTitle(getString(title))
           .setContentText(step)
+          .setProgress(100, Math.max(percent, 0), percent == AppState.UNKNOWN)
           .setStyle(new Notification.BigTextStyle().bigText(step))
           .build();
     }

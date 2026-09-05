@@ -25,6 +25,7 @@ final class AppState {
   private static boolean working;
   private static int percent = UNKNOWN;
   private static boolean lastLineIsProgress;
+  private static String failure;
 
   private AppState() {
   }
@@ -78,9 +79,21 @@ final class AppState {
   static synchronized void working(boolean isWorking) {
     working = isWorking;
     percent = UNKNOWN;
-    if(!isWorking)
+    if(isWorking)
+      failure = null;
+    else
       step = "";
     changed();
+  }
+
+  /** What went wrong, kept until the next run so that the screen can say so and not only the log. */
+  static synchronized void failed(String message) {
+    failure = message;
+    log("It stopped: " + message);
+  }
+
+  static synchronized String failure() {
+    return failure;
   }
 
   static synchronized boolean isWorking() {

@@ -8,7 +8,7 @@
   <color name="surface">#3d3d3d</color>
   <color name="console">#2b2b2b</color>
   <color name="text">#f0f0f0</color>
-  <color name="text_dim">#a0a0a0</color>
+  <color name="text_dim">#b0b0b0</color>
   <color name="disabled">#5a5a5a</color>
   <color name="negative">#e06060</color>
 </resources>

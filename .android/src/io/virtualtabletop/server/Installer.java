@@ -55,7 +55,7 @@ final class Installer implements Runnable {
     try {
       update();
     } catch(Exception e) {
-      AppState.log("Update failed: " + describe(e));
+      AppState.failed(describe(e));
     } finally {
       AppState.working(false);
       if(whenDone != null)
@@ -151,7 +151,7 @@ final class Installer implements Runnable {
       AppState.percent(100 * index / (groups.size() + 1));
       if(present.containsAll(groups.get(index)))
         continue;
-      AppState.step("Downloading the files (" + (index + 1) + " of " + groups.size() + ")");
+      AppState.step("Downloading VirtualTabletop - part " + (index + 1) + " of " + groups.size());
       List<String> command = new ArrayList<>();
       command.add(git);
       command.add("sparse-checkout");

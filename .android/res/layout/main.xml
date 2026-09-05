@@ -4,14 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    android:padding="20dp">
+    android:padding="@dimen/screen_padding">
 
   <ImageView
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
-      android:layout_marginBottom="24dp"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="@dimen/logo_margin_top"
+      android:layout_marginBottom="@dimen/logo_margin_bottom"
       android:adjustViewBounds="true"
+      android:maxHeight="@dimen/logo_height"
       android:src="@drawable/vtt_logo"
       android:contentDescription="@string/logo_description"/>
 
@@ -35,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
+        android:minLines="@integer/detail_lines"
         android:textColor="@color/text_dim"
         android:textSize="14sp"
         android:lineSpacingExtra="3sp"/>
@@ -46,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:indeterminate="true"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
   </LinearLayout>
 
   <ScrollView
@@ -65,19 +68,19 @@
         android:padding="12dp"
         android:typeface="monospace"
         android:textColor="@color/text_dim"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:lineSpacingExtra="3sp"
         android:textIsSelectable="true"/>
   </ScrollView>
 
   <Button
-      android:id="@+id/start"
+      android:id="@+id/primary"
       style="@style/Button.VirtualTabletop.Primary"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
       android:textColor="@color/button_text"
-      android:text="@string/start_server"/>
+      android:text="@string/install"/>
 
   <LinearLayout
       android:layout_width="match_parent"
@@ -86,7 +89,7 @@
       android:orientation="horizontal">
 
     <Button
-        android:id="@+id/update"
+        android:id="@+id/secondary"
         style="@style/Button.VirtualTabletop.Secondary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

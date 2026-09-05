@@ -1,6 +1,8 @@
 package io.virtualtabletop.server;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -15,7 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-/** The three buttons: install or update the server, start it, and stop everything again. */
+/**
+ * The screen. The card says what is going on, the console below it carries the output, and the
+ * big button is always the next thing to do: install, then start the server, then open the room.
+ */
 public class MainActivity extends Activity implements AppState.Listener {
   private static MainActivity shown;
 
@@ -26,8 +31,8 @@ public class MainActivity extends Activity implements AppState.Listener {
   private TextView log;
   private ScrollView logScroll;
   private ProgressBar progress;
-  private Button start;
-  private Button update;
+  private Button primary;
+  private Button secondary;
   private Button quit;
 
   /** Lets the service close the app once it has shut the server down. */
@@ -46,22 +51,28 @@ public class MainActivity extends Activity implements AppState.Listener {
     log = (TextView)findViewById(R.id.log);
     logScroll = (ScrollView)findViewById(R.id.logScroll);
     progress = (ProgressBar)findViewById(R.id.progress);
-    start = (Button)findViewById(R.id.start);
-    update = (Button)findViewById(R.id.update);
+    primary = (Button)findViewById(R.id.primary);
+    secondary = (Button)findViewById(R.id.secondary);
     quit = (Button)findViewById(R.id.quit);
 
-    start.setOnClickListener(new View.OnClickListener() {
+    primary.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        startService(new Intent(MainActivity.this, ServerService.class).setAction(ServerService.ACTION_START));
+        if(ServerService.isRunning())
+          open();
+        else
+          service(Env.isInstalled(MainActivity.this) ? ServerService.ACTION_START : ServerService.ACTION_UPDATE);
         render();
       }
     });
 
-    update.setOnClickListener(new View.OnClickListener() {
+    secondary.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        startService(new Intent(MainActivity.this, ServerService.class).setAction(ServerService.ACTION_UPDATE));
+        if(ServerService.isRunning())
+          share();
+        else
+          service(ServerService.ACTION_UPDATE);
         render();
       }
     });
@@ -69,9 +80,13 @@ public class MainActivity extends Activity implements AppState.Listener {
     quit.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        if(ServerService.isRunning() || ServerService.isStarting()) {
-          startService(new Intent(MainActivity.this, ServerService.class).setAction(ServerService.ACTION_QUIT));
-        } else {
+        // a press that would interrupt players or a download is asked about first, an idle app
+        // simply closes
+        if(ServerService.isRunning() || ServerService.isStarting())
+          confirm(R.string.confirm_quit_running);
+        else if(AppState.isWorking())
+          confirm(R.string.confirm_quit_working);
+        else {
           finishAndRemoveTask();
           System.exit(0);
         }
@@ -82,7 +97,7 @@ public class MainActivity extends Activity implements AppState.Listener {
       @Override
       public void onClick(View view) {
         if(ServerService.isRunning())
-          startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ServerService.url())));
+          open();
       }
     });
   }
@@ -118,6 +133,35 @@ public class MainActivity extends Activity implements AppState.Listener {
     });
   }
 
+  private void service(String action) {
+    startService(new Intent(this, ServerService.class).setAction(action));
+  }
+
+  private void open() {
+    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ServerService.url())));
+  }
+
+  private void share() {
+    Intent address = new Intent(Intent.ACTION_SEND).setType("text/plain")
+        .putExtra(Intent.EXTRA_TEXT, ServerService.url());
+    startActivity(Intent.createChooser(address, getString(R.string.share_title)));
+  }
+
+  private void confirm(int message) {
+    new AlertDialog.Builder(this)
+        .setTitle(R.string.confirm_quit_title)
+        .setMessage(message)
+        .setNegativeButton(android.R.string.cancel, null)
+        .setPositiveButton(R.string.quit, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int button) {
+            service(ServerService.ACTION_QUIT);
+            render();
+          }
+        })
+        .show();
+  }
+
   private void render() {
     boolean running = ServerService.isRunning();
     boolean starting = ServerService.isStarting();
@@ -126,16 +170,29 @@ public class MainActivity extends Activity implements AppState.Listener {
     // while a run is going on the marker it reads from is away for a moment, so the wording
     // follows what the run set out to do rather than the state of the moment
     boolean first = working ? ServerService.isInstalling() : !installed;
+    String failure = running || starting || working ? null : AppState.failure();
+
+    state.setTextColor(getColor(failure == null ? R.color.text : R.color.negative));
+    // the address is what the whole app is there to produce, so it is the one line the card
+    // states at full strength rather than as a remark under the heading
+    detail.setTextColor(getColor(running ? R.color.text : R.color.text_dim));
+    detail.setTextSize(TypedValue.COMPLEX_UNIT_SP, running ? 18 : 14);
+    detail.setContentDescription(null);
 
     if(running) {
-      state.setText(R.string.server_running);
+      state.setText(R.string.state_running);
       detail.setText(ServerService.url());
+      detail.setContentDescription(getString(R.string.address_description));
     } else if(starting) {
       state.setText(R.string.state_starting);
-      detail.setText(AppState.step());
+      detail.setText(getString(R.string.hint_starting));
     } else if(working) {
       state.setText(first ? R.string.state_installing : R.string.state_updating);
       detail.setText(AppState.step());
+    } else if(failure != null) {
+      state.setText(installed ? R.string.state_update_failed : R.string.state_install_failed);
+      detail.setText(getString(R.string.hint_failed, failure,
+          getString(installed ? R.string.update : R.string.install)));
     } else if(installed) {
       state.setText(R.string.state_ready);
       detail.setText(R.string.hint_ready);
@@ -144,13 +201,18 @@ public class MainActivity extends Activity implements AppState.Listener {
       detail.setText(R.string.hint_not_installed);
     }
 
-    start.setText(running ? R.string.server_running : starting ? R.string.state_starting : R.string.start_server);
-    start.setEnabled(installed && !running && !starting && !working);
-    update.setText(first ? R.string.install : R.string.update);
-    update.setEnabled(!running && !starting && !working);
-    quit.setEnabled(!working);
+    // the big button carries the next step rather than the state, which the card above says
+    primary.setText(running ? R.string.open : installed ? R.string.start_server : R.string.install);
+    primary.setEnabled(running || !(working || starting));
+    secondary.setText(running ? R.string.share : R.string.update);
+    // there is nothing to update before the first installation, so the row is the way out alone
+    secondary.setVisibility(installed || running ? View.VISIBLE : View.GONE);
+    secondary.setEnabled(running || !(working || starting));
+
     int percent = AppState.percent();
-    progress.setVisibility(working || starting ? View.VISIBLE : View.GONE);
+    // kept in the layout while there is nothing to show, so the buttons do not move under a
+    // finger when a run starts or ends
+    progress.setVisibility(working || starting ? View.VISIBLE : View.INVISIBLE);
     progress.setIndeterminate(starting || percent == AppState.UNKNOWN);
     if(percent != AppState.UNKNOWN)
       progress.setProgress(percent);
@@ -159,14 +221,21 @@ public class MainActivity extends Activity implements AppState.Listener {
     String output = AppState.log();
     final boolean introduction = output.length() == 0;
     log.setTypeface(introduction ? Typeface.DEFAULT : Typeface.MONOSPACE);
-    log.setTextSize(TypedValue.COMPLEX_UNIT_SP, introduction ? 14 : 11);
+    log.setTextSize(TypedValue.COMPLEX_UNIT_SP, introduction ? 14 : 12);
+    log.setTextColor(getColor(introduction ? R.color.text : R.color.text_dim));
     // only the introduction is linkified - running it over every log update would be wasteful
     log.setAutoLinkMask(introduction ? Linkify.WEB_URLS : 0);
+    // whether the console is showing its last line right now, which is the only case where it
+    // may jump to the new one: someone who scrolled up is reading and stays where they are
+    final boolean atEnd = logScroll.getScrollY() + logScroll.getHeight() >= log.getBottom();
     log.setText(introduction ? introduction() : output);
     logScroll.post(new Runnable() {
       @Override
       public void run() {
-        logScroll.fullScroll(introduction ? View.FOCUS_UP : View.FOCUS_DOWN);
+        if(introduction)
+          logScroll.fullScroll(View.FOCUS_UP);
+        else if(atEnd)
+          logScroll.fullScroll(View.FOCUS_DOWN);
       }
     });
   }
