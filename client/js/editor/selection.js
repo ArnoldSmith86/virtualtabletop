@@ -248,6 +248,11 @@ function selectionChanged(previousSelection, newSelection) {
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
 
+  // a widget inside a smart clone is never selected on its own - the selection
+  // moves up to the clone it belongs to, so what the editor ends up on (and
+  // therefore what counts as moving on to another widget) is the mapped set
+  const selectionToApply = smartCloneProcessSelection(newSelectedWidgets);
+
   // Whatever the editor has open belongs to the widget that was being edited, so
   // moving on to another one takes it along: the sound library is an overlay
   // that outlives the editor it was opened from (it does not cover the sidebar,
@@ -261,11 +266,11 @@ function setSelection(newSelectedWidgets) {
   // link something else than the editor moving on, so it ends with its popup.
   endWidgetPickerWithoutTarget();
   const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
-                        && selectionChanged(previousSelectedWidgets, newSelectedWidgets);
+                        && selectionChanged(previousSelectedWidgets, selectionToApply);
   if(editorMovedOn)
     cancelAudioPicker();
 
-  selectedWidgets = newSelectedWidgets;
+  selectedWidgets = selectionToApply;
 
   // before the modules are notified: the panels they build carry a selection bar
   // that shows where in the history the editor now is
@@ -335,9 +340,13 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
+  // the new state brings its own smart clones, so their source map is rebuilt
+  // from it before anything reads it
+  smartCloneInit();
   // A new state replaces every widget in the room, so anything still selected
   // points at a widget object that is gone by the time this runs. Clearing the
   // selection first is the same notification the modules got before - just

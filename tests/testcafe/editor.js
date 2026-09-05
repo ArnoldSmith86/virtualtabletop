@@ -5661,3 +5661,98 @@ test('The context commands still insert while a semantic error is shown', async 
     .expect(widgetProperty('one', 'layer')).eql(2);
   await setEditorState(null);
 });
+
+// A smart clone keeps itself in sync with its source: the properties it inherits follow the source,
+// the ones the clone owns (a die's face, a seat's score, replaced literals) stay its own, a child
+// whose source is gone disappears with it, and unlinking freezes what it had at that moment.
+test('Smart clone lifecycle', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    base: { id: 'base', type: 'basic', classes: 'baseA' },
+    scoreboard: { id: 'scoreboard', type: 'scoreboard', scoreProperty: 'points' },
+    source: { id: 'source', type: 'basic', width: 140 },
+    sourceDice: { id: 'sourceDice', type: 'dice', parent: 'source', activeFace: 1, rollCount: 2 },
+    sourceSeat: { id: 'sourceSeat', type: 'seat', parent: 'source', index: 1, points: 10 },
+    sourceChild: { id: 'sourceChild', type: 'basic', parent: 'source', text: 'literal[' },
+    clone: {
+      id: 'clone',
+      type: 'basic',
+      x: 200,
+      editorSmartClone: { replaces: { 'literal[': 'value$&' } },
+      inheritFrom: {
+        source: [ '!x', '!y', '!rotation', '!parent', '!dragging', '!hoverParent', '!owner', '!hoverTarget' ],
+        base: [ 'classes' ]
+      }
+    },
+    cloneDice: {
+      id: 'cloneDice',
+      type: 'dice',
+      parent: 'clone',
+      activeFace: 5,
+      rollCount: 7,
+      inheritFrom: { sourceDice: [ '!parent', '!x', '!y', '!dragging', '!hoverParent', '!owner', '!hoverTarget', '!activeFace', '!rollCount' ] }
+    },
+    cloneSeat: {
+      id: 'cloneSeat',
+      type: 'seat',
+      parent: 'clone',
+      index: 2,
+      points: 4,
+      inheritFrom: { sourceSeat: [ '!parent', '!x', '!y', '!dragging', '!hoverParent', '!owner', '!hoverTarget', '!points', '!player', '!color', '!turn', '!index' ] }
+    },
+    cloneChild: { id: 'cloneChild', type: 'basic', parent: 'clone', inheritFrom: 'sourceChild' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok();
+  await ClientFunction(() => {
+    batchStart();
+    return widgets.get('sourceDice').set('activeFace', 3)
+      .then(() => widgets.get('sourceDice').set('rollCount', 4))
+      .then(() => widgets.get('sourceSeat').set('points', 12))
+      .then(() => batchEnd());
+  })();
+  await t.wait(100);
+
+  const independentState = await ClientFunction(() => ({
+    activeFace: widgets.get('cloneDice').get('activeFace'),
+    rollCount: widgets.get('cloneDice').get('rollCount'),
+    points: widgets.get('cloneSeat').get('points'),
+    replacedText: widgets.get('cloneChild').get('text')
+  }))();
+  await t.expect(independentState).eql({ activeFace: 5, rollCount: 7, points: 4, replacedText: 'value$&' });
+
+  await ClientFunction(() => widgets.get('sourceChild').set('parent', null))();
+  await t.wait(100);
+  await t.expect(ClientFunction(() => widgets.has('cloneChild'))()).notOk();
+
+  await t
+    .rightClick('#w_clone')
+    .click('#editorModules .active.tune [icon=link_off]')
+    .wait(100);
+
+  await ClientFunction(() => {
+    batchStart();
+    return widgets.get('source').set('width', 180)
+      .then(() => widgets.get('base').set('classes', 'baseB'))
+      .then(() => batchEnd());
+  })();
+  await t.wait(100);
+
+  const unlinkedState = await ClientFunction(() => ({
+    width: widgets.get('clone').get('width'),
+    classes: widgets.get('clone').get('classes'),
+    inheritFrom: widgets.get('clone').get('inheritFrom'),
+    hasEditorSmartClone: Object.prototype.hasOwnProperty.call(widgets.get('clone').state, 'editorSmartClone')
+  }))();
+  await t.expect(unlinkedState).eql({
+    width: 140,
+    classes: 'baseB',
+    inheritFrom: { base: [ 'classes' ] },
+    hasEditorSmartClone: false
+  });
+  await setEditorState(null);
+});
