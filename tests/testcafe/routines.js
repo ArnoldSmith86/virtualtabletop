@@ -823,3 +823,93 @@ test('a drag whose widget is deleted leaves no drop shadow behind', async t => {
   await t.click('#w_go');
   await expectEventually(t, markedWidgets, [ 'go' ]);
 });
+
+// Creating the pile runs every routine listening on 'id', and those are as free to delete one of
+// the two cards as the pile itself. The card that is left used to be handed to the pile anyway -
+// a pile with a single child, which nothing dissolves because the other card was never in it to
+// be removed from it, and which keeps the position of the card it swallowed. (#1402)
+test('a card deleted while its pile is being created leaves no pile behind', async t => {
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', x: 200, y: 100 },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', x: 600, y: 100 },
+    watcher: { id: 'watcher', type: 'basic', x: 1200, y: 700, idGlobalUpdateRoutine: [
+      { func: 'SELECT', property: 'id', value: 'card2' },
+      { func: 'DELETE' }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.dragToElement('#w_card2', '#w_card1', { speed: 0.4 });
+
+  await expectEventually(t, async ()=>JSON.parse(await getState()).card2 || null, null);
+  // the pile the drag started to build is taken back out instead of staying behind with one card
+  await t.expect(Object.keys(JSON.parse(await getState())).filter(id=>id != '_meta').sort()).eql([ 'card1', 'deck', 'go', 'watcher' ]);
+  // and the card that is left keeps its own position rather than handing it to that pile
+  await t.expect(await widgetProperty('card1', 'parent')).eql(null);
+  await t.expect(await widgetProperty('card1', 'x')).eql(200);
+
+  // the client is still there and reacts to the next click
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+});
+
+// Taking the widget out of the holder it is in is itself a step that runs game logic, so the
+// holder it is on its way to can disappear while the widget is already detached. Its x and y are
+// the numbers it had inside its old holder, so leaving it on the top level would draw it somewhere
+// else entirely - it goes back where it came from instead. (#1504)
+test('a holder that disappears while the widget leaves its old one puts the widget back', async t => {
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+    source: { id: 'source', type: 'holder', x: 50, y: 100, width: 700, height: 180, leaveRoutine: [
+      { func: 'SELECT', property: 'id', value: 'target' },
+      { func: 'DELETE' }
+    ] },
+    target: { id: 'target', type: 'holder', x: 50, y: 600, width: 700, height: 180 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source', x: 100, y: 20 },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source', x: 300, y: 20 },
+    move: { id: 'move', type: 'button', text: 'move', x: 800, y: 400, clickRoutine: [
+      { func: 'MOVE', from: 'source', to: 'target', count: 2 }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await ClientFunction(() => widgets.get('move').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('because that holder no longer exists');
+  // both cards are in the holder they started in - the one whose turn never came and the one that
+  // was already taken out of it when the target disappeared
+  await expectEventually(t, ()=>widgetProperty('card1', 'parent'), 'source');
+  await expectEventually(t, ()=>widgetProperty('card2', 'parent'), 'source');
+});
+
+// The guards in receiveDelta() are the last resort for a delta that names a widget this client
+// does not have: reading its state to build the undo entry, or moving it out of the way of a
+// parent change, both dereferenced a lookup that came back undefined and took the client down
+// before the delta was applied at all. (#2317)
+test('a delta naming a widget the client does not have is applied without taking it down', async t => {
+  await setRoomState({ go: markSelf });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+
+  const undoProtocolMentionsGhost = await ClientFunction(() => {
+    sendRawDelta({ s: { ghost: { x: 42 } } });          // no state to undo back to
+    sendRawDelta({ s: { ghost: { parent: null } } });   // and nothing to move to the top level
+    return getUndoProtocol().some(entry=>entry.undoDelta.ghost !== undefined);
+  })();
+
+  await t.expect(undoProtocolMentionsGhost).notOk();
+  await t.expect(Selector('#clientErrorOverlay').visible).notOk();
+
+  // the client is still there and reacts to the next click
+  await t.click('#editorToolbar button[icon=close]');
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
+});

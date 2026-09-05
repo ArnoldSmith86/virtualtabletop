@@ -851,7 +851,7 @@ async function loadEditMode() {
         $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, confirmOverlay, sleep, rand, shuffleArray,
         setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
         toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
-        addWidgetLocal, updateWidgetId, removeWidgetLocal,
+        addWidgetLocal, updateWidgetId, removeWidgetLocal, widgetAdditionProblem,
         loadZipLibrary, waitForZipLibrary, zipBlob,
         generateUniqueWidgetID, unescapeID, regexEscape, stringifyForDisplay, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
         uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,

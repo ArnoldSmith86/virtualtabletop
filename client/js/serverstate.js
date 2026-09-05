@@ -140,6 +140,29 @@ export function addWidget(widget, instance, allowMissingParent) {
   delete deferredChildren[widget.id];
 }
 
+// Why the room cannot be given this widget as it stands, or null when it can. These are the
+// refusals that only look at the state and at what the room already holds, so a caller that has to
+// tear something down before it can add - the editor changing a widget's type is a remove followed
+// by a re-add of the same ID - can ask before rather than after, when there is nothing left to
+// put back.
+export function widgetAdditionProblem(widget) {
+  if(widget.parent && !widgets.has(widget.parent))
+    return `Refusing to add widget '${widget.id}': there is no widget '${widget.parent}' to use as its parent.`;
+
+  // A card is only a card together with its deck: addWidget() holds one whose deck is missing back
+  // until that deck arrives, which for a widget created here never happens - it would wait forever.
+  if(widget.type == 'card' && !widget.deck)
+    return `Refusing to add card '${widget.id}': it names no deck to take its cardTypes from.`;
+
+  if(widget.type == 'card' && (!widgets.has(widget.deck) || widgets.get(widget.deck).get('type') != 'deck'))
+    return `Refusing to add card '${widget.id}': '${widget.deck}' is not a deck in this room.`;
+
+  if(widget.type == 'card' && !widgets.get(widget.deck).get('cardTypes')[widget.cardType])
+    return `Refusing to add card '${widget.id}': deck '${widget.deck}' has no cardType '${widget.cardType}'.`;
+
+  return null;
+}
+
 // useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
 // creation) so live gameplay keeps random IDs - type-based IDs are an
 // authoring/edit-mode convenience and give no benefit during play, while
@@ -152,25 +175,9 @@ async function addWidgetLocal(widget, useTypeBasedID = true, problems = null) {
   else
     widget.id = String(widget.id);
 
-  if(widget.parent && !widgets.has(widget.parent)) {
-    reportProblem(`Refusing to add widget '${widget.id}': there is no widget '${widget.parent}' to use as its parent.`, problems);
-    return null;
-  }
-
-  // A card is only a card together with its deck: addWidget() holds one whose deck is missing back
-  // until that deck arrives, which for a widget created here never happens - it would wait forever.
-  if(widget.type == 'card' && !widget.deck) {
-    reportProblem(`Refusing to add card '${widget.id}': it names no deck to take its cardTypes from.`, problems);
-    return null;
-  }
-
-  if(widget.type == 'card' && (!widgets.has(widget.deck) || widgets.get(widget.deck).get('type') != 'deck')) {
-    reportProblem(`Refusing to add card '${widget.id}': '${widget.deck}' is not a deck in this room.`, problems);
-    return null;
-  }
-
-  if(widget.type == 'card' && !widgets.get(widget.deck).get('cardTypes')[widget.cardType]) {
-    reportProblem(`Refusing to add card '${widget.id}': deck '${widget.deck}' has no cardType '${widget.cardType}'.`, problems);
+  const additionProblem = widgetAdditionProblem(widget);
+  if(additionProblem) {
+    reportProblem(additionProblem, problems);
     return null;
   }
 
@@ -456,7 +463,9 @@ function addDeltaEntryToUndoProtocol(delta) {
       undoDelta[widgetID] = null;
     } else if(widgets.has(widgetID)) {
       // a property update can name a widget the room no longer has, when something kept writing to
-      // it after it was removed - there is no state left to undo back to, so it gets no entry
+      // it after it was removed - there is no state left to undo back to, so it gets no entry.
+      // A card still parked in deferredCards because its deck has not arrived is the one widget
+      // this also skips while it is perfectly legitimate; it gets its entries once the deck lands
       undoDelta[widgetID] = {};
       for(const property in delta.s[widgetID]) {
         undoDelta[widgetID][property] = widgets.get(widgetID).unalteredState[property];

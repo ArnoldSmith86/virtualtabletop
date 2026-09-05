@@ -1632,8 +1632,23 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(widget.id !== previousState.id) {
     await updateWidgetId(widget, previousState.id);
   } else if (widget.type !== previousState.type) {
+    // A type change is a remove followed by a re-add of the same id, so a re-add the client would
+    // refuse has to be caught before the removal: afterwards there is nothing left to put back and
+    // the widget would be gone from the room for good.
+    const typeProblem = widgetAdditionProblem(widget);
+    if(typeProblem) {
+      alert(`${typeProblem} Nothing was saved.`);
+      batchEnd();
+      return;
+    }
+
     await removeWidgetLocal(previousState.id, true);
     const id = await addWidgetLocal(widget);
+    if(id === null) {
+      alert(`Changing the type of '${previousState.id}' to '${widget.type}' failed: the widget could not be added back and is gone. Its children and cards are on the top level now.`);
+      batchEnd();
+      return;
+    }
 
     // Handle special case where type is removed
     if(widget.type === undefined)

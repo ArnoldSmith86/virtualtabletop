@@ -2166,8 +2166,8 @@ export class Widget extends StateManaged {
             c.movedByButton = true;
             if(target.get('type') == 'seat') {
               if(target.get('hand') && target.get('player')) {
-                if(widgets.has(target.get('hand'))) {
-                  const targetHand = widgets.get(target.get('hand'));
+                const targetHand = liveWidget(target.get('hand'));
+                if(targetHand) {
                   let wasMoved = true;
                   await applyFlip();
                   if (targetHand == source) {
@@ -2178,11 +2178,14 @@ export class Widget extends StateManaged {
                     wasMoved = await c.moveToHolder(targetHand, problems);
                     delete c.targetPlayer;
                   }
-                  await c.bringToFront();
-                  if(targetHand.get('type') == 'holder')
-                    await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
-                  if(wasMoved)
+                  // a refused move left the card where it was, so there is no hand to rearrange
+                  // and no card in it to raise
+                  if(wasMoved) {
+                    await c.bringToFront();
+                    if(targetHand.get('type') == 'holder')
+                      await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                     ++moved;
+                  }
                 } else {
                   problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
                 }
@@ -3139,14 +3142,25 @@ export class Widget extends StateManaged {
 
     if(this.get('parent') && !this.currentParent)
       this.currentParent = widgets.get(this.get('parent'));
+
+    // Where the widget came from, so that a refusal after checkParent(true) has taken it out of
+    // there can put it back: x and y are the numbers it had inside that holder, and left on the
+    // top level they are read as the room's and draw the widget somewhere else entirely.
+    const parentBefore = this.get('parent');
+    const putBack = async ()=> {
+      if(this.get('parent') !== parentBefore && liveWidget(this.id) === this && liveWidget(parentBefore))
+        await this.set('parent', parentBefore);
+      return false;
+    };
+
     if(this.currentParent != holder)
       await this.checkParent(true);
     if(cannotMove())
-      return false;
+      return await putBack();
 
     await this.set('owner',  null);
     if(cannotMove())
-      return false;
+      return await putBack();
 
     await this.set('parent', holder.get('id'));
     return true;
@@ -3418,9 +3432,11 @@ export class Widget extends StateManaged {
   // write to that widget is pointless, but the marks the drag left on other widgets
   // outlive it: the drop targets keep the 'droppable' class, which move() takes as
   // reason enough to drop the next dragged widget there whatever the holder accepts,
-  // the hovered holder keeps its highlight, and a drop shadow is parented to that
-  // holder rather than to the widget, so removing the widget leaves it in the room for
-  // every player. This takes all of that off again and touches nothing that is gone.
+  // the hovered holder keeps its highlight, a drop shadow is parented to that holder
+  // rather than to the widget, so removing the widget leaves it in the room for every
+  // player, and #enlarged is a single element the whole room shares, which only the
+  // widget's own touchend listener and moveEnd() ever hide again. This takes all of that
+  // off again and touches nothing that is gone.
   async abandonDrag() {
     for(const t of this.dropTargets || [])
       if(t.domElement)
@@ -3429,9 +3445,12 @@ export class Widget extends StateManaged {
       this.hoverTarget.domElement.classList.remove('droptarget');
     this.highlightStopDropLine(null);
     delete this.stopDropLines;
+    this.hideEnlarged();
 
     // hideShadowWidget() would write 'dropShadowWidget' back to the gone widget, so the
-    // shadow is taken out the way that method does but without that last step
+    // shadow is taken out the way that method does but without that last step - and
+    // without its preventRearrangeDuringPileDrop bracket, which only matters for a holder
+    // that is receiving a drop, while nothing is being dropped here
     const shadowWidget = liveWidget(this.get('dropShadowWidget'));
     if(shadowWidget) {
       shadowWidget.currentParent = liveWidget(shadowWidget.get('parent'));
@@ -4069,15 +4088,30 @@ export class Widget extends StateManaged {
           // limbo, from where the next update tried to pile them up again, forever. (#1402)
           if(pileId === null) {
             // the two cards stay where they are and stay within pileSnapRange, so every later update
-            // of either of them tries the same pile again - only the first attempt is worth reading
-            if(!reportedPileCreationFailures.has(thisOnPileCreationJSON)) {
-              reportedPileCreationFailures.add(thisOnPileCreationJSON);
+            // of either of them tries the same pile again - only the first attempt of this pair is
+            // worth reading, while a different pair failing the same way still gets its own message
+            const failureKey = `${thisOnPileCreationJSON} ${this.id} ${widgetID}`;
+            if(!reportedPileCreationFailures.has(failureKey)) {
+              reportedPileCreationFailures.add(failureKey);
               reportProblem(`Could not create a pile for '${this.id}' and '${widgetID}'. Check the onPileCreation property of '${this.id}'.`);
               for(const problem of pileProblems)
                 reportProblem(problem);
             }
             break;
           }
+
+          // Creating the pile ran every routine listening on 'id', and those are as free to delete
+          // the cards as the pile. A pile that gets only one of them stays in the room forever: a
+          // pile dissolves itself when a child is removed from it, and the card that is gone was
+          // never in it to be removed. So the empty pile goes again and the surviving card keeps its
+          // own position rather than handing it to a pile it is alone in.
+          if(liveWidget(this.id) !== this || liveWidget(widgetID) !== widget) {
+            const pileWidget = liveWidget(pileId);
+            if(pileWidget && !pileWidget.children().length)
+              await removeWidgetLocal(pileId);
+            break;
+          }
+
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);

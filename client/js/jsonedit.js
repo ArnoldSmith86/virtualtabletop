@@ -153,10 +153,14 @@ const jeCommands = [
           const macroProblems = [];
           for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
             const s = JSON.stringify(w.state);
+            const previousState = JSON.parse(s);
             const newState = JSON.parse(s);
             macro(newState, variableState);
-            // updateWidget would show one modal alert per widget, so collect the problems instead
-            const problem = widgetParentProblem(newState, JSON.parse(s));
+            // updateWidget would show one modal alert per widget, so collect the problems instead.
+            // A changed type makes it remove the widget before it adds the new one back, so a
+            // state the client cannot build has to be caught here rather than halfway through
+            const problem = widgetParentProblem(newState, previousState)
+              || (newState.type !== previousState.type ? widgetAdditionProblem(newState) : null);
             if(problem)
               macroProblems.push(`${w.id}: ${problem}`);
             else
