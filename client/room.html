@@ -47,6 +47,10 @@
     <div id="room">
       <div id="topSurface" class="surface"><h1 id="loadingRoomIndicator">Loading room...</h1></div>
     </div>
+    <div id="statusOverlay" data-state="">
+      <span class="statusIcon" icon="hourglass_empty"></span>
+      <span class="statusText"></span>
+    </div>
 
     <div id="gridOverlay" class="overlay">
       <div class="modal"></div>
@@ -211,8 +215,8 @@
           <i class="material-symbols">auto_awesome</i>
           <select id="filterByAi">
             <option>Any</option>
-            <option value="no-ai">No AI imagery</option>
-            <option value="ai">Uses AI imagery</option>
+            <option value="no-ai">Made without AI</option>
+            <option value="ai">Made with AI</option>
           </select>
         </span>
         <span id="librarySortWrapper" data-priority="3">
@@ -232,7 +236,7 @@
           <button icon="star_rate" class="star"></button>
           <i class="material-symbols linked">link</i>
           <i class="material-symbols importNotes" title="This game was imported - the game details list what could not be translated">info</i>
-          <span class="ai-badge" title="Uses AI generated imagery">AI</span>
+          <span class="ai-badge" title="Uses AI generated content">AI</span>
           <div class="details">
             <h3>Name</h3>
             <h4>Similar Name</h4>
@@ -341,7 +345,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
-          <span class="ai-badge hideForEdit" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
+          <span class="ai-badge hideForEdit" data-showfor="usesAIImagery|usesAILayout" title="Uses AI generated content">AI</span>
           <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
@@ -376,6 +380,7 @@
       </template>
       <div id="variantsList">
         <div class="variantsList"></div>
+        <p id="emptyVariants">This game has no variants left. Variants are the different setups of a game - a game needs at least one of them to be playable.<span class="onlyForEdit"><br>Add one below, or save to remove the game from your game shelf.</span></p>
         <button icon="add" class="onlyForEdit">Add variant</button>
       </div>
       <div id="similarDetails" data-showfor="similarImage|similarName|similarDesigner|similarAwards|bgg|rules">
@@ -413,7 +418,7 @@
         </div>
         <button class="prettyButton next"><i class="material-symbols">arrow_forward</i></button>
       </div>
-      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery|importerWarnings">
+      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery|usesAILayout|importerWarnings">
         <h3 data-showfor="importerWarnings" id="importNotesHeading">Import notes</h3>
         <ul data-showfor="importerWarnings" id="importNotes"></ul>
         <h3 data-showfor="ruleText">How to play the game</h3>
@@ -423,9 +428,14 @@
         <h3 data-showfor="attribution">Attribution</h3>
         <div data-field="attribution" data-html="true"></div>
         <div class="onlyForEdit" style="margin-top: 12px;"><input type="checkbox" id="usesAIImagery" data-field="usesAIImagery" data-target="checked"> <label for="usesAIImagery">Uses AI generated imagery</label></div>
-        <div class="hideForEdit ai-imagery-notice" data-showfor="usesAIImagery">
+        <div class="onlyForEdit"><input type="checkbox" id="usesAILayout" data-field="usesAILayout" data-target="checked"> <label for="usesAILayout">Heavy use of AI for the layout</label></div>
+        <div class="hideForEdit ai-notice" data-showfor="usesAIImagery">
           <i class="material-symbols">auto_awesome</i>
           <span>This game uses AI generated imagery.</span>
+        </div>
+        <div class="hideForEdit ai-notice" data-showfor="usesAILayout">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game was built with heavy use of AI for its layout.</span>
         </div>
       </div>
     </div>
@@ -495,7 +505,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
-          <span class="ai-badge" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
+          <span class="ai-badge" data-showfor="usesAIImagery|usesAILayout" title="Uses AI generated content">AI</span>
         </div>
         <div class="details">
           <h1 data-field="name"></h1>
@@ -522,9 +532,13 @@
           <button id="welcomePlayButton" icon="play_arrow">Create room</button>
         </div>
         <p id="welcomeUserGenerated" icon="warning">This game is <b>user-generated content</b> for which VirtualTabletop.io holds no responsibility or liability.</p>
-        <div class="ai-imagery-notice" data-showfor="usesAIImagery">
+        <div class="ai-notice" data-showfor="usesAIImagery">
           <i class="material-symbols">auto_awesome</i>
           <span>This game uses AI generated imagery.</span>
+        </div>
+        <div class="ai-notice" data-showfor="usesAILayout">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game was built with heavy use of AI for its layout.</span>
         </div>
       </div>
     </div>
@@ -688,15 +702,22 @@
       </div>
     </div>
 
-    <div id="connectionLostOverlay" class="overlay" style="display:none;">
-      <h1>Connection lost</h1>
+    <div id="serverRestartOverlay" class="overlay" style="display:none;">
+      <h1>The server was updated</h1>
       <div class="disconnected">
         <div class="cable">&nbsp;</div>
         <div class="plug">&nbsp;</div>
         <div class="cable">&nbsp;</div>
       </div>
-      <p>The connection to the server was lost. It should be reestablished in a few moments.</p>
-      <p>In case that doesn't work, try reloading the page or use a different room.</p>
+      <p>This page is reloading with the new version in a moment. Your room is not affected - it comes back exactly as you left it.</p>
+      <p><button id="reloadNowButton">Reload now</button></p>
+    </div>
+
+    <div id="editModeUnavailableOverlay" class="overlay" style="display:none;">
+      <h1>Edit mode could not be loaded</h1>
+      <p>The editor is fetched from the server the first time it is opened, and the server did not answer - it is most likely restarting.</p>
+      <p>Nothing is broken and nothing is lost. Please try again in a moment.</p>
+      <p><button icon="close">Close</button></p>
     </div>
 
     <div id="playerCursors"></div>
@@ -724,6 +745,73 @@
     <button icon="movie"></button>
     <button icon="add_reaction"></button>
   </template>
+
+  <!-- The client is a single <script type="module">, so a browser that does not support modules
+       (or has JavaScript turned off) runs nothing at all and is left staring at the empty loading
+       screen with no hint of what went wrong. This says what happened instead, which part of the
+       browser is missing, and which version has it. The two scripts are deliberately ES5 and touch
+       nothing else - they are the one piece of the page that has to run on a browser we do not
+       support. The versions are the browserslist key of package.json, kept in step with it by
+       tests/browsercompat.test.js. -->
+  <div id="unsupportedBrowser" class="unsupportedBrowser" hidden>
+    <img src="i/branding/logo.svg" alt="VirtualTabletop">
+    <h1>This browser is too old for VirtualTabletop</h1>
+    <p>Please update this browser, or open this page in one of these - or anything newer:</p>
+    <ul id="unsupportedBrowserVersions">
+      <li><b>Chrome 88</b></li>
+      <li><b>Edge 88</b></li>
+      <li><b>Firefox 79</b></li>
+      <li><b>Safari 14.1</b></li>
+      <li><b>Safari on iOS 14.5</b></li>
+      <li><b>Samsung Internet 15</b></li>
+    </ul>
+    <p class="unsupportedBrowserURL">This page:<br><span id="unsupportedBrowserURL"></span></p>
+    <p><a href="#" id="unsupportedBrowserContinue">Let me try anyway</a></p>
+    <p id="unsupportedBrowserReason" class="unsupportedBrowserReason">(this browser is missing something VirtualTabletop is built on)</p>
+  </div>
+  <a href="#" id="unsupportedBrowserReopen" class="unsupportedBrowserReopen" hidden>Why this may not work</a>
+  <script>
+    function unsupportedBrowser(missing) {
+      document.getElementById('unsupportedBrowserReason').innerHTML = '(this browser is missing ' + missing + ', which VirtualTabletop is built on)';
+      document.getElementById('unsupportedBrowser').removeAttribute('hidden');
+      document.getElementById('unsupportedBrowserReopen').setAttribute('hidden', '');
+    }
+    // whoever has to move to another browser has to take the link with them, and they are on the
+    // machine that cannot open it - so spell the URL out instead of leaving it in the address bar
+    document.getElementById('unsupportedBrowserURL').textContent = window.location.href;
+    document.getElementById('unsupportedBrowserContinue').onclick = function() {
+      document.getElementById('unsupportedBrowser').setAttribute('hidden', '');
+      // dismissing is not final: the app may well do nothing at all, and then the loading screen
+      // is all that is left of the explanation
+      document.getElementById('unsupportedBrowserReopen').removeAttribute('hidden');
+      return false;
+    };
+    document.getElementById('unsupportedBrowserReopen').onclick = function() {
+      document.getElementById('unsupportedBrowser').removeAttribute('hidden');
+      document.getElementById('unsupportedBrowserReopen').setAttribute('hidden', '');
+      return false;
+    };
+    // A browser can be new enough to run this file and still be too old for the room. These are
+    // the pieces of the platform the client cannot do without at all - each of them arrived years
+    // before the oldest browser above, so a browser we do support never reads any of this.
+    if(!window.WebSocket)
+      unsupportedBrowser('WebSockets');
+    else if(!window.fetch)
+      unsupportedBrowser('the fetch API');
+    else if(!window.ResizeObserver)
+      unsupportedBrowser('ResizeObserver');
+    else if(!window.CSS || !CSS.supports || !CSS.supports('color', 'var(--a)'))
+      unsupportedBrowser('CSS custom properties');
+  </script>
+  <script nomodule>unsupportedBrowser('JavaScript modules');</script>
+  <noscript>
+    <div class="unsupportedBrowser">
+      <img src="i/branding/logo.svg" alt="VirtualTabletop">
+      <h1>VirtualTabletop needs JavaScript</h1>
+      <p>This page is a JavaScript application - there is nothing to show without it.</p>
+      <p>Please enable JavaScript for this site and reload the page.</p>
+    </div>
+  </noscript>
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
