@@ -42,8 +42,12 @@ const readOnlyProperties = new Set([
 // Routines re-enter evaluateRoutine through CALL, CLICK, change routines and more, and none of
 // those paths bounded the nesting - a routine that (indirectly) triggers itself used to take the
 // client down with a stack overflow. Abort once the nesting gets absurd and report it as a problem
-// in the routine that caused it. IF branches and LOOP bodies are evaluated the same way and use up
-// a level as well, so the budget is generous. (#1405, #1455)
+// in the routine that caused it. (#1405, #1455)
+// Only routines that were entered by name count towards the limit. An IF branch, a FOREACH body or
+// the MOVE list of a Moves operation is written inline in the routine that runs it, so its nesting
+// is bounded by the game file and it can never re-enter anything on its own. Counting those too
+// would mean a routine recursing through the usual `IF -> CALL itself` base case gets half of the
+// limit the message names, and a third of it inside a FOREACH.
 // The problem is reported twice: once in the innermost routine, which is where it happened, and
 // once in the outermost one, which is the only place the user can realistically find it - the
 // innermost one is hundreds of collapsed levels deep in the routine log.
@@ -54,7 +58,7 @@ let routineDepthProblemForOutermost = null;
 
 // What re-entered the routine, so that the message names the operation the user has to go and look
 // at. CALL and click() set it immediately before they hand over; every other way in - the first
-// click on the table, a change routine, an IF branch - leaves it null and gets the generic hint.
+// click on the table, a change routine - leaves it null and gets the generic hint.
 let routineEntry = null;
 const routineEntryHint = {
   CALL: 'This is likely a recursive routine calling itself.',
@@ -64,6 +68,8 @@ const routineEntryHint = {
 // A routine waiting in DELAY or INPUT has nothing running inside it, so it gives its level back for
 // as long as it waits. Otherwise a game that keeps a handful of timer driven routines in flight -
 // each of them legitimately waiting, none of them calling itself - would run into the nesting limit.
+// An inline branch shares the level of the routine it is written in, so exactly one level is given
+// back no matter how deep inside IF branches and LOOP bodies the wait sits.
 async function whileSuspended(promise) {
   --routineDepth;
   try {
@@ -1252,8 +1258,11 @@ export class Widget extends StateManaged {
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
     const entry = routineEntry;
     routineEntry = null;
-    if(routineDepth >= maxRoutineDepth) {
-      const hint = routineEntryHint[entry] || 'Routines, IF branches and LOOP bodies all count towards that limit, so something is probably triggering itself.';
+    // a routine reached by name is a re-entry and nests; an inline branch is part of the routine it
+    // is written in and runs within its level
+    const nestsRoutine = !byReference || typeof property == 'string';
+    if(nestsRoutine && routineDepth >= maxRoutineDepth) {
+      const hint = routineEntryHint[entry] || 'Something is probably triggering it again while it is still running.';
       routineDepthProblem = routineDepthProblemForOutermost = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')} more than ${maxRoutineDepth} times. ${hint}`;
       return { variable: null, collection: [] };
     }
@@ -1266,13 +1275,14 @@ export class Widget extends StateManaged {
     // closed exactly once so that this stays true while routines overlap: two routines suspended
     // in DELAY or INPUT share the batch counter, so closing everything down to a depth remembered
     // at entry would close the batch of whichever routine started in between.
-    ++routineDepth;
+    if(nestsRoutine)
+      ++routineDepth;
     batchStart();
     try {
-      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference);
+      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, nestsRoutine);
     } finally {
       batchEnd();
-      if(!--routineDepth) {
+      if(nestsRoutine && !--routineDepth) {
         // Nothing is left that could report it - that happens when the routine that hit the limit
         // was aborted by an exception, or when every routine that is still alive is suspended in
         // DELAY or INPUT. The message names the routine it came from, so the console still tells
@@ -1285,7 +1295,7 @@ export class Widget extends StateManaged {
     }
   }
 
-  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference) {
+  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, nestsRoutine) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -2865,7 +2875,7 @@ export class Widget extends StateManaged {
       }
 
       // repeat it in the outermost routine so that it is visible without expanding the whole nesting
-      if(routineDepthProblemForOutermost && routineDepth == 1) {
+      if(routineDepthProblemForOutermost && nestsRoutine && routineDepth == 1) {
         problems.push(routineDepthProblemForOutermost);
         routineDepthProblemForOutermost = null;
       }

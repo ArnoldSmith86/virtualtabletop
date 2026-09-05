@@ -450,6 +450,71 @@ test('the routine log shows a value that contains itself instead of crashing', a
   await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('the value contains itself and can not be stored');
 });
 
+// how many routines may be running inside each other before the client refuses the next one
+const maxNesting = 250;
+
+// A button that counts one up in its own 'n' and then calls itself again until it has run `limit`
+// times, at which point it writes how far it got into its text. The CALL sits inside two IF
+// branches, which is what recursion as a loop looks like: one IF for the base case, and whatever
+// else the author wrapped around it.
+function recursiveCounterRoom(limit) {
+  return {
+    counter: { id: 'counter', type: 'button', text: 'counter', x: 800, y: 400, n: 0, clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'counter' },
+      { func: 'GET', variable: 'n', property: 'n' },
+      'var n = ${n} + 1',
+      { func: 'SET', property: 'n', value: '${n}' },
+      { func: 'IF', operand1: '${n}', relation: '<', operand2: limit, thenRoutine: [
+        { func: 'IF', operand1: 1, relation: '==', operand2: 1, thenRoutine: [ { func: 'CALL' } ] }
+      ], elseRoutine: [
+        { func: 'SET', property: 'text', value: '${n}' }
+      ] }
+    ] },
+    reset: { id: 'reset', type: 'button', text: 'reset', x: 800, y: 600, clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'counter' },
+      { func: 'SET', property: 'n', value: 0 },
+      { func: 'SET', property: 'text', value: 'counter' }
+    ] }
+  };
+}
+
+const runCounter = ClientFunction(() => widgets.get('counter').evaluateRoutine('clickRoutine', {}, {}).then(_=>true));
+
+// The limit is there to catch a routine that triggers itself, so it counts the routines that were
+// entered by name. Recursion is how the routine language writes a while loop - the public library
+// uses it in dozens of games - and its CALL almost always sits inside the IF that checks the base
+// case, so counting inline branches as well would cut such a loop off at half the number the
+// message names. (#1405)
+test('a routine calling itself from inside IF branches gets the whole nesting limit', async t => {
+  await setRoomState(recursiveCounterRoom(maxNesting));
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+
+  await runCounter();
+  await expectEventually(t, ()=>widgetProperty('counter', 'text'), maxNesting);
+});
+
+// Whatever the CALL is nested in, it is the CALL that re-entered the routine - so that is what the
+// message has to name, together with the routine it belongs to. (#1405)
+test('a routine calling itself once too often is refused and named', async t => {
+  await setRoomState(recursiveCounterRoom(maxNesting + 1));
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=pest_control]')
+    .expect(Selector('#jeLog').exists).ok();
+
+  await runCounter();
+
+  const outermostProblem = Selector('#jeLog > .jeLog > .jeLogNested > .jeLogOperation > .jeLogNested > .jeLogDetails > .jeLogNested > .jeLogProblems');
+  await t.expect(outermostProblem.innerText).contains(`Not running clickRoutine of counter more than ${maxNesting} times.`);
+  await t.expect(outermostProblem.innerText).contains('recursive routine calling itself');
+  // the routine never got to its last step
+  await t.expect(await widgetProperty('counter', 'text')).eql('counter');
+});
+
 // The routine that hits the limit is hundreds of collapsed levels deep in the log, so the problem
 // is reported in the outermost routine as well. (#1405, #1455)
 test('the recursion limit is reported in the routine that was clicked', async t => {
@@ -516,6 +581,44 @@ test('routines that are waiting do not use up the nesting limit', async t => {
   // the routines that are waiting hold the client's batch open, so the write stays local for now
   await ClientFunction(() => widgets.get('go').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
   await t.expect(await ClientFunction(() => widgets.get('go').get('marked'))()).eql(true);
+});
+
+// A routine waiting for INPUT is suspended just like one waiting in DELAY, and the player it is
+// waiting for can take minutes. Cancelling the overlay unwinds it through a rejected promise, which
+// has to give the level back exactly once - a leak there would shrink the budget with every
+// cancelled input. (#1405)
+test('routines that are waiting for input do not use up the nesting limit', async t => {
+  await setRoomState({
+    ask: { id: 'ask', type: 'button', text: 'ask', x: 800, y: 200, clickRoutine: [
+      { func: 'INPUT', header: 'ask', fields: [ { type: 'string', variable: 'answer' } ] }
+    ] },
+    ...recursiveCounterRoom(maxNesting)
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+
+  await ClientFunction(() => {
+    widgets.get('ask').evaluateRoutine('clickRoutine', {}, {}); // waits in its INPUT until cancelled
+    return true;
+  })();
+  await t.wait(300); // long enough for it to have reached its INPUT
+
+  // the counter needs every level of the limit, so it only gets all the way through while the
+  // routine waiting for the input is not holding on to its own. that routine holds the client's
+  // batch open as well, so the count stays local for now
+  await runCounter();
+  await t.expect(await ClientFunction(() => widgets.get('counter').get('text'))()).eql(maxNesting);
+
+  // cancelling the input unwinds the waiting routine, which has to give its level back once - the
+  // editor keeps the overlay itself hidden, so its button is pressed rather than clicked
+  await ClientFunction(() => {
+    $('#buttonInputCancel').click();
+    return true;
+  })();
+  await ClientFunction(() => widgets.get('reset').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+  await runCounter();
+  await expectEventually(t, ()=>widgetProperty('counter', 'text'), maxNesting);
 });
 
 // Routines that overlap - one starts while another one is waiting in DELAY or INPUT - share the

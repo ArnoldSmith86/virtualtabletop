@@ -3434,19 +3434,25 @@ export function jeLoggingRoutineEnd(variables, collections) {
 function jeLoggingRenderLog(logHTML) {
   $('#jeLog').innerHTML = logHTML;
 
-  // Make it so clicking on the arrows expands the subtree
+  // Make it so clicking on the arrows expands the subtree. A routine that calls itself hundreds of
+  // levels deep nests deeper than the HTML parser keeps - past its depth limit it appends what
+  // follows as siblings instead - so an entry down there can end up without the expander and the
+  // nested block it was built with. Everything here works on what actually made it into the DOM.
   const expanders = document.getElementsByClassName('jeExpander');
   let i;
   for (i=0; i < expanders.length; i++) {
     expanders[i].addEventListener('click', function() {
+      const nested = this.parentNode.querySelector('.jeLogNested');
+      if(!nested)
+        return;
       this.classList.toggle('jeExpander-down');
-      this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
+      nested.classList.toggle('active');
       if(this.classList.contains('jeExpander-down')) {
         this.classList.add('manuallyExpanded');
-        this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+        nested.classList.add('manuallyExpanded');
       } else {
         this.classList.remove('manuallyExpanded');
-        this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
+        nested.classList.remove('manuallyExpanded');
       }
     });
   }
@@ -3455,7 +3461,7 @@ function jeLoggingRenderLog(logHTML) {
   for (i=0; i<problems.length; i++) {
     let node = problems[i];
     while (node && node.id != 'jeLog') {
-      if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
+      if((node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) && node.firstElementChild) {
         node.firstElementChild.classList.remove('jeExpander');
         node.firstElementChild.classList.add('jeRedExpander')
       }
