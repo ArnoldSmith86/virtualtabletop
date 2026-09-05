@@ -50,6 +50,10 @@ function holderState(holderProperties = {}) {
     witness: { id: 'witness', type: 'basic', x: 1200, y: 100, width: 100, height: 100 },
     hand: Object.assign({
       id: 'hand', type: 'holder', x: 100, y: 600, width: 700, height: 180,
+      // the classic arrangement is pinned because the assertions here are about the drop
+      // geometry both tiers share - dropOffsetX is 4, the classic default, so it alone no
+      // longer opts the holder out of the auto layout, which would center the card instead
+      layout: 'custom',
       dropOffsetX: 4, dropOffsetY: 4,
       onEnter: { entered: true },
       onLeave: { left: true },

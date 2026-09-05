@@ -164,7 +164,9 @@ for(const combo of TIERS) {
     await openRoom(t, combo, {
       deck:  { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 760, y: 300 },
       card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', x: 620, y: 330 },
-      hand:  { id: 'hand', type: 'holder', x: 620, y: 520, width: 350, height: 200,
+      // the classic layout, so the assertion below can pin the drop offset
+      // (the auto default would center the card instead)
+      hand:  { id: 'hand', type: 'holder', layout: 'custom', x: 620, y: 520, width: 350, height: 200,
                onEnter: { entered: true },
                enterRoutine: [ { func: 'SELECT', property: 'id', value: 'deck', collection: 'deck' },
                                { func: 'SET', collection: 'deck', property: 'arrived', value: true } ] }

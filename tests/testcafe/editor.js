@@ -639,6 +639,109 @@ test('A holder picks what it accepts in the dropTarget editor', async t => {
     .expect(dropTarget()).eql('{"type":"dice"}');
 });
 
+test('A holder layout is picked in the Layout section and takes over what it decides', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 300, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const stateOf = ClientFunction(property => JSON.stringify(widgets.get('holder').state[property] === undefined ? null : widgets.get('holder').state[property]));
+  const layout = Selector('#editorModules .selectInput').withText('Arrange as');
+  const align = Selector('#editorModules .checkboxInput').withText('Align dropped widgets');
+  const preventPiles = Selector('#editorModules .checkboxInput').withText('Prevent piles');
+  const dropShadow = Selector('#editorModules .checkboxInput').withText('Drop shadow');
+  const pilesGap = Selector('#editorModules .numberPairRow').withText('Piles gap');
+  const pilesOffset = Selector('#editorModules .numberPairRow').withText('Piles offset');
+  const stackOffset = Selector('#editorModules .numberPairRow').withText('Stack offset');
+  const spreadMin = Selector('#editorModules .numberInput').withText('Spread min');
+  const gridColumns = Selector('#editorModules .numberInput').withText('Grid columns');
+
+  // a new holder is on auto: the low-level switches it decides for itself stay
+  // out of the way - the grid pins stay, they pin auto's wrap instead
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok()
+    .click('#w_holder')
+    .expect(layout.find('select').value).eql('"auto"')
+    .expect(align.visible).notOk()
+    .expect(pilesGap.visible).notOk()
+    .expect(gridColumns.visible).ok();
+
+  // a multi spread arranges piles: it brings the group spacing (and a starting fan) with
+  // it, and the switches it decides stay hidden; the grid pins wrap its groups
+  // into rows and the drop shadow is its knob to turn the insert preview off
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"multiSpread"'))
+    .expect(stateOf('layout')).eql('"multiSpread"')
+    .expect(stateOf('stackOffsetX')).eql('40')
+    .expect(stackOffset.find('input').nth(0).value).eql('40')
+    .expect(pilesGap.find('input').nth(0).value).eql('')
+    .expect(pilesGap.find('input').nth(0).getAttribute('placeholder')).eql('8')
+    .expect(pilesGap.visible).ok()
+    .expect(gridColumns.visible).ok()
+    .expect(spreadMin.visible).ok()
+    .expect(dropShadow.visible).ok()
+    .expect(align.visible).notOk();
+
+  // a grid offers its own knobs - including the cell pitch and the stacks
+  // switch - and a single spread keeps a long fan readable through spreadMin;
+  // custom offers every switch
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"grid"'))
+    .expect(gridColumns.visible).ok()
+    .expect(pilesOffset.visible).ok()
+    .expect(preventPiles.visible).ok()
+    .expect(spreadMin.visible).notOk()
+    .expect(pilesGap.visible).notOk()
+    // the room contradicts a hard 0 here: an unset cell gap renders as 8, an
+    // unset single-spread offset fans at 40 - the inputs stay empty and show
+    // the derived value as a greyed placeholder instead
+    .expect(stackOffset.find('input').nth(0).value).eql('')
+    .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('8')
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"singleSpread"'))
+    .expect(spreadMin.visible).ok()
+    .expect(pilesOffset.visible).notOk()
+    .expect(stackOffset.find('input').nth(0).value).eql('')
+    .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('40')
+    .expect(stackOffset.find('input').nth(1).getAttribute('placeholder')).eql('0')
+    // the arc bends the same spread: it reads the same step, so the same
+    // derived 40 shows, and the piles knobs stay away
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"arc"'))
+    .expect(stateOf('layout')).eql('"arc"')
+    .expect(stackOffset.visible).ok()
+    .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('40')
+    .expect(pilesOffset.visible).notOk()
+    .expect(spreadMin.visible).notOk()
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"custom"'))
+    .expect(align.visible).ok();
+
+  // random scatters inside the drop offset margin: that pair is its only knob
+  const dropOffset = Selector('#editorModules .numberPairRow').withText('Drop offset');
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"random"'))
+    .expect(stateOf('layout')).eql('"random"')
+    .expect(dropOffset.visible).ok()
+    .expect(gridColumns.visible).notOk()
+    .expect(align.visible).notOk();
+
+  // back to auto: it clears the arrangement properties it steps aside for
+  await t
+    .click(layout.find('select'))
+    .click(layout.find('option').withAttribute('value', '"auto"'))
+    .expect(stateOf('layout')).eql('null')
+    .expect(stateOf('stackOffsetX')).eql('null')
+    .expect(align.visible).notOk();
+});
+
 test('Position holds the grid and the drag limits, SVG replacements come from the file', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -1401,7 +1504,7 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_dice2')
     .click('#w_dice2');
-  await compareState(t, '3878b15bd31f8ad1d0972a20b69d7ea5');
+  await compareState(t, 'cb0b951304fc082699ed5c9d4d679a02');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {

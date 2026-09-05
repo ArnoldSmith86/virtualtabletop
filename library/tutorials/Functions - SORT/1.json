@@ -1,1740 +1,664 @@
 {
-  "melu": {
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 1,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "SORT: Parameters"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Beyond <b>key</b> and <b>reverse</b>, SORT has parameters that pick what gets sorted and how values compare. <b>groupBy</b> stacks a fanned hand into one group per value of a property. An <b>order</b> array pins a custom sequence for one key. <b>locales</b> and <b>options</b> are handed to JavaScript's localeCompare, and <b>collection</b> with <b>rearrange</b> sorts a SELECTed collection without moving a thing. Every button below runs one of them. Click a button in edit mode to see the detail."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 129,
+    "y": 215,
+    "height": 40,
+    "text": "groupBy: 'suit'",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "rank",
+        "groupBy": "suit"
+      }
+    ],
+    "width": 160
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 537,
+    "y": 215,
+    "height": 40,
+    "text": "groupBy: 'rank'",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "suit",
+        "groupBy": "rank"
+      }
+    ],
+    "width": 160
+  },
+  "button3": {
+    "type": "button",
+    "id": "button3",
+    "x": 953,
+    "y": 215,
+    "height": 40,
+    "text": "Suits in a fixed order",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": [
+          {
+            "key": "suit",
+            "order": [
+              "H",
+              "C",
+              "D",
+              "S"
+            ]
+          },
+          "rank"
+        ],
+        "groupBy": "suit"
+      }
+    ],
+    "width": 200
+  },
+  "dealButton": {
+    "type": "button",
+    "id": "dealButton",
+    "x": 1359,
+    "y": 215,
+    "height": 40,
+    "text": "Deal 12 cards",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "hand",
+        "count": 12,
+        "face": 1
+      }
+    ],
+    "width": 150
+  },
+  "text1": {
+    "id": "text1",
+    "x": 14,
+    "y": 270,
+    "width": 350,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>groupBy</b>: in a holder that fans groups (<i>layout: \"multiSpread\"</i>), SORT stacks one group per value of that property. <b>Key</b> sorts inside each group. This also works on collections (for example, one player's cards only)."
+  },
+  "text2": {
+    "id": "text2",
+    "x": 421,
+    "y": 270,
+    "width": 350,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<i>groupBy: \"rank\"</i> regroups the same cards by rank instead. Pairs and triples land in one fan. Then <i>key: \"suit\"</i> orders each of them."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 836,
+    "y": 270,
+    "width": 350,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>order</b>: an array inside a key object fixes the sequence by hand: <i>{key: \"suit\", order: [\"H\", \"C\", \"D\", \"S\"]}</i> puts hearts first and spades last. Values missing from the list sort after it. Combined with <b>groupBy</b> the fans themselves line up in that order."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 1234,
+    "y": 270,
+    "width": 350,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The deal lands in the hand as one single fan. Split it up with the buttons, drag cards between the fans, and start over any time: Recall &amp; Shuffle, then deal a fresh dozen."
+  },
+  "hand": {
     "type": "holder",
-    "id": "melu",
-    "x": 20,
-    "y": 885,
+    "id": "hand",
+    "x": 100,
+    "y": 460,
+    "width": 1360,
+    "height": 190,
+    "layout": "multiSpread",
+    "stackOffsetX": 40,
     "dropTarget": {
       "type": "card"
-    },
-    "z": 1155
+    }
   },
-  "ingw": {
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1478,
+    "y": 440,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deckHolderB": {
+    "id": "deckHolderB",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
     "type": "button",
-    "text": "Sort by cardType",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
     "clickRoutine": [
       {
         "func": "RECALL",
-        "holder": "melu"
+        "holder": "${PROPERTY parent}"
       },
       {
         "func": "FLIP",
-        "holder": "melu",
+        "holder": "${PROPERTY parent}",
         "face": 0
       },
       {
         "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "cardType",
-        "reverse": false
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
+        "holder": "${PROPERTY parent}"
       }
-    ],
-    "x": 505,
-    "y": 892,
-    "z": 11131,
-    "id": "ingw"
-  },
-  "grid001-1-1": {
-    "id": "grid001-1-1",
-    "x": 20,
-    "y": 24,
-    "z": 400,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-2": {
-    "id": "grid001-1-2",
-    "x": 140,
-    "y": 24,
-    "z": 401,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-3": {
-    "id": "grid001-1-3",
-    "x": 260,
-    "y": 24,
-    "z": 402,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-4": {
-    "id": "grid001-1-4",
-    "x": 380,
-    "y": 24,
-    "z": 403,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-5": {
-    "id": "grid001-1-5",
-    "x": 500,
-    "y": 24,
-    "z": 404,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-6": {
-    "id": "grid001-1-6",
-    "x": 620,
-    "y": 24,
-    "z": 405,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-7": {
-    "id": "grid001-1-7",
-    "x": 740,
-    "y": 24,
-    "z": 406,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-8": {
-    "id": "grid001-1-8",
-    "x": 860,
-    "y": 24,
-    "z": 407,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-9": {
-    "id": "grid001-1-9",
-    "x": 980,
-    "y": 24,
-    "z": 408,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-10": {
-    "id": "grid001-1-10",
-    "x": 1100,
-    "y": 24,
-    "z": 409,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-11": {
-    "id": "grid001-1-11",
-    "x": 1220,
-    "y": 24,
-    "z": 410,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-12": {
-    "id": "grid001-1-12",
-    "x": 1340,
-    "y": 24,
-    "z": 411,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-1-13": {
-    "id": "grid001-1-13",
-    "x": 1460,
-    "y": 24,
-    "z": 412,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-1": {
-    "id": "grid001-2-1",
-    "x": 20,
-    "y": 194,
-    "z": 413,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-2": {
-    "id": "grid001-2-2",
-    "x": 140,
-    "y": 194,
-    "z": 414,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-3": {
-    "id": "grid001-2-3",
-    "x": 260,
-    "y": 194,
-    "z": 415,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-4": {
-    "id": "grid001-2-4",
-    "x": 380,
-    "y": 194,
-    "z": 416,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-5": {
-    "id": "grid001-2-5",
-    "x": 500,
-    "y": 194,
-    "z": 417,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-6": {
-    "id": "grid001-2-6",
-    "x": 620,
-    "y": 194,
-    "z": 418,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-7": {
-    "id": "grid001-2-7",
-    "x": 740,
-    "y": 194,
-    "z": 419,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-8": {
-    "id": "grid001-2-8",
-    "x": 860,
-    "y": 194,
-    "z": 420,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-9": {
-    "id": "grid001-2-9",
-    "x": 980,
-    "y": 194,
-    "z": 421,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-10": {
-    "id": "grid001-2-10",
-    "x": 1100,
-    "y": 194,
-    "z": 422,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-11": {
-    "id": "grid001-2-11",
-    "x": 1220,
-    "y": 194,
-    "z": 423,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-12": {
-    "id": "grid001-2-12",
-    "x": 1340,
-    "y": 194,
-    "z": 424,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-2-13": {
-    "id": "grid001-2-13",
-    "x": 1460,
-    "y": 194,
-    "z": 425,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-1": {
-    "id": "grid001-3-1",
-    "x": 20,
-    "y": 364,
-    "z": 426,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-2": {
-    "id": "grid001-3-2",
-    "x": 140,
-    "y": 364,
-    "z": 427,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-3": {
-    "id": "grid001-3-3",
-    "x": 260,
-    "y": 364,
-    "z": 428,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-4": {
-    "id": "grid001-3-4",
-    "x": 380,
-    "y": 364,
-    "z": 429,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-5": {
-    "id": "grid001-3-5",
-    "x": 500,
-    "y": 364,
-    "z": 430,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-6": {
-    "id": "grid001-3-6",
-    "x": 620,
-    "y": 364,
-    "z": 431,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-7": {
-    "id": "grid001-3-7",
-    "x": 740,
-    "y": 364,
-    "z": 432,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-8": {
-    "id": "grid001-3-8",
-    "x": 860,
-    "y": 364,
-    "z": 433,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-9": {
-    "id": "grid001-3-9",
-    "x": 979.5,
-    "y": 365,
-    "z": 1156,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-10": {
-    "id": "grid001-3-10",
-    "x": 1100,
-    "y": 364,
-    "z": 435,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-11": {
-    "id": "grid001-3-11",
-    "x": 1220,
-    "y": 364,
-    "z": 436,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-12": {
-    "id": "grid001-3-12",
-    "x": 1340,
-    "y": 364,
-    "z": 437,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-3-13": {
-    "id": "grid001-3-13",
-    "x": 1460,
-    "y": 364,
-    "z": 438,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-1": {
-    "id": "grid001-4-1",
-    "x": 20,
-    "y": 534,
-    "z": 439,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-2": {
-    "id": "grid001-4-2",
-    "x": 140,
-    "y": 534,
-    "z": 440,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-3": {
-    "id": "grid001-4-3",
-    "x": 260,
-    "y": 534,
-    "z": 441,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-4": {
-    "id": "grid001-4-4",
-    "x": 380,
-    "y": 534,
-    "z": 442,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-5": {
-    "id": "grid001-4-5",
-    "x": 500,
-    "y": 534,
-    "z": 443,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-6": {
-    "id": "grid001-4-6",
-    "x": 620,
-    "y": 534,
-    "z": 444,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-7": {
-    "id": "grid001-4-7",
-    "x": 740,
-    "y": 534,
-    "z": 445,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-8": {
-    "id": "grid001-4-8",
-    "x": 860,
-    "y": 534,
-    "z": 446,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-9": {
-    "id": "grid001-4-9",
-    "x": 980,
-    "y": 534,
-    "z": 447,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-10": {
-    "id": "grid001-4-10",
-    "x": 1100,
-    "y": 534,
-    "z": 448,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-11": {
-    "id": "grid001-4-11",
-    "x": 1220,
-    "y": 534,
-    "z": 449,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-12": {
-    "id": "grid001-4-12",
-    "x": 1340,
-    "y": 534,
-    "z": 450,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-4-13": {
-    "id": "grid001-4-13",
-    "x": 1460,
-    "y": 534,
-    "z": 451,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-5-1": {
-    "id": "grid001-5-1",
-    "x": 20,
-    "y": 704,
-    "z": 452,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "grid001-5-2": {
-    "id": "grid001-5-2",
-    "x": 140,
-    "y": 704,
-    "z": 453,
-    "type": "holder",
-    "width": 111,
-    "height": 168
-  },
-  "k131": {
-    "type": "button",
-    "text": "Sort by Suit",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "suit",
-        "reverse": false
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 600,
-    "y": 892,
-    "z": 4,
-    "id": "k131"
-  },
-  "cnfu": {
-    "type": "button",
-    "text": "Sort by rank",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rank",
-        "reverse": false
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 600,
-    "y": 796,
-    "z": 11132,
-    "id": "cnfu"
-  },
-  "i6yz": {
-    "type": "button",
-    "text": "Sort by suitColor",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "suitColor",
-        "reverse": false
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 695,
-    "y": 892,
-    "z": 11134,
-    "id": "i6yz"
-  },
-  "z394": {
-    "type": "button",
-    "text": "Sort by rankA",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rankA",
-        "reverse": false
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 695,
-    "y": 796,
-    "z": 11133,
-    "id": "z394"
-  },
-  "0v3h": {
-    "type": "button",
-    "text": "Sort by suitAlt",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "suitAlt",
-        "reverse": false
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 790,
-    "y": 892,
-    "z": 11135,
-    "id": "0v3h"
-  },
-  "lpuv": {
-    "type": "label",
-    "text": "Use these buttons to see how the deck is sorted using the default keys",
-    "css": "font-size: 20px",
-    "height": 60,
-    "width": 500,
-    "x": 446,
-    "y": 735,
-    "z": 11102,
-    "id": "lpuv"
-  },
-  "ingw-copy001": {
-    "type": "button",
-    "text": "Sort by cardType in reverse",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "cardType",
-        "reverse": true
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 1132,
-    "y": 892,
-    "id": "ingw-copy001",
-    "z": 11119,
-    "width": 100
-  },
-  "k131-copy001": {
-    "type": "button",
-    "text": "Sort by Suit in reverse",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "suit",
-        "reverse": true
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 1247,
-    "y": 892,
-    "id": "k131-copy001",
-    "z": 11110,
-    "width": 100
-  },
-  "cnfu-copy001": {
-    "type": "button",
-    "text": "Sort by rank in reverse",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rank",
-        "reverse": true
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 1247,
-    "y": 796,
-    "id": "cnfu-copy001",
-    "z": 11127,
-    "width": 100
-  },
-  "i6yz-copy001": {
-    "type": "button",
-    "text": "Sort by suitColor in reverse",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "suitColor",
-        "reverse": true
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 1362,
-    "y": 892,
-    "id": "i6yz-copy001",
-    "z": 11111,
-    "width": 100
-  },
-  "z394-copy001": {
-    "type": "button",
-    "text": "Sort by rankA in reverse",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rankA",
-        "reverse": true
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 1362,
-    "y": 796,
-    "id": "z394-copy001",
-    "z": 11129,
-    "width": 100
-  },
-  "0v3h-copy001": {
-    "type": "button",
-    "text": "Sort by suitAlt in reverse",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "suitAlt",
-        "reverse": true
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
-    ],
-    "x": 1476,
-    "y": 892,
-    "id": "0v3h-copy001",
-    "z": 11109,
-    "width": 100
-  },
-  "lpuv-copy001": {
-    "type": "label",
-    "text": "Use these buttons to see how the deck is sorted using the default keys with 'reverse' set to true",
-    "css": "font-size: 20px",
-    "height": 60,
-    "width": 500,
-    "x": 1072,
-    "y": 735,
-    "id": "lpuv-copy001",
-    "z": 11109
-  },
-  "95s5D": {
+    ]
+  },
+  "deckHolderP": {
+    "type": "pile",
+    "id": "deckHolderP",
+    "parent": "deckHolder",
+    "width": 103,
+    "height": 160,
+    "z": 1
+  },
+  "deckHolder_A_C": {
+    "id": "deckHolder_A_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 01",
+    "z": 228
+  },
+  "deckHolder_2_C": {
+    "id": "deckHolder_2_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 02",
+    "z": 234
+  },
+  "deckHolder_3_C": {
+    "id": "deckHolder_3_C",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 03",
+    "z": 295,
+    "activeFace": 1,
+    "x": 160
+  },
+  "deckHolder_4_C": {
+    "id": "deckHolder_4_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 04",
+    "z": 231
+  },
+  "deckHolder_5_C": {
+    "id": "deckHolder_5_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 05",
+    "z": 241
+  },
+  "deckHolder_6_C": {
+    "id": "deckHolder_6_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 06",
+    "z": 246
+  },
+  "deckHolder_7_C": {
+    "id": "deckHolder_7_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 07",
+    "z": 229
+  },
+  "deckHolder_8_C": {
+    "id": "deckHolder_8_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 08",
+    "z": 260
+  },
+  "deckHolder_9_C": {
+    "id": "deckHolder_9_C",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 09",
+    "z": 302,
+    "activeFace": 1,
+    "x": 440
+  },
+  "deckHolder_T_C": {
+    "id": "deckHolder_T_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 10",
+    "z": 244
+  },
+  "deckHolder_J_C": {
+    "id": "deckHolder_J_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 2J",
+    "z": 251
+  },
+  "deckHolder_Q_C": {
+    "id": "deckHolder_Q_C",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 3Q",
+    "z": 250
+  },
+  "deckHolder_K_C": {
+    "id": "deckHolder_K_C",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "C 4K",
+    "z": 300,
+    "activeFace": 1,
+    "x": 360
+  },
+  "deckHolder_A_D": {
+    "id": "deckHolder_A_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 01",
+    "z": 236
+  },
+  "deckHolder_2_D": {
+    "id": "deckHolder_2_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 02",
+    "z": 235
+  },
+  "deckHolder_3_D": {
+    "id": "deckHolder_3_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 03",
+    "z": 265
+  },
+  "deckHolder_4_D": {
+    "id": "deckHolder_4_D",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 04",
+    "z": 297,
+    "activeFace": 1,
+    "x": 240
+  },
+  "deckHolder_5_D": {
+    "id": "deckHolder_5_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 05",
+    "z": 255
+  },
+  "deckHolder_6_D": {
+    "id": "deckHolder_6_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 06",
+    "z": 248
+  },
+  "deckHolder_7_D": {
+    "id": "deckHolder_7_D",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 07",
+    "z": 298,
+    "activeFace": 1,
+    "x": 280
+  },
+  "deckHolder_8_D": {
+    "id": "deckHolder_8_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 08",
+    "z": 233
+  },
+  "deckHolder_9_D": {
+    "id": "deckHolder_9_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 09",
+    "z": 245
+  },
+  "deckHolder_T_D": {
+    "id": "deckHolder_T_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 10",
+    "z": 263
+  },
+  "deckHolder_J_D": {
+    "id": "deckHolder_J_D",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 2J",
+    "z": 299,
+    "activeFace": 1,
+    "x": 320
+  },
+  "deckHolder_Q_D": {
+    "id": "deckHolder_Q_D",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 3Q",
+    "z": 301,
+    "activeFace": 1,
+    "x": 400
+  },
+  "deckHolder_K_D": {
+    "id": "deckHolder_K_D",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "D 4K",
+    "z": 243
+  },
+  "deckHolder_A_H": {
+    "id": "deckHolder_A_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 01",
+    "z": 264
+  },
+  "deckHolder_2_H": {
+    "id": "deckHolder_2_H",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 02",
+    "z": 293,
+    "activeFace": 1,
+    "x": 80
+  },
+  "deckHolder_3_H": {
+    "id": "deckHolder_3_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 03",
+    "z": 254
+  },
+  "deckHolder_4_H": {
+    "id": "deckHolder_4_H",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 04",
+    "z": 296,
+    "activeFace": 1,
+    "x": 200
+  },
+  "deckHolder_5_H": {
+    "id": "deckHolder_5_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 05",
+    "z": 237
+  },
+  "deckHolder_6_H": {
+    "id": "deckHolder_6_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 06",
+    "z": 257
+  },
+  "deckHolder_7_H": {
+    "id": "deckHolder_7_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 07",
+    "z": 261
+  },
+  "deckHolder_8_H": {
+    "id": "deckHolder_8_H",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 08",
+    "z": 292,
+    "activeFace": 1,
+    "x": 40
+  },
+  "deckHolder_9_H": {
+    "id": "deckHolder_9_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 09",
+    "z": 266
+  },
+  "deckHolder_T_H": {
+    "id": "deckHolder_T_H",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 10",
+    "z": 291,
+    "activeFace": 1
+  },
+  "deckHolder_J_H": {
+    "id": "deckHolder_J_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 2J",
+    "z": 253
+  },
+  "deckHolder_Q_H": {
+    "id": "deckHolder_Q_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 3Q",
+    "z": 230
+  },
+  "deckHolder_K_H": {
+    "id": "deckHolder_K_H",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "H 4K",
+    "z": 242
+  },
+  "deckHolder_A_S": {
+    "id": "deckHolder_A_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 01",
+    "z": 256
+  },
+  "deckHolder_2_S": {
+    "id": "deckHolder_2_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 02",
+    "z": 259
+  },
+  "deckHolder_3_S": {
+    "id": "deckHolder_3_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 03",
+    "z": 239
+  },
+  "deckHolder_4_S": {
+    "id": "deckHolder_4_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 04",
+    "z": 252
+  },
+  "deckHolder_5_S": {
+    "id": "deckHolder_5_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 247
+  },
+  "deckHolder_6_S": {
+    "id": "deckHolder_6_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 258
+  },
+  "deckHolder_7_S": {
+    "id": "deckHolder_7_S",
+    "parent": "e0im",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 294,
+    "activeFace": 1,
+    "x": 120
+  },
+  "deckHolder_8_S": {
+    "id": "deckHolder_8_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 232
+  },
+  "deckHolder_9_S": {
+    "id": "deckHolder_9_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 238
+  },
+  "deckHolder_T_S": {
+    "id": "deckHolder_T_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 227
+  },
+  "deckHolder_J_S": {
+    "id": "deckHolder_J_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 262
+  },
+  "deckHolder_Q_S": {
+    "id": "deckHolder_Q_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 249
+  },
+  "deckHolder_K_S": {
+    "id": "deckHolder_K_S",
+    "parent": "deckHolderP",
+    "deck": "deckHolderD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 240
+  },
+  "deckHolderD": {
     "type": "deck",
-    "id": "95s5D",
-    "x": 4,
-    "y": 4,
+    "id": "deckHolderD",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -2215,8 +1139,8 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "value": "/i/cards-default/2B.svg",
-            "color": "transparent"
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
           }
         ]
       },
@@ -2237,674 +1161,371 @@
           }
         ]
       }
+    ]
+  },
+  "buttonNumeric": {
+    "type": "button",
+    "id": "buttonNumeric",
+    "x": 100,
+    "y": 700,
+    "height": 40,
+    "text": "Sort as numbers",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": "counters",
+        "options": {
+          "numeric": true
+        }
+      }
     ],
-    "z": 16103,
-    "parent": "melu"
+    "width": 210
   },
-  "0u6e": {
-    "deck": "95s5D",
+  "buttonPlain": {
+    "type": "button",
+    "id": "buttonPlain",
+    "x": 330,
+    "y": 700,
+    "height": 40,
+    "text": "Sort as text",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": "counters"
+      }
+    ],
+    "width": 210
+  },
+  "counters": {
+    "type": "holder",
+    "id": "counters",
+    "x": 100,
+    "y": 750,
+    "width": 440,
+    "height": 110,
+    "layout": "grid",
+    "gridColumns": 4,
+    "gridRows": 1,
+    "dropTarget": {
+      "deck": "countersD"
+    }
+  },
+  "countersT0": {
+    "id": "countersT0",
+    "parent": "counters",
+    "deck": "countersD",
     "type": "card",
-    "cardType": "T 1J",
-    "id": "0u6e",
-    "z": 16104,
-    "parent": "ubsg"
-  },
-  "1soc": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "T 2J",
-    "id": "1soc",
-    "z": 16105,
-    "parent": "ubsg"
-  },
-  "ubsg": {
-    "type": "pile",
-    "parent": "melu",
+    "cardType": "v0",
     "x": 4,
     "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "ubsg"
+    "z": 1
   },
-  "db5c": {
-    "deck": "95s5D",
+  "countersT1": {
+    "id": "countersT1",
+    "parent": "counters",
+    "deck": "countersD",
     "type": "card",
-    "cardType": "C 01",
-    "id": "db5c",
-    "z": 16107,
-    "parent": "ubsg"
+    "cardType": "v1",
+    "x": 160,
+    "y": 4,
+    "z": 3
   },
-  "iior": {
-    "deck": "95s5D",
+  "countersT2": {
+    "id": "countersT2",
+    "parent": "counters",
+    "deck": "countersD",
     "type": "card",
-    "cardType": "C 02",
-    "id": "iior",
-    "z": 16109,
-    "parent": "ubsg"
+    "cardType": "v2",
+    "x": 82,
+    "y": 4,
+    "z": 2
   },
-  "zehr": {
-    "deck": "95s5D",
+  "countersT3": {
+    "id": "countersT3",
+    "parent": "counters",
+    "deck": "countersD",
     "type": "card",
-    "cardType": "C 03",
-    "id": "zehr",
-    "z": 16111,
-    "parent": "ubsg"
+    "cardType": "v3",
+    "x": 238,
+    "y": 4,
+    "z": 4
   },
-  "w76c": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 04",
-    "id": "w76c",
-    "z": 16113,
-    "parent": "ubsg"
+  "countersD": {
+    "type": "deck",
+    "id": "countersD",
+    "parent": "counters",
+    "x": 4,
+    "y": 4,
+    "cardDefaults": {
+      "width": 70,
+      "height": 94
+    },
+    "cardTypes": {
+      "v0": {
+        "value": "1"
+      },
+      "v1": {
+        "value": "2"
+      },
+      "v2": {
+        "value": "10"
+      },
+      "v3": {
+        "value": "20"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": true,
+        "radius": true,
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 25,
+            "width": 70,
+            "textAlign": "center",
+            "fontSize": 30,
+            "css": "color: #222222",
+            "dynamicProperties": {
+              "value": "value"
+            }
+          }
+        ]
+      }
+    ]
   },
-  "o7ch": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 05",
-    "id": "o7ch",
-    "z": 16115,
-    "parent": "ubsg"
+  "text5": {
+    "id": "text5",
+    "x": 100,
+    "y": 870,
+    "width": 440,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>options</b>: is handed to localeCompare. <i>{numeric: true}</i> compares digit runs by value, so 10 follows 2 instead of 1. The buttons leave <b>key</b> out, so its default <i>\"value\"</i> applies — the counters carry it as text."
   },
-  "y2u6": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 06",
-    "id": "y2u6",
-    "z": 16117,
-    "parent": "ubsg"
-  },
-  "kym8": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 07",
-    "id": "kym8",
-    "z": 16119,
-    "parent": "ubsg"
-  },
-  "ybz0": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 08",
-    "id": "ybz0",
-    "z": 16121,
-    "parent": "ubsg"
-  },
-  "8w9x": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 09",
-    "id": "8w9x",
-    "z": 16123,
-    "parent": "ubsg"
-  },
-  "o07v": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 10",
-    "id": "o07v",
-    "z": 16125,
-    "parent": "ubsg"
-  },
-  "tdgq": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 2J",
-    "id": "tdgq",
-    "z": 16127,
-    "parent": "ubsg"
-  },
-  "2su0": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 3Q",
-    "id": "2su0",
-    "z": 16129,
-    "parent": "ubsg"
-  },
-  "yeb8": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "C 4K",
-    "id": "yeb8",
-    "z": 16131,
-    "parent": "ubsg"
-  },
-  "kejn": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 01",
-    "id": "kejn",
-    "z": 16133,
-    "parent": "ubsg"
-  },
-  "mt5p": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 02",
-    "id": "mt5p",
-    "z": 16135,
-    "parent": "ubsg"
-  },
-  "3dek": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 03",
-    "id": "3dek",
-    "z": 16137,
-    "parent": "ubsg"
-  },
-  "jko5": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 04",
-    "id": "jko5",
-    "z": 16139,
-    "parent": "ubsg"
-  },
-  "m406": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 05",
-    "id": "m406",
-    "z": 16141,
-    "parent": "ubsg"
-  },
-  "hg96": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 06",
-    "id": "hg96",
-    "z": 16143,
-    "parent": "ubsg"
-  },
-  "ku42": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 07",
-    "id": "ku42",
-    "z": 16145,
-    "parent": "ubsg"
-  },
-  "0xc9": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 08",
-    "id": "0xc9",
-    "z": 16147,
-    "parent": "ubsg"
-  },
-  "exme": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 09",
-    "id": "exme",
-    "z": 16149,
-    "parent": "ubsg"
-  },
-  "wemm": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 10",
-    "id": "wemm",
-    "z": 16151,
-    "parent": "ubsg"
-  },
-  "arvo": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 2J",
-    "id": "arvo",
-    "z": 16153,
-    "parent": "ubsg"
-  },
-  "yo8k": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 3Q",
-    "id": "yo8k",
-    "z": 16155,
-    "parent": "ubsg"
-  },
-  "lz1t": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "D 4K",
-    "id": "lz1t",
-    "z": 16157,
-    "parent": "ubsg"
-  },
-  "4zox": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 01",
-    "id": "4zox",
-    "z": 16159,
-    "parent": "ubsg"
-  },
-  "bfe0": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 02",
-    "id": "bfe0",
-    "z": 16161,
-    "parent": "ubsg"
-  },
-  "kpef": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 03",
-    "id": "kpef",
-    "z": 16163,
-    "parent": "ubsg"
-  },
-  "gvgj": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 04",
-    "id": "gvgj",
-    "z": 16165,
-    "parent": "ubsg"
-  },
-  "3s7b": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 05",
-    "id": "3s7b",
-    "z": 16167,
-    "parent": "ubsg"
-  },
-  "un78": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 06",
-    "id": "un78",
-    "z": 16169,
-    "parent": "ubsg"
-  },
-  "ekg3": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 07",
-    "id": "ekg3",
-    "z": 16171,
-    "parent": "ubsg"
-  },
-  "ay07": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 08",
-    "id": "ay07",
-    "z": 16173,
-    "parent": "ubsg"
-  },
-  "bgjj": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 09",
-    "id": "bgjj",
-    "z": 16175,
-    "parent": "ubsg"
-  },
-  "td0j": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 10",
-    "id": "td0j",
-    "z": 16177,
-    "parent": "ubsg"
-  },
-  "2hpx": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 2J",
-    "id": "2hpx",
-    "z": 16179,
-    "parent": "ubsg"
-  },
-  "ae8e": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 3Q",
-    "id": "ae8e",
-    "z": 16181,
-    "parent": "ubsg"
-  },
-  "fta0": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "H 4K",
-    "id": "fta0",
-    "z": 16183,
-    "parent": "ubsg"
-  },
-  "w5qe": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 01",
-    "id": "w5qe",
-    "z": 16185,
-    "parent": "ubsg"
-  },
-  "u21r": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 02",
-    "id": "u21r",
-    "z": 16187,
-    "parent": "ubsg"
-  },
-  "vi7k": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 03",
-    "id": "vi7k",
-    "z": 16189,
-    "parent": "ubsg"
-  },
-  "o2el": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 04",
-    "id": "o2el",
-    "z": 16191,
-    "parent": "ubsg"
-  },
-  "f8lw": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 05",
-    "id": "f8lw",
-    "z": 16193,
-    "parent": "ubsg"
-  },
-  "kmib": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 06",
-    "id": "kmib",
-    "z": 16195,
-    "parent": "ubsg"
-  },
-  "oxgl": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 07",
-    "id": "oxgl",
-    "z": 16197,
-    "parent": "ubsg"
-  },
-  "146o": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 08",
-    "id": "146o",
-    "z": 16199,
-    "parent": "ubsg"
-  },
-  "j4nd": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 09",
-    "id": "j4nd",
-    "z": 16201,
-    "parent": "ubsg"
-  },
-  "vh86": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 10",
-    "id": "vh86",
-    "z": 16203,
-    "parent": "ubsg"
-  },
-  "f78c": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 2J",
-    "id": "f78c",
-    "z": 16205,
-    "parent": "ubsg"
-  },
-  "4hel": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 3Q",
-    "id": "4hel",
-    "z": 16207,
-    "parent": "ubsg"
-  },
-  "d6wl": {
-    "deck": "95s5D",
-    "type": "card",
-    "cardType": "S 4K",
-    "id": "d6wl",
-    "z": 16209,
-    "parent": "ubsg"
-  },
-  "1h8o": {
+  "buttonDe": {
     "type": "button",
-    "text": "Sort by rankFixed",
+    "id": "buttonDe",
+    "x": 620,
+    "y": 700,
+    "height": 40,
+    "text": "locales: 'de'",
     "clickRoutine": [
       {
-        "func": "RECALL",
-        "holder": "melu"
-      },
+        "func": "SORT",
+        "holder": "words",
+        "locales": "de"
+      }
+    ],
+    "width": 210
+  },
+  "buttonSv": {
+    "type": "button",
+    "id": "buttonSv",
+    "x": 850,
+    "y": 700,
+    "height": 40,
+    "text": "locales: 'sv'",
+    "clickRoutine": [
       {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
+        "func": "SORT",
+        "holder": "words",
+        "locales": "sv"
+      }
+    ],
+    "width": 210
+  },
+  "words": {
+    "type": "holder",
+    "id": "words",
+    "x": 620,
+    "y": 750,
+    "width": 440,
+    "height": 110,
+    "layout": "grid",
+    "gridColumns": 3,
+    "gridRows": 1,
+    "dropTarget": {
+      "deck": "wordsD"
+    }
+  },
+  "wordsT0": {
+    "id": "wordsT0",
+    "parent": "words",
+    "deck": "wordsD",
+    "type": "card",
+    "cardType": "v0",
+    "x": 142,
+    "y": 4,
+    "z": 2
+  },
+  "wordsT1": {
+    "id": "wordsT1",
+    "parent": "words",
+    "deck": "wordsD",
+    "type": "card",
+    "cardType": "v1",
+    "x": 280,
+    "y": 4,
+    "z": 3
+  },
+  "wordsT2": {
+    "id": "wordsT2",
+    "parent": "words",
+    "deck": "wordsD",
+    "type": "card",
+    "cardType": "v2",
+    "x": 4,
+    "y": 4,
+    "z": 1
+  },
+  "wordsD": {
+    "type": "deck",
+    "id": "wordsD",
+    "parent": "words",
+    "x": 4,
+    "y": 4,
+    "cardDefaults": {
+      "width": 130,
+      "height": 94
+    },
+    "cardTypes": {
+      "v0": {
+        "value": "Zebra"
       },
+      "v1": {
+        "value": "Äpfel"
+      },
+      "v2": {
+        "value": "Apfel"
+      }
+    },
+    "faceTemplates": [
       {
-        "func": "SHUFFLE",
-        "holder": "melu"
+        "border": true,
+        "radius": true,
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 29,
+            "width": 130,
+            "textAlign": "center",
+            "fontSize": 24,
+            "css": "color: #222222",
+            "dynamicProperties": {
+              "value": "value"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "text6": {
+    "id": "text6",
+    "x": 620,
+    "y": 870,
+    "width": 440,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>locales</b>: picks the language rules for the comparison: German files Äpfel next to Apfel, Swedish sorts it after Zebra."
+  },
+  "buttonRearrange": {
+    "type": "button",
+    "id": "buttonRearrange",
+    "x": 1140,
+    "y": 700,
+    "height": 40,
+    "text": "rearrange: false",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hand"
       },
       {
         "func": "SORT",
-        "holder": "melu",
-        "key": "rankFixed",
-        "reverse": false
+        "key": "rank",
+        "rearrange": false
       },
       {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
+        "func": "GET",
+        "property": "rankFixed",
+        "aggregation": "array",
+        "variable": "ranks"
       },
       {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
+        "func": "SELECT",
+        "property": "id",
+        "value": "readout",
+        "collection": "out"
+      },
+      {
+        "func": "SET",
+        "collection": "out",
+        "property": "text",
+        "value": "${ranks}"
       }
     ],
-    "x": 506,
-    "y": 796,
-    "z": 11130,
-    "id": "1h8o"
+    "width": 210
   },
-  "v5ra": {
-    "type": "button",
-    "text": "Sort by rankFixed in reverse",
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "melu"
-      },
-      {
-        "func": "FLIP",
-        "holder": "melu",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "melu"
-      },
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rankFixed",
-        "reverse": true
-      },
-      {
-        "func": "FLIP",
-        "count": "all",
-        "holder": [
-          "melu"
-        ]
-      },
-      {
-        "func": "MOVE",
-        "from": [
-          "melu"
-        ],
-        "to": [
-          "grid001-1-1",
-          "grid001-1-2",
-          "grid001-1-3",
-          "grid001-1-4",
-          "grid001-1-5",
-          "grid001-1-6",
-          "grid001-1-7",
-          "grid001-1-8",
-          "grid001-1-9",
-          "grid001-1-10",
-          "grid001-1-11",
-          "grid001-1-12",
-          "grid001-1-13",
-          "grid001-2-1",
-          "grid001-2-2",
-          "grid001-2-3",
-          "grid001-2-4",
-          "grid001-2-5",
-          "grid001-2-6",
-          "grid001-2-7",
-          "grid001-2-8",
-          "grid001-2-9",
-          "grid001-2-10",
-          "grid001-2-11",
-          "grid001-2-12",
-          "grid001-2-13",
-          "grid001-3-1",
-          "grid001-3-2",
-          "grid001-3-3",
-          "grid001-3-4",
-          "grid001-3-5",
-          "grid001-3-6",
-          "grid001-3-7",
-          "grid001-3-8",
-          "grid001-3-9",
-          "grid001-3-10",
-          "grid001-3-11",
-          "grid001-3-12",
-          "grid001-3-13",
-          "grid001-4-1",
-          "grid001-4-2",
-          "grid001-4-3",
-          "grid001-4-4",
-          "grid001-4-5",
-          "grid001-4-6",
-          "grid001-4-7",
-          "grid001-4-8",
-          "grid001-4-9",
-          "grid001-4-10",
-          "grid001-4-11",
-          "grid001-4-12",
-          "grid001-4-13",
-          "grid001-5-1",
-          "grid001-5-2"
-        ],
-        "count": 1
-      }
+  "readout": {
+    "id": "readout",
+    "x": 1140,
+    "y": 750,
+    "width": 350,
+    "height": 90,
+    "movable": false,
+    "movableInEdit": false,
+    "text": [
+      "02 H",
+      "03 C",
+      "04 D",
+      "04 H",
+      "07 D",
+      "07 S",
+      "08 H",
+      "09 C",
+      "10 H",
+      "2J D",
+      "3Q D",
+      "4K C"
     ],
-    "x": 1132,
-    "y": 796,
-    "z": 11128,
-    "id": "v5ra",
-    "width": 100
+    "css": {
+      "font-size": "20px",
+      "border": "2px solid #888888",
+      "border-radius": "8px",
+      "padding": "8px",
+      "white-space": "pre-wrap"
+    }
   },
-  "jvmw": {
-    "type": "label",
-    "text": "rankedFixed and cardTypes always return the cards in the same order.\n\nThe other keys are more generic and the output will depend on the original order of the cards",
-    "x": 271,
-    "y": 794,
-    "z": 11124,
-    "id": "jvmw",
-    "width": 200,
-    "height": 200,
-    "css": "font-size: 17px; text-align:left"
-  },
-  "pv58": {
-    "type": "label",
-    "text": "When reverse is set to true, the sorting start as normal but in the end, all cards a reversed from top to bottom",
-    "x": 922,
-    "y": 820,
-    "z": 11117,
-    "width": 200,
-    "height": 200,
-    "id": "pv58",
-    "css": "font-size: 17px; text-align:left"
+  "text7": {
+    "id": "text7",
+    "x": 1140,
+    "y": 870,
+    "width": 350,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Without <b>holder</b>, SORT orders the current <b>collection</b>. With <i>rearrange: false</i> nothing on the table moves. The routine just reads the sorted order. This example uses rank."
   },
   "_meta": {
-    "version": 20,
+    "version": 25,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - SORT",
       "image": "/assets/401978976_4042",
@@ -2913,9 +1534,9 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "attribution": "In this tutorial, you will learn:\n- How to use a key to sort cards\n- How to set more keys for each desired sorting\n\n\n--\n\nIn this tutorial, you will learn:\n- Which keys are included in the default deck\n- How each key sorts the default deck\n\n--\n\nIn this tutorial, you will learn:\n- How to combine keys in sequential sorting to get many sorting configurations you may need.\n- This tutorial includes an exercise with anwser\n\n--\n\nIn this tutorial, you will learn:\n- How to reverse the sorting in a pile\n- How to use that to deal from and to the bottom of a pile\n\n--\n\nIn this tutorial, you will learn:\n- How to sort 5-card poker hands by rank",
+      "attribution": "",
       "showName": false,
-      "lastUpdate": 1768674020662,
+      "lastUpdate": 1788041231914,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -2926,27 +1547,19 @@
       "helpText": "",
       "players": "1",
       "language": "en-US",
-      "variant": "2) Default deck's inbuilt keys",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "variant": "Parameters",
+      "variantImage": "",
+      "usesAIImagery": false
     }
   },
-  "bwe0": {
-    "type": "label",
-    "text": "Highest",
-    "x": 25,
-    "y": 5,
-    "z": 11120,
-    "id": "bwe0"
-  },
-  "5qpt": {
-    "type": "label",
-    "text": "Lowest",
-    "x": 140,
-    "y": 873,
-    "z": 11123,
-    "id": "5qpt"
+  "e0im": {
+    "type": "pile",
+    "parent": "hand",
+    "x": 4,
+    "y": 4,
+    "width": 543,
+    "height": 160,
+    "id": "e0im",
+    "z": 1
   }
 }

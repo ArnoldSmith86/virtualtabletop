@@ -1310,11 +1310,11 @@ const editorPropertyHints = {
   rollTime: 'How long the rolling animation lasts, in milliseconds.',
   swapTime: 'How long the face-swap animation lasts, in milliseconds.',
   pipColor: 'The color used for the pips or the face symbol of the dice.',
-  dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
+  dropShadow: 'Show a visual shadow while a movable widget is over this holder. A multi spread turns it on by default - it is what previews where the drop is about to be inserted - but unchecking it here turns the preview off.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
   dropLimit: 'The most widgets a player can drag in here. Routines, the JSON editor and "Split the pile" ignore it, so they can still put in more. On a line it counts the stops the line carries, on a pile the cards it takes. Leave empty for no limit.',
   showLimit: 'Make the handle read "2/3" instead of "2", so the drop limit of the pile is readable before a drop is refused.',
-  preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
+  preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles. A grid keeps them separate by default; unchecking this there turns every cell into a stack instead.',
   pileSnapRange: 'How close in pixels this pile has to be dropped to another pile or card to combine with it. A card dropped onto this pile uses its own snap range instead, which comes from the pile template of its deck.',
   handleCSS: 'Custom CSS declarations for the handle badge of the pile.',
   childrenPerOwner: 'Keep a separate set of held widgets for each player.',
@@ -1322,6 +1322,14 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
+  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder is smaller than one and a half cards along both axes; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nArc bends that fan into the curve of a hand held over the table: the cards tilt along a circle, up to 30 degrees at the outer ends, as far as the holder has height for the dip.\nMulti spread lines up several groups (piles) side by side.\nGrid fills rows and columns; a drop is inserted at the cell it points at and the other cards flow around it.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
+  pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds. In a grid it pins the horizontal pitch of the cells instead - a pitch of the card width packs them flush.',
+  pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds. In a grid it pins the vertical pitch of the cells instead.',
+  pilesGapX: 'The next group starts right of the cards of the previous one, plus this many pixels.',
+  pilesGapY: 'The next group starts below the cards of the previous one, plus this many pixels. With the groups wrapped into rows it is the gap between the rows.',
+  spreadMin: 'How many of the topmost cards of each pile - or of a fanned row of loose cards - keep the full stack offset; everything below them is squeezed together so a long fan stays readable.',
+  gridColumns: 'Pin the grid to this many columns instead of deriving the count from the holder size. Under Auto it pins how many cards go into a row, under Multi spread how many groups do.',
+  gridRows: 'Wrap after as many columns as it takes to come out at this many rows - the row count itself can come out smaller. Under Auto and Multi spread it wraps the cards or groups the same way. Grid columns wins where both are set; with both set and Prevent piles off, nothing goes past them - what no longer fits stacks.',
   showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
   verticalHeader: 'Rotate the scoreboard header text vertically.',
   autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
@@ -1357,6 +1365,23 @@ const editorPropertyHints = {
 // content = what the widget shows, colors/hover/appearance = subsections of
 // the Appearance section, behavior = type specific behavior,
 // cssProperties = css-like properties edited by the CSS editor in Appearance.
+// The properties a holder's effective layout can depend on: the layout itself
+// plus the raw arrangement properties that switch an auto layout off (see
+// Holder.effectiveLayout). Everything conditional on the layout listens to all
+// of them.
+const holderArrangementProperties = [ 'alignChildren', 'preventPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
+const holderArrangementListenTo = [ 'layout', ...holderArrangementProperties ];
+
+// The layout a holder actually follows; a multi-selection facade has no
+// effectiveLayout(), so it falls back to showing every low-level input.
+function holderEffectiveLayout(widget) {
+  return typeof widget.effectiveLayout == 'function' ? widget.effectiveLayout() : 'custom';
+}
+
+function holderStateHas(widget, property) {
+  return isObjectLike(widget.state) && widget.state[property] !== undefined;
+}
+
 const editorTypeSections = {
   basic: {
     content: [
@@ -1424,11 +1449,23 @@ const editorTypeSections = {
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true },
-      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
+      // its default depends on the layout (a multi spread turns the preview
+      // on), so the checkbox re-reads it when the layout changes
+      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox',
+        listenTo: [ 'dropShadow', ...holderArrangementListenTo ] }
     ],
+    // the layout decides most of these low-level switches for the holder, so
+    // while one is in effect the inputs it overrides step aside - an input
+    // that changes nothing would read as broken. A value that is set anyway
+    // stays shown so it never becomes editable nowhere.
     behavior: [
-      { label: 'Align dropped widgets', property: 'alignChildren',    kind: 'checkbox' },
-      { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox' },
+      { label: 'Align dropped widgets', property: 'alignChildren',    kind: 'checkbox',
+        available: widget=>holderEffectiveLayout(widget) == 'custom' || holderStateHas(widget, 'alignChildren'),
+        availableListenTo: holderArrangementListenTo },
+      { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox',
+        available: widget=>[ 'custom', 'pile', 'singleSpread', 'freeform', 'grid' ].indexOf(holderEffectiveLayout(widget)) != -1 || holderStateHas(widget, 'preventPiles'),
+        availableListenTo: holderArrangementListenTo,
+        listenTo: holderArrangementListenTo },
       { label: 'Children per owner',    property: 'childrenPerOwner', kind: 'checkbox' }
     ]
   },
@@ -8767,9 +8804,32 @@ class PropertiesModule extends SidebarModule {
 
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
+    // how the pile places its own cards: fanned out by the stack offset, with
+    // spreadMin keeping a long fan readable. A pile inside a holder that
+    // arranges piles inherits both from that holder unless set here - so the
+    // inputs show only what the pile sets itself and show the inherited value
+    // as a greyed placeholder, instead of posing as the pile's own.
+    const inheritAwareOptions = property=>({
+      hint: `${editorPropertyHints[property]} A greyed value comes from the holder arranging this pile (or the default) instead of being set here.`,
+      nullIfEmpty: true,
+      getValue: _=>holderStateHas(widget, property) ? widget.state[property] : null,
+      placeholder: _=>{
+        if(typeof widget.getDefaultValue != 'function')
+          return '';
+        const value = widget.getDefaultValue(property);
+        return value === null || value === undefined ? '' : String(value);
+      }
+    });
+    this.renderNumberPairRow(widget, 'Stack offset', [
+      { label: 'X', property: 'stackOffsetX', options: inheritAwareOptions('stackOffsetX') },
+      { label: 'Y', property: 'stackOffsetY', options: inheritAwareOptions('stackOffsetY') }
+    ]);
+    new NumberInput(this, widget, 'Spread min', {
+      property: 'spreadMin', step: 1, min: 1, ...inheritAwareOptions('spreadMin')
+    }).render(this.moduleDOM);
     this.renderPileTemplateSection(widget);
 
-    this.renderOtherPropertiesSection(widget, [ 'text', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition' ]);
+    this.renderOtherPropertiesSection(widget, [ 'text', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition', 'stackOffsetX', 'stackOffsetY', 'spreadMin' ]);
   }
 
   // Sits above everything else, because it says what every input below it
@@ -10351,16 +10411,8 @@ class PropertiesModule extends SidebarModule {
       this.renderHolderStateSection(widget, 'When a widget can be dropped here', '.droppable');
       this.renderHolderStateSection(widget, 'When a widget hovers over it', '.droptarget.droppable');
     });
+    this.renderHolderLayoutSection(widget);
     this.renderBehaviorSection(widget);
-    // offsets as two labelled X/Y number pairs
-    this.renderNumberPairRow(widget, 'Drop offset', [
-      { label: 'X', property: 'dropOffsetX' },
-      { label: 'Y', property: 'dropOffsetY' }
-    ]);
-    this.renderNumberPairRow(widget, 'Stack offset', [
-      { label: 'X', property: 'stackOffsetX' },
-      { label: 'Y', property: 'stackOffsetY' }
-    ]);
 
     this.renderAdvancedSection(widget, body => {
       this.renderSeatReferenceInput(widget, 'showInactiveFaceToSeat', 'Show inactive face to seat:', body, {
@@ -10371,7 +10423,127 @@ class PropertiesModule extends SidebarModule {
     });
 
     // onEnter / onLeave are edited in the Automations section below
-    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat' ]);
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'layout', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows', 'showInactiveFaceToSeat' ]);
+  }
+
+  // The arrangement of the holder: the layout select and the offsets that act
+  // as its knobs. Which of them mean anything depends on the layout, so the
+  // rows show and hide with it; a row whose property holds a value is always
+  // shown, so nothing ever becomes editable nowhere.
+  renderHolderLayoutSection(widget) {
+    this.addSubHeader('Layout');
+
+    // whether the last layout choice wrote the starter fan below, so leaving
+    // multiSpread with it untouched takes it out again - a layout the user
+    // merely explored through the select leaves nothing behind
+    let wroteStarterFan = false;
+    new SelectInput(this, widget, 'Arrange as', {
+      // what the holder actually follows: an auto layout that stepped aside
+      // because an arrangement property is set reads as Custom here
+      listenTo: holderArrangementListenTo,
+      getValue: _=>widget.effectiveLayout(),
+      setValue: value=>{
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} set layout in editor`);
+        if(value == 'auto')
+          // auto only applies while the arrangement properties are untouched
+          for(const property of holderArrangementProperties)
+            widget.set(property, null);
+        if(wroteStarterFan && value != 'multiSpread' && widget.state.stackOffsetX === 40 && widget.state.stackOffsetY === undefined) {
+          widget.set('stackOffsetX', null);
+          wroteStarterFan = false;
+        }
+        // a multi spread without a stack offset is a row of flat stacks -
+        // give it the classic hand fan as its starting point
+        if(value == 'multiSpread' && !widget.state.stackOffsetX && !widget.state.stackOffsetY) {
+          widget.set('stackOffsetX', 40);
+          wroteStarterFan = true;
+        }
+        widget.set('layout', value);
+        batchEnd();
+      },
+      hint: editorPropertyHints.layout,
+      choices: [
+        { value: 'auto',           text: 'Auto (decided by size)' },
+        { value: 'custom',         text: 'Custom (properties below)' },
+        { value: 'pile',           text: 'Pile' },
+        { value: 'singleSpread',   text: 'Single spread' },
+        { value: 'arc',            text: 'Arc (curved fan)' },
+        { value: 'multiSpread', text: 'Multi spread (groups)' },
+        { value: 'grid',           text: 'Grid' },
+        { value: 'random',         text: 'Random (scatter)' },
+        { value: 'freeform',       text: 'Freeform' }
+      ]
+    }).render(this.moduleDOM);
+
+    // a holder set to Auto silently reads as Custom above as soon as an
+    // arrangement property is written (see Holder.effectiveLayout) - say why,
+    // and how to get Auto back, right where the surprise happens
+    const autoNote = div(this.moduleDOM, 'layoutAutoNote', 'Auto is switched off because an arrangement property below is set. Choosing Auto clears them all.');
+
+    // the inputs show only what the holder sets itself: some layouts derive a
+    // value for an unset offset (a singleSpread fans at 40, a grid falls back
+    // to an 8px cell gap), so a hard 0 here would contradict what the room
+    // renders. The derived value shows as a greyed placeholder instead - the
+    // same treatment the pile editor gives its inherited stack offset.
+    const derivedValue = property=>{
+      const layout = widget.effectiveLayout();
+      // gridMetrics reads the cell gap with a fallback of 8 instead of
+      // deriving it in get(), so the placeholder needs the same fallback
+      if(layout == 'grid' && (property == 'stackOffsetX' || property == 'stackOffsetY'))
+        return Math.abs(widget.get(property)) || 8;
+      // wrapped multiSpread rows advance by the row extent plus a fallback
+      // gap of 8 unless a pitch or gap is written (see rearrangeChildren)
+      if(layout == 'multiSpread' && property == 'pilesGapY' && widget.multiSpreadWraps() && widget.get('pilesGapY') === null && widget.get('pilesOffsetY') === null)
+        return 8;
+      return widget.get(property);
+    };
+    const derivedAwareOptions = property=>({
+      hint: `${editorPropertyHints[property]} A greyed value comes from the chosen layout (or the default) instead of being set here.`,
+      nullIfEmpty: true,
+      listenTo: [ ...holderArrangementListenTo, 'gridColumns', 'gridRows' ],
+      getValue: _=>holderStateHas(widget, property) ? widget.state[property] : null,
+      placeholder: _=>{
+        const value = derivedValue(property);
+        return value === null || value === undefined ? '' : String(value);
+      }
+    });
+    const rows = [];
+    const addPairRow = (title, propertyX, propertyY, layouts)=>{
+      const row = this.renderNumberPairRow(widget, title, [
+        { label: 'X', property: propertyX, options: derivedAwareOptions(propertyX) },
+        { label: 'Y', property: propertyY, options: derivedAwareOptions(propertyY) }
+      ]);
+      rows.push({ row, layouts, properties: [ propertyX, propertyY ] });
+      return row;
+    };
+    const addNumberRow = (title, property, layouts, options)=>{
+      const input = new NumberInput(this, widget, title, {
+        property, step: 1, nullIfEmpty: true, hint: editorPropertyHints[property], ...options
+      });
+      input.render(this.moduleDOM);
+      rows.push({ row: input.dom, layouts, properties: [ property ] });
+    };
+
+    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'arc', 'multiSpread', 'grid', 'random' ]);
+    addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'arc', 'multiSpread', 'grid' ]);
+    addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multiSpread', 'grid' ]);
+    addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multiSpread' ]);
+    addNumberRow('Spread min',   'spreadMin',   [ 'multiSpread', 'singleSpread', 'custom' ]);
+    addNumberRow('Grid columns', 'gridColumns', [ 'grid', 'auto', 'multiSpread' ], { min: 1 });
+    addNumberRow('Grid rows',    'gridRows',    [ 'grid', 'auto', 'multiSpread' ], { min: 1 });
+
+    const updateRows = _=>{
+      const layout = widget.effectiveLayout();
+      autoNote.style.display = layout == 'custom' && widget.get('layout') == 'auto' ? '' : 'none';
+      for(const entry of rows) {
+        const applies = entry.layouts.indexOf(layout) != -1;
+        entry.row.style.display = applies || entry.properties.some(p=>widget.state[p] !== undefined) ? '' : 'none';
+      }
+    };
+    for(const property of [ ...holderArrangementListenTo, 'gridColumns', 'gridRows' ])
+      this.addPropertyListener(widget, property, updateRows);
+    updateRows();
   }
 
   // Text / background / border color plus a brightness filter written into a
