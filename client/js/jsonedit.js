@@ -3413,19 +3413,28 @@ function jeFormatHTML(html, baseIndent) {
 // START routine logging
 
 let jeRoutineResetOnNextLog = true;
+// True while the newest thing in the log is the "logging resumed" note. Leaving and entering edit
+// mode again without anything being logged in between would otherwise stack up an identical note
+// for every round trip.
+let jeLoggingResumeNoted = false;
 let jeRoutineAutoReset = true;
 let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
 
-// Empty the log. Operations of a routine that is currently running have the log so far saved on
-// jeHTMLStack, so that has to be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it
-// again and resurrects what was just cleared.
+// Empty the log, both the buffer and what is on screen - a buffer that no longer matches the panel
+// leaves entries on display that look current while nothing knows about them any more. Operations
+// of a routine that is currently running have the log so far saved on jeHTMLStack, so that has to
+// be emptied too - otherwise jeLoggingRoutineOperationEnd prepends it again and resurrects what was
+// just cleared.
 function jeLoggingClear() {
   jeLoggingHTML = '';
+  jeLoggingResumeNoted = false;
   for(const entry of jeHTMLStack)
     entry[0] = '';
+  if($('#jeLog'))
+    $('#jeLog').innerHTML = '';
 }
 
 function jeLoggingJSON(obj) {
@@ -3484,6 +3493,7 @@ export function jeLoggingRoutineStart(widget, property, variables, byReference) 
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
+    jeLoggingResumeNoted = false;
   }
   // a routine that runs by reference works on the variables of the routine that started it, which
   // may have changed a built-in one by now - the enclosing routine's set still says what it started
@@ -3560,7 +3570,28 @@ export function jeLoggingRoutineNotLogged(widget, property) {
       ${routine} was already running when the Debug panel was opened, so it could not be recorded. Run it again to see its log.
     </div>
   `;
+  jeLoggingResumeNoted = false;
   jeLoggingRenderLog(jeLoggingHTML);
+}
+
+// Called when logging is switched back on because edit mode was opened again with the Debug panel
+// still displayed. Nothing that happened while the game was played was logged, so the entries that
+// are still on screen are older than the last thing the user did - mark them instead of letting the
+// panel present them as the most recent interaction.
+function jeLoggingResumed() {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog') || !jeLoggingHTML || jeLoggingResumeNoted)
+    return;
+  jeLoggingResumeNoted = true;
+  const note = `
+    <div class="jeLog jeLogNote">
+      Logging resumed. Everything above is from before edit mode was left - what you did while playing was not logged.
+    </div>
+  `;
+  jeLoggingHTML += note;
+  // Appended instead of rendered from the buffer: a re-render collapses the entries the user
+  // expanded before going off to play, which is the very log this note belongs to. The note carries
+  // no expanders and sits outside .jeLogNested, so neither the click handlers nor the filter apply.
+  $('#jeLog').insertAdjacentHTML('beforeend', note);
 }
 
 export function jeLoggingRoutineOperationStart(original, applied) {
