@@ -29,6 +29,7 @@ let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
 let jeIgnoreBlurOnce = false;
+let jePrefillProperties = localStorage.getItem('jePrefillProperties') != 'false';
 const jeState = {
   ctrl: false,
   shift: false,
@@ -554,6 +555,22 @@ const jeCommands = [
       }
     },
     show: _=>!Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon') == 'object' && jeGetValueAt('icon') !== null || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'object'
+  },
+  {
+    id: 'je_anonymousCollection',
+    name: '[] anonymous collection',
+    description: 'Replace the named collection with [] so you can list widget IDs directly',
+    context: '^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|FOREACH|GET|LABEL|MOVE|ROTATE|SET|SHUFFLE|SORT|TIMER)\\) ↦ collection|^.*\\((CLONE|SELECT|TURN)\\) ↦ source|^.*\\(SHIFT\\) ↦ holders|^.*\\(RECALL\\) ↦ excludeCollection',
+    show: function() {
+      // the key check keeps the command hidden on the elements of an already anonymous collection
+      const key = jeGetLastKey();
+      const value = jeGetValue();
+      return typeof key == 'string' && value && typeof value[key] == 'string';
+    },
+    call: async function() {
+      jeGetValue()[jeGetLastKey()] = '###SELECT ME###';
+      jeSetAndSelect([]);
+    }
   },
   {
     id: 'je_uploadAudio',
@@ -1440,6 +1457,54 @@ function jeAddRoutineCommentCommand() {
   });
 }
 
+// Common properties to prefill when inserting (from library game patterns).
+// Property order follows a common grammar: input collection/widget/source, mode/relationship,
+// misc properties specific to the operation, count/value, output collection/variable.
+// Omit an operation here to always insert it empty.
+const jeRoutineOperationCommonProperties = {
+  AUDIO: { source: '', maxVolume: 1.0 },
+  CALL: { routine: '' },
+  CANVAS: { collection: 'DEFAULT', mode: 'reset' },
+  CLICK: { collection: 'DEFAULT', count: 1 },
+  CLONE: { source: 'DEFAULT', count: 1, collection: 'DEFAULT' },
+  COUNT: { collection: 'DEFAULT', variable: 'COUNT' },
+  DELAY: { milliseconds: 500 },
+  DELETE: { collection: 'DEFAULT' },
+  FLIP: { collection: 'DEFAULT', face: null },
+  FOREACH: { collection: 'DEFAULT', loopRoutine: [] },
+  GET: { collection: 'DEFAULT', property: 'id', variable: 'result' },
+  IF: { operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] },
+  INPUT: { header: '', fields: [], confirmButtonText: 'Go', cancelButtonText: 'Cancel' },
+  LABEL: { collection: 'DEFAULT', mode: 'set', value: 0 },
+  MOVE: { from: null, to: null, count: 1, collection: 'DEFAULT' },
+  MOVEXY: { from: null, x: 0, y: 0, count: 1 },
+  RECALL: { holder: null, inHolder: true },
+  RESET: { property: 'resetProperties' },
+  ROTATE: { collection: 'DEFAULT', mode: 'add', angle: 90, count: 1 },
+  SCORE: { mode: 'set', property: 'score' },
+  SELECT: { source: 'all', type: 'all', property: 'parent', value: null, collection: 'DEFAULT' },
+  SET: { collection: 'DEFAULT', property: 'parent', value: null },
+  SHIFT: { holders: null, widgets: 'all', direction: 'forward' },
+  SHUFFLE: { collection: 'DEFAULT' },
+  SORT: { collection: 'DEFAULT', key: 'value', reverse: false },
+  TIMER: { collection: 'DEFAULT', mode: 'toggle' },
+  TURN: { source: 'all', turnCycle: 'forward' },
+  UPLOAD: { variable: 'uploadedFileName' },
+  VAR: { variables: {} }
+};
+
+// True while the cursor is somewhere an operation can be inserted - all operation
+// commands share the same context and condition, so asking the first one is enough.
+function jeCanInsertOperation() {
+  const command = jeCommands.find(c => c.class == 'operation');
+  // the same gate the command list below uses: a state that only failed a semantic
+  // check still has an object behind it and keeps inserting, so the toggle stays too
+  if(!command || !jeStateNow || jeJSONisUnparsed())
+    return false;
+  const contextMatch = jeContext.join(' ↦ ').match(new RegExp(command.context));
+  return !!contextMatch && contextMatch[0] != '' && command.show();
+}
+
 function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
@@ -1447,10 +1512,12 @@ function jeAddRoutineOperationCommands(command, defaults) {
     class: 'operation',
     context: `^.*Routine`,
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      const common = jePrefillProperties && jeRoutineOperationCommonProperties[command];
+      const newOp = { func: '###SELECT ME###', ...(common ? JSON.parse(JSON.stringify(common)) : {}) };
       if(operationIndex === null)
-        routine.push({func: '###SELECT ME###'});
+        routine.push(newOp);
       else
-        routine.splice(operationIndex+1, 0, {func: '###SELECT ME###'});
+        routine.splice(operationIndex+1, 0, newOp);
       jeSetAndSelect(command);
     }),
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
@@ -3892,12 +3959,13 @@ function jeShowCommands() {
     }
   }
   commandText += `</div>`;
+  const context = jeContext.join(' ↦ ');
   if (!jeTabSearchActive) {
-    commandText += `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">Press or hold <span class="key">Tab</span> to search</div>`;
+    commandText += `<div class="jeHint">Press or hold <span class="key">Tab</span> to search</div>`;
   } else {
-    let searchHint = `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">`;
+    let searchHint = `<div class="jeHint">`;
     if (jeTabSearchFilter.length > 0) {
-      searchHint += `Search: <span style="color: var(--textColor); font-weight: bold;">${html(jeTabSearchFilter)}</span><br>`;
+      searchHint += `Search: <span class="jeHintValue">${html(jeTabSearchFilter)}</span><br>`;
     } else {
       searchHint += `Type letters to filter<br>`;
     }
@@ -3906,11 +3974,12 @@ function jeShowCommands() {
     searchHint += `</div>`;
     commandText += searchHint;
   }
+  if(jeCanInsertOperation())
+    commandText += `<button id="jePrefillProperties" class="jeToggle${jePrefillProperties ? ' onState' : ''}" title="${jePrefillProperties ? 'Operations are inserted with their most common properties. Click to insert them empty instead.' : 'Operations are inserted empty. Click to insert them with their most common properties.'}">${jePrefillProperties ? '☑' : '☐'} prefill properties</button>`;
   commandText += `<div id='jeContextButtons'>`;
 
   // Next figure out which context commands are active here.
   const activeCommands = {};
-  const context = jeContext.join(' ↦ ');
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
@@ -4016,7 +4085,7 @@ function jeShowCommands() {
           jeTabSearchHighlightIndex >= 0 &&
           commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
         const highlightClass = shouldHighlight ? ' jeHighlight' : '';
-        commandText += `<button id="${command.id}" class="${highlightClass}">${name}</button>\n`;
+        commandText += `<button id="${command.id}" class="${highlightClass}"${command.description ? ` title="${html(command.description)}"` : ''}>${name}</button>\n`;
         commandIndex++;
       }
     }
@@ -4114,7 +4183,18 @@ function jeShowCommands() {
     scrollContainer.scrollTop = previousScrollTop;
   }
   
-  on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp):not(.jeEditorLine)', 'click', clickButton);
+  on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp):not(.jeEditorLine):not(.jeToggle)', 'click', clickButton);
+  // Toggling the prefill must not blur the editor - that would execute the Tab search
+  on('#jePrefillProperties', 'mousedown', e=>e.preventDefault());
+  on('#jePrefillProperties', 'click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    jePrefillProperties = !jePrefillProperties;
+    localStorage.setItem('jePrefillProperties', jePrefillProperties);
+    if($('#jeText'))
+      $('#jeText').focus();
+    jeShowCommands();
+  });
   // Make any keycap with text 'Tab' act as a press/release toggle
   const keycaps = $a('#jeCommands .key');
   if (keycaps && keycaps.length) {
