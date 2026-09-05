@@ -19,15 +19,18 @@ final class Network {
   private Network() {
   }
 
-  static String url() {
+  /** The address of this phone right now, null while it is on no network at all. */
+  static String address() {
     String address = address(HOTSPOT);
     if(address == null)
       address = address(WIFI);
     if(address == null)
       address = address(null);
-    if(address == null)
-      address = "localhost";
-    return "http://" + address + ":" + Env.PORT + "/" + Env.ROOM;
+    return address;
+  }
+
+  static String url(String address) {
+    return "http://" + (address == null ? "localhost" : address) + ":" + Env.PORT + "/" + Env.ROOM;
   }
 
   /** The first IPv4 address of an interface whose name starts with one of the given names. */

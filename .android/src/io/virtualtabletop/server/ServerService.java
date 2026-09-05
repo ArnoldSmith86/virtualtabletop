@@ -18,6 +18,7 @@ import android.os.PowerManager;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,19 +39,56 @@ public class ServerService extends Service implements AppState.Listener {
   private static final int NOTIFICATION = 1;
   private static final String CHANNEL = "server";
   private static final int SHUTDOWN_MILLISECONDS = 5000;
+  /** what the server prints once it has taken the port, which is when it can be played on */
+  private static final String LISTENING = "Listening on ";
+  /** how long a network change is given to settle, so that one switch is one restart */
+  private static final int SETTLE_MILLISECONDS = 2000;
+  /** how often the address is looked at anyway, for the changes no broadcast announces */
+  private static final int POLL_MILLISECONDS = 15000;
 
   private static boolean running;
+  private static boolean starting;
   private static boolean installing;
   private static String url = "";
+  private static String address;
+
+  private final Handler handler = new Handler(Looper.getMainLooper());
 
   private Process server;
   private PowerManager.WakeLock wakeLock;
   private BroadcastReceiver networkReceiver;
   private boolean updating;
+  private boolean restarting;
   private String shown = "";
 
+  private final Runnable settled = new Runnable() {
+    @Override
+    public void run() {
+      addressChanged();
+    }
+  };
+
+  /**
+   * Turning the hotspot on or off does not always broadcast a connectivity change, so the
+   * address is read again from time to time while the server runs. Enumerating the interfaces
+   * costs nothing next to the server the phone is already running.
+   */
+  private final Runnable watchAddress = new Runnable() {
+    @Override
+    public void run() {
+      addressChanged();
+      handler.postDelayed(this, POLL_MILLISECONDS);
+    }
+  };
+
+  /** whether the server has said that it is listening - before that it cannot be played on */
   static boolean isRunning() {
     return running;
+  }
+
+  /** whether node has been launched but has not reported its port yet */
+  static boolean isStarting() {
+    return starting;
   }
 
   /** whether the run going on right now is the first installation rather than an update */
@@ -69,7 +107,7 @@ public class ServerService extends Service implements AppState.Listener {
       quit();
     else if(ACTION_UPDATE.equals(action))
       update();
-    else if(!running)
+    else if(!running && !starting)
       start();
     return START_NOT_STICKY;
   }
@@ -140,20 +178,30 @@ public class ServerService extends Service implements AppState.Listener {
   }
 
   private void start() {
-    running = true;
-    url = Network.url();
-    startForeground(NOTIFICATION, notification());
-    AppState.step("Starting the server on " + url);
-
-    keepAwake("virtualtabletop:server");
-
     networkReceiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
-        addressChanged();
+        // several of these arrive while a phone changes network, so the address is read once
+        // the changing has come to a rest rather than for every one of them
+        handler.removeCallbacks(settled);
+        handler.postDelayed(settled, SETTLE_MILLISECONDS);
       }
     };
     registerReceiver(networkReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_ACTION"));
+    handler.postDelayed(watchAddress, POLL_MILLISECONDS);
+    startServer();
+  }
+
+  /** Launches node. The server counts as running only once it has printed that it is listening. */
+  private void startServer() {
+    starting = true;
+    restarting = false;
+    address = Network.address();
+    url = Network.url(address);
+    AppState.step("Starting the server on " + url);
+    startForeground(NOTIFICATION, notification());
+
+    keepAwake("virtualtabletop:server");
 
     try {
       server = launch();
@@ -163,6 +211,14 @@ public class ServerService extends Service implements AppState.Listener {
       return;
     }
     watch(server);
+  }
+
+  /** The port is taken, so the address in the notification is one that answers now. */
+  private void listening() {
+    starting = false;
+    running = true;
+    AppState.step("The server is running at " + url);
+    notifyNow();
   }
 
   /**
@@ -189,8 +245,17 @@ public class ServerService extends Service implements AppState.Listener {
           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
           try {
             String line;
-            while((line = reader.readLine()) != null)
+            while((line = reader.readLine()) != null) {
               AppState.log(line);
+              if(line.contains(LISTENING))
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                  @Override
+                  public void run() {
+                    if(server == process && starting)
+                      listening();
+                  }
+                });
+            }
           } finally {
             reader.close();
           }
@@ -257,6 +322,8 @@ public class ServerService extends Service implements AppState.Listener {
   }
 
   private void quit() {
+    restarting = false;
+    stopWatchingTheAddress();
     shutDown(new Runnable() {
       @Override
       public void run() {
@@ -269,6 +336,9 @@ public class ServerService extends Service implements AppState.Listener {
 
   private void stop() {
     running = false;
+    starting = false;
+    restarting = false;
+    stopWatchingTheAddress();
     if(networkReceiver != null) {
       unregisterReceiver(networkReceiver);
       networkReceiver = null;
@@ -280,6 +350,11 @@ public class ServerService extends Service implements AppState.Listener {
     stopForeground(true);
     stopSelf();
     AppState.changed();
+  }
+
+  private void stopWatchingTheAddress() {
+    handler.removeCallbacks(settled);
+    handler.removeCallbacks(watchAddress);
   }
 
   private void keepAwake(String tag) {
@@ -296,16 +371,32 @@ public class ServerService extends Service implements AppState.Listener {
     wakeLock = null;
   }
 
-  /** Keeps the notification on the address players have to type in when the network changes. */
+  /**
+   * Restarts the server on the address the phone has now. The address is read once, when the
+   * server starts (EXTERNALURL), so switching WiFi or turning the hotspot on otherwise leaves a
+   * running server that hands out an address nobody can reach any more.
+   */
   private void addressChanged() {
-    String current = Network.url();
-    if(current.equals(url))
+    String current = Network.address();
+    // a switch between two networks has a moment with no address at all, which is not a new one
+    if(restarting || current == null || current.equals(address))
       return;
-    url = current;
-    AppState.log("The server is now reachable at " + url);
-    NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-    manager.notify(NOTIFICATION, notification());
-    AppState.changed();
+    address = current;
+    url = Network.url(current);
+    running = false;
+    starting = true;
+    restarting = true;
+    AppState.step("The network changed - restarting the server on " + url);
+    Toast.makeText(this, getString(R.string.toast_address_changed, url), Toast.LENGTH_LONG).show();
+    notifyNow();
+    shutDown(new Runnable() {
+      @Override
+      public void run() {
+        // Quit clears this, so a press during the shutdown is not answered with a new server
+        if(restarting)
+          startServer();
+      }
+    });
   }
 
   private Notification notification() {
@@ -330,10 +421,12 @@ public class ServerService extends Service implements AppState.Listener {
         .setShowWhen(false)
         .setVisibility(Notification.VISIBILITY_PUBLIC);
 
-    if(updating && !running) {
+    if(!running && (updating || starting)) {
       String step = AppState.step();
+      int title = !updating ? R.string.notification_starting
+          : installing ? R.string.notification_installing : R.string.notification_updating;
       return builder
-          .setContentTitle(getString(installing ? R.string.notification_installing : R.string.notification_updating))
+          .setContentTitle(getString(title))
           .setContentText(step)
           .setStyle(new Notification.BigTextStyle().bigText(step))
           .build();

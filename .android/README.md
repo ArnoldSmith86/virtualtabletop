@@ -22,13 +22,13 @@ somewhere the release comes from) would be what makes updates install over each 
 | Button | What it does |
 | --- | --- |
 | **Install**, **Update** once it is installed | Installs or updates git, Node.js and the clone, then runs `npm install --omit=dev`. The only step that needs a connection. It runs in the foreground service with a wake lock, so it keeps going while the screen is off, and it can be pressed again to carry on after a lost connection. |
-| **Start server** | Runs `node server.mjs` in a foreground service. Enabled once the installation has finished. |
+| **Start server** | Runs `node server.mjs` in a foreground service. Enabled once the installation has finished. It says *Starting the server* until the server reports the port it listens on, and hands out the address after that. |
 | **Quit** | Shuts the server down (the rooms are saved) and closes the app. |
 
 While the server runs, the notification shows `http://<address>:8272/vtt` with three actions:
 **Open** hands the address to the browser, **Share** to any other app, and **Quit** stops
-everything. The address is the hotspot's when tethering is on and the WiFi one otherwise, and it
-follows along when the phone changes network.
+everything. The address is the hotspot's when tethering is on and the WiFi one otherwise, and the
+server is restarted on the new one when the phone changes network.
 
 Rooms are saved outside of the clone (in `save/` next to it), so they survive every update.
 
@@ -95,10 +95,16 @@ each other - uninstall the old one first, or build locally where `keystore.jks` 
   offers the current release and the current long term support one, so an older version than
   those lands on the closest available and the log says so.
 * **Devices.** `aarch64`, `arm`, `x86_64` and `i686` are all built for by the repository.
-* **The address the server bakes in.** `EXTERNALURL` is read when the server starts. The
-  notification follows the phone from WiFi to hotspot and back, but the links the server itself
-  writes into shared saves keep the address it started on - restart the server after a network
-  change if those matter.
+* **When the server counts as running.** Node takes a few seconds to come up on a phone, and it
+  can still fail on the way - an occupied port, a half finished installation. The app therefore
+  says *Starting the server* until the server has printed that it is listening, and only then
+  shows the address and offers to open or share it.
+* **The address the server bakes in.** `EXTERNALURL` is read when the server starts, so an
+  address that changes underneath a running server is wrong in every link it hands out. The app
+  watches for that - a connectivity broadcast, plus a look every 15 seconds, because turning the
+  hotspot on and off does not always broadcast anything - and restarts the server on the new
+  address, with a toast saying so. Every switch between two networks has a moment with no address
+  at all, which is waited out rather than restarted on.
 * **The notification.** On Android 13 and newer the app asks for the notification permission when
   the server is first started. Declining it hides the notification, which is the only place the
   address, **Open**, **Share** and **Quit** live; the app screen still works.

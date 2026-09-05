@@ -69,7 +69,7 @@ public class MainActivity extends Activity implements AppState.Listener {
     quit.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        if(ServerService.isRunning()) {
+        if(ServerService.isRunning() || ServerService.isStarting()) {
           startService(new Intent(MainActivity.this, ServerService.class).setAction(ServerService.ACTION_QUIT));
         } else {
           finishAndRemoveTask();
@@ -120,6 +120,7 @@ public class MainActivity extends Activity implements AppState.Listener {
 
   private void render() {
     boolean running = ServerService.isRunning();
+    boolean starting = ServerService.isStarting();
     boolean working = AppState.isWorking();
     boolean installed = Env.isInstalled(this);
     // while a run is going on the marker it reads from is away for a moment, so the wording
@@ -129,6 +130,9 @@ public class MainActivity extends Activity implements AppState.Listener {
     if(running) {
       state.setText(R.string.server_running);
       detail.setText(ServerService.url());
+    } else if(starting) {
+      state.setText(R.string.state_starting);
+      detail.setText(AppState.step());
     } else if(working) {
       state.setText(first ? R.string.state_installing : R.string.state_updating);
       detail.setText(AppState.step());
@@ -140,14 +144,14 @@ public class MainActivity extends Activity implements AppState.Listener {
       detail.setText(R.string.hint_not_installed);
     }
 
-    start.setText(running ? R.string.server_running : R.string.start_server);
-    start.setEnabled(installed && !running && !working);
+    start.setText(running ? R.string.server_running : starting ? R.string.state_starting : R.string.start_server);
+    start.setEnabled(installed && !running && !starting && !working);
     update.setText(first ? R.string.install : R.string.update);
-    update.setEnabled(!running && !working);
+    update.setEnabled(!running && !starting && !working);
     quit.setEnabled(!working);
     int percent = AppState.percent();
-    progress.setVisibility(working ? View.VISIBLE : View.GONE);
-    progress.setIndeterminate(percent == AppState.UNKNOWN);
+    progress.setVisibility(working || starting ? View.VISIBLE : View.GONE);
+    progress.setIndeterminate(starting || percent == AppState.UNKNOWN);
     if(percent != AppState.UNKNOWN)
       progress.setProgress(percent);
 
