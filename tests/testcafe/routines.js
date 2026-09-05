@@ -178,6 +178,12 @@ const releaseDrag = ClientFunction(() => {
   document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 0, clientX: holder.x + holder.width/2, clientY: holder.y + holder.height/2 }));
 });
 
+// what a drag left on the widgets around it: the drop targets it offered and the one it hovered
+const dropStateClasses = ClientFunction(() => ({
+  droppable: document.querySelectorAll('.droppable').length,
+  droptarget: document.querySelectorAll('.droptarget').length
+}));
+
 async function widgetProperty(id, property) {
   const widget = JSON.parse(await getState())[id];
   return widget && widget[property] !== undefined ? widget[property] : null;
@@ -752,4 +758,68 @@ test('moving into a holder that is gone leaves the widget where it is', async t 
   await t.expect(Selector('#jeLog .jeLogProblems').visible).ok();
   // the card that is left stays in the holder it came from instead of getting an invalid parent
   await expectEventually(t, ()=>widgetProperty('card1', 'parent'), 'source');
+});
+
+// A drag that is abandoned because its widget is gone still has to take back what moveStart() put
+// on the widgets that stay: every drop target carries 'droppable' until the drop removes it again,
+// and the first hit test of the next drag takes any element with that class as its hover target
+// without asking whether the holder accepts what is being dragged. (#2317)
+test('a drag whose widget is deleted leaves no holder taking widgets it refuses', async t => {
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 1300, y: 100 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', x: 100, y: 700 },
+    holder: { id: 'holder', type: 'holder', x: 500, y: 300, width: 500, height: 400, dropTarget: { type: 'basic' } },
+    group: { id: 'group', type: 'basic', x: 100, y: 100, width: 200, height: 200, movable: true },
+    child: { id: 'child', type: 'basic', parent: 'group', x: 20, y: 20, width: 100, height: 100, movable: false },
+    watcher: { id: 'watcher', type: 'basic', x: 1200, y: 700, xGlobalUpdateRoutine: [
+      { func: 'IF', condition: '${widgetID} == "group" and ${PROPERTY hoverTarget OF group} == "holder"', thenRoutine: [
+        { func: 'SELECT', property: 'id', value: 'child' },
+        { func: 'SET', property: 'parent', value: null },
+        { func: 'SELECT', property: 'id', value: 'group' },
+        { func: 'DELETE' }
+      ] }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.drag('#w_child', 600, 400, { speed: 0.15 });
+
+  await expectEventually(t, async ()=>JSON.parse(await getState()).group || null, null);
+  await t.expect(dropStateClasses()).eql({ droppable: 0, droptarget: 0 });
+
+  // the holder takes basic widgets only, so a card dragged onto it stays where it is
+  await t.drag('#w_card1', 550, -250, { speed: 0.15 });
+  await expectEventually(t, ()=>widgetProperty('card1', 'parent'), null);
+});
+
+// The drop shadow a holder shows during a drag is a widget of its own, parented to the holder -
+// so removing the dragged widget does not take it along, and only the drop it never gets would
+// have removed it. It used to stay in the room for every player, marked as being dragged. (#2317)
+test('a drag whose widget is deleted leaves no drop shadow behind', async t => {
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 500, y: 300, width: 500, height: 400, dropTarget: {}, dropShadow: true },
+    group: { id: 'group', type: 'basic', x: 100, y: 100, width: 200, height: 200, movable: true },
+    child: { id: 'child', type: 'basic', parent: 'group', x: 20, y: 20, width: 100, height: 100, movable: false },
+    watcher: { id: 'watcher', type: 'basic', x: 1200, y: 700, hoverTargetGlobalUpdateRoutine: [
+      { func: 'IF', condition: '${widgetID} == "group" and ${value} == "holder"', thenRoutine: [
+        { func: 'SELECT', property: 'id', value: 'child' },
+        { func: 'SET', property: 'parent', value: null },
+        { func: 'SELECT', property: 'id', value: 'group' },
+        { func: 'DELETE' }
+      ] }
+    ] },
+    go: markSelf
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.drag('#w_child', 600, 400, { speed: 0.15 });
+
+  await expectEventually(t, async ()=>JSON.parse(await getState()).group || null, null);
+  await expectEventually(t, async ()=>Object.values(JSON.parse(await getState())).filter(w=>w && w.dropShadowOwner).length, 0);
+  await t.expect(dropStateClasses()).eql({ droppable: 0, droptarget: 0 });
+  await t.expect(Selector('#clientErrorOverlay').visible).notOk();
+
+  // the client is still there and reacts to the next click
+  await t.click('#w_go');
+  await expectEventually(t, markedWidgets, [ 'go' ]);
 });

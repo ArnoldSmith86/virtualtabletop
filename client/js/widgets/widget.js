@@ -661,7 +661,9 @@ export class Widget extends StateManaged {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
     const inheritFrom = clone.inheritFrom;
-    if(parent !== undefined && parent !== null && !widgets.has(parent))
+    // a parent that is already queued for removal is no place to put a clone, so nothing
+    // is created for it rather than creating one that then has nowhere to go
+    if(parent !== undefined && parent !== null && !liveWidget(parent))
       return null;
 
     clone.clonedFrom = this.get('id');
@@ -686,7 +688,7 @@ export class Widget extends StateManaged {
       // use moveToHolder so that CLONE triggers onEnter and similar features
       cWidget.movedByButton = problems != null;
       if(parentWidget)
-        await cWidget.moveToHolder(parentWidget);
+        await cWidget.moveToHolder(parentWidget, problems);
       if(inheritFrom)
         await cWidget.set('inheritFrom', inheritFrom);
 
@@ -3410,6 +3412,33 @@ export class Widget extends StateManaged {
 
     await this.updatePiles();
     delete this.pileUpdateFromDrag;
+  }
+
+  // Let go of a drag whose widget has left the room. Everything moveEnd() would still
+  // write to that widget is pointless, but the marks the drag left on other widgets
+  // outlive it: the drop targets keep the 'droppable' class, which move() takes as
+  // reason enough to drop the next dragged widget there whatever the holder accepts,
+  // the hovered holder keeps its highlight, and a drop shadow is parented to that
+  // holder rather than to the widget, so removing the widget leaves it in the room for
+  // every player. This takes all of that off again and touches nothing that is gone.
+  async abandonDrag() {
+    for(const t of this.dropTargets || [])
+      if(t.domElement)
+        t.domElement.classList.remove('droppable');
+    if(this.hoverTarget && this.hoverTarget.domElement)
+      this.hoverTarget.domElement.classList.remove('droptarget');
+    this.highlightStopDropLine(null);
+    delete this.stopDropLines;
+
+    // hideShadowWidget() would write 'dropShadowWidget' back to the gone widget, so the
+    // shadow is taken out the way that method does but without that last step
+    const shadowWidget = liveWidget(this.get('dropShadowWidget'));
+    if(shadowWidget) {
+      shadowWidget.currentParent = liveWidget(shadowWidget.get('parent'));
+      await shadowWidget.set('parent', null);
+      await shadowWidget.checkParent(true);
+      await removeWidgetLocal(shadowWidget.get('id'));
+    }
   }
 
   async hideShadowWidget() {
