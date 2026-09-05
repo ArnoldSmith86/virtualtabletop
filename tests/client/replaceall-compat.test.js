@@ -17,13 +17,17 @@ function servedSources() {
   return [ ...new Set(listed) ].filter(file => fs.existsSync(path.join(repositoryRoot, file)));
 }
 
-// Every API here is younger than the browsers the client is served to, so calling one throws and
-// takes down the whole room instead of just the feature using it - the client spells them out.
+// The support line is the browserslist key in package.json, and npm run browsercompat checks the
+// client against it - but only for what can be resolved without knowing any types, so a method
+// called on a value (foo.replaceAll(), bar.at()) is invisible to it. This list names those, and
+// it is deliberately stricter than the browserslist line: crash reports from the live site still
+// come from Chrome 80 clients, and replaceAll is the one that takes the whole room down in
+// mapAssetURLs before a single game is on the shelf instead of only breaking its own feature.
 const bannedClientAPIs = [
   { api: 'String.prototype.replaceAll', arrivedIn: 'Chrome 85, Safari 13.1, Firefox 77', pattern: /\.replaceAll\s*\(/ }
 ];
 
-describe("Scenarios: The client stays away from APIs its browsers do not have", () => {
+describe("Scenarios: The client stays away from the APIs that break its oldest clients", () => {
   const sources = servedSources();
 
   // A regex over minify.mjs is only as good as the way that file spells its lists, so make a
