@@ -32,6 +32,15 @@ function roomLoadingStates(states) {
   return room;
 }
 
+// a room that applies deltas and talks to nobody
+function roomReceivingDeltas(state) {
+  const room = Object.create(Room.prototype);
+  room.state = state;
+  room.deltaID = 0;
+  room.broadcast = ()=>{};
+  return room;
+}
+
 function writeVariantFiles(stateID, count) {
   for(let i=0; i<count; ++i)
     fs.writeFileSync(path.join(directory, `${stateID}-${i}.json`), `{"variant":${i}}`);
@@ -141,5 +150,21 @@ describe('server/room.mjs', function() {
     expect(states.empty).toBeUndefined();
     expect(states.filled).toBeDefined();
     expect(states['PL:games/Empty']).toBeDefined();
+  });
+
+  test('receiveDelta does not store null properties of a widget it creates', function() {
+    const room = roomReceivingDeltas({ _meta: {} });
+
+    room.receiveDelta(player, { s: { card1: { id: 'card1', type: 'card', x: null, y: null, z: 3 } } });
+
+    expect(room.state.card1).toEqual({ id: 'card1', type: 'card', z: 3 });
+  });
+
+  test('receiveDelta removes null properties of a widget that already exists', function() {
+    const room = roomReceivingDeltas({ _meta: {}, card1: { id: 'card1', type: 'card', x: 10, z: 3 } });
+
+    room.receiveDelta(player, { s: { card1: { x: null, z: 4 } } });
+
+    expect(room.state.card1).toEqual({ id: 'card1', type: 'card', z: 4 });
   });
 });
