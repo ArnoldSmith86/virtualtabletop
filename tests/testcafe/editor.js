@@ -5661,3 +5661,86 @@ test('The context commands still insert while a semantic error is shown', async 
     .expect(widgetProperty('one', 'layer')).eql(2);
   await setEditorState(null);
 });
+
+test('The context menu section builds the right-click popup of a widget', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    hero:  { id: 'hero', type: 'basic', x: 300, y: 200, clickRoutine: [], dealRoutine: [ { func: 'FLIP' } ] },
+    other: { id: 'other', type: 'basic', x: 600, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const section = title => Selector('#editorModules .collapsibleTitle').withText(title).parent('.collapsibleSection');
+  const labeledInput = (scope, label) => scope.find('label').withText(label).parent('.propertyInput').find('input, select');
+  const interaction = section('Interaction & display');
+  const contextMenu = section('Context menu');
+  const entry = index => contextMenu.find('.contextMenuEntries').nth(0).child('.contextMenuEntry').nth(index);
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_hero')
+    .expect(contextMenu.exists).ok()
+    .expect(contextMenu.hasClass('collapsed')).ok()
+    .click(interaction.find('.collapsibleHeader'));
+
+  // a list of rotations is stored as an array, a step size as a number
+  await t
+    .typeText(labeledInput(interaction, 'Rotation steps'), '0, 90', { replace: true })
+    .expect(widgetProperty('hero', 'rotationSteps')).eql([ 0, 90 ])
+    .typeText(labeledInput(interaction, 'Rotation steps'), '45', { replace: true })
+    .expect(widgetProperty('hero', 'rotationSteps')).eql(45)
+    .expect(contextMenu.find('.collapsibleSummary').innerText).eql('rotates 45°')
+    .selectText(labeledInput(interaction, 'Rotation steps')).pressKey('delete')
+    .expect(widgetProperty('hero', 'rotationSteps')).eql(null);
+
+  // a new entry runs the click routine; the row follows the text and routine
+  await t
+    .click(contextMenu.find('.collapsibleHeader'))
+    .click(contextMenu.find('.contextMenuAddEntry'))
+    .expect(widgetProperty('hero', 'contextMenu')).eql([ { text: 'Action', routine: 'clickRoutine' } ])
+    .expect(entry(0).hasClass('expanded')).ok()
+    .typeText(labeledInput(entry(0), 'Text'), 'Deal', { replace: true })
+    .click(labeledInput(entry(0), 'Routine'))
+    .click(labeledInput(entry(0), 'Routine').find('option').withText('dealRoutine'))
+    .expect(widgetProperty('hero', 'contextMenu')).eql([ { text: 'Deal', routine: 'dealRoutine' } ])
+    .expect(entry(0).find('.contextMenuEntryTitle').innerText).eql('Deal')
+    .expect(entry(0).find('.contextMenuEntrySummary').innerText).eql('runs dealRoutine');
+
+  // a submenu is the same list one level in
+  await t
+    .click(entry(0).find('.contextMenuAddSubmenu'))
+    .expect(widgetProperty('hero', 'contextMenu')).eql([ { text: 'Deal', routine: 'dealRoutine', menu: [ { text: 'Action', routine: 'clickRoutine' } ] } ])
+    .expect(entry(0).find('.contextMenuEntrySummary').innerText).eql('opens a submenu with 1 entry')
+    .typeText(labeledInput(entry(0).find('.contextMenuSubmenu .contextMenuEntry'), 'Text'), 'Sub', { replace: true })
+    .expect(widgetProperty('hero', 'contextMenu')).eql([ { text: 'Deal', routine: 'dealRoutine', menu: [ { text: 'Sub', routine: 'clickRoutine' } ] } ])
+    .click(entry(0).find('.contextMenuRemoveSubmenu'))
+    .expect(widgetProperty('hero', 'contextMenu')).eql([ { text: 'Deal', routine: 'dealRoutine' } ]);
+
+  // entries are reordered and removed from their row
+  await t
+    .click(contextMenu.find('.contextMenuAddEntry'))
+    .click(entry(1).find('.faceOrderControls button').nth(0))
+    .expect(widgetProperty('hero', 'contextMenu')).eql([ { text: 'Action', routine: 'clickRoutine' }, { text: 'Deal', routine: 'dealRoutine' } ])
+    .click(entry(0).find('button[icon=delete]'))
+    .expect(widgetProperty('hero', 'contextMenu')).eql([ { text: 'Deal', routine: 'dealRoutine' } ]);
+
+  // the preview settings fill the options object key by key
+  await t
+    .typeText(labeledInput(contextMenu, 'Size factor'), '3', { replace: true })
+    .expect(widgetProperty('hero', 'contextMenuOptions')).eql({ factor: 3 })
+    .typeText(contextMenu.find('.contextMenuWidgetsInput'), 'other', { replace: true })
+    .pressKey('tab')
+    .expect(widgetProperty('hero', 'contextMenuOptions')).eql({ factor: 3, widget: [ 'other' ] })
+    .expect(contextMenu.find('.collapsibleSummary').innerText).eql('1 entry · preview ×3 · shows other');
+
+  // and the popup shows what was set up
+  await t
+    .click('#editorToolbar [icon=close]')
+    .expect(Selector('body').hasClass('edit')).notOk()
+    .rightClick('#w_hero')
+    .expect(Selector('#contextMenuPopup').visible).ok()
+    .expect(Selector('#contextMenuPopup .contextMenuActionLabel').innerText).eql('Deal');
+});

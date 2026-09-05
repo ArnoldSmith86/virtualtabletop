@@ -6,6 +6,7 @@ import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } fro
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
+import { closeContextMenuFor, onLongTouch, onTouchEndContextMenu, openContextMenuWithMenu, updateContextMenuFor } from '../contextmenu.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
@@ -163,8 +164,12 @@ export class Widget extends StateManaged {
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
+      rightClickRoutine: null,
       doubleClickRoutine: null,
       changeRoutine: null,
+      rotationSteps: null,
+      contextMenu: null,
+      contextMenuOptions: null,
       enterRoutine: null,
       leaveRoutine: null,
       globalUpdateRoutine: null,
@@ -194,14 +199,19 @@ export class Widget extends StateManaged {
     this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
+      onTouchEndContextMenu();
       this.hideEnlarged();
     }
 
     this.onlongtouch = function() {
-      this.showEnlarged();
+      if (document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit')) {
+        this.showEnlarged();
+        this.domElement.classList.add('longtouch');
+      } else {
+        onLongTouch(this);
+      }
       clearTimeout(this.timer);
       this.timer = null;
-      this.domElement.classList.add('longtouch');
     }
 
     this.animateTimeouts = {};
@@ -365,6 +375,7 @@ export class Widget extends StateManaged {
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
       this.showEnlarged(null, delta);
     }
+    updateContextMenuFor(this, delta);
   }
 
   applyInheritedDeltaToDOM(delta) {
@@ -419,6 +430,7 @@ export class Widget extends StateManaged {
       this.deck.removeCard(this);
     if($(`#STYLES_${this.cssScope}`))
       removeFromDOM($(`#STYLES_${this.cssScope}`));
+    closeContextMenuFor(this);
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -1519,6 +1531,37 @@ export class Widget extends StateManaged {
         }
         if (!a.return)
           abortRoutine = true;
+      }
+
+      if(a.func == 'CONTEXTMENU') {
+        // without a collection the popup belongs to the widget running the routine, like the widget of CALL
+        setDefaults(a, { collection: null, contextMenu: null, property: null });
+        let targetWidget = null;
+        if(a.collection === null) {
+          targetWidget = this;
+        } else {
+          const collection = getCollection(a.collection);
+          if(collection && collections[collection] && collections[collection].length)
+            targetWidget = collections[collection][0];
+        }
+        if(targetWidget) {
+          let menu = a.contextMenu;
+          if (menu === undefined || menu === null) {
+            if (typeof a.property === 'string') menu = targetWidget.get(a.property);
+            else menu = [];
+          }
+          if (Array.isArray(menu)) {
+            const overrides = {};
+            if (typeof a.factor === 'number') overrides.factor = a.factor;
+            if (typeof a.title === 'string') overrides.title = a.title;
+            if (typeof a.color === 'string') overrides.color = a.color;
+            if (a.image !== undefined && a.image !== null) overrides.image = a.image;
+            if (a.widget !== undefined && a.widget !== null) overrides.widget = a.widget;
+            const hasOverrides = Object.keys(overrides).length > 0;
+            // deferred past the click that ran this routine, which would otherwise close the popup right away
+            setTimeout(() => openContextMenuWithMenu(targetWidget, menu, hasOverrides ? overrides : undefined), 0);
+          }
+        }
       }
 
       if(a.func == 'CANVAS') {
