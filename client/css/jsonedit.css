@@ -521,13 +521,6 @@ body.jsonEdit #toolbar {
   white-space: pre-wrap;
 }
 
-/* problems are sentences, not JSON: wrap them instead of clipping at the panel edge */
-.jeLogProblems {
-  margin-left:20px;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
 [id=jeTopButtons] button {
   display: inline-block;
   text-align: center;
