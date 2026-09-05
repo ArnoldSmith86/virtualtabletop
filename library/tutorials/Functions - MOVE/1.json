@@ -9,7 +9,7 @@
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
     "layer": -3,
-    "text": "Holders: Layout - pile & singleSpread"
+    "text": "Functions: MOVE position"
   },
   "overview": {
     "id": "overview",
@@ -21,133 +21,187 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "This variant covers holders with <b>layout</b> set to &quotpile&quot and &quotsingleSpread&quot. A single spread has no overflow handling of its own - a hand longer than the holder simply runs past its edge - but <b>spreadMin</b> keeps a long fan readable without growing past it."
+    "html": "The <b>position</b> parameter of <b>MOVE</b> says where the moved cards end up in the target holder. It defaults to &quotnull&quot. &quotpileBottom&quot puts them at the bottom of a stack, which is the beginning of a spread. &quotpileTop&quot on top (which is what happens by default). In a holder that arranges groups, the same two values join the first or the last group, while &quotgroupStart&quot and &quotgroupEnd&quot deal the whole batch as a new group before or after the existing ones. In the visual routine editor the option is called <i>at a place in the holder</i>."
   },
   "holder1": {
     "type": "holder",
     "id": "holder1",
     "x": 60,
     "y": 250,
-    "width": 340,
-    "height": 220,
+    "width": 560,
+    "height": 180,
+    "layout": "singleSpread",
+    "stackOffsetX": 34,
     "onEnter": {
       "activeFace": 1
     }
   },
   "text1": {
     "id": "text1",
-    "x": 62,
-    "y": 485,
-    "width": 340,
+    "x": 65,
+    "y": 450,
+    "width": 440,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "No arrangement properties at all: a new holder is on <b>layout</b> &quotauto&quot. Here, that gives a centered row that packs tighter as it fills up."
+    "html": "A &quotsingleSpread&quot holder. <b>position</b> &quotpileBottom&quot inserts the card at the beginning of the fan. &quotpileTop&quot at its end, so the order of a spread is fully under the routine's control."
   },
   "holder2": {
     "type": "holder",
     "id": "holder2",
-    "x": 425,
+    "x": 700,
     "y": 250,
-    "width": 340,
-    "height": 220,
+    "width": 780,
+    "height": 180,
+    "layout": "multiSpread",
+    "stackOffsetX": 26,
     "onEnter": {
       "activeFace": 1
     },
-    "layout": "pile"
+    "pilesGapX": 40
   },
   "text2": {
     "id": "text2",
-    "x": 427,
-    "y": 485,
-    "width": 340,
+    "x": 705,
+    "y": 450,
+    "width": 640,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>layout</b> &quotpile&quot: one plain stack. Even if the holder is big enough to make spread out arrangements, this layout forces cards into piles. Non-card widgets do not create piles but will be stacked together."
-  },
-  "holder3": {
-    "type": "holder",
-    "id": "holder3",
-    "x": 790,
-    "y": 250,
-    "width": 540,
-    "height": 220,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "layout": "singleSpread"
-  },
-  "text3": {
-    "id": "text3",
-    "x": 792,
-    "y": 485,
-    "width": 540,
-    "layer": -3,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "font-size": "22px"
-    },
-    "html": "<b>layout</b> &quotsingleSpread&quot: this layout is one spread fan of cards. This is how most games in the public library appear since most games were created before the <b>layout</b> property was available. However, if you look at a game from the library, you would usually see <b>layout</b> &quotcustom&quot as that does something similar but allows for modifying some of the parameters."
+    "html": "A &quotmultiSpread&quot holder: &quotgroupStart&quot and &quotgroupEnd&quot deal the two cards as a new group at the start or the end. &quotpileBottom&quot and &quotpileTop&quot add them to the first or last group that is already there."
   },
   "button1": {
     "id": "button1",
     "type": "button",
     "x": 60,
-    "y": 732,
-    "width": 150,
+    "y": 615,
+    "width": 140,
     "height": 50,
-    "text": "Deal 3 to each",
+    "text": "pileBottom",
     "clickRoutine": [
       {
         "func": "MOVE",
         "from": "deckHolder",
         "to": "holder1",
-        "count": 3,
-        "face": 1
-      },
+        "count": 1,
+        "face": 1,
+        "position": "pileBottom"
+      }
+    ]
+  },
+  "button2": {
+    "id": "button2",
+    "type": "button",
+    "x": 220,
+    "y": 615,
+    "width": 140,
+    "height": 50,
+    "text": "pileTop",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder1",
+        "count": 1,
+        "face": 1,
+        "position": "pileTop"
+      }
+    ]
+  },
+  "button3": {
+    "id": "button3",
+    "type": "button",
+    "x": 700,
+    "y": 615,
+    "width": 140,
+    "height": 50,
+    "text": "groupStart",
+    "clickRoutine": [
       {
         "func": "MOVE",
         "from": "deckHolder",
         "to": "holder2",
-        "count": 3,
-        "face": 1
-      },
-      {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": "holder3",
-        "count": 3,
-        "face": 1
-      },
-      {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": "holder4",
-        "count": 3,
-        "face": 1
+        "count": 2,
+        "face": 1,
+        "position": "groupStart"
       }
     ]
   },
-  "text5": {
-    "id": "text5",
-    "x": 240,
-    "y": 732,
-    "width": 500,
+  "button4": {
+    "id": "button4",
+    "type": "button",
+    "x": 860,
+    "y": 615,
+    "width": 140,
+    "height": 50,
+    "text": "groupEnd",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder2",
+        "count": 2,
+        "face": 1,
+        "position": "groupEnd"
+      }
+    ]
+  },
+  "button5": {
+    "id": "button5",
+    "type": "button",
+    "x": 1020,
+    "y": 615,
+    "width": 140,
+    "height": 50,
+    "text": "pileBottom",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder2",
+        "count": 2,
+        "face": 1,
+        "position": "pileBottom"
+      }
+    ]
+  },
+  "button6": {
+    "id": "button6",
+    "type": "button",
+    "x": 1180,
+    "y": 615,
+    "width": 140,
+    "height": 50,
+    "text": "pileTop",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder2",
+        "count": 2,
+        "face": 1,
+        "position": "pileTop"
+      }
+    ]
+  },
+  "text3": {
+    "id": "text3",
+    "x": 60,
+    "y": 720,
+    "width": 1330,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "Deal a few cards, then drag them from one holder into the next and watch how each layout receives them."
+    "html": "Each button deals from the deck with one MOVE operation - open it in the JSON editor to see the <b>position</b> parameter. In the group holder, start with &quotgroupEnd&quot a couple of times since &quotpileBottom&quot and &quotpileTop&quot need a group to join."
   },
   "deckHolder": {
     "type": "holder",
@@ -677,8 +731,7 @@
     "id": "deckHolderP",
     "parent": "deckHolder",
     "width": 103,
-    "height": 160,
-    "z": 1
+    "height": 160
   },
   "deckHolderB": {
     "id": "deckHolderB",
@@ -895,8 +948,8 @@
     "type": "card",
     "deck": "mainDeck",
     "cardType": "D 2J",
-    "z": 54,
-    "parent": "deckHolderP"
+    "parent": "deckHolderP",
+    "z": 24
   },
   "cardD3Q": {
     "id": "cardD3Q",
@@ -1007,8 +1060,8 @@
     "type": "card",
     "deck": "mainDeck",
     "cardType": "H 3Q",
-    "z": 57,
-    "parent": "deckHolderP"
+    "parent": "deckHolderP",
+    "z": 38
   },
   "cardH4K": {
     "id": "cardH4K",
@@ -1119,8 +1172,8 @@
     "type": "card",
     "deck": "mainDeck",
     "cardType": "S 4K",
-    "z": 60,
-    "parent": "deckHolderP"
+    "parent": "deckHolderP",
+    "z": 52
   },
   "_meta": {
     "version": 25,
@@ -1128,55 +1181,29 @@
       "legacyModes": {}
     },
     "info": {
-      "name": "Types - Holder",
-      "image": "/assets/-1144102332_4316",
+      "name": "Functions - MOVE",
+      "image": "/assets/1128259959_3590",
       "rules": "",
       "bgg": "",
-      "year": "2020",
+      "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
+      "attribution": "",
       "showName": false,
-      "lastUpdate": 1788142590078,
+      "lastUpdate": 1788034350234,
       "skill": "",
       "description": "",
       "similarImage": "",
       "similarName": "",
+      "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "similarDesigner": "",
-      "usesAIImagery": false,
-      "variantImage": "",
-      "variant": "layout: pile & singleSpread",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "position",
+      "variantImage": "",
+      "usesAIImagery": false
     }
-  },
-  "holder4": {
-    "type": "holder",
-    "id": "holder4",
-    "x": 790,
-    "y": 680,
-    "width": 540,
-    "height": 220,
-    "layout": "singleSpread",
-    "spreadMin": 3,
-    "onEnter": {
-      "activeFace": 1
-    }
-  },
-  "text4": {
-    "id": "text4",
-    "x": 792,
-    "y": 910,
-    "width": 540,
-    "layer": -3,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "font-size": "22px"
-    },
-    "html": "<b>spreadMin</b> <i>3</i>: the topmost three cards keep the full fan step, the rest squeeze together - a long hand stays inside the holder. Deal a few times to see it."
   }
 }

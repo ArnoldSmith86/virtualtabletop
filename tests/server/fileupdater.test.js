@@ -64,7 +64,7 @@ describe('legacy mode detection', () => {
   });
 
   test('a mode is not applied to a save that is already at or past its version', () => {
-    // a v20 save predates v21, so the holder mode applies, but the var modes (v18) do not
+    // a v20 save predates v21, so the holder modes apply, but the var modes (v18) do not
     const state = at(20, {
       h: { id: 'h', type: 'holder', color: 'red' },
       b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }
@@ -76,6 +76,22 @@ describe('legacy mode detection', () => {
     // hand-written saves and importers can produce one; the detectors used to assume the v18
     // step had already created the object
     expect(flagsFor(at(19, { h: { id: 'h', type: 'holder', color: 'red' } }))).toEqual({ disableHolderImageWidget: true });
+  });
+
+  test('a pre-v25 holder without a layout is written as custom', () => {
+    expect(FileUpdater(at(24, { h: { id: 'h', type: 'holder' } })).h.layout).toEqual('custom');
+  });
+
+  test('a holder that spells its layout out keeps it', () => {
+    expect(FileUpdater(at(24, { h: { id: 'h', type: 'holder', layout: 'grid' } })).h.layout).toEqual('grid');
+  });
+
+  test('the layout rewrite leaves other widget types alone', () => {
+    expect(FileUpdater(at(24, { c: { id: 'c', type: 'card' } })).c.layout).toEqual(undefined);
+  });
+
+  test('a current-version save keeps its bare holders on the auto default', () => {
+    expect(FileUpdater(at(VERSION, { h: { id: 'h', type: 'holder' } })).h.layout).toEqual(undefined);
   });
 
   test('a current-version save is left exactly as it is', () => {
@@ -147,7 +163,10 @@ const CLASSIFICATION_FIXTURES = {
   'v19 holder with text': [ at(19, { h: { id: 'h', type: 'holder', text: 'draw' } }), [ 'disableHolderImageWidget' ] ],
   'v19 holder with nothing on it': [ at(19, { h: { id: 'h', type: 'holder' } }), [] ],
   'v20 holder with svgReplaces': [ at(20, { h: { id: 'h', type: 'holder', svgReplaces: { a: 'b' } } }), [ 'disableHolderImageWidget' ] ],
-  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [] ]
+  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [] ],
+  'v22 game with a holder': [ at(22, { h: { id: 'h', type: 'holder' } }), [] ],
+  'v22 game without a holder': [ at(22, { l: { id: 'l', type: 'label', text: 'hi' } }), [] ],
+  'v23 game with a holder': [ at(23, { h: { id: 'h', type: 'holder' } }), [] ]
 };
 
 describe('classification stability', () => {

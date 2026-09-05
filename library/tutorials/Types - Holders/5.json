@@ -1,983 +1,1171 @@
 {
   "title": {
     "id": "title",
-    "x": 300,
+    "x": 100,
     "y": -2,
+    "width": 1400,
     "height": 60,
-    "z": 74,
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Holders: Stackable Tokens Demo",
-    "width": 1000
+    "layer": -3,
+    "text": "Holders: Layout - grid"
   },
   "overview": {
     "id": "overview",
     "x": 108,
     "y": 80,
-    "width": 1400,
+    "width": 1330,
     "height": 150,
     "layer": -3,
-    "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 24px; ",
-    "html": "When holders are set to be movable and to accept other holders as a <b>dropTarget</b>, then holders can have characteristics of cards (because they stack) and holders. This room has several different examples of how this can be implemented. Drag widgets around in this room and stack them to see how this works. Unlike with piles, you can select and drag from the middle of the stack and the rest of the stack moves with it. The &quotmaster&quot holders are the four to the left of this block of text. Do not use them. In a game they should be stored off-screen as the room will crash if the master widgets get sandwhiched between two widgets. Although holders can use <b>image</b> and <b>icon</b> properties, the holders in this demo do not as that would be more complicated for this use of holders."
+    "css": "font-size: 25px",
+    "html": "<b>layout</b> &quotgrid&quot arranges a holder's cards in a grid that always stays inside the holder: when the cards stop fitting at the requested spacing they overlap instead of spilling outside. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin to the holder's edge and <b>stackOffsetX</b>/<b>stackOffsetY</b> the gap between the cells. The column count comes from whatever fits with the least overlap, or from <b>gridColumns</b>/<b>gridRows</b>. By default, a grid does not keep piles. Whatever you drop in is dealt out into the grid. However, change <b>preventPiles</b> to false and you can have grids with piles."
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 60,
+    "y": 240,
+    "width": 460,
+    "height": 380,
+    "layout": "grid",
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "stackOffsetX": 10,
+    "stackOffsetY": 10,
+    "onEnter": {
+      "activeFace": 1
+    }
   },
   "text1": {
     "id": "text1",
-    "x": 42,
-    "y": 434,
-    "width": 300,
-    "z": 185,
+    "x": 40,
+    "y": 650,
+    "width": 440,
+    "layer": -3,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "html": "All the stackable widgets in this demo use <b>inheritFrom</b> to copy the master's properties. It is important that the parent property be excluded to prevent problems.<br><br>CSS is used to adjust the style and location of the text.<br><br>Routines (enter, leave, and textChange) are used to update the count on each card.<br><br>You can remove or adjust position of the numbers and you can adjust the offsets to change how the stack forms."
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "A 460 x 380 <i>grid</i> with a <b>dropOffset</b> of <i>10</i> and a <b>stackOffset</b> of <i>10</i>. Six cards become three columns with a real gap between them. Deal six more and the grid packs them closer together instead of growing past the edge."
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 560,
+    "y": 240,
+    "width": 140,
+    "height": 380,
+    "layout": "grid",
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "gridColumns": 1
   },
   "text2": {
     "id": "text2",
-    "x": 398,
-    "y": 514,
-    "width": 300,
-    "z": 185,
+    "x": 530,
+    "y": 650,
+    "width": 230,
+    "layer": -3,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "html": "This group uses CSS and a URL-encoded SVG to draw a rectangle. The rectangle's color is adjustable and it is shifted to the bottom of the holder so that vertical stacking works.<br><br>The <b>dropTarget</b> allows blue and red to stack together, but that can be changed so that only the same colors stack with each other.<br><br>Again, displaying the numbers are optional and position and stying is adjustable."
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Only one card wide, and <b>gridColumns</b> <i>1</i> pins the single column. Without it the automatic count would switch to two."
   },
-  "coin2": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
+  "holder3": {
     "type": "holder",
-    "id": "coin2",
-    "x": -1,
-    "y": -15,
-    "z": 9734,
-    "width": 100,
-    "height": 80,
-    "text": 2,
-    "parent": "coin1"
-  },
-  "coin3": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin3",
-    "x": -1,
-    "y": -15,
-    "z": 1258,
-    "width": 100,
-    "height": 80,
-    "parent": "coin2",
-    "text": 3
-  },
-  "coin4": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin4",
-    "x": -1,
-    "y": -15,
-    "z": 1260,
-    "width": 100,
-    "height": 80,
-    "parent": "coin3",
-    "text": 4
-  },
-  "coin5": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin5",
-    "x": -1,
-    "y": -15,
-    "z": 1262,
-    "width": 100,
-    "height": 80,
-    "parent": "coin4",
-    "text": 5
-  },
-  "coin6": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin6",
-    "x": -1,
-    "y": -15,
-    "z": 1264,
-    "width": 100,
-    "height": 80,
-    "parent": "coin5",
-    "text": 6
-  },
-  "circle3": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle3",
-    "x": -1,
-    "y": -25,
-    "z": 9737,
-    "text": 2,
-    "parent": "circle1"
-  },
-  "circle2": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle2",
-    "x": -1,
-    "y": -25,
-    "z": 1208,
-    "parent": "circle3",
-    "text": 3
-  },
-  "square2": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square2",
-    "x": 10,
-    "y": 10,
-    "z": 9743,
-    "text": 2,
-    "parent": "square1"
-  },
-  "square3": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square3",
-    "x": 10,
-    "y": 10,
-    "z": 1103,
-    "text": 3,
-    "parent": "square2"
-  },
-  "square4": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square4",
-    "x": 10,
-    "y": 10,
-    "z": 1070,
-    "text": 4,
-    "parent": "square3"
-  },
-  "square9": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square9",
-    "x": 10,
-    "y": 10,
-    "z": 1072,
-    "text": 5,
-    "parent": "square4"
-  },
-  "square8": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square8",
-    "x": 10,
-    "y": 10,
-    "z": 1108,
-    "text": 6,
-    "parent": "square9"
-  },
-  "rectangle20": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle20",
-    "x": -1,
-    "y": -25,
-    "z": 9740,
-    "text": 2,
-    "parent": "rectangle1"
-  },
-  "rectangle19": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle19",
-    "x": -1,
-    "y": -25,
-    "z": 1114,
-    "parent": "rectangle20",
-    "text": 3
-  },
-  "rectangle18": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle18",
-    "x": -1,
-    "y": -25,
-    "z": 1189,
-    "text": 4,
-    "parent": "rectangle19"
-  },
-  "rectangle17": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle17",
-    "x": -1,
-    "y": -25,
-    "z": 1118,
-    "parent": "rectangle18",
-    "text": 5
-  },
-  "square7": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square7",
-    "x": 148,
-    "y": 285,
-    "z": 1110,
-    "text": 1
-  },
-  "square6": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square6",
-    "x": 10,
-    "y": 10,
-    "z": 1050,
-    "parent": "square7",
-    "text": 2
-  },
-  "square5": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square5",
-    "x": 10,
-    "y": 10,
-    "z": 1052,
-    "parent": "square6",
-    "text": 3
-  },
-  "square10": {
-    "inheritFrom": {
-      "squareMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "square10",
-    "x": 10,
-    "y": 10,
-    "z": 1074,
-    "parent": "square5",
-    "text": 4
-  },
-  "rectangle11": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle11",
-    "x": 496,
-    "y": 343,
-    "z": 1177,
-    "color": "blue"
-  },
-  "rectangle10": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle10",
-    "x": -1,
-    "y": -25,
-    "z": 1133,
-    "parent": "rectangle11",
-    "text": 2,
-    "color": "blue"
-  },
-  "rectangle9": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle9",
-    "x": -1,
-    "y": -25,
-    "z": 1135,
-    "parent": "rectangle10",
-    "text": 3,
-    "color": "blue"
-  },
-  "rectangle8": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle8",
-    "x": -1,
-    "y": -25,
-    "z": 1137,
-    "parent": "rectangle9",
-    "text": 4,
-    "color": "blue"
-  },
-  "rectangle13": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle13",
-    "x": 606,
-    "y": 464,
-    "z": 1178,
-    "text": 1
-  },
-  "rectangle12": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle12",
-    "x": -1,
-    "y": -25,
-    "z": 1130,
-    "parent": "rectangle13",
-    "text": 2
-  },
-  "rectangle4": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle4",
-    "x": -1,
-    "y": -25,
-    "z": 1165,
-    "text": 3,
-    "color": "blue",
-    "parent": "rectangle12"
-  },
-  "rectangle3": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle3",
-    "x": -1,
-    "y": -25,
-    "z": 1147,
-    "parent": "rectangle4",
-    "text": 4,
-    "color": "blue"
-  },
-  "rectangle2": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle2",
-    "x": -1,
-    "y": -25,
-    "z": 1181,
-    "text": 5,
-    "color": "blue",
-    "parent": "rectangle3"
-  },
-  "rectangle5": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle5",
-    "x": -1,
-    "y": -25,
-    "z": 1167,
-    "text": 6,
-    "color": "blue",
-    "parent": "rectangle2"
-  },
-  "rectangle6": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle6",
-    "x": -1,
-    "y": -25,
-    "z": 1170,
-    "text": 7,
-    "color": "blue",
-    "parent": "rectangle5"
-  },
-  "rectangle7": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle7",
-    "x": -1,
-    "y": -25,
-    "z": 1172,
-    "text": 8,
-    "color": "blue",
-    "parent": "rectangle6"
-  },
-  "rectangle16": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle16",
-    "x": 494,
-    "y": 463,
-    "z": 1176,
-    "text": 1
-  },
-  "rectangle15": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle15",
-    "x": -1,
-    "y": -25,
-    "z": 1122,
-    "parent": "rectangle16",
-    "text": 2
-  },
-  "rectangle14": {
-    "inheritFrom": {
-      "rectangleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle14",
-    "x": -1,
-    "y": -25,
-    "z": 1125,
-    "parent": "rectangle15",
-    "text": 3
-  },
-  "circle5": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle5",
-    "x": 797,
-    "y": 658,
-    "z": 1235,
-    "text": 1
-  },
-  "circle4": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle4",
-    "x": -1,
-    "y": -25,
-    "z": 1226,
-    "text": 2,
-    "parent": "circle5"
-  },
-  "circle9": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle9",
-    "x": 916,
-    "y": 661,
-    "z": 1238,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "text": 1
-  },
-  "circle10": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle10",
-    "x": 912,
-    "y": 531,
-    "z": 1237,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
+    "id": "holder3",
+    "x": 790,
+    "y": 240,
+    "width": 400,
+    "height": 210,
+    "layout": "grid",
+    "dropOffsetX": 8,
+    "dropOffsetY": 8,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
     }
-  },
-  "circle6": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle6",
-    "x": -1,
-    "y": -25,
-    "z": 1220,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "parent": "circle10",
-    "text": 2
-  },
-  "circle7": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle7",
-    "x": -1,
-    "y": -25,
-    "z": 1214,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "parent": "circle6",
-    "text": 3
-  },
-  "circle8": {
-    "inheritFrom": {
-      "circleMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "circle8",
-    "x": -1,
-    "y": -25,
-    "z": 1216,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "parent": "circle7",
-    "text": 4
   },
   "text3": {
     "id": "text3",
-    "x": 778,
-    "y": 833,
-    "width": 300,
-    "z": 185,
+    "x": 770,
+    "y": 650,
+    "width": 380,
+    "layer": -3,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "html": "This group is similar to the rectangles except that the numbers are displayed in a different location and the <b>dropTarget</b> prevents mixing colors."
-  },
-  "text4": {
-    "id": "text4",
-    "x": 1178,
-    "y": 615,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "html": "The SVG is a little more complicated in this holder. So it is represented by a VTT asset and not a URL-encoded SVG. Doing it this way simplifies the JSON, but then it is not possible to adjust the fill or stroke colors.<br><br>This group also uses a transform on the CSS to achieve the desired visual effect for the numbers."
-  },
-  "coin7": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin7",
-    "x": 1264,
-    "y": 516,
-    "z": 1284,
-    "width": 100,
-    "height": 80,
-    "text": 1
-  },
-  "coin8": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin8",
-    "x": -1,
-    "y": -15,
-    "z": 1282,
-    "width": 100,
-    "height": 80,
-    "text": 2,
-    "parent": "coin7"
-  },
-  "coin9": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin9",
-    "x": -1,
-    "y": -15,
-    "z": 1280,
-    "width": 100,
-    "height": 80,
-    "text": 3,
-    "parent": "coin8"
-  },
-  "coin10": {
-    "inheritFrom": {
-      "coinMaster": "!parent"
-    },
-    "type": "holder",
-    "id": "coin10",
-    "x": 1384,
-    "y": 519,
-    "z": 1285,
-    "width": 100,
-    "height": 80,
-    "text": 1
-  },
-  "coinMaster": {
-    "type": "holder",
-    "id": "coinMaster",
-    "x": 1,
-    "y": 211,
-    "width": 100,
-    "height": 80,
-    "z": 1274,
-    "movable": true,
-    "classes": "transparent",
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -15,
-    "dropTarget": {
-      "token": "coin"
-    },
-    "text": 1,
-    "token": "coin",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
-      },
-      "var childCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
-      }
-    ],
     "css": {
-      "default": {
-        "background-image": "url('/assets/123241915_760')",
-        "background-position-y": "20%"
-      },
-      " .holderTextOnly": {
-        "color": "black",
-        "font-size": "26px !important",
-        "transform": "translateY(-3px) skewX(20deg)"
-      }
-    }
-  },
-  "coin1": {
-    "type": "holder",
-    "id": "coin1",
-    "x": 1133,
-    "y": 517,
-    "inheritFrom": {
-      "coinMaster": "*"
-    }
-  },
-  "circleMaster": {
-    "type": "holder",
-    "id": "circleMaster",
-    "x": 3,
-    "y": 116,
-    "width": 100,
-    "height": 100,
-    "z": 1229,
-    "movable": true,
-    "classes": "transparent",
-    "css": {
-      "default": {
-        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' d='m50 99c-27.1 0-49-21.9-49-49 0-27.1 21.9-49 49-49 27.1 0 49 21.9 49 49 0 27.1-21.9 49-49 49z'/%3E%3C/svg%3E\")",
-        "background-size": "contain",
-        "background-repeat": "no-repeat"
-      },
-      " .holderTextOnly": {
-        "color": "black"
-      }
+      "font-size": "22px"
     },
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -25,
-    "dropTarget": {
-      "token": "circle",
-      "color": "cyan"
-    },
-    "color": "cyan",
-    "outline": "black",
-    "text": 1,
-    "token": "circle",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
+    "html": "Barely taller than a card: the grid keeps one row and overlaps the cards sideways rather than starting a second row."
+  },
+  "button1": {
+    "id": "button1",
+    "type": "button",
+    "x": 60,
+    "y": 890,
+    "width": 150,
+    "height": 50,
+    "text": "Deal 6 to each",
+    "clickRoutine": [
       {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder1",
+        "count": 6,
+        "face": 1
       },
       {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder2",
+        "count": 6,
+        "face": 1
       },
-      "var childCount = ${PROPERTY text} + 1",
       {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder3",
+        "count": 6,
+        "face": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "holder4",
+        "count": 4,
+        "face": 1
       }
     ]
   },
-  "circle1": {
+  "text4": {
+    "id": "text4",
+    "x": 230,
+    "y": 885,
+    "width": 1180,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Drag a card within a grid to insert it at the cell you point at and the other cards flow around it. A whole pile dropped into a grid breaks up into single cards, because a grid normally keeps no piles. The <i>preventPiles</i> button turns the first holder's cells into stacks instead: dropped piles stay, a card dropped onto a cell stacks onto it, and the handle counts the stack."
+  },
+  "deckHolder": {
     "type": "holder",
-    "id": "circle1",
-    "x": 795,
-    "y": 527,
-    "inheritFrom": {
-      "circleMaster": "*"
+    "id": "deckHolder",
+    "x": 1470,
+    "y": 18,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onLeave": {
+      "activeFace": 1
     }
   },
-  "rectangleMaster": {
-    "type": "holder",
-    "id": "rectangleMaster",
-    "y": 66,
-    "width": 100,
+  "mainDeck": {
+    "cardTypes": {
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "type": "deck",
+    "id": "mainDeck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41
+  },
+  "deckHolderP": {
+    "type": "pile",
+    "id": "deckHolderP",
+    "parent": "deckHolder",
+    "width": 103,
+    "height": 160
+  },
+  "deckHolderB": {
+    "id": "deckHolderB",
+    "type": "button",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
     "height": 40,
-    "borderRadius": 0,
-    "z": 1175,
-    "movable": true,
-    "classes": "transparent",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "cardC01": {
+    "id": "cardC01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 01",
+    "parent": "deckHolderP",
+    "z": 1
+  },
+  "cardC02": {
+    "id": "cardC02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 02",
+    "parent": "deckHolderP",
+    "z": 2
+  },
+  "cardC03": {
+    "id": "cardC03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 03",
+    "parent": "deckHolderP",
+    "z": 3
+  },
+  "cardC04": {
+    "id": "cardC04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 04",
+    "parent": "deckHolderP",
+    "z": 4
+  },
+  "cardC05": {
+    "id": "cardC05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 05",
+    "parent": "deckHolderP",
+    "z": 5
+  },
+  "cardC06": {
+    "id": "cardC06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 06",
+    "parent": "deckHolderP",
+    "z": 6
+  },
+  "cardC07": {
+    "id": "cardC07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 07",
+    "parent": "deckHolderP",
+    "z": 7
+  },
+  "cardC08": {
+    "id": "cardC08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 08",
+    "parent": "deckHolderP",
+    "z": 8
+  },
+  "cardC09": {
+    "id": "cardC09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 09",
+    "parent": "deckHolderP",
+    "z": 9
+  },
+  "cardC10": {
+    "id": "cardC10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 10",
+    "parent": "deckHolderP",
+    "z": 10
+  },
+  "cardC2J": {
+    "id": "cardC2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 2J",
+    "parent": "deckHolderP",
+    "z": 11
+  },
+  "cardC3Q": {
+    "id": "cardC3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 3Q",
+    "parent": "deckHolderP",
+    "z": 12
+  },
+  "cardC4K": {
+    "id": "cardC4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 4K",
+    "parent": "deckHolderP",
+    "z": 13
+  },
+  "cardD01": {
+    "id": "cardD01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 01",
+    "parent": "deckHolderP",
+    "z": 14
+  },
+  "cardD02": {
+    "id": "cardD02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 02",
+    "parent": "deckHolderP",
+    "z": 15
+  },
+  "cardD03": {
+    "id": "cardD03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 03",
+    "parent": "deckHolderP",
+    "z": 16
+  },
+  "cardD04": {
+    "id": "cardD04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 04",
+    "parent": "deckHolderP",
+    "z": 17
+  },
+  "cardD05": {
+    "id": "cardD05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 05",
+    "parent": "deckHolderP",
+    "z": 18
+  },
+  "cardD06": {
+    "id": "cardD06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 06",
+    "parent": "deckHolderP",
+    "z": 19
+  },
+  "cardD07": {
+    "id": "cardD07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 07",
+    "parent": "deckHolderP",
+    "z": 20
+  },
+  "cardD08": {
+    "id": "cardD08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 08",
+    "parent": "deckHolderP",
+    "z": 21
+  },
+  "cardD09": {
+    "id": "cardD09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 09",
+    "parent": "deckHolderP",
+    "z": 22
+  },
+  "cardD10": {
+    "id": "cardD10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 10",
+    "parent": "deckHolderP",
+    "z": 23
+  },
+  "cardD2J": {
+    "id": "cardD2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 2J",
+    "parent": "deckHolderP",
+    "z": 24
+  },
+  "cardD3Q": {
+    "id": "cardD3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 3Q",
+    "parent": "deckHolderP",
+    "z": 25
+  },
+  "cardD4K": {
+    "id": "cardD4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 4K",
+    "parent": "deckHolderP",
+    "z": 26
+  },
+  "cardH01": {
+    "id": "cardH01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 01",
+    "parent": "deckHolderP",
+    "z": 27
+  },
+  "cardH02": {
+    "id": "cardH02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 02",
+    "parent": "deckHolderP",
+    "z": 28
+  },
+  "cardH03": {
+    "id": "cardH03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 03",
+    "parent": "deckHolderP",
+    "z": 29
+  },
+  "cardH04": {
+    "id": "cardH04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 04",
+    "parent": "deckHolderP",
+    "z": 30
+  },
+  "cardH05": {
+    "id": "cardH05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 05",
+    "parent": "deckHolderP",
+    "z": 31
+  },
+  "cardH06": {
+    "id": "cardH06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 06",
+    "parent": "deckHolderP",
+    "z": 32
+  },
+  "cardH07": {
+    "id": "cardH07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 07",
+    "parent": "deckHolderP",
+    "z": 33
+  },
+  "cardH08": {
+    "id": "cardH08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 08",
+    "parent": "deckHolderP",
+    "z": 34
+  },
+  "cardH09": {
+    "id": "cardH09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 09",
+    "parent": "deckHolderP",
+    "z": 35
+  },
+  "cardH10": {
+    "id": "cardH10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 10",
+    "parent": "deckHolderP",
+    "z": 36
+  },
+  "cardH2J": {
+    "id": "cardH2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 2J",
+    "parent": "deckHolderP",
+    "z": 37
+  },
+  "cardH3Q": {
+    "id": "cardH3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 3Q",
+    "parent": "deckHolderP",
+    "z": 38
+  },
+  "cardH4K": {
+    "id": "cardH4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 4K",
+    "parent": "deckHolderP",
+    "z": 39
+  },
+  "cardS01": {
+    "id": "cardS01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 01",
+    "parent": "deckHolderP",
+    "z": 40
+  },
+  "cardS02": {
+    "id": "cardS02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 02",
+    "parent": "deckHolderP",
+    "z": 41
+  },
+  "cardS03": {
+    "id": "cardS03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 03",
+    "parent": "deckHolderP",
+    "z": 42
+  },
+  "cardS04": {
+    "id": "cardS04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 04",
+    "parent": "deckHolderP",
+    "z": 43
+  },
+  "cardS05": {
+    "id": "cardS05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 05",
+    "parent": "deckHolderP",
+    "z": 44
+  },
+  "cardS06": {
+    "id": "cardS06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 06",
+    "parent": "deckHolderP",
+    "z": 45
+  },
+  "cardS07": {
+    "id": "cardS07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 07",
+    "parent": "deckHolderP",
+    "z": 46
+  },
+  "cardS08": {
+    "id": "cardS08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 08",
+    "parent": "deckHolderP",
+    "z": 47
+  },
+  "cardS09": {
+    "id": "cardS09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 09",
+    "parent": "deckHolderP",
+    "z": 48
+  },
+  "cardS10": {
+    "id": "cardS10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 10",
+    "parent": "deckHolderP",
+    "z": 49
+  },
+  "cardS2J": {
+    "id": "cardS2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 2J",
+    "parent": "deckHolderP",
+    "z": 50
+  },
+  "cardS3Q": {
+    "id": "cardS3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 3Q",
+    "parent": "deckHolderP",
+    "z": 51
+  },
+  "cardS4K": {
+    "id": "cardS4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 4K",
+    "parent": "deckHolderP",
+    "z": 52
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 1230,
+    "y": 240,
+    "width": 250,
+    "height": 380,
+    "layout": "grid",
+    "gridColumns": 2,
+    "stackOffsetX": 8,
+    "stackOffsetY": 8,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pilesOffsetY": 120
+  },
+  "text4b": {
+    "id": "text4b",
+    "x": 1170,
+    "y": 650,
+    "width": 370,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
     "css": {
-      "default": {
-        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' width='100' height='20'%3E%3Cpath fill='${PROPERTY color}' d='m0 0h100v20h-100z'/%3E%3C/svg%3E\")",
-        "background-repeat": "no-repeat",
-        "background-position-y": "100%"
-      },
-      " .holderTextOnly": {
-        "color": "black",
-        "top": "-20px",
-        "font-size": "16px !important",
-        "font-weight": "normal"
-      }
+      "font-size": "22px"
     },
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -25,
-    "dropTarget": {
-      "token": "rectangle"
-    },
-    "color": "red",
-    "text": 1,
-    "token": "rectangle",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
-      },
-      "var childCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
-      }
-    ],
-    "x": 3
-  },
-  "rectangle1": {
-    "type": "holder",
-    "id": "rectangle1",
-    "x": 386,
-    "y": 462,
-    "inheritFrom": {
-      "rectangleMaster": "*"
-    }
-  },
-  "squareMaster": {
-    "type": "holder",
-    "id": "squareMaster",
-    "x": 26,
-    "y": 12,
-    "width": 50,
-    "height": 50,
-    "z": 1107,
-    "movable": true,
-    "dropOffsetX": 10,
-    "dropOffsetY": 10,
-    "dropTarget": {
-      "token": "square"
-    },
-    "text": 1,
-    "token": "square",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
-      },
-      "var childCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
-      }
-    ],
-    "css": {
-      "default": {
-        "border": "1px solid black",
-        "font-size": "8px"
-      },
-      " .holderTextOnly": {
-        "color": "black",
-        "top": "-20px",
-        "left": "-20px",
-        "font-size": "16px !important"
-      }
-    },
-    "color": "mediumseagreen"
-  },
-  "square1": {
-    "type": "holder",
-    "id": "square1",
-    "x": 58,
-    "y": 292,
-    "inheritFrom": {
-      "squareMaster": "*"
-    }
+    "html": "<b>gridColumns</b> <i>2</i> pins the column count however the holder is sized, <b>gridRows</b> would pin the rows. <b>pilesOffsetY</b> <i>120</i> pins the row pitch: a fixed pitch never squishes, so what does not fit sticks out of the holder."
   },
   "_meta": {
-    "version": 21,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -991,7 +1179,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1770832868975,
+      "lastUpdate": 1788142590091,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1002,9 +1190,57 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "Stackable Tokens Demo",
+      "variant": "layout: grid",
       "language": "en-US",
       "players": "1"
     }
+  },
+  "stacksButton": {
+    "id": "stacksButton",
+    "type": "button",
+    "x": 60,
+    "y": 830,
+    "width": 170,
+    "height": 50,
+    "text": "preventPiles true",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY preventPiles OF holder1}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "holder1"
+            ],
+            "property": "preventPiles",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "preventPiles false"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "holder1"
+            ],
+            "property": "preventPiles",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "preventPiles true"
+          }
+        ]
+      }
+    ]
   }
 }

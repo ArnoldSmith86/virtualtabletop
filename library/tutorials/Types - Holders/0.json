@@ -35,7 +35,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This is a default holder with no modifications. Some of the relevant default values are:<br> <b>dropOffsetX</b>: 4 <br><b>dropOffsetY</b>: 4 <br><b>stackOffsetX</b>: 0<br><b>stackOffsetY</b>: 0<br><b>dropLimit</b>: -1<br><b>alignChildren</b>: true<br><b>childrenPerOwner</b>: false<br><b>preventPiles</b>: false<br><b>dropTarget</b>: <i>{&quottype&quot:&quotcard&quot}</i><br><br>These do show up in the JSON Editor since they are defaults.",
+    "html": "This is a default holder with no modifications. Some of the relevant default values are:<br> <b>layout</b>: auto<br><b>dropLimit</b>: -1<br><b>alignChildren</b>: true<br><b>childrenPerOwner</b>: false<br><b>preventPiles</b>: false<br><b>dropTarget</b>: <i>{&quottype&quot:&quotcard&quot}</i><br><br>These do show up in the JSON Editor since they are defaults.<br><br>In the Edit Widgets mode, you can see the auto setting under Layout -> Arrange as.",
     "layer": -3
   },
   "text2": {
@@ -49,7 +49,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This holder has <b>preventPiles</b> set to true so a pile handle does not form and it appears as if there is only one card in the holder.",
+    "html": "This holder changes <b>layout</b> to &quotcustom&quot. It also has <b>preventPiles</b> set to true so a pile handle does not form and it appears as if there is only one card in the holder.<br><br>Changing certain holder properties will treat the <b>layout</b> as if it were &quotcustom&quot even if it is set to &quotauto&quot. See the wiki for details.",
     "layer": -3
   },
   "text3": {
@@ -77,7 +77,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This holder changes <b>alignChildren</b> to false. Widgets dropped into this holder will stay where they are placed and not automatically align themselves. This property overrides all of the drop and stack offset properties.",
+    "html": "This holder changes <b>layout</b> to &quotfreeform&quot. Widgets dropped into this holder will stay where they are placed and not automatically align themselves. You can do the same thing by setting <b>alignChildren</b> to false.",
     "layer": -3
   },
   "deckHolder": {
@@ -874,7 +874,7 @@
     "deck": "deck",
     "type": "card",
     "cardType": "H 05",
-    "z": 887,
+    "z": 912,
     "parent": "a348"
   },
   "6_H": {
@@ -962,7 +962,7 @@
     "deck": "deck",
     "type": "card",
     "cardType": "S 03",
-    "z": 886,
+    "z": 907,
     "parent": "a348"
   },
   "4_S": {
@@ -1051,6 +1051,7 @@
     "x": 404,
     "y": 338,
     "z": 1,
+    "layout": "custom",
     "preventPiles": true
   },
   "holder1": {
@@ -1076,18 +1077,19 @@
     "z": 1,
     "width": 400,
     "height": 300,
-    "alignChildren": false
+    "alignChildren": false,
+    "layout": "freeform"
   },
   "a348": {
     "type": "pile",
     "width": 103,
     "height": 160,
     "id": "a348",
-    "z": 889,
+    "z": 1,
     "parent": "deckHolder"
   },
   "_meta": {
-    "version": 21,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -1101,7 +1103,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1770832868965,
+      "lastUpdate": 1788142590068,
       "skill": "",
       "description": "",
       "similarImage": "",

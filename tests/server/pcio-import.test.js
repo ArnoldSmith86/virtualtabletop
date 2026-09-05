@@ -79,8 +79,57 @@ describe('PCIO importer', () => {
       { id: 'holder', type: 'cardPile', x: 10, y: 20, layoutType: 'spread', spreadDirection: 'down' }
     ]);
     expect(state.holder1.type).toBe('holder');
+    expect(state.holder1.layout).toBe('singleSpread');
     expect(state.holder1.stackOffsetY).toBe(168);
     expect(state._meta.info.importerSchemaVersion).toBe(0);
+  });
+
+  it('maps every PCIO holder layout onto the layout property', async () => {
+    const state = await importWidgets([
+      { id: 'stack',  type: 'holder', x: 0,   y: 0 },
+      { id: 'row',    type: 'holder', x: 200, y: 0, layoutType: 'spread' },
+      { id: 'free',   type: 'holder', x: 400, y: 0, layoutType: 'freeform' },
+      { id: 'table',  type: 'holder', x: 600, y: 0, layoutType: 'grid' }
+    ], 8);
+
+    expect(state.holder1.layout).toBe('pile');
+    expect(state.holder2.layout).toBe('singleSpread');
+    expect(state.holder2.stackOffsetX).toBe(111);
+    expect(state.holder3.layout).toBe('freeform');
+    expect(state.holder4.layout).toBe('grid');
+    expect(state.holder4.dropOffsetX).toBe(6);
+    expect(state.holder4.stackOffsetX).toBe(4);
+    expect(state._meta.info.importerWarnings).toBeUndefined();
+  });
+
+  it('turns a multi spread into groups the way PCIO fans them', async () => {
+    const state = await importWidgets([
+      // ids that cannot collide with property values like spreadDirection's
+      // 'down', which the importer's ID rewriting would replace
+      { id: 'zRt1', type: 'holder', x: 0,   y: 0, layoutType: 'spread', spreadMulti: 'multi' },
+      { id: 'zDn2', type: 'holder', x: 200, y: 0, layoutType: 'spread', spreadMulti: 'multi', spreadDirection: 'down' }
+    ], 8);
+
+    expect(state.holder1.layout).toBe('multiSpread');
+    expect(state.holder1.stackOffsetX).toBe(40);
+    expect(state.holder1.pilesGapX).toBe(20);
+    expect(state.holder2.layout).toBe('multiSpread');
+    expect(state.holder2.stackOffsetY).toBe(54);
+    expect(state.holder2.pilesGapX).toBe(20);
+    expect(state._meta.info.importerWarnings).toBeUndefined();
+  });
+
+  it('imports the hand as a multi-group spread, which is what a PCIO hand is', async () => {
+    const state = await importWidgets([
+      { id: 'hand',  type: 'hand', x: 0, y: 500 },
+      { id: 'extra', type: 'hand', x: 0, y: 700 }
+    ], 8);
+
+    expect(state.hand.layout).toBe('multiSpread');
+    expect(state.hand.stackOffsetX).toBe(40);
+    expect(state.hand.pilesGapX).toBe(20);
+    expect(state.hand.childrenPerOwner).toBe(true);
+    expect(state.holder1.layout).toBe('freeform');
   });
 
   it('keeps the position of a counter that sits at the very top of the table', async () => {
@@ -673,14 +722,14 @@ describe('PCIO importer', () => {
 
   it('reports the same problem on several widgets as one line', async () => {
     const state = await importWidgets([
-      { id: 'a', type: 'holder', x: 0,   y: 0, label: 'One',   layoutType: 'grid' },
-      { id: 'b', type: 'holder', x: 200, y: 0, label: 'Two',   layoutType: 'grid' },
-      { id: 'c', type: 'holder', x: 400, y: 0, label: 'Three', layoutType: 'grid' },
-      { id: 'd', type: 'holder', x: 600, y: 0, label: 'Four',  layoutType: 'grid' }
+      { id: 'a', type: 'urlButton', x: 0,   y: 0, label: 'One',   clickURL: 'javascript:alert(1)' },
+      { id: 'b', type: 'urlButton', x: 200, y: 0, label: 'Two',   clickURL: 'javascript:alert(2)' },
+      { id: 'c', type: 'urlButton', x: 400, y: 0, label: 'Three', clickURL: 'javascript:alert(3)' },
+      { id: 'd', type: 'urlButton', x: 600, y: 0, label: 'Four',  clickURL: 'javascript:alert(4)' }
     ], 8);
 
     expect(state._meta.info.importerWarnings).toEqual([
-      `PlayingCards.io's grid layout has no VirtualTabletop equivalent - the holders "One", "Two", "Three" and 1 more were imported as freeform.`
+      `The webpage buttons "One", "Two", "Three" and 1 more open addresses that VirtualTabletop cannot follow - they show them instead.`
     ]);
   });
 

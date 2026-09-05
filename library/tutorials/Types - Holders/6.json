@@ -9,7 +9,7 @@
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
     "layer": -3,
-    "text": "Holders: Layout - pile & singleSpread"
+    "text": "Holders: Layouts - random"
   },
   "overview": {
     "id": "overview",
@@ -21,133 +21,356 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px",
-    "html": "This variant covers holders with <b>layout</b> set to &quotpile&quot and &quotsingleSpread&quot. A single spread has no overflow handling of its own - a hand longer than the holder simply runs past its edge - but <b>spreadMin</b> keeps a long fan readable without growing past it."
+    "html": "<b>layout</b> &quotrandom&quot scatters whatever is dropped into the holder. Every piece lands on a spot of its own with a small random tilt, measured against its size so nothing overlaps and nothing pokes past the border. A piece you drop keeps the spot you aimed for while it is free. On a crowded spot, it hops to a random free one instead. A widget taken back out straightens up again. <b>dropOffsetX</b>/<b>dropOffsetY</b> is the margin the pieces keep to the border."
   },
   "holder1": {
     "type": "holder",
     "id": "holder1",
     "x": 60,
-    "y": 250,
-    "width": 340,
-    "height": 220,
-    "onEnter": {
-      "activeFace": 1
+    "y": 240,
+    "width": 460,
+    "height": 380,
+    "layout": "random",
+    "dropTarget": {
+      "type": "dice"
     }
+  },
+  "d1": {
+    "type": "dice",
+    "id": "d1",
+    "parent": "holder1",
+    "x": 80,
+    "y": 60,
+    "z": 1,
+    "width": 60,
+    "height": 60,
+    "rotation": -8,
+    "activeFace": 3,
+    "classes": "transitions shaking"
+  },
+  "d2": {
+    "type": "dice",
+    "id": "d2",
+    "parent": "holder1",
+    "x": 240,
+    "y": 90,
+    "z": 2,
+    "width": 60,
+    "height": 60,
+    "rotation": 12,
+    "activeFace": 1,
+    "classes": "transitions shaking"
+  },
+  "d3": {
+    "type": "dice",
+    "id": "d3",
+    "parent": "holder1",
+    "x": 360,
+    "y": 200,
+    "z": 3,
+    "width": 60,
+    "height": 60,
+    "rotation": -4,
+    "activeFace": 5,
+    "classes": "transitions shaking"
+  },
+  "d4": {
+    "type": "dice",
+    "id": "d4",
+    "parent": "holder1",
+    "x": 120,
+    "y": 240,
+    "z": 4,
+    "width": 60,
+    "height": 60,
+    "rotation": 9,
+    "classes": "transitions shaking"
+  },
+  "d5": {
+    "type": "dice",
+    "id": "d5",
+    "parent": "holder1",
+    "x": 250,
+    "y": 290,
+    "z": 5,
+    "width": 60,
+    "height": 60,
+    "rotation": -13,
+    "activeFace": 4,
+    "classes": "transitions shaking"
   },
   "text1": {
     "id": "text1",
-    "x": 62,
-    "y": 485,
-    "width": 340,
+    "x": 61,
+    "y": 650,
+    "width": 440,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "No arrangement properties at all: a new holder is on <b>layout</b> &quotauto&quot. Here, that gives a centered row that packs tighter as it fills up."
+    "html": "Click a die, or the button below, to roll it. Every roll also moves it onto a fresh free spot. The &quottransitions&quot class was added to each die and the related CSS is applied under the Game Settings -> Global Room CSS area to enhance the effect."
   },
   "holder2": {
     "type": "holder",
     "id": "holder2",
-    "x": 425,
-    "y": 250,
-    "width": 340,
-    "height": 220,
+    "x": 560,
+    "y": 240,
+    "width": 420,
+    "height": 380,
+    "layout": "random",
     "onEnter": {
       "activeFace": 1
-    },
-    "layout": "pile"
+    }
   },
   "text2": {
     "id": "text2",
-    "x": 427,
-    "y": 485,
-    "width": 340,
+    "x": 551,
+    "y": 650,
+    "width": 400,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>layout</b> &quotpile&quot: one plain stack. Even if the holder is big enough to make spread out arrangements, this layout forces cards into piles. Non-card widgets do not create piles but will be stacked together."
+    "html": "Cards scatter too. Deal a few. Each one lands on a free spot with its own tilt. Once the tray gets crowded the pieces overlap as little as possible instead of spilling past the border."
   },
   "holder3": {
     "type": "holder",
     "id": "holder3",
-    "x": 790,
-    "y": 250,
-    "width": 540,
-    "height": 220,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "layout": "singleSpread"
+    "x": 1020,
+    "y": 240,
+    "width": 420,
+    "height": 380,
+    "layout": "random",
+    "dropTarget": {}
   },
   "text3": {
     "id": "text3",
-    "x": 792,
-    "y": 485,
-    "width": 540,
+    "x": 1021,
+    "y": 650,
+    "width": 420,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>layout</b> &quotsingleSpread&quot: this layout is one spread fan of cards. This is how most games in the public library appear since most games were created before the <b>layout</b> property was available. However, if you look at a game from the library, you would usually see <b>layout</b> &quotcustom&quot as that does something similar but allows for modifying some of the parameters."
+    "html": "Drag the checkers around. A piece dropped on a free spot keeps exactly that spot, one dropped onto another piece hops to a random free one. Pieces never overlap so long as there is space."
   },
   "button1": {
     "id": "button1",
     "type": "button",
     "x": 60,
-    "y": 732,
+    "y": 890,
     "width": 150,
     "height": 50,
-    "text": "Deal 3 to each",
+    "text": "Deal 3 cards",
     "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": "holder1",
-        "count": 3,
-        "face": 1
-      },
       {
         "func": "MOVE",
         "from": "deckHolder",
         "to": "holder2",
         "count": 3,
         "face": 1
-      },
-      {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": "holder3",
-        "count": 3,
-        "face": 1
-      },
-      {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": "holder4",
-        "count": 3,
-        "face": 1
       }
     ]
   },
-  "text5": {
-    "id": "text5",
-    "x": 240,
-    "y": 732,
-    "width": 500,
+  "button2": {
+    "id": "button2",
+    "type": "button",
+    "x": 230,
+    "y": 890,
+    "width": 150,
+    "height": 50,
+    "text": "Roll the dice",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "dice",
+        "property": "parent",
+        "value": "holder1",
+        "collection": "trayDice"
+      },
+      {
+        "func": "CLICK",
+        "collection": "trayDice"
+      }
+    ]
+  },
+  "text4": {
+    "id": "text4",
+    "x": 400,
+    "y": 885,
+    "width": 1010,
     "layer": -3,
     "movable": false,
     "movableInEdit": false,
     "css": {
       "font-size": "22px"
     },
-    "html": "Deal a few cards, then drag them from one holder into the next and watch how each layout receives them."
+    "html": "The scatter never moves a piece it does not have to move. Dealing another card leaves everything else exactly where it lies."
+  },
+  "token1": {
+    "id": "token1",
+    "width": 75,
+    "height": 75,
+    "activeFace": 0,
+    "classes": "chip",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "parent": "holder3",
+    "x": 50,
+    "y": 60,
+    "z": 1,
+    "rotation": 7,
+    "color": "#4a68b6"
+  },
+  "token2": {
+    "id": "token2",
+    "width": 75,
+    "height": 75,
+    "activeFace": 0,
+    "classes": "chip",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "parent": "holder3",
+    "x": 220,
+    "y": 100,
+    "z": 2,
+    "rotation": -12,
+    "color": "#b8514d"
+  },
+  "token3": {
+    "id": "token3",
+    "width": 75,
+    "height": 75,
+    "activeFace": 0,
+    "classes": "chip",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "parent": "holder3",
+    "x": 110,
+    "y": 220,
+    "z": 3,
+    "rotation": 4,
+    "color": "#4a68b6"
+  },
+  "token4": {
+    "id": "token4",
+    "width": 75,
+    "height": 75,
+    "activeFace": 0,
+    "classes": "chip",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "x": 1480,
+    "y": 690,
+    "color": "#b8514d"
+  },
+  "token5": {
+    "id": "token5",
+    "width": 75,
+    "height": 75,
+    "activeFace": 0,
+    "classes": "chip",
+    "faces": [
+      {
+        "image": "i/game-pieces/2D/Checkers-2D.svg",
+        "crowned": false
+      },
+      {
+        "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+        "crowned": true
+      }
+    ],
+    "image": "i/game-pieces/2D/Checkers-2D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "secondaryColor": "#ffffff",
+    "x": 1495,
+    "y": 785,
+    "color": "#4a68b6"
   },
   "deckHolder": {
     "type": "holder",
@@ -677,8 +900,7 @@
     "id": "deckHolderP",
     "parent": "deckHolder",
     "width": 103,
-    "height": 160,
-    "z": 1
+    "height": 160
   },
   "deckHolderB": {
     "id": "deckHolderB",
@@ -895,8 +1117,8 @@
     "type": "card",
     "deck": "mainDeck",
     "cardType": "D 2J",
-    "z": 54,
-    "parent": "deckHolderP"
+    "parent": "deckHolderP",
+    "z": 24
   },
   "cardD3Q": {
     "id": "cardD3Q",
@@ -1007,8 +1229,8 @@
     "type": "card",
     "deck": "mainDeck",
     "cardType": "H 3Q",
-    "z": 57,
-    "parent": "deckHolderP"
+    "parent": "deckHolderP",
+    "z": 38
   },
   "cardH4K": {
     "id": "cardH4K",
@@ -1119,13 +1341,14 @@
     "type": "card",
     "deck": "mainDeck",
     "cardType": "S 4K",
-    "z": 60,
-    "parent": "deckHolderP"
+    "parent": "deckHolderP",
+    "z": 52
   },
   "_meta": {
     "version": 25,
     "gameSettings": {
-      "legacyModes": {}
+      "legacyModes": {},
+      "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 600ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
     },
     "info": {
       "name": "Types - Holder",
@@ -1137,7 +1360,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788142590078,
+      "lastUpdate": 1788142590094,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1148,35 +1371,9 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "layout: pile & singleSpread",
+      "variant": "layout: random",
       "language": "en-US",
       "players": "1"
     }
-  },
-  "holder4": {
-    "type": "holder",
-    "id": "holder4",
-    "x": 790,
-    "y": 680,
-    "width": 540,
-    "height": 220,
-    "layout": "singleSpread",
-    "spreadMin": 3,
-    "onEnter": {
-      "activeFace": 1
-    }
-  },
-  "text4": {
-    "id": "text4",
-    "x": 792,
-    "y": 910,
-    "width": 540,
-    "layer": -3,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "font-size": "22px"
-    },
-    "html": "<b>spreadMin</b> <i>3</i>: the topmost three cards keep the full fan step, the rest squeeze together - a long hand stays inside the holder. Deal a few times to see it."
   }
 }
