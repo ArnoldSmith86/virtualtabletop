@@ -1374,6 +1374,7 @@ const editorTypeSections = {
         available: basicColorIsUsed, availableListenTo: [ 'icon', 'classes', 'css', 'svgReplaces' ] }
     ],
     appearance: [
+      { label: 'Font',          kind: 'font', cssKey: 'font-family' },
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
@@ -1394,6 +1395,7 @@ const editorTypeSections = {
       { label: 'Border',           property: 'borderColorOH',     kind: 'color', labelIcon: 'border_color', propertyOrCss: '--wcBorderOH' }
     ],
     appearance: [
+      { label: 'Font',             kind: 'font', cssKey: 'font-family' },
       { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
@@ -1405,6 +1407,7 @@ const editorTypeSections = {
     // color/pipColor/borderColor are edited per-face (or locked to the widget)
     // by the "Face colors" controls in the dice face editor instead
     appearance: [
+      { label: 'Font',          kind: 'font', cssKey: 'font-family' },
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, placeholder: 'e.g. 16%', nullIfEmpty: true }
     ],
     behavior: [
@@ -1423,6 +1426,7 @@ const editorTypeSections = {
       { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' }
     ],
     appearance: [
+      { label: 'Font',          kind: 'font', cssKey: 'font-family' },
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true },
       { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
     ],
@@ -1441,6 +1445,9 @@ const editorTypeSections = {
       // inheritChildZ - on by default for a pile - is curated for every widget
       // in the Position section
     ],
+    appearance: [
+      { label: 'Handle font', kind: 'font', cssKey: 'font-family', cssProperty: 'handleCSS' }
+    ],
     // the handle is styled through handleCSS, the pile box through css
     cssProperties: [ 'css', 'handleCSS' ]
   },
@@ -1449,12 +1456,14 @@ const editorTypeSections = {
     // border radius stays in the generic appearance/style block
     stateClasses: { '.equalWidth': 'autosizeColumns', '.verticalHeader': 'verticalHeader' },
     appearance: [
+      { label: 'Font',               kind: 'font', cssKey: 'font-family' },
       { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
   seat: {
     stateClasses: { '.seated': 'player', '.turn': 'turn', '.foreign': 'hideWhenUnused' },
     appearance: [
+      { label: 'Font', kind: 'font', cssKey: 'font-family' },
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
@@ -1468,6 +1477,9 @@ const editorTypeSections = {
       { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', labelIconNoFill: true, cssKey: 'color', cssProperty: 'valueCSS', effectiveSelector: '.value' },
       { label: 'Value background', kind: 'color', labelIcon: 'counter_1', cssKey: 'background', cssProperty: 'valueCSS', effectiveSelector: '.value' }
     ],
+    appearance: [
+      { label: 'Font', kind: 'font', cssKey: 'font-family' }
+    ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },
   timer: {
@@ -1475,6 +1487,9 @@ const editorTypeSections = {
     colors: [
       { label: 'Text',       cssKey: 'color',      kind: 'color', labelIcon: 'format_color_text' },
       { label: 'Background', cssKey: 'background', kind: 'color', labelIcon: 'format_color_fill' }
+    ],
+    appearance: [
+      { label: 'Font', kind: 'font', cssKey: 'font-family' }
     ]
   }
 };
@@ -7123,6 +7138,7 @@ class PropertiesModule extends SidebarModule {
       checkbox: CheckboxInput,
       select: SelectInput,
       color: ColorInput,
+      font: FontInput,
       icon: IconInput,
       image: ImageInput
     };
@@ -7153,11 +7169,24 @@ class PropertiesModule extends SidebarModule {
     return editorTypeSections[widget.get('type') || 'basic'] || {};
   }
 
+  // a label's Font row sits below its text field, every other type's in one of the curated sections
+  showsFontRow(widget) {
+    if(widget.get('type') == 'label')
+      return true;
+    const sections = this.typeSections(widget);
+    return [ 'content', 'colors', 'hover', 'appearance', 'behavior' ]
+      .some(group=>(sections[group] || []).some(def=>def.kind == 'font'));
+  }
+
   // all properties covered by the curated sections of this type, used to keep
   // them out of the generic "Other properties" list
   typeSectionProperties(widget) {
     const sections = this.typeSections(widget);
     const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
+    // fonts is a list of downloaded font files, edited through the font picker the Font row opens
+    // rather than as raw JSON - where there is no such row, the raw list stays the only way to see it
+    if(this.showsFontRow(widget))
+      properties.push('fonts');
     if(this.showsDropLimit(widget))
       properties.push('dropLimit');
     if(widget.get('type') == 'pile')
@@ -11884,6 +11913,11 @@ class PropertiesModule extends SidebarModule {
       typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'right', cssProperty, cssClass, 'format_align_right', 'Align right'));
 
       textAreaWrap.appendChild(typographyWrap);
+
+      // The family the text is drawn in sits below the toolbar rather than in it: it is a dropdown of
+      // names, which needs the width of a row of its own.
+      new FontInput(this, widget, 'Font', cssValueOptions(this, widget, 'font-family', cssProperty, cssClass))
+        .render(textAreaWrap);
     }
 
     this.addPropertyListener(widget, textProperty, w => {

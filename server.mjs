@@ -15,6 +15,7 @@ import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
+import GoogleFonts from './server/googlefonts.mjs';
 import { readEmojiVariants } from './server/emojivariants.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
@@ -343,6 +344,46 @@ MinifyHTML().then(function(result) {
   // list is read at startup like the other checked-in data and this hands out what is in memory
   router.get('/api/emojiVariants', function(req, res, next) {
     res.json(emojiVariants);
+  });
+
+  // The families the deck editor's font picker offers. Fetched from Google once a day by the
+  // server, so browsing the list does not put every player's client in touch with Google.
+  router.get('/api/googleFonts', function(req, res, next) {
+    GoogleFonts.families().then(function(families) {
+      res.setHeader('Cache-Control', 'max-age=3600');
+      res.json(families);
+    }).catch(next);
+  });
+
+  // Looking at a family in the picker: the file is streamed through without being stored, so browsing
+  // the catalog does not leave a font file in the assets for every family that was clicked.
+  router.get('/api/googleFonts/:family/preview', function(req, res, next) {
+    (async function() {
+      const styles = String(req.query.styles || '400').split(',');
+      const face = (await GoogleFonts.fontFaces(req.params.family, styles))[0];
+      const content = await GoogleFonts.download(face.url);
+      res.setHeader('Content-Type', 'font/ttf');
+      res.setHeader('Cache-Control', 'max-age=3600');
+      res.send(content);
+    })().catch(next);
+  });
+
+  // Importing a family: the font files are downloaded here and stored as normal assets, so the game
+  // carries its fonts the way it carries its pictures and no player's browser ever asks Google for
+  // them. Answers with the @font-face descriptors of what was stored.
+  router.put('/api/googleFonts/:family', function(req, res, next) {
+    (async function() {
+      const styles = String(req.query.styles || '400').split(',');
+      const fonts = [];
+      for(const face of await GoogleFonts.fontFaces(req.params.family, styles)) {
+        const content = await GoogleFonts.download(face.url);
+        const filename = `/${CRC32.buf(content)}_${content.length}`;
+        if(!Config.resolveAsset(filename.substr(1)))
+          FileWriter.writeFileSync(assetsdir + filename, content);
+        fonts.push({ family: req.params.family, src: `/assets${filename}`, weight: face.weight, style: face.style });
+      }
+      res.json(fonts);
+    })().catch(next);
   });
 
   router.get('/api/widgets', function(req, res, next) {

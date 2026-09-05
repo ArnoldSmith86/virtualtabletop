@@ -525,12 +525,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   width: min(720px, 100%);
   max-height: 100%;
   overflow: auto;
-  padding: 24px;
   box-sizing: border-box;
-  border: 1px solid #0002;
-  border-radius: 10px;
-  box-shadow: 0 8px 30px #0004;
-  background: white;
 }
 
 #deckEditorExportDialog h1 {
@@ -621,12 +616,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   width: min(560px, 100%);
   max-height: 100%;
   overflow: auto;
-  padding: 24px;
   box-sizing: border-box;
-  border: 1px solid #0002;
-  border-radius: 10px;
-  box-shadow: 0 8px 30px #0004;
-  background: white;
 }
 
 #deckEditorImportDialog h1 {
@@ -681,12 +671,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   width: min(680px, 100%);
   max-height: 100%;
   overflow: auto;
-  padding: 24px;
   box-sizing: border-box;
-  border: 1px solid #0002;
-  border-radius: 10px;
-  box-shadow: 0 8px 30px #0004;
-  background: white;
 }
 
 #deckEditorNewDeckDialog h1 {
@@ -699,11 +684,9 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   right: 10px;
 }
 
-/* Match the standard VTT modal look (see .modal in layout.css): themed background, VTTblue top/bottom
-   accent, and a VTTblueDark title bar. Placed after the per-dialog rules so it overrides their white bg. */
-#deckEditorExportDialog,
-#deckEditorImportDialog,
-#deckEditorNewDeckDialog {
+/* The look every dialog of the editor shares (see .modal in layout.css): themed background, VTTblue
+   top/bottom accent, and a VTTblueDark title bar with the close button on it. */
+.editorModal {
   color: var(--modalTextColor);
   background: var(--modalBackgroundColor);
   border: none;
@@ -714,9 +697,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   padding: 0 24px 20px 24px;
 }
 
-#deckEditorExportDialog h1,
-#deckEditorImportDialog h1,
-#deckEditorNewDeckDialog h1 {
+.editorModal h1 {
   margin: 0 -24px 16px -24px;
   padding: 12px 44px 12px 16px;
   background: var(--VTTblueDark);
@@ -728,9 +709,7 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
 }
 
 /* Close button sits on the dark title bar. */
-#deckEditorExportClose,
-#deckEditorImportClose,
-#deckEditorNewDeckClose {
+.editorModal > button[icon=close] {
   background: transparent;
   color: #fff;
 }
@@ -2208,4 +2187,27 @@ body.dragToolbarDragging #deckEditorDragToolbar button:hover span {
 
 body.dragToolbarDragging #deckEditorDragToolbarFeedback.active {
   display: block;
+}
+
+/* The font row's picker button: sized and positioned like the trash of every other property row (see the
+   trash note above), so the Appearance block keeps one right edge and one row height. The row has no trash
+   of its own - a font is unset by picking the row's default entry - so it takes that rightmost slot. */
+#deckEditorSidebar .deckEditorFontPickerButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorFontPickerButton[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
 }
