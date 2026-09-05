@@ -2083,6 +2083,8 @@ class PropertiesModule extends SidebarModule {
         if(widget.get('type') != 'pile' && this.moduleDOM)
           this.renderEvents(widget);
       }
+    } else if(this.renamingWidget) {
+      this.addRenameInProgress();
     } else {
       this.addDeck();
     }
@@ -2568,6 +2570,18 @@ class PropertiesModule extends SidebarModule {
     sidebarHint.className = 'noSelectionIntro';
     sidebarHint.innerText = 'The other editor tools are in the sidebar on the right.';
     this.moduleDOM.append(sidebarHint);
+  }
+
+  // Shown instead of the "nothing selected" module while a rename started from this panel is still running:
+  // the widget briefly leaves the room, which empties the selection, and the empty module with its two big
+  // call-to-action buttons reads as if the rename had thrown the selection away.
+  addRenameInProgress() {
+    this.addHeader('Edit widgets');
+
+    const status = document.createElement('p');
+    status.className = 'noSelectionIntro renameInProgress';
+    status.innerText = `Renaming ${this.renamingWidget.oldID} to ${this.renamingWidget.newID}…`;
+    this.moduleDOM.append(status);
   }
 
   async deckTraditional(target) {
@@ -5540,62 +5554,84 @@ class PropertiesModule extends SidebarModule {
     idInput.type = 'text';
     idInput.className = options.className || 'widgetHeaderIdInput';
     idInput.value = widget.id;
-    idInput.title = options.title || 'Rename widget';
+    // the two ways out of the field are worth spelling out: nothing on screen says that Enter applies the
+    // rename and that Escape puts the id back
+    idInput.title = `${options.title || 'Rename widget'} (Enter applies, Esc cancels)`;
     idInput.setAttribute('aria-label', options.ariaLabel || 'Widget id');
 
-    // the rename replaces the widget object, so the id the field stands for is
-    // kept here instead of read back from the widget it was created for - and
-    // a browser may commit the same edit twice (a change event on Enter and
-    // another one when the field loses focus), which must not start a second
-    // rename that then finds the new id taken by the first one
+    // the box is as wide as the id it holds instead of the browser's 20 character default, so a long id stays
+    // readable without scrolling through it (the CSS max-width caps how much of the panel it can take)
+    const fitToValue = _=>idInput.size = Math.max(12, idInput.value.length + 1);
+    fitToValue();
+    idInput.oninput = fitToValue;
+
+    // The id the input stands for. The Widget object it was created from keeps the id it had when it was
+    // renamed, so this is what tells a repeated change event - a browser fires one when the input is blurred
+    // after its value was already committed - from a second, real rename.
     let currentID = widget.id;
     let renaming = false;
 
     idInput.onchange = async () => {
-      if(renaming)
+      if(renaming) // a rename started by an earlier event of this input is still running
         return;
       const oldID = currentID;
       const newID = idInput.value.trim();
       if(newID == oldID) {
         idInput.value = oldID;
+        fitToValue();
         return;
       }
       if(!newID) {
         alert('Widget id cannot be empty.');
         idInput.value = oldID;
+        fitToValue();
         return;
       }
       if(widgets.has(newID)) {
-        alert(`A widget with the id "${newID}" already exists.`);
+        alert(`A widget with the id "${newID}" already exists. Please choose a different id.`);
         idInput.value = oldID;
+        fitToValue();
         return;
       }
 
       renaming = true;
       idInput.disabled = true;
+      const state = JSON.parse(JSON.stringify((widgets.get(oldID) || widget).state));
+      state.id = newID;
+      // the new id already exists partway through the rename, so the input stands for it from here on rather
+      // than only once the rename has finished
+      currentID = newID;
+      // the widget is gone from the room between the remove and the add inside updateWidgetId, so without
+      // this the panel would drop to its "nothing selected" state for as long as the rename takes
+      this.renamingWidget = { oldID, newID };
       batchStart();
       try {
         setDeltaCause(`${getPlayerDetails().playerName} renamed widget ${oldID} to ${newID} in editor`);
-        const state = JSON.parse(JSON.stringify((widgets.get(oldID) || widget).state));
-        state.id = newID;
         await updateWidgetId(state, oldID);
-        currentID = newID;
         const renamedWidget = widgets.get(newID);
         if(renamedWidget && options.onRenamed)
           options.onRenamed(renamedWidget);
       } catch(error) {
+        currentID = oldID;
         alert(`Could not rename widget: ${error}`);
         idInput.value = oldID;
+        fitToValue();
       } finally {
         renaming = false;
         batchEnd();
         idInput.disabled = false;
+        this.renamingWidget = null;
+        // a rename that ended without a widget landing back in the selection - it threw, or the widget it put
+        // there is not one this panel shows - leaves the busy state above with nothing to replace it
+        if(this.moduleDOM && this.moduleDOM.querySelector('.renameInProgress'))
+          this.onSelectionChangedWhileActive([ ...selectedWidgets ]);
       }
     };
 
     idInput.onkeydown = event => {
       if(event.key == 'Escape') {
         idInput.value = currentID;
+        fitToValue();
         idInput.blur();
       }
     };
