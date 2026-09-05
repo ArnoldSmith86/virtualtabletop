@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Map;
 
 /** Where the installation lives and what the downloaded binaries need to find each other. */
@@ -17,6 +18,11 @@ final class Env {
   static final String PACKAGE_REPOSITORY = "https://packages.termux.dev/apt/termux-main";
   /** the prefix those packages are built for, which is what every path inside them starts with */
   static final String TERMUX_PREFIX = "/data/data/com.termux/files/usr";
+
+  /** what a finished installation occupies: the unpacked packages, the clone, node_modules and the caches */
+  static final long REQUIRED_BYTES = 1100L * 1000 * 1000;
+  /** the room on top of that below which an installation is worth warning about */
+  private static final long SPARE_BYTES = 400L * 1000 * 1000;
 
   private Env() {
   }
@@ -59,6 +65,23 @@ final class Env {
     return binary(context, "node").canExecute()
         && new File(repository(context), "server.mjs").isFile()
         && installed(context).isFile();
+  }
+
+  /** What is left of the storage the installation goes into. */
+  static long freeBytes(Context context) {
+    return context.getFilesDir().getUsableSpace();
+  }
+
+  /** Whether the phone has so little room left that an installation may not fit. */
+  static boolean storageIsTight(Context context) {
+    return freeBytes(context) < REQUIRED_BYTES + SPARE_BYTES;
+  }
+
+  /** A size in the units a phone states its storage in. */
+  static String size(long bytes) {
+    if(bytes >= 1000L * 1000 * 1000)
+      return String.format(Locale.US, "%.1f GB", bytes / 1e9);
+    return Math.round(bytes / 1e6) + " MB";
   }
 
   /** The name this device has in the package repository, null when it is not built for. */

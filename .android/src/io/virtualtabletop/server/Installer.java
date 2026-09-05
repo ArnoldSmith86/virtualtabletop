@@ -67,6 +67,12 @@ final class Installer implements Runnable {
     String architecture = Env.architecture();
     if(architecture == null)
       throw new IOException("no packages are built for " + Build.SUPPORTED_ABIS[0]);
+    // an update only replaces what is there, so the room a whole installation needs is
+    // only worth stating while there is none yet
+    if(!Env.isInstalled(context))
+      AppState.log("A complete installation takes about " + Env.size(Env.REQUIRED_BYTES) + ", and "
+          + Env.size(Env.freeBytes(context)) + " is free on this phone"
+          + (Env.storageIsTight(context) ? " - that may well not be enough" : ""));
     Env.createDirectories(context);
     readInstalled();
 

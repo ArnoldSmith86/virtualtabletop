@@ -162,12 +162,24 @@ public class MainActivity extends Activity implements AppState.Listener {
     log.setTextSize(TypedValue.COMPLEX_UNIT_SP, introduction ? 14 : 11);
     // only the introduction is linkified - running it over every log update would be wasteful
     log.setAutoLinkMask(introduction ? Linkify.WEB_URLS : 0);
-    log.setText(introduction ? getText(R.string.introduction) : output);
+    log.setText(introduction ? introduction() : output);
     logScroll.post(new Runnable() {
       @Override
       public void run() {
         logScroll.fullScroll(introduction ? View.FOCUS_UP : View.FOCUS_DOWN);
       }
     });
+  }
+
+  /**
+   * The introduction, with the storage an installation takes filled in, followed by a warning
+   * when the phone has little more room than that left.
+   */
+  private String introduction() {
+    String text = getString(R.string.introduction, Env.size(Env.REQUIRED_BYTES));
+    if(Env.storageIsTight(this))
+      text += "\n\n" + getString(R.string.storage_warning,
+          Env.size(Env.freeBytes(this)), Env.size(Env.REQUIRED_BYTES));
+    return text;
   }
 }

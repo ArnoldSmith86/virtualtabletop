@@ -18,10 +18,11 @@
   <string name="toast_address_changed">The network changed - restarting the server on %1$s</string>
   <string name="state_not_installed">Not installed yet</string>
   <string name="hint_not_installed">Install downloads Node.js, git and VirtualTabletop. It needs an internet connection once - after that the server runs offline.</string>
+  <string name="storage_warning">Only %1$s of storage are free on this phone. The installation takes about %2$s, so it may well run out of space - free some room first.</string>
   <string name="state_installing">Installing</string>
   <string name="state_updating">Updating</string>
   <string name="state_starting">Starting the server</string>
   <string name="state_ready">Ready to play</string>
   <string name="hint_ready">Start the server and open the room on any device in the same network.</string>
-  <string name="introduction">Just want to play? Open virtualtabletop.io in a browser - that is the game itself, always up to date, and it needs no app at all.\n\nThis app is for playing with no internet around. It runs the VirtualTabletop server on this phone, so the phone, a tablet and a laptop on the same WiFi - or on this phone\'s hotspot - can play together on a train, in a garden or anywhere else offline.\n\nInstall fetches Node.js, git and VirtualTabletop once. That needs a connection and about 750 MB of storage, and everything it does is printed here. It can be pressed again to carry on if the connection breaks. Start server then hands out the address the other devices open.</string>
+  <string name="introduction">Just want to play? Open virtualtabletop.io in a browser - that is the game itself, always up to date, and it needs no app at all.\n\nThis app is for playing with no internet around. It runs the VirtualTabletop server on this phone, so the phone, a tablet and a laptop on the same WiFi - or on this phone\'s hotspot - can play together on a train, in a garden or anywhere else offline.\n\nInstall fetches Node.js, git and VirtualTabletop once. That needs a connection and about %1$s of storage, and everything it does is printed here. It can be pressed again to carry on if the connection breaks. Start server then hands out the address the other devices open.\n\nThank you to the Termux project (termux.dev): Node.js and git for Android are their work, built and kept up to date by them, and this app simply installs their packages.</string>
 </resources>

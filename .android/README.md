@@ -62,7 +62,11 @@ each other - uninstall the old one first, or build locally where `keystore.jks` 
 * **Where the binaries come from.** Termux is the only project that builds Node.js and git for
   Android, so the app installs its packages (`git`, `nodejs-lts`, `npm` and their dependencies)
   straight from `packages.termux.dev`, checking each one against the SHA-256 of the repository
-  index. Together they are about 35 MB, the clone and `node_modules` another 750 MB.
+  index. Together they are about 35 MB to download and 170 MB unpacked; with the clone,
+  `node_modules` and the caches git and npm leave behind, a finished installation occupies about
+  1.1 GB, which is the number the introduction on the empty console states. The app compares it
+  against the free space and warns when the phone has less than 400 MB to spare on top of it -
+  both on that screen and in the log when an installation starts.
 * **What is cloned, and how it survives a broken connection.** Only the tip of `main`, shallow and
   single-branch and without tags. The clone keeps no reflog and prunes right away, so an update
   replaces that one snapshot instead of piling up the ones before it. Git cannot resume a clone
@@ -88,13 +92,15 @@ each other - uninstall the old one first, or build locally where `keystore.jks` 
   and its LZMA2 filter itself.
 * **Why it targets API 28.** Android refuses to execute files an app has written into its own
   data directory once the app targets API 29 or newer. Termux stays at 28 for the same reason.
-  The app still installs and runs on current Android versions. It needs API 24 or newer, which is
-  what the Termux packages are built for.
+  The app still installs and runs on current Android versions. It needs API 24 - Android 7.0 - or
+  newer, which is what the Termux packages are built for.
 * **Which Node.js.** The version is read from `.github/workflows/production-environment.yml` in
   the clone, so it follows the repository rather than the app. The Termux repository only ever
   offers the current release and the current long term support one, so an older version than
   those lands on the closest available and the log says so.
-* **Devices.** `aarch64`, `arm`, `x86_64` and `i686` are all built for by the repository.
+* **Devices.** The repository builds every package for `aarch64`, `arm`, `x86_64` and `i686`, so
+  `arm64-v8a`, `armeabi-v7a`, `x86_64` and `x86` devices and emulators are all covered. A device
+  whose ABI is none of those is told that instead of installing anything.
 * **When the server counts as running.** Node takes a few seconds to come up on a phone, and it
   can still fail on the way - an occupied port, a half finished installation. The app therefore
   says *Starting the server* until the server has printed that it is listening, and only then
