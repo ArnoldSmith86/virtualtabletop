@@ -479,7 +479,7 @@ const jeCommands = [
     // Fonts are files the game has to carry, so they are imported rather than typed: this opens the deck
     // editor's Google Fonts dialog on this deck, which downloads the font and fills in the "fonts" list.
     id: 'je_deckFonts',
-    name: 'import a font from Google Fonts',
+    name: 'fonts (deck editor)',
     context: '^deck( ↦ fonts( ↦ .*)?)?$',
     call: async function() {
       await deckEditor.open(jeStateNow.id);

@@ -3609,6 +3609,11 @@ class DeckEditor {
     labelEl.title = 'font - the font family this text is drawn in';
 
     const current = mixed ? '' : String(this.commonPropertyValue(objects, 'font').value || '');
+    // The font can come from the card type instead of from the object (dynamicProperties: { font: ... }).
+    // A static value shadows that binding (card.js only fills a bound property that is undefined), so the
+    // entry that writes no value is what the binding reads from - and picking a family here shadows it
+    // again, reversibly, rather than the row claiming a font the card is not drawn in.
+    const bound = this.commonPropertyValue(objects.map(object=>object.dynamicProperties || {}), 'font');
     const select = document.createElement('select');
     const addOption = (value, text, group)=>{
       const option = document.createElement('option');
@@ -3626,7 +3631,7 @@ class DeckEditor {
       select.firstChild.dataset.mixed = '1';
       select.firstChild.selected = true;
     }
-    addOption('', 'Default (Roboto)');
+    addOption('', bound.mixed ? 'Default or from the card type' : bound.value ? `From the card type — ${bound.value}` : 'Default');
     const imported = this.deckFontFamilies();
     if(imported.length) {
       const group = document.createElement('optgroup');
@@ -3667,6 +3672,7 @@ class DeckEditor {
     button.className = 'deckEditorFontPickerButton';
     button.setAttribute('icon', 'font_download');
     button.title = 'Get a font from Google Fonts';
+    button.setAttribute('aria-label', 'Get a font from Google Fonts');
     button.onclick = _=>this.openFontOverlay(objects, args);
 
     row.append(labelEl, select, button);
@@ -3681,6 +3687,9 @@ class DeckEditor {
     this.fontTarget = { objects: objects || [], args };
     this.fontSelection = null;
     $('#deckEditorFontSearch').value = '';
+    // Opened from a text's font row the button does two things, so it says both; opened from the JSON
+    // editor there is nothing to apply it to and it only fills the deck's "fonts".
+    $('#deckEditorFontAdd').textContent = this.fontTarget.objects.length ? 'Add to deck & use for this text' : 'Add to deck';
     this.renderFontOverlay();
     showOverlay('deckEditorFontOverlay');
     await this.loadGoogleFonts();
@@ -3716,6 +3725,25 @@ class DeckEditor {
     this.renderFontDetails();
   }
 
+  // What one entry of the deck's "fonts" is called in the dialog - the same names the style check boxes use.
+  fontStyleName(font) {
+    const weight = String(font.weight || 400);
+    const italic = font.style == 'italic';
+    const named = { '400': 'Regular', '700': 'Bold' }[weight];
+    return named ? (italic ? (weight == '700' ? 'Bold italic' : 'Italic') : named) : `${weight}${italic ? ' italic' : ''}`;
+  }
+
+  // How many face objects of this deck name a family, so dropping it says what it costs rather than only
+  // asking. Bindings are not counted: which family they end up on is a property of the card type.
+  fontUsageCount(family) {
+    let count = 0;
+    for(const face of this.faceTemplates)
+      for(const object of face.objects || [])
+        if(object.font == family)
+          count++;
+    return count;
+  }
+
   // The fonts this deck already carries, each with what it costs to keep and a button to drop it again.
   renderDeckFontList() {
     const target = $('#deckEditorFontDeckFonts');
@@ -3725,17 +3753,18 @@ class DeckEditor {
       div(target, 'deckEditorFontEmpty').textContent = 'This deck has no imported fonts yet.';
       return;
     }
-    div(target, 'deckEditorFontSubHeader').textContent = 'In this deck';
     for(const family of families) {
-      const styles = this.fonts.filter(font=>font && font.family == family).length;
+      const styles = this.fonts.filter(font=>font && font.family == family).map(font=>this.fontStyleName(font));
+      const used = this.fontUsageCount(family);
       const entry = div(target, 'deckEditorFontDeckEntry');
       const name = div(entry, 'deckEditorFontDeckName');
       name.textContent = family;
       name.style.fontFamily = `"${family}"`;
-      div(entry, 'deckEditorFontDeckStyles').textContent = `${styles} style${styles == 1 ? '' : 's'}`;
+      div(entry, 'deckEditorFontDeckStyles').textContent = `${styles.join(', ')} · used by ${used} text${used == 1 ? '' : 's'}`;
       const remove = document.createElement('button');
       remove.setAttribute('icon', 'delete_forever');
-      remove.title = `Remove "${family}" from this deck`;
+      remove.title = `Remove "${family}" from this deck - texts naming it fall back to the default font`;
+      remove.setAttribute('aria-label', `Remove "${family}" from this deck`);
       remove.onclick = _=>this.removeDeckFont(family);
       entry.append(remove);
     }
@@ -3743,9 +3772,16 @@ class DeckEditor {
 
   renderGoogleFontList() {
     const target = $('#deckEditorFontList');
+    const hint = $('#deckEditorFontHint');
     target.innerHTML = '';
+    hint.innerHTML = '';
     if(this.googleFontsError) {
-      div(target, 'deckEditorFontEmpty').textContent = `Google Fonts could not be reached: ${this.googleFontsError}`;
+      div(target, 'deckEditorFontEmpty').textContent = 'The list of Google fonts could not be loaded.';
+      const retry = document.createElement('button');
+      retry.textContent = 'Try again';
+      retry.onclick = _=>this.reloadGoogleFonts();
+      hint.textContent = `${this.googleFontsError} `;
+      hint.append(retry);
       return;
     }
     if(!this.googleFonts) {
@@ -3756,17 +3792,30 @@ class DeckEditor {
     const matches = this.googleFonts.filter(font=>font.family.toLowerCase().indexOf(search) != -1);
     // The catalog is far longer than anyone scrolls through; the search field is what narrows it down.
     const shown = matches.slice(0, 200);
+    const imported = this.deckFontFamilies();
     for(const font of shown) {
       const entry = div(target, 'deckEditorFontEntry');
       entry.classList.toggle('selected', !!this.fontSelection && this.fontSelection.family == font.family);
       div(entry, 'deckEditorFontName').textContent = font.family;
+      if(imported.indexOf(font.family) != -1)
+        div(entry, 'deckEditorFontInDeck').textContent = 'in deck';
       div(entry, 'deckEditorFontCategory').textContent = font.category || '';
       entry.onclick = _=>this.selectGoogleFont(font);
     }
     if(!matches.length)
       div(target, 'deckEditorFontEmpty').textContent = 'No Google font has that in its name.';
     else if(matches.length > shown.length)
-      div(target, 'deckEditorFontEmpty').textContent = `${matches.length-shown.length} more fonts match - type more of the name to narrow it down.`;
+      hint.textContent = `${matches.length-shown.length} more fonts match - type more of the name to narrow it down.`;
+  }
+
+  // The catalog is fetched once per session, so a failed fetch would otherwise stay failed until the editor
+  // is opened again.
+  async reloadGoogleFonts() {
+    this.googleFonts = null;
+    this.googleFontsError = null;
+    this.renderGoogleFontList();
+    await this.loadGoogleFonts();
+    this.renderFontOverlay();
   }
 
   // The style a family is previewed in and always downloaded with: Regular, unless the family does not have
@@ -3781,6 +3830,9 @@ class DeckEditor {
     const forced = this.forcedFontStyle(font.styles);
     this.fontSelection = { family: font.family, styles: font.styles, chosen: [ forced ], forced };
     this.renderFontOverlay();
+    // The preview and the style boxes appear below the list, which in a short window means below the fold -
+    // so bring them into view rather than leaving the click looking like it did nothing.
+    $('#deckEditorFontDetails').scrollIntoView({ block: 'end' });
     this.setFontStatus(`Loading ${font.family}…`);
     try {
       await this.setFontPreview(font.family, forced);
@@ -3851,6 +3903,8 @@ class DeckEditor {
       box.type = 'checkbox';
       box.checked = selection.chosen.indexOf(style) != -1;
       box.disabled = style == selection.forced;
+      if(box.disabled)
+        label.title = 'The style the preview is drawn in is always downloaded';
       box.onchange = _=>{
         selection.chosen = selection.chosen.filter(chosen=>chosen != style);
         if(box.checked)
