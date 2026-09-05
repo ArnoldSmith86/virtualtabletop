@@ -5888,6 +5888,19 @@ class PropertiesModule extends SidebarModule {
     return contextMenuEntryList(widgetOwnValue(widget, 'contextMenu'));
   }
 
+  // the rows show the entries the popup uses: a card gets them from its deck and an
+  // inheriting widget from its source until it has its own - which a change through
+  // the rows gives it - so say where they come from until then
+  contextMenuInheritedHint(widget) {
+    if(widget.isMulti || !isObjectLike(widget.state) || widget.state.contextMenu !== undefined)
+      return null;
+    const shown = this.contextMenuEntries(widget);
+    if(!shown.length)
+      return null;
+    const source = widget.get('type') == 'card' ? `the deck ${widget.get('deck')}` : widget.get('inheritFrom') ? 'the widget this one inherits from' : 'another widget';
+    return `${shown.length == 1 ? 'This entry comes' : 'These entries come'} from ${source}. Changing ${shown.length == 1 ? 'it' : 'them'} here stores a copy on this widget.`;
+  }
+
   // a deep copy to change and write back: an entry deep in a submenu is still
   // one value of the contextMenu property
   editableContextMenu(widget) {
@@ -5951,7 +5964,7 @@ class PropertiesModule extends SidebarModule {
     // (an entry or submenu added, removed or reordered), when another entry
     // was opened or when the routines the dropdowns offer changed - editing a
     // value keeps the rows and lets the inputs update themselves
-    const signature = _=>JSON.stringify([ contextMenuShape(this.contextMenuEntries(widget)), expandedContextMenuEntryByWidgetId.get(widget.id), widgetRoutineNames(widget) ]);
+    const signature = _=>JSON.stringify([ contextMenuShape(this.contextMenuEntries(widget)), expandedContextMenuEntryByWidgetId.get(widget.id), widgetRoutineNames(widget), this.contextMenuInheritedHint(widget) ]);
     let lastSignature = null;
     let rebuild = _=>{};
 
@@ -5963,7 +5976,10 @@ class PropertiesModule extends SidebarModule {
       const scrollTop = this.moduleDOM.scrollTop;
       lastSignature = signature();
       list.innerHTML = '';
-      if(!this.contextMenuEntries(widget).length)
+      const inheritedHint = this.contextMenuInheritedHint(widget);
+      if(inheritedHint)
+        div(list, 'contextMenuHelp', inheritedHint);
+      else if(!this.contextMenuEntries(widget).length)
         div(list, 'contextMenuHelp', 'No buttons yet.');
       this.renderContextMenuEntryRows(widget, [], list, rebuildRows);
       this.moduleDOM.scrollTop = scrollTop;

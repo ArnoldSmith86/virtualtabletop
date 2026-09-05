@@ -45,6 +45,11 @@ function reactsToRightClick(widget) {
   return hasPopupTriggers(widget) || Array.isArray(widget.get('rightClickRoutine'));
 }
 
+// another player or a state reload can remove the widget while its popup is open
+function isLiveWidget(widget) {
+  return !!widget && widgets.get(widget.id) === widget;
+}
+
 // the widgets under a point, topmost first - including the ones the open popup covers, so that
 // holding the button and moving over a fan of cards previews one after the other
 function widgetsAtPoint(clientX, clientY) {
@@ -258,6 +263,8 @@ function renderRotationButtons(widget, rowEl) {
   }
   rowEl.style.display = 'flex';
   const rotate = async direction => {
+    if (!isLiveWidget(currentWidget))
+      return closeContextMenu();
     const current = currentWidget.get('rotation') || 0;
     let next;
     if (typeof steps === 'number') {
@@ -367,8 +374,10 @@ function renderContextMenuButtons(widget, colEl, popupContrastColor) {
       };
     } else if (hasRoutine) {
       btn.onclick = async () => {
+        const previewIndex = enlargePreviewIndex;
         closeContextMenu();
-        await runRoutine(widget, routine, `${playerName} context action ${routine} on ${widget.id}`, { previewIndex: enlargePreviewIndex });
+        if (isLiveWidget(widget))
+          await runRoutine(widget, routine, `${playerName} context action ${routine} on ${widget.id}`, { previewIndex });
       };
     }
     colEl.appendChild(row);
@@ -465,7 +474,7 @@ function applyPopupContrastColors(popup) {
 }
 
 export function openContextMenuWithMenu(widget, menu, overrides) {
-  if (!widget || !Array.isArray(menu)) return;
+  if (!isLiveWidget(widget) || !Array.isArray(menu)) return;
   openContextMenu(widget, menu, overrides && typeof overrides === 'object' ? overrides : null);
 }
 
@@ -485,6 +494,12 @@ export function closeContextMenu() {
   }
   const styleEl = $('#contextMenuStyle');
   if (styleEl) removeFromDOM(styleEl);
+}
+
+// a widget that leaves the room takes its popup with it
+export function closeContextMenuFor(widget) {
+  if (currentWidget === widget)
+    closeContextMenu();
 }
 
 function isPopupOpen() {
@@ -517,11 +532,6 @@ function handleWidgetContextMenu(e) {
 
     if (hasPopupTriggers(widget)) {
       openContextMenu(widget);
-      return true;
-    }
-
-    if (widget.get('enlarge')) {
-      widget.showEnlarged(e);
       return true;
     }
   }
@@ -598,12 +608,13 @@ export function handleContextMenuInput(name, e) {
 }
 
 export function onLongTouch(widget) {
+  // a long touch is never a click, whether or not the widget shows something for it
+  widget.domElement.classList.add('longtouch');
   if (longTouchHandled)
     return; // a widget nested inside this one already reacted to the same long touch
 
   if (Array.isArray(widget.get('rightClickRoutine'))) {
     longTouchHandled = true;
-    widget.domElement.classList.add('longtouch');
     runRoutine(widget, 'rightClickRoutine', `${playerName} long-touched ${widget.id}`);
     return;
   }
@@ -612,14 +623,12 @@ export function onLongTouch(widget) {
     if (widget.get('enlarge')) {
       longTouchHandled = true;
       widget.showEnlarged();
-      widget.domElement.classList.add('longtouch');
     }
     return;
   }
 
   longTouchHandled = true;
   touchActive = true;
-  widget.domElement.classList.add('longtouch');
   openContextMenu(widget);
 }
 

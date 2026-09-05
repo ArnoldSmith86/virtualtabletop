@@ -2575,7 +2575,7 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      collection: collection - the popup is shown for the first widget in it (defaults to DEFAULT collection).
+      collection: collection - the popup is shown for the first widget in it. Without it, the popup opens on the widget running the routine.
       contextMenu: array - the menu entries to show. Each entry is an object with text, routine (the name of a routine of the widget) and optionally icon, color, description and menu (a submenu). Either this or property is required.
       property: property name - the widget property holding the menu entries, as an alternative to writing them into the operation (e.g. contextMenu).
       title: text - a title shown above the popup.

@@ -693,6 +693,50 @@ function getEnumValidator(values) {
 
 const CONTEXT_MENU_ENTRY_KEYS = ['text', 'routine', 'icon', 'menu', 'color', 'description'];
 
+// where the engine finds a routine a menu entry names: on the widget itself, in the cardDefaults
+// of a card's deck or on a widget it inherits from. undefined when it is nowhere, null when a
+// source the file does not contain could still carry it
+function findWidgetRoutine(widget, name, context, seen = new Set()) {
+    if (!widget || typeof widget !== 'object' || seen.has(widget))
+        return undefined;
+    seen.add(widget);
+    if (Array.isArray(widget[name]))
+        return widget[name];
+    let unknownSource = false;
+    if (widget.type === 'card') {
+        const deck = context.widgets[widget.deck];
+        if (!deck)
+            unknownSource = true;
+        else if (deck.cardDefaults && Array.isArray(deck.cardDefaults[name]))
+            return deck.cardDefaults[name];
+    }
+    const inheritFrom = typeof widget.inheritFrom === 'string' ? { [widget.inheritFrom]: '*' } : widget.inheritFrom;
+    if (inheritFrom && typeof inheritFrom === 'object' && !Array.isArray(inheritFrom)) {
+        for (const [ id, properties ] of Object.entries(inheritFrom)) {
+            if (!inheritsProperty(properties, name))
+                continue;
+            if (!context.widgets[id]) {
+                unknownSource = true;
+                continue;
+            }
+            const found = findWidgetRoutine(context.widgets[id], name, context, seen);
+            if (found !== undefined)
+                return found;
+        }
+    }
+    return unknownSource ? null : undefined;
+}
+
+// inheritFrom names the properties taken from a widget: all of them, some, or all but some
+function inheritsProperty(properties, key) {
+    if (properties === '*')
+        return true;
+    const list = Array.isArray(properties) ? properties : [ properties ];
+    if (list.length && typeof list[0] === 'string' && list[0][0] === '!')
+        return !list.includes('!' + key);
+    return list.includes(key);
+}
+
 function validateContextMenuEntries(entries, context, propertyPath, widget) {
     const problems = [];
     if (!Array.isArray(entries)) return problems;
@@ -719,8 +763,10 @@ function validateContextMenuEntries(entries, context, propertyPath, widget) {
                 problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: 'contextMenu entry routine must be a string' });
             } else if (!validators.routineProperty(entry.routine)) {
                 problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: validators.routineProperty(entry.routine) });
-            } else if (widget && !Array.isArray(widget[entry.routine])) {
+            } else if (widget && findWidgetRoutine(widget, entry.routine, context) === undefined) {
                 problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: `routine '${entry.routine}' does not exist on this widget` });
+            } else if (widget && !Array.isArray(widget[entry.routine])) {
+                // defined on another widget or in a deck's cardDefaults - not this widget's own routine to check here
             } else if (context.calledCustomRoutines && !context.calledCustomRoutines.includes(entry.routine)) {
                 context.calledCustomRoutines.push(entry.routine);
                 // context menu routines receive previewIndex as a variable when they get triggered

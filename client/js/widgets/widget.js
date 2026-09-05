@@ -6,6 +6,7 @@ import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } fro
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
+import { closeContextMenuFor, onLongTouch, onTouchEndContextMenu, openContextMenuWithMenu } from '../contextmenu.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
@@ -434,6 +435,7 @@ export class Widget extends StateManaged {
       this.deck.removeCard(this);
     if($(`#STYLES_${this.cssScope}`))
       removeFromDOM($(`#STYLES_${this.cssScope}`));
+    closeContextMenuFor(this);
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -1537,10 +1539,17 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CONTEXTMENU') {
-        setDefaults(a, { collection: 'DEFAULT', contextMenu: null, property: null });
-        const collection = getCollection(a.collection);
-        if (collection && collections[collection] && collections[collection].length) {
-          const targetWidget = collections[collection][0];
+        // without a collection the popup belongs to the widget running the routine, like the widget of CALL
+        setDefaults(a, { collection: null, contextMenu: null, property: null });
+        let targetWidget = null;
+        if(a.collection === null) {
+          targetWidget = this;
+        } else {
+          const collection = getCollection(a.collection);
+          if(collection && collections[collection] && collections[collection].length)
+            targetWidget = collections[collection][0];
+        }
+        if(targetWidget) {
           let menu = a.contextMenu;
           if (menu === undefined || menu === null) {
             if (typeof a.property === 'string') menu = targetWidget.get(a.property);

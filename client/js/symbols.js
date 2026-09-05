@@ -1,4 +1,4 @@
-import { $, asArray } from "./domhelpers";
+import { $, $a, asArray, div, domByTemplate, mapAssetURLs, removeFromDOM, toggleClass } from "./domhelpers";
 import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout, collapseEmojiVariants, expandEmojiVariants, loadEmojiVariants } from "./emojivariants";
 
 export function emojiToFilename(emoji) {
