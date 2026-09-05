@@ -427,6 +427,55 @@ test('MOVE with from and to naming one holder repositions cards that already sit
   await t.expect(pileCount(roomState)).eql(2, 'no extra group formed');
 });
 
+test('MOVE within a shared hand with position groupEnd deals every seat its own group', async t => {
+  // two seated players share the hand, one fan each; the hand moved onto itself spans both
+  // owners' cards, and a group only ever holds one owner's - a pile is shown to its owner
+  // alone, so a card inside the other player's pile would be visible to nobody
+  const state = Object.assign(fan('mine', 4, 2, { owner: 'TestCafe' }), fan('theirs', 4, 2, { owner: 'Bob' }));
+  state.mine.owner = 'TestCafe';
+  state.mine.z = 1;
+  state.theirs.owner = 'Bob';
+  state.theirs.z = 1;
+  await openRoom(t, 'modern', multiSpreadHand(Object.assign(state, {
+    seatA: { id: 'seatA', type: 'seat', player: 'TestCafe', hand: 'hand', index: 1, x: 1200, y: 100 },
+    seatB: { id: 'seatB', type: 'seat', player: 'Bob', hand: 'hand', index: 2, x: 1200, y: 250 },
+    regroup: { id: 'regroup', type: 'button', x: 1200, y: 400, text: 'regroup',
+      clickRoutine: [ { func: 'MOVE', from: 'hand', to: 'hand', count: 'all', position: 'groupEnd' } ] }
+  }), { childrenPerOwner: true }));
+
+  await t.click('#w_regroup');
+
+  const roomState = await stateWhen(s=>s.minec0.parent && s.minec0.parent != 'mine' && s.theirsc0.parent && s.theirsc0.parent != 'theirs');
+  const mineGroup = roomState.minec0.parent;
+  const theirsGroup = roomState.theirsc0.parent;
+  await t.expect(mineGroup).notEql(theirsGroup, 'one new group per seat');
+  await t.expect(pileCount(roomState)).eql(2);
+  await t.expect(roomState[mineGroup].owner).eql('TestCafe');
+  await t.expect(byZ(roomState, mineGroup).map(c=>c.owner)).eql([ 'TestCafe', 'TestCafe' ]);
+  await t.expect(roomState[theirsGroup].owner).eql('Bob');
+  await t.expect(byZ(roomState, theirsGroup).map(c=>c.owner)).eql([ 'Bob', 'Bob' ]);
+  await t.expect([ roomState[mineGroup].x, roomState[theirsGroup].x ]).eql([ 4, 4 ], 'each leading its own lane');
+});
+
+test('Shuffling and flipping a fanned group through its handle menu lays the fan out again', async t => {
+  await openRoom(t, 'modern', multiSpreadHand(fan('fan', 4, 4)));
+  // a card at the pile's corner has the default x, which the state leaves out
+  const inOrder = s=>byZ(s, 'fan').every((c, i)=>(c.x || 0) == i*40);
+
+  await t.click('#w_fan > .handle');
+  await t.click('#pileOverlay .modal > div:nth-of-type(4) > button'); // Shuffle the pile
+  let state = await stateWhen(s=>byZ(s, 'fan').map(c=>c.id).join() != 'fanc0,fanc1,fanc2,fanc3' && inOrder(s));
+  const shuffled = byZ(state, 'fan').map(c=>c.id);
+  await t.expect(shuffled).notEql([ 'fanc0', 'fanc1', 'fanc2', 'fanc3' ], 'shuffled');
+  await t.expect(byZ(state, 'fan').map(c=>c.x || 0)).eql([ 0, 40, 80, 120 ], 'the fan follows the shuffled order');
+
+  await t.click('#w_fan > .handle');
+  await t.click('#pileOverlay .modal > div:nth-of-type(3) > button'); // Flip everything over
+  state = await stateWhen(s=>byZ(s, 'fan').map(c=>c.id).join() == [ ...shuffled ].reverse().join() && inOrder(s));
+  await t.expect(byZ(state, 'fan').map(c=>c.id)).eql([ ...shuffled ].reverse(), 'flipped over as a whole');
+  await t.expect(byZ(state, 'fan').map(c=>c.x || 0)).eql([ 0, 40, 80, 120 ], 'and laid out in the new order');
+});
+
 test('SORT with groupBy builds one group per suit even when the sort interleaves them', async t => {
   await openRoom(t, 'modern', multiSpreadHand({
     s1: card('s1', { parent: 'hand', x: 4,   y: 4, z: 1, suit: 'S', rank: 2 }),

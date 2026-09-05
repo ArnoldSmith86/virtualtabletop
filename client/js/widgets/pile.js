@@ -132,6 +132,8 @@ export class Pile extends Widget {
           if(c.flip)
             await c.flip();
         };
+        // a fanned pile shows its cards in their order, so it follows the new one
+        await this.arrangeChildren();
         showOverlay();
         batchEnd();
       });
@@ -147,7 +149,8 @@ export class Pile extends Widget {
       shuffleButton.className = 'ui-button';
       shuffleButton.addEventListener('click', async e=>{
         batchStart();
-        shuffleWidgets(this.children())
+        await shuffleWidgets(this.children());
+        await this.arrangeChildren();
         showOverlay();
         batchEnd();
       });
@@ -324,6 +327,12 @@ export class Pile extends Widget {
 
   spreadsCards() {
     return !!(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')));
+  }
+
+  // SHUFFLE and SORT lay whatever they reordered out again through this, a
+  // pile the same as a holder: a fan shows its cards in their order
+  async updateAfterShuffle() {
+    await this.arrangeChildren();
   }
 
   // Put the given cards - already children of this pile - at the given position

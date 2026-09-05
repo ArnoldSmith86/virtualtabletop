@@ -1,7 +1,7 @@
 import { dropTargets, exceedsDropLimit } from '../../client/js/main.js';
 import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta, arrangementStateVersion } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
-import { sortWidgets } from '../../client/js/main.js';
+import { sortWidgets, shuffleWidgets } from '../../client/js/main.js';
 
 import { createWidget, removeWidget } from './client-util.js';
 
@@ -51,6 +51,7 @@ beforeAll(async () => {
   globalThis.setTextAndAdjustFontSize = () => {};
   globalThis.playerName = 'jestPlayer';
   globalThis.sortWidgets = sortWidgets;
+  globalThis.shuffleWidgets = shuffleWidgets;
   globalThis.exceedsDropLimit = exceedsDropLimit;
   globalThis.DOMPoint = globalThis.DOMPoint || class { constructor(x=0, y=0) { Object.assign(this, { x, y, z: 0, w: 1 }); } };
   globalThis.DOMMatrix = globalThis.DOMMatrix || class {
@@ -1693,6 +1694,58 @@ describe('a shared hand (childrenPerOwner) keeps its lanes', () => {
     expect(mine.get('x')).toBe(4);
     expect(theirs.get('x')).toBe(4);
   });
+
+  test('MOVE within the hand with position groupEnd deals every seat its own new group', async () => {
+    // the whole hand moved onto itself spans both owners' cards, and a group
+    // only ever holds one owner's: a pile is shown to its owner alone, so a
+    // card inside another owner's pile would be visible to nobody
+    globalThis.jeRoutineLogging = false;
+    const holder = await sharedHand();
+    await holder.updateAfterShuffle();
+    const button = createWidget({ id: 'moveButton', clickRoutine: [ { func: 'MOVE', from: 'h', to: 'h', count: 'all', position: 'groupEnd' } ] });
+    await button.click();
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(2);
+    for(const pile of piles) {
+      expect(pile.children().length).toBe(2);
+      expect(pile.children().every(c=>c.get('owner') == pile.get('owner'))).toBe(true);
+    }
+    expect(piles.map(p=>p.get('owner')).sort()).toEqual([ 'alice', 'jestPlayer' ]);
+    expect([ 'mine-card-0', 'mine-card-1' ].every(id=>widgets.get(id).get('owner') == 'jestPlayer')).toBe(true);
+    expect([ 'theirs-card-0', 'theirs-card-1' ].every(id=>widgets.get(id).get('owner') == 'alice')).toBe(true);
+    // each new group leads its own lane
+    expect(piles.map(p=>p.get('x'))).toEqual([ 4, 4 ]);
+  });
+
+  test('MOVE with position pileTop joins each card to the last group of its own lane', async () => {
+    const holder = await sharedHand();
+    await createPile('mine2', holder, 500, 4, 2);
+    await createPile('theirs2', holder, 500, 4, 2);
+    await widgets.get('mine2').set('owner', 'jestPlayer');
+    await widgets.get('theirs2').set('owner', 'alice');
+    await holder.updateAfterShuffle();
+    // the top card of each lane's first group, moved as one batch
+    const moved = [ widgets.get('mine-card-1'), widgets.get('theirs-card-1') ];
+    await holder.applyMovePosition(moved, 'pileTop');
+    expect(widgets.get('mine-card-1').get('parent')).toBe('mine2');
+    expect(widgets.get('theirs-card-1').get('parent')).toBe('theirs2');
+    expect(widgets.get('mine-card-1').get('owner')).toBe('jestPlayer');
+    expect(widgets.get('theirs-card-1').get('owner')).toBe('alice');
+    for(const pile of widgetFilter(w=>w.get('type') == 'pile'))
+      expect(pile.children().every(c=>c.get('owner') == pile.get('owner'))).toBe(true);
+  });
+
+  test('a batch of several owners a routine brings in is grouped per owner', async () => {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 900, height: 120, childrenPerOwner: true });
+    const cards = [];
+    for(const [ id, owner ] of [ [ 'a1', 'jestPlayer' ], [ 'a2', 'jestPlayer' ], [ 'b1', 'alice' ], [ 'b2', 'alice' ] ])
+      cards.push(createCard(id, { parent: 'h', z: cards.length + 1, owner }));
+    await holder.groupDroppedCards(cards);
+    const piles = widgetFilter(w=>w.get('type') == 'pile');
+    expect(piles.length).toBe(2);
+    for(const pile of piles)
+      expect(new Set(pile.children().map(c=>c.get('owner')))).toEqual(new Set([ pile.get('owner') ]));
+  });
 });
 
 describe('switching layouts with piles inside', () => {
@@ -2045,6 +2098,22 @@ describe('the layout-dependent defaults survive set()', () => {
 
 describe('the arc layout', () => {
   const rotations = holder => holder.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('rotation'));
+  // the box a card covers on the table once it is turned around its center
+  const tiltedBox = card => {
+    const radians = (card.get('rotation') || 0) * Math.PI / 180;
+    const w = card.get('width') * Math.abs(Math.cos(radians)) + card.get('height') * Math.abs(Math.sin(radians));
+    const h = card.get('height') * Math.abs(Math.cos(radians)) + card.get('width') * Math.abs(Math.sin(radians));
+    const centerX = card.get('x') + card.get('width') / 2;
+    const centerY = card.get('y') + card.get('height') / 2;
+    return { left: centerX - w/2, right: centerX + w/2, top: centerY - h/2, bottom: centerY + h/2 };
+  };
+  const fanBox = holder => {
+    const boxes = holder.arrangedChildren().map(tiltedBox);
+    return {
+      left: Math.min(...boxes.map(b=>b.left)), right: Math.max(...boxes.map(b=>b.right)),
+      top: Math.min(...boxes.map(b=>b.top)), bottom: Math.max(...boxes.map(b=>b.bottom))
+    };
+  };
 
   test('the cards fan along a circle, tangent to it, the middle at the top', async () => {
     const holder = createHolder({ id: 'h', layout: 'arc', width: 600, height: 400 });
@@ -2062,12 +2131,11 @@ describe('the arc layout', () => {
     expect(row[0][1]).toBeCloseTo(row[4][1], 3);
     expect(row[0][1]).toBeGreaterThan(row[1][1]);
     expect(row[1][1]).toBeGreaterThan(row[2][1]);
-    // and the whole fan stands centered: the room above it equals the room
-    // below the lowest corner of the tilted end cards
-    const top = row[2][1];
-    const sagitta = row[0][1] - top;
-    const endHalf = (100*Math.cos(12*Math.PI/180) + 100*Math.sin(12*Math.PI/180)) / 2;
-    expect(top).toBeCloseTo(400 - (top + sagitta + 50 + endHalf), 1);
+    // and the whole fan stands centered: the room above its highest tilted
+    // corner equals the room below its lowest one
+    const box = fanBox(holder);
+    expect(box.top).toBeCloseTo(400 - box.bottom, 3);
+    expect(box.left).toBeCloseTo(600 - box.right, 3);
   });
 
   test('a holder without height for the dip flattens the arc to a straight row', async () => {
@@ -2090,10 +2158,54 @@ describe('the arc layout', () => {
     const r = rotations(holder);
     expect(r[0]).toBe(-30);
     expect(r[12]).toBe(30);
+    // justified: the tilted end cards' outer corners sit the margin from the
+    // edges - not the unrotated boxes, which would let the corners poke out
+    const box = fanBox(holder);
+    expect(box.left).toBeCloseTo(4, 3);
+    expect(box.right).toBeCloseTo(396, 3);
     const row = positionsByZ(holder);
-    // justified: the ends sit the margin from the edges (chord 292, centered)
-    expect(row[0][0]).toBeCloseTo(4, 3);
-    expect(row[12][0]).toBeCloseTo(296, 3);
+    expect(row[0][0]).toBeGreaterThan(4);
+    expect(row[12][0]).toBeLessThan(296);
+  });
+
+  test('a narrow, shallow holder keeps every tilted corner inside its margins', async () => {
+    // ten playing cards in a holder with room for a straight row but not for
+    // the full dip: the span shrinks to what the tilted end cards leave and
+    // the sweep flattens until the lowest corner fits
+    const holder = createHolder({ id: 'h', layout: 'arc', width: 300, height: 180 });
+    for(let i=0; i<10; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1, width: 103, height: 160 });
+    await holder.updateAfterShuffle();
+    const box = fanBox(holder);
+    expect(box.left).toBeGreaterThanOrEqual(4 - 0.01);
+    expect(box.right).toBeLessThanOrEqual(296 + 0.01);
+    expect(box.top).toBeGreaterThanOrEqual(4 - 0.01);
+    expect(box.bottom).toBeLessThanOrEqual(176 + 0.01);
+    // as wide and as curved as that allows: the fan fills the height and the
+    // width, and it is still a fan
+    expect(box.bottom - box.top).toBeCloseTo(172, 0);
+    expect(box.right - box.left).toBeCloseTo(292, 0);
+    const r = rotations(holder);
+    expect(r[0]).toBeLessThan(0);
+    expect(r[9]).toBe(-r[0]);
+    expect(r[0]).toBeGreaterThan(-27);
+  });
+
+  test('a card lying sideways by default is measured that way', async () => {
+    const holder = createHolder({ id: 'h', layout: 'arc', width: 700, height: 200 });
+    for(let i=0; i<5; ++i) {
+      const card = createCard(`c${i}`, { parent: 'h', z: i+1, width: 60, height: 160 });
+      card.getDefaultValue = property => property == 'rotation' ? 90 : Widget.prototype.getDefaultValue.call(card, property);
+    }
+    await holder.updateAfterShuffle();
+    // the tilt sits on top of the default rotation
+    expect(rotations(holder)).toEqual([ 78, 84, 90, 96, 102 ]);
+    const box = fanBox(holder);
+    expect(box.left).toBeGreaterThanOrEqual(4 - 0.01);
+    expect(box.right).toBeLessThanOrEqual(696 + 0.01);
+    expect(box.top).toBeGreaterThanOrEqual(4 - 0.01);
+    expect(box.bottom).toBeLessThanOrEqual(196 + 0.01);
+    expect(box.top).toBeCloseTo(200 - box.bottom, 3);
   });
 
   test('the tilt belongs to the holder: it leaves with the layout and with the card', async () => {
@@ -2124,5 +2236,70 @@ describe('the arc layout', () => {
     const row = holder.arrangedChildren().sort((a, b)=>a.get('z') - b.get('z'));
     expect(row[0].get('id')).toBe('drop');
     expect(rotations(holder)).toEqual([ -12, -6, 0, 6, 12 ]);
+  });
+});
+
+describe('the handle menu of a fanned pile', () => {
+  // the menu is real DOM: the overlay the pile fills in and the buttons it
+  // wires up, clicked the way a player clicks them - the fan has to follow
+  // whatever order they leave the cards in
+  beforeAll(() => {
+    globalThis.$ = (selector, parent=document)=>parent.querySelector(selector);
+    globalThis.showOverlay = () => {};
+    const overlay = document.createElement('div');
+    overlay.id = 'pileOverlay';
+    overlay.innerHTML = '<div class="modal"></div>';
+    document.body.appendChild(overlay);
+  });
+  const menuButton = label => [ ...document.querySelectorAll('#pileOverlay button') ].find(b=>b.textContent == label);
+  const orderOf = pile => pile.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('id'));
+  const fanFollowsOrder = pile => pile.children().sort((a, b)=>a.get('z') - b.get('z')).every((c, i)=>c.get('x') == i * 40 && c.get('y') == 0);
+  // the button handlers run on their own after the click
+  const settle = async check => {
+    for(let i=0; i<200 && !check(); ++i)
+      await new Promise(resolve=>setTimeout(resolve, 5));
+  };
+
+  async function fannedPile() {
+    const holder = createHolder({ id: 'h', layout: 'multiSpread', stackOffsetX: 40, width: 900, height: 300 });
+    const pile = await createPile('fan', holder, 4, 4, 5);
+    await holder.updateAfterShuffle();
+    expect(fanFollowsOrder(pile)).toBe(true);
+    return pile;
+  }
+
+  test('Shuffle the pile lays the fan out in the shuffled order', async () => {
+    const pile = await fannedPile();
+    const before = orderOf(pile);
+    await pile.click();
+    menuButton('Shuffle the pile').click();
+    await settle(()=>orderOf(pile).join() != before.join() && fanFollowsOrder(pile));
+    expect(orderOf(pile)).not.toEqual(before);
+    expect(orderOf(pile).sort()).toEqual([ ...before ].sort());
+    expect(fanFollowsOrder(pile)).toBe(true);
+  });
+
+  test('Flip everything over reverses the fan and lays it out again', async () => {
+    const pile = await fannedPile();
+    const before = orderOf(pile);
+    await pile.click();
+    menuButton('Flip everything over').click();
+    await settle(()=>orderOf(pile).join() == [ ...before ].reverse().join() && fanFollowsOrder(pile));
+    expect(orderOf(pile)).toEqual([ ...before ].reverse());
+    expect(fanFollowsOrder(pile)).toBe(true);
+  });
+
+  test('SHUFFLE and SORT naming the pile lay the fan out like they do a holder', async () => {
+    globalThis.jeRoutineLogging = false;
+    const pile = await fannedPile();
+    for(const [ i, card ] of pile.children().sort((a, b)=>a.get('z') - b.get('z')).entries())
+      await card.set('value', 5 - i);
+    const shuffle = createWidget({ id: 'shuffle', clickRoutine: [ { func: 'SHUFFLE', holder: 'fan' } ] });
+    await shuffle.click();
+    expect(fanFollowsOrder(pile)).toBe(true);
+    const sort = createWidget({ id: 'sort', clickRoutine: [ { func: 'SORT', holder: 'fan', key: 'value' } ] });
+    await sort.click();
+    expect(pile.children().sort((a, b)=>a.get('z') - b.get('z')).map(c=>c.get('value'))).toEqual([ 1, 2, 3, 4, 5 ]);
+    expect(fanFollowsOrder(pile)).toBe(true);
   });
 });

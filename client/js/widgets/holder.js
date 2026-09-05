@@ -1092,59 +1092,89 @@ export class Holder extends ImageWidget {
   // the step along the row is the stack offset (the singleSpread default of
   // 40 without one), the sweep grows with the hand up to ±30 degrees, and the
   // curvature follows from span and sweep - a holder without the height for
-  // that dip gets a flatter arc, down to a straight row.
+  // that dip gets a flatter arc, down to a straight row. The fan is measured
+  // by the boxes the tilted cards cover, so no corner pokes past the margins:
+  // the span shrinks to what the tilted end cards leave room for, and the
+  // sweep flattens until the lowest corner fits.
   async rearrangeChildrenArc(children) {
     if(this.preventRearrangeDuringPileDrop || !children.length)
       return;
-    const cardW = Math.max(...children.map(c=>c.get('width')));
-    const cardH = Math.max(...children.map(c=>c.get('height')));
     const count = children.length;
     const step = Math.abs(this.get('stackOffsetX')) || 40;
-    const availW = Math.max(0, this.get('width') - 2*this.get('dropOffsetX') - cardW);
-    // the span between the first and the last card's center: the natural step
-    // while it fits, spread out to justified steps once it would overflow
-    const chord = Math.min(step * (count - 1), availW);
-    const centerX = this.get('width') / 2;
+    const roomX = this.get('width')  - 2*this.get('dropOffsetX');
+    const roomY = this.get('height') - 2*this.get('dropOffsetY');
+    const bases = children.map(c=>+c.getDefaultValue('rotation') || 0);
 
-    let halfSweep = Math.min(arcLayoutMaxHalfSweep, arcLayoutSweepPerCard * (count - 1) / 2) * Math.PI / 180;
-    let radius = null;
-    let sagitta = 0;
-    if(halfSweep > 0.001 && chord > 0) {
-      radius = chord / (2 * Math.sin(halfSweep));
-      sagitta = radius * (1 - Math.cos(halfSweep));
-      const room = Math.max(0, this.get('height') - 2*this.get('dropOffsetY') - cardH);
-      if(sagitta > room) {
-        // without the height for the dip, the circle through the same span
-        // with the sagitta the holder has room for - possibly a straight row
-        if(room < 1) {
-          radius = null;
-          sagitta = 0;
-        } else {
-          radius = (chord * chord / 4 + room * room) / (2 * room);
-          halfSweep = Math.asin(Math.min(1, chord / (2 * radius)));
-          sagitta = room;
+    // The fan for a given half sweep. Each card's center lies on the circle
+    // at a fraction of the span (kx along the row, ky down into the dip), so
+    // the geometry scales with the span - which is the natural step while
+    // the tilted boxes fit into the holder and otherwise the widest span
+    // they still fit into: how far apart two cards' outer edges are grows
+    // with the span, so every pair bounds it.
+    const fan = halfSweep=>{
+      const cards = children.map((child, i)=>{
+        const angle = count < 2 ? 0 : halfSweep * (2*i / (count - 1) - 1);
+        const tilt = halfSweep ? Math.round(angle * 1800 / Math.PI) / 10 : 0;
+        const radians = (bases[i] + tilt) * Math.PI / 180;
+        const width = child.get('width');
+        const height = child.get('height');
+        return {
+          child, tilt,
+          kx: halfSweep ? Math.sin(angle) / (2 * Math.sin(halfSweep)) : (count < 2 ? 0 : i / (count - 1) - 0.5),
+          ky: halfSweep ? (1 - Math.cos(angle)) / (2 * Math.sin(halfSweep)) : 0,
+          w: width * Math.abs(Math.cos(radians)) + height * Math.abs(Math.sin(radians)),
+          h: height * Math.abs(Math.cos(radians)) + width * Math.abs(Math.sin(radians))
+        };
+      });
+      let chord = step * (count - 1);
+      for(const a of cards)
+        for(const b of cards)
+          if(a.kx > b.kx + 1e-9)
+            chord = Math.min(chord, (roomX - (a.w + b.w) / 2) / (a.kx - b.kx));
+      chord = Math.max(0, chord);
+      return {
+        cards, chord,
+        minX: Math.min(...cards.map(c=>chord * c.kx - c.w/2)),
+        maxX: Math.max(...cards.map(c=>chord * c.kx + c.w/2)),
+        minY: Math.min(...cards.map(c=>chord * c.ky - c.h/2)),
+        maxY: Math.max(...cards.map(c=>chord * c.ky + c.h/2))
+      };
+    };
+    const fits = f=>f.maxY - f.minY <= roomY + 1e-6;
+
+    const fullSweep = Math.min(arcLayoutMaxHalfSweep, arcLayoutSweepPerCard * (count - 1) / 2) * Math.PI / 180;
+    let best = fan(fullSweep);
+    if(!fits(best)) {
+      // without the height for the dip, the widest sweep whose lowest corner
+      // still fits - a straight row when not even that does
+      best = fan(0);
+      if(fits(best)) {
+        let low = 0;
+        let high = fullSweep;
+        for(let i = 0; i < 16; ++i) {
+          const candidate = fan((low + high) / 2);
+          if(fits(candidate)) {
+            low = (low + high) / 2;
+            best = candidate;
+          } else {
+            high = (low + high) / 2;
+          }
         }
       }
     }
-    if(radius === null)
-      halfSweep = 0;
 
-    // the whole fan stands centered in the holder: from the top of the middle
-    // card down to the lowest corner of the tilted end cards
-    const endHalf = (cardH * Math.cos(halfSweep) + cardW * Math.sin(halfSweep)) / 2;
-    const top = Math.max(this.get('dropOffsetY'), (this.get('height') - sagitta - cardH/2 - endHalf) / 2);
-
+    // the whole fan stands centered in the holder, measured from its highest
+    // tilted corner to its lowest one and across the outermost two
+    const originX = Math.max(this.get('dropOffsetX'), (this.get('width')  - (best.maxX - best.minX)) / 2) - best.minX;
+    const originY = Math.max(this.get('dropOffsetY'), (this.get('height') - (best.maxY - best.minY)) / 2) - best.minY;
     let z = 1;
     for(let i = 0; i < count; ++i) {
-      const angle = count < 2 ? 0 : -halfSweep + i * 2 * halfSweep / (count - 1);
-      const along = count < 2 ? 0 : -chord/2 + i * chord / (count - 1);
-      const x = centerX + (radius === null ? along : radius * Math.sin(angle)) - cardW/2;
-      const y = top + (radius === null ? 0 : radius * (1 - Math.cos(angle)));
-      await children[i].setPosition(Math.round(x*1024)/1024, Math.round(y*1024)/1024, z++);
+      const { child, tilt, kx, ky } = best.cards[i];
+      const x = originX + best.chord * kx - child.get('width') / 2;
+      const y = originY + best.chord * ky - child.get('height') / 2;
+      await child.setPosition(Math.round(x*1024)/1024, Math.round(y*1024)/1024, z++);
       // tangent to the circle, on top of whatever the card's own default is
-      const base = +children[i].getDefaultValue('rotation') || 0;
-      const tilt = radius === null ? 0 : Math.round(angle * 1800 / Math.PI) / 10;
-      await children[i].set('rotation', tilt ? base + tilt : children[i].getDefaultValue('rotation'));
+      await child.set('rotation', tilt ? bases[i] + tilt : child.getDefaultValue('rotation'));
     }
   }
 
@@ -1703,16 +1733,19 @@ export class Holder extends ImageWidget {
 
   // Cards a routine moves in arrive one by one. In a holder that arranges piles
   // they are meant to land as one pile of their own rather than being fed into
-  // whichever pile the holder already ends with.
+  // whichever pile the holder already ends with - one pile per owner, since a
+  // shared hand shows every owner their own lane and nobody would get to see
+  // a card inside another owner's pile.
   async groupDroppedCards(cards) {
     if(!this.arrangesPiles())
       return;
 
     const dropped = cards.filter(c=>c.get('parent') == this.get('id') && c.get('type') == 'card');
-    if(dropped.length < 2)
-      return;
-
-    await this.makeGroup(dropped);
+    for(const owner of new Set(dropped.map(c=>c.get('owner') || null))) {
+      const lane = dropped.filter(c=>(c.get('owner') || null) === owner);
+      if(lane.length > 1)
+        await this.makeGroup(lane);
+    }
   }
 
   // Turn the given cards (children of this holder, in the order the bottom of
@@ -1830,8 +1863,6 @@ export class Holder extends ImageWidget {
       return;
 
     if(this.arrangesPiles()) {
-      const owner = cards[0].get('owner') || null;
-
       // A move within one holder can select cards that already sit inside the
       // holder's groups. They take part like freshly dropped ones: pulled out
       // of their group first - which lets a drained one dissolve - so the
@@ -1857,24 +1888,32 @@ export class Holder extends ImageWidget {
       }
       delete this.preventRearrangeDuringPileDrop;
 
-      const groups = this.arrangedChildren().filter(w=>cards.indexOf(w) == -1 && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
+      // A shared hand keeps every owner's cards in a lane of their own, and a
+      // move within the hand can select the cards of several owners at once.
+      // The batch is placed lane by lane: a group only ever holds one owner's
+      // cards, because a pile is shown to its owner alone and a card inside
+      // another owner's pile would be visible to nobody.
       const dropped = cards.filter(c=>c.get('parent') == this.get('id') && c.get('type') == 'card');
-      if((position == 'pileBottom' || position == 'pileTop') && groups.length && dropped.length) {
-        const target = position == 'pileBottom' ? groups[0] : groups[groups.length - 1];
-        await this.mergeIntoGroup(dropped, target, position == 'pileBottom' ? 0 : null);
-      } else if(dropped.length) {
-        const group = dropped.length > 1 ? await this.makeGroup(dropped) : dropped[0];
-        // one renumbering pass puts the new group before or after the others -
-        // after needs it as much as before, since the pile makeGroup just made
-        // starts out at z 0 and would sort in front of everything
-        const before = position == 'pileBottom' || position == 'groupStart';
-        let z = 1;
-        if(before)
-          await group.set('z', z++);
-        for(const w of groups)
-          await w.set('z', z++);
-        if(!before)
-          await group.set('z', z++);
+      for(const owner of new Set(dropped.map(c=>c.get('owner') || null))) {
+        const lane = dropped.filter(c=>(c.get('owner') || null) === owner);
+        const groups = this.arrangedChildren().filter(w=>cards.indexOf(w) == -1 && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
+        if((position == 'pileBottom' || position == 'pileTop') && groups.length) {
+          const target = position == 'pileBottom' ? groups[0] : groups[groups.length - 1];
+          await this.mergeIntoGroup(lane, target, position == 'pileBottom' ? 0 : null);
+        } else {
+          const group = lane.length > 1 ? await this.makeGroup(lane) : lane[0];
+          // one renumbering pass puts the new group before or after the others -
+          // after needs it as much as before, since the pile makeGroup just made
+          // starts out at z 0 and would sort in front of everything
+          const before = position == 'pileBottom' || position == 'groupStart';
+          let z = 1;
+          if(before)
+            await group.set('z', z++);
+          for(const w of groups)
+            await w.set('z', z++);
+          if(!before)
+            await group.set('z', z++);
+        }
       }
     } else if(position == 'pileBottom' || position == 'groupStart') {
       // put the batch below all siblings, renumbering the whole holder to a
