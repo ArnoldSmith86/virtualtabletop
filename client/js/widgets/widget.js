@@ -437,13 +437,19 @@ export class Widget extends StateManaged {
     } catch(e) {
       console.error(`Could not remove widget!`, this.id, e);
       reportErrorSilently(`Could not remove widget ${this.id}\n${describeError(e, 'Unknown error')}`);
-      // applyRemove can throw before it gets around to any part of its cleanup, so redo what
-      // does not depend on the widget being intact: an object of a room that is gone must not
-      // stay painted on the next one, and it must not keep listening for its updates either
-      removeFromDOM($(`#STYLES_${this.cssScope}`));
-      removeFromDOM(this.domElement);
-      this.inheritFromUnregister();
-      this.globalUpdateListenersUnregister();
+      try {
+        // applyRemove can throw before it gets around to any part of its cleanup, so redo what
+        // does not depend on the widget being intact: an object of a room that is gone must not
+        // stay painted on the next one, and it must not keep listening for its updates either.
+        // Whatever of that fails in turn must not escape either - one widget cannot be allowed
+        // to take the teardown of the whole room with it, no matter where it breaks.
+        removeFromDOM($(`#STYLES_${this.cssScope}`));
+        removeFromDOM(this.domElement);
+        this.inheritFromUnregister();
+        this.globalUpdateListenersUnregister();
+      } catch(fallbackError) {
+        console.error(`Could not clean up after a widget that failed to be removed!`, this.id, fallbackError);
+      }
     }
   }
 

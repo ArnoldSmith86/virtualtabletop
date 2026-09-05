@@ -100,6 +100,7 @@ describe('Removing a tree of widgets', () => {
   afterEach(() => {
     for(const id of [ ...widgets.keys() ]) {
       delete widgets.get(id).applyRemove; // the stubs below would fail the cleanup itself
+      delete widgets.get(id).inheritFromUnregister;
       removeWidget(id);
     }
   });
@@ -179,6 +180,22 @@ describe('Removing a tree of widgets', () => {
     expect(timer.domElement.parentNode).toBe(null);
   });
 
+  // the fallback for a widget that threw repeats parts of the removal, so it can hit the very
+  // thing that threw in the first place - one broken widget must not take the tree with it there
+  // either
+  test('a widget whose cleanup throws as well leaves its parent removed', () => {
+    const parent = createWidget({ id: 'aParent', type: 'holder' });
+    const broken = createWidget({ id: 'brokenChild', type: 'holder', parent: 'aParent' });
+    breakRemovalOf(broken);
+    broken.inheritFromUnregister = () => {
+      throw new Error('brokenChild cannot be cleaned up either');
+    };
+
+    expect(() => parent.applyRemoveRecursive()).not.toThrow();
+
+    expect(parent.domElement.parentNode).toBe(null);
+  });
+
   test('widgets that are each other\'s parent do not recurse forever', () => {
     const first = createWidget({ id: 'firstOfCycle', type: 'holder', parent: 'secondOfCycle' });
     const second = createWidget({ id: 'secondOfCycle', type: 'holder', parent: 'firstOfCycle' });
@@ -252,6 +269,27 @@ describe('Tearing down a room', () => {
 
     expect(orphan.domElement.parentNode).toBe(null);
     expect([ ...widgets.keys() ]).toEqual([]);
+  });
+
+  // a delta can defer a child whose parent has not arrived yet. Once the room is gone that
+  // child waits for a parent of a room that does not exist anymore, and the state loaded next
+  // brings its own copy of it, so the teardown has to forget it.
+  test('forgets a child a delta left waiting for a parent', () => {
+    addWidget({ id: 'waiting', type: 'holder', parent: 'later' });
+
+    tearDownRoom();
+    createWidget({ id: 'later', type: 'holder' });
+
+    expect(widgets.has('waiting')).toBe(false);
+  });
+
+  test('forgets a card a delta left waiting for its deck', () => {
+    addWidget({ id: 'waitingCard', type: 'card', deck: 'laterDeck' });
+
+    tearDownRoom();
+    createWidget({ id: 'laterDeck', type: 'deck' });
+
+    expect(widgets.has('waitingCard')).toBe(false);
   });
 
   test('forgets the listeners of the room it took down', () => {
