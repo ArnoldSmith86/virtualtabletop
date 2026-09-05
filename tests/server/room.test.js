@@ -1,6 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { jest } from '@jest/globals'; // the ES module build has no globals of its own
 
 import Room from '../../server/room.mjs';
 import { VERSION } from '../../server/fileupdater.mjs';
@@ -172,8 +173,8 @@ describe('server/room.mjs', function() {
     room.trace('unload', {});
 
     const trace = readTraceFile();
-    expect(trace.length).toEqual(1);
-    expect(trace[0].source).toEqual('unload');
+    expect(trace.map(entry=>entry.source)).toEqual([ 'init', 'unload' ]);
+    expect(trace[0].initialState).toEqual(room.state);
   });
 
   test('trace writes into the file that was opened when tracing was switched on', function() {
@@ -182,6 +183,26 @@ describe('server/room.mjs', function() {
     room.traceIsEnabled(true);
     room.trace('unload', {});
 
-    expect(readTraceFile().map(entry=>entry.source)).toEqual([ 'broadcast', 'unload' ]);
+    const trace = readTraceFile();
+    expect(trace.map(entry=>entry.source)).toEqual([ 'init', 'broadcast', 'unload' ]);
+    expect(trace[0].initialState).toEqual(room.state);
+  });
+
+  test('the unload timeout waits for a room that is still loading', function() {
+    jest.useFakeTimers();
+    const room = Object.create(Room.prototype);
+    room.id = 'room';
+    room.players = [];
+    room.isLoading = true;
+    room.unload = jest.fn();
+
+    room.startUnloadTimeout();
+    jest.advanceTimersByTime(20000);
+    expect(room.unload).not.toHaveBeenCalled();
+
+    room.isLoading = false;
+    jest.advanceTimersByTime(5000);
+    expect(room.unload).toHaveBeenCalled();
+    jest.useRealTimers();
   });
 });
