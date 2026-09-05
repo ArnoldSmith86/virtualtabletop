@@ -14,4 +14,3 @@ screenshots
 .appimage/out/.vscode/
 .android/build/
 .android/out/
-.android/keystore.jks

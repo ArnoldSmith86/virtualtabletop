@@ -64,7 +64,8 @@ javac -nowarn -source 8 -target 8 -bootclasspath "$ANDROID_JAR" -d build/classes
 cp build/unsigned.apk build/app.apk
 jar uf build/app.apk -C build/dex classes.dex
 
-# a self signed key is all a sideloaded APK needs, and it must stay the same to allow updates
+# a self signed key is all a sideloaded APK needs, and it has to stay the same one for a build to
+# install over the build before it, which is why it is committed rather than made up per machine
 if [[ ! -f "$KEYSTORE" ]]; then
   echo "Creating a signing key in $KEYSTORE"
   keytool -genkeypair -keystore "$KEYSTORE" -alias virtualtabletop -keyalg RSA -keysize 2048 \

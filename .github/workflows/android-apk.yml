@@ -3,8 +3,8 @@ name: Android APK (builds the app that runs the server on a phone)
 # The ubuntu runners ship a JDK, node, xz and the Android SDK, so .android/build-apk.sh and
 # .android/test/run.sh need nothing else: the tests compile the app's own classes against stubs of
 # the Android ones and run them here, leaving the installation itself and how the screen looks to
-# a phone. The APK is attached to the run so it can be installed without a local SDK. Every run
-# signs with a key of its own, so two artifacts cannot be installed over each other.
+# a phone. The APK is attached to the run so it can be installed without a local SDK; it is signed
+# with the committed key, so it installs over a build from any other run or from a local machine.
 on:
   workflow_dispatch:
   push:

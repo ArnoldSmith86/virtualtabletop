@@ -13,9 +13,12 @@ changes:
     ANDROID_HOME=~/Android/Sdk .android/build-apk.sh
     cp .android/out/VirtualTabletop-*.apk .android/VirtualTabletop.apk
 
-Everyone who builds signs with a self-signed key of their own, so a refreshed APK usually cannot
-be installed over the one before it - uninstall first. Committing `keystore.jks` (or keeping it
-somewhere the release comes from) would be what makes updates install over each other.
+The key it is signed with is committed as [`keystore.jks`](keystore.jks), so a rebuilt APK
+installs over the one that is already on a phone instead of having to be uninstalled first.
+Android has no other way of telling two builds apart: an app can only be replaced by one signed
+with the same key. It is a throwaway key with a password anyone can read here, which is what a
+sideloaded app is worth - it makes updates work, and it is no proof of where a build came from.
+Install an APK because you trust where you got it, not because it is signed.
 
 ## Using it
 
@@ -48,16 +51,15 @@ Needed: a JDK and the Android SDK with build tools and a platform of API 28 or n
 ANDROID_HOME=~/Android/Sdk .android/build-apk.sh
 ```
 
-The APK lands in `.android/out/`, signed with a self-signed key the script creates on first use
-(`.android/keystore.jks`, kept out of git - keep it if you want to install updates over an
-existing installation). Install it with `adb install -r .android/out/VirtualTabletop-*.apk` or by
-opening the file on the phone.
+The APK lands in `.android/out/`, signed with `keystore.jks` - alias, store password and key
+password are all `virtualtabletop`. Install it with
+`adb install -r .android/out/VirtualTabletop-*.apk`, or by opening the file on the phone.
 
 The `Android APK` workflow builds it on demand and attaches the result to the run. It runs the
 tests below first, so what they cover is checked on every change under `.android/`.
 
-Every run of the workflow signs with a key of its own, so two artifacts cannot be installed over
-each other - uninstall the old one first, or build locally where `keystore.jks` is kept.
+It signs with the same committed key, so the APK a run attaches, a local build and the committed
+one all install over each other.
 
 ## Tests
 
