@@ -1103,7 +1103,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1788142590068,
+      "lastUpdate": 1788632516885,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1116,7 +1116,8 @@
       "variantImage": "",
       "variant": "Overview",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAILayout": false
     }
   }
 }
