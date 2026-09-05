@@ -19,6 +19,7 @@ let rightClickActive = false;
 let longTouchTimer = null;
 let currentMenu = null;
 let descriptionPopoverOwner = null;
+let previewRepaintScheduled = false;
 
 function hasRotationSteps(widget) {
   const s = widget.get('rotationSteps');
@@ -48,6 +49,12 @@ function reactsToRightClick(widget) {
 // another player or a state reload can remove the widget while its popup is open
 function isLiveWidget(widget) {
   return !!widget && widgets.get(widget.id) === widget;
+}
+
+// a widget this player doesn't get to see - because of its owner, its seat visibility or its
+// display, or an ancestor's - has display: none in play mode, so its popup has nothing to act on
+function isAccessibleWidget(widget) {
+  return isLiveWidget(widget) && !widget.domElement.closest('.widget.foreign, .widget.hidden');
 }
 
 // the widgets under a point, topmost first - including the ones the open popup covers, so that
@@ -240,16 +247,20 @@ function copyWidgetToPreview(widget, previewEl) {
   }
 }
 
-function rotationStepIndex(steps, currentRotation) {
-  const r = ((currentRotation % 360) + 360) % 360;
-  let best = 0;
+// the closest allowed angle when turning in the given direction from the current rotation, which
+// may sit between two steps; the step it is already at is a full turn away, so a list with a single
+// entry keeps the widget where it is
+function nextRotationStep(steps, currentRotation, direction) {
+  const normalize = angle => ((angle % 360) + 360) % 360;
+  let best = steps[0];
   let bestDist = Infinity;
-  for (let i = 0; i < steps.length; i++) {
-    const s = ((steps[i] % 360) + 360) % 360;
-    const d = Math.min(Math.abs(r - s), 360 - Math.abs(r - s));
+  for (const step of steps) {
+    let d = normalize((step - currentRotation) * direction);
+    if (d < 0.001)
+      d = 360;
     if (d < bestDist) {
       bestDist = d;
-      best = i;
+      best = step;
     }
   }
   return best;
@@ -265,22 +276,21 @@ function renderRotationButtons(widget, rowEl) {
   }
   rowEl.style.display = 'flex';
   const rotate = async direction => {
-    if (!isLiveWidget(currentWidget))
+    const widget = currentWidget;
+    if (!isAccessibleWidget(widget))
       return closeContextMenu();
-    const current = currentWidget.get('rotation') || 0;
-    let next;
-    if (typeof steps === 'number') {
-      next = (((current + direction * steps) % 360) + 360) % 360;
-    } else {
-      const i = rotationStepIndex(steps, current);
-      next = steps[(i + direction + steps.length) % steps.length];
-    }
-    setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
-    await currentWidget.set('rotation', next);
-    copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
-    requestAnimationFrame(() => {
-      if (currentWidget) positionPopupBackground(currentWidget, ensurePopup());
-    });
+    const current = widget.get('rotation') || 0;
+    const next = typeof steps === 'number'
+      ? (((current + direction * steps) % 360) + 360) % 360
+      : nextRotationStep(steps, current, direction);
+    setDeltaCause(`${playerName} rotated ${widget.id}`);
+    await widget.set('rotation', next);
+    // the change routines that ran in the meantime may have closed the popup, removed or hidden
+    // the widget or opened the popup on another one; the delta itself repainted the preview
+    if (currentWidget !== widget)
+      return;
+    if (!isAccessibleWidget(widget))
+      closeContextMenu();
   };
   for (const [ icon, title, direction ] of [ [ 'rotate_left', 'Rotate left', -1 ], [ 'rotate_right', 'Rotate right', 1 ] ]) {
     const btn = document.createElement('button');
@@ -378,7 +388,7 @@ function renderContextMenuButtons(widget, colEl, popupContrastColor) {
       btn.onclick = async () => {
         const previewIndex = enlargePreviewIndex;
         closeContextMenu();
-        if (isLiveWidget(widget))
+        if (isAccessibleWidget(widget))
           await runRoutine(widget, routine, `${playerName} context action ${routine} on ${widget.id}`, { previewIndex });
       };
     }
@@ -476,7 +486,7 @@ function applyPopupContrastColors(popup) {
 }
 
 export function openContextMenuWithMenu(widget, menu, overrides) {
-  if (!isLiveWidget(widget) || !Array.isArray(menu)) return;
+  if (!isAccessibleWidget(widget) || !Array.isArray(menu)) return;
   openContextMenu(widget, menu, overrides && typeof overrides === 'object' ? overrides : null);
 }
 
@@ -502,6 +512,32 @@ export function closeContextMenu() {
 export function closeContextMenuFor(widget) {
   if (currentWidget === widget)
     closeContextMenu();
+}
+
+// a property change of the popup's widget or of one of its ancestors: the popup closes when
+// the change hides the widget from this player and otherwise repaints the preview like the
+// enlarged copy does, skipping changes that only move the widget
+export function updateContextMenuFor(widget, delta) {
+  if (!currentWidget || (widget !== currentWidget && !widget.domElement.contains(currentWidget.domElement)))
+    return;
+  if (!isAccessibleWidget(currentWidget))
+    return closeContextMenu();
+  if (widget === currentWidget && Object.keys(delta).some(p => ![ 'x', 'y', 'z', 'dragging' ].includes(p)))
+    schedulePreviewRepaint(widget);
+}
+
+// repainted once per frame, after the widget subclass has finished updating its own DOM
+function schedulePreviewRepaint(widget) {
+  if (previewRepaintScheduled)
+    return;
+  previewRepaintScheduled = true;
+  requestAnimationFrame(() => {
+    previewRepaintScheduled = false;
+    if (currentWidget !== widget || !isAccessibleWidget(widget))
+      return;
+    copyWidgetToPreview(widget, $(`#${CONTEXT_PREVIEW_ID}`));
+    positionPopupBackground(widget, ensurePopup());
+  });
 }
 
 function isPopupOpen() {

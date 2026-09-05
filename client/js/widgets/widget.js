@@ -6,7 +6,7 @@ import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } fro
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
-import { closeContextMenuFor, onLongTouch, onTouchEndContextMenu, openContextMenuWithMenu } from '../contextmenu.js';
+import { closeContextMenuFor, onLongTouch, onTouchEndContextMenu, openContextMenuWithMenu, updateContextMenuFor } from '../contextmenu.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
@@ -184,13 +184,7 @@ export class Widget extends StateManaged {
     });
     this.domElement.timer = false
 
-    this.domElement.addEventListener('contextmenu', e => {
-      // in play mode, handleContextMenuInput in mousehandling.js takes over
-      if (document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit'))
-        this.showEnlarged(e);
-      else
-        e.preventDefault();
-    }, false);
+    this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
@@ -381,6 +375,7 @@ export class Widget extends StateManaged {
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
       this.showEnlarged(null, delta);
     }
+    updateContextMenuFor(this, delta);
   }
 
   applyInheritedDeltaToDOM(delta) {

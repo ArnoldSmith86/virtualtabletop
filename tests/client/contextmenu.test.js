@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 
 import { closeContextMenu, handleContextMenuInput, handleContextMenuTouchEnd, onLongTouch, onTouchEndContextMenu, openContextMenuWithMenu } from '../../client/js/contextmenu.js';
+import { widgets } from '../../client/js/serverstate.js';
 import { createWidget, removeWidget } from './client-util.js';
 import { routineState, runRoutine } from './engine/harness.js';
 
@@ -26,6 +27,8 @@ const popupMarkup = `
   </div>`;
 
 const popupIsOpen = () => !document.getElementById('contextMenuPopup').classList.contains('hidden');
+const popupButton = selector => document.querySelector(`#contextMenuPopup ${selector}`);
+const rotationButton = icon => popupButton(`.contextMenuRotationRow [icon=${icon}]`);
 
 describe('Context menu input handling', () => {
   let elementsFromPoint;
@@ -104,6 +107,106 @@ describe('Context menu input handling', () => {
     removeWidget(widget.get('id'));
     expect(popupIsOpen()).toBe(false);
     expect(document.getElementById('contextMenuPreview').innerHTML).toBe('');
+  });
+
+  test('a rotation whose change routine removes the widget closes the popup without an error', async () => {
+    const widget = createWidget({ id: 'context-rotating', type: 'widget', rotationSteps: 90, rotationChangeRoutine: [] });
+    widget.evaluateRoutine = jest.fn(async () => removeWidget(widget.get('id')));
+    openContextMenuWithMenu(widget, []);
+    expect(popupIsOpen()).toBe(true);
+
+    await rotationButton('rotate_right').onclick();
+
+    expect(widget.evaluateRoutine).toHaveBeenCalledWith('rotationChangeRoutine', expect.anything(), expect.anything());
+    expect(widgets.has('context-rotating')).toBe(false);
+    expect(popupIsOpen()).toBe(false);
+  });
+
+  test('a rotation whose change routine opens the popup on another widget leaves that popup alone', async () => {
+    const widget = createWidget({ id: 'context-first', type: 'widget', rotationSteps: 90, rotationChangeRoutine: [] });
+    const other = createWidget({ id: 'context-second', type: 'widget' });
+    widget.evaluateRoutine = jest.fn(async () => openContextMenuWithMenu(other, []));
+    openContextMenuWithMenu(widget, []);
+
+    await rotationButton('rotate_right').onclick();
+
+    expect(widget.get('rotation')).toBe(90);
+    expect(popupIsOpen()).toBe(true);
+    expect(document.getElementById('contextMenuPreview').dataset.id).toBe('context-second');
+
+    removeWidget(widget.get('id'));
+    removeWidget(other.get('id'));
+  });
+
+  test('rotation steps turn to the next allowed angle in the chosen direction', async () => {
+    const widget = createWidget({ id: 'context-steps', type: 'widget', rotation: 30, rotationSteps: [ 270, 0, 180, 90 ] });
+    openContextMenuWithMenu(widget, []);
+
+    for (const [ icon, expected ] of [ [ 'rotate_left', 0 ], [ 'rotate_left', 270 ], [ 'rotate_right', 0 ], [ 'rotate_right', 90 ], [ 'rotate_right', 180 ] ]) {
+      await rotationButton(icon).onclick();
+      expect(widget.get('rotation')).toBe(expected);
+    }
+
+    // the angles are written the way the list spells them, and a single one is a full turn away from itself
+    const signed = createWidget({ id: 'context-signed', type: 'widget', rotationSteps: [ -90, 0, 90 ] });
+    openContextMenuWithMenu(signed, []);
+    await rotationButton('rotate_left').onclick();
+    expect(signed.get('rotation')).toBe(-90);
+    const single = createWidget({ id: 'context-single', type: 'widget', rotation: 45, rotationSteps: [ 45 ] });
+    openContextMenuWithMenu(single, []);
+    await rotationButton('rotate_right').onclick();
+    expect(single.get('rotation')).toBe(45);
+
+    for (const id of [ 'context-steps', 'context-signed', 'context-single' ])
+      removeWidget(id);
+  });
+
+  test('the popup closes when its widget is handed to another player', async () => {
+    const widget = createWidget({ id: 'context-owned', type: 'widget', rotationSteps: 90 });
+    openContextMenuWithMenu(widget, []);
+    expect(popupIsOpen()).toBe(true);
+
+    await widget.set('owner', 'somebody else');
+
+    expect(widget.domElement.classList.contains('foreign')).toBe(true);
+    expect(popupIsOpen()).toBe(false);
+
+    removeWidget(widget.get('id'));
+  });
+
+  test('the popup closes when the parent of its widget is hidden', async () => {
+    const parent = createWidget({ id: 'context-hand', type: 'widget' });
+    const child = createWidget({ id: 'context-card', type: 'widget', parent: 'context-hand', rotationSteps: 90 });
+    openContextMenuWithMenu(child, []);
+    expect(popupIsOpen()).toBe(true);
+
+    await parent.set('display', false);
+
+    expect(popupIsOpen()).toBe(false);
+
+    removeWidget(child.get('id'));
+    removeWidget(parent.get('id'));
+  });
+
+  test('a menu action and a rotation do nothing once the widget is hidden from the player', async () => {
+    const widget = createWidget({ id: 'context-stolen', type: 'widget', rotationSteps: 90, markRoutine: [] });
+    widget.evaluateRoutine = jest.fn(() => Promise.resolve());
+    openContextMenuWithMenu(widget, [ { text: 'Mark', routine: 'markRoutine' } ]);
+    const action = popupButton('.contextMenuAction');
+    const rotate = rotationButton('rotate_right');
+    // hidden without a delta of its own, the way a seat change hides widgets
+    widget.domElement.classList.add('foreign');
+
+    await rotate.onclick();
+    expect(widget.get('rotation')).toBe(0);
+    expect(popupIsOpen()).toBe(false);
+
+    openContextMenuWithMenu(widget, [ { text: 'Mark', routine: 'markRoutine' } ]);
+    expect(popupIsOpen()).toBe(false);
+    await action.onclick();
+    expect(widget.evaluateRoutine).not.toHaveBeenCalled();
+
+    removeWidget(widget.get('id'));
   });
 
   test('CONTEXTMENU without a collection opens the popup on the widget running the routine', async () => {
