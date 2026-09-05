@@ -189,9 +189,76 @@ describe('Validator custom properties', () => {
     expect(missingPropertyProblems(problems)).toHaveLength(0);
   });
 
+  test('GET accepts the card property a write face object is bound to', () => {
+    const problems = validateGameFile({
+      deck: {
+        id: 'deck',
+        type: 'deck',
+        faceTemplates: [{ objects: [{ type: 'write', dynamicProperties: { value: 'customProperty' } }] }]
+      },
+      card: {
+        id: 'card',
+        type: 'card',
+        deck: 'deck',
+        clickRoutine: [{ func: 'GET', property: 'customProperty' }]
+      }
+    }, false);
+
+    expect(missingPropertyProblems(problems)).toHaveLength(0);
+  });
+
   test.each(['_absoluteX', '_totals'])('GET accepts computed read-only property %s', property => {
     const problems = validateRoutine([{ func: 'GET', property }]);
 
     expect(problems.some(undefinedProperty(property))).toBe(false);
+  });
+
+  test.each([
+    ['holder', 'onEnter'],
+    ['holder', 'onLeave'],
+    ['line', 'onEnter'],
+    ['line', 'onLeave']
+  ])('GET accepts a custom property that a %s applies through %s', (type, hook) => {
+    const problems = validateGameFile({
+      target: { id: 'target', type, [hook]: { customProperty: 1 } },
+      widget: {
+        id: 'widget',
+        clickRoutine: [{ func: 'GET', property: 'customProperty' }]
+      }
+    }, false);
+
+    expect(missingPropertyProblems(problems)).toHaveLength(0);
+  });
+
+  test('GET accepts a custom property that a grid entry applies on snapping', () => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        grid: [{ x: 50, y: 50, customProperty: 1 }],
+        clickRoutine: [{ func: 'GET', property: 'customProperty' }]
+      }
+    }, false);
+
+    expect(missingPropertyProblems(problems)).toHaveLength(0);
+  });
+
+  test('GET still reports a grid key that only describes the lattice', () => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        grid: [{ x: 50, y: 50, alignX: 0.5 }],
+        clickRoutine: [{ func: 'GET', property: 'alignX' }]
+      }
+    }, false);
+
+    expect(problems.some(undefinedProperty('alignX'))).toBe(true);
+  });
+});
+
+describe('Validator input handling', () => {
+  test.each([null, 'not an object', 42])('reports a non-object game file (%p) instead of throwing', data => {
+    expect(validateGameFile(data, false)).toEqual([
+      { widget: '', property: [], message: 'Game file must be a JSON object' }
+    ]);
   });
 });

@@ -53,6 +53,12 @@ const READ_ONLY_PROPERTIES = [
     '_totals'
 ];
 
+// The keys of a grid entry that describe its lattice - every other key is a widget property the engine
+// sets on whatever snaps to that entry. Keep in sync with the snap loop in client/js/widgets/widget.js.
+const GRID_LATTICE_PROPERTIES = [
+    'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY', 'condition'
+];
+
 const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
@@ -1073,8 +1079,34 @@ function getCustomPropertyUsage(data) {
                     for(const prop of Object.keys(properties))
                         definedCustomProperties.add(prop);
 
+            // a "write" face object stores what players type in the card property its value is bound to
+            for(const template of Array.isArray(widget.faceTemplates) ? widget.faceTemplates : []) {
+                if(typeof template !== 'object' || template === null || typeof template.objects !== 'object' || template.objects === null)
+                    continue;
+                for(const object of Object.values(template.objects)) {
+                    if(typeof object !== 'object' || object === null || object.type !== 'write')
+                        continue;
+                    const boundProperty = typeof object.dynamicProperties === 'object' && object.dynamicProperties !== null ? object.dynamicProperties.value : null;
+                    if(typeof boundProperty === 'string')
+                        definedCustomProperties.add(boundProperty);
+                }
+            }
         }
 
+        // the engine writes properties without a routine in two more places: a holder's or line's
+        // onEnter/onLeave applies its keys to whatever enters or leaves, and a grid entry applies
+        // everything beyond its lattice keys to whatever snaps to it
+        for(const map of [ widget.onEnter, widget.onLeave ])
+            if(typeof map === 'object' && map !== null && !Array.isArray(map))
+                for(const prop of Object.keys(map))
+                    definedCustomProperties.add(prop);
+
+        if(Array.isArray(widget.grid))
+            for(const entry of widget.grid)
+                if(typeof entry === 'object' && entry !== null && !Array.isArray(entry))
+                    for(const prop of Object.keys(entry))
+                        if(!GRID_LATTICE_PROPERTIES.includes(prop))
+                            definedCustomProperties.add(prop);
     }
 
     // Turns an interpolated name like "score_${player}" into the source of /^score_.*$/, or returns
