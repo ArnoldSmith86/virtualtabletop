@@ -829,8 +829,12 @@
 /* validation */
 
 
-.pest_control.editorModule .staticErrors {
-  container-type: inline-size;
+/* The findings table lays itself out by the width this box has, not the window's: the module is docked
+   next to the JSON editor as often as it is on its own. containerQueryFallback.js resolves a container by
+   its selector with querySelector, so this one names the box by its own class rather than through the
+   module around it. */
+.staticErrors {
+  container: debugValidation / inline-size;
 }
 
 .pest_control.editorModule .validation-summary {
@@ -886,7 +890,7 @@
 }
 
 /* docked next to the JSON editor the module is far too narrow for three columns */
-@container (max-width: 400px) {
+@container debugValidation (max-width: 400px) {
   .pest_control.editorModule .validation-table thead {
     display: none;
   }

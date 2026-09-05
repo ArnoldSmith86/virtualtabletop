@@ -97,7 +97,7 @@ class DebugModule extends SidebarModule {
     if(widget)
       setSelection([widget]);
 
-    if(!jeEnabled || !widget || !problem.property.length)
+    if(!jeEnabled || !widget || !problem.property?.length)
       return;
     const property = [...problem.property];
     const lastProperty = property.pop();
