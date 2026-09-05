@@ -96,6 +96,24 @@ function zipIndex(buffer) {
   return entries;
 }
 
+// The JSON files a game archive holds as its variants: the ones at its root, minus the asset map
+// that gets added when an upload leaves out assets the server already has. server/fileloader.mjs
+// reads the same set - a TTS export keeps its save in a subdirectory, so it is deliberately not one.
+function isVariantFile(filename) {
+  return !!filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json';
+}
+
+// The game metadata a VTT file carries, or null for an archive that has none: a PCIO or TTS export
+// is a valid upload as well and only becomes a game once the server has converted it.
+function gameFileInfo(json) {
+  if(!json || typeof json != 'object' || Array.isArray(json))
+    return null;
+  const meta = json._meta;
+  if(!meta || typeof meta != 'object' || !meta.info || typeof meta.info != 'object' || Array.isArray(meta.info))
+    return null;
+  return meta.info;
+}
+
 function toBase64(data) {
   let binary = '';
   for(let i=0; i<data.length; i+=32768)
@@ -192,7 +210,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   let jsonFiles = null;
   try {
     entries = zipIndex(buffer);
-    jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
+    jsonFiles = await unzipBuffer(buffer, isVariantFile);
   } catch(e) {
     alertNotAGameFile(sourceFile.name);
     loadCallback(true);
@@ -200,26 +218,24 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   }
 
   const fileName = sourceFile.name.replace(gameFileExtension, '');
-  let containsJSON = false;
+  // the JSON of a PCIO or TTS export is not a variant, but it still makes the archive something
+  // the server can turn into a game - so it decides whether the file is worth uploading at all
+  const containsJSON = Object.keys(entries).some(filename=>filename.match(/\.json$/));
   let info = null;
   const variants = [];
   const assets = {};
   for(const [ filename, entry ] of Object.entries(entries)) {
+    // jsonFiles holds the variants of the archive, and a game file written by hand or by
+    // another tool can be missing its metadata entirely
     if(jsonFiles[filename]) {
-      containsJSON = true;
-      // the server reads a variant from every JSON file in the top level of the zip, so the
-      // JSON of a PCIO or TTS file and anything an asset happens to contain is not one - and
-      // a game file written by hand or by another tool can be missing its metadata entirely
-      if(filename.match(/^[^\/]+\.json$/)) {
-        const content = parseJSONorNull(jsonFiles[filename]);
-        if(content && content._meta) {
-          // the info of a hand-written file can hold anything, while everything that reads a
-          // variant treats it as an object it can read properties from and write them to
-          const variantInfo = typeof content._meta.info == 'object' && !Array.isArray(content._meta.info) ? content._meta.info : null;
-          variants.push(variantInfo || {});
-          if(!info)
-            info = variantInfo;
-        }
+      const content = parseJSONorNull(jsonFiles[filename]);
+      if(content && content._meta) {
+        // the info of a hand-written file can hold anything, while everything that reads a
+        // variant treats it as an object it can read properties from and write them to
+        const variantInfo = gameFileInfo(content);
+        variants.push(variantInfo || {});
+        if(!info)
+          info = variantInfo;
       }
     }
     if(filename.match(/^\/?(user)?assets/) && entry.size)
@@ -231,7 +247,8 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     loadCallback(true);
     return;
   } else if(!info) {
-    // without metadata the file name is all the tile can show until the server has read the file
+    // without metadata - a PCIO or TTS export, or a hand-written file - the file name is all the
+    // tile can show until the server has read the file and answered with what it made of it
     metaCallback(fileName, '', null, variants.length ? variants : [{}], null, null);
   } else {
     let imageURL = null;

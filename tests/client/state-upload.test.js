@@ -54,7 +54,7 @@ function loadStatesOverlay(serverStatus=200) {
 function vttFile(name, files) {
   const entries = {};
   for(const [ filename, content ] of Object.entries(files))
-    entries[filename] = fflate.strToU8(typeof content == 'string' ? content : JSON.stringify(content));
+    entries[filename] = content instanceof Uint8Array ? content : fflate.strToU8(typeof content == 'string' ? content : JSON.stringify(content));
   const zip = fflate.zipSync(entries);
   // jsdom has no File.arrayBuffer(), and the upload only needs the name and the bytes
   return { name, arrayBuffer: async () => zip.buffer };
@@ -81,6 +81,32 @@ describe('uploading a game file', () => {
     expect(meta[0][4]).toBe(2);
     expect(overlay.alerts).toEqual([]);
     expect(overlay.uploaded.length).toBe(1);
+  });
+
+  test('turns an image stored in the file into a data URL', async () => {
+    const overlay = loadStatesOverlay();
+    const png = new Uint8Array([ 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00 ]);
+    const meta = await upload(overlay, vttFile('Some Game.vtt', {
+      '0.json': { _meta: { version: 8, info: { name: 'Some Game', image: '/assets/1_2' } } },
+      'assets/1_2': png
+    }));
+
+    expect(meta[0][2]).toMatch(/^data:image\/png;base64,iVBO/);
+    expect(overlay.alerts).toEqual([]);
+  });
+
+  // an upload that leaves out assets the server already has carries the list of them as
+  // asset-map.json, which is not a variant - the server skips it for the same reason
+  test('ignores the asset map next to the variants', async () => {
+    const overlay = loadStatesOverlay();
+    const meta = await upload(overlay, vttFile('Some Game.vtt', {
+      '0.json': { _meta: { version: 8, info: { name: 'Some Game' } } },
+      'asset-map.json': { '1_2': 'assets/1_2' }
+    }));
+
+    expect(meta[0][0]).toBe('Some Game');
+    expect(meta[0][3].length).toBe(1);
+    expect(overlay.alerts).toEqual([]);
   });
 
   // the server accepts a game file without metadata, so reading it must not throw before
