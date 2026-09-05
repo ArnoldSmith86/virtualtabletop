@@ -1,11 +1,31 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, mod, timeToMS } from '../domhelpers.js';
+import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
-import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
+import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
+
+// A stop is listed in the line's stops property, so it can be any widget in the
+// room - being a child of the line is the common shape, not a requirement. This
+// reads the raw property instead of stopList() because it runs for every line
+// in the room and only needs to know whether the id is listed.
+function lineListsStop(line, widgetID) {
+  const stops = line.get('stops');
+  return Array.isArray(stops) && stops.some(entry=>entry && entry.widget == widgetID);
+}
+
+// Every line that carries the given widget as a stop.
+function linesWithStop(widgetID) {
+  return widgetFilter(w=>w.get('type') == 'line' && lineListsStop(w, widgetID));
+}
+
+// Only lines care about another widget's geometry: an endpoint connected to it
+// has to follow, and a line carrying it as a stop has to re-space.
+const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
+const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ]);
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -50,12 +70,42 @@ function hasPlayerSpecificChooseField(overlay) {
 
 let lastExecutedOperation = null;
 
+// Counts the widgets that were created without an id so each of them still gets a css scope of its own - see
+// the cssScope below.
+let unnamedWidgetCount = 0;
+
+// A widget without an id is a read-only preview the editor renders: it is simply dropped from the dom instead
+// of going through applyRemove, so nobody removes the stylesheet its css property created. Every such
+// stylesheet is registered here, keyed by scope and valued by the preview it styles, and the ones whose
+// preview has left the document are collected after the render that replaced them - otherwise they would pile
+// up in head as the editor re-renders its previews.
+const unnamedWidgetStyles = new Map();
+let unnamedWidgetStyleCollection = null;
+
+function collectUnnamedWidgetStyles() {
+  unnamedWidgetStyleCollection = null;
+  for(const [ scope, element ] of unnamedWidgetStyles) {
+    if(element.isConnected)
+      continue;
+    if($(`#STYLES_${scope}`))
+      removeFromDOM($(`#STYLES_${scope}`));
+    unnamedWidgetStyles.delete(scope);
+  }
+}
+
 export class Widget extends StateManaged {
   constructor(id) {
+    // Everything that identifies this widget in css - its dom id, the id of its stylesheet element and the
+    // selectors in it - is built from this scope. A widget in a room has a unique id, but the read-only copies
+    // the editor renders (deck editor, card type list, widget picker) are created without one: they would all
+    // share the scope of an empty id, so the last copy rendered would restyle every other one with its own
+    // card type's properties. Widgets that do have an id keep using it, so nothing changes for a room.
+    const cssScope = id === undefined || id === null ? `unnamed_${++unnamedWidgetCount}` : escapeID(id);
     const div = document.createElement('div');
-    div.id = 'w_' + escapeID(id);
+    div.id = 'w_' + cssScope;
     super();
     this.id = id;
+    this.cssScope = cssScope;
     this.domElement = div;
     this.dropShadowWidget = null;
     this.targetTransform = '';
@@ -120,6 +170,9 @@ export class Widget extends StateManaged {
       globalUpdateRoutine: null,
       gameStartRoutine: null,
       hotkey: null,
+
+      // durable snapshot used while a line is automatically rotating this stop
+      lineOriginalRotation: null,
 
       animatePropertyChange: [],
       resetProperties: {},
@@ -359,10 +412,13 @@ export class Widget extends StateManaged {
   applyRemove() {
     if(this.get('parent') && widgets.has(this.get('parent')))
       widgets.get(this.get('parent')).applyChildRemove(this);
-    if(this.get('deck') && widgets.has(this.get('deck')))
-      widgets.get(this.get('deck')).removeCard(this);
-    if($(`#STYLES_${escapeID(this.id)}`))
-      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
+    // only cards belong to a deck - any other widget may carry a property called "deck"
+    // without it referring to one, so use the deck the card registered with instead of
+    // resolving the property again
+    if(this.deck)
+      this.deck.removeCard(this);
+    if($(`#STYLES_${this.cssScope}`))
+      removeFromDOM($(`#STYLES_${this.cssScope}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -525,7 +581,7 @@ export class Widget extends StateManaged {
     }
     delete clone.parent;
     delete clone.inheritFrom;
-    const newID = await addWidgetLocal(clone);
+    const newID = await addWidgetLocal(clone, false); // runtime path: keep random IDs
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
 
@@ -601,8 +657,8 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    if($(`#STYLES_${escapeID(this.id)}`))
-      removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
+    if($(`#STYLES_${this.cssScope}`))
+      removeFromDOM($(`#STYLES_${this.cssScope}`));
     const usedProperties = new Set();
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
     this.propertiesUsedInProperty['css'] = Array.from(usedProperties);
@@ -669,14 +725,14 @@ export class Widget extends StateManaged {
     let styleString = '';
     for(const key in css) {
       let usesVariables = false;
-      let selector = key.replace(/\$\{THIS\}/g, m => {usesVariables = true; return `#w_${escapeID(this.id)}`});
+      let selector = key.replace(/\$\{THIS\}/g, m => {usesVariables = true; return `#w_${this.cssScope}`});
       if(!nested) {
         if(key == 'inline')
           continue;
         if(key == 'default')
           selector = '';
         if(!usesVariables && selector.charAt(0) != '@')
-          selector = `#w_${escapeID(this.id)}${selector}`;
+          selector = `#w_${this.cssScope}${selector}`;
       }
       styleString += `${selector} { ${mapAssetURLs(this.cssReplaceProperties(this.cssAsText(css[key], usedProperties, true), usedProperties))} }\n`;
     }
@@ -685,9 +741,17 @@ export class Widget extends StateManaged {
       return styleString;
 
     const style = document.createElement('style');
-    style.id = `STYLES_${escapeID(this.id)}`;
+    style.id = `STYLES_${this.cssScope}`;
     style.appendChild(document.createTextNode(styleString));
     $('head').appendChild(style);
+
+    // see unnamedWidgetStyles - the collection is deferred so previews that are built into a container before
+    // that container is put into the document are not collected while they are still being rendered
+    if(this.id === undefined || this.id === null) {
+      unnamedWidgetStyles.set(this.cssScope, this.domElement);
+      if(!unnamedWidgetStyleCollection)
+        unnamedWidgetStyleCollection = setTimeout(collectUnnamedWidgetStyles);
+    }
 
     return this.cssAsText(css.inline || '', usedProperties);
   }
@@ -697,7 +761,13 @@ export class Widget extends StateManaged {
     let y = this.get('y');
     let scaleValue = this.get('scale');
 
-    if(this.get('ignoreZoom')) {
+    // The inverse-zoom compensation below is computed in the room's coordinate
+    // frame, so it is only correct for a top-level widget sitting directly on the
+    // surface. A widget nested inside another widget lives in its parent's frame
+    // and simply inherits the parent's zoom behaviour, so its parent's ignoreZoom
+    // effectively controls it: it stays put inside a compensating ancestor and
+    // zooms along with a non-compensating one. Only compensate at the top level.
+    if(this.get('ignoreZoom') && !this.isNestedInWidget()) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
 
@@ -726,7 +796,19 @@ export class Widget extends StateManaged {
   }
 
   cssTransformProperties() {
-    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    // Only an ignoreZoom widget has a transform that depends on its parent: it
+    // compensates for zoom when top-level but not when nested, so reparenting it
+    // between those states must recompute the transform. Keeping 'parent' out of
+    // the list otherwise avoids a redundant transform write on every card move.
+    const properties = [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    if(this.get('ignoreZoom'))
+      properties.push('parent');
+    return properties;
+  }
+
+  isNestedInWidget() {
+    const parentID = this.get('parent');
+    return parentID != null && widgets.has(parentID);
   }
 
   dragCorner(coordGlobal, localAnchor, parent = null) {
@@ -742,6 +824,273 @@ export class Widget extends StateManaged {
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
+  }
+
+  // How a name in an expression about a position is answered - a dragLimit
+  // side or condition, a snap grid's condition: x and y are the position being
+  // tested rather than where the widget currently is, so they mean in an
+  // expression what minX/maxX/minY/maxY mean next to it. A property is written
+  // the way routines write one - ${PROPERTY name} for this widget's,
+  // ${PROPERTY name OF id} for another widget's - and nothing else is a name,
+  // so the two languages agree on what a bare word is.
+  positionResolver(coord) {
+    return (name, widgetID, explicit)=>{
+      if(!explicit)
+        return name == 'x' || name == 'y' ? coord[name] : undefined;
+      if(widgetID === null)
+        return this.get(name);
+      return widgets.has(widgetID) ? widgets.get(widgetID).get(name) : undefined;
+    };
+  }
+
+  // Which point of the widget the limit applies to, as an offset from its top
+  // left corner: the corner itself unless alignX/alignY move it, the same
+  // fractions of the widget box a snap grid aligns to (0.5/0.5 is its middle).
+  // Everything below works on that point, so x, y and the four sides all mean
+  // the same thing wherever it sits.
+  dragLimitOffset() {
+    const limit = this.get('dragLimit');
+    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+      return { x: 0, y: 0 };
+    return {
+      x: (+limit.alignX || 0) * (+this.get('width') || 0),
+      y: (+limit.alignY || 0) * (+this.get('height') || 0)
+    };
+  }
+
+  // What the dragLimit says, read for one position - the point of the widget
+  // the limit applies to (see dragLimitOffset), not necessarily its corner: the
+  // two clamps of the rectangle (each side a number or an expression that
+  // computes one) and the conditions to test there. null when there is no limit
+  // to obey at all.
+  // `varies` says whether these rules hold for one position only: a side that
+  // reads x or y ("maxX": "y") is a different number at every point, so both
+  // callers - the drag and the editor's drawing - have to read it again for
+  // every position they judge instead of once for all of them.
+  dragLimitRules(coord) {
+    const limit = this.get('dragLimit');
+    if(!limit || typeof limit != 'object' || Array.isArray(limit))
+      return null;
+
+    const resolve = this.positionResolver(coord);
+    const bound = key=>limit[key] === undefined ? undefined : expressionNumber(limit[key], resolve);
+    const minX = bound('minX'), maxX = bound('maxX'), minY = bound('minY'), maxY = bound('maxY');
+
+    return {
+      varies: [ 'minX', 'maxX', 'minY', 'maxY' ].some(key=>expressionNames(limit[key])
+        .some(name=>!name.explicit && (name.name == 'x' || name.name == 'y'))),
+      clampX: value=>{
+        if(minX !== undefined && minX !== null) value = Math.max(minX, value);
+        if(maxX !== undefined && maxX !== null) value = Math.min(maxX, value);
+        return value;
+      },
+      clampY: value=>{
+        if(minY !== undefined && minY !== null) value = Math.max(minY, value);
+        if(maxY !== undefined && maxY !== null) value = Math.min(maxY, value);
+        return value;
+      },
+      conditions: asArray(limit.condition === undefined || limit.condition === null ? [] : limit.condition).filter(c=>c !== null && c !== undefined)
+    };
+  }
+
+  // Whether a position is inside the area at all, i.e. whether a drag that ends
+  // there is left alone. This is the question the editor's preview asks of
+  // every point it samples; dragLimitedCoord() below answers the other one -
+  // where a drag that is not allowed ends up instead. The rules can be passed
+  // in when the caller knows they are the same everywhere (thousands of points
+  // of one drawing), which saves reading the four sides at every one of them.
+  dragLimitAllows(coord, rules = this.dragLimitRules(coord)) {
+    if(!rules)
+      return true;
+    return rules.clampX(coord.x) === coord.x && rules.clampY(coord.y) === coord.y
+      && rules.conditions.every(c=>expressionCondition(c, this.positionResolver(coord)));
+  }
+
+  // Where a drag is allowed to put the widget's top left corner. minX/maxX/
+  // minY/maxY bound it to a rectangle, and each of them can be an expression
+  // instead of a fixed number ("${PROPERTY width OF board} - 100"). A condition
+  // - one inequality or a list of them, "2x^2 + y > 4", "2y + 10 > 5x" - bounds
+  // it to any area that can be written down, and both are checked on every
+  // mouse move, so an area that depends on the state follows it. A side can
+  // read x and y like a condition can ("maxX": "y"), and then the rectangle is
+  // judged where the position it bounds is rather than where the pointer is.
+  // All of that is about the point alignX/alignY picks out of the widget - its
+  // top left corner unless they say otherwise - so only the two conversions at
+  // the ends of this method deal in corners.
+  //
+  // A refused position does not stop the drag where the last accepted one was:
+  // the widget goes where its area comes closest to the pointer, so it comes to
+  // rest against the boundary itself rather than a whole mouse step before it,
+  // and it keeps sliding along that boundary while the pointer moves - along a
+  // straight edge at any angle and around a curve alike. It gets there the way
+  // the mouse went: every position it is moved to is one it can reach from
+  // where it is without leaving the area on the way, so a widget limited to a
+  // ring or a track walks around it instead of appearing on the far side of the
+  // hole when the pointer crosses it.
+  // A widget that starts outside its area (a condition that changed under it,
+  // a routine that put it there) is not held in place: it is free until it is
+  // inside, so it can never get stuck - only a widget that is on the boundary
+  // of its area rather than away from it is carried along that boundary.
+  dragLimitedCoord(coord) {
+    // the corner a drag reports, as the point the limit is written about
+    const offset = this.dragLimitOffset();
+    const point = { x: coord.x + offset.x, y: coord.y + offset.y };
+    const rules = this.dragLimitRules(point);
+    if(!rules)
+      return coord;
+
+    // A side that reads the position being judged describes a different
+    // rectangle at every point, so it is read again for each of them - the same
+    // way a condition is. Any other limit is read once for the whole drag.
+    const rulesAt = rules.varies ? position=>this.dragLimitRules(position) : _=>rules;
+    const clamped = position=>{
+      const { clampX, clampY } = rulesAt(position);
+      return { x: clampX(position.x), y: clampY(position.y) };
+    };
+    const target = clamped(point);
+    // and back to the corner, which is what a drag writes
+    const asCoord = position=>Object.assign({}, coord, { x: position.x - offset.x, y: position.y - offset.y });
+
+    // a fixed rectangle and nothing else is what clamping already answered
+    if(!rules.varies && !rules.conditions.length)
+      return asCoord(target);
+
+    // the rectangle is part of the question everywhere below, so a position
+    // reached by sliding or by rounding can never leave it either
+    const inside = position=>this.dragLimitAllows(position, rulesAt(position));
+
+    // where the widget is, put through the rectangle as well: it is a hard
+    // bound, so a widget sitting outside it (a routine moved it, a side moved
+    // under it) must not be able to stay there through the fallbacks below
+    // Read off x and y - except for the one move where they cannot be: taking a
+    // widget out of a holder does not convert them out of the holder's
+    // coordinates, so between moveStart() and the first position a drag writes
+    // they are the holder's numbers read as the room's. dragLimitStartCoord is
+    // where the widget was, in the room, taken while its parent still said what
+    // x and y meant (see moveStart), and it stands in for exactly that move.
+    const at = this.dragLimitStartCoord
+      ? this.coordParentFromCoordGlobal(this.dragLimitStartCoord)
+      : { x: +this.get('x') || 0, y: +this.get('y') || 0 };
+    const current = clamped({ x: at.x + offset.x, y: at.y + offset.y });
+    const away = position=>Math.hypot(target.x - position.x, target.y - position.y);
+    // A widget that is not inside its area is let go - but a widget sitting
+    // exactly on the edge of a strict inequality ("x < 200" at x == 200, put
+    // there by a routine or by the initial state) is not inside it either, and
+    // that is a different thing: it is on the boundary rather than away from
+    // the area, and letting it go would make the limit stop applying at its own
+    // edge. The two are told apart by asking the whole positions around the
+    // widget, the ones a drag could have left it on: one of them being inside
+    // means the area is right there, and the drag along that edge its author
+    // meant to allow starts from the one nearest the pointer.
+    const edgeStart = _=>{
+      const around = [];
+      for(const x of [ current.x - 1, current.x, current.x + 1 ])
+        for(const y of [ current.y - 1, current.y, current.y + 1 ])
+          if(x != current.x || y != current.y)
+            around.push({ x, y });
+      return around.sort((a, b)=>away(a) - away(b)).find(inside);
+    };
+    const start = inside(current) ? current : edgeStart();
+    if(!start)
+      return asCoord(target);
+
+    // How far along the way from an allowed position to another one the widget
+    // gets without leaving the area - the far end itself when the whole way is
+    // inside it. Walked rather than halved: what is being answered is where the
+    // mouse took the widget, so an area the way crosses out of and back into
+    // (the hole of a ring, the middle of a track) has to stop it at the near
+    // side rather than let it carry on beyond the gap. The samples are a few
+    // pixels apart, and the last step between the one that was allowed and the
+    // one that was not is halved until the boundary is a twentieth of a pixel
+    // wide, so the widget rests against it rather than a sample short of it.
+    const reach = (from, to)=>{
+      const distance = Math.hypot(to.x - from.x, to.y - from.y);
+      const at = part=>({ x: from.x + (to.x - from.x) * part, y: from.y + (to.y - from.y) * part });
+      // bounded, so one long jump of a fast mouse costs no more than a slow one
+      const samples = Math.min(128, Math.max(1, Math.ceil(distance / 4)));
+      let reached = 0, refused = 1;
+      for(let sample = 1; sample <= samples; ++sample) {
+        if(!inside(at(sample / samples))) {
+          refused = sample / samples;
+          break;
+        }
+        reached = sample / samples;
+      }
+      if(reached == 1)
+        return to;
+      for(let steps = Math.min(20, Math.ceil(Math.log2(distance / samples * 20))); steps > 0; --steps) {
+        const middle = (reached + refused) / 2;
+        if(inside(at(middle)))
+          reached = middle;
+        else
+          refused = middle;
+      }
+      return at(reached);
+    };
+
+    // straight at the pointer, as far as the area lets the widget go: getting
+    // all the way there is the ordinary drag, and there is nothing to slide
+    // along then
+    const straight = reach(start, target);
+    if(straight === target)
+      return asCoord(target);
+
+    // The widget ends up where its area comes closest to the pointer. Straight
+    // at the pointer is one candidate; the others are that same movement turned
+    // to one side and to the other, which is what sliding along an edge is.
+    // Turning a movement also shortens it to the point of the turned line
+    // nearest the pointer, so the smallest turn that lands in the area is the
+    // one that ends up closest - it is looked for by halving the angle between
+    // straight at the pointer (refused, or there would be nothing to do) and a
+    // quarter turn (which is standing still, and therefore always allowed).
+    // Repeating the whole thing follows an edge that curves away, where no
+    // straight movement can stay against the boundary.
+    let position = start;
+    for(let round = 0; round < 3; ++round) {
+      const dx = target.x - position.x, dy = target.y - position.y;
+      const turnedBy = angle=>{
+        const cos = Math.cos(angle), sin = Math.sin(angle);
+        return { x: position.x + (dx*cos - dy*sin)*cos, y: position.y + (dx*sin + dy*cos)*cos };
+      };
+      let closest = round == 0 ? straight : reach(position, target);
+      // as many halvings of the quarter turn as it takes for the last one to
+      // move the widget by less than a twentieth of a pixel
+      const halvings = Math.min(16, Math.max(1, Math.ceil(Math.log2(Math.hypot(dx, dy) * 32))));
+      for(const side of [ -1, 1 ]) {
+        let turn = side*Math.PI/2, straighter = 0;
+        for(let step = 0; step < halvings; ++step) {
+          const middle = (turn + straighter) / 2;
+          if(inside(turnedBy(middle)))
+            turn = middle;
+          else
+            straighter = middle;
+        }
+        // the turned movement is walked as well, so a turn that ends up in the
+        // area but crosses out of it on the way is taken only as far as it goes
+        const slid = reach(position, turnedBy(turn));
+        if(away(slid) < away(closest))
+          closest = slid;
+      }
+      // anything below the precision the two searches above work to is noise,
+      // and taking it would let the widget wobble by a pixel for nothing
+      if(away(closest) > away(position) - .05)
+        break;
+      position = closest;
+    }
+
+    // A widget is placed on whole pixels like every other position a drag
+    // writes, and this one is on the edge of its area: rounded the usual way it
+    // would be just outside it half the time. So the four whole positions
+    // around it are tried, the one nearest the pointer first, and the widget
+    // stays where it was only if the area is too thin to hold any of them. It
+    // is the corner that is whole, so an alignX of 0.5 on an odd width does not
+    // put the widget on half a pixel.
+    const whole = [];
+    for(const x of new Set([ Math.floor(position.x - offset.x), Math.ceil(position.x - offset.x) ]))
+      for(const y of new Set([ Math.floor(position.y - offset.y), Math.ceil(position.y - offset.y) ]))
+        whole.push({ x: x + offset.x, y: y + offset.y });
+    whole.sort((a, b)=>away(a) - away(b));
+    return asCoord(whole.find(inside) || start);
   }
 
   async doubleClick(mode='respect') {
@@ -813,14 +1162,16 @@ export class Widget extends StateManaged {
 
     const displayError = (field, error) => {
       const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
-      div(dom.parentElement, 'inputError', error);
+      // the message carries what the field defines (regexHint, min, max, regex),
+      // so it goes into the DOM as text and not as HTML
+      div(dom.parentElement, 'inputError').textContent = error;
     };
 
     for(const field of o.fields || []) {
       if(field.type == 'choose' && asArray(variables[field.variable]).length < field.min)
         isValid = displayError(field, `Please select at least ${field.min}.`);
       if(field.type == 'choose' && asArray(variables[field.variable]).length > (field.max || 1))
-        isValid = displayError(field, `Please select at most ${field.min}.`);
+        isValid = displayError(field, `Please select at most ${field.max || 1}.`);
       if(field.type == 'number' && variables[field.variable] < field.min)
         isValid = displayError(field, `Please enter a number above ${field.min}.`);
       if(field.type == 'number' && variables[field.variable] > field.max)
@@ -936,8 +1287,13 @@ export class Widget extends StateManaged {
 
     if(tracingEnabled && typeof property == 'string')
       sendTraceEvent('evaluateRoutine', { id: this.get('id'), property });
-    if(jeRoutineLogging)
-      jeLoggingRoutineStart(this, property, initialVariables, initialCollections, byReference);
+
+    // Capture the routine logging state once, at the start of the routine. Toggling the Debug
+    // panel while the routine is suspended (e.g. waiting for an INPUT modal) would otherwise
+    // mismatch the jeLogging start/end calls and crash the client. (#2672) A routine that was
+    // already running when logging got enabled can not be logged retroactively - it adds a note
+    // to the log instead (see jeLoggingRoutineNotLogged at the end of this function).
+    const routineLogging = jeRoutineLogging;
 
     let variables = initialVariables;
     let collections = initialCollections;
@@ -964,6 +1320,9 @@ export class Widget extends StateManaged {
       });
     }
 
+    if(routineLogging)
+      jeLoggingRoutineStart(this, property, variables, byReference);
+
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
@@ -981,10 +1340,10 @@ export class Widget extends StateManaged {
         property: typeof property == 'string' ? property : 'literal'
       };
 
-      if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
+      if(routineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
-        if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, true);
+        if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, true);
         continue;
       }
 
@@ -1047,21 +1406,36 @@ export class Widget extends StateManaged {
             variables[variable][index] = await getValue(variables[variable][index]);
           else
             variables[variable] = await getValue(variables[variable]);
-          if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
+          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
           if (comment) {
             // ignore (but log) blank and comment only lines
-            if(jeRoutineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
+            if(routineLogging) jeLoggingRoutineOperationSummary(comment[1]||'');
           } else {
             const withoutVars = evaluateVariables(a).replace(/false|null/g, 0).replace(/true/g, 1);
             const mathExpression = withoutVars.match(new RegExp(`^${left} += +([() 0-9.&|!*/+-]+)(?: +//.*)?`+'\x24'));
             if(mathExpression) {
+              // What the regex above matched is arithmetic already: its character class has no
+              // letters, quotes or brackets, so nothing in it can be named, called or
+              // constructed. Rebuilding the string from that alphabet instead of filtering the
+              // matched text makes that checkable rather than a claim - every character that
+              // reaches the eval below is a literal from this line, so there is no path from the
+              // routine into the evaluated code left for a reader (or a static analyzer) to rule
+              // out. charAt(-1) is '', so a character the regex ever lets through by mistake is
+              // dropped instead of evaluated.
+              const arithmetic = '0123456789.() &|!*/+-';
+              const expression = [ ...mathExpression[5] ].map(c => arithmetic.charAt(arithmetic.indexOf(c))).join('');
               let result = null;
               try {
-                result = +eval(mathExpression[5]);
+                // the indirect form evaluates in global scope instead of in this function - a
+                // direct eval() would additionally stop the minifier from renaming anything here,
+                // because it could read every name around it. Indirect eval is sloppy mode while
+                // this module is strict, so the directive keeps the strictness: without it "010"
+                // would quietly be octal 8 instead of being reported as a problem
+                result = +(0,eval)('"use strict";' + expression);
               } catch(e) {
-                problems.push(`The expression "${mathExpression[5]}" threw an exception: ${e}.`);
+                problems.push(`The expression "${expression}" threw an exception: ${e}.`);
                 result = null;
               }
               const variable = mathExpression[1] !== undefined ? variables[unescape(mathExpression[2])] : unescape(mathExpression[2]);
@@ -1072,7 +1446,15 @@ export class Widget extends StateManaged {
                 variables[variable][index] = result;
               else
                 variables[variable] = result;
-              if(jeRoutineLogging) jeLoggingRoutineOperationSummary(a.substr(4) + ' => ' + mathExpression[5], JSON.stringify(result));
+              if(routineLogging) {
+                // the evaluated expression is only worth showing next to the original when the two
+                // differ - otherwise it is a verbatim repeat of the right hand side the user
+                // already sees. withoutVars can not answer that: it also rewrites true/false/null,
+                // and it does so on the whole operation, so a variable whose name contains one of
+                // those words would make every one of its operations look substituted.
+                const writtenExpression = a.replace(new RegExp(`^${left} += +`), '').replace(/ +\/\/.*$/, '');
+                jeLoggingRoutineOperationSummary(a.substr(4) + (writtenExpression == mathExpression[5] ? '' : ' => ' + mathExpression[5]), JSON.stringify(result));
+              }
             } else {
               problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
             }
@@ -1120,7 +1502,7 @@ export class Widget extends StateManaged {
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               const theWidget = a.widget != this.get('id') ? `in ${a.widget}` : '';
               if (a.return) {
                 let returnCollection = result.collection.map(w=>w.get('id')).join(',');
@@ -1191,7 +1573,7 @@ export class Widget extends StateManaged {
           problems.push(`Collection ${a.collection} is empty.`);
         }
 
-        if(jeRoutineLogging) {
+        if(routineLogging) {
           if(a.mode == 'set')
             jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${JSON.stringify(a.value)}`)
           else if(a.mode == 'change')
@@ -1215,7 +1597,7 @@ export class Widget extends StateManaged {
           for(let i=0; i<a.count; ++i)
             for(const w of collections[collection])
               await w.click(a.mode);
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const theCount = a.count ? `${a.count} times` : '';
             jeLoggingRoutineOperationSummary( `'${a.collection}' ${theCount}`)
           }
@@ -1237,7 +1619,7 @@ export class Widget extends StateManaged {
             }
           }
           collections[a.collection]=c;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`);
         }
       }
@@ -1286,7 +1668,7 @@ export class Widget extends StateManaged {
           }
           theItem = `${a.collection}`
         }
-        if(jeRoutineLogging)
+        if(routineLogging)
           jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
       }
@@ -1295,7 +1677,7 @@ export class Widget extends StateManaged {
         setDefaults(a, { milliseconds: 0 });
         flushDelta();
         await sleep(a.milliseconds);
-        if(jeRoutineLogging)
+        if(routineLogging)
           jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
 
@@ -1308,7 +1690,7 @@ export class Widget extends StateManaged {
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `'${a.collection}'`)
         }
       }
@@ -1326,7 +1708,7 @@ export class Widget extends StateManaged {
                 c.flip && await c.flip(a.face,a.faceCycle);
             });
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`holder '${a.holder}'`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
@@ -1335,7 +1717,7 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
@@ -1354,10 +1736,10 @@ export class Widget extends StateManaged {
             collectionBackups[add] = collections[add];
             collections[add] = addCollections[add];
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
           await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
             if(variableBackups[add] !== undefined)
@@ -1375,7 +1757,7 @@ export class Widget extends StateManaged {
         if(a.in) {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
         } else if(a.range) {
           let range = [...asArray(a.range)];
@@ -1413,12 +1795,12 @@ export class Widget extends StateManaged {
 
           for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
             await callWithAdditionalValues({ value: index });
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary( `widgets in '${a.collection}'`);
         }
       }
@@ -1473,7 +1855,7 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
         }
       }
@@ -1491,7 +1873,7 @@ export class Widget extends StateManaged {
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             if (a.condition === undefined)
               jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
             else
@@ -1559,7 +1941,7 @@ export class Widget extends StateManaged {
             Object.assign(variables, result.variables);
             Object.assign(collections, result.collections);
           }
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             let varList = [];
             let valueList = [];
             a.fields.forEach(f=>{
@@ -1572,7 +1954,7 @@ export class Widget extends StateManaged {
           }
         } catch(e) {
           abortRoutine = true;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary("INPUT cancelled");
         }
       }
@@ -1587,7 +1969,7 @@ export class Widget extends StateManaged {
             await w(a.label, async widget=>{
               await widget.setText(a.value, a.mode, problems)
             });
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
                 jeLoggingRoutineOperationSummary(`${a.mode} '${a.label}' by ${a.value}`)
               else if(a.mode == 'append')
@@ -1600,7 +1982,7 @@ export class Widget extends StateManaged {
           if(collections[collection].length) {
             for(const c of collections[collection])
               await c.setText(a.value, a.mode, problems);
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               if(a.mode == 'inc' || a.mode == 'dec')
                 jeLoggingRoutineOperationSummary(`${a.mode} widgets in '${a.collection}' by ${a.value}`)
               else if(a.mode == 'append')
@@ -1690,7 +2072,7 @@ export class Widget extends StateManaged {
                 await target.updateAfterShuffle();
             });
           }
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const logCount = count==1 ? '1 widget' : `${count == 999999 ? 'all' : count} widgets`;
             jeLoggingRoutineOperationSummary(`${logCount} from '${a.from || a.collection}' to '${a.to}'`)
           }
@@ -1716,7 +2098,7 @@ export class Widget extends StateManaged {
               await c.set('parent', null);
             }
           });
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             const count = a.count==1 ? '1 widget' : `${a.count} widgets`;
             jeLoggingRoutineOperationSummary(`${count} from '${a.from}' to (${a.x}, ${a.y})`)
           }
@@ -1774,7 +2156,7 @@ export class Widget extends StateManaged {
               problems.push(`Holder ${holder} does not have a deck.`);
             }
           };
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             jeLoggingRoutineOperationSummary(`'${a.holder}' ${a.owned ? ' (including hands)' : ''}`);
           }
         }
@@ -1791,7 +2173,7 @@ export class Widget extends StateManaged {
             }
           }
         }
-        if (jeRoutineLogging) {
+        if (routineLogging) {
           jeLoggingRoutineOperationSummary(`Reset properties for widgets with property '${a.property}'`);
         }
       }
@@ -1809,7 +2191,7 @@ export class Widget extends StateManaged {
               for(const c of holder.children().slice(0, a.count))
                 await c.rotate(a.angle, a.mode);
             });
-            if(jeRoutineLogging) {
+            if(routineLogging) {
               jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.holder}' ${mode} ${a.angle}`);
             }
           }
@@ -1817,7 +2199,7 @@ export class Widget extends StateManaged {
           if(collections[collection].length) {
             for(const c of collections[collection].slice(0, a.count))
               await c.rotate(a.angle, a.mode);
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationSummary(`${a.count == 999999 ? '' : a.count} ${a.count==1 ? 'widget' : 'widgets'} in '${a.collection}' ${mode} ${a.angle}`);
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
@@ -1858,7 +2240,7 @@ export class Widget extends StateManaged {
           await seats[i].set(String(a.property), newScore);
         }
 
-        if(jeRoutineLogging) {
+        if(routineLogging) {
           const phrase = round===null ? 'new round' : `round ${a.round}`;
           const seatIds = seats.map(w => w.get('id'));
           if(a.mode == 'inc' || a.mode == 'dec')
@@ -1918,7 +2300,7 @@ export class Widget extends StateManaged {
           if(a.sortBy)
             await sortWidgets(collections[a.collection], a.sortBy);
 
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
@@ -1969,8 +2351,171 @@ export class Widget extends StateManaged {
             }
           }
         }
-        if(jeRoutineLogging)
+        if(routineLogging)
           jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
+      }
+
+      if(a.func == 'SHIFT') {
+        setDefaults(a, { widgets: 'all', interval: 1, direction: 'forward', wrap: true, keepOrder: true });
+        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
+          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
+          a.direction = 'forward'
+        }
+
+        function shiftContainer(id, derived) {
+          const entry = widgets.get(id);
+          if(entry.get('type') != 'seat')
+            return { seat: null, holder: entry };
+          // An unoccupied seat is skipped entirely: it neither contributes nor
+          // receives widgets, so the shift cycles through the remaining entries.
+          if(!entry.get('player'))
+            return { empty: true };
+          if(!entry.get('hand') || !widgets.has(entry.get('hand'))) {
+            problems.push(`Seat ${id} does not define a valid hand.`);
+            // a written-down list names the exact cycle the game asked for, so a broken
+            // entry in it stops the shift. A list derived from the room was not chosen
+            // by anybody, so the seat is skipped like an unoccupied one and the rest
+            // still move
+            return derived ? { empty: true } : null;
+          }
+          return { seat: entry, holder: widgets.get(entry.get('hand')) };
+        }
+
+        function shiftContainerID(container) {
+          return (container.seat || container.holder).get('id');
+        }
+
+        // without an explicit list every occupied seat takes part, ordered by the seat
+        // index property
+        const useActiveSeats = a.holders === undefined || a.holders === null;
+        if(useActiveSeats)
+          a.holders = Array.from(widgets.values()).filter(w=>w.get('type')=='seat' && w.get('player')).sort((x, y)=>x.get('index')-y.get('index')).map(seat=>seat.get('id'));
+
+        // holders can name a collection instead of listing ids: the widgets in it take
+        // part, the seats among them in seat index order like the derived list above,
+        // every other holder in the place the collection has it
+        const fromCollection = typeof a.holders == 'string';
+        let collectionExists = true;
+        if(fromCollection) {
+          const holderCollection = getCollection(a.holders);
+          collectionExists = !!holderCollection;
+          const entries = collectionExists ? collections[holderCollection] : [];
+          const seatsByIndex = entries.filter(w=>w.get('type')=='seat').sort((x, y)=>x.get('index')-y.get('index'));
+          a.holders = entries.map(w=>(w.get('type') == 'seat' ? seatsByIndex.shift() : w).get('id'));
+        }
+
+        let valid = collectionExists && Array.isArray(a.holders) && a.holders.length > 1;
+        // fewer than two entries in a derived list is not an error, there is simply
+        // nothing to shift
+        if(!valid && collectionExists && !useActiveSeats && !fromCollection)
+          problems.push(`SHIFT requires a 'holders' array of at least two holders or seats.`);
+
+        let order = [];
+        if(valid && this.isValidID(a.holders, problems)) {
+          for(const id of a.holders) {
+            const container = shiftContainer(id, useActiveSeats || fromCollection);
+            if(!container) {
+              valid = false;
+              break;
+            }
+            if(!container.empty)
+              order.push(container);
+          }
+        } else {
+          valid = false;
+        }
+
+        let widgetCollection = null;
+        if(valid && a.widgets != 'all' && a.widgets != 'top')
+          valid = !!(widgetCollection = getCollection(a.widgets));
+
+        if(valid && !Number.isFinite(a.interval)) {
+          problems.push(`SHIFT 'interval' must be a finite number.`);
+          valid = false;
+        }
+
+        if(valid) {
+          // the direction is applied to the order itself, so the shift is always
+          // forward along it: backward walks the entries the other way round and
+          // random hands each entry's widgets to an arbitrary other one
+          if(a.direction == 'backward') {
+            order.reverse();
+          } else if(a.direction == 'random') {
+            for(let i = order.length - 1; i > 0; i--) {
+              const rand = Math.floor(Math.random() * (i + 1));
+              [order[i], order[rand]] = [order[rand], order[i]];
+            }
+          }
+
+          const length = order.length;
+          const shift = Math.trunc(a.interval);
+          const collectionSet = widgetCollection ? new Set(collections[widgetCollection]) : null;
+          // the contents of every entry are collected before anything is moved so that
+          // an entry does not pass on the widgets an earlier entry just gave it
+          const moves = [];
+
+          for(let i = 0; i < length; i++) {
+            const source = order[i];
+            // seats can share a single hand through childrenPerOwner, in which case
+            // only the widgets owned by that seat's player belong to that seat
+            const perOwner = source.seat && source.holder.get('childrenPerOwner');
+            let selected = source.holder.children().filter(c=>!perOwner || c.get('owner') == source.seat.get('player'));
+            if(a.widgets == 'top')
+              selected = selected.slice(0, 1);
+            else if(collectionSet)
+              selected = selected.filter(c=>collectionSet.has(c));
+            if(!selected.length)
+              continue;
+            // children() is top-first (z descending) and MOVE brings each widget to
+            // front as it moves it, so hand them over bottom-first to keep the order
+            selected.reverse();
+
+            let targetIndex = i + shift;
+            if(a.wrap)
+              targetIndex = ((targetIndex % length) + length) % length;
+            else
+              targetIndex = Math.max(0, Math.min(length - 1, targetIndex));
+
+            if(targetIndex != i)
+              moves.push({ source, contents: selected, to: shiftContainerID(order[targetIndex]) });
+          }
+
+          if(moves.length) {
+            if(routineLogging)
+              jeLoggingRoutineOperationStart("Moves", "Moves");
+            for(const move of moves) {
+              // a seat entry is moved to the seat itself instead of to its hand so that
+              // ownership, hands shared through childrenPerOwner and the arranging of
+              // the receiving hand are all handled by MOVE rather than duplicated here
+              const collection = `${move.source.seat ? 'hand' : 'contents'} of ${shiftContainerID(move.source)}`;
+              // a collection of the surrounding routine that happens to use the same
+              // name is shadowed only while its MOVE runs and then put back
+              const shadowed = collections[collection];
+              // the widgets are looked up right before their own MOVE so that one which
+              // a routine of an earlier MOVE removed is left alone. keepOrder hands them
+              // over in the order of their holder, without it they arrive in the order
+              // they were created
+              collections[collection] = a.keepOrder
+                ? move.contents.filter(w=>!w.isBeingRemoved)
+                : widgetFilter(w=>move.contents.indexOf(w) != -1);
+              try {
+                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+              } finally {
+                if(shadowed === undefined)
+                  delete collections[collection];
+                else
+                  collections[collection] = shadowed;
+              }
+            }
+            if(routineLogging)
+              jeLoggingRoutineOperationEnd([], variables, collections, false);
+          }
+
+          if(routineLogging) {
+            const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
+            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.direction} ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(shiftContainerID))}`);
+          }
+        }
       }
 
       if(a.func == 'SHUFFLE') {
@@ -1983,7 +2528,7 @@ export class Widget extends StateManaged {
               if(typeof holder.updateAfterShuffle == 'function')
                 await holder.updateAfterShuffle();
             });
-            if(jeRoutineLogging)
+            if(routineLogging)
               jeLoggingRoutineOperationSummary(`holder ${a.holder}`);
           }
         } else if(collection = getCollection(a.collection)) {
@@ -1992,7 +2537,7 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`collection '${a.collection}'`);
         }
       }
@@ -2014,7 +2559,7 @@ export class Widget extends StateManaged {
                 await holder.updateAfterShuffle();
             });
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.holder}' by ${key}${reverse}`);
         } else if(collection = getCollection(a.collection)) {
           if(collections[collection].length) {
@@ -2026,62 +2571,16 @@ export class Widget extends StateManaged {
           } else {
             problems.push(`Collection ${a.collection} is empty.`);
           }
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`widgets in '${a.collection}' by ${key}${reverse}`);
         }
       }
 
-      if(a.func == 'SWAPHANDS') {
-        setDefaults(a, { interval: 1, direction: 'forward', source: 'all' });
-        if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
-          problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
-          a.direction = 'forward'
-        }
-        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
-        let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
-        if (c.length > 1) {
-          if(a.direction == 'forward') {
-            c.sort((a, b)=>a.get('index')-b.get('index'));
-          } else if(a.direction == 'backward') {
-            c.sort((a, b)=>b.get('index')-a.get('index'));
-          } else if (a.direction == 'random') {
-            for (let i = c.length - 1; i > 0; i--) {
-              const rand = Math.floor(Math.random() * (i + 1));
-              [c[i], c[rand]] = [c[rand], c[i]];
-            }
-          }
-          let moves = [];
-          for (let i = 0; i < c.length; i++) {
-            let source = c[i];
-            let target = c[(i + a.interval) % c.length];
-            let hand = source.get('hand');
-            if (this.isValidID(hand, problems)) {
-              let perOwner = widgets.get(hand).get('childrenPerOwner');
-              let contents = widgets.get(hand).children().reduce(
-                function (collect, w) {
-                  if (!perOwner || w.get('owner') == source.get('player')) {
-                    collect.unshift(w.get('id'));
-                  }
-                  return collect
-                },
-                []
-              );
-              moves.push({
-                func: "MOVE",
-                collection: contents,
-                to: target.get('id'),
-              });
-            }
-          }
-          if(jeRoutineLogging) {
-            jeLoggingRoutineOperationStart("Moves", "Moves");
-          }
-          await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
-          if(jeRoutineLogging) {
-          jeLoggingRoutineOperationEnd([], variables, collections, false);
-          }
-        }
-      }
+      // an operation an existing save carries is rewritten by the file updater, but one a
+      // routine builds while it runs or one pasted into the editor never passes through it
+      // and would otherwise do nothing at all, without saying so
+      if(a.func == 'SWAPHANDS')
+        problems.push(`SWAPHANDS was replaced by SHIFT.`);
 
       if(a.func == 'TIMER') {
         setDefaults(a, { value: 0, seconds: 0, mode: 'toggle', collection: 'DEFAULT' });
@@ -2109,24 +2608,27 @@ export class Widget extends StateManaged {
           }
         };
         if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
+          // a "minutes:seconds" string in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
+          const seconds = timeToMS(a.seconds);
+          const milliseconds = seconds !== a.seconds ? seconds : a.seconds*1000 || a.value;
           if(a.timer !== undefined) {
             if (this.isValidID(a.timer, problems)) {
               await w(a.timer, async widget=>{
                 if(widget.setMilliseconds)
-                  await widget.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await widget.setMilliseconds(milliseconds, a.mode);
               });
             }
           } else if(collection) {
             if(collections[collection].length) {
               for(const c of collections[collection])
                 if(c.setMilliseconds)
-                  await c.setMilliseconds(a.seconds*1000 || a.value, a.mode);
+                  await c.setMilliseconds(milliseconds, a.mode);
             } else {
               problems.push(`Collection ${a.collection} is empty.`);
             }
           }
         };
-        if(jeRoutineLogging &&
+        if(routineLogging &&
            (a.timer != undefined || (collection && collections[collection].length))) {
           const phrase = (a.timer == undefined) ? `timers in '${a.collection}'` : `'${a.timer}'`;
           if(a.mode == 'set')
@@ -2143,11 +2645,11 @@ export class Widget extends StateManaged {
         const uploadedAsset = await uploadAsset(null, a.fileTypes);
         if(!String(uploadedAsset).match(/^\/assets\/[0-9_-]+$/)) {
           variables[a.variable] = false;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary("UPLOAD cancelled");
         } else {
           variables[a.variable] = uploadedAsset;
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
         }
       }
@@ -2163,7 +2665,7 @@ export class Widget extends StateManaged {
         let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
 
         if (c.length == 0) {
-          if(jeRoutineLogging)
+          if(routineLogging)
             jeLoggingRoutineOperationSummary(`No active seats found in collection ${a.source}.`);
         } else {
           if (c.length > 1) {
@@ -2222,7 +2724,7 @@ export class Widget extends StateManaged {
             }
           }
 
-          if(jeRoutineLogging) {
+          if(routineLogging) {
             if (target) {
               const indexList = c.map(w => w.get('index'));
               const turn = target.get('index');
@@ -2239,14 +2741,14 @@ export class Widget extends StateManaged {
         for(const [ key, value ] of Object.entries(a.variables||{}))
           variables[key] = value;
 
-        if(jeRoutineLogging) {
+        if(routineLogging) {
           jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
         }
       }
 
-      if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
+      if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
 
-      if(!jeRoutineLogging && problems.length)
+      if(!routineLogging && problems.length)
         console.log(problems);
 
       if(abortRoutine)
@@ -2254,7 +2756,10 @@ export class Widget extends StateManaged {
 
     } // End iterate over functions in routine
 
-    if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
+    if(routineLogging)
+      jeLoggingRoutineEnd(variables, collections);
+    else if(jeRoutineLogging)
+      jeLoggingRoutineNotLogged(this, property); // logging was enabled while this routine was running
 
     batchEnd();
 
@@ -2432,6 +2937,20 @@ export class Widget extends StateManaged {
 
     await this.bringToFront();
     await this.set('dragging', playerName);
+    delete this.lastMoveCoord;
+
+    // Where the widget is, in the coordinates of the room, taken while its
+    // parent is still the one x and y are measured against. Dropping that
+    // parent below does not convert them, so from here until the first position
+    // move() writes they are a holder's numbers read as the room's - and a
+    // dragLimit walks the drag from where the widget is, so it would walk it
+    // from the wrong end of the board once. Cleared again by that first move.
+    this.dragLimitStartCoord = this.coordGlobalFromCoordParent({ x: +this.get('x') || 0, y: +this.get('y') || 0 });
+
+    // Lines that take a widget dropped onto their path as a stop. Collected once
+    // like the drop targets below, but not restricted to widgets that can be
+    // dragged in play: a stop is usually placed in edit mode.
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
 
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
@@ -2449,34 +2968,32 @@ export class Widget extends StateManaged {
   }
 
   async move(coordGlobal, localAnchor) {
-    let newCoord = this.dragCorner(coordGlobal, localAnchor);
-
-    //Keeps widget's top left corner within coordinates set by dragLimit object
-    const limit = this.get('dragLimit');
-
-    if (limit.minX !== undefined) {
-      newCoord.x = Math.max(limit.minX, newCoord.x);
-    }
-    if (limit.maxX !== undefined) {
-      newCoord.x = Math.min(limit.maxX, newCoord.x);
-    }
-    if (limit.minY !== undefined) {
-      newCoord.y = Math.max(limit.minY, newCoord.y);
-    }
-    if (limit.maxY !== undefined) {
-      newCoord.y = Math.min(limit.maxY, newCoord.y);
-    }
+    let newCoord = this.dragLimitedCoord(this.dragCorner(coordGlobal, localAnchor));
 
     if(tracingEnabled)
       sendTraceEvent('move', { id: this.get('id'), coordGlobal, localAnchor, newX: newCoord.x, newY: newCoord.y });
 
+    this.lastMoveCoord = coordGlobal;
+
     await this.setPosition(newCoord.x, newCoord.y, this.get('z'));
+    // x and y are the drag's own numbers now, in whatever the widget is
+    // parented to, so they say where it is again
+    delete this.dragLimitStartCoord;
     await this.snapToGrid();
 
     if(!this.get('fixedParent') && this.get('movable')) {
       await this.checkParent();
 
       const lastHoverTarget = this.hoverTarget;
+      // The hit test below asks the DOM where this widget is, but the delta that
+      // carries the position set above only reaches the DOM when the batch around
+      // the mouse event ends. Without the flush the drop target is computed for the
+      // position of the *previous* mouse event - so a drag that moves further than
+      // half a holder between two events resolves the drop against the square the
+      // widget has already left, and the piece lands next to where it was dropped
+      // (or the game rejects the move and sends it back).
+      if(this.domElement.style.transform != this.cssTransform())
+        flushDelta();
       const myCenter = center(this.domElement);
       const myMinDim = Math.min(this.get('width'), this.get('height')) * this.get('_absoluteScale');
       this.hoverTarget = null;
@@ -2485,7 +3002,7 @@ export class Widget extends StateManaged {
       // First, check for elements under the midpoint in order in which they were hit.
       for (let i = 0; i < hitElements.length; i++) {
         let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
-        if (hitElements[i].classList.contains('droppable') && widget) {
+        if (hitElements[i].classList.contains('droppable') && widget && widget.get('type') != 'line') {
           this.hoverTarget = widget;
           break;
         }
@@ -2494,6 +3011,10 @@ export class Widget extends StateManaged {
       if (!this.hoverTarget) {
         let targetDist = 99999;
         for(const t of this.dropTargets) {
+          // a line takes a drop close to its path, not anywhere in its bounding
+          // box, so it is hit tested by lineStopDropTarget() instead
+          if(t.get('type') == 'line')
+            continue;
           if(overlap(this.domElement, t.domElement)) {
             const tCursor = t.coordGlobalInside(coordGlobal);
             const tDist = distance(center(t.domElement), myCenter) / scale;
@@ -2548,14 +3069,103 @@ export class Widget extends StateManaged {
         }
       }
     }
+
+    this.highlightStopDropLine(this.lineStopDropTarget());
+  }
+
+  // The line this widget would attach to as a stop if it were dropped where it
+  // is now, or null. A real drop target wins: a widget dropped into a holder
+  // that happens to sit on a line goes into the holder.
+  lineStopDropTarget() {
+    if(this.hoverTarget || !this.stopDropLines || !this.stopDropLines.length)
+      return null;
+    const center = this.coordGlobalFromCoordLocal({ x: +this.get('width')/2, y: +this.get('height')/2 });
+    let best = null;
+    for(const line of this.stopDropLines) {
+      const target = widgets.has(line.id) ? line.stopDropTarget(this, center) : null;
+      if(target && (!best || target.distance < best.distance))
+        best = target;
+    }
+    return best;
+  }
+
+  // make it visible during the drag which line a drop would attach this widget to
+  highlightStopDropLine(target) {
+    const line = target && target.line || null;
+    if(this.stopDropHighlight == line)
+      return;
+    if(this.stopDropHighlight && this.stopDropHighlight.domElement)
+      this.stopDropHighlight.domElement.classList.remove('lineDropTarget');
+    this.stopDropHighlight = line;
+    if(line)
+      line.domElement.classList.add('lineDropTarget');
+  }
+
+  // The widget the drag took this one out of: dragging detaches it right away
+  // and only remembers where it came from in currentParent.
+  currentParentWidget() {
+    return this.currentParent || (widgets.has(this.get('parent')) ? widgets.get(this.get('parent')) : null);
+  }
+
+  // Attach to (or detach from) a line that takes dropped widgets. Entering and
+  // leaving one changes parentage just like a holder does, which applies the
+  // line's onEnter/onLeave and triggers its enterRoutine/leaveRoutine. Lines
+  // that take no drops keep their stop lists, so a game can rely on them.
+  async applyLineStopDrop(target) {
+    const line = target && target.line || null;
+    const from = this.currentParentWidget();
+
+    // a widget that only rides on a line - listed as a stop without being its
+    // child - is taken off that list when it is dragged away
+    for(const other of linesWithStop(this.id))
+      if(other != line && other != from && other.get('dropTarget') && compareDropTarget(this, other))
+        await other.removeStop(this.id);
+
+    if(line) {
+      await line.addStop(this.id, target.position);
+      // a widget that cannot change parent just rides on the line instead
+      if(!this.get('fixedParent'))
+        await this.moveToHolder(line);
+    } else if(from && from.get('type') == 'line' && !this.get('fixedParent')) {
+      // dropping it off the line hands it back to the room, which lets the line
+      // dispense it: onLeave is applied and the stop comes off the list
+      this.currentParent = from;
+      await this.checkParent(true);
+    }
   }
 
   async moveEnd(coordGlobal, localAnchor) {
     if(tracingEnabled)
       sendTraceEvent('moveEnd', { id: this.get('id'), coordGlobal, localAnchor });
 
+    // dropLimit constrains manual drops only, and every pile this widget can
+    // still form from here on is one. Dropping into a holder reparents it,
+    // which runs updatePiles() before the call at the end of this method, so
+    // the marker has to cover the whole drop rather than just that call.
+    this.pileUpdateFromDrag = true;
+
+    // The drop belongs where the button was released, not where the last mousemove
+    // reported: a fast drag can end with a mouseup at coordinates no mousemove ever
+    // delivered, and everything below - the drop target, the line stop, the position -
+    // would then be resolved for a spot the widget has already been dragged away from.
+    // Applying the release coordinates first also makes the drop target match what the
+    // player last saw highlighted, since move() recomputes it.
+    const releasedElsewhere = coordGlobal && (!this.lastMoveCoord || this.lastMoveCoord.x != coordGlobal.x || this.lastMoveCoord.y != coordGlobal.y);
+    if(releasedElsewhere)
+      await this.move(coordGlobal, localAnchor);
+    delete this.lastMoveCoord;
+    // a click is a moveStart and a moveEnd with no move in between, so what it
+    // took for that first move has to go whether one happened or not
+    delete this.dragLimitStartCoord;
+
     await this.hideShadowWidget();
     await this.set('dragging', null);
+
+    // read where the drag ended before the drop into a holder below moves the widget
+    const stopDropTarget = this.lineStopDropTarget();
+    this.highlightStopDropLine(null);
+    delete this.stopDropLines;
+
     await this.set('hoverTarget', null);
 
     if(!this.get('fixedParent') && this.get('movable')) {
@@ -2573,11 +3183,14 @@ export class Widget extends StateManaged {
       }
     }
 
+    await this.applyLineStopDrop(stopDropTarget);
+
     this.hideEnlarged();
     if(this.domElement.classList.contains('longtouch'))
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+    delete this.pileUpdateFromDrag;
   }
 
   async hideShadowWidget() {
@@ -2626,21 +3239,90 @@ export class Widget extends StateManaged {
 
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
-      if(oldValue) {
-        const oldParent = widgets.get(oldValue);
+      // deleting a stop takes it off the lines that list it; a rename is a
+      // remove + re-add of the same state, so it keeps its place instead
+      if(this.isBeingRemoved && !this.isBeingRenamed)
+        for(const line of linesWithStop(this.id))
+          await line.removeStop(this.id);
+      // a parent id no widget in the room has leaves this one in limbo (the
+      // editor marks it "Invalid Parent") - there is nothing to hand the widget
+      // over to or take it from, so that half of the move is simply skipped
+      const oldParent = oldValue && widgets.has(oldValue) ? widgets.get(oldValue) : null;
+      if(oldParent) {
         await oldParent.onChildRemove(this);
         if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
-      if(newValue) {
+      if(newValue && widgets.has(newValue)) {
+        // a widget in limbo sits on the surface, so it arrives with global
+        // coordinates and there is no widget it can name as the one it came from
+        const oldParentID = oldParent ? oldValue : null;
         const newParent = widgets.get(newValue);
-        await newParent.onChildAdd(this, oldValue);
+        await newParent.onChildAdd(this, oldParentID);
         if(Array.isArray(newParent.get('enterRoutine')))
-          await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
+          await newParent.evaluateRoutine('enterRoutine', { oldParentID }, { child: [ this ] });
       }
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
     }
+
+    // x and y alone are written twice per mousemove of every drag, so bail out
+    // before the inheritance walk for everything a line cannot react to - and
+    // once more for the games (the vast majority) that contain no line at all
+    if(!lineRelevantProperties.has(property))
+      return;
+    const lines = widgetFilter(w=>w.get('type') == 'line');
+    if(!lines.length)
+      return;
+
+    for(const widget of this.widgetsInheritingProperty(property)) {
+      await widget.updateConnectedLineEndpoints(lines);
+
+      // a stop is listed in a line's stops property and does not have to be a
+      // child of it, so ask every line that lists it to re-space
+      if(stopLayoutProperties.has(property))
+        for(const line of lines)
+          if(lineListsStop(line, widget.id))
+            await line.onStopPropertyChange(widget);
+    }
+  }
+
+  // A source property can affect widgets that inherit it through more than one
+  // level. Return each effective inheritor once, plus the source widget itself.
+  widgetsInheritingProperty(property, result = new Set) {
+    if(result.has(this))
+      return result;
+    result.add(this);
+    for(const inheriting of StateManaged.inheritFromMapping[this.id] || []) {
+      const definition = inheriting.inheritFrom()[this.id] || [];
+      if(inheriting.state[property] === undefined && inheriting.inheritFromIsValid(definition, property))
+        inheriting.widgetsInheritingProperty(property, result);
+    }
+    return result;
+  }
+
+  // Connections are expressed against a target's global transform. A change
+  // to this widget can therefore move endpoints connected to it or any child.
+  // Collecting the descendants is the expensive half, so only do it once it is
+  // known that some line is connected to anything at all.
+  async updateConnectedLineEndpoints(lines) {
+    const connected = (lines || widgetFilter(w=>w.get('type') == 'line')).filter(line=>line.get('connectStart') || line.get('connectEnd'));
+    if(!connected.length)
+      return;
+    const targetIDs = new Set([ this.id ]);
+    let added = true;
+    while(added) {
+      added = false;
+      for(const widget of widgets.values()) {
+        if(!targetIDs.has(widget.id) && targetIDs.has(widget.get('parent'))) {
+          targetIDs.add(widget.id);
+          added = true;
+        }
+      }
+    }
+    for(const line of connected)
+      if([ line.get('connectStart'), line.get('connectEnd') ].some(connection=>connection && targetIDs.has(connection.line)))
+        await line.applyConnections();
   }
 
   readOnlyProperties() {
@@ -2649,6 +3331,8 @@ export class Widget extends StateManaged {
 
   renderReadonlyCopyRaw(state, target, isChild=false) {
     delete state.id;
+    // the copy is not part of the room state, so nothing it renders may be written back (editable card text)
+    this.isReadonlyCopy = true;
     if(!isChild) {
       state.x = 0;
       state.y = 0;
@@ -2662,7 +3346,7 @@ export class Widget extends StateManaged {
 
     this.applyInitialDelta(state);
     target.appendChild(this.domElement);
-    if(this instanceof Card)
+    if(this instanceof Card && this.deck)
       this.deck.removeCard(this);
     return this;
   }
@@ -2793,13 +3477,13 @@ export class Widget extends StateManaged {
       if(cursor.top < window.innerHeight/2)
         e.classList.add('bottom');
 
-      const wStyle = $(`#STYLES_${escapeID(id)}`);
+      const wStyle = $(`#STYLES_${this.cssScope}`);
       if(wStyle) {
         if($('#enlargeStyle'))
           removeFromDOM($('#enlargeStyle'));
         const eStyle = document.createElement('style');
         eStyle.id = "enlargeStyle";
-        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`,'#enlarged')));
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${this.cssScope}`,'#enlarged')));
         $('head').appendChild(eStyle);
       }
     }
@@ -2932,17 +3616,16 @@ export class Widget extends StateManaged {
         const alignX = (grid.alignX || 0) * this.get('width');
         const alignY = (grid.alignY || 0) * this.get('height');
 
-        if(x < (grid.minX || -99999) || x > (grid.maxX || 99999))
-          continue;
-        if(y < (grid.minY || -99999) || y > (grid.maxY || 99999))
+        if(!this.gridAppliesAt(grid, { x, y }))
           continue;
 
-        const snapX = x + alignX + grid.x/2 - mod(x + alignX + grid.x/2 - (grid.offsetX || 0), grid.x);
-        const snapY = y + alignY + grid.y/2 - mod(y + alignY + grid.y/2 - (grid.offsetY || 0), grid.y);
+        const snapped = this.gridSnapCoord(grid, { x, y }, { x: alignX, y: alignY });
+        if(!snapped)
+          continue;
 
-        const distance = (snapX - x) ** 2 + (snapY - y) ** 2;
+        const distance = (snapped.x - x) ** 2 + (snapped.y - y) ** 2;
         if(distance < closestDistance) {
-          closest = [ snapX - alignX, snapY - alignY, grid ];
+          closest = [ snapped.x - alignX, snapped.y - alignY, grid ];
           closestDistance = distance;
         }
       }
@@ -2950,10 +3633,109 @@ export class Widget extends StateManaged {
       if(closest) {
         await this.setPosition(closest[0], closest[1], this.get('z'));
         for(const p in closest[2])
-          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ].indexOf(p) == -1)
+          if([ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY', 'condition' ].indexOf(p) == -1)
             await this.set(p, closest[2][p]);
       }
     }
+  }
+
+  // Which point of one grid's lattice a widget dropped at coord is snapped to,
+  // as the point alignX/alignY aligns to it (the widget's corner is that minus
+  // the alignment): the lattice point nearest the position it was dropped at,
+  // moved on to the nearest one this grid applies at as well.
+  // A grid limited to a rectangle and nothing else keeps snapping to the
+  // nearest lattice point wherever that lies, which is what it has always done
+  // and what games are built on. A condition can bound the grid to an area of
+  // any shape, and there it is not enough that the position the widget was
+  // dropped at is inside it: the lattice point nearest to that position is up
+  // to half a cell away in each direction, and a boundary that runs wherever it
+  // likes can easily be in between, so snapping there would drop the widget
+  // just outside the very area the grid is limited to. The lattice is walked
+  // outwards in square rings around that point instead, ranked by how far the
+  // widget actually moves, until no ring further out can hold anything closer
+  // than the best point already found.
+  // null when no lattice point within reach is one this grid applies at - an
+  // area narrower than the grid step need not contain one at all - and then
+  // this grid does not apply here either, exactly as outside its rectangle.
+  gridSnapCoord(grid, coord, align) {
+    const nearest = (position, offset, step)=>position + step/2 - mod(position + step/2 - offset, step);
+    const snap = {
+      x: nearest(coord.x + align.x, grid.offsetX || 0, grid.x),
+      y: nearest(coord.y + align.y, grid.offsetY || 0, grid.y)
+    };
+    if(!this.gridConditions(grid).length)
+      return snap;
+
+    const appliesAt = point=>this.gridAppliesAt(grid, { x: point.x - align.x, y: point.y - align.y });
+    if(appliesAt(snap))
+      return snap;
+
+    const stepX = Math.abs(grid.x), stepY = Math.abs(grid.y);
+    if(!(stepX > 0) || !(stepY > 0))
+      return null;
+
+    // far enough to step over a boundary that cuts between the widget and the
+    // lattice point it would snap to, and short enough to stay a handful of
+    // expressions rather than a search of the whole board
+    const searchRings = 8;
+    let best = null;
+    let bestDistance = Infinity;
+    for(let ring = 1; ring <= searchRings; ++ring) {
+      // a lattice point `ring` cells away is at least `ring` minus the half
+      // cell the widget itself sits off the lattice from it, so once a point is
+      // found the rings that cannot come closer are not looked at at all
+      if(best && ((ring - 0.5) * Math.min(stepX, stepY)) ** 2 >= bestDistance)
+        break;
+      for(let column = -ring; column <= ring; ++column)
+        for(let row = -ring; row <= ring; ++row) {
+          if(Math.max(Math.abs(column), Math.abs(row)) != ring)
+            continue;
+          const candidate = { x: snap.x + column * grid.x, y: snap.y + row * grid.y };
+          const distance = (candidate.x - align.x - coord.x) ** 2 + (candidate.y - align.y - coord.y) ** 2;
+          if(distance < bestDistance && appliesAt(candidate)) {
+            best = candidate;
+            bestDistance = distance;
+          }
+        }
+    }
+    return best;
+  }
+
+  // Whether one grid applies at a position at all: inside the rectangle its
+  // four sides bound it to, and inside the area its conditions describe. This
+  // is asked of the position a widget was dropped at - is this grid one of the
+  // grids tried - and of every lattice point gridSnapCoord() weighs up snapping
+  // it to, so a grid that only applies in part of the parent cannot put a
+  // widget down outside that part either.
+  gridAppliesAt(grid, coord) {
+    return coord.x >= (grid.minX || -99999) && coord.x <= (grid.maxX || 99999)
+      && coord.y >= (grid.minY || -99999) && coord.y <= (grid.maxY || 99999)
+      && this.gridConditionsHold(grid, coord);
+  }
+
+  // The conditions one grid entry carries, as a list: none, one, or a list of
+  // them with the empty ones dropped.
+  gridConditions(grid) {
+    if(!grid || grid.condition === undefined || grid.condition === null)
+      return [];
+    return asArray(grid.condition).filter(condition=>condition !== null && condition !== undefined);
+  }
+
+  // Where one grid applies, beyond the rectangle minX/maxX/minY/maxY bound it
+  // to: a condition is an inequality in x and y - the position the widget would
+  // be dropped at, the same coordinates the four sides are measured in - or a
+  // list of them, all of which have to hold. It is written in the language a
+  // dragLimit condition is written in (client/js/expression.js), so
+  // "(x - 800)^2 + (y - 500)^2 < 300^2" is a round area and
+  // "${PROPERTY width OF board}" reads the state while the game is played.
+  // Outside the area this grid is simply not one of the grids tried, so the
+  // widget snaps to whichever other grid covers the position - and to nothing
+  // at all where none does - exactly as the rectangle already behaves. A
+  // condition that cannot be read (a typo, a widget that is gone) holds, so a
+  // mistyped grid keeps snapping rather than silently stopping.
+  gridConditionsHold(grid, coord) {
+    const resolve = this.positionResolver(coord);
+    return this.gridConditions(grid).every(condition=>expressionCondition(condition, resolve));
   }
 
   supportsPiles() {
@@ -2978,6 +3760,12 @@ export class Widget extends StateManaged {
     const thisOwner = this.get('owner');
     const thisOnPileCreation = this.get('onPileCreation');
     const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
+
+    // A pile that is already at its dropLimit takes no more cards - but only
+    // when this update comes from a drag. Everything else that piles cards up
+    // (a MOVE or CLONE in a routine, "Split the pile", the JSON editor) ignores
+    // dropLimit elsewhere too, and games rely on that, so it stays ignored here.
+    const isFull = (pile, count) => this.pileUpdateFromDrag && exceedsDropLimit(pile, count);
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -2996,6 +3784,11 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a card, they create a new pile and are added to it
         if(thisType == 'card' && widgetType == 'card') {
+          // the pile that would be created is bound by the dropLimit it would
+          // be created with, so a limit below 2 rules the pile out entirely
+          const newPileDropLimit = thisOnPileCreation && thisOnPileCreation.dropLimit;
+          if(this.pileUpdateFromDrag && newPileDropLimit > -1 && newPileDropLimit < 2)
+            continue;
           const pile = Object.assign({
             type: 'pile',
             parent: this.get('parent'),
@@ -3006,7 +3799,7 @@ export class Widget extends StateManaged {
           }, this.get('onPileCreation'));
           if(thisOwner !== null)
             pile.owner = thisOwner;
-          const pileId = await addWidgetLocal(pile);
+          const pileId = await addWidgetLocal(pile, false); // runtime path: keep random IDs
           await widget.set('parent', pileId);
           await this.bringToFront();
           await this.set('parent', pileId);
@@ -3015,6 +3808,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a pile, all children of one pile are moved to the other (the empty one destroys itself)
         if(thisType == 'pile' && widgetType == 'pile') {
+          if(isFull(widget, this.children().length))
+            continue;
           for(const w of this.children().reverse()) {
             await w.set('parent', widget.get('id'));
             await w.bringToFront();
@@ -3024,6 +3819,8 @@ export class Widget extends StateManaged {
 
         // if a pile gets dropped onto a card, the card is added to the pile but the pile is moved to the original position of the card
         if(thisType == 'pile' && widgetType == 'card') {
+          if(isFull(this, 1))
+            continue;
           for(const w of this.children().reverse())
             await w.bringToFront();
           await this.set('x', widget.get('x'));
@@ -3034,6 +3831,8 @@ export class Widget extends StateManaged {
 
         // if a card gets dropped onto a pile, it simply gets added to the pile
         if(thisType == 'card' && widgetType == 'pile') {
+          if(isFull(widget, 1))
+            continue;
           await this.bringToFront();
           await this.set('parent', widget.get('id'));
           break;
