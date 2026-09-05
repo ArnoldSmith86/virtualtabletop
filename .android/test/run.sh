@@ -1,11 +1,12 @@
 #!/bin/sh
 # Runs everything about the app that can be tested without a phone: the xz decoder against the
-# xz command line tool, the server's state machine, and the screen the app draws. All three
-# compile the real classes out of .android/src against stubs of the Android ones, so they need
-# nothing but a JDK - javac and java out of JAVA_HOME when it is set, from the path otherwise -
-# and node, which turns res/values into the R the tests read the app's texts out of.
+# xz command line tool, the installer against a repository built on the spot, the server's state
+# machine, and the screen the app draws. All four compile the real classes out of .android/src
+# against stubs of the Android ones, so they need nothing but a JDK - javac and java out of
+# JAVA_HOME when it is set, from the path otherwise - git, and node, which turns res/values into
+# the R the tests read the app's texts out of.
 #
-# Usage: [JAVA_HOME=<jdk>] .android/test/run.sh [xz|service|screen ...]
+# Usage: [JAVA_HOME=<jdk>] .android/test/run.sh [xz|installer|service|screen ...]
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
 android=$(dirname "$here")
@@ -23,6 +24,18 @@ xz() {
   $javac -nowarn -d "$out/xz" "$android/src/io/virtualtabletop/server/Xz.java" \
     "$here/xz/io/virtualtabletop/server/XzTest.java"
   $java -cp "$out/xz" io.virtualtabletop.server.XzTest
+}
+
+installer() {
+  rm -rf "$out/installer" && mkdir -p "$out/installer/classes" "$out/installer/files"
+  $javac -nowarn -d "$out/installer/classes" $(find "$here/installer/stub" -name '*.java') \
+    "$here/installer/InstallerTest.java" \
+    "$android/src/io/virtualtabletop/server/Installer.java" \
+    "$android/src/io/virtualtabletop/server/Packages.java" \
+    "$android/src/io/virtualtabletop/server/Deb.java" \
+    "$android/src/io/virtualtabletop/server/Xz.java" \
+    "$android/src/io/virtualtabletop/server/AppState.java"
+  $java -DtestDir="$out/installer" -cp "$out/installer/classes" InstallerTest
 }
 
 service() {
@@ -47,7 +60,7 @@ screen() {
   $java -DtestDir="$out/screen" -cp "$out/screen/classes" MainTest
 }
 
-for suite in ${*:-xz service screen}; do
+for suite in ${*:-xz installer service screen}; do
   echo "=== $suite ==="
   $suite
 done

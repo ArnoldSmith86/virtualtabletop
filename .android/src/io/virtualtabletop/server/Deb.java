@@ -92,6 +92,7 @@ final class Deb {
         skipFully(in, padded(size));
         continue;
       }
+      inside(target, prefix);
 
       int mode = (int)octal(header, 100, 8);
       if(type == '5') {
@@ -137,9 +138,20 @@ final class Deb {
     return new File(prefix, relative);
   }
 
+  /**
+   * Where an entry really lands. Its path is checked against the prefix already, but a link an
+   * earlier entry laid down can lead out of it, and a path through that link is followed like any
+   * other - so what the directories on the way resolve to has to stay inside as well.
+   */
+  private static void inside(File target, File prefix) throws IOException {
+    String parent = target.getParentFile().getCanonicalPath();
+    String root = prefix.getCanonicalPath();
+    if(!parent.equals(root) && !parent.startsWith(root + "/"))
+      throw new IOException("the package puts " + target.getName() + " outside its prefix, in " + parent);
+  }
+
   private static void write(InputStream in, long size, File target, int mode) throws IOException {
-    if(target.exists() && !target.delete())
-      throw new IOException("cannot replace " + target);
+    remove(target);
 
     OutputStream out = new FileOutputStream(target);
     try {
@@ -163,9 +175,23 @@ final class Deb {
     chmod(directory, mode | 0700);
   }
 
-  private static void symlink(String link, File target) throws IOException {
-    if(target.exists() && !target.delete())
+  /**
+   * Clears the way for an entry. What a path leads to is not what is being replaced: a link left
+   * behind by an earlier unpack whose target is gone is invisible to File.exists(), and writing
+   * the entry would then follow it to wherever it points instead of taking its place.
+   */
+  private static void remove(File target) throws IOException {
+    try {
+      Os.lstat(target.getAbsolutePath());
+    } catch(ErrnoException e) {
+      return;
+    }
+    if(!target.delete())
       throw new IOException("cannot replace " + target);
+  }
+
+  private static void symlink(String link, File target) throws IOException {
+    remove(target);
     try {
       Os.symlink(link, target.getAbsolutePath());
     } catch(ErrnoException e) {

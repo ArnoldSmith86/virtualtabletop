@@ -35,8 +35,13 @@ ANDROID_JAR="$PLATFORM/android.jar"
 KEYSTORE="$HERE/keystore.jks"
 PASSWORD="virtualtabletop"
 VERSION="$(git -C "$HERE/.." rev-parse --short HEAD 2>/dev/null || echo nogit)"
-# the number of commits, so that a newer build also looks newer to Android
+# the number of commits, so that a newer build also looks newer to Android. The manifest sets no
+# version of its own, because aapt2 only fills these in when it finds none there.
 CODE="$(git -C "$HERE/.." rev-list --count HEAD 2>/dev/null || echo 1)"
+if [[ "$(git -C "$HERE/.." rev-parse --is-shallow-repository 2>/dev/null)" == "true" ]]; then
+  echo "Warning: this is a shallow clone, so version $CODE counts the commits it has rather than"
+  echo "         all of them - Android will not take the build for an update of a full one."
+fi
 OUTPUT="$HERE/out/VirtualTabletop-$VERSION.apk"
 
 echo "Building VirtualTabletop $VERSION with $(basename "$BUILD_TOOLS") against $(basename "$PLATFORM")"
@@ -76,6 +81,14 @@ fi
 "$BUILD_TOOLS/apksigner" sign --ks "$KEYSTORE" --ks-pass "pass:$PASSWORD" \
   --key-pass "pass:$PASSWORD" --out "$OUTPUT" build/aligned.apk
 rm -f "$OUTPUT.idsig"
+
+# aapt2 only fills in a version the manifest leaves out, so a versionCode that stayed behind means
+# the manifest has taken one back and every build would look like the same one to Android
+STAMPED="$("$BUILD_TOOLS/aapt2" dump badging "$OUTPUT" | sed -n "s/^package:.*versionCode='\([0-9]*\)'.*/\1/p")"
+if [[ "$STAMPED" != "$CODE" ]]; then
+  echo "The APK carries versionCode $STAMPED instead of $CODE - AndroidManifest.xml must not set one."
+  exit 1
+fi
 
 echo "Created $OUTPUT ($(du -h "$OUTPUT" | cut -f1))"
 echo "Install it with: adb install -r $OUTPUT"

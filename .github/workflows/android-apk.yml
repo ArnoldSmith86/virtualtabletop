@@ -25,7 +25,24 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Test the xz decoder, the server state machine and the screen
+      with:
+        # the whole history: the version the APK carries is the number of commits, which a
+        # shallow checkout would report as 1
+        fetch-depth: 0
+    # the APK the main README links to is committed, so a change to the app that forgets to
+    # refresh it would leave everyone downloading a build older than the sources it is reviewed as
+    - name: Check that the committed APK was refreshed
+      if: github.event_name == 'pull_request'
+      run: |
+        base=${{ github.event.pull_request.base.sha }}
+        git cat-file -e "$base^{commit}" 2>/dev/null || git fetch --quiet --no-tags origin "$base"
+        changed() { git diff --name-only "$base" HEAD -- "$@" | grep -q .; }
+        if changed .android/src .android/res .android/AndroidManifest.xml && ! changed .android/VirtualTabletop.apk; then
+          echo "The app changed but .android/VirtualTabletop.apk did not. Build it and copy it"
+          echo "over - see .android/README.md."
+          exit 1
+        fi
+    - name: Test the xz decoder, the installer, the server state machine and the screen
       run: .android/test/run.sh
     - name: Build the APK
       run: .android/build-apk.sh

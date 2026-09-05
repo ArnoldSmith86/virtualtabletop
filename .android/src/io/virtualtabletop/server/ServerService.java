@@ -269,15 +269,17 @@ public class ServerService extends Service implements AppState.Listener {
         }
         final String last = said;
         final int exit = exitCode(process);
-        // a shutdown of our own clears this field before it waits, so whatever gets here ended
-        // without being asked to
-        if(server == process)
-          new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+          @Override
+          public void run() {
+            // a shutdown of our own clears this field before it waits, so whatever gets here
+            // ended without being asked to. The field belongs to the main thread, which is why
+            // it is read here rather than on the watcher: a restart would otherwise be able to
+            // put the new server in place between the two and have this tear it down again.
+            if(server == process)
               ended(last, exit);
-            }
-          });
+          }
+        });
       }
     }, "server").start();
   }

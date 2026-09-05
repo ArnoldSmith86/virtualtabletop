@@ -1,6 +1,7 @@
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -56,6 +57,16 @@ public class MainTest {
     check(AlertDialog.lastMessage != null && AlertDialog.lastMessage.startsWith("The download stops"),
         "pressing Quit during a download asks first");
     check("io.virtualtabletop.server.QUIT".equals(Context.lastService), "and quits once it is confirmed");
+
+    Stage.step("Downloading VirtualTabletop - part 8 of 15");
+    Handler.pending.clear();
+    call(screen, "stateChanged", null, null);
+    call(screen, "stateChanged", null, null);
+    call(screen, "stateChanged", null, null);
+    check(Handler.pending.size() == 1, "the lines of a burst of output share one drawing");
+    check(text(screen, "detail").endsWith("part 7 of 15"), "which has not happened while they arrive");
+    Handler.run();
+    check(text(screen, "detail").endsWith("part 8 of 15"), "and shows the newest of them when it does");
 
     Stage.reset();
     Stage.failed("git exited with 128");

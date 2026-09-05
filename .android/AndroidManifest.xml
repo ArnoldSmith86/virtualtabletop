@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.virtualtabletop.server"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="io.virtualtabletop.server">
+
+  <!-- no versionCode or versionName here: build-apk.sh derives both from the commit the app is
+       built from and aapt2 only fills them in when the manifest leaves them out -->
 
   <!-- Android 10 and newer refuse to execute files an app downloaded into its own data
        directory once the app targets API 29, so the target stays at 28 - the same reason

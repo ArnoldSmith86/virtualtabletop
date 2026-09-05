@@ -163,11 +163,13 @@ final class Xz extends InputStream {
     int properties = header[position[0]] & 0xFF;
     if(properties > 40)
       throw new IOException("unsupported dictionary size");
-    int size = properties == 40 ? MAXIMUM_DICTIONARY : (2 | (properties & 1)) << (properties / 2 + 11);
+    // in long, because the sizes the last few property values stand for do not fit into an int
+    // and would come out negative, which is a size that passes every check below it
+    long size = properties == 40 ? MAXIMUM_DICTIONARY : (long)(2 | (properties & 1)) << (properties / 2 + 11);
     if(size > MAXIMUM_DICTIONARY)
       throw new IOException("dictionary of " + size + " bytes is too large");
     if(dictionary.length < size)
-      dictionary = new byte[size];
+      dictionary = new byte[(int)size];
 
     resetDictionary();
     chunkRemaining = 0;

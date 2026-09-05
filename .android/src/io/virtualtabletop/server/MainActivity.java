@@ -24,7 +24,17 @@ import android.widget.TextView;
 public class MainActivity extends Activity implements AppState.Listener {
   private static MainActivity shown;
 
+  /** how long lines that arrive one after the other are collected into one drawing */
+  private static final int DRAW_DELAY_MILLISECONDS = 50;
+
   private final Handler handler = new Handler(Looper.getMainLooper());
+
+  private final Runnable draw = new Runnable() {
+    @Override
+    public void run() {
+      render();
+    }
+  };
 
   private TextView state;
   private TextView detail;
@@ -123,14 +133,15 @@ public class MainActivity extends Activity implements AppState.Listener {
     super.onDestroy();
   }
 
+  /**
+   * git and npm write several lines a second while they work, and every one of them would
+   * otherwise queue a whole redraw of the screen on the thread that has to stay responsive. One
+   * drawing at the end of a burst says the same thing.
+   */
   @Override
   public void stateChanged() {
-    handler.post(new Runnable() {
-      @Override
-      public void run() {
-        render();
-      }
-    });
+    handler.removeCallbacks(draw);
+    handler.postDelayed(draw, DRAW_DELAY_MILLISECONDS);
   }
 
   private void service(String action) {

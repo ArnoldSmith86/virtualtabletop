@@ -13,12 +13,18 @@ changes:
     ANDROID_HOME=~/Android/Sdk .android/build-apk.sh
     cp .android/out/VirtualTabletop-*.apk .android/VirtualTabletop.apk
 
+The `Android APK` workflow fails a pull request that changes the app without refreshing that file,
+so what the main README links to is never older than the sources it is reviewed as.
+
 The key it is signed with is committed as [`keystore.jks`](keystore.jks), so a rebuilt APK
 installs over the one that is already on a phone instead of having to be uninstalled first.
 Android has no other way of telling two builds apart: an app can only be replaced by one signed
 with the same key. It is a throwaway key with a password anyone can read here, which is what a
 sideloaded app is worth - it makes updates work, and it is no proof of where a build came from.
-Install an APK because you trust where you got it, not because it is signed.
+The other side of that: the package name and the key are both public, so any APK anyone
+builds is accepted by Android as an *update* to an installed VirtualTabletop and inherits its
+data directory, saved rooms included. Install an APK because you trust where you got it, not
+because it is signed.
 
 ## Using it
 
@@ -55,6 +61,11 @@ The APK lands in `.android/out/`, signed with `keystore.jks` - alias, store pass
 password are all `virtualtabletop`. Install it with
 `adb install -r .android/out/VirtualTabletop-*.apk`, or by opening the file on the phone.
 
+Every build is stamped with the commit it was built from: the number of commits as the version
+code and the short hash as the version name, which is what a phone's app info shows and what
+tells Android that one build is newer than another. `aapt2` only fills those in when the manifest
+leaves them out, so `AndroidManifest.xml` sets neither and the build fails if it ever does again.
+
 The `Android APK` workflow builds it on demand and attaches the result to the run. It runs the
 tests below first, so what they cover is checked on every change under `.android/`.
 
@@ -64,18 +75,24 @@ one all install over each other.
 ## Tests
 
 ```
-.android/test/run.sh          # or run.sh xz, run.sh service, run.sh screen
+.android/test/run.sh          # or run.sh xz, run.sh installer, run.sh service, run.sh screen
 ```
 
 The app is Java, so its tests are too, but they need no device, no emulator and no Android SDK:
 each one compiles the real classes out of `src/` against stubs of the Android classes they use
-(`test/<suite>/stub/`) and drives them on the machine, which takes a JDK, `node` and a couple of
-minutes at most. `node` generates the `R` the tests compile against out of `res/values/`, so a
-test reads the very texts the app shows rather than a copy of them that goes stale. The build
-output lands in `.android/out/test/`.
+(`test/<suite>/stub/`) and drives them on the machine, which takes a JDK, `git`, `node` and a
+couple of minutes at most. `node` generates the `R` the tests compile against out of
+`res/values/`, so a test reads the very texts the app shows rather than a copy of them that goes
+stale. The build output lands in `.android/out/test/`.
 
 * **xz** compresses samples with the `xz` command line tool and requires the decoder in `Xz.java`
   to hand them back byte for byte, a truncated stream included.
+* **installer** clones a repository it builds itself, with the machine's own git in the place of
+  the one the app downloads: a first installation, an update over it, and the case the whole
+  design is for - a phone that was killed in the middle of a group, whose leftover lock and half
+  written pack have to be cleared before the next attempt rather than blocking it for good. It
+  also unpacks package entries over what an earlier installation left in their place, a link
+  whose target is gone and one that leads out of the prefix included.
 * **service** drives the real `ServerService` with a shell script standing in for node, and walks
   the states a phone would otherwise be needed for: a server that is not up until it has printed
   that it is listening, connectivity broadcasts that change nothing, the hotspot coming up and the
@@ -107,9 +124,12 @@ screen and the notification actually look.
   that broke, so the app does not take it in one piece: it clones with `--filter=blob:none`, which
   is a few megabytes, and then fills the file contents in with `git sparse-checkout add`, a group
   of directories of about a thousand files at a time. Every group that arrived stays in the clone,
-  so pressing the button again continues where it stopped. The last group turns the checkout back
-  into an ordinary one (`sparse-checkout disable`), which is also what tells a later update that
-  the clone is complete.
+  so pressing the button again continues where it stopped. Every attempt starts by clearing what
+  an interrupted git left behind - its lock files, wherever in `.git` they lie, and half written
+  packs - because the lock a group download takes is held for as long as the group needs, and one
+  that nobody releases would block every later update rather than one of them. The last group
+  turns the checkout back into an ordinary one (`sparse-checkout disable`), which is also what
+  tells a later update that the clone is complete.
 * **What is verified.** Each package is checked against the SHA-256 the repository index states,
   and a package the index does not state one for is an error. The index itself is trusted on TLS
   alone: `apt` would verify `InRelease` against Termux's GPG key, which this app has no keyring

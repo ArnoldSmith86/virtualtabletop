@@ -221,14 +221,28 @@ final class Installer implements Runnable {
         select(child, files, children, selected);
   }
 
-  /** A git that was stopped along with the app leaves its lock files behind. */
+  /**
+   * A git that was stopped along with the app leaves its lock files behind, and the one a group
+   * download holds for minutes on end lies in .git/info rather than next to the index, so the
+   * whole directory is swept - a lock nobody removes turns every later update into "File exists"
+   * with no way out but clearing the app's data. The half written packs of an interrupted fetch
+   * go with them, because they are the other thing an interruption leaves lying around and
+   * nothing else ever reclaims them.
+   */
   private void releaseLocks(File clone) {
-    File[] files = new File(clone, ".git").listFiles();
+    sweep(new File(clone, ".git"));
+  }
+
+  private void sweep(File directory) {
+    File[] files = directory.listFiles();
     if(files == null)
       return;
-    for(File file : files)
-      if(file.getName().endsWith(".lock"))
+    for(File file : files) {
+      if(file.isDirectory())
+        sweep(file);
+      else if(file.getName().endsWith(".lock") || file.getName().startsWith("tmp_pack_"))
         file.delete();
+    }
   }
 
   /** A setting of the clone, empty when it is not set. */

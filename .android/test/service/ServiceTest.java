@@ -24,7 +24,8 @@ public class ServiceTest {
     waitFor("the server to report its port", true);
     check("it is running once it did", running() && !starting());
     check("the address it was given is the one of the phone", log().contains("EXTERNALURL=http://192.168.1.20:8272"));
-    check("the notification hands out the address", log().contains("\"VirtualTabletop is running\" / \"http://192.168.1.20:8272/vtt\" [Open Share Quit]"));
+    check("the notification hands out the address",
+        said("\"VirtualTabletop is running\" / \"http://192.168.1.20:8272/vtt\" [Open Share Quit]"));
     int pid = pid();
 
     say("a connectivity change that changed nothing");
@@ -42,11 +43,10 @@ public class ServiceTest {
     address("192.168.43.1");
     Harness.receiver.onReceive(null, new Intent());
     waitFor("the server to go down", false);
-    Thread.sleep(500);  // the toast and the notification follow the moment it is marked as down
     check("a toast says what is happening",
-        log().contains("toast: The network changed - restarting the server on http://192.168.43.1:8272/vtt"));
+        said("toast: The network changed - restarting the server on http://192.168.43.1:8272/vtt"));
     check("and so does the notification",
-        log().contains("\"VirtualTabletop is starting\" / \"The network changed - restarting the server on http://192.168.43.1:8272/vtt\""));
+        said("\"VirtualTabletop is starting\" / \"The network changed - restarting the server on http://192.168.43.1:8272/vtt\""));
     waitFor("the server to come back", true);
     check("it runs on the new address", pid() != pid && url().equals("http://192.168.43.1:8272/vtt"));
     check("and was told about it", log().contains("EXTERNALURL=http://192.168.43.1:8272"));
@@ -157,6 +157,19 @@ public class ServiceTest {
     if(!file.isFile())
       return -1;
     return Integer.parseInt(new String(Files.readAllBytes(file.toPath()), "UTF-8").trim());
+  }
+
+  /**
+   * Whether the app has said something, waited for rather than read once: the state a check like
+   * this follows is set a moment before the line about it is written.
+   */
+  static boolean said(String what) throws Exception {
+    for(int waited = 0; waited < 5000; waited += 50) {
+      if(log().contains(what))
+        return true;
+      Thread.sleep(50);
+    }
+    return false;
   }
 
   /** Waits for the app to have recorded why the server is not running. */
