@@ -2682,10 +2682,16 @@ export class Widget extends StateManaged {
           }
 
           if (a.turnCycle != 'position' && a.turnCycle != 'seat' && a.turnCycle != 'random') {
-            // rotate the set of seats so the current turn is first
-            for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
-              c.unshift(c.pop());
-            }
+            // find the last seat that currently has turn so that we advance past
+            // every seat sharing the current turn (e.g. multiple seats on the same index)
+            let lastTurnedPos = -1;
+            for (let i = 0; i < c.length; i++)
+              if (c[i].get('turn'))
+                lastTurnedPos = i;
+
+            // rotate the set of seats so the current turn is first (no-op if none has turn)
+            if (lastTurnedPos > 0)
+              c = c.slice(lastTurnedPos).concat(c.slice(0, lastTurnedPos));
           }
 
           // filter out seats with skipTurn set to true
