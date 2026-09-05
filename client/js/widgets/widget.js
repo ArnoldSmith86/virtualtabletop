@@ -3483,7 +3483,7 @@ export class Widget extends StateManaged {
           removeFromDOM($('#enlargeStyle'));
         const eStyle = document.createElement('style');
         eStyle.id = "enlargeStyle";
-        eStyle.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${this.cssScope}`,'#enlarged')));
+        eStyle.appendChild(document.createTextNode(wStyle.textContent.split(`#w_${this.cssScope}`).join('#enlarged')));
         $('head').appendChild(eStyle);
       }
     }
