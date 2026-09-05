@@ -1580,6 +1580,28 @@ function uploadWidget(preset) {
   });
 }
 
+// Returns the reason why the new parent cannot be used, or null. Callers that update many widgets
+// at once (the macro command) use it to collect the problems instead of alerting once per widget.
+// The widget is looked up by its previous id because renaming it keeps its children pointing at it.
+function widgetParentProblem(widget, previousState) {
+  if(widget.parent === undefined || widget.parent === null)
+    return null;
+  // Only an edit that actually changes where the widget hangs is checked: a widget that ended up
+  // inside a loop has to stay editable so that it can be repaired, and a macro running over every
+  // widget does not walk a parent chain it is not touching.
+  const parentChanges = widget.parent !== previousState.parent || widget.id !== previousState.id;
+  // the self-parent case before the existence check: renaming a widget and pointing parent at the
+  // new id would otherwise be reported as a parent that does not exist, which is true but not the
+  // useful half
+  if(parentChanges && widget.parent == widget.id)
+    return `A widget cannot be its own parent.`;
+  if(!widgets.has(widget.parent))
+    return `Parent ${widget.parent} does not exist.`;
+  if(parentChanges && widgets.has(previousState.id) && widgets.get(previousState.id).wouldCreateParentCycle(widget.parent))
+    return `Widget ${widget.parent} is inside ${widget.id}, so using it as the parent would create a loop.`;
+  return null;
+}
+
 async function updateWidget(currentState, oldState, applyChangesFromUI) {
   batchStart();
 
@@ -1597,8 +1619,9 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     if(widget[key] === null)
       delete widget[key];
 
-  if(widget.parent !== undefined && !widgets.has(widget.parent)) {
-    alert(`Parent widget ${widget.parent} does not exist.`);
+  const problem = widgetParentProblem(widget, previousState);
+  if(problem) {
+    alert(`${problem} Nothing was saved.`);
     batchEnd();
     return;
   }
