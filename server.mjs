@@ -605,6 +605,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  const reportTypes = new Map([ [ 'feedback', 'Feedback' ], [ 'nonFatal', 'Client error (survived)' ] ]);
   const feedbackCooldowns = new Map();
   router.put('/clientError', express.json({ limit: '50mb' }), function(req, res, next) {
     if(typeof req.body == 'object') {
@@ -624,7 +625,12 @@ MinifyHTML().then(function(result) {
       }
       const errorID = Math.random().toString(36).substring(2, 10).padEnd(8, '0');
       fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));
-      Logging.log(`${req.body.type == 'feedback' ? 'Feedback' : 'ERROR: Client error'} ${errorID}: ${req.body.message}`);
+      // a report the client sent while carrying on is not an ERROR the server has to page anyone
+      // about, and its message is a whole stack trace - only its first line goes into the log so
+      // that the log stays one line per report, the saved file above has the rest
+      const reportType = reportTypes.get(req.body.type) || 'ERROR: Client error';
+      const message = req.body.type == 'nonFatal' ? `${req.body.message}`.split('\n')[0] : req.body.message;
+      Logging.log(`${reportType} ${errorID}: ${message}`);
       res.send(errorID);
     } else {
       res.send('not a valid JSON object');
