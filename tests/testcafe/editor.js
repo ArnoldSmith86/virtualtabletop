@@ -427,6 +427,43 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   await t.expect(result.y).notEql(200);
 });
 
+test('A rename that the browser commits twice does not claim the new id is taken', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    old: { id: 'old', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_old')
+    .expect(Selector('[aria-label="Widget id"]').exists).ok();
+
+  // Chrome commits an edited field with a change event, and depending on how
+  // the field loses focus it can send a second one for the same edit, so a
+  // rename must survive being asked for twice.
+  const result = await ClientFunction(() => {
+    const input = document.querySelector('[aria-label="Widget id"]');
+    const alerts = [];
+    const originalAlert = window.alert;
+    window.alert = message => alerts.push(message);
+    input.value = 'new';
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    return new Promise(resolve => setTimeout(() => {
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      setTimeout(() => {
+        window.alert = originalAlert;
+        resolve({ alerts, renamed: widgets.has('new'), gone: !widgets.has('old') });
+      }, 200);
+    }, 500));
+  })();
+
+  await t.expect(result).eql({ alerts: [], renamed: true, gone: true });
+});
+
 // Committing a widget id and then blurring the input can hand the same change event to the client twice -
 // Chrome does that once the rename has replaced the widget under the input. The second one must not be read
 // as an attempt to take the id that the first one just created, whether it arrives after the rename or while
