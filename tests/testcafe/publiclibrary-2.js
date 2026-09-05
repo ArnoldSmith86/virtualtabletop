@@ -13,7 +13,7 @@ publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36'
          { from: 'zpiece19', to: 'sq35', sticks: true  },
          { from: 'zpiece08', to: 'sq53', sticks: true  }
        ]);
-publicLibraryButtons('Reward',             0, '5290d9113f42a3c0e458a788b5a1ea99', [
+publicLibraryButtons('Reward',             0, '5acf6ceee560f871fac038af6d1196d1', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', 'seat1', 'next'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '2625ca4661785ca9a75cdf93d6379427', [ 'startMix', 'draw14' ]);

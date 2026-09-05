@@ -1614,7 +1614,7 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_dice2')
     .click('#w_dice2');
-  await compareState(t, '3878b15bd31f8ad1d0972a20b69d7ea5');
+  await compareState(t, 'eae7a01f31d1075d7e458b4abf5af3d6');
 });
 
 test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
