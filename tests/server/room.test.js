@@ -7,6 +7,7 @@ import { VERSION } from '../../server/fileupdater.mjs';
 
 let directory = null;
 let source = null;
+let saveDirectory = null;
 
 const moveFile = (from, to)=>Room.prototype.moveFile.call(null, from, to);
 
@@ -32,6 +33,22 @@ function roomLoadingStates(states) {
   return room;
 }
 
+// a room that traces into the temporary directory and talks to nobody
+function tracingRoom(meta) {
+  const room = Object.create(Room.prototype);
+  room.id = 'room';
+  room.deltaID = 0;
+  room.players = [];
+  room.state = { _meta: meta };
+  return room;
+}
+
+function readTraceFile() {
+  const files = fs.readdirSync(directory).filter(f=>f.match(/\.trace$/));
+  expect(files.length).toEqual(1);
+  return JSON.parse(fs.readFileSync(path.join(directory, files[0]), 'utf8'));
+}
+
 function writeVariantFiles(stateID, count) {
   for(let i=0; i<count; ++i)
     fs.writeFileSync(path.join(directory, `${stateID}-${i}.json`), `{"variant":${i}}`);
@@ -41,9 +58,15 @@ beforeEach(function() {
   directory = fs.mkdtempSync(path.join(os.tmpdir(), 'vtt-room-'));
   source = path.join(directory, '0.json');
   fs.writeFileSync(source, '{"a":1}');
+  saveDirectory = process.env.VTT_SAVE_DIR;
+  process.env.VTT_SAVE_DIR = directory;
 });
 
 afterEach(function() {
+  if(saveDirectory === undefined)
+    delete process.env.VTT_SAVE_DIR;
+  else
+    process.env.VTT_SAVE_DIR = saveDirectory;
   fs.rmSync(directory, { recursive: true, force: true });
 });
 
@@ -141,5 +164,24 @@ describe('server/room.mjs', function() {
     expect(states.empty).toBeUndefined();
     expect(states.filled).toBeDefined();
     expect(states['PL:games/Empty']).toBeDefined();
+  });
+
+  test('trace opens a trace file for a room that was loaded with tracing already enabled', function() {
+    const room = tracingRoom({ tracingEnabled: true });
+
+    room.trace('unload', {});
+
+    const trace = readTraceFile();
+    expect(trace.length).toEqual(1);
+    expect(trace[0].source).toEqual('unload');
+  });
+
+  test('trace writes into the file that was opened when tracing was switched on', function() {
+    const room = tracingRoom({});
+
+    room.traceIsEnabled(true);
+    room.trace('unload', {});
+
+    expect(readTraceFile().map(entry=>entry.source)).toEqual([ 'broadcast', 'unload' ]);
   });
 });

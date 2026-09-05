@@ -569,6 +569,7 @@ export default class Room {
       Logging.log(`loading room ${this.id}`);
       this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
       this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+      this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
 
       this.migrateOldPublicLibraryLinks();
       this.migrateBrokenSaveWithoutVersion();
@@ -576,7 +577,6 @@ export default class Room {
       this.removeInvalidPublicLibraryLinks(player);
       this.removeStatesWithoutVariants(player);
 
-      this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
       this.normalizeGameSettings(this.state._meta.gameSettings);
       this.broadcast('state', this.state);
     } else {
@@ -1385,6 +1385,12 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  openTraceFile() {
+    this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+    fs.writeFileSync(this.tracingFilename, '[\n');
+    Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+  }
+
   trace(source, payload) {
     if(!this.traceIsEnabled() && source == 'client' && payload.type == 'enable') {
       this.traceIsEnabled(true);
@@ -1392,6 +1398,10 @@ export default class Room {
     }
 
     if(this.traceIsEnabled()) {
+      // a saved room comes back with tracing already enabled, so the room state can ask for tracing
+      // before load() opened a file for it - whatever is traced until then opens the file itself
+      if(!this.tracingFilename)
+        this.openTraceFile();
       payload.servertime = +new Date;
       payload.source = source;
       payload.serverDeltaID = this.deltaID;
@@ -1404,10 +1414,8 @@ export default class Room {
     if(setEnabled && this.state && this.state._meta) {
       this.state._meta.tracingEnabled = true;
 
-      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+      this.openTraceFile();
       this.broadcast('tracing', 'enable');
-      fs.writeFileSync(this.tracingFilename, '[\n');
-      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
     return this.state && this.state._meta && this.state._meta.tracingEnabled;
   }
