@@ -112,16 +112,22 @@ each other - uninstall the old one first, or build locally where `keystore.jks` 
 * **When the server counts as running.** Node takes a few seconds to come up on a phone, and it
   can still fail on the way - an occupied port, a half finished installation. The app therefore
   says *Starting the server* until the server has printed that it is listening, and only then
-  shows the address and offers to open or share it.
+  shows the address and offers to open or share it. A server that stops instead of getting there,
+  or that dies later while people are playing, leaves the last thing it printed on the card in the
+  failure colour until the next **Start server**: the app would otherwise fall back to *Ready to
+  play* and the only trace of what happened would have scrolled past in the console.
 * **The address the server bakes in.** `EXTERNALURL` is read when the server starts, so an
   address that changes underneath a running server is wrong in every link it hands out. The app
   watches for that - a connectivity broadcast, plus a look every 15 seconds, because turning the
   hotspot on and off does not always broadcast anything - and restarts the server on the new
   address, with a toast saying so. Every switch between two networks has a moment with no address
   at all, which is waited out rather than restarted on.
-* **The notification.** On Android 13 and newer the app asks for the notification permission when
-  the server is first started. Declining it hides the notification, which is the only place the
-  address, **Open**, **Share** and **Quit** live; the app screen still works.
+* **The notification.** The manifest declares `POST_NOTIFICATIONS`, without which Android 13 and
+  newer shows no notification at all - not even the one a foreground service carries. An app that
+  targets API 28 does not ask for it itself: the system does, on its own, once the notification
+  channel exists and an activity is on screen, which is when the server or an installation is
+  first started. Declining it hides the notification, which is the only place the address,
+  **Open**, **Share** and **Quit** live; the app screen still works.
 
 ## Branding
 

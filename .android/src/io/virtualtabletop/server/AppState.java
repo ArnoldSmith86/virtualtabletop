@@ -26,6 +26,7 @@ final class AppState {
   private static int percent = UNKNOWN;
   private static boolean lastLineIsProgress;
   private static String failure;
+  private static boolean serverFailure;
 
   private AppState() {
   }
@@ -80,7 +81,7 @@ final class AppState {
     working = isWorking;
     percent = UNKNOWN;
     if(isWorking)
-      failure = null;
+      clearFailure();
     else
       step = "";
     changed();
@@ -89,11 +90,35 @@ final class AppState {
   /** What went wrong, kept until the next run so that the screen can say so and not only the log. */
   static synchronized void failed(String message) {
     failure = message;
+    serverFailure = false;
     log("It stopped: " + message);
+  }
+
+  /**
+   * The same for a server that did not come up, or did not stay up. It is kept apart from a failed
+   * installation because the screen words it differently and because the button that answers it is
+   * Start server rather than Install - and it is kept at all because once the server is down there
+   * is nothing else on the screen that would say anything went wrong.
+   */
+  static synchronized void serverFailed(String message) {
+    failure = message;
+    serverFailure = true;
+    log(message);
+  }
+
+  /** Forgets a failure, which is where a new attempt at the same thing starts. */
+  static synchronized void clearFailure() {
+    failure = null;
+    serverFailure = false;
+    changed();
   }
 
   static synchronized String failure() {
     return failure;
+  }
+
+  static synchronized boolean serverFailed() {
+    return serverFailure;
   }
 
   static synchronized boolean isWorking() {

@@ -12,6 +12,11 @@
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
   <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <!-- Android 13 and newer shows no notification at all until this is granted, including the one
+       a foreground service carries - which is where the address, Open, Share and Quit live. The
+       app targets 28, so the system asks for it on its own once the channel exists and an
+       activity is on screen; a runtime request is not the app's to make. -->
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
   <application
       android:label="@string/app_name"

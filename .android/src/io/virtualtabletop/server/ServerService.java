@@ -196,6 +196,7 @@ public class ServerService extends Service implements AppState.Listener {
   private void startServer() {
     starting = true;
     restarting = false;
+    AppState.clearFailure();
     address = Network.address();
     url = Network.url(address);
     AppState.step("Starting the server on " + url);
@@ -206,7 +207,7 @@ public class ServerService extends Service implements AppState.Listener {
     try {
       server = launch();
     } catch(IOException e) {
-      AppState.step("The server could not be started: " + e.getMessage());
+      AppState.serverFailed("The server could not be started: " + e.getMessage());
       stop();
       return;
     }
@@ -241,12 +242,16 @@ public class ServerService extends Service implements AppState.Listener {
     new Thread(new Runnable() {
       @Override
       public void run() {
+        // the last thing the server said, which is what its reason for stopping looks like
+        String said = "";
         try {
           BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
           try {
             String line;
             while((line = reader.readLine()) != null) {
               AppState.log(line);
+              if(line.trim().length() > 0)
+                said = line.trim();
               if(line.contains(LISTENING))
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                   @Override
@@ -259,20 +264,42 @@ public class ServerService extends Service implements AppState.Listener {
           } finally {
             reader.close();
           }
-          process.waitFor();
         } catch(Exception e) {
           AppState.log("The server output could not be read: " + e);
         }
+        final String last = said;
+        final int exit = exitCode(process);
+        // a shutdown of our own clears this field before it waits, so whatever gets here ended
+        // without being asked to
         if(server == process)
           new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-              AppState.step("The server stopped");
-              stop();
+              ended(last, exit);
             }
           });
       }
     }, "server").start();
+  }
+
+  /**
+   * The server ended on its own: a port that is taken, a half finished installation, a crash while
+   * people were playing. What it printed last is the only explanation there is, so it goes on the
+   * card and stays there until the next start rather than scrolling away in the console.
+   */
+  private void ended(String said, int exit) {
+    String reason = said.length() > 0 ? said : "it ended with code " + exit;
+    AppState.serverFailed((starting ? "The server stopped before it was ready: " : "The server stopped: ") + reason);
+    stop();
+  }
+
+  /** What the server ended with, which is all there is to say when it printed nothing on the way out. */
+  private static int exitCode(Process process) {
+    try {
+      return process.waitFor();
+    } catch(InterruptedException e) {
+      return -1;
+    }
   }
 
   /**

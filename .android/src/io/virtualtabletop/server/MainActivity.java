@@ -190,9 +190,11 @@ public class MainActivity extends Activity implements AppState.Listener {
       state.setText(first ? R.string.state_installing : R.string.state_updating);
       detail.setText(AppState.step());
     } else if(failure != null) {
-      state.setText(installed ? R.string.state_update_failed : R.string.state_install_failed);
-      detail.setText(getString(R.string.hint_failed, failure,
-          getString(installed ? R.string.update : R.string.install)));
+      boolean server = AppState.serverFailed();
+      state.setText(server ? R.string.state_server_failed
+          : installed ? R.string.state_update_failed : R.string.state_install_failed);
+      detail.setText(getString(server ? R.string.hint_server_failed : R.string.hint_failed, failure,
+          getString(server ? R.string.start_server : installed ? R.string.update : R.string.install)));
     } else if(installed) {
       state.setText(R.string.state_ready);
       detail.setText(R.string.hint_ready);

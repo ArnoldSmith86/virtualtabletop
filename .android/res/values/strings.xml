@@ -25,9 +25,11 @@
   <string name="state_running">Players open this address</string>
   <string name="state_install_failed">The installation stopped</string>
   <string name="state_update_failed">The update stopped</string>
+  <string name="state_server_failed">The server stopped</string>
   <string name="hint_ready">Start the server and open the room on any device in the same network.</string>
   <string name="hint_starting">Node.js takes a few seconds to come up on a phone.</string>
   <string name="hint_failed">%1$s\n\nPress %2$s again to carry on where it stopped.</string>
+  <string name="hint_server_failed">%1$s\n\nPress %2$s to try again.</string>
   <string name="address_description">Open the room in the browser</string>
   <string name="confirm_quit_title">Quit VirtualTabletop</string>
   <string name="confirm_quit_running">The server stops and everyone playing is disconnected. The rooms are saved and are still there next time.</string>
