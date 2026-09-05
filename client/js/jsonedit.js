@@ -487,6 +487,16 @@ const jeCommands = [
     }
   },
   {
+    // The same for every other widget: the dialog downloads the font files and fills in this widget's
+    // "fonts", from where the family is declared for the whole document and can be used in any css.
+    id: 'je_widgetFonts',
+    name: 'fonts (font picker)',
+    context: '^(?!deck )[^ ]+( ↦ fonts( ↦ .*)?)?$',
+    call: function() {
+      openWidgetFontPicker(widgets.get(jeStateNow.id));
+    }
+  },
+  {
     id: 'je_symbolPickerCustom',
     name: 'upload a custom icon asset',
     context: '^.* ↦ icon( ↦ |$)',

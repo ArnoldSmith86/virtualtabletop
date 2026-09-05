@@ -879,6 +879,93 @@ class SelectInput extends PropertyInput {
   }
 }
 
+// The font family a text is drawn in: a dropdown of every family this game can render, plus a button that
+// fetches another one from Google Fonts (see client/js/editor/fontPicker.js). Only the families that are
+// declared for the document are offered, so picking one here can not end up as a font nobody but the author
+// sees. Its value is a font-family declaration, so it goes with the color and size inputs of the same text
+// through cssValueOptions.
+//
+// options.owner is the widget the imported font files are stored on - the one being edited, so its texts
+// carry their fonts along when it is copied into another game. A multi-selection has no single owner: the
+// dropdown still sets the family on all of them, but importing a new one is done on one widget at a time.
+class FontInput extends PropertyInput {
+  cssClass() {
+    return 'fontInput';
+  }
+
+  owner() {
+    return this.options.owner || (this.widget.isMulti ? null : this.widget);
+  }
+
+  renderControl(target) {
+    this.select = document.createElement('select');
+    this.select.onchange = _=>this.setValue(this.select.value ? cssFontFamilyValue(this.select.value) : null);
+    target.appendChild(this.select);
+
+    this.button = document.createElement('button');
+    this.button.className = 'fontPickerButton';
+    this.button.setAttribute('icon', 'font_download');
+    this.button.title = 'Get a font from Google Fonts';
+    this.button.setAttribute('aria-label', 'Get a font from Google Fonts');
+    this.button.onclick = _=>this.openPicker();
+    this.button.disabled = !this.owner();
+    target.appendChild(this.button);
+
+    this.fillOptions();
+  }
+
+  fillOptions() {
+    const owner = this.owner();
+    this.select.innerHTML = '';
+    const addOption = (value, text, group)=>{
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = text;
+      if(value)
+        option.style.fontFamily = cssFontFamilyValue(value);
+      (group || this.select).append(option);
+    };
+    addOption('', 'Default');
+    addFontFamilyOptions(this.select, addOption, {
+      owned: owner ? fontFamilyList(owner.get('fonts')) : [],
+      ownScope: owner ? owner.cssScope : null,
+      ownLabel: 'Google fonts of this widget',
+      otherLabel: 'Google fonts of another widget in this game',
+      current: this.currentFamily
+    });
+  }
+
+  openPicker() {
+    const owner = this.owner();
+    if(!owner)
+      return;
+    openWidgetFontPicker(owner, {
+      setFonts: fonts=>this.module.inputValueUpdated(owner, 'fonts', fonts),
+      applyFamily: family=>this.setValue(cssFontFamilyValue(family)),
+      refresh: _=>this.applyUpdate(this.getValue())
+    });
+  }
+
+  update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.currentFamily = multi ? null : cssFontFamilyName(value);
+    this.fillOptions();
+    if(multi) {
+      if(!this.multiOption) {
+        this.multiOption = document.createElement('option');
+        this.multiOption.value = '';
+        this.multiOption.disabled = true;
+        this.multiOption.textContent = '— multiple —';
+      }
+      this.select.prepend(this.multiOption);
+      this.select.selectedIndex = 0;
+      return;
+    }
+    this.select.value = this.currentFamily || '';
+  }
+}
+
 // Base class for color/icon/image inputs: shows the current value as a
 // preview and expands an inline picker section (no popup) when clicked.
 class PickerInput extends PropertyInput {

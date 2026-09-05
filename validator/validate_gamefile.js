@@ -119,6 +119,31 @@ const COMMON_PROPERTIES = {
     },
     classes: 'string',
     css: 'any',
+    fonts: (v,p,propertyPath=[])=>{
+        if(!Array.isArray(v))
+            return 'fonts must be an array of { family, src, weight, style } font faces';
+        const problems = [];
+        for(const [index, font] of v.entries()) {
+            if(typeof font !== 'object' || font === null || typeof font.family !== 'string' || typeof font.src !== 'string') {
+                problems.push({
+                    widget: p.widgetId,
+                    property: [...propertyPath, index],
+                    message: 'must be an object with a "family" name and the "src" of the font file'
+                });
+                continue;
+            }
+            for(const prop of Object.keys(font)) {
+                if(['family', 'src', 'weight', 'style'].includes(prop))
+                    continue;
+                problems.push({
+                    widget: p.widgetId,
+                    property: [...propertyPath, index, prop],
+                    message: 'invalid property. Valid font properties: family, src, weight, style'
+                });
+            }
+        }
+        return problems;
+    },
     movable: 'boolean',
     movableInEdit: 'boolean',
     clickable: 'boolean',
@@ -244,31 +269,6 @@ const WIDGET_PROPERTIES = {
     Deck: {
         ...COMMON_PROPERTIES,
         clickable: 'boolean', cardDefaults: 'any', cardTypes: 'any', borderRadius: 'any',
-        fonts: (v,p,propertyPath=[])=>{
-            if(!Array.isArray(v))
-                return 'fonts must be an array of { family, src, weight, style } font faces';
-            const problems = [];
-            for(const [index, font] of v.entries()) {
-                if(typeof font !== 'object' || font === null || typeof font.family !== 'string' || typeof font.src !== 'string') {
-                    problems.push({
-                        widget: p.widgetId,
-                        property: [...propertyPath, index],
-                        message: 'must be an object with a "family" name and the "src" of the font file'
-                    });
-                    continue;
-                }
-                for(const prop of Object.keys(font)) {
-                    if(['family', 'src', 'weight', 'style'].includes(prop))
-                        continue;
-                    problems.push({
-                        widget: p.widgetId,
-                        property: [...propertyPath, index, prop],
-                        message: 'invalid property. Valid font properties: family, src, weight, style'
-                    });
-                }
-            }
-            return problems;
-        },
         faceTemplates: (v,p,propertyPath=[])=>{
             const problems = [];
             if(!Array.isArray(v))

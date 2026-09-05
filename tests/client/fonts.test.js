@@ -22,14 +22,24 @@ beforeAll(async () => {
   ({ cardFaceObjectFont } = await import('../../client/js/widgets/card.js'));
 });
 
-function deckWithFonts(fonts) {
-  const deck = Object.create(Deck.prototype);
-  deck.fonts = fonts;
-  deck.cards = {};
-  deck.cssScope = 'testdeck';
-  deck.get = property=>property == 'fonts' ? deck.fonts : undefined;
-  return deck;
+// the font picker is a plain script as well, evaluated up to the instance it creates at the end
+const pickerSource = fs.readFileSync(path.join(dir, '../../client/js/editor/fontPicker.js'), 'utf8');
+const pickerWidgets = new Map(); // stands in for the room's widget map the picker reads the game's fonts from
+const { FontPicker, cssFontFamilyValue, cssFontFamilyName, fontUsageText } =
+  new Function('widgets', `${pickerSource.slice(0, pickerSource.indexOf('const fontPicker = new FontPicker()'))}
+    return { FontPicker, cssFontFamilyValue, cssFontFamilyName, fontUsageText };`)(pickerWidgets);
+
+function widgetWithFonts(fonts, prototype = Widget.prototype, cssScope = 'testwidget') {
+  const widget = Object.create(prototype);
+  widget.id = cssScope;
+  widget.fonts = fonts;
+  widget.cards = {};
+  widget.cssScope = cssScope;
+  widget.get = property=>property == 'fonts' ? widget.fonts : undefined;
+  return widget;
 }
+
+const deckWithFonts = fonts=>widgetWithFonts(fonts, Deck.prototype, 'testdeck');
 
 describe('the @font-face rules a deck declares for its imported fonts', () => {
   test('declares one rule per font file, with the asset URL the client uses', () => {
@@ -59,6 +69,29 @@ describe('the @font-face rules a deck declares for its imported fonts', () => {
 
   test('skips entries that name no family or no file', () => {
     expect(deckWithFonts([ { family: 'Lobster' }, { src: '/assets/12_34' }, null ]).fontFaceCSS()).toEqual('');
+  });
+});
+
+// A font family is global to the document once it is declared, so a widget of any type can bring one along
+// and every text of the game can then be drawn in it.
+describe('the fonts of a widget in the document', () => {
+  afterEach(() => {
+    for(const style of document.querySelectorAll('style'))
+      style.remove();
+  });
+
+  test('are declared in a style element of that widget', () => {
+    const widget = widgetWithFonts([ { family: 'Lobster', src: '/assets/12_34', weight: 400, style: 'normal' } ]);
+    widget.applyFonts();
+    expect(document.querySelector('#FONTS_testwidget').textContent).toContain(`font-family: "Lobster"`);
+  });
+
+  test('leave no style element behind when the last one is removed', () => {
+    const widget = widgetWithFonts([ { family: 'Lobster', src: '/assets/12_34', weight: 400, style: 'normal' } ]);
+    widget.applyFonts();
+    widget.fonts = [];
+    widget.applyFonts();
+    expect(document.querySelector('#FONTS_testwidget')).toBe(null);
   });
 });
 
@@ -222,42 +255,99 @@ describe('how many texts of a deck a font is used by', () => {
 });
 
 // Adding a family writes the styles that are checked and drops the rest, so what the boxes open on decides
-// what a deck keeps when a family it already carries is picked from the catalog again.
+// what is kept when a family that is already there is picked from the catalog again.
 describe('the styles the font dialog opens a family on', () => {
-  const editor = fonts => {
-    const e = Object.create(DeckEditor.prototype);
-    e.fonts = fonts;
-    return e;
+  const picker = fonts => {
+    const p = new FontPicker();
+    p.host = { fonts: _=>fonts };
+    return p;
   };
   const catalogEntry = { family: 'Cabin', styles: [ '400', '700', '400i', '700i' ] };
 
-  test('is the previewed style alone for a family the deck does not have', () => {
-    expect(editor([]).initialFontStyles(catalogEntry).chosen).toEqual([ '400' ]);
+  test('is the previewed style alone for a family that is not imported yet', () => {
+    expect(picker([]).initialStyles(catalogEntry).chosen).toEqual([ '400' ]);
   });
 
   test('is the first style a family without a Regular offers', () => {
-    expect(editor([]).initialFontStyles({ family: 'Molle', styles: [ '400i' ] }).chosen).toEqual([ '400i' ]);
+    expect(picker([]).initialStyles({ family: 'Molle', styles: [ '400i' ] }).chosen).toEqual([ '400i' ]);
   });
 
-  test('keeps the styles the deck already has for that family', () => {
-    const e = editor([
+  test('keeps the styles that are already imported for that family', () => {
+    const p = picker([
       { family: 'Cabin', src: '/assets/1_1', weight: 400, style: 'normal' },
       { family: 'Cabin', src: '/assets/2_2', weight: 700, style: 'normal' },
       { family: 'Cabin', src: '/assets/3_3', weight: 700, style: 'italic' },
       { family: 'Bangers', src: '/assets/4_4', weight: 400, style: 'normal' }
     ]);
-    expect(e.initialFontStyles(catalogEntry)).toEqual({ owned: [ '400', '700', '700i' ], chosen: [ '400', '700', '700i' ] });
-    expect(e.deckFontStyles('Bangers')).toEqual([ '400' ]);
+    expect(p.initialStyles(catalogEntry)).toEqual({ owned: [ '400', '700', '700i' ], chosen: [ '400', '700', '700i' ] });
+    expect(p.ownedStyles('Bangers')).toEqual([ '400' ]);
   });
 
-  test('adds the previewed style to a family the deck only has other styles of', () => {
-    const e = editor([ { family: 'Cabin', src: '/assets/1_1', weight: 700, style: 'normal' } ]);
-    expect(e.initialFontStyles(catalogEntry).chosen).toEqual([ '400', '700' ]);
+  test('adds the previewed style to a family only other styles of are imported', () => {
+    const p = picker([ { family: 'Cabin', src: '/assets/1_1', weight: 700, style: 'normal' } ]);
+    expect(p.initialStyles(catalogEntry).chosen).toEqual([ '400', '700' ]);
   });
 
-  test('ignores a style of the deck the catalog no longer offers', () => {
-    const e = editor([ { family: 'Cabin', src: '/assets/1_1', weight: 700, style: 'italic' } ]);
-    expect(e.initialFontStyles({ family: 'Cabin', styles: [ '400', '700' ] })).toEqual({ owned: [], chosen: [ '400' ] });
+  test('ignores an imported style the catalog no longer offers', () => {
+    const p = picker([ { family: 'Cabin', src: '/assets/1_1', weight: 700, style: 'italic' } ]);
+    expect(p.initialStyles({ family: 'Cabin', styles: [ '400', '700' ] })).toEqual({ owned: [], chosen: [ '400' ] });
+  });
+});
+
+// The family a text is drawn in is written as a font-family declaration, and read back out of one to find
+// the entry of the dropdown it belongs to.
+describe('a family in a font-family declaration', () => {
+  test('is quoted, because a browser drops a declaration naming an unquoted family with a digit', () => {
+    expect(cssFontFamilyValue('Exo 2')).toEqual('"Exo 2"');
+    expect(cssFontFamilyValue('Roboto')).toEqual('"Roboto"');
+  });
+
+  test('can not add declarations of its own to the css it is written into', () => {
+    expect(cssFontFamilyValue('Lobster"; display: none')).toEqual('"Lobster display: none"');
+  });
+
+  test('is read back from what is written, quoted or not', () => {
+    expect(cssFontFamilyName('"Exo 2"')).toEqual('Exo 2');
+    expect(cssFontFamilyName('Roboto')).toEqual('Roboto');
+    expect(cssFontFamilyName('"Lobster", serif')).toEqual('Lobster');
+    expect(cssFontFamilyName(null)).toEqual('');
+  });
+});
+
+// Dropping a family says what keeping it is worth, counted over the whole game: a widget names it in one of
+// its css properties, a card text in the "font" of a face object.
+describe('how much of a game a font is used by', () => {
+  const widget = state => ({ state, get: property=>state[property] });
+
+  beforeEach(() => pickerWidgets.clear());
+
+  test('counts the widgets whose css draws their text in it', () => {
+    pickerWidgets.set('a', widget({ css: { 'font-family': '"Lobster"' } }));
+    pickerWidgets.set('b', widget({ css: 'color: red; font-family: "Lobster"' }));
+    pickerWidgets.set('c', widget({ css: { default: { 'font-family': 'Bangers' } } }));
+    expect(fontUsageText('Lobster')).toEqual('used by 2 widgets');
+    expect(fontUsageText('Bangers')).toEqual('used by 1 widget');
+  });
+
+  test('counts a css property that styles a part of a widget', () => {
+    pickerWidgets.set('a', widget({ handleCSS: { 'font-family': '"Lobster"' } }));
+    expect(fontUsageText('Lobster')).toEqual('used by 1 widget');
+  });
+
+  test('counts the card texts of a deck naming it', () => {
+    pickerWidgets.set('deck', widget({ faceTemplates: [ { objects: [ { font: 'Lobster' }, { font: 'Bangers' } ] } ] }));
+    expect(fontUsageText('Lobster')).toEqual('used by 1 card text');
+  });
+
+  test('says both when a family is used in both ways', () => {
+    pickerWidgets.set('a', widget({ css: { 'font-family': '"Lobster"' } }));
+    pickerWidgets.set('deck', widget({ faceTemplates: [ { objects: [ { font: 'Lobster' }, { font: 'Lobster' } ] } ] }));
+    expect(fontUsageText('Lobster')).toEqual('used by 1 widget and 2 card texts');
+  });
+
+  test('says so when nothing is drawn in it', () => {
+    pickerWidgets.set('a', widget({ css: { color: 'red' } }));
+    expect(fontUsageText('Lobster')).toEqual('not used yet');
   });
 });
 
