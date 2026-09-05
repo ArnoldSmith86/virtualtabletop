@@ -66,4 +66,21 @@ describe('server/googlefonts.mjs', function() {
     expect(GoogleFonts.parseFontFaces(stylesheet)).toEqual([]);
     return expect(GoogleFonts.download('http://example.com/evil.ttf')).rejects.toThrow();
   });
+
+  // what makes that check a guarantee is that the address it looked at is the address the bytes come from,
+  // so a redirect off Google is refused rather than followed
+  test('does not follow a redirect away from the host it checked', async function() {
+    const originalFetch = global.fetch;
+    let options = null;
+    global.fetch = (url, opts)=>{
+      options = opts;
+      return Promise.reject(new Error('unexpected redirect'));
+    };
+    try {
+      await expect(GoogleFonts.download('https://fonts.gstatic.com/s/lobster/v32/regular.ttf')).rejects.toThrow();
+      expect(options).toEqual({ redirect: 'error' });
+    } finally {
+      global.fetch = originalFetch;
+    }
+  });
 });

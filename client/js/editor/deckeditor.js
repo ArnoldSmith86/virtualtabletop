@@ -3566,36 +3566,44 @@ class DeckEditor {
     return [ ...new Set(this.fonts.filter(font=>font && font.family).map(font=>String(font.family))) ];
   }
 
-  // The families the client itself ships. Read back from the @font-face rules of the document instead of
-  // being listed here, so the dropdown cannot drift away from what fonts.css declares. The style elements a
-  // deck adds for its imported fonts are skipped: those families belong to that deck and go away with it.
-  // The symbol and emoji fonts are left out too - they draw glyphs, not text, and are picked through the
-  // symbol pickers.
-  builtInFontFamilies() {
+  // The families that are declared for the document besides this deck's own, read back from its @font-face
+  // rules instead of being listed here so the dropdown cannot drift away from what fonts.css declares. They
+  // come in two groups: the ones the client ships, and the ones ANOTHER deck of this game imported - a family
+  // is global to the document once it is declared, so a text of this deck can be drawn in one of those, but
+  // it goes away with that deck, which is why they are kept apart. This deck's own element is left out; its
+  // families are read from "fonts". The symbol and emoji fonts are left out too - they draw glyphs, not text,
+  // and are picked through the symbol pickers.
+  declaredFontFamilies() {
     const symbolFonts = [ 'VTT-Symbols', 'Material Symbols', 'Material Symbols NoFill', 'Noto Emoji' ];
     const imported = this.deckFontFamilies();
-    const families = new Set();
-    const collect = rules=>{
+    const ownElement = this.deck() ? `FONTS_${this.deck().cssScope}` : null;
+    const builtIn = new Set();
+    const otherDecks = new Set();
+    const collect = (rules, target)=>{
       for(const rule of rules || []) {
         if(rule.cssRules)
-          collect(rule.cssRules); // an @media or @container the declarations sit in
+          collect(rule.cssRules, target); // an @media or @container the declarations sit in
         if(!(rule instanceof CSSFontFaceRule))
           continue;
         const family = String(rule.style.getPropertyValue('font-family')).replace(/^["']|["']$/g, '');
         if(family && symbolFonts.indexOf(family) == -1 && imported.indexOf(family) == -1)
-          families.add(family);
+          target.add(family);
       }
     };
     for(const sheet of document.styleSheets) {
-      if(sheet.ownerNode && String(sheet.ownerNode.id || '').startsWith('FONTS_'))
+      const id = String((sheet.ownerNode && sheet.ownerNode.id) || '');
+      if(id == ownElement)
         continue;
       try {
-        collect(sheet.cssRules);
+        collect(sheet.cssRules, id.startsWith('FONTS_') ? otherDecks : builtIn);
       } catch(e) {
         continue; // a stylesheet of another origin does not hand out its rules
       }
     }
-    return [ ...families ].sort();
+    return {
+      builtIn: [ ...builtIn ].sort(),
+      otherDecks: [ ...otherDecks ].filter(family=>!builtIn.has(family)).sort()
+    };
   }
 
   // The font row of the Appearance block: which family the selected text is drawn in, and the button that
@@ -3640,11 +3648,19 @@ class DeckEditor {
       for(const family of imported)
         addOption(family, family, group);
     }
+    const declared = this.declaredFontFamilies();
     const builtIn = document.createElement('optgroup');
     builtIn.label = 'Fonts VirtualTabletop ships with';
     select.append(builtIn);
-    for(const family of this.builtInFontFamilies())
+    for(const family of declared.builtIn)
       addOption(family, family, builtIn);
+    if(declared.otherDecks.length) {
+      const group = document.createElement('optgroup');
+      group.label = 'Google fonts of another deck in this game';
+      select.append(group);
+      for(const family of declared.otherDecks)
+        addOption(family, family, group);
+    }
     // A family written by hand (or one that came with a deck whose fonts were removed) is not in either
     // list, so it gets an entry of its own rather than the row silently showing something else.
     if(current && ![ ...select.querySelectorAll('option') ].some(option=>option.value == current)) {
@@ -3680,20 +3696,30 @@ class DeckEditor {
   }
 
   // The Google Fonts dialog. objects/args are the face objects the font is for - adding a font applies it to
-  // them right away, which is what opening the dialog from their row means.
+  // them right away, which is what opening the dialog from their row means. The objects are remembered by
+  // their position rather than by reference: the dialog stays open across a remote change, and a reload
+  // deep-clones a fresh faceTemplates the objects held here would no longer be part of.
   async openFontOverlay(objects, args) {
     if(!this.deck())
       return;
-    this.fontTarget = { objects: objects || [], args };
+    const onFace = (this.faceTemplates[this.face] || {}).objects || [];
+    const indices = (objects || []).map(object=>onFace.indexOf(object)).filter(index=>index != -1);
+    this.fontTarget = { face: this.face, indices, args };
     this.fontSelection = null;
     $('#deckEditorFontSearch').value = '';
-    // Opened from a text's font row the button does two things, so it says both; opened from the JSON
-    // editor there is nothing to apply it to and it only fills the deck's "fonts".
-    $('#deckEditorFontAdd').textContent = this.fontTarget.objects.length ? 'Add to deck & use for this text' : 'Add to deck';
     this.renderFontOverlay();
     showOverlay('deckEditorFontOverlay');
     await this.loadGoogleFonts();
     this.renderFontOverlay();
+  }
+
+  // The face objects the dialog was opened for, looked up again every time they are needed so that they are
+  // the ones the working copy holds now.
+  fontTargetObjects() {
+    if(!this.fontTarget)
+      return [];
+    const onFace = (this.faceTemplates[this.fontTarget.face] || {}).objects || [];
+    return this.fontTarget.indices.map(index=>onFace[index]).filter(Boolean);
   }
 
   closeFontOverlay() {
@@ -3731,6 +3757,16 @@ class DeckEditor {
     const italic = font.style == 'italic';
     const named = { '400': 'Regular', '700': 'Bold' }[weight];
     return named ? (italic ? (weight == '700' ? 'Bold italic' : 'Italic') : named) : `${weight}${italic ? ' italic' : ''}`;
+  }
+
+  // What the catalog calls the style one entry of the deck's "fonts" carries ("400", "700i", ...).
+  fontStyleKey(font) {
+    return `${font.weight || 400}${font.style == 'italic' ? 'i' : ''}`;
+  }
+
+  // The styles this deck has files for, for one family.
+  deckFontStyles(family) {
+    return [ ...new Set(this.fonts.filter(font=>font && font.family == family).map(font=>this.fontStyleKey(font))) ];
   }
 
   // What a card property of this deck resolves to for one card type - the card type first, then the face it
@@ -3854,11 +3890,20 @@ class DeckEditor {
     return styles.indexOf('400') != -1 ? '400' : styles[0];
   }
 
+  // What the style boxes of a family open on: the ones this deck already has files for ("owned"), and the
+  // set that is checked - those plus the previewed style. Adding a family replaces its files, so a family the
+  // catalog tags as "in deck" has to open on what the deck has, or adding it again throws the rest away.
+  initialFontStyles(font) {
+    const owned = this.deckFontStyles(font.family).filter(style=>font.styles.indexOf(style) != -1);
+    return { owned, chosen: [ ...new Set([ this.forcedFontStyle(font.styles), ...owned ]) ] };
+  }
+
   // Choosing a family in the list loads that style so the preview shows the real thing. The preview route
   // does not store anything, so looking through the catalog leaves nothing behind on the server.
   async selectGoogleFont(font) {
     const forced = this.forcedFontStyle(font.styles);
-    this.fontSelection = { family: font.family, styles: font.styles, chosen: [ forced ], forced };
+    const { owned, chosen } = this.initialFontStyles(font);
+    this.fontSelection = { family: font.family, styles: font.styles, chosen, forced, owned };
     this.renderFontOverlay();
     // The preview and the style boxes appear below the list, which in a short window means below the fold -
     // so bring them into view rather than leaving the click looking like it did nothing.
@@ -3919,6 +3964,11 @@ class DeckEditor {
     const add = $('#deckEditorFontAdd');
     const selection = this.fontSelection;
     add.disabled = !selection;
+    // Opened from a text's font row the button does two things, so it says both; opened from the JSON editor
+    // there is nothing to apply it to and it only fills the deck's "fonts". A family the deck already carries
+    // is updated rather than added - the box that is checked decides which styles it ends up with.
+    const owned = !!selection && this.deckFontFamilies().indexOf(selection.family) != -1;
+    add.textContent = `${owned ? 'Update in deck' : 'Add to deck'}${this.fontTargetObjects().length ? ' & use for this text' : ''}`;
     if(!selection) {
       $('#deckEditorFontPreview').classList.remove('active');
       return;
@@ -3933,14 +3983,17 @@ class DeckEditor {
       box.type = 'checkbox';
       box.checked = selection.chosen.indexOf(style) != -1;
       box.disabled = style == selection.forced;
+      const inDeck = (selection.owned || []).indexOf(style) != -1;
       if(box.disabled)
         label.title = 'The style the preview is drawn in is always downloaded';
+      else if(inDeck)
+        label.title = 'This style is already in the deck - unchecking it takes its file out again';
       box.onchange = _=>{
         selection.chosen = selection.chosen.filter(chosen=>chosen != style);
         if(box.checked)
           selection.chosen.push(style);
       };
-      label.append(box, document.createTextNode(name));
+      label.append(box, document.createTextNode(inDeck ? `${name} (in deck)` : name));
       target.append(label);
     }
   }
@@ -3961,14 +4014,18 @@ class DeckEditor {
     }
 
     await this.flushPendingCommits();
+    // The family's files are replaced rather than appended to, so the boxes decide the whole set of styles
+    // it ends up with - which is also why they open on the styles the deck already has.
+    const updating = this.deckFontFamilies().indexOf(selection.family) != -1;
     this.fonts = this.fonts.filter(font=>!font || font.family != selection.family).concat(fonts);
     const action = this.newAction();
-    const cause = `${getPlayerDetails().playerName} added the font "${selection.family}" to deck ${this.deckID} in deck editor`;
+    const verb = updating ? 'updated the font' : 'added the font';
+    const cause = `${getPlayerDetails().playerName} ${verb} "${selection.family}" ${updating ? 'of' : 'to'} deck ${this.deckID} in deck editor`;
     await this.commit('fonts', cause, action);
 
-    const target = this.fontTarget;
-    if(target && target.objects.length) {
-      for(const object of target.objects)
+    const targetObjects = this.fontTargetObjects();
+    if(targetObjects.length) {
+      for(const object of targetObjects)
         object.font = selection.family;
       this.refreshMainCardFaces();
       await this.commit('faceTemplates', cause, action);

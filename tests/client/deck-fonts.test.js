@@ -220,3 +220,76 @@ describe('how many texts of a deck a font is used by', () => {
     expect(e.fontUsage('Bangers')).toEqual({ direct: 1, bound: 0 });
   });
 });
+
+// Adding a family writes the styles that are checked and drops the rest, so what the boxes open on decides
+// what a deck keeps when a family it already carries is picked from the catalog again.
+describe('the styles the font dialog opens a family on', () => {
+  const editor = fonts => {
+    const e = Object.create(DeckEditor.prototype);
+    e.fonts = fonts;
+    return e;
+  };
+  const catalogEntry = { family: 'Cabin', styles: [ '400', '700', '400i', '700i' ] };
+
+  test('is the previewed style alone for a family the deck does not have', () => {
+    expect(editor([]).initialFontStyles(catalogEntry).chosen).toEqual([ '400' ]);
+  });
+
+  test('is the first style a family without a Regular offers', () => {
+    expect(editor([]).initialFontStyles({ family: 'Molle', styles: [ '400i' ] }).chosen).toEqual([ '400i' ]);
+  });
+
+  test('keeps the styles the deck already has for that family', () => {
+    const e = editor([
+      { family: 'Cabin', src: '/assets/1_1', weight: 400, style: 'normal' },
+      { family: 'Cabin', src: '/assets/2_2', weight: 700, style: 'normal' },
+      { family: 'Cabin', src: '/assets/3_3', weight: 700, style: 'italic' },
+      { family: 'Bangers', src: '/assets/4_4', weight: 400, style: 'normal' }
+    ]);
+    expect(e.initialFontStyles(catalogEntry)).toEqual({ owned: [ '400', '700', '700i' ], chosen: [ '400', '700', '700i' ] });
+    expect(e.deckFontStyles('Bangers')).toEqual([ '400' ]);
+  });
+
+  test('adds the previewed style to a family the deck only has other styles of', () => {
+    const e = editor([ { family: 'Cabin', src: '/assets/1_1', weight: 700, style: 'normal' } ]);
+    expect(e.initialFontStyles(catalogEntry).chosen).toEqual([ '400', '700' ]);
+  });
+
+  test('ignores a style of the deck the catalog no longer offers', () => {
+    const e = editor([ { family: 'Cabin', src: '/assets/1_1', weight: 700, style: 'italic' } ]);
+    expect(e.initialFontStyles({ family: 'Cabin', styles: [ '400', '700' ] })).toEqual({ owned: [], chosen: [ '400' ] });
+  });
+});
+
+// The dialog stays open while another player edits the same deck, and a reload deep-clones the working
+// copies - so the face objects it applies the family to are looked up again rather than held on to.
+describe('the face objects the font dialog writes the family to', () => {
+  const editor = faceTemplates => {
+    const e = Object.create(DeckEditor.prototype);
+    e.faceTemplates = faceTemplates;
+    return e;
+  };
+
+  test('are the ones the working copy holds now, not the ones the dialog was opened on', () => {
+    const e = editor([ { objects: [ { type: 'text' }, { type: 'text' } ] } ]);
+    e.fontTarget = { face: 0, indices: [ 1 ], args: [] };
+    e.faceTemplates = JSON.parse(JSON.stringify(e.faceTemplates)); // what reload() does
+    e.fontTargetObjects()[0].font = 'Lobster';
+    expect(e.faceTemplates[0].objects[1].font).toEqual('Lobster');
+  });
+
+  test('are none when the dialog was opened from the JSON editor', () => {
+    const e = editor([ { objects: [ { type: 'text' } ] } ]);
+    e.fontTarget = { face: 0, indices: [], args: [] };
+    expect(e.fontTargetObjects()).toEqual([]);
+    e.fontTarget = null;
+    expect(e.fontTargetObjects()).toEqual([]);
+  });
+
+  test('are none when the objects went away while the dialog was open', () => {
+    const e = editor([ { objects: [ { type: 'text' } ] } ]);
+    e.fontTarget = { face: 0, indices: [ 0, 1 ], args: [] };
+    e.faceTemplates = [ { objects: [] } ];
+    expect(e.fontTargetObjects()).toEqual([]);
+  });
+});

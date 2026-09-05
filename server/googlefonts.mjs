@@ -121,7 +121,9 @@ export function parseFontFaces(stylesheet) {
 export async function download(url) {
   if(!url.startsWith(FILE_HOST))
     throw new Logging.UserError(400, 'Font files are only downloaded from Google Fonts.');
-  const response = await fetch(url).catch(_=>null);
+  // Redirects are refused rather than followed: what makes the check above a guarantee is that the
+  // address the bytes come from is the one that was checked, and a redirect would move it elsewhere.
+  const response = await fetch(url, { redirect: 'error' }).catch(_=>null);
   if(!response || !response.ok)
     throw new Logging.UserError(502, 'Downloading a font file from Google Fonts failed.');
   if(+response.headers.get('content-length') > FILE_MAX_SIZE)
