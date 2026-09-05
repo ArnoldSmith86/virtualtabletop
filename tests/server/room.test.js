@@ -8,7 +8,6 @@ import { VERSION } from '../../server/fileupdater.mjs';
 
 let directory = null;
 let source = null;
-let saveDirectory = null;
 
 const moveFile = (from, to)=>Room.prototype.moveFile.call(null, from, to);
 
@@ -19,16 +18,6 @@ function roomWithStates(states) {
   const room = Object.create(Room.prototype);
   room.state = { _meta: { states } };
   room.variantFilename = (stateID, variantID)=>path.join(directory, `${stateID}-${variantID}.json`);
-  room.sendMetaUpdate = ()=>{};
-  return room;
-}
-
-// a room object with just the state and the callback addState needs, writing its variant files
-// into the temporary save directory
-function testRoom() {
-  const room = Object.create(Room.prototype);
-  room.id = 'testroom';
-  room.state = { _meta: { states: {} } };
   room.sendMetaUpdate = ()=>{};
   return room;
 }
@@ -49,6 +38,7 @@ function writeVariantFiles(stateID, count) {
     fs.writeFileSync(path.join(directory, `${stateID}-${i}.json`), `{"variant":${i}}`);
 }
 
+// a zip of the given files, the way an uploaded game file reaches addState
 function gameFile(files) {
   const entries = {};
   for(const [ filename, content ] of Object.entries(files))
@@ -60,16 +50,10 @@ beforeEach(function() {
   directory = fs.mkdtempSync(path.join(os.tmpdir(), 'vtt-room-'));
   source = path.join(directory, '0.json');
   fs.writeFileSync(source, '{"a":1}');
-
-  saveDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'vtt-room-save-'));
-  fs.mkdirSync(path.join(saveDirectory, 'states'));
-  process.env.VTT_SAVE_DIR = saveDirectory;
 });
 
 afterEach(function() {
-  delete process.env.VTT_SAVE_DIR;
   fs.rmSync(directory, { recursive: true, force: true });
-  fs.rmSync(saveDirectory, { recursive: true, force: true });
 });
 
 describe('server/room.mjs', function() {
@@ -171,7 +155,7 @@ describe('server/room.mjs', function() {
   // the tile the client shows while the file is uploading is named after the file the same way,
   // so a game that is named after its file here must not rename itself once this answers
   test('addState names a game after its file without the extension', async function() {
-    const room = testRoom();
+    const room = roomWithStates({});
     const noMeta = { '0.json': { _meta: { version: 8 } } };
 
     await room.addState('a', 'file', gameFile(noMeta), 'My Game.vtt');
@@ -185,7 +169,7 @@ describe('server/room.mjs', function() {
   // metadata written by hand or by another tool can hold anything, and assigning something that
   // is not an object into the game spreads it in one property per character or element
   test('addState reads the metadata of a variant only when it is an object', async function() {
-    const room = testRoom();
+    const room = roomWithStates({});
 
     await room.addState('a', 'file', gameFile({ '0.json': { _meta: { version: 8, info: 'bad metadata' } } }), 'Odd.vtt');
     await room.addState('b', 'file', gameFile({ '0.json': { _meta: { version: 8, info: [ 'bad', 'metadata' ] } } }), 'Odd.vtt');
@@ -205,10 +189,10 @@ describe('server/room.mjs', function() {
   // a client whose optimistic variant rows got ahead of the game sends input for a variant that
   // does not exist - dropping the rest of the edit over that loses everything the user typed
   test('editState ignores input for a variant that does not exist', function() {
-    const room = testRoom();
+    const room = roomWithStates({});
     room.state._meta.states.a = { name: 'Game', variants: [ { variant: '' } ] };
 
-    room.editState({ name: 'player' }, 'a', { name: 'Renamed' }, [ { variant: 'Basic' }, { variant: 'Ghost' } ], []);
+    room.editState(player, 'a', { name: 'Renamed' }, [ { variant: 'Basic' }, { variant: 'Ghost' } ], []);
 
     expect(room.state._meta.states.a.name).toEqual('Renamed');
     expect(room.state._meta.states.a.variants).toEqual([ { variant: 'Basic' } ]);

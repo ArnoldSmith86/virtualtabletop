@@ -856,7 +856,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   word-break: break-all;
 }
 
-.variant .variant-name:empty::before {
+.variant:not(:only-child) .variant-name:empty::before {
   content: attr(data-placeholder);
   color: gray;
   font-style: italic;
