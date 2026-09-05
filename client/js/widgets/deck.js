@@ -61,13 +61,18 @@ class Deck extends Widget {
       removeFromDOM(existing);
 
     const rules = this.fontFaceCSS();
-    if(!rules)
-      return;
+    if(rules) {
+      const style = document.createElement('style');
+      style.id = `FONTS_${this.cssScope}`;
+      style.appendChild(document.createTextNode(rules));
+      $('head').appendChild(style);
+    }
 
-    const style = document.createElement('style');
-    style.id = `FONTS_${this.cssScope}`;
-    style.appendChild(document.createTextNode(rules));
-    $('head').appendChild(style);
+    // A frame of an html face object is a document of its own and carries a copy of these rules rather than
+    // reading them from the page (see Card.createFaces), so the cards that are already on the table are built
+    // again instead of keeping the fonts the deck had when they were created.
+    for(const cardID in this.cards)
+      this.cards[cardID].refreshEmbeddedFonts();
   }
 
   applyRemove() {

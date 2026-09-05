@@ -149,6 +149,7 @@ export class Card extends Widget {
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
     this.writeBoxes = [];
+    this.embeddedFontObjects = [];
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
@@ -368,6 +369,12 @@ export class Card extends Widget {
             return usedProperties;
           }
 
+          // A frame is its own document and carries a copy of the deck's @font-face rules (see above), so it
+          // has to be built again when the deck's fonts change - an object on the page instead picks up the
+          // rules the deck declares in the document.
+          if(useIframe)
+            this.embeddedFontObjects.push(setValue);
+
           // add a callback that makes sure dynamic property changes are reflected on the DOM
           const properties = setValue();
           if (original.svgReplaces)
@@ -389,6 +396,14 @@ export class Card extends Widget {
       this.domElement.appendChild(faceDiv);
     }
     this.updateOverflowHints();
+  }
+
+  // Called by the deck when its "fonts" change: the face objects that carry a copy of its @font-face rules
+  // instead of reading them from the document are built again, so a family added or removed also reaches the
+  // cards that are already on the table.
+  refreshEmbeddedFonts() {
+    for(const setValue of this.embeddedFontObjects || [])
+      setValue();
   }
 
   // Marks the write boxes holding more text than they show, so that css can say so (see card.css). Called

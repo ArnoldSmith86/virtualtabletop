@@ -3733,15 +3733,45 @@ class DeckEditor {
     return named ? (italic ? (weight == '700' ? 'Bold italic' : 'Italic') : named) : `${weight}${italic ? ' italic' : ''}`;
   }
 
-  // How many face objects of this deck name a family, so dropping it says what it costs rather than only
-  // asking. Bindings are not counted: which family they end up on is a property of the card type.
-  fontUsageCount(family) {
-    let count = 0;
-    for(const face of this.faceTemplates)
-      for(const object of face.objects || [])
-        if(object.font == family)
-          count++;
-    return count;
+  // What a card property of this deck resolves to for one card type - the card type first, then the face it
+  // is on, then the deck's defaults, which is the order a card reads it in (see Deck.cardPropertyGet).
+  cardPropertyValue(cardType, face, property) {
+    const type = this.cardTypes[cardType];
+    if(type && type[property] !== undefined)
+      return type[property];
+    const template = this.faceTemplates[face];
+    if(template && template.properties && template.properties[property] !== undefined)
+      return template.properties[property];
+    return this.cardDefaults[property];
+  }
+
+  // How many face objects of this deck are drawn in a family, so dropping it says what it costs rather than
+  // only asking. A text can name the family itself, or read it from a card property (dynamicProperties) -
+  // the second kind counts as soon as one of the card types puts this family into that property.
+  fontUsage(family) {
+    const usage = { direct: 0, bound: 0 };
+    for(let face=0; face<this.faceTemplates.length; ++face) {
+      for(const object of this.faceTemplates[face].objects || []) {
+        const binding = object.dynamicProperties && object.dynamicProperties.font;
+        if(object.font !== undefined) {
+          if(object.font == family)
+            usage.direct++;
+        } else if(typeof binding == 'string' && Object.keys(this.cardTypes).some(cardType=>this.cardPropertyValue(cardType, face, binding) == family)) {
+          usage.bound++;
+        }
+      }
+    }
+    return usage;
+  }
+
+  // What the deck's font list says a family costs to keep, in the terms the remove button asks about.
+  fontUsageText(family) {
+    const { direct, bound } = this.fontUsage(family);
+    const total = direct+bound;
+    const texts = `used by ${total} text${total == 1 ? '' : 's'}`;
+    if(!bound)
+      return texts;
+    return direct ? `${texts}, ${bound} of them through a card type` : `${texts} through a card type`;
   }
 
   // The fonts this deck already carries, each with what it costs to keep and a button to drop it again.
@@ -3755,15 +3785,15 @@ class DeckEditor {
     }
     for(const family of families) {
       const styles = this.fonts.filter(font=>font && font.family == family).map(font=>this.fontStyleName(font));
-      const used = this.fontUsageCount(family);
+      const used = this.fontUsageText(family);
       const entry = div(target, 'deckEditorFontDeckEntry');
       const name = div(entry, 'deckEditorFontDeckName');
       name.textContent = family;
       name.style.fontFamily = `"${family}"`;
-      div(entry, 'deckEditorFontDeckStyles').textContent = `${styles.join(', ')} · used by ${used} text${used == 1 ? '' : 's'}`;
+      div(entry, 'deckEditorFontDeckStyles').textContent = `${styles.join(', ')} · ${used}`;
       const remove = document.createElement('button');
       remove.setAttribute('icon', 'delete_forever');
-      remove.title = `Remove "${family}" from this deck - texts naming it fall back to the default font`;
+      remove.title = `Remove "${family}" from this deck - the texts drawn in it fall back to the default font`;
       remove.setAttribute('aria-label', `Remove "${family}" from this deck`);
       remove.onclick = _=>this.removeDeckFont(family);
       entry.append(remove);
