@@ -68,6 +68,11 @@ function widgetAtPoint(clientX, clientY) {
   return widgetsAtPoint(clientX, clientY).find(hasPopupTriggers) || null;
 }
 
+// a URL written into url("…") of a style: quotes, backslashes and line breaks are CSS-escaped
+function cssURL(url) {
+  return String(url).replace(/["\\\n\r]/g, c => `\\${c.charCodeAt(0).toString(16)} `);
+}
+
 function ensurePopup() {
   return $(`#${CONTEXT_POPUP_ID}`);
 }
@@ -140,14 +145,11 @@ function copyWidgetToPreview(widget, previewEl) {
     previewEl.removeAttribute('data-id');
     // fills the preview box so the picture is fitted into it instead of overflowing onto the buttons below
     previewEl.style.cssText = 'width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
-    const img = document.createElement('img');
-    img.alt = '';
-    img.style.maxWidth = '100%';
-    img.style.maxHeight = '100%';
-    img.style.objectFit = 'contain';
-    const idx = enlargePreviewIndex % imageList.length;
-    img.src = mapAssetURLs(imageList[idx]);
-    previewEl.appendChild(img);
+    // a background image like the image widget draws its picture
+    const picture = document.createElement('div');
+    picture.className = 'contextMenuPreviewImage';
+    picture.style.backgroundImage = `url("${cssURL(mapAssetURLs(imageList[enlargePreviewIndex % imageList.length]))}")`;
+    previewEl.appendChild(picture);
     wrap.appendChild(previewEl);
   } else {
     const id = sourceWidget.get('id');
