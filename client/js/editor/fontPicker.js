@@ -181,6 +181,7 @@ class FontPicker {
     this.initializeDOM();
     this.host = host;
     this.selection = null;
+    this.setPreview(null); // the dialog can also be closed without its own button, leaving a face registered
     $('#fontPickerTitle').textContent = host.title;
     $('#fontPickerIntro').textContent = host.intro;
     $('#fontPickerSearch').value = '';
