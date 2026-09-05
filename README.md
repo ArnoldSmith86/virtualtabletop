@@ -105,7 +105,8 @@ An Android phone can be the server itself, so everyone plays on their own device
 Download **[VirtualTabletop.apk](https://github.com/ArnoldSmith86/virtualtabletop/raw/main/.android/VirtualTabletop.apk)** and open it on the phone; Android asks once whether the browser or file manager may install it. It runs on Android 7.0 and newer, on ARM and Intel devices alike.
 
 - **Install** fetches Node.js, git and VirtualTabletop. This is the only step that needs an internet connection, and a finished installation takes about 1.1 GB of storage.
-- **Start server** runs the server on the phone. A notification then shows the address the other devices open, and offers to share it.
+- **Start server** runs the server on the phone. A notification then shows the address the other devices open in their browser - something like `http://192.168.x.x:8272/vtt` - and offers to share it.
+- The phone has to stay on with the app running while people play. **Quit**, in the app or in its notification, saves the rooms and stops the server.
 
 Node.js and git for Android are the work of the [Termux](https://termux.dev/) project, whose packages the app installs - thank you. [.android/README.md](.android/README.md) says how it works, how to build the APK yourself and what it does instead of running Termux by hand.
 
