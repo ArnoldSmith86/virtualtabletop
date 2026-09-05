@@ -897,6 +897,12 @@ class FontInput extends PropertyInput {
     return this.options.owner || (this.widget.isMulti ? null : this.widget);
   }
 
+  // the dropdown groups the families this widget carries, so the list has to follow "fonts" as well
+  // as the css property the family is written into
+  listenProperties() {
+    return [ ...super.listenProperties(), 'fonts' ];
+  }
+
   renderControl(target) {
     this.select = document.createElement('select');
     this.select.onchange = _=>this.setValue(this.select.value ? cssFontFamilyValue(this.select.value) : null);

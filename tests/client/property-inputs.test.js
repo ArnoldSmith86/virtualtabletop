@@ -78,6 +78,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', 'positionNames', 'ex
     cssValueSuggestions,
     cssPropertySuggestions: PropertiesModule.prototype.cssPropertySuggestions,
     typeSections: PropertiesModule.prototype.typeSections,
+    showsFontRow: PropertiesModule.prototype.showsFontRow,
+    typeSectionProperties: PropertiesModule.prototype.typeSectionProperties,
     parseFontSize,
     formatTimerMs,
     parseTimerInput,
@@ -269,6 +271,24 @@ describe('css declaration rows', () => {
 describe('css helpers', () => {
   test('basic properties exclude the generic inputs from other property sections', () => {
     expect(cssHelpers.basicPropertyExcludeList()).toEqual(expect.arrayContaining([ 'clickable', 'enlarge', 'ignoreZoom' ]));
+  });
+
+  test('fonts stays in the generic list for the types that have no Font row', () => {
+    const module = {
+      typeSections: cssHelpers.typeSections,
+      showsFontRow: cssHelpers.showsFontRow,
+      showsDropLimit: _=>false
+    };
+    const properties = type=>cssHelpers.typeSectionProperties.call(module, {
+      get: key=>key == 'type' ? type : undefined,
+      defaults: {}
+    });
+    // a Font row edits it, so the raw list would only duplicate it
+    for(const type of [ 'basic', 'button', 'dice', 'holder', 'label', 'pile', 'scoreboard', 'seat', 'spinner', 'timer' ])
+      expect(properties(type)).toContain('fonts');
+    // no Font row anywhere in the sidebar: hiding it would make the value unreachable
+    for(const type of [ 'canvas', 'card', 'deck', 'line' ])
+      expect(properties(type)).not.toContain('fonts');
   });
 
   test('only D4 and D6 previews use the requested extra rotations', () => {

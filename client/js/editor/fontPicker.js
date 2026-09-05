@@ -20,10 +20,11 @@
 let builtInFamilies = null;
 
 // The families the client itself declares, read back from the @font-face rules of its stylesheets instead
-// of being listed here so a dropdown cannot drift away from what fonts.css ships. The style elements the
-// widgets declare their imported fonts in are left out, and so are the symbol and emoji fonts - those draw
-// glyphs, not text, and are picked through the symbol pickers. The stylesheets are part of the bundle and
-// do not change while the page is open, so this is walked once.
+// of being listed here so a dropdown cannot drift away from what fonts.css ships. The style elements a
+// widget owns are left out - both the one its imported fonts are declared in (FONTS_) and the one its css
+// ends up in (STYLES_), where a game can declare a font face by hand - and so are the symbol and emoji
+// fonts, which draw glyphs rather than text and are picked through the symbol pickers. What is left is
+// part of the bundle and does not change while the page is open, so this is walked once.
 function builtInFontFamilies() {
   if(builtInFamilies)
     return builtInFamilies;
@@ -41,7 +42,7 @@ function builtInFontFamilies() {
     }
   };
   for(const sheet of document.styleSheets) {
-    if(String((sheet.ownerNode && sheet.ownerNode.id) || '').startsWith('FONTS_'))
+    if(String((sheet.ownerNode && sheet.ownerNode.id) || '').match(/^(FONTS|STYLES)_/))
       continue;
     try {
       collect(sheet.cssRules);

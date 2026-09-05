@@ -7156,12 +7156,24 @@ class PropertiesModule extends SidebarModule {
     return editorTypeSections[widget.get('type') || 'basic'] || {};
   }
 
+  // a label's Font row sits below its text field, every other type's in one of the curated sections
+  showsFontRow(widget) {
+    if(widget.get('type') == 'label')
+      return true;
+    const sections = this.typeSections(widget);
+    return [ 'content', 'colors', 'hover', 'appearance', 'behavior' ]
+      .some(group=>(sections[group] || []).some(def=>def.kind == 'font'));
+  }
+
   // all properties covered by the curated sections of this type, used to keep
   // them out of the generic "Other properties" list
   typeSectionProperties(widget) {
     const sections = this.typeSections(widget);
-    // fonts is a list of downloaded font files, edited through the font picker rather than as raw JSON
-    const properties = [ 'classes', 'fonts', ...(sections.cssProperties || [ 'css' ]) ];
+    const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
+    // fonts is a list of downloaded font files, edited through the font picker the Font row opens
+    // rather than as raw JSON - where there is no such row, the raw list stays the only way to see it
+    if(this.showsFontRow(widget))
+      properties.push('fonts');
     if(this.showsDropLimit(widget))
       properties.push('dropLimit');
     if(widget.get('type') == 'pile')

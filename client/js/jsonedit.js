@@ -491,10 +491,13 @@ const jeCommands = [
     // "fonts", from where the family is declared for the whole document and can be used in any css.
     id: 'je_widgetFonts',
     name: 'fonts (font picker)',
-    context: '^(?!deck )[^ ]+( ↦ fonts( ↦ .*)?)?$',
+    context: '^(?!deck($| ))[^ ]+( ↦ fonts( ↦ .*)?)?$',
     call: function() {
       openWidgetFontPicker(widgets.get(jeStateNow.id));
-    }
+    },
+    // jeContext is the widget type only in single-widget mode; in macro, trace and multi-selection
+    // mode it is a single token like "Macro" that the context regex would match just as well.
+    show: _=>jeMode == 'widget' && !!jeStateNow && widgets.has(jeStateNow.id)
   },
   {
     id: 'je_symbolPickerCustom',
