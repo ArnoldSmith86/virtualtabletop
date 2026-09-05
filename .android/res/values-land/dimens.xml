@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- a landscape screen is short, so the logo and the padding give their room to the console
+       and the buttons, which have to stay reachable -->
+  <dimen name="screen_padding">12dp</dimen>
+  <dimen name="logo_height">32dp</dimen>
+  <dimen name="logo_margin_top">0dp</dimen>
+  <dimen name="logo_margin_bottom">10dp</dimen>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- the room the card keeps for its second line, so that the buttons do not move when the
+       wording under the heading grows or shrinks -->
+  <integer name="detail_lines">2</integer>
+</resources>
