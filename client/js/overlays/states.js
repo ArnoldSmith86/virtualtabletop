@@ -121,6 +121,7 @@ function selectVTTfile(callback) {
   });
 }
 
+// returns the upload, so a caller can wait for it to finish
 function addStateFile(f) {
   const stateDOM = domByTemplate('template-stateslist-entry');
   let id;
@@ -157,10 +158,12 @@ function addStateFile(f) {
   }
   function doneCallback() {
     uploadingStates[isSave ? 0 : 1] = uploadingStates[isSave ? 0 : 1].filter(s=>s!=stateDOM);
-    removeFromDOM(stateDOM);
+    // a file the client rejects before it is sent never reaches metaCallback, so its tile was
+    // never inserted into the list - remove() tolerates that, removeChild does not
+    stateDOM.remove();
   }
 
-  uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
+  return uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
 }
 
 // the extensions the server removes from the name of an uploaded file (see Room.addState) - the
@@ -936,6 +939,10 @@ function fillStateDetails(states, state, dom) {
     if(variant.plStateID)
       variant = states[variant.plStateID].variants[variant.plVariantID];
 
+    // an uploaded file reaches this with the metadata it was written with, which can hold anything
+    // where a string belongs - fillStatesList only normalizes what the server has already read
+    if(typeof variant.variantImage != 'string')
+      variant.variantImage = '';
     if(!variant.variantImage)
       variant.variantImage = state.image;
 
@@ -943,7 +950,8 @@ function fillStateDetails(states, state, dom) {
     vEntry.className = isLinkedVariant ? 'linked variant' : 'variant';
 
     // a variant without a name of its own renders as a blank row, which gives the user nothing to
-    // tell several of them apart - the number is its position in the list
+    // tell several of them apart - the number is its position in the list. The details list only
+    // shows it while the game has more than one variant, the name field uses it as its hint always
     if(!variant.variant)
       $('.variant-name', vEntry).dataset.placeholder = `Variant ${+variantID + 1}`;
 
@@ -1079,8 +1087,9 @@ function fillStateDetails(states, state, dom) {
         // which makes the server drop the whole edit
         if(failed) {
           for(const d of variantDOM)
-            removeFromDOM(d);
+            d.remove();
           variantDOM.length = 0;
+          updateEmptyVariantsHint();
           if(createOperation)
             variantOperationQueue.splice(variantOperationQueue.indexOf(createOperation), 1);
         }

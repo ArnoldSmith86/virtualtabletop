@@ -26,9 +26,9 @@ function loadStatesOverlay(serverStatus=200) {
     }
   }
 
-  const scope = new Function('$', '$a', 'onLoad', 'IntersectionObserver', 'fflate', 'alert', 'fetch', 'XMLHttpRequest', `
+  const scope = new Function('$', '$a', 'onLoad', 'IntersectionObserver', 'fflate', 'alert', 'fetch', 'XMLHttpRequest', 'domByTemplate', 'removeFromDOM', 'rand', 'roomID', `
     ${statesSource};
-    return { uploadStateFile };
+    return { uploadStateFile, addStateFile };
   `)(
     (selector, parent=document) => parent.querySelector(selector),
     (selector, parent=document) => [ ...parent.querySelectorAll(selector) ],
@@ -37,7 +37,15 @@ function loadStatesOverlay(serverStatus=200) {
     fflate,
     message => alerts.push(message),
     async () => ({ json: async () => ({}) }),
-    XHR
+    XHR,
+    () => {
+      const dom = document.createElement('div');
+      dom.innerHTML = '<img><h3></h3><i></i><span class="ai-badge"></span>';
+      return dom;
+    },
+    node => node.parentNode.removeChild(node),
+    () => Math.random(),
+    'room'
   );
 
   return Object.assign(scope, { alerts, uploaded, uploadFailed: [] });
@@ -185,5 +193,18 @@ describe('uploading a game file', () => {
     await upload(rejected, vttFile('Pictures.zip', { 'image.png': 'not a game' }));
     await upload(rejected, { name: 'Notes.txt', arrayBuffer: async () => fflate.strToU8('not a zip').buffer });
     expect(rejected.uploadFailed).toEqual([ true, true, true ]);
+  });
+
+  // the tile is only put into the game list by metaCallback, which a file that is rejected before
+  // it is sent never reaches - so the done callback of the game shelf has to cope with a tile that
+  // has no parent instead of taking the whole client down with it
+  test('drops the tile of a rejected file without throwing', async () => {
+    const overlay = loadStatesOverlay();
+
+    await overlay.addStateFile({ name: 'Notes.txt', arrayBuffer: async () => fflate.strToU8('not a zip').buffer });
+    await overlay.addStateFile(vttFile('Pictures.zip', { 'image.png': 'not a game' }));
+
+    expect(overlay.alerts.length).toBe(2);
+    expect(overlay.uploaded.length).toBe(0);
   });
 });
