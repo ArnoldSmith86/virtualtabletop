@@ -5569,9 +5569,10 @@ class PropertiesModule extends SidebarModule {
     // renamed, so this is what tells a repeated change event - a browser fires one when the input is blurred
     // after its value was already committed - from a second, real rename.
     let currentID = widget.id;
+    let renaming = false;
 
     idInput.onchange = async () => {
-      if(idInput.disabled) // a rename started by an earlier event of this input is still running
+      if(renaming) // a rename started by an earlier event of this input is still running
         return;
       const oldID = currentID;
       const newID = idInput.value.trim();
@@ -5593,6 +5594,7 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
+      renaming = true;
       idInput.disabled = true;
       const state = JSON.parse(JSON.stringify((widgets.get(oldID) || widget).state));
       state.id = newID;
@@ -5615,6 +5617,7 @@ class PropertiesModule extends SidebarModule {
         idInput.value = oldID;
         fitToValue();
       } finally {
+        renaming = false;
         batchEnd();
         idInput.disabled = false;
         this.renamingWidget = null;
