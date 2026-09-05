@@ -461,7 +461,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
    that hides everything behind it. */
 #deckEditorExportOverlay,
 #deckEditorImportOverlay,
-#deckEditorNewDeckOverlay {
+#deckEditorNewDeckOverlay,
+#deckEditorFontOverlay {
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -662,7 +663,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
   padding: 8px 12px;
 }
 
-#deckEditorNewDeckOverlay {
+#deckEditorNewDeckOverlay,
+#deckEditorFontOverlay {
   position: fixed;
   top: var(--editToolbarHeight);
   right: var(--editSidebarWidth);
@@ -703,7 +705,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
    accent, and a VTTblueDark title bar. Placed after the per-dialog rules so it overrides their white bg. */
 #deckEditorExportDialog,
 #deckEditorImportDialog,
-#deckEditorNewDeckDialog {
+#deckEditorNewDeckDialog,
+#deckEditorFontDialog {
   color: var(--modalTextColor);
   background: var(--modalBackgroundColor);
   border: none;
@@ -716,7 +719,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
 
 #deckEditorExportDialog h1,
 #deckEditorImportDialog h1,
-#deckEditorNewDeckDialog h1 {
+#deckEditorNewDeckDialog h1,
+#deckEditorFontDialog h1 {
   margin: 0 -24px 16px -24px;
   padding: 12px 44px 12px 16px;
   background: var(--VTTblueDark);
@@ -730,7 +734,8 @@ body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
 /* Close button sits on the dark title bar. */
 #deckEditorExportClose,
 #deckEditorImportClose,
-#deckEditorNewDeckClose {
+#deckEditorNewDeckClose,
+#deckEditorFontClose {
   background: transparent;
   color: #fff;
 }
@@ -2208,4 +2213,236 @@ body.dragToolbarDragging #deckEditorDragToolbar button:hover span {
 
 body.dragToolbarDragging #deckEditorDragToolbarFeedback.active {
   display: block;
+}
+
+/* The font row's picker button: sized and positioned like the trash of every other property row (see the
+   trash note above), so the Appearance block keeps one right edge and one row height. The row has no trash
+   of its own - a font is unset by picking the row's default entry - so it takes that rightmost slot. */
+#deckEditorSidebar .deckEditorFontPickerButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorFontPickerButton[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
+}
+
+/* Google Fonts dialog: what the deck already carries, the searchable catalog, and a preview of the font
+   currently being looked at. The title bar and the actions row are fixed and only the middle scrolls, so
+   "Add to deck" and the status next to it stay on screen at any window height. */
+#deckEditorFontDialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(640px, 100%);
+  max-height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#deckEditorFontDialog h1 {
+  flex: none;
+}
+
+#deckEditorFontBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+#deckEditorFontClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* The dialog's two halves - the deck's own fonts and the Google catalog - as separate blocks, the same
+   treatment the Add a new deck dialog gives its groups. */
+.deckEditorFontSection {
+  margin-bottom: 12px;
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+}
+
+.deckEditorFontSectionHeader {
+  padding: 8px 12px;
+  border-radius: 5px 5px 0 0;
+  background: #8080801a;
+  font-weight: bold;
+}
+
+.deckEditorFontSectionBody {
+  padding: 12px;
+}
+
+/* Bounded so a deck with a dozen families does not push the catalog below it out of the dialog. */
+#deckEditorFontDeckFonts {
+  max-height: 25vh;
+  overflow-y: auto;
+}
+
+#deckEditorFontSearch {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 8px;
+  padding: 6px 8px;
+}
+
+/* Says how many more families the search still matches. Above the list, because at the bottom of 200
+   entries it only reaches those who already know to narrow the search down. */
+#deckEditorFontHint {
+  margin-bottom: 8px;
+  font-size: 12px;
+  opacity: .7;
+}
+
+#deckEditorFontList {
+  min-height: 120px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+}
+
+.deckEditorFontEntry {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* Mid grey at low alpha: lightens a dark room's modal and darkens a light one, so the hovered row is
+   visible whichever way the game themes --modalBackgroundColor. */
+.deckEditorFontEntry:hover {
+  background: #8080804d;
+}
+
+.deckEditorFontEntry.selected {
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorFontName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deckEditorFontCategory {
+  flex: none;
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* Marks a catalog entry the deck already carries, so the list above and the list below line up. */
+.deckEditorFontInDeck {
+  flex: none;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--VTTblue);
+  color: #fff;
+  font-size: 11px;
+}
+
+.deckEditorFontEntry.selected .deckEditorFontInDeck {
+  background: #fff;
+  color: var(--VTTblue);
+}
+
+.deckEditorFontEmpty {
+  padding: 10px;
+  opacity: .7;
+}
+
+.deckEditorFontSubHeader {
+  margin: 12px 0 6px;
+  font-weight: bold;
+}
+
+.deckEditorFontDeckEntry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+/* Dropping a font is destructive, so it wears the red of the property rows' trash rather than the blue of
+   the dialog's own "Add to deck". */
+.deckEditorFontDeckEntry button {
+  background: var(--VTTred, #c0392b);
+  color: #fff;
+}
+
+.deckEditorFontDeckName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+.deckEditorFontDeckStyles {
+  flex: none;
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* Only shown once a font is being looked at - an empty preview box would just be a gap in the dialog. */
+#deckEditorFontPreview {
+  display: none;
+  margin-top: 12px;
+  padding: 10px;
+  font-size: 22px;
+  line-height: 1.3;
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+}
+
+#deckEditorFontPreview.active {
+  display: block;
+}
+
+#deckEditorFontStyles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+#deckEditorFontStyles .deckEditorFontSubHeader {
+  flex-basis: 100%;
+}
+
+#deckEditorFontStyles label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.deckEditorFontActions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+#deckEditorFontStatus {
+  flex: 1;
+  min-width: 0;
+  opacity: .8;
 }

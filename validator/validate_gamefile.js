@@ -49,9 +49,9 @@ const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
     icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
-    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
-    write: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign', 'editable', 'placeholder', 'spellCheck', 'backgroundColor', 'borderColor'],
-    html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
+    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'font', 'fontSize', 'textAlign'],
+    write: [...FACE_OBJECT_COMMON_PROPS, 'color', 'font', 'fontSize', 'textAlign', 'editable', 'placeholder', 'spellCheck', 'backgroundColor', 'borderColor'],
+    html: [...FACE_OBJECT_COMMON_PROPS, 'font', 'fontSize', 'textAlign']
 };
 
 // Common properties for all widgets
@@ -244,6 +244,31 @@ const WIDGET_PROPERTIES = {
     Deck: {
         ...COMMON_PROPERTIES,
         clickable: 'boolean', cardDefaults: 'any', cardTypes: 'any', borderRadius: 'any',
+        fonts: (v,p,propertyPath=[])=>{
+            if(!Array.isArray(v))
+                return 'fonts must be an array of { family, src, weight, style } font faces';
+            const problems = [];
+            for(const [index, font] of v.entries()) {
+                if(typeof font !== 'object' || font === null || typeof font.family !== 'string' || typeof font.src !== 'string') {
+                    problems.push({
+                        widget: p.widgetId,
+                        property: [...propertyPath, index],
+                        message: 'must be an object with a "family" name and the "src" of the font file'
+                    });
+                    continue;
+                }
+                for(const prop of Object.keys(font)) {
+                    if(['family', 'src', 'weight', 'style'].includes(prop))
+                        continue;
+                    problems.push({
+                        widget: p.widgetId,
+                        property: [...propertyPath, index, prop],
+                        message: 'invalid property. Valid font properties: family, src, weight, style'
+                    });
+                }
+            }
+            return problems;
+        },
         faceTemplates: (v,p,propertyPath=[])=>{
             const problems = [];
             if(!Array.isArray(v))

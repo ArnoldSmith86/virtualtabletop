@@ -191,6 +191,10 @@ class DeckEditorRotateButton extends DeckEditorDragButton {
   }
 }
 
+// The deck properties the editor keeps a working copy of: everything it can change, edited locally and
+// committed to the deck widget as a whole (see commit/loadWorkingCopies/snapshot).
+const deckEditorWorkingCopies = [ 'faceTemplates', 'cardTypes', 'cardDefaults', 'fonts' ];
+
 class DeckEditor {
   constructor() {
     this.deckID = null;
@@ -206,6 +210,7 @@ class DeckEditor {
     this.faceTemplates = [];
     this.cardTypes = {};
     this.cardDefaults = {};
+    this.fonts = [];
     this.showAllAreas = false;
     this.expandedDecks = new Set(); // tree branches the user explicitly expanded (beyond the current deck)
     this.expandedFaces = new Set(); // keyed "deckID:faceIndex"
@@ -320,6 +325,7 @@ class DeckEditor {
     $('#editor').append($('#deckEditorExportOverlay'));
     $('#editor').append($('#deckEditorImportOverlay'));
     $('#editor').append($('#deckEditorNewDeckOverlay'));
+    $('#editor').append($('#deckEditorFontOverlay'));
     $('#editor').append($('#symbolPickerOverlay'));
     $('#editor').append($('#audioPickerOverlay'));
 
@@ -351,6 +357,10 @@ class DeckEditor {
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
       $('#deckEditorMain').classList.toggle('deckEditorShowAllAreas', this.showAllAreas);
     };
+
+    $('#deckEditorFontClose').onclick = _=>this.closeFontOverlay();
+    $('#deckEditorFontSearch').oninput = _=>this.renderGoogleFontList();
+    $('#deckEditorFontAdd').onclick = _=>this.addSelectedFontToDeck();
 
     $('#deckEditorExport').onclick = _=>this.openExportOverlay();
     $('#deckEditorExportClose').onclick = _=>this.closeExportOverlay();
@@ -1003,6 +1013,7 @@ class DeckEditor {
     this.faceTemplates = [];
     this.cardTypes = {};
     this.cardDefaults = {};
+    this.fonts = [];
     this.cardType = null;
     this.selectedObject = null;
     this.treeLevel = 'deck';
@@ -1135,11 +1146,13 @@ class DeckEditor {
     return this[property];
   }
 
-  loadWorkingCopies(properties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ]) {
+  loadWorkingCopies(properties = deckEditorWorkingCopies) {
     const deck = this.deck();
-    if(properties.includes('faceTemplates')) {
-      const faceTemplates = deck.get('faceTemplates');
-      this.faceTemplates = Array.isArray(faceTemplates) ? JSON.parse(JSON.stringify(faceTemplates)) : [];
+    for(const property of [ 'faceTemplates', 'fonts' ]) {
+      if(properties.includes(property)) {
+        const value = deck.get(property);
+        this[property] = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : [];
+      }
     }
     for(const property of [ 'cardTypes', 'cardDefaults' ]) {
       if(properties.includes(property)) {
@@ -1156,7 +1169,7 @@ class DeckEditor {
     return !!deck && JSON.stringify(deck.get(property)) == JSON.stringify(this.workingCopy(property));
   }
 
-  reload(properties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ]) {
+  reload(properties = deckEditorWorkingCopies) {
     if(!this.deck())
       return this.close();
     for(const property of properties) {
@@ -1265,14 +1278,10 @@ class DeckEditor {
   }
 
   snapshot(cause, actionId, label) {
-    return {
-      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates)),
-      cardTypes: JSON.parse(JSON.stringify(this.cardTypes)),
-      cardDefaults: JSON.parse(JSON.stringify(this.cardDefaults)),
-      cause,
-      actionId,
-      label: label || this.historyLabel(cause)
-    };
+    const snapshot = { cause, actionId, label: label || this.historyLabel(cause) };
+    for(const property of deckEditorWorkingCopies)
+      snapshot[property] = JSON.parse(JSON.stringify(this.workingCopy(property)));
+    return snapshot;
   }
 
   resetHistory() {
@@ -1355,7 +1364,7 @@ class DeckEditor {
     this.historyIndex = index;
     const snapshot = this.history[index];
 
-    const changed = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ].filter(property=>JSON.stringify(this.workingCopy(property)) !== JSON.stringify(snapshot[property]));
+    const changed = deckEditorWorkingCopies.filter(property=>JSON.stringify(this.workingCopy(property)) !== JSON.stringify(snapshot[property]));
     for(const property of changed)
       this[property] = JSON.parse(JSON.stringify(snapshot[property]));
 
@@ -2133,11 +2142,18 @@ class DeckEditor {
     // of the selected objects has still gets a row, so it can be given to all of them in one go.
     const objectProperties = [...new Set(objects.flatMap(o=>Object.keys(o)))].filter(property=>property != 'dynamicProperties');
     const commonType = this.commonPropertyValue(objects, 'type');
+    // Objects that draw text always offer the font row, whether or not they name a font yet: choosing one is
+    // what the row is for, and an object without the property would otherwise have no way to get one.
+    const drawsText = !commonType.mixed && [ 'text', 'write', 'html' ].indexOf(commonType.value || 'text') != -1;
+    if(drawsText && objectProperties.indexOf('font') == -1)
+      objectProperties.push('font');
     this.renderPropertyGroups(sidebar, objectProperties, 'object', (property, objectProps)=>{
       // The object's structural "type" is a dropdown of the valid types (not a free-typed field that could
       // be broken by a typo) and can't be deleted.
       if(property == 'type')
         return this.renderObjectTypeRow(objectProps, objects, objectFieldArgs('type'));
+      if(property == 'font' && drawsText)
+        return this.renderFontRow(objectProps, objects, objectFieldArgs('font'), this.commonPropertyValue(objects, 'font').mixed);
       // Known object properties get a fixed field type (number or text) with no type selector; the value's
       // JS type decides for anything custom. A "(mixed)" row has no value to read that type from, so it is
       // taken from the first object that has the property set - otherwise a mixed checkbox/JSON row would
@@ -3169,7 +3185,7 @@ class DeckEditor {
       { id: 'position',   title: 'Position',   properties: [ 'x', 'y', 'rotation' ], collapsed: true },
       { id: 'size',       title: 'Size',       properties: [ 'width', 'height', 'size', 'scale' ], collapsed: true },
       { id: 'colors',     title: 'Colors',     properties: [ 'color', 'strokeColor', 'hoverColor', 'hoverStrokeColor' ] },
-      { id: 'appearance', title: 'Appearance', properties: [ 'fontSize', 'textAlign', 'strokeWidth', 'hoverStrokeWidth', 'opacity', 'hoverOpacity', 'offsetX', 'offsetY', 'flip', 'display', 'classes', 'css', 'svgReplaces', 'border', 'radius', 'note' ] },
+      { id: 'appearance', title: 'Appearance', properties: [ 'font', 'fontSize', 'textAlign', 'strokeWidth', 'hoverStrokeWidth', 'opacity', 'hoverOpacity', 'offsetX', 'offsetY', 'flip', 'display', 'classes', 'css', 'svgReplaces', 'border', 'radius', 'note' ] },
       { id: 'custom',     title: 'Custom',     properties: null } // everything else, in the order it is stored
     ];
   }
@@ -3231,7 +3247,7 @@ class DeckEditor {
   objectFieldType(property) {
     if([ 'x', 'y', 'width', 'height', 'fontSize', 'size', 'strokeWidth', 'rotation' ].indexOf(property) != -1)
       return 'number';
-    if([ 'textAlign', 'color', 'value', 'strokeColor', 'type', 'placeholder', 'backgroundColor', 'borderColor' ].indexOf(property) != -1)
+    if([ 'font', 'textAlign', 'color', 'value', 'strokeColor', 'type', 'placeholder', 'backgroundColor', 'borderColor' ].indexOf(property) != -1)
       return 'text';
     return undefined;
   }
@@ -3538,6 +3554,440 @@ class DeckEditor {
     const show = this.deck() && !this.deckSymbolSelected && this.selectedObject === null && this.faceTemplates.length;
     hint.textContent = show ? 'Click a face object on the card, or in the "Face objects" list, to select, edit, or drag it around.' : '';
     hint.classList.toggle('active', !!show);
+  }
+
+  // ---- fonts -------------------------------------------------------------------------------------------
+  // A face object names its font family in its "font" property; the family itself has to be declared for the
+  // document, which is either one of the ones the client ships (client/css/fonts.css) or one this deck
+  // imported from Google Fonts into its "fonts" property (see Deck.fontFaceCSS).
+
+  // The families this deck has imported, in the order they were added.
+  deckFontFamilies() {
+    return [ ...new Set(this.fonts.filter(font=>font && font.family).map(font=>String(font.family))) ];
+  }
+
+  // The families the client itself ships. Read back from the @font-face rules of the document instead of
+  // being listed here, so the dropdown cannot drift away from what fonts.css declares. The style elements a
+  // deck adds for its imported fonts are skipped: those families belong to that deck and go away with it.
+  // The symbol and emoji fonts are left out too - they draw glyphs, not text, and are picked through the
+  // symbol pickers.
+  builtInFontFamilies() {
+    const symbolFonts = [ 'VTT-Symbols', 'Material Symbols', 'Material Symbols NoFill', 'Noto Emoji' ];
+    const imported = this.deckFontFamilies();
+    const families = new Set();
+    const collect = rules=>{
+      for(const rule of rules || []) {
+        if(rule.cssRules)
+          collect(rule.cssRules); // an @media or @container the declarations sit in
+        if(!(rule instanceof CSSFontFaceRule))
+          continue;
+        const family = String(rule.style.getPropertyValue('font-family')).replace(/^["']|["']$/g, '');
+        if(family && symbolFonts.indexOf(family) == -1 && imported.indexOf(family) == -1)
+          families.add(family);
+      }
+    };
+    for(const sheet of document.styleSheets) {
+      if(sheet.ownerNode && String(sheet.ownerNode.id || '').startsWith('FONTS_'))
+        continue;
+      try {
+        collect(sheet.cssRules);
+      } catch(e) {
+        continue; // a stylesheet of another origin does not hand out its rules
+      }
+    }
+    return [ ...families ].sort();
+  }
+
+  // The font row of the Appearance block: which family the selected text is drawn in, and the button that
+  // fetches another one from Google Fonts. Only the families the game can actually render are offered, so
+  // picking one here can not end up as a font nobody but the author sees.
+  renderFontRow(target, objects, args, mixed) {
+    const row = div(target, 'genericInput deckEditorTypedInput deckEditorFontRow');
+    const labelEl = document.createElement('label');
+    labelEl.className = 'deckEditorPropertyLabel';
+    labelEl.textContent = 'font';
+    labelEl.title = 'font - the font family this text is drawn in';
+
+    const current = mixed ? '' : String(this.commonPropertyValue(objects, 'font').value || '');
+    // The font can come from the card type instead of from the object (dynamicProperties: { font: ... }).
+    // A static value shadows that binding (card.js only fills a bound property that is undefined), so the
+    // entry that writes no value is what the binding reads from - and picking a family here shadows it
+    // again, reversibly, rather than the row claiming a font the card is not drawn in.
+    const bound = this.commonPropertyValue(objects.map(object=>object.dynamicProperties || {}), 'font');
+    const select = document.createElement('select');
+    const addOption = (value, text, group)=>{
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = text;
+      option.selected = !mixed && value == current;
+      if(value)
+        option.style.fontFamily = `"${value}"`;
+      (group || select).append(option);
+    };
+    // A "(mixed)" row starts on an entry of its own that writes nothing, so opening the dropdown and
+    // closing it again does not give every selected object the first font in the list.
+    if(mixed) {
+      addOption('', 'Mixed — the selected objects use different fonts');
+      select.firstChild.dataset.mixed = '1';
+      select.firstChild.selected = true;
+    }
+    addOption('', bound.mixed ? 'Default or from the card type' : bound.value ? `From the card type — ${bound.value}` : 'Default');
+    const imported = this.deckFontFamilies();
+    if(imported.length) {
+      const group = document.createElement('optgroup');
+      group.label = 'Google fonts of this deck';
+      select.append(group);
+      for(const family of imported)
+        addOption(family, family, group);
+    }
+    const builtIn = document.createElement('optgroup');
+    builtIn.label = 'Fonts VirtualTabletop ships with';
+    select.append(builtIn);
+    for(const family of this.builtInFontFamilies())
+      addOption(family, family, builtIn);
+    // A family written by hand (or one that came with a deck whose fonts were removed) is not in either
+    // list, so it gets an entry of its own rather than the row silently showing something else.
+    if(current && ![ ...select.querySelectorAll('option') ].some(option=>option.value == current)) {
+      const group = document.createElement('optgroup');
+      group.label = 'Not declared in this game';
+      select.append(group);
+      addOption(current, current, group);
+    }
+
+    select.onchange = _=>this.queueFieldEdit(async _=>{
+      if(select.selectedOptions[0] && select.selectedOptions[0].dataset.mixed)
+        return;
+      await this.flushPendingCommitForOtherField('faceTemplates', args[1]);
+      for(const object of objects) {
+        if(select.value)
+          object.font = select.value;
+        else
+          delete object.font;
+      }
+      this.refreshMainCardFaces();
+      this.scheduleCommit('faceTemplates', ...args);
+    });
+
+    const button = document.createElement('button');
+    button.className = 'deckEditorFontPickerButton';
+    button.setAttribute('icon', 'font_download');
+    button.title = 'Get a font from Google Fonts';
+    button.setAttribute('aria-label', 'Get a font from Google Fonts');
+    button.onclick = _=>this.openFontOverlay(objects, args);
+
+    row.append(labelEl, select, button);
+    return row;
+  }
+
+  // The Google Fonts dialog. objects/args are the face objects the font is for - adding a font applies it to
+  // them right away, which is what opening the dialog from their row means.
+  async openFontOverlay(objects, args) {
+    if(!this.deck())
+      return;
+    this.fontTarget = { objects: objects || [], args };
+    this.fontSelection = null;
+    $('#deckEditorFontSearch').value = '';
+    // Opened from a text's font row the button does two things, so it says both; opened from the JSON
+    // editor there is nothing to apply it to and it only fills the deck's "fonts".
+    $('#deckEditorFontAdd').textContent = this.fontTarget.objects.length ? 'Add to deck & use for this text' : 'Add to deck';
+    this.renderFontOverlay();
+    showOverlay('deckEditorFontOverlay');
+    await this.loadGoogleFonts();
+    this.renderFontOverlay();
+  }
+
+  closeFontOverlay() {
+    this.fontTarget = null;
+    this.fontSelection = null;
+    this.setFontPreview(null);
+    showOverlay();
+  }
+
+  // The catalog is a couple of thousand families, so it is fetched once per session and kept.
+  async loadGoogleFonts() {
+    if(this.googleFonts)
+      return this.googleFonts;
+    this.googleFontsError = null;
+    try {
+      const response = await fetch('api/googleFonts');
+      if(!response.ok)
+        throw new Error(await response.text());
+      this.googleFonts = await response.json();
+    } catch(e) {
+      this.googleFontsError = String(e.message || e);
+    }
+    return this.googleFonts;
+  }
+
+  renderFontOverlay() {
+    this.renderDeckFontList();
+    this.renderGoogleFontList();
+    this.renderFontDetails();
+  }
+
+  // What one entry of the deck's "fonts" is called in the dialog - the same names the style check boxes use.
+  fontStyleName(font) {
+    const weight = String(font.weight || 400);
+    const italic = font.style == 'italic';
+    const named = { '400': 'Regular', '700': 'Bold' }[weight];
+    return named ? (italic ? (weight == '700' ? 'Bold italic' : 'Italic') : named) : `${weight}${italic ? ' italic' : ''}`;
+  }
+
+  // What a card property of this deck resolves to for one card type - the card type first, then the face it
+  // is on, then the deck's defaults, which is the order a card reads it in (see Deck.cardPropertyGet).
+  cardPropertyValue(cardType, face, property) {
+    const type = this.cardTypes[cardType];
+    if(type && type[property] !== undefined)
+      return type[property];
+    const template = this.faceTemplates[face];
+    if(template && template.properties && template.properties[property] !== undefined)
+      return template.properties[property];
+    return this.cardDefaults[property];
+  }
+
+  // How many face objects of this deck are drawn in a family, so dropping it says what it costs rather than
+  // only asking. A text can name the family itself, or read it from a card property (dynamicProperties) -
+  // the second kind counts as soon as one of the card types puts this family into that property.
+  fontUsage(family) {
+    const usage = { direct: 0, bound: 0 };
+    for(let face=0; face<this.faceTemplates.length; ++face) {
+      for(const object of this.faceTemplates[face].objects || []) {
+        const binding = object.dynamicProperties && object.dynamicProperties.font;
+        if(object.font !== undefined) {
+          if(object.font == family)
+            usage.direct++;
+        } else if(typeof binding == 'string' && Object.keys(this.cardTypes).some(cardType=>this.cardPropertyValue(cardType, face, binding) == family)) {
+          usage.bound++;
+        }
+      }
+    }
+    return usage;
+  }
+
+  // What the deck's font list says a family costs to keep, in the terms the remove button asks about.
+  fontUsageText(family) {
+    const { direct, bound } = this.fontUsage(family);
+    const total = direct+bound;
+    const texts = `used by ${total} text${total == 1 ? '' : 's'}`;
+    if(!bound)
+      return texts;
+    return direct ? `${texts}, ${bound} of them through a card type` : `${texts} through a card type`;
+  }
+
+  // The fonts this deck already carries, each with what it costs to keep and a button to drop it again.
+  renderDeckFontList() {
+    const target = $('#deckEditorFontDeckFonts');
+    target.innerHTML = '';
+    const families = this.deckFontFamilies();
+    if(!families.length) {
+      div(target, 'deckEditorFontEmpty').textContent = 'This deck has no imported fonts yet.';
+      return;
+    }
+    for(const family of families) {
+      const styles = this.fonts.filter(font=>font && font.family == family).map(font=>this.fontStyleName(font));
+      const used = this.fontUsageText(family);
+      const entry = div(target, 'deckEditorFontDeckEntry');
+      const name = div(entry, 'deckEditorFontDeckName');
+      name.textContent = family;
+      name.style.fontFamily = `"${family}"`;
+      div(entry, 'deckEditorFontDeckStyles').textContent = `${styles.join(', ')} · ${used}`;
+      const remove = document.createElement('button');
+      remove.setAttribute('icon', 'delete_forever');
+      remove.title = `Remove "${family}" from this deck - the texts drawn in it fall back to the default font`;
+      remove.setAttribute('aria-label', `Remove "${family}" from this deck`);
+      remove.onclick = _=>this.removeDeckFont(family);
+      entry.append(remove);
+    }
+  }
+
+  renderGoogleFontList() {
+    const target = $('#deckEditorFontList');
+    const hint = $('#deckEditorFontHint');
+    target.innerHTML = '';
+    hint.innerHTML = '';
+    if(this.googleFontsError) {
+      div(target, 'deckEditorFontEmpty').textContent = 'The list of Google fonts could not be loaded.';
+      const retry = document.createElement('button');
+      retry.textContent = 'Try again';
+      retry.onclick = _=>this.reloadGoogleFonts();
+      hint.textContent = `${this.googleFontsError} `;
+      hint.append(retry);
+      return;
+    }
+    if(!this.googleFonts) {
+      div(target, 'deckEditorFontEmpty').textContent = 'Loading the list of Google fonts…';
+      return;
+    }
+    const search = $('#deckEditorFontSearch').value.trim().toLowerCase();
+    const matches = this.googleFonts.filter(font=>font.family.toLowerCase().indexOf(search) != -1);
+    // The catalog is far longer than anyone scrolls through; the search field is what narrows it down.
+    const shown = matches.slice(0, 200);
+    const imported = this.deckFontFamilies();
+    for(const font of shown) {
+      const entry = div(target, 'deckEditorFontEntry');
+      entry.classList.toggle('selected', !!this.fontSelection && this.fontSelection.family == font.family);
+      div(entry, 'deckEditorFontName').textContent = font.family;
+      if(imported.indexOf(font.family) != -1)
+        div(entry, 'deckEditorFontInDeck').textContent = 'in deck';
+      div(entry, 'deckEditorFontCategory').textContent = font.category || '';
+      entry.onclick = _=>this.selectGoogleFont(font);
+    }
+    if(!matches.length)
+      div(target, 'deckEditorFontEmpty').textContent = 'No Google font has that in its name.';
+    else if(matches.length > shown.length)
+      hint.textContent = `${matches.length-shown.length} more fonts match - type more of the name to narrow it down.`;
+  }
+
+  // The catalog is fetched once per session, so a failed fetch would otherwise stay failed until the editor
+  // is opened again.
+  async reloadGoogleFonts() {
+    this.googleFonts = null;
+    this.googleFontsError = null;
+    this.renderGoogleFontList();
+    await this.loadGoogleFonts();
+    this.renderFontOverlay();
+  }
+
+  // The style a family is previewed in and always downloaded with: Regular, unless the family does not have
+  // one (a handful only come as Bold or as Italic), in which case the first style it does offer stands in.
+  forcedFontStyle(styles) {
+    return styles.indexOf('400') != -1 ? '400' : styles[0];
+  }
+
+  // Choosing a family in the list loads that style so the preview shows the real thing. The preview route
+  // does not store anything, so looking through the catalog leaves nothing behind on the server.
+  async selectGoogleFont(font) {
+    const forced = this.forcedFontStyle(font.styles);
+    this.fontSelection = { family: font.family, styles: font.styles, chosen: [ forced ], forced };
+    this.renderFontOverlay();
+    // The preview and the style boxes appear below the list, which in a short window means below the fold -
+    // so bring them into view rather than leaving the click looking like it did nothing.
+    $('#deckEditorFontDetails').scrollIntoView({ block: 'end' });
+    this.setFontStatus(`Loading ${font.family}…`);
+    try {
+      await this.setFontPreview(font.family, forced);
+      if(!this.fontSelection || this.fontSelection.family != font.family)
+        return;
+      this.setFontStatus('');
+    } catch(e) {
+      this.setFontStatus(String(e.message || e));
+    }
+    this.renderFontOverlay();
+  }
+
+  async importGoogleFont(family, styles) {
+    const response = await fetch(`api/googleFonts/${encodeURIComponent(family)}?styles=${styles.join(',')}`, { method: 'PUT' });
+    if(!response.ok)
+      throw new Error(await response.text());
+    return await response.json();
+  }
+
+  // The font being looked at, loaded for the editor only - the deck gets it when it is actually added, so
+  // browsing the catalog changes neither the game nor what the server stores. It is registered under a name
+  // of its own so a family the deck already carries keeps being drawn from the deck's own files.
+  async setFontPreview(family, style) {
+    const preview = $('#deckEditorFontPreview');
+    if(this.fontPreviewFace) {
+      document.fonts.delete(this.fontPreviewFace);
+      this.fontPreviewFace = null;
+    }
+    preview.style.fontFamily = '';
+    if(!family)
+      return;
+    const response = await fetch(`api/googleFonts/${encodeURIComponent(family)}/preview?styles=${encodeURIComponent(style)}`);
+    if(!response.ok)
+      throw new Error(await response.text());
+    const face = new FontFace(`${family} (preview)`, await response.arrayBuffer());
+    await face.load();
+    if(!this.fontSelection || this.fontSelection.family != family)
+      return;
+    this.fontPreviewFace = face;
+    document.fonts.add(face);
+    preview.style.fontFamily = `"${family} (preview)"`;
+  }
+
+  setFontStatus(message) {
+    $('#deckEditorFontStatus').textContent = message || '';
+  }
+
+  // The styles of the chosen family, as checkboxes: every style is a font file of its own that the game has
+  // to carry, so only the ones a card actually needs are downloaded. The style the preview uses is always
+  // part of it.
+  renderFontDetails() {
+    const target = $('#deckEditorFontStyles');
+    target.innerHTML = '';
+    const add = $('#deckEditorFontAdd');
+    const selection = this.fontSelection;
+    add.disabled = !selection;
+    if(!selection) {
+      $('#deckEditorFontPreview').classList.remove('active');
+      return;
+    }
+    $('#deckEditorFontPreview').classList.add('active');
+    div(target, 'deckEditorFontSubHeader').textContent = `Styles of ${selection.family} to download`;
+    for(const [ style, name ] of [ [ '400', 'Regular' ], [ '700', 'Bold' ], [ '400i', 'Italic' ], [ '700i', 'Bold italic' ] ]) {
+      if(selection.styles.indexOf(style) == -1)
+        continue;
+      const label = document.createElement('label');
+      const box = document.createElement('input');
+      box.type = 'checkbox';
+      box.checked = selection.chosen.indexOf(style) != -1;
+      box.disabled = style == selection.forced;
+      if(box.disabled)
+        label.title = 'The style the preview is drawn in is always downloaded';
+      box.onchange = _=>{
+        selection.chosen = selection.chosen.filter(chosen=>chosen != style);
+        if(box.checked)
+          selection.chosen.push(style);
+      };
+      label.append(box, document.createTextNode(name));
+      target.append(label);
+    }
+  }
+
+  // Downloads the chosen styles into the game's assets, lists them in the deck's "fonts" and hands the family
+  // to the face objects the dialog was opened from.
+  async addSelectedFontToDeck() {
+    const selection = this.fontSelection;
+    if(!selection || !this.deck())
+      return;
+    this.setFontStatus(`Downloading ${selection.family}…`);
+    let fonts;
+    try {
+      fonts = await this.importGoogleFont(selection.family, selection.chosen);
+    } catch(e) {
+      this.setFontStatus(String(e.message || e));
+      return;
+    }
+
+    await this.flushPendingCommits();
+    this.fonts = this.fonts.filter(font=>!font || font.family != selection.family).concat(fonts);
+    const action = this.newAction();
+    const cause = `${getPlayerDetails().playerName} added the font "${selection.family}" to deck ${this.deckID} in deck editor`;
+    await this.commit('fonts', cause, action);
+
+    const target = this.fontTarget;
+    if(target && target.objects.length) {
+      for(const object of target.objects)
+        object.font = selection.family;
+      this.refreshMainCardFaces();
+      await this.commit('faceTemplates', cause, action);
+    }
+
+    this.closeFontOverlay();
+    this.renderSidebar();
+  }
+
+  // Dropping a font takes its files out of the deck. Face objects keep naming it, so the text falls back to
+  // the default font - which is what a deck that was copied without its fonts looks like too.
+  async removeDeckFont(family) {
+    if(!this.deck())
+      return;
+    await this.flushPendingCommits();
+    this.fonts = this.fonts.filter(font=>!font || font.family != family);
+    await this.commit('fonts', `${getPlayerDetails().playerName} removed the font "${family}" from deck ${this.deckID} in deck editor`);
+    this.renderFontOverlay();
+    this.renderSidebar();
   }
 
   renderCardDefaults(sidebar, addHeader, addPropertyRow) {
@@ -4160,7 +4610,8 @@ class DeckEditor {
       y: 41,
       cardDefaults: JSON.parse(JSON.stringify(this.cardDefaults)),
       cardTypes: JSON.parse(JSON.stringify(this.cardTypes)),
-      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates))
+      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates)),
+      fonts: JSON.parse(JSON.stringify(this.fonts))
     });
     batchEnd();
     await this.open(id+'D');
@@ -4602,7 +5053,7 @@ async function deckEditorReceiveDelta(delta) {
   // deck.set() in commit() echoes back into here synchronously (before commit() even returns); reloading on
   // that self-echo would wipe out the sidebar mid-edit and revert any other property still pending a commit.
   // A delta that exactly matches the current working copy is that self-echo, not a genuine remote change.
-  const changedProperties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ].filter(property=>deckDelta[property] !== undefined && !deckEditor.matchesWorkingCopy(property));
+  const changedProperties = deckEditorWorkingCopies.filter(property=>deckDelta[property] !== undefined && !deckEditor.matchesWorkingCopy(property));
   if(!changedProperties.length)
     return;
 
