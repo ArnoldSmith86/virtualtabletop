@@ -153,10 +153,14 @@ const jeCommands = [
           const macroProblems = [];
           for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
             const s = JSON.stringify(w.state);
+            const previousState = JSON.parse(s);
             const newState = JSON.parse(s);
             macro(newState, variableState);
-            // updateWidget would show one modal alert per widget, so collect the problems instead
-            const problem = widgetParentProblem(newState, JSON.parse(s));
+            // updateWidget would show one modal alert per widget, so collect the problems instead.
+            // A changed type makes it remove the widget before it adds the new one back, so a
+            // state the client cannot build has to be caught here rather than halfway through
+            const problem = widgetParentProblem(newState, previousState)
+              || (newState.type !== previousState.type ? widgetAdditionProblem(newState) : null);
             if(problem)
               macroProblems.push(`${w.id}: ${problem}`);
             else
@@ -655,11 +659,12 @@ const jeCommands = [
     context: '^deck ↦ cardTypes ↦ [^"↦]+',
     call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
-      await addWidgetLocal(card);
-      if(jeStateNow.parent)
-        await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
-      else
-        await widgets.get(card.id).updatePiles();
+      if(await addWidgetLocal(card)) {
+        if(jeStateNow.parent)
+          await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+        else
+          await widgets.get(card.id).updatePiles();
+      }
     }
   },
   {
@@ -670,11 +675,12 @@ const jeCommands = [
     call: async function() {
       for(const cardType in jeStateNow.cardTypes) {
         const card = { deck:jeStateNow.id, type:'card', cardType };
-        await addWidgetLocal(card);
-        if(jeStateNow.parent)
-          await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
-        else
-          await widgets.get(card.id).updatePiles();
+        if(await addWidgetLocal(card)) {
+          if(jeStateNow.parent)
+            await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+          else
+            await widgets.get(card.id).updatePiles();
+        }
       }
     }
   },
@@ -828,7 +834,7 @@ const jeCommands = [
         const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
         for(let i=0; i<targetCount-currentCount; ++i) {
           const cardId = await addWidgetLocal({ deck:jeStateNow.id, type:'card', cardType:id });
-          if(jeStateNow.parent)
+          if(cardId && jeStateNow.parent)
             await widgets.get(cardId).moveToHolder(widgets.get(jeStateNow.parent));
         }
         for(let i=0; i<currentCount-targetCount; ++i) {
@@ -3494,6 +3500,24 @@ export function jeLoggingRoutineNotLogged(widget, property) {
   jeLoggingRenderLog(jeLoggingHTML);
 }
 
+// A problem that was found outside of any routine - an automatic pile that could not be created, a
+// drop into a holder that is gone. There is no logged operation to hang it on, so it becomes an
+// entry of its own rather than a console line the panel never shows.
+export function jeLoggingProblemNote(message) {
+  if(jeLoggingDepth || jeHTMLStack.length || !$('#jeLog'))
+    return;
+  if(jeRoutineResetOnNextLog) {
+    jeLoggingHTML = '';
+    jeRoutineResetOnNextLog = false;
+  }
+  jeLoggingHTML += `
+    <div class="jeLog jeLogNote jeLogProblemNote">
+      ${html(message)}
+    </div>
+  `;
+  jeLoggingRenderLog(jeLoggingHTML);
+}
+
 export function jeLoggingRoutineOperationStart(original, applied) {
   let fcn;
   if (typeof applied == 'string')
@@ -3569,13 +3593,15 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
           </div>
         </div>` : '';
 
+  // An operation that failed opens itself as well, so that the pre-expanded Problems block below is
+  // on screen instead of sitting inside a collapsed parent.
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
-      <div class="jeExpander">
+      <div class="jeExpander${problems.length ? ' jeExpander-down' : ''}">
         <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} ${problems.length ? '<span class="jeLogFailed">failed</span>' : ''} <span class="jeLogTime" title="how long this operation took">(${+new Date() - startTime}ms)</span>
       </div>
-      <div class="jeLogNested">
+      <div class="jeLogNested${problems.length ? ' active' : ''}">
         ${opProblems}
         ${opOperation}
         ${jeLoggingHTML}

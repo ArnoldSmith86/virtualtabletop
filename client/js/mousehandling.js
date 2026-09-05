@@ -43,6 +43,15 @@ function eventCoords(name, e) {
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
 }
 
+// The widget a drag holds on to can leave the room while the drag is still running - another
+// player deletes it, or game logic reacting to the move itself does. Everything the drag would
+// still do to it writes to a widget the room no longer has, so it lets go of it instead. (#2317)
+// A widget removeWidgetLocal() has only queued counts as gone here as everywhere else: the batch
+// around the drag keeps it in the map until the delta is sent.
+function dragTargetGone(ms) {
+  return ms.moveTarget && liveWidget(ms.moveTarget.get('id')) !== ms.moveTarget;
+}
+
 // Finish a drag whose mouseup never reached the drag handling below, because one
 // of the checks in handleInput() returned before it. The widget would otherwise
 // stay detached from its holder and flagged as being dragged for every player
@@ -55,8 +64,8 @@ async function endDrag(target) {
     return;
   delete mouseStatus[target.id];
 
-  // while the state is being replaced the dragged widget may already be gone
-  if(isLoading || ms.status == 'initial' || !ms.moveTarget || widgets.get(ms.moveTarget.get('id')) !== ms.moveTarget)
+  // nothing to end: no drag was running, or the whole state is being replaced
+  if(isLoading || ms.status == 'initial' || !ms.moveTarget)
     return;
 
   batchStart();
@@ -65,7 +74,10 @@ async function endDrag(target) {
     // like the mouseup branch below: let a mousemove that is still being
     // processed finish first, so no move lands after the drag has ended
     await ms.dragChain;
-    await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
+    if(dragTargetGone(ms))
+      await ms.moveTarget.abandonDrag();
+    else
+      await ms.moveTarget.moveEnd(ms.coords, ms.localAnchor);
   } finally {
     batchEnd();
   }
@@ -208,7 +220,10 @@ async function handleInput(name, e, dragTarget) {
           // let every mousemove that is still being processed finish first so that the
           // drop happens after the last one instead of racing with it
           await ms.dragChain;
-          await ms.moveTarget.moveEnd(coords, ms.localAnchor);
+          if(dragTargetGone(ms))
+            await ms.moveTarget.abandonDrag();
+          else
+            await ms.moveTarget.moveEnd(coords, ms.localAnchor);
         }
         if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
           let editClickHandled = false;
@@ -264,8 +279,15 @@ async function handleInput(name, e, dragTarget) {
             // widget visibly lags behind the cursor.
             if(!isFirstMove && ms.coords !== coords)
               return;
+            // The widget can leave the room at any of these awaits - moveStart() sets 'dragging',
+            // which runs game logic that is free to remove it - so every one of them is followed by
+            // the check instead of it being made once before the move is queued.
+            if(dragTargetGone(ms))
+              return;
             if(isFirstMove)
               await ms.moveTarget.moveStart();
+            if(dragTargetGone(ms))
+              return;
             await ms.moveTarget.move(coords, ms.localAnchor);
           }).catch(error => {
             // keep the chain resolvable - a rejected one would make every later move
