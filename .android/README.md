@@ -53,13 +53,41 @@ The APK lands in `.android/out/`, signed with a self-signed key the script creat
 existing installation). Install it with `adb install -r .android/out/VirtualTabletop-*.apk` or by
 opening the file on the phone.
 
-The `Android APK` workflow builds it on demand and attaches the result to the run. It also runs
-`.android/test/` first: `XzTest` compresses samples with the `xz` command line tool and requires
-the decoder in `Xz.java` to hand them back byte for byte. It needs a JDK and `xz` and no device,
-which is why it is the one part of the app a workflow can check.
+The `Android APK` workflow builds it on demand and attaches the result to the run. It runs the
+tests below first, so what they cover is checked on every change under `.android/`.
 
 Every run of the workflow signs with a key of its own, so two artifacts cannot be installed over
 each other - uninstall the old one first, or build locally where `keystore.jks` is kept.
+
+## Tests
+
+```
+.android/test/run.sh          # or run.sh xz, run.sh service, run.sh screen
+```
+
+The app is Java, so its tests are too, but they need no device, no emulator and no Android SDK:
+each one compiles the real classes out of `src/` against stubs of the Android classes they use
+(`test/<suite>/stub/`) and drives them on the machine, which takes a JDK, `node` and a couple of
+minutes at most. `node` generates the `R` the tests compile against out of `res/values/`, so a
+test reads the very texts the app shows rather than a copy of them that goes stale. The build
+output lands in `.android/out/test/`.
+
+* **xz** compresses samples with the `xz` command line tool and requires the decoder in `Xz.java`
+  to hand them back byte for byte, a truncated stream included.
+* **service** drives the real `ServerService` with a shell script standing in for node, and walks
+  the states a phone would otherwise be needed for: a server that is not up until it has printed
+  that it is listening, connectivity broadcasts that change nothing, the hotspot coming up and the
+  server being restarted on the new address, a server that is killed while players are connected,
+  and the four ways starting one can fail (an occupied port, a silent exit, a missing `node`, a
+  missing clone) - each of which has to leave its reason on the screen.
+* **screen** renders the real `MainActivity` against stub views and prints every state it can be
+  in, then checks what those states show: which button is the next step, that Update is away
+  before the first installation, that a phone with little room left is warned, that a failed
+  install stays on the card, and that a press which would interrupt players or a download asks
+  first.
+
+What is left for a device: the installation itself, the relocated Termux binaries, and how the
+screen and the notification actually look.
 
 ## How it works
 
