@@ -280,6 +280,7 @@ body.gridLines33 #topSurface {
   width: 100%;
   height: 100%;
   opacity: 0.3;
+  /* compat-fallback css.properties.image-rendering.pixelated: a browser that smooths it instead blurs the edges of the tested cells, which still shows the same area */
   image-rendering: pixelated;
   pointer-events: none;
   z-index: 2000000;

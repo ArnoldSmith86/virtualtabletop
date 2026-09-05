@@ -357,6 +357,15 @@ function generateTimerWidgets(id, x, y) {
   ];
 }
 
+// A composite widget is a base widget plus children whose IDs are derived from
+// the base ID, so the base is only usable when none of the derived IDs is taken.
+async function addCompositeWidget(type, generate) {
+  const id = generateUniqueWidgetID(type, base=>generate(base).map(w=>w.id));
+  for(const w of generate(id))
+    await addWidgetLocal(w);
+  return id;
+}
+
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick, title) {
   // how far the group reaches around its root widget, filled in below because most of these
   // widgets leave their size to the widget defaults. The children hang off the root - the deck's
@@ -443,6 +452,9 @@ function addPieceToAddWidgetOverlay(w, wi, title) {
         ]
       });
       const toAdd = {...wi};
+      const pieceName = (String(w.id).match(/^[A-Z][a-z]+/) || [])[0];
+      if(pieceName)
+        toAdd.id = generateUniqueWidgetID(pieceName.toLowerCase());
       [ toAdd.x, toAdd.y ] = overlayPosition(wi.x, wi.y, w);
       toAdd.z = getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
@@ -458,10 +470,12 @@ function addPieceToAddWidgetOverlay(w, wi, title) {
   $('#addOverlayLayout').appendChild(w.domElement);
 }
 
-function addWidgetToAddWidgetOverlay(w, wi, title) {
+function addWidgetToAddWidgetOverlay(w, wi, title, idType) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
+    if(idType)
+      toAdd.id = generateUniqueWidgetID(idType);
     [ toAdd.x, toAdd.y ] = overlayPosition(wi.x, wi.y, w);
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
@@ -490,18 +504,10 @@ function populateAddWidgetOverlay() {
     y: 150
   }, 'Add a card holder');
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', cardsX, 340, false), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, y, false))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add an empty deck and its holder');
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', cardsX, 570, true), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, y, true))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add a deck of 52 playing cards and its holder');
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', cardsX, 340, false),
+    (x, y)=>addCompositeWidget('deck', id=>generateCardDeckWidgets(id, x, y, false)), 'Add an empty deck and its holder');
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', cardsX, 570, true),
+    (x, y)=>addCompositeWidget('deck', id=>generateCardDeckWidgets(id, x, y, true)), 'Add a deck of 52 playing cards and its holder');
 
   //Add svg game pieces
   // First row
@@ -958,7 +964,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  }, 'Add a flat poker chip');
+  }, 'Add a flat poker chip', 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
@@ -985,14 +991,10 @@ function populateAddWidgetOverlay() {
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
 
-  }, 'Add a flat dealer button');
+  }, 'Add a flat dealer button', 'dealer');
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, x, y, 2))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add a pile of flat poker chips and its holder');
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2),
+    (x, y)=>addCompositeWidget('chips', id=>generateChipPileWidgets(id, x, y, 2)), 'Add a pile of flat poker chips and its holder');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
     x: 1010,
@@ -1016,7 +1018,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  }, 'Add a poker chip');
+  }, 'Add a poker chip', 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
@@ -1043,14 +1045,10 @@ function populateAddWidgetOverlay() {
     borderWidth: 2,
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
-  }, 'Add a dealer button');
+  }, 'Add a dealer button', 'dealer');
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateChipPileWidgets(id, x, y, 3))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add a pile of poker chips and its holder');
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3),
+    (x, y)=>addCompositeWidget('chips', id=>generateChipPileWidgets(id, x, y, 3)), 'Add a pile of poker chips and its holder');
 
   // Populate the dice. The real dice choosing happens in a popup.
   const dice2D = new Dice('add-dice2D0');
@@ -1254,20 +1252,12 @@ function populateAddWidgetOverlay() {
   }, 'Add a button that runs a routine when it is clicked');
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateTimerWidgets(id, x, y))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add a timer');
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825),
+    (x, y)=>addCompositeWidget('timer', id=>generateTimerWidgets(id, x, y)), 'Add a timer');
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCounterWidgets(id, x, y))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add a counter');
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890),
+    (x, y)=>addCompositeWidget('counter', id=>generateCounterWidgets(id, x, y)), 'Add a counter');
 
   // Populate the Decorative panel in the add widget overlay
   addWidgetToAddWidgetOverlay(new Label('add-label'), {
@@ -1287,12 +1277,8 @@ function populateAddWidgetOverlay() {
     y: 150
   }, 'Add a heading');
   // Add the composite line widget (a path with attached stops)
-  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateLineWidgets(id, x, y))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add a line with stops that pieces snap to');
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420),
+    (x, y)=>addCompositeWidget('line', id=>generateLineWidgets(id, x, y)), 'Add a line with stops that pieces snap to');
 
   // The divider line is a plain line widget (without stops), so it can be
   // curved, restyled and connected like any other line
@@ -1321,12 +1307,8 @@ function populateAddWidgetOverlay() {
   }, 'Add a circle');
 
   // Add the composite ring widget (a closed line with stops all the way round)
-  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495), async function(x, y) {
-    const id = generateUniqueWidgetID();
-    for(const w of generateRingWidgets(id, x, y))
-      await addWidgetLocal(w);
-    return id
-  }, 'Add a ring of stops that pieces snap to');
+  addCompositeWidgetToAddWidgetOverlay(generateRingWidgets('add-ring', 1420, 495),
+    (x, y)=>addCompositeWidget('ring', id=>generateRingWidgets(id, x, y)), 'Add a ring of stops that pieces snap to');
 }
 // end of JSON generators
 
@@ -1529,11 +1511,8 @@ async function addLibraryDeckToGame(entry) {
   batchStart();
   setDeltaCause(`${getPlayerDetails().playerName} added deck ${entry.deck} from public library game ${entry.gameName} in editor`);
 
-  let id = null;
   const suffixes = [ 'B', 'D', 'P', ...details.cards.map((_, i)=>`C${i+1}`) ];
-  do {
-    id = generateUniqueWidgetID();
-  } while(suffixes.some(suffix=>widgets.has(id+suffix)));
+  const id = generateUniqueWidgetID('deck', base=>suffixes.map(suffix=>base+suffix));
 
   const holderWidth  = entry.cardWidth  + 8;
   const holderHeight = entry.cardHeight + 11;
@@ -1583,6 +1562,7 @@ function uploadWidget(preset) {
     let id;
     if(asset && preset == 'board') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('board'),
         image: asset,
         movable: false,
         width: viewportConfig.targetWidth,
@@ -1592,6 +1572,7 @@ function uploadWidget(preset) {
     }
     if(asset && preset == 'token') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('token'),
         image: asset
       });
     }
@@ -1792,6 +1773,7 @@ export function initializeEditMode(currentMetaData) {
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
+      id: generateUniqueWidgetID('basic'),
       text: "Basic widget"
     });
     overlayDone(id);

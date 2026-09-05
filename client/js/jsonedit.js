@@ -10,6 +10,9 @@ let jeJSONerror = null;
 let jeCommandError = null;
 let jeCommandWithOptions = null;
 let jeIsSVG = {};
+// how long an image that could not be read stays remembered as unreadable, in step with the retry
+// the engine does for the same file (UNREADABLE_RETRY_MS in main.js)
+const jeSVGRetryDelay = 30000;
 let jeWidgetHighlighting = true;
 let jeDebugViewing = null;
 let jeInMacroExecution = false;
@@ -85,12 +88,14 @@ const jeOrder = [ 'type', 'id#', 'parent', 'fixedParent', 'deck', 'cardType', 'i
 // the engine and the SVG replacements editor make, so the three cannot disagree
 // about the same file. It also spares decoding a whole bitmap as text just to
 // find no <svg> in it, and does not call a PNG that happens to contain the
-// three bytes "svg" somewhere an SVG.
+// three bytes "svg" somewhere an SVG. A file that could not be read at all is
+// answered with undefined: that says nothing about what the file is, so it must
+// not be remembered as a verdict - fetchSVG() retries such a file as well.
 async function checkIfSVG(url) {
   try {
     return (await fetchSVG(url)) !== null;
   } catch (e) {
-    return false;
+    return undefined;
   }
 }
 
@@ -218,14 +223,32 @@ const jeCommands = [
       if (typeof jeIsSVG[url] === 'boolean') return jeIsSVG[url];
       if (url.match(/\.svg$/i))
         return true;
-      checkIfSVG(url).then(result => {
-        jeIsSVG[url] = result;
-        jeShowCommands();
-      });
+      // Only a definite answer is remembered as a verdict - a file that could not be read says
+      // nothing about what it is, and fetchSVG() retries it. What is remembered for such a file is
+      // *when* it failed, because the buttons are redrawn by plenty of things - every keystroke in
+      // the JSON pane among them - and a dead URL would otherwise cost one failing request each.
+      // While the request is in flight the url is marked as being asked about, so a failure that
+      // redraws the buttons cannot ask for the file again without ever stopping.
+      if (jeIsSVG[url] === undefined || jeIsSVG[url].failedAt < Date.now() - jeSVGRetryDelay) {
+        jeIsSVG[url] = 'pending';
+        checkIfSVG(url).then(result => {
+          if (typeof result === 'boolean') {
+            jeIsSVG[url] = result;
+            jeShowCommands();
+          } else {
+            jeIsSVG[url] = { failedAt: Date.now() };
+          }
+        });
+      }
       return false;
     },
-    call: async function(options) {  
-      jeSVGColors();
+    call: async function(options) {
+      // pressing the button again closes the panel it opened, so it is never left without a way out
+      const panel = $('#jeSVGColors');
+      if (panel)
+        panel.querySelector('.jeSVGColorsClose').click();
+      else
+        jeSVGColors();
     }
   },
   /* Now the context-dependent stuff */
@@ -253,9 +276,7 @@ const jeCommands = [
       
       // Get current indentation from the JSON structure
       // Find the line with the property key
-      const aO = getSelection().anchorOffset;
-      const fO = getSelection().focusOffset;
-      const s = Math.min(aO, fO);
+      const s = jeCursorOffsets()[0];
       const v = jeGetEditorContent();
       const lines = v.split('\n');
       
@@ -1175,8 +1196,7 @@ const jeCommands = [
       else
         delete pointer[jeContext[jeContext.length-1]];
 
-      const oldStart = getSelection().anchorOffset;
-      const oldEnd   = getSelection().focusOffset;
+      const [ oldStart, oldEnd ] = jeCursorOffsets();
       jeSet(JSON.stringify(jeStateNow, null, '  '));
       jeSelect(oldStart, oldEnd, true);
     },
@@ -1472,9 +1492,9 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SCORE', { mode: 'set', property: 'score', seats: null, round: null, value: null });
   jeAddRoutineOperationCommands('SELECT', { type: 'all', property: 'parent', relation: '==', value: null, max: 999999, collection: 'DEFAULT', mode: 'set', source: 'all', sortBy: '###SEE jeAddRoutineOperation###', random: false});
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
+  jeAddRoutineOperationCommands('SHIFT', { holders: null, widgets: 'all', interval: 1, direction: 'forward', wrap: true, keepOrder: true });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
@@ -1578,7 +1598,10 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SELECT\\) ↦ type', widgetTypes);
   jeAddEnumCommands('^.*\\(SET\\) ↦ relation', [ '+', '-', '=', "*", "/",'!' ]);
   jeAddEnumCommands('^.*\\(SHUFFLE\\) ↦ mode', [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ]);
-  jeAddEnumCommands('^.*\\(SWAPHANDS\\) ↦ direction', [ 'forward', 'backward', 'random']);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ widgets', [ 'all', 'top' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ direction', [ 'forward', 'backward', 'random' ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ wrap', [ true, false ]);
+  jeAddEnumCommands('^.*\\(SHIFT\\) ↦ keepOrder', [ true, false ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
@@ -1589,6 +1612,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
   jeAddEnumCommands('^scoreboard ↦ sortField',['index', 'player', 'total']);
+  jeAddEnumCommands('^scoreboard ↦ scoreEntry',['auto', 'keypad', 'pane', 'type']);
 
   jeAddNumberCommand('increment number', '+', x=>x+1);
   jeAddNumberCommand('decrement number', '-', x=>x-1);
@@ -1978,6 +2002,11 @@ function jeAddWidgetPropertyCommand(object, widgetBase, property) {
 }
 
 async function jeApplyChanges() {
+  // while the state is only semantically wrong the commands keep editing the text, but the
+  // room is never handed a state it cannot load - including by the commands that apply their
+  // own change instead of going through the gated call in clickButton
+  if(jeJSONerror)
+    return;
   if(jeMode == 'multi')
     return await jeApplyChangesMulti();
 
@@ -2028,12 +2057,12 @@ async function jeApplyChangesMulti() {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
-    const widgets = jeMultiSelectedWidgets();
-    const widgetIDs = widgets.map(w=>w.get('id'));
+    const selection = jeMultiSelectedWidgets();
+    const widgetIDs = selection.map(w=>w.get('id'));
     for(const key in currentState) {
       if(key != 'widgets') {
-        for(const w of widgets) {
-          if(typeof currentState[key] != 'object' || currentState[key] === null || Object.keys(currentState[key]).filter(k=>!widgetIDs.includes(k)).length)
+        for(const w of selection) {
+          if(!jeMultiValueIsPerWidget(currentState[key], widgetIDs))
             await setValueIfNeeded(w, key, currentState[key]);
           else if(currentState[key][w.get('id')] !== undefined)
             await setValueIfNeeded(w, key, currentState[key][w.get('id')]);
@@ -2138,8 +2167,19 @@ async function jeCallCommand(command) {
 function jeCommandOptions() {
   const div = document.createElement('div');
   div.id = 'jeCommandOptions';
-  div.innerHTML = '<b>Command options:</b><div></div><button>Go</button><button>Cancel</button>';
-  $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  const name = typeof jeCommandWithOptions.name == 'function' ? jeCommandWithOptions.name() : jeCommandWithOptions.name;
+  div.innerHTML = `<b>${html(String(name))} options:</b><div></div><button>Go</button><button class=cancel>Cancel</button>`;
+
+  // the options belong to the command button that was clicked, so they open right below it and that
+  // button is marked. Opening them above the list instead would push the whole list down, away
+  // from the pointer that just clicked into it.
+  const button = $(`#jeContextButtons > [id="${jeCommandWithOptions.id}"]`);
+  if(button) {
+    button.classList.add('jeCommandOwner');
+    button.parentElement.insertBefore(div, button.nextSibling);
+  } else {
+    $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
+  }
 
   for(const option of jeCommandWithOptions.options) {
     formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
@@ -2148,6 +2188,10 @@ function jeCommandOptions() {
     if(firstInput)
       firstInput.focus();
   }
+
+  // the command list scrolls, so options opening near its bottom edge would have their buttons cut
+  // off. 'nearest' scrolls only in that case, which keeps the list still in the common one
+  div.scrollIntoView({ block: 'nearest' });
 
   $a('#jeCommandOptions button')[0].addEventListener('click', async function() {
     const options = {};
@@ -2178,11 +2222,26 @@ export async function jeClick(widget, e) {
   }
 }
 
+// The offsets getSelection() reports are indices into whichever node holds the selection, so
+// they only describe the editor while the editor holds it. Clicking a command button - or
+// typing into the option fields of a command that has some - moves the selection out of
+// #jeText, so the position the editor was last at is remembered here and used instead. Every
+// read of the editor cursor goes through this, which keeps that memory up to date.
+let jeLastCursorOffsets = [ 0, 0 ];
+
+function jeCursorOffsets() {
+  const selection = getSelection();
+  // both ends have to sit in the text node #jeText holds: a selection dragged out of the editor
+  // reports its two ends in different nodes, and one anchored on #jeText itself counts child
+  // nodes rather than characters - neither pair says where the cursor is in the JSON
+  const text = $('#jeText').firstChild;
+  if(text && selection.anchorNode === text && selection.focusNode === text)
+    jeLastCursorOffsets = [ Math.min(selection.anchorOffset, selection.focusOffset), Math.max(selection.anchorOffset, selection.focusOffset) ];
+  return jeLastCursorOffsets;
+}
+
 function jeCursorStateGet() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
   const linesUntilCursor = v.split('\n').slice(0, v.substr(0, s).split('\n').length);
   const currentLine = linesUntilCursor.pop();
@@ -2195,6 +2254,7 @@ function jeCursorStateGet() {
   return {
     scroll: $('#jeText').scrollTop,
     currentLine,
+    lineNumber: linesUntilCursor.length,
     defaultValueToAdd,
     sameLinesBefore: linesUntilCursor.filter(l=>l==currentLine).length,
     start: s-linesUntilCursor.join('\n').length,
@@ -2205,17 +2265,41 @@ function jeCursorStateGet() {
 function jeCursorStateSet(state) {
   const v = jeGetEditorContent();
   const lines = v.split('\n');
+  // moving the selection focuses the editor, which must not happen while a command's options are
+  // being typed into: a change arriving from another player would else pull the caret out of the
+  // option field and the next keystroke would land in the JSON. The position is only remembered
+  // then, which is where the commands read it from anyway.
+  const restore = function(start, end) {
+    const options = $('#jeCommandOptions');
+    if(options && options.contains(document.activeElement))
+      jeLastCursorOffsets = [ start, end ];
+    else
+      jeSelect(start, end);
+  };
   let offset = 0;
   let linesFound = 0;
+  let lineRestored = false;
   for(const line of lines) {
     if(line == state.currentLine && linesFound++ == state.sameLinesBefore) {
-      jeSelect(offset + state.start - 1, offset + state.end - 1);
+      restore(offset + state.start - 1, offset + state.end - 1);
+      lineRestored = true;
       break;
     } else {
       offset += line.length + 1;
     }
   }
+  // a command that rewrites the very line the cursor sits on - shift on "x" for example - leaves
+  // no line to match it by, so the cursor falls back to the same line number. Without that it ends
+  // up nowhere and the next command runs on the top of the JSON instead of on the property the
+  // panel still offers commands for.
+  if(!lineRestored && lines[state.lineNumber] !== undefined) {
+    const lineStart = lines.slice(0, state.lineNumber).reduce((total, line)=>total + line.length + 1, 0);
+    const lineEnd = lineStart + lines[state.lineNumber].length;
+    const inLine = offsetInLine=>Math.max(lineStart, Math.min(lineEnd, lineStart + offsetInLine - 1));
+    restore(inLine(state.start), inLine(state.end));
+  }
   $('#jeText').scrollTop = state.scroll;
+  jeMarkCommandLine();
 }
 
 const jeCursorStateStorage = {};
@@ -2312,6 +2396,66 @@ function jeMultiSelectedWidgets() {
   return selected;
 }
 
+// In the multi-selection editor a property is either one value that goes to all
+// selected widgets or an object that maps each selected widget id to its own.
+function jeMultiValueIsPerWidget(value, widgetIDs) {
+  return typeof value == 'object' && value !== null && !Object.keys(value).filter(k=>!widgetIDs.includes(k)).length;
+}
+
+// Pairs every value the multi-selection state gives for a property with the widget
+// it belongs to, or with null where one value goes to the whole selection. Gathering
+// the ids of the selection means running its search terms, so the shared case is
+// answered without doing that.
+function jeMultiPropertyEntries(state, property) {
+  const value = state[property];
+  if(typeof value != 'object' || value === null)
+    return [ [ null, value ] ];
+  const widgetIDs = jeMultiSelectedWidgets().map(w=>w.get('id'));
+  if(!jeMultiValueIsPerWidget(value, widgetIDs))
+    return [ [ null, value ] ];
+  return Object.entries(value);
+}
+
+// The properties of a multi-selection whose value has to name a widget in the room,
+// with the message for the first one that does not.
+function jeMultiWidgetReferenceError(state) {
+  // gathering the selection means running its search terms, so a state without either
+  // property is answered without doing that
+  let cardIDs = null;
+  const goesToACard = widgetID => {
+    if(cardIDs === null)
+      cardIDs = new Set(jeMultiSelectedWidgets().filter(w=>w.get('type') == 'card').map(w=>w.get('id')));
+    return widgetID === null ? cardIDs.size > 0 : cardIDs.has(widgetID);
+  };
+  for(const [ property, label ] of [ [ 'parent', 'Parent' ], [ 'deck', 'Deck' ] ]) {
+    if(state[property] === undefined)
+      continue;
+    for(const [ widgetID, value ] of jeMultiPropertyEntries(state, property)) {
+      // deck names a deck on a card - on anything else it is an ordinary property
+      // that happens to be called deck
+      if(property == 'deck' && !goesToACard(widgetID))
+        continue;
+      // null is applied by deleting the property: a widget without a parent belongs to the
+      // room, while a card without a deck is dropped on the next load like a missing one
+      if(value === undefined || (value === null && property != 'deck'))
+        continue;
+      const forWidget = widgetID === null ? '' : ` (widget "${widgetID}")`;
+      // an object arrives here either as a value that is no ID at all, or as a
+      // per-widget object whose keys do not match the selection - which makes the
+      // whole object the one value the selection shares
+      if(value !== null && typeof value == 'object')
+        return widgetID === null
+          ? `${label} has to be a widget ID, or an object with one entry per selected widget.`
+          : `${label} has to be a widget ID${forWidget}.`;
+      if(!widgets.has(value))
+        return `${label} ${value} does not exist${forWidget}.`;
+      if(property == 'deck' && !widgets.get(value).get('cardTypes'))
+        return `Given widget ${value} is not a deck or doesn't define cardTypes${forWidget}.`;
+    }
+  }
+  return null;
+}
+
 function jeSelectedIDs() {
   if(!jeStateNow)
     return [];
@@ -2355,7 +2499,7 @@ function jeToggleWidgetHighlighting() {
 function jeSVGColors() {
   const div = document.createElement('div');
   div.id = 'jeSVGColors';
-  div.innerHTML = `<b>SVG Colors:</b><div></div><button>Close</button>`;
+  div.innerHTML = `<div class="jeSVGColorsHeader"><b>SVG colors</b><button class="jeSVGColorsClose" title="Close">✕</button></div><div class="jeSVGColorsBody"></div>`;
   $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
 
   // Reinsert the div because it gets removed
@@ -2363,57 +2507,124 @@ function jeSVGColors() {
     if (!document.querySelector('#jeSVGColors')) {
       $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
     }
+    closeIfImageChanged();
   });
   const jeCommands = document.querySelector('#jeCommands');
   if (jeCommands) {
     observer.observe(jeCommands, { childList: true, subtree: false });
   }
 
-  // Extract and display SVG colors
-  fetch(mapAssetURLs(jeStateNow.image))
-  .then(response => response.text())
-  .then(svg => {
-    const hexColorRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g;
-    const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
-    const colors = [...new Set(uniqueColors)];
-    const colorsDiv = div.querySelector('div');
-    if (colorsDiv) {
-      colorsDiv.innerHTML = colors.map(color => {
-        const backgroundColor = color === 'currentColor' ? 'black' : color;
-        const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(color, 1);
-        return `<button style="width: 100%; background-color: ${backgroundColor}; color: ${textColor}; border: 1px solid #808080; padding: 5px; margin: 2px 0;" data-color="${color}">${color}</button>`;
-      }).join('');
+  const body = div.querySelector('.jeSVGColorsBody');
+  const image = jeStateNow.image;
 
-      // Create the buttons
-      const buttons = colorsDiv.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          if (!jeStateNow.svgReplaces) {
-            jeStateNow.svgReplaces = {};
-          }
-          const color = this.getAttribute('data-color');
-          if (!(color in jeStateNow.svgReplaces)) {
-            jeStateNow.svgReplaces[color] = "###SELECT ME###";
-            jeSetAndSelect("");
-          }
-        });
-      });
+  // Whatever the panel has to say instead of colors, followed by the URL it is about: the panel is
+  // a narrow column and the image property it answers for is easily scrolled out of the JSON pane.
+  function sayInPanel(text, offerRetry) {
+    body.innerHTML = '';
+    const message = document.createElement('div');
+    message.className = 'jeSVGColorsMessage';
+    message.textContent = text;
+    const url = document.createElement('div');
+    url.className = 'jeSVGColorsURL';
+    url.textContent = url.title = image;
+    body.append(message, url);
+    if (offerRetry) {
+      const retry = document.createElement('button');
+      retry.textContent = 'Try again';
+      // fetchSVG() forgets a request that failed, so this really does ask for the file again
+      retry.addEventListener('click', loadColors);
+      body.appendChild(retry);
     }
-  });
+  }
 
-  $a('#jeSVGColors button')[0].addEventListener('click', function () {
+  // the text of a swatch has to stay readable on the color itself, and contrastAnyColor() reads a
+  // six digit hex: a short form or an alpha channel would go through a canvas it cannot answer for
+  // and come back as black on every swatch
+  function opaqueHex(color) {
+    const short = color.match(/^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])[0-9a-fA-F]?$/);
+    return short ? `#${short[1]}${short[1]}${short[2]}${short[2]}${short[3]}${short[3]}` : color.slice(0, 7);
+  }
+
+  function showColors(colors) {
+    body.innerHTML = `<div class="jeSVGColorList">` + colors.map(color => {
+      const backgroundColor = color === 'currentColor' ? 'black' : color;
+      const textColor = color === 'currentColor' ? 'white' : contrastAnyColor(opaqueHex(color), 1);
+      const title = color === 'currentColor' ? ` title="Inherits the widget's text color"` : '';
+      return `<button style="background-color: ${backgroundColor}; color: ${textColor};" data-color="${color}"${title}>${color}</button>`;
+    }).join('') + `</div>`;
+
+    // Create the buttons
+    const buttons = body.querySelectorAll('button');
+    // a color that already has an svgReplaces entry is checked off, so working through a long
+    // palette shows what is left instead of looking the same after every click
+    const markMapped = _=>buttons.forEach(button => button.classList.toggle('jeSVGColorMapped', !!jeStateNow.svgReplaces && button.getAttribute('data-color') in jeStateNow.svgReplaces));
+    markMapped();
+    buttons.forEach(button => {
+      button.addEventListener('click', function() {
+        // a color of one file has no business in another widget's svgReplaces
+        if (!jeStateNow || jeStateNow.image !== image)
+          return;
+        if (!jeStateNow.svgReplaces) {
+          jeStateNow.svgReplaces = {};
+        }
+        const color = this.getAttribute('data-color');
+        if (!(color in jeStateNow.svgReplaces)) {
+          jeStateNow.svgReplaces[color] = "###SELECT ME###";
+          jeSetAndSelect("");
+        }
+        markMapped();
+      });
+    });
+  }
+
+  // Extract and display SVG colors. The file comes from fetchSVG() (main.js), the one request per
+  // image the engine and the SVG replacements editor go through as well: it answers with the file's
+  // text, with null for a file that turned out not to be an SVG, and rejects when the file could not
+  // be read at all - a cross-origin image blocked by CORS, a server that is not answering, a URL
+  // that 404s. Every outcome gets a sentence in the panel, including an SVG that simply uses no hex
+  // colors, so it never sits empty looking like it is still loading. An unhandled rejection here is
+  // treated as a client crash and takes the whole session down with the error overlay.
+  function loadColors() {
+    sayInPanel('Loading the image …');
+    fetchSVG(image).then(svg => {
+      if (svg === null)
+        return sayInPanel('The file behind this URL is not an SVG - the server answered with something else - so it has no colors that could be replaced.');
+      // longest first, so #33aabbcc is one color and not #33aabb followed by nothing
+      const hexColorRegex = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})\b|currentColor/g;
+      const uniqueColors = Array.from(svg.matchAll(hexColorRegex), match => match[0]);
+      const colors = [...new Set(uniqueColors)];
+      if (!colors.length)
+        return sayInPanel('This SVG paints itself with named colors like red, with rgb() values or from a <style> block. Only hex colors such as #3366cc can be replaced.');
+      showColors(colors);
+    }).catch(_=>sayInPanel('This image could not be loaded, so the colors it uses could not be listed. Check the URL, then try again.', true));
+  }
+  loadColors();
+
+  // The panel answers for one file, so it goes away as soon as the widget is showing another one -
+  // otherwise it keeps listing the colors of the file it was opened with, names that file in its
+  // messages and retries that file. Reloading it instead would request one URL per keystroke while
+  // the image property is being typed, each prefix of it a URL of its own.
+  function closeIfImageChanged() {
+    if (jeStateNow && jeStateNow.image !== image)
+      closePanel();
+  }
+
+  let classObserver;
+  const closePanel = function() {
     div.remove();
     observer.disconnect();
-  });
+    if (classObserver)
+      classObserver.disconnect();
+  };
+  div.querySelector('.jeSVGColorsClose').addEventListener('click', closePanel);
 
-  // Close the color viewer if the widget is deselected
-  const widgetDiv = document.querySelector(`#w_${jeStateNow.id}`);
+  // Close the color viewer if the widget is deselected. The widget's DOM id is escaped, so it is
+  // asked for its element rather than looked up by the id as it is written in the JSON.
+  const widgetDiv = jeWidget && jeWidget.domElement;
   if (widgetDiv) {
-    const classObserver = new MutationObserver(() => {
-      if (!widgetDiv.classList.contains('selectedInEdit')) {
-        div.remove();
-        classObserver.disconnect();
-      }
+    classObserver = new MutationObserver(() => {
+      if (!widgetDiv.classList.contains('selectedInEdit'))
+        closePanel();
     });
     classObserver.observe(widgetDiv, { attributes: true, attributeFilter: ['class'] });
   }
@@ -2515,6 +2726,7 @@ function jeColorize() {
   }
   $('#jeTextHighlight').innerHTML = out.join('');
   $('#editor').style.setProperty('--linenumbers-digits', Math.floor(Math.log10(nr)+1));
+  jeMarkCommandLine();
 }
 
 /* Displaying and controlling tree subpane of edit area */
@@ -2646,7 +2858,10 @@ function jeTreeGetWidgetHTML(widget) {
   const type = widget.get('type');
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
-  if(String(widget.get('id')).match(/^[0-9a-z]{4}$/)) {
+  const id = String(widget.get('id'));
+  // extras are only helpful on generated IDs (random four characters or a
+  // type/piece prefix plus a number), not on IDs an author chose
+  if(id.match(/^[0-9a-z]{4}$/) || (type ? id.startsWith(type) && id.substr(type.length).match(/^[0-9]+$/) : id.match(/^[a-z]+[0-9]+$/))) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))
@@ -2714,10 +2929,7 @@ function jeDisplayFilteredWidgets(e) {
 /* End of tree subpane control */
 
 function jeGetContext() {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   const select = v.substr(s, Math.min(e-s, 100)).replace(/\n/g, '\\n');
@@ -2789,7 +3001,7 @@ function jeGetContext() {
   }
 
   // make sure the context actually exists in the widget
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     let pointer = jeStateNow;
     for(let i=1; i<keys.length; ++i) {
       if(pointer[keys[i]] === undefined) {
@@ -2803,7 +3015,7 @@ function jeGetContext() {
   // insert the operation type as a virtual key so commands can check which operation they're in
   try {
     for(let i=1; i<keys.length-1; ++i) {
-      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONerror) {
+      if(String(keys[i]).match(/Routine$/) && typeof keys[i+1] == 'number' && !jeJSONisUnparsed()) {
         const operation = jeGetValue(keys.slice(1, i+2), true);
         const func = typeof operation == 'string' && operation.match(/^var/) ? 'var expression' : operation.func;
         keys.splice(i+2, 0, '(' + (func || String(keys.slice(0, i+2))) + ')');
@@ -2818,10 +3030,16 @@ function jeGetContext() {
     try {
       jeStateNow = JSON.parse(v);
 
-      if(!Array.isArray(jeStateNow.widgets))
+      if(!Array.isArray(jeStateNow.widgets)) {
         jeJSONerror = 'Key widgets is not an array.';
-      else
-        jeJSONerror = null;
+      } else {
+        // the same checks the single widget mode does above - a parent no widget in
+        // the room has would leave the whole selection in limbo, a deck no widget in
+        // the room has leaves the card without faces and drops it on the next load.
+        // While the widgets array itself is being edited, the values still describe
+        // the previous selection, so there is nothing to check yet.
+        jeJSONerror = keys[1] == 'widgets' ? null : jeMultiWidgetReferenceError(jeStateNow);
+      }
     } catch(e) {
       jeStateNow = null;
       jeJSONerror = e;
@@ -2853,7 +3071,7 @@ function jeGetValue(context, all) {
 }
 
 function jeInsert(context, key, value) {
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     let pointer = jeGetValue(context);
     pointer[key] = '###SELECT ME###';
     jeSetAndSelect(value);
@@ -3106,7 +3324,45 @@ function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
-export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
+// The built-in variables of the routines that are currently running, one entry per routine on the
+// stack - the innermost one belongs to the routine the operation being logged is part of. They
+// hold the value the routine started with, so they are identical in every operation of it and are
+// shown behind their own expander while the variables the routine actually works with stay at the
+// top of the pane. A routine that assigns a built-in name keeps that variable among its own,
+// because its value then differs from the one the routine started with.
+let jeLoggingEngineVariableStack = [];
+
+function jeLoggingEngineVariables(variables) {
+  const fromEngine = {};
+  for(const name in predefinedVariableDescriptions)
+    if(name in variables)
+      fromEngine[name] = variables[name];
+  return fromEngine;
+}
+
+function jeLoggingVariables(variables) {
+  const fromEngine = jeLoggingEngineVariableStack[0] || {};
+  const own = {};
+  const engine = {};
+  for(const name in variables) {
+    const untouched = name in fromEngine && JSON.stringify(variables[name]) === JSON.stringify(fromEngine[name]);
+    (untouched ? engine : own)[name] = variables[name];
+  }
+  const ownBlock = Object.keys(own).length ?
+        `<div class="jeLogVariables"><h3>Variables afterwards</h3>${jeLoggingJSON(own)}</div>` : '';
+  const engineBlock = Object.keys(engine).length ?
+        `<div class="jeLogDetails">
+            <div class="jeExpander">
+              <span class="jeLogName">Built-in variables</span>
+            </div>
+            <div class="jeLogNested">
+              <div class="jeLogVariables">${jeLoggingJSON(engine)}</div>
+            </div>
+          </div>` : '';
+  return ownBlock + engineBlock;
+}
+
+export function jeLoggingRoutineStart(widget, property, variables, byReference) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
@@ -3115,12 +3371,18 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
     jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
-          <span class="jeLogWidget">${widget.get('id')}</span>
-          <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+          <span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo;
+          <span class="jeLogProperty">${html(typeof property == 'string' ? property : '--custom--')}</span>
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
   }
+  // a routine that runs by reference works on the variables of the routine that started it, which
+  // may have changed a built-in one by now - the enclosing routine's set still says what it started
+  // with, so it is what applies here as well
+  jeLoggingEngineVariableStack.unshift(byReference
+    ? jeLoggingEngineVariableStack[0] || {}
+    : jeLoggingEngineVariables(variables));
   ++jeLoggingDepth;
 }
 
@@ -3128,6 +3390,7 @@ export function jeLoggingRoutineEnd(variables, collections) {
   if(!jeLoggingDepth)
     return; // defensive: unmatched End, should not happen since #2672
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  jeLoggingEngineVariableStack.shift();
   --jeLoggingDepth;
   if(!jeLoggingDepth)
     jeLoggingRenderLog(jeLoggingHTML + '</div></div>');
@@ -3182,7 +3445,7 @@ export function jeLoggingRoutineNotLogged(widget, property) {
     jeRoutineResetOnNextLog = false;
   }
   const routine = typeof property == 'string'
-    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> <span class="jeLogProperty">${html(property)}</span>`
+    ? `<span class="jeLogWidget">${html(widget.get('id'))}</span> &rsaquo; <span class="jeLogProperty">${html(property)}</span>`
     : `an inline routine of <span class="jeLogWidget">${html(widget.get('id'))}</span>`;
   jeLoggingHTML += `
     <div class="jeLog jeLogNote">
@@ -3231,7 +3494,7 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
             <span class="jeLogName">Problems</span>
           </div>
           <div class="jeLogNested">
-            <div class="jeLogProblems">${jeLoggingJSON(problems)}</div>
+            <div class="jeLogProblems">${problems.map(p=>html(typeof p == 'string' ? p : JSON.stringify(p))).join('\n')}</div>
           </div>
         </div>` : '';
   const originalOp = originalText.length ?
@@ -3246,31 +3509,36 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
            <div class="jeLogNested">
              ${originalOp}
              ${appliedOp}
-             <h3></h3>
            </div>
          </div>` : '';
+
+  const deltaText = jeLoggingJSON(getDelta().s);
+  const collectionsBlock = Object.keys(collDisplay).length ?
+        `<div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay)}</div>` : '';
+  const deltaBlock = deltaText.length ?
+        `<div class="jeLogVariables"><h3>Delta afterwards</h3>${deltaText}</div>` : '';
+  const opState = `${jeLoggingVariables(variables)}${collectionsBlock}${deltaBlock}`;
+  const opStateBlock = opState.length ?
+        `<div class="jeLogDetails">
+          <div class="jeExpander">
+            <span class="jeLogName">Variables, collections and delta afterwards</span>
+          </div>
+          <div class="jeLogNested">
+            ${opState}
+          </div>
+        </div>` : '';
 
   jeLoggingHTML =  `
     ${savedHTML[0]}
     <div class="jeLogOperation ${skipped ? 'jeLogSkipped' : ''} ${problems.length ? 'jeLogHasProblems' : 'jeLogHasNoProblems'}">
       <div class="jeExpander">
-        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} <span class="jeLogTime">(${+new Date() - startTime}ms)</span>
+        <span class="jeLogName">${opFunction}</span> ${jeRoutineResult} ${problems.length ? '<span class="jeLogFailed">failed</span>' : ''} <span class="jeLogTime" title="how long this operation took">(${+new Date() - startTime}ms)</span>
       </div>
       <div class="jeLogNested">
         ${opProblems}
         ${opOperation}
         ${jeLoggingHTML}
-        <div class="jeLogDetails">
-          <div class="jeExpander">
-            <span class="jeLogName">Variables, collections and delta afterwards</span>
-          </div>
-          <div class="jeLogNested">
-            <div class="jeLogVariables"    ><h3>Variables afterwards</h3>${jeLoggingJSON(variables   )}</div>
-            <div class="jeLogCollections"><h3>Collections afterwards</h3>${jeLoggingJSON(collDisplay )}</div>
-            <div class="jeLogVariables"        ><h3>Delta afterwards</h3>${jeLoggingJSON(getDelta().s)}</div>
-            <h3></h3>
-          </div>
-        </div>
+        ${opStateBlock}
       </div>
     </div>
   `;
@@ -3316,16 +3584,13 @@ function jeLoggingFilterLog(filter) {
 // END routine logging
 
 function jeNewline() {
-  const s = Math.min(getSelection().anchorOffset, getSelection().focusOffset);
+  const s = jeCursorOffsets()[0];
   const match = jeGetEditorContent().substr(0,s).match(/( *)[^\n]*$/);
   jePasteText('\n' + match[1], false);
 }
 
 function jePasteText(text, select) {
-  const aO = getSelection().anchorOffset;
-  const fO = getSelection().focusOffset;
-  const s = Math.min(aO, fO);
-  const e = Math.max(aO, fO);
+  const [ s, e ] = jeCursorOffsets();
   const v = jeGetEditorContent();
 
   jeSetEditorContent(v.substr(0, s) + text + v.substr(e));
@@ -3551,6 +3816,8 @@ function jeSetAndSelect(replaceBy, insideString) {
 }
 
 function jeSetEditorContent(content) {
+  // the remembered offsets index the text that is replaced here, so they say nothing afterwards
+  jeLastCursorOffsets = [ 0, 0 ];
   $('#jeText').textContent = content.replace(/\u00a0/g, ' ');
 }
 
@@ -3559,6 +3826,15 @@ function jeMatchCommandName(name, filter) {
   const words = name.toLowerCase().split(/\s+/);
   const filterWords = filter.toLowerCase().split(/\s+/);
   return filterWords.every(fw => words.some(w => w.startsWith(fw)));
+}
+
+// A parse error leaves nothing to work with. A state that parsed and was only
+// rejected for what it says - a parent that does not exist, an ID already in use -
+// still has a valid object behind it, so the context can be resolved against it and
+// the commands that would fix it stay available and keep inserting. Only handing the
+// state to the room waits for the message to go away.
+function jeJSONisUnparsed() {
+  return jeJSONerror instanceof Error;
 }
 
 function jeShowCommands() {
@@ -3597,7 +3873,7 @@ function jeShowCommands() {
   for(const command of jeCommands) {
     delete command.currentKey;
     const contextMatch = context.match(new RegExp(command.context));
-    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONerror) && (!command.show || command.show())) {
+    if(contextMatch && contextMatch[0]!= "" && (!command.context || command.onEmpty || jeStateNow && !jeJSONisUnparsed()) && (!command.show || command.show())) {
       const title = command.isTypeSpecific || command.isTypeSpecific === undefined ? contextMatch[0] : 'widget';
       if(activeCommands[title] === undefined)
         activeCommands[title] = [];
@@ -3610,7 +3886,7 @@ function jeShowCommands() {
     commandText += `<div id="var_results"></div>\n`;
   }
 
-  if(!jeJSONerror) {
+  if(!jeJSONisUnparsed()) {
     const usedKeys = { a: 1, c: 1, x: 1, v: 1, w: 1, n: 1, t: 1, q: 1, j: 1, z: 1 };
 
     const sortByName = function(a, b) {
@@ -3777,11 +4053,11 @@ function jeShowCommands() {
   commandText += `\n\n${html(context)}\n`;
   if(jeJSONerror) {
     if(jeMode == 'widget')
-      commandText += `\nCtrl-Space: go to error\n`;
-    commandText += `\n<i class=error>${html(String(jeJSONerror))}</i>\n`;
+      commandText += `\n<div>Ctrl-Space: go to error</div>\n`;
+    commandText += `\n<div class=error>${html(String(jeJSONerror))}</div>\n`;
   }
   if(jeCommandError)
-    commandText += `\n<i class=error>Last command failed: ${html(String(jeCommandError))}</i>\n`;
+    commandText += `\n<div class=error>Last command failed: ${html(String(jeCommandError))}</div>\n`;
   if(jeSecondaryWidget)
     commandText += `\n\n<pre>${html(jeSecondaryWidget)}</pre>\n`;
   commandText += `</div>`;
@@ -3917,8 +4193,7 @@ function jeShowCommands() {
       }
     } else if (jeContext && jeContext[jeContext.length - 1] == '(var expression)') {
       const v = jeGetEditorContent();
-      const aO = getSelection().anchorOffset;
-      const s = Math.min(aO, getSelection().focusOffset);
+      const s = jeCursorOffsets()[0];
       const before = v.substr(0, s);
       const after = v.substr(s);
       const newContent = before + sample + after;
@@ -3942,6 +4217,20 @@ function jeShowCommands() {
 
   if(jeCommandWithOptions)
     jeCommandOptions();
+  jeMarkCommandLine();
+}
+
+// A command with options runs on the line the cursor was left on, which no longer shows a caret
+// once the dialog has taken the selection - so that line is marked while the dialog is open.
+function jeMarkCommandLine() {
+  for(const line of $a('#jeTextHighlight > .jeCommandLine'))
+    line.classList.remove('jeCommandLine');
+  if(!jeCommandWithOptions)
+    return;
+  const content = jeGetEditorContent();
+  const line = $a('#jeTextHighlight > .jeTextLine')[content.substr(0, jeCursorOffsets()[0]).split('\n').length - 1];
+  if(line)
+    line.classList.add('jeCommandLine');
 }
 
 let editPanel = null;

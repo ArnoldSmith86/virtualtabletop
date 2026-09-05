@@ -113,6 +113,20 @@ Using [Termux](https://termux.dev/), you can use an Android phone as the server 
 
 If you want to contribute to virtualtabletop.io development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
 
+### Browser support
+
+There is no build step: the JavaScript and CSS that are written here are the ones the browser gets, so the features used in the source are the support line. That line is written down as the `browserslist` key in `package.json` — currently **Chrome/Edge 88, Firefox 79, Safari 14.1 (iOS 14.5), Samsung Internet 15**, roughly spring 2021. The Chromium on Android — Chrome for Android and the WebView an app embeds — has no entry of its own because browserslist only ever knows its current release, so no floor can be expressed for it; it is Chromium and ships the Chrome version it is built from, so `chrome >= 88` is what says where that floor is.
+
+`npm run browsercompat` checks the client against it, and the *Browser compatibility* workflow runs the same check on every pull request. It reads the browser support data from [@mdn/browser-compat-data](https://github.com/mdn/browser-compat-data) and reports every at-rule, selector, property, value, global, built-in and syntax construct that is newer than the oldest browser in the key. The two dependencies that reach the browser as they are — dompurify and fflate — are checked too, but only for the syntax they were built to: names say nothing useful once they are minified. The data is a dependency like any other, so a new release of it can report something the release before it did not know about: that is a finding about the client, not a broken check, and it is answered the same way as any other.
+
+Newer features are still fine where they degrade or where something stands in for them. Two of those the check recognises by itself: asking with `@supports` for the very feature that is then used, and declaring a property twice — `overflow: hidden; overflow: clip`, in that order, because the browser keeps the last declaration it understands — or next to its vendor prefixed spelling, which is a property name of its own and may stand on either side. A prefixed spelling only covers the browsers that actually understand it, though: `-webkit-backdrop-filter` next to `backdrop-filter` still leaves Firefox 79 with neither, and the check says so. Anything else says so where it is used:
+
+```css
+/* compat-fallback css.at-rules.container: containerQueryFallback.js applies these blocks by hand where they are dropped */
+```
+
+`compat-fallback-file` instead of `compat-fallback` covers a whole file, and `tools/browsercompat/exceptions.mjs` lists the features that need no fallback anywhere. All three have to keep excusing something: once the last use of the feature is gone, the check asks for the marker to go too.
+
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
 
 Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/CEZz7wny9T); you will find a helpful and responsive audience.

@@ -54,6 +54,18 @@ function collapsibleSection(target, title, collapsed, renderBody, collapsedState
   return wrap;
 }
 
+// showOverlay() hides every overlay, including the one a sidebar module can be opened into by
+// shift-clicking its sidebar button, and a dialog leaves it hidden when it closes. A confirmation
+// asked from inside a module therefore puts that overlay back, so answering the question does not
+// take the panel it was asked from with it.
+async function confirmInEditor(...args) {
+  const confirmed = await confirmOverlay(...args);
+  const moduleInOverlay = $('#editorModuleInOverlay');
+  if(moduleInOverlay && moduleInOverlay.classList.contains('active'))
+    showOverlay('editorModuleOverlay');
+  return confirmed;
+}
+
 class SidebarModule {
   constructor(icon, title, tooltip) {
     this.icon = icon;
@@ -172,6 +184,14 @@ class SidebarModule {
   }
 
   onStateReceivedWhileActive(state) {
+  }
+
+  onUndoProtocolChanged() {
+    if(this.moduleDOM)
+      this.onUndoProtocolChangedWhileActive();
+  }
+
+  onUndoProtocolChangedWhileActive() {
   }
 
   openInTarget(target) {

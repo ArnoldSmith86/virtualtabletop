@@ -1674,6 +1674,7 @@
   "scoreboard": {
     "type": "scoreboard",
     "id": "scoreboard",
+    "scoreEntry": "auto",
     "x": 5,
     "y": 85,
     "height": 840,
@@ -3101,6 +3102,7 @@
   "trickCount": {
     "type": "scoreboard",
     "id": "trickCount",
+    "scoreEntry": "auto",
     "x": 1325,
     "y": 260,
     "playersInColumns": false,
@@ -8504,6 +8506,7 @@
   "tempScoreboard": {
     "type": "scoreboard",
     "id": "tempScoreboard",
+    "scoreEntry": "auto",
     "x": 5,
     "css": {
       ".scoreboard tbody tr:nth-child(1) td": {
@@ -11773,6 +11776,7 @@
   "scoreboard3": {
     "type": "scoreboard",
     "id": "scoreboard3",
+    "scoreEntry": "auto",
     "y": 86,
     "width": 175,
     "height": 480,
@@ -22456,6 +22460,7 @@
   "playerAid12": {
     "type": "scoreboard",
     "id": "playerAid12",
+    "scoreEntry": "auto",
     "x": 1225,
     "width": 360,
     "height": 305,
@@ -22835,6 +22840,7 @@
   "playerAid2": {
     "type": "scoreboard",
     "id": "playerAid2",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 300,
     "width": 360,
@@ -23050,6 +23056,7 @@
   "playerAid21": {
     "type": "scoreboard",
     "id": "playerAid21",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 300,
     "width": 360,
@@ -24164,6 +24171,7 @@
   "playerAid25": {
     "type": "scoreboard",
     "id": "playerAid25",
+    "scoreEntry": "auto",
     "x": 1225,
     "width": 360,
     "height": 245,
@@ -25215,6 +25223,7 @@
   "playerAid26": {
     "type": "scoreboard",
     "id": "playerAid26",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 560,
     "width": 360,
@@ -25734,6 +25743,7 @@
   "playerAid27": {
     "type": "scoreboard",
     "id": "playerAid27",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 560,
     "width": 360,
@@ -26848,6 +26858,7 @@
   "playerAid8": {
     "type": "scoreboard",
     "id": "playerAid8",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 300,
     "width": 350,
@@ -26883,6 +26894,7 @@
   "playerAid25a": {
     "type": "scoreboard",
     "id": "playerAid25a",
+    "scoreEntry": "auto",
     "width": 450,
     "movable": false,
     "movableInEdit": false,
@@ -26959,6 +26971,7 @@
   "playerAid7": {
     "type": "scoreboard",
     "id": "playerAid7",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 300,
     "width": 350,
@@ -26994,6 +27007,7 @@
   "playerAid12a": {
     "type": "scoreboard",
     "id": "playerAid12a",
+    "scoreEntry": "auto",
     "parent": "playerAid12",
     "fixedParent": true,
     "y": 307,
@@ -27028,6 +27042,7 @@
   "playerAid2a": {
     "type": "scoreboard",
     "id": "playerAid2a",
+    "scoreEntry": "auto",
     "width": 360,
     "height": 257,
     "movable": false,
@@ -27062,6 +27077,7 @@
   "playerAid4": {
     "type": "scoreboard",
     "id": "playerAid4",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 300,
     "width": 350,
@@ -27722,6 +27738,7 @@
   "playerAid29": {
     "type": "scoreboard",
     "id": "playerAid29",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 560,
     "width": 360,
@@ -29263,6 +29280,7 @@
   "playerAid30": {
     "type": "scoreboard",
     "id": "playerAid30",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 260,
     "width": 360,
@@ -29348,6 +29366,7 @@
   "playerAid30a": {
     "type": "scoreboard",
     "id": "playerAid30a",
+    "scoreEntry": "auto",
     "y": 280,
     "width": 360,
     "height": 155,
@@ -33199,6 +33218,7 @@
   "playerAid33": {
     "type": "scoreboard",
     "id": "playerAid33",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 560,
     "width": 360,
@@ -33366,6 +33386,7 @@
   "playerAid34": {
     "type": "scoreboard",
     "id": "playerAid34",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 560,
     "width": 360,
@@ -34752,6 +34773,7 @@
   "playerAid36": {
     "type": "scoreboard",
     "id": "playerAid36",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 265,
     "width": 360,
@@ -34782,6 +34804,7 @@
   "playerAid36a": {
     "type": "scoreboard",
     "id": "playerAid36a",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 358,
     "inheritFrom": {
@@ -34801,6 +34824,7 @@
   "playerAid36b": {
     "type": "scoreboard",
     "id": "playerAid36b",
+    "scoreEntry": "auto",
     "x": 475,
     "y": 58,
     "height": 181,
@@ -36571,6 +36595,7 @@
   "playerAid41": {
     "type": "scoreboard",
     "id": "playerAid41",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 560,
     "width": 360,
@@ -36844,6 +36869,7 @@
   "playerAid42": {
     "type": "scoreboard",
     "id": "playerAid42",
+    "scoreEntry": "auto",
     "x": 1225,
     "y": 560,
     "width": 360,
@@ -38716,6 +38742,7 @@
   "playerAid18": {
     "type": "scoreboard",
     "id": "playerAid18",
+    "scoreEntry": "auto",
     "x": 1260,
     "y": 260,
     "width": 335,
@@ -38749,6 +38776,7 @@
   "playerAid18a": {
     "type": "scoreboard",
     "id": "playerAid18a",
+    "scoreEntry": "auto",
     "x": 310,
     "y": 60,
     "width": 395,

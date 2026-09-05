@@ -1,6 +1,8 @@
 import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
-import { startWebSocket, toServer } from './connection.js';
+import { checkForServerRestart, clientIsOutdated, editModeLoadFailed, editModeURL, showServerRestartOverlay, startWebSocket, toServer } from './connection.js';
+import { setCurrentOverlayId, getCurrentOverlayId, getEditMode } from './overlaystate.js';
 import { addOverlayPosition, addOverlayScale, ADD_OVERLAY_HEADER_HEIGHT, calculateLayout, calculateEditModuleClasses, isEditSidebarNarrow, isOrientationMismatch, viewportConfig, DEFAULT_VIEWPORT, LAYOUT_CLASSES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './calculateLayout.js';
+import { updateContainerQueryFallback } from './containerQueryFallback.js';
 
 export let scale = 1;
 let roomRectangle;
@@ -113,17 +115,19 @@ export function showOverlay(id, forced) {
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
+    setCurrentOverlayId(overlayActive ? id : null);
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
-    if(!isLoading)
-      toServer('mouse',{inactive:true})
   } else {
+    setCurrentOverlayId(null);
     overlayActive = false;
   }
   $('body').classList.toggle('overlayActive', overlayActive);
+  if(!isLoading)
+    toServer('mouse', { inactive: !!overlayActive, activeOverlay: getCurrentOverlayId(), editMode: getEditMode() });
 }
 
 export function showStatesOverlay(id) {
@@ -263,6 +267,9 @@ function setScale() {
   document.documentElement.style.setProperty('--scale', scale);
   updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
+  // the board just changed size, which is what every container query in the overlays asks
+  // about - on a browser that has them this does nothing (see containerQueryFallback.js)
+  updateContainerQueryFallback();
   setSidebar(); // the game details sidebar is a container query on the board, so it flips with it
   if(edit)
     scaleHasChanged(scale);
@@ -800,33 +807,81 @@ export function getSVG(url, replaces, callback) {
   return unreadableCache[url] ? mapAssetURLs(url) : '';
 }
 
+// Decides what the user gets when the editor bundle did not load, by asking the server what it is:
+// a server that has been replaced means this page belongs to a build that is gone and reloads, a
+// server that does not answer at all is restarting and the click can simply be repeated once it is
+// back, and a server that is there and is still the build this page belongs to means the bundle
+// itself is at fault - a genuine defect, which has to reach the error report rather than be excused
+// as downtime. Resolves to false where edit mode is unavailable for now, throws where it is broken.
+async function editModeUnavailable(error) {
+  // kept out of the message on screen but not out of the console: whoever debugs a bundle that does
+  // not load needs the original failure, restart or not
+  console.error('Edit mode could not be loaded.', error);
+  editModeLoadFailed();
+
+  const serverAnswered = await checkForServerRestart();
+  if(clientIsOutdated()) {
+    showServerRestartOverlay();
+    // long enough for the message to be on screen before the reload takes the page away, so a click
+    // on the edit button does not just flash the whole app for no visible reason. The arrow keeps
+    // reload() on its Location: a timer calls what it is handed on the window, which throws.
+    setTimeout(_=>location.reload(), 1000);
+    return false;
+  }
+  if(!serverAnswered) {
+    // while the connection is down its own overlay is up and forced, so it stays and this one does
+    // not appear - which is the right way round: it already says the server is away, and unlike
+    // this one it goes when the server comes back
+    showOverlay('editModeUnavailableOverlay');
+    return false;
+  }
+
+  throw error;
+}
+
+// Resolves to whether edit mode is available: false means the editor could not be fetched, which
+// the user has been told about and can retry - the callers must not go on to use it.
 async function loadEditMode() {
   if(edit === null) {
-    edit = false;
-    Object.assign(window, {
-      $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
-      setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
-      toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
-      addWidgetLocal, updateWidgetId, removeWidgetLocal,
-      loadZipLibrary, waitForZipLibrary, zipBlob,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
-      iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
-      config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
-      viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
-      html, formField,
-      Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
-      toHex, contrastAnyColor,
-      asArray, compute_ops, positionNames, expressionError, expressionNames,
-      eventCoords,
-      getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
-    });
     $('body').classList.add('loadingEditMode');
-    const editmode = await import('./edit.js');
-    $('body').classList.remove('loadingEditMode');
+    let editmode;
+    try {
+      edit = false;
+      Object.assign(window, {
+        $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, confirmOverlay, sleep, rand, shuffleArray,
+        setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
+        toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
+        addWidgetLocal, updateWidgetId, removeWidgetLocal,
+        loadZipLibrary, waitForZipLibrary, zipBlob,
+        generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
+        uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
+        iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
+        enableEmojiVariantFlyouts, closeEmojiVariantFlyout, expandEmojiVariants, loadEmojiVariants,
+        config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+        viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
+        html, formField,
+        Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
+        toHex, contrastAnyColor,
+        asArray, compute_ops, positionNames, expressionError, expressionNames,
+        eventCoords,
+        getCurrentGameSettings, legacyMode, getEnabledLegacyModes, LEGACY_MODES
+      });
+
+      // The two halves of the client only know each other through the names handed over above, so
+      // a pair from two builds fails on the first name one of them does not have - which is why
+      // the bundle is asked for by build rather than by name alone.
+      editmode = await import(editModeURL());
+    } catch(e) {
+      edit = null;
+      return await editModeUnavailable(e);
+    } finally {
+      $('body').classList.remove('loadingEditMode');
+    }
+
     Object.assign(window, editmode);
     initializeEditMode(currentMetaData);
   }
+  return true;
 }
 
 window.addEventListener('keydown', async function(e) {
@@ -836,8 +891,7 @@ window.addEventListener('keydown', async function(e) {
       $('#editorToolbar button[icon=close]').click();
     } else if(edit === false) {
       $('#editButton').click();
-    } else {
-      await loadEditMode();
+    } else if(await loadEditMode()) {
       $('#editButton').click();
       if(!$('#editorSidebar button[icon=data_object].active'))
         $('#editorSidebar button[icon=data_object]').click();
@@ -846,7 +900,8 @@ window.addEventListener('keydown', async function(e) {
 });
 
 async function toggleEditMode() {
-  await loadEditMode();
+  if(!await loadEditMode())
+    return false;
   if(edit)
     $('body').classList.remove('edit');
   else
@@ -857,9 +912,20 @@ async function toggleEditMode() {
     openEditor();
   showOverlay();
   setScale();
+  return true;
 }
 
 onLoad(function() {
+  // overflow: clip does not create a scroll container, the overflow: hidden that browsers
+  // predating it fall back to (layout.css) does. Nothing ever wants to scroll the board, but
+  // scrollIntoView() - what the JSON editor uses to reveal a widget and the game shelf to reveal
+  // a state - scrolls every scrollable ancestor along with its target, which would slide the
+  // board out from under the toolbar with no scrollbar and no gesture to put it back.
+  if(!(window.CSS && CSS.supports && CSS.supports('overflow', 'clip')))
+    on('#roomArea', 'scroll', function() {
+      this.scrollTop = this.scrollLeft = 0;
+    });
+
   on('#pileOverlay', 'click', e=>e.target.id=='pileOverlay'&&showOverlay());
 
   on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());
@@ -909,8 +975,20 @@ onLoad(function() {
     for(const tabButton of $a('.toolbarTab'))
       toggleClass(tabButton, 'active', tabButton == e.currentTarget);
 
-    if(e.currentTarget == $('#editButton') || edit)
-      toggleEditMode();
+    if(e.currentTarget == $('#editButton') || edit) {
+      // a tab that could not be opened - edit mode is fetched on demand and the server may be
+      // away - must not stay marked as the open one, or the next click on it counts as a click on
+      // the active tab and does nothing at all. What is on screen then belongs to no tab, so none
+      // of them is marked either.
+      const noTabIsOpen = _=>{
+        for(const tabButton of $a('.toolbarTab'))
+          tabButton.classList.remove('active');
+      };
+      toggleEditMode().then(opened=>opened || noTabIsOpen(), error=>{
+        noTabIsOpen();
+        throw error;
+      });
+    }
   });
 
   on('#activeGameButton', 'click', function() {
@@ -920,8 +998,8 @@ onLoad(function() {
   on('.toolbarButton', 'click', async function(e) {
     const overlay = e.currentTarget.dataset.overlay;
     if(overlay) {
-      if(overlay == 'addOverlay')
-        await loadEditMode();
+      if(overlay == 'addOverlay' && !await loadEditMode())
+        return;
 
       showOverlay(overlay);
       if(overlay == 'statesOverlay')
@@ -950,9 +1028,11 @@ onLoad(function() {
       // the returned promises reject when the browser denies the request (for
       // example inside an iframe without allowfullscreen) - don't treat that
       // as a client error
+      // compat-fallback api.Document.fullscreenElement: only read where requestFullscreen exists, the webkit branch below covers the rest
       if(!document.fullscreenElement)
         document.documentElement.requestFullscreen().catch(e=>console.warn(`Could not enter fullscreen mode: ${e.message}`));
       else
+        // compat-fallback api.Document.exitFullscreen: same branch, webkitExitFullscreen below
         document.exitFullscreen().catch(e=>console.warn(`Could not exit fullscreen mode: ${e.message}`));
     } else if(document.documentElement.webkitRequestFullscreen) {
       if(!document.webkitFullscreenElement)
@@ -989,6 +1069,13 @@ onLoad(function() {
   onMessage('redirect', function(url) {
     window.location.href = `${url}#player:${encodeURIComponent(playerName)}:${encodeURIComponent(playerColor)}`;
   });
+
+  // the delay before the reload after a server restart spreads the clients over a few seconds,
+  // which is the server's concern and not the waiting player's
+  on('#reloadNowButton', 'click', _=>location.reload());
+
+  on('#editModeUnavailableOverlay button', 'click', _=>showOverlay());
+
   on('#returnOverlay button', 'click', function() {
     toServer('setRedirect', 'return');
   });
