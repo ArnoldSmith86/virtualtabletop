@@ -4,6 +4,7 @@ import { connectionClosed, connectionStatus, deltaConfirmed, deltaSent, monitorT
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { setViewportSize } from './calculateLayout.js';
+import { dropTargets } from './main.js';
 import { playerName } from './overlays/players.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
@@ -677,8 +678,13 @@ export function sendPropertyUpdate(widgetID, property, value) {
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
   } else {
-    if(delta.s[widgetID] === undefined)
+    if(delta.s[widgetID] === undefined) {
+      // a routine can remove a widget and flush that removal (DELAY does) and then still
+      // update a property of it - the widget is gone here and on the server, so drop it
+      if(!widgets.has(widgetID))
+        return;
       delta.s[widgetID] = {};
+    }
     if(delta.s[widgetID] !== null)
       delta.s[widgetID][property] = value;
   }
