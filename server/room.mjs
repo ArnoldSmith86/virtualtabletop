@@ -14,6 +14,7 @@ export default class Room {
   players = [];
   state = {};
   deltaID = 0;
+  isLoading = false;
   lastStatisticsDeltaID = 0;
   lastMouseState = new Map();
 
@@ -21,10 +22,21 @@ export default class Room {
     this.id = id;
     this.unloadCallback = unloadCallback;
     this.publicLibraryUpdatedCallback = publicLibraryUpdatedCallback;
+    this.startUnloadTimeout();
+  }
+
+  // loading a room can take a while because linked states are fetched over the network - unloading
+  // it in the middle of that would write a half loaded room to disk, so wait for the load to finish
+  startUnloadTimeout() {
+    clearTimeout(this.unloadTimeout);
     this.unloadTimeout = setTimeout(_=>{
       if(this.players.length == 0) {
-        Logging.log(`unloading room ${this.id} after 5s without player connection`);
-        this.unload();
+        if(this.isLoading) {
+          this.startUnloadTimeout();
+        } else {
+          Logging.log(`unloading room ${this.id} after 5s without player connection`);
+          this.unload();
+        }
       }
     }, 5000);
   }
@@ -550,63 +562,65 @@ export default class Room {
   }
 
   async load(fileOrLink, player, delayForGameStartRoutine) {
-    const emptyState = {
-      _meta: {
-        version: 1,
-        metaVersion: 1,
-        players: {},
-        states: {},
-        starred: {}
-      }
-    };
+    this.isLoading = true;
+    try {
+      const emptyState = {
+        _meta: {
+          version: 1,
+          metaVersion: 1,
+          players: {},
+          states: {},
+          starred: {}
+        }
+      };
 
-    if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
-      Logging.log(`creating room ${this.id}`);
-      this.state = FileUpdater(emptyState);
-      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
-      this.traceIsEnabled(Config.get('forceTracing'));
-    } else if(!fileOrLink) {
-      Logging.log(`loading room ${this.id}`);
-      this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
-      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+      if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
+        Logging.log(`creating room ${this.id}`);
+        this.state = FileUpdater(emptyState);
+        this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+        this.traceIsEnabled(Config.get('forceTracing'));
+      } else if(!fileOrLink) {
+        Logging.log(`loading room ${this.id}`);
+        this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+        this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+        this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
 
-      this.migrateOldPublicLibraryLinks();
-      this.migrateBrokenSaveWithoutVersion();
-      await this.updateLinkedStates();
-      this.removeInvalidPublicLibraryLinks(player);
-      this.removeStatesWithoutVariants(player);
+        this.migrateOldPublicLibraryLinks();
+        this.migrateBrokenSaveWithoutVersion();
+        await this.updateLinkedStates();
+        this.removeInvalidPublicLibraryLinks(player);
+        this.removeStatesWithoutVariants(player);
 
-      this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
-      this.normalizeGameSettings(this.state._meta.gameSettings);
-      this.broadcast('state', this.state);
-    } else {
-      let newState = emptyState;
-      let errorMessage = 'Error loading state.';
-      try {
-        if(fileOrLink.match(/^http/))
-          newState = await FileLoader.readVariantFromLink(fileOrLink);
-        else
-          newState = JSON.parse(fs.readFileSync(fileOrLink));
-      } catch(e) {
-        errorMessage = `Error loading state:\n${e.toString()}`;
-        newState = null;
-      }
-      if(newState) {
-        Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-        this.setState(newState, player, delayForGameStartRoutine);
+        this.normalizeGameSettings(this.state._meta.gameSettings);
+        this.broadcast('state', this.state);
       } else {
-        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
-        this.setState(emptyState, player, false);
-        if(player)
-          player.send('error', errorMessage);
+        let newState = emptyState;
+        let errorMessage = 'Error loading state.';
+        try {
+          if(fileOrLink.match(/^http/))
+            newState = await FileLoader.readVariantFromLink(fileOrLink);
+          else
+            newState = JSON.parse(fs.readFileSync(fileOrLink));
+        } catch(e) {
+          errorMessage = `Error loading state:\n${e.toString()}`;
+          newState = null;
+        }
+        if(newState) {
+          Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+          this.setState(newState, player, delayForGameStartRoutine);
+        } else {
+          Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
+          this.setState(emptyState, player, false);
+          if(player)
+            player.send('error', errorMessage);
+        }
       }
+
+      if(!this.state._meta || typeof this.state._meta.version !== 'number')
+        throw Error('Room state has invalid meta information.');
+    } finally {
+      this.isLoading = false;
     }
-
-    if(!this.state._meta || typeof this.state._meta.version !== 'number')
-      throw Error('Room state has invalid meta information.');
-
-    if(!fileOrLink)
-      this.trace('init', { initialState: this.state });
   }
 
   async loadState(player, stateID, variantID, linkSourceStateID, delayForGameStartRoutine) {
@@ -1388,6 +1402,15 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  // the trace viewer replays a trace on top of the initialState of its first record, so a trace
+  // file always starts with the room state at the moment the file was opened
+  openTraceFile() {
+    this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+    fs.writeFileSync(this.tracingFilename, '[\n');
+    Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    this.trace('init', { initialState: this.state });
+  }
+
   trace(source, payload) {
     if(!this.traceIsEnabled() && source == 'client' && payload.type == 'enable') {
       this.traceIsEnabled(true);
@@ -1395,6 +1418,10 @@ export default class Room {
     }
 
     if(this.traceIsEnabled()) {
+      // a saved room comes back with tracing already enabled, so the room state can ask for tracing
+      // before load() opened a file for it - whatever is traced until then opens the file itself
+      if(!this.tracingFilename)
+        this.openTraceFile();
       payload.servertime = +new Date;
       payload.source = source;
       payload.serverDeltaID = this.deltaID;
@@ -1407,10 +1434,8 @@ export default class Room {
     if(setEnabled && this.state && this.state._meta) {
       this.state._meta.tracingEnabled = true;
 
-      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+      this.openTraceFile();
       this.broadcast('tracing', 'enable');
-      fs.writeFileSync(this.tracingFilename, '[\n');
-      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
     return this.state && this.state._meta && this.state._meta.tracingEnabled;
   }
