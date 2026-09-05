@@ -1205,9 +1205,7 @@
     "cardType": "C 02",
     "id": "card2",
     "z": 601,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "ja9f": {
     "type": "pile",
@@ -1225,9 +1223,7 @@
     "cardType": "C 03",
     "id": "card3",
     "z": 644,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card4": {
     "deck": "mainDeck",
@@ -1235,9 +1231,7 @@
     "cardType": "C 04",
     "id": "card4",
     "z": 602,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card5": {
     "deck": "mainDeck",
@@ -1245,9 +1239,7 @@
     "cardType": "C 05",
     "id": "card5",
     "z": 691,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card6": {
     "deck": "mainDeck",
@@ -1263,9 +1255,7 @@
     "cardType": "C 07",
     "id": "card7",
     "z": 641,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card8": {
     "deck": "mainDeck",
@@ -1273,9 +1263,7 @@
     "cardType": "C 08",
     "id": "card8",
     "z": 686,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card9": {
     "deck": "mainDeck",
@@ -1283,9 +1271,7 @@
     "cardType": "C 09",
     "id": "card9",
     "z": 692,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card10": {
     "deck": "mainDeck",
@@ -1293,9 +1279,7 @@
     "cardType": "C 10",
     "id": "card10",
     "z": 624,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card11": {
     "deck": "mainDeck",
@@ -1311,9 +1295,7 @@
     "cardType": "C 3Q",
     "id": "card12",
     "z": 625,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card13": {
     "deck": "mainDeck",
@@ -1321,9 +1303,7 @@
     "cardType": "C 4K",
     "id": "card13",
     "z": 696,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card14": {
     "deck": "mainDeck",
@@ -1331,9 +1311,7 @@
     "cardType": "D 01",
     "id": "card14",
     "z": 673,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card15": {
     "deck": "mainDeck",
@@ -1341,9 +1319,7 @@
     "cardType": "D 02",
     "id": "card15",
     "z": 690,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card16": {
     "deck": "mainDeck",
@@ -1367,9 +1343,7 @@
     "cardType": "D 05",
     "id": "card18",
     "z": 667,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card19": {
     "deck": "mainDeck",
@@ -1377,9 +1351,7 @@
     "cardType": "D 06",
     "id": "card19",
     "z": 668,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card20": {
     "deck": "mainDeck",
@@ -1395,9 +1367,7 @@
     "cardType": "D 08",
     "id": "card21",
     "z": 650,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card22": {
     "deck": "mainDeck",
@@ -1413,9 +1383,7 @@
     "cardType": "D 10",
     "id": "card23",
     "z": 676,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card24": {
     "deck": "mainDeck",
@@ -1423,9 +1391,7 @@
     "cardType": "D 2J",
     "id": "card24",
     "z": 597,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card25": {
     "deck": "mainDeck",
@@ -1433,9 +1399,7 @@
     "cardType": "D 3Q",
     "id": "card25",
     "z": 645,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card26": {
     "deck": "mainDeck",
@@ -1443,9 +1407,7 @@
     "cardType": "D 4K",
     "id": "card26",
     "z": 595,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card27": {
     "deck": "mainDeck",
@@ -1461,9 +1423,7 @@
     "cardType": "H 02",
     "id": "card28",
     "z": 623,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card29": {
     "deck": "mainDeck",
@@ -1479,9 +1439,7 @@
     "cardType": "H 04",
     "id": "card30",
     "z": 627,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card31": {
     "deck": "mainDeck",
@@ -1489,9 +1447,7 @@
     "cardType": "H 05",
     "id": "card31",
     "z": 616,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card32": {
     "deck": "mainDeck",
@@ -1499,9 +1455,7 @@
     "cardType": "H 06",
     "id": "card32",
     "z": 664,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card33": {
     "deck": "mainDeck",
@@ -1509,9 +1463,7 @@
     "cardType": "H 07",
     "id": "card33",
     "z": 647,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card34": {
     "deck": "mainDeck",
@@ -1519,9 +1471,7 @@
     "cardType": "H 08",
     "id": "card34",
     "z": 628,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card35": {
     "deck": "mainDeck",
@@ -1529,9 +1479,7 @@
     "cardType": "H 09",
     "id": "card35",
     "z": 675,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card36": {
     "deck": "mainDeck",
@@ -1539,9 +1487,7 @@
     "cardType": "H 10",
     "id": "card36",
     "z": 680,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card37": {
     "deck": "mainDeck",
@@ -1549,9 +1495,7 @@
     "cardType": "H 2J",
     "id": "card37",
     "z": 659,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card38": {
     "deck": "mainDeck",
@@ -1559,9 +1503,7 @@
     "cardType": "H 3Q",
     "id": "card38",
     "z": 657,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card39": {
     "deck": "mainDeck",
@@ -1569,9 +1511,7 @@
     "cardType": "H 4K",
     "id": "card39",
     "z": 638,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card40": {
     "deck": "mainDeck",
@@ -1579,9 +1519,7 @@
     "cardType": "S 01",
     "id": "card40",
     "z": 622,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card41": {
     "deck": "mainDeck",
@@ -1589,9 +1527,7 @@
     "cardType": "S 02",
     "id": "card41",
     "z": 643,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card42": {
     "deck": "mainDeck",
@@ -1599,9 +1535,7 @@
     "cardType": "S 03",
     "id": "card42",
     "z": 649,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card43": {
     "deck": "mainDeck",
@@ -1609,9 +1543,7 @@
     "cardType": "S 04",
     "id": "card43",
     "z": 665,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card44": {
     "deck": "mainDeck",
@@ -1619,9 +1551,7 @@
     "cardType": "S 05",
     "id": "card44",
     "z": 621,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card45": {
     "deck": "mainDeck",
@@ -1629,9 +1559,7 @@
     "cardType": "S 06",
     "id": "card45",
     "z": 619,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card46": {
     "deck": "mainDeck",
@@ -1663,9 +1591,7 @@
     "cardType": "S 10",
     "id": "card49",
     "z": 603,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card50": {
     "deck": "mainDeck",
@@ -1673,9 +1599,7 @@
     "cardType": "S 2J",
     "id": "card50",
     "z": 617,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   },
   "card51": {
     "deck": "mainDeck",
@@ -1691,8 +1615,6 @@
     "cardType": "S 4K",
     "id": "card52",
     "z": 658,
-    "parent": "ja9f",
-    "x": null,
-    "y": null
+    "parent": "ja9f"
   }
 }
