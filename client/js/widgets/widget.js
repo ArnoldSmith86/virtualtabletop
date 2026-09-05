@@ -2730,8 +2730,10 @@ export class Widget extends StateManaged {
                 target = c[0];
               }
             } else {
-              if (isNaN(turnNumber))
+              if (a.turn == 'first' || a.turn == 'last')
                 problems.push(`Warning: turn ${JSON.stringify(a.turn)} is only valid with turnCycle position. Using 1.`);
+              else if (isNaN(turnNumber))
+                problems.push(`Warning: turn ${JSON.stringify(a.turn)} is not a number. Using 1.`);
               // turn 0 leaves the turn where it is - unless the current seat is skipped,
               // in which case it is not in unskipped and the turn moves on to the next seat
               const turn = isNaN(turnNumber) ? 1 : turnNumber;
