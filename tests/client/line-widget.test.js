@@ -153,6 +153,20 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('auto-rotation applies the line rotation offset', async () => {
+    const line = createLine({ id: 'rotation-offset-line', x: 0, y: 0,
+      lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, rotationOffset: 90,
+      autoSpaceStops: false, stops: [ { widget: 'rotation-offset-stop', position: 0.5 } ] });
+    const stop = new Widget('rotation-offset-stop');
+    addWidget({ id: 'rotation-offset-stop', type: 'basic', parent: line.id, width: 20, height: 20 }, stop);
+
+    await line.updateAttachedWidgets();
+
+    expect(Math.round(stop.get('rotation'))).toBe(135);
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   test('stops of every shape are turned onto the line, and let go of again', async () => {
     const shapes = [ { id: 'shape-landscape', width: 80, height: 20 }, { id: 'shape-portrait', width: 20, height: 80 }, { id: 'shape-square', width: 40, height: 40 } ];
     const line = createLine({ id: 'shape-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 300 }, autoSpaceStops: false,

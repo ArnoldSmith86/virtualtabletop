@@ -10969,6 +10969,15 @@ class PropertiesModule extends SidebarModule {
       })
     }).render(this.moduleDOM);
 
+    new NumberInput(this, widget, 'Rotation offset', {
+      property: 'rotationOffset',
+      min: -360,
+      max: 360,
+      step: 1,
+      unit: 'deg',
+      hint: 'Adds this angle to the direction of every automatically rotated stop.'
+    }).render(this.moduleDOM);
+
     new CheckboxInput(this, widget, 'Distribute evenly', {
       property: 'autoSpaceStops',
       hint: 'The line keeps the same gap between its stops, measured along the path, and re-spaces them whenever it changes shape.',
@@ -11404,7 +11413,7 @@ class PropertiesModule extends SidebarModule {
     this.renderOtherPropertiesSection(widget, [
       'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
       'lineColor', 'lineDash', 'lineWidth', 'stops',
-      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
+      'rotateStops', 'rotateAttachedWidgets', 'rotationOffset', 'autoSpaceStops',
       'connectStart', 'connectEnd', 'dropTarget'
     ]);
   }

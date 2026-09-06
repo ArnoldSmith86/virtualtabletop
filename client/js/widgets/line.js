@@ -29,6 +29,7 @@ export class Line extends Widget {
       // when enabled, every stop follows the direction of the line at its
       // position, whatever its shape; when off, each keeps its own rotation
       rotateStops: true,
+      rotationOffset: 0,
       autoSpaceStops: true,
 
       // A line takes widgets in like a holder: what dropTarget matches becomes
@@ -336,7 +337,7 @@ export class Line extends Widget {
       if(this.shouldRotateStops()) {
         if(stop.get('lineOriginalRotation') === null)
           await stop.set('lineOriginalRotation', { value: stop.get('rotation'), explicit: stop.state.rotation !== undefined });
-        await stop.set('rotation', this.tangentAngleAtPosition(entry.position));
+        await stop.set('rotation', this.tangentAngleAtPosition(entry.position) + (+this.get('rotationOffset') || 0));
       } else
         await this.restoreStopRotation(stop);
     }
@@ -806,7 +807,7 @@ export class Line extends Widget {
     if(property == 'autoSpaceStops')
       await this.layoutStops();
 
-    if(property == 'rotateStops' || property == 'rotateAttachedWidgets')
+    if(property == 'rotateStops' || property == 'rotateAttachedWidgets' || property == 'rotationOffset')
       await this.updateAttachedWidgets();
 
     if((property == 'x' || property == 'y') && !this.normalizingGeometry) {
