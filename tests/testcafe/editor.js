@@ -3554,7 +3554,7 @@ test('Line widget in edit mode', async t => {
     .click('#editorToolbar > div > [icon=delete_forever]');
   // the added stop's id is derived from the existing stops instead of being
   // random, so the compared state no longer depends on the seeded rand() stream
-  await compareState(t, '39dac10e30820bf231f3d4a10fc70572');
+  await compareState(t, '2ac69b3c945fd9dc4619a506a53cbe56');
 });
 
 // A stop does not have to be a child of the line, and one that is not gets

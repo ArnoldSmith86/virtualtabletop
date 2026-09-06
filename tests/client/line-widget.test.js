@@ -153,6 +153,35 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('stops of every shape are turned onto the line, and let go of again', async () => {
+    const shapes = [ { id: 'shape-landscape', width: 80, height: 20 }, { id: 'shape-portrait', width: 20, height: 80 }, { id: 'shape-square', width: 40, height: 40 } ];
+    const line = createLine({ id: 'shape-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 300 }, autoSpaceStops: false,
+      stops: shapes.map((shape, i) => ({ widget: shape.id, position: (i+1)/4 })) });
+    const stops = shapes.map(shape => {
+      const stop = new Widget(shape.id);
+      addWidget({ ...shape, type: 'basic', parent: line.id }, stop);
+      return stop;
+    });
+
+    await line.updateAttachedWidgets();
+    for(const stop of stops) {
+      expect(Math.round(stop.get('rotation'))).toBe(45);
+      // a stop that is turned onto the line lays its own width along it
+      expect(line.widgetLengthOnLine(stop, 45)).toBe(+stop.get('width'));
+    }
+
+    // none of them was given a rotation of its own, so they all fall back to 0
+    await line.set('rotateStops', false);
+    for(const stop of stops) {
+      expect(stop.get('rotation')).toBe(0);
+      expect(stop.get('lineOriginalRotation')).toBeNull();
+    }
+
+    for(const stop of stops)
+      removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   test('direct and inherited stop geometry changes reposition the stop', async () => {
     const line = createLine({ id: 'stop-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
       stops: [ { widget: 'reactive-stop', position: 0.25 } ] });

@@ -10959,7 +10959,7 @@ class PropertiesModule extends SidebarModule {
     // speaks the sidebar's own toggle language
     new CheckboxInput(this, widget, 'Turn stops to follow the line', {
       listenTo: [ 'rotateStops', 'rotateAttachedWidgets' ],
-      hint: 'Landscape stops are rotated so they stay aligned with the line under them.',
+      hint: 'Every stop is turned to the direction of the line under it, whatever its shape - turn this off to keep the rotation each stop has.',
       getValue: _=>widget.shouldRotateStops(),
       setValue: checked=>lineEdit(`${checked ? 'enabled' : 'disabled'} automatic stop rotation on line ${widget.id}`, async _=>{
         // Remove the previous property when changing the setting in the tuner,

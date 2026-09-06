@@ -26,8 +26,8 @@ export class Line extends Widget {
       // [ { widget: <id>, position: <0..1 along the path> }, ... ]
       stops: [],
 
-      // when enabled, landscape stops follow the direction of the line at
-      // their position; portrait and square stops keep their own rotation
+      // when enabled, every stop follows the direction of the line at its
+      // position, whatever its shape; when off, each keeps its own rotation
       rotateStops: true,
       autoSpaceStops: true,
 
@@ -333,8 +333,7 @@ export class Line extends Widget {
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
       await stop.set('y', Math.round(p.y - stop.get('height')/2));
 
-      const landscape = +stop.get('width') > +stop.get('height');
-      if(this.shouldRotateStops() && landscape) {
+      if(this.shouldRotateStops()) {
         if(stop.get('lineOriginalRotation') === null)
           await stop.set('lineOriginalRotation', { value: stop.get('rotation'), explicit: stop.state.rotation !== undefined });
         await stop.set('rotation', this.tangentAngleAtPosition(entry.position));
@@ -457,7 +456,7 @@ export class Line extends Widget {
 
   // How much room a stop claims along the path, measured against referenceAngle
   // instead of against the tangent below the stop itself: a stop that gets
-  // turned onto the line always lays its width along it, one that keeps its own
+  // turned onto the line lays its width along it, one that keeps its own
   // rotation contributes the extent of its bounding box in that direction.
   // Either way the result depends on the widget alone, so a curve turning
   // underneath a stop does not change the space it takes up and equally sized
@@ -466,7 +465,7 @@ export class Line extends Widget {
     const scale = Math.max(0, +widget.get('scale') || 0);
     const width = Math.max(0, +widget.get('width') || 0) * scale;
     const height = Math.max(0, +widget.get('height') || 0) * scale;
-    if(this.shouldRotateStops() && width > height)
+    if(this.shouldRotateStops())
       return width;
     const relativeRotation = ((+widget.get('rotation') || 0) - referenceAngle)*Math.PI/180;
     return Math.abs(width*Math.cos(relativeRotation)) + Math.abs(height*Math.sin(relativeRotation));
