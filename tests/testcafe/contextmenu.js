@@ -9,13 +9,15 @@ const rotationButton = icon => popup.find(`.contextMenuRotationRow [icon=${icon}
 const entry = text => popup.find('.contextMenuActionLabel').withText(text);
 const widgetProperty = (id, property) => getStateObject().then(state => state[id] && state[id][property]);
 
-// a widget that starts between two of its allowed rotations and carries a menu with a submenu,
-// a button whose CONTEXTMENU has no collection and therefore opens the popup on the button itself,
-// a widget whose rotation deletes it, and a button that hands the first widget to another player
+// a widget that starts between two of its allowed rotations, shows an enlarged copy while hovered
+// and carries a menu with a submenu, a button whose CONTEXTMENU has no collection and therefore
+// opens the popup on the button itself, a widget whose rotation deletes it, and a button that
+// hands the first widget to another player
 function contextMenuRoom() {
   return {
     hero: {
       id: 'hero', type: 'basic', x: 300, y: 200, width: 100, height: 100, rotation: 120, rotationSteps: [ 0, 90, 180, 270 ],
+      enlarge: 2,
       contextMenu: [
         { text: 'Mark', routine: 'markRoutine' },
         { text: 'More', menu: [ { text: 'Flag', routine: 'flagRoutine' } ] }
@@ -49,11 +51,19 @@ test('The right-click popup rotates a widget in steps and runs the routines of i
   await ClientFunction(prepareClient)();
   await setName(t);
 
+  // the enlarged copy of the hovered widget gives way to the popup
+  const enlarged = Selector('#enlarged');
+  await t
+    .hover('#w_hero')
+    .expect(enlarged.getAttribute('data-id')).eql('hero')
+    .expect(enlarged.hasClass('hidden')).notOk()
+    .rightClick('#w_hero')
+    .expect(popup.visible).ok()
+    .expect(enlarged.hasClass('hidden')).ok();
+
   // rotation steps: from 120 the next allowed angle to the left is 90, then two clicks to the right
   // turn the widget to 270, and the popup stays open because it has buttons
   await t
-    .rightClick('#w_hero')
-    .expect(popup.visible).ok()
     .click(rotationButton('rotate_left'));
   await expectEventually(t, _=>widgetProperty('hero', 'rotation'), 90, 'the rotation step to the left of 120');
   await t
@@ -103,5 +113,5 @@ test('The right-click popup rotates a widget in steps and runs the routines of i
     .expect(popup.visible).notOk({ timeout: 5000 });
   await expectEventually(t, _=>widgetProperty('hero', 'owner'), 'somebody else', 'the steal button');
 
-  await compareState(t, 'd6067220353bdbe22c4cb8e1de217e84');
+  await compareState(t, '63d5fca6ee141b07f4b4cb50b9298443');
 });

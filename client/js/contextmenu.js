@@ -448,6 +448,8 @@ async function runRoutine(widget, routine, cause, variables = {}) {
 
 function openContextMenu(widget, menuOverride, overrides = null) {
   currentWidget = widget;
+  // the popup takes over from the hover copy of a widget that also has `enlarge`
+  widget.hideEnlarged();
   enlargePreviewIndex = 0;
   optionOverrides = overrides;
   currentMenu = menuOverride !== undefined ? (Array.isArray(menuOverride) ? menuOverride : []) : (widget.get('contextMenu') || []);

@@ -277,6 +277,19 @@ describe('Context menu input handling', () => {
     expect(document.getElementById('contextMenuPreview').dataset.id).toBe('other');
   });
 
+  test('opening the popup hides the enlarged copy of a widget that also has enlarge', () => {
+    const widget = createWidget({ id: 'context-enlarge-popup', type: 'widget', enlarge: 2, contextMenuOptions: { factor: 3 } });
+    const enlarged = document.getElementById('enlarged');
+    enlarged.className = 'widget';
+    enlarged.dataset.id = widget.get('id');
+
+    openContextMenuWithMenu(widget, []);
+
+    expect(popupIsOpen()).toBe(true);
+    expect(enlarged.classList.contains('hidden')).toBe(true);
+    removeWidget(widget.get('id'));
+  });
+
   test('touchend on a popup action does not reach the room input handler', () => {
     const stopPropagation = jest.fn();
     const target = { closest: selector => selector === '.contextMenuPopupBg' };

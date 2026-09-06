@@ -2898,11 +2898,14 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/)) {
-      $('#enlarged').classList.add('hidden');
-      if($('#enlargeStyle'))
-        removeFromDOM($('#enlargeStyle'));
-    }
+    // while editing, a selected widget keeps its enlarged copy on screen; the selection outlives
+    // edit mode, so only the editor's own modes honor it
+    const editing = document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit');
+    if (editing && this.domElement.className.match(/selected/))
+      return;
+    $('#enlarged').classList.add('hidden');
+    if($('#enlargeStyle'))
+      removeFromDOM($('#enlargeStyle'));
   }
 
   inheritSeatVisibility(seatVisibility) {
