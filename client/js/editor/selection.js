@@ -360,7 +360,7 @@ export function editorReceiveDelta(delta) {
   aiRoutineDeltaReceived();
 }
 
-function receiveStateFromServer(state) {
+function editorReceiveState(state) {
   // the new state brings its own smart clones, so their source map is rebuilt
   // from it before anything reads it
   smartCloneInit();
@@ -382,5 +382,5 @@ function receiveStateFromServer(state) {
 }
 
 function registerSelectionEventHandlers() {
-  onMessage('state', receiveStateFromServer);
+  onMessage('state', editorReceiveState);
 }

@@ -208,14 +208,18 @@ window.addEventListener('keyup', function(e) {
 onLoad(function() {
   on('#feedbackButton', 'click', openFeedbackOverlay);
 
-  window.addEventListener('keydown', function(e) {
+  window.addEventListener('keydown', async function(e) {
     if(!jeEnabled && e.key == 'F9') {
-      if(e.ctrlKey)
-        selectFile('TEXT').then(loadTraceFile).catch(e=>{
-          if(e.message !== 'File selection cancelled.')
-            alert(`Error: ${e.toString()}`);
-        });
-      else if(!tracingEnabled)
+      if(e.ctrlKey) {
+        // loadTraceFile and the trace UI belong to the editor bundle, which is only fetched on
+        // demand - asking for it before the file picker means a bundle that cannot be loaded is
+        // reported right away instead of after the user has picked a file
+        if(await loadEditMode())
+          selectFile('TEXT').then(loadTraceFile).catch(e=>{
+            if(e.message !== 'File selection cancelled.')
+              alert(`Error: ${e.toString()}`);
+          });
+      } else if(!tracingEnabled)
         enableTracing();
       else
         sendUserTraceEvent();
@@ -238,8 +242,7 @@ onLoad(function() {
   const reportError = function(description) {
     // close the connection before collecting the context: if that throws, the user still ends up
     // with a terminal overlay over a terminated session instead of a still running one
-    preventReconnect();
-    connection.close();
+    closeConnection();
 
     const details = {
       error: description,

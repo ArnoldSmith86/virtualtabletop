@@ -29,6 +29,16 @@ function windowAPINames() {
   return assign.split(',').map(name => name.trim()).filter(name => /^[\w$]+$/.test(name));
 }
 
+// Files are concatenated as they are, so everything a bundle declares for itself starts at the
+// beginning of a line - anything indented belongs to a scope inside one of them.
+function topLevelDeclarationNames(js) {
+  return [ ...new Set([ ...js.matchAll(/^(?:export\s+)?(?:async\s+)?(?:function|class|let|const|var)\s+([\w$]+)/gm) ].map(match => match[1])) ];
+}
+
+// validator/validate_gamefile.js also runs outside the browser (validate_gamefile_node.js), so it
+// brings its own copies of the handful of helpers it needs rather than relying on the handover.
+const SHADOWED_ON_PURPOSE = [ 'asArray' ];
+
 function topLevelFunctionNames(js) {
   return [ ...new Set([ ...js.matchAll(/^(?:async\s+)?function\s+([\w$]+)/gm) ].map(match => match[1])) ];
 }
@@ -65,6 +75,18 @@ describe('minifyHTML with minifyJavascript disabled', () => {
   test('keeps the editor JS readable', () => {
     expect(build.editorJSmin).toMatch(readableJS);
     expect(build.editorJSmin).toContain('\n\n');
+  });
+
+  // Edit mode reads its half of the API off the window, which is a plain global lookup - so a top
+  // level declaration of the same name anywhere in the editor bundle wins over it, silently and
+  // for the whole bundle at once. A name that is handed over therefore must not be declared on the
+  // other side of the boundary.
+  test('does not shadow a handed over name in the editor bundle', () => {
+    const names = windowAPINames();
+    expect(names.length).toBeGreaterThan(50);  // the block was found, not an empty match
+    const declared = topLevelDeclarationNames(build.editorJSmin);
+    expect(declared.length).toBeGreaterThan(100);  // same for the bundle
+    expect(names.filter(name => declared.includes(name) && !SHADOWED_ON_PURPOSE.includes(name))).toEqual([]);
   });
 
   // Nothing imports the client bundle, so its exports only stop terser from dropping code that
