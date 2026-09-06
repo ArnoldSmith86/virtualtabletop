@@ -45,6 +45,11 @@ export class StateManaged {
     this.applyDelta(delta);
   }
 
+  // the widget is part of the room now - the hook for everything that needs the
+  // other widgets of the state, which are only complete once the whole batch of
+  // additions is through
+  onAddedToRoom() {}
+
   getDefaultValue(key) {
     if(this.inheritedProperties)
       for(const [ id, properties ] of Object.entries(this.inheritFrom()))

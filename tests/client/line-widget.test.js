@@ -736,3 +736,80 @@ describe('dragging a widget onto a line to make it a stop', () => {
     });
   });
 });
+
+describe('a line places its stops when a state is loaded', () => {
+  const stopIDs = [ 'load-a', 'load-b', 'load-c' ];
+
+  // what happens when a state arrives: every widget is added, and only once the
+  // whole batch is through does anything scheduled during it get a turn
+  async function loadState(lineState, stopStates) {
+    const line = createLine(lineState);
+    const stops = stopStates.map(state => {
+      const stop = new Widget(state.id);
+      addWidget({ type: 'basic', parent: line.id, width: 40, height: 40, ...state }, stop);
+      return stop;
+    });
+    await new Promise(resolve => setTimeout(resolve));
+    return { line, stops };
+  }
+
+  function unload(line, stops) {
+    for(const stop of stops)
+      removeWidget(stop.id);
+    removeWidget(line.id);
+  }
+
+  // 300 long, offset from the line's own origin so a placed stop cannot be
+  // confused with one that was never placed at all
+  const geometry = { x: 100, y: 100, lineStart: { x: 20, y: 70 }, lineEnd: { x: 320, y: 70 }, rotateStops: false };
+  const coordinates = stops => stops.map(stop => [ stop.get('x'), stop.get('y') ]);
+
+  test('stops that carry no coordinates end up on the path instead of in the corner', async () => {
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: false, stops: stopIDs.map((widget, i) => ({ widget, position: i/2 })) },
+      stopIDs.map(id => ({ id }))
+    );
+
+    expect(coordinates(stops)).toEqual([ [ 0, 50 ], [ 150, 50 ], [ 300, 50 ] ]);
+    unload(line, stops);
+  });
+
+  test('autoSpaceStops re-spaces stops whose stored positions do not match the line anymore', async () => {
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: true, stops: stopIDs.map((widget, i) => ({ widget, position: i/10 })) },
+      stopIDs.map(id => ({ id }))
+    );
+
+    expect(line.stopList().map(entry => entry.position)).toEqual([ 0, 0.5, 1 ]);
+    expect(coordinates(stops)).toEqual([ [ 0, 50 ], [ 150, 50 ], [ 300, 50 ] ]);
+    unload(line, stops);
+  });
+
+  test('stops that sit on the path keep the positions they were saved with', async () => {
+    // uneven positions the line would re-space away from if it laid them out
+    // again: a state that renders correctly is a deliberate one
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: true, stops: stopIDs.map((widget, i) => ({ widget, position: i/10 })) },
+      stopIDs.map((id, i) => ({ id, x: i*30, y: 50 }))
+    );
+
+    expect(line.stopList().map(entry => entry.position)).toEqual([ 0, 0.1, 0.2 ]);
+    expect(coordinates(stops)).toEqual([ [ 0, 50 ], [ 30, 50 ], [ 60, 50 ] ]);
+    unload(line, stops);
+  });
+
+  test('a save whose stops already sit on the path is not written to again', async () => {
+    const lineState = { ...geometry, id: 'saved-line', autoSpaceStops: true, stops: stopIDs.map((widget, i) => ({ widget, position: i/2 })) };
+    const saved = await loadState(lineState, stopIDs.map(id => ({ id })));
+    const savedLine = JSON.parse(JSON.stringify(saved.line.state));
+    const savedStops = saved.stops.map(stop => JSON.parse(JSON.stringify(stop.state)));
+    unload(saved.line, saved.stops);
+
+    const { line, stops } = await loadState(savedLine, savedStops);
+    // set() writes to state only, so a widget nothing has written to still
+    // equals the state it was loaded with - down to the last property
+    for(const widget of [ line, ...stops ])
+      expect(widget.state).toEqual(widget.unalteredState);
+    unload(line, stops);
+  });
+});
