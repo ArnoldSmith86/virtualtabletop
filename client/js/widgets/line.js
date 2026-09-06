@@ -57,6 +57,42 @@ export class Line extends Widget {
     }
   }
 
+  // A state whose stops carry no coordinates - or coordinates that stopped
+  // matching the path, e.g. because the line was reshaped after the save - would
+  // otherwise render them all in the line's top left corner until a player or
+  // the editor touches something. The widgets of a state arrive one by one, so
+  // the stops usually do not exist yet when the line does: place them once the
+  // whole batch of additions is through. A state whose stops already sit on the
+  // path is left exactly as it was loaded.
+  onAddedToRoom() {
+    if(this.initialStopLayout)
+      return;
+    this.initialStopLayout = setTimeout(async ()=>{
+      this.initialStopLayout = null;
+      // the widget can be gone again - or replaced by a newer state - by now
+      if(widgets.get(this.id) !== this || this.isBeingRemoved || !this.stopsOffPath())
+        return;
+      batchStart();
+      setDeltaCause(`line ${this.id} placed its stops`);
+      try {
+        await this.layoutStops();
+      } finally {
+        batchEnd();
+      }
+    });
+  }
+
+  // whether any stop sits somewhere other than where the line puts it - the same
+  // coordinates positionAttachedWidgets writes, compared instead of assigned
+  stopsOffPath() {
+    return this.stopList().some(entry=>{
+      const stop = widgets.get(entry.widget);
+      const point = this.stopCoordInParentFrame(stop, this.pointAtPosition(entry.position));
+      return Math.round(point.x - stop.get('width')/2) != stop.get('x')
+          || Math.round(point.y - stop.get('height')/2) != stop.get('y');
+    });
+  }
+
   isEllipse() {
     return this.get('lineShape') == 'ellipse';
   }

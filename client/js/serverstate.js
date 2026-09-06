@@ -138,6 +138,8 @@ export function addWidget(widget, instance, allowMissingParent) {
     if(!widgets.has(c.id))
       addWidget(c);
   delete deferredChildren[widget.id];
+
+  w.onAddedToRoom();
 }
 
 // useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
