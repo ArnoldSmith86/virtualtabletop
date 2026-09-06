@@ -45,8 +45,12 @@ export class StateManaged {
     this.applyDelta(delta);
   }
 
-  // the whole state is in the room now - the hook for everything that needs the
-  // other widgets of a state, which do not exist yet while it is being added
+  // The whole state is in the room now - the hook for everything that needs the
+  // other widgets of a state, which do not exist yet while it is being added.
+  // The room already presents itself as loaded when this runs, so an
+  // implementation has to finish without an observable delay: anything that
+  // waits for a network round trip or for something to be rendered would
+  // rearrange the board under the player's cursor after it looked ready.
   async onStateLoaded() {}
 
   getDefaultValue(key) {
