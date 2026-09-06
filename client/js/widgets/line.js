@@ -370,9 +370,9 @@ export class Line extends Widget {
     await stop.set('lineOriginalRotation', null);
   }
 
-  // Move stops so the gaps between their edges are equal. The stops array is
-  // captured once in line order and is used for every update, so distributing
-  // never changes which widget occupies which stop.
+  // Move stops so the gaps between their edges are equal, measured as arc
+  // length along the path. The stops array is captured once in line order, so
+  // distributing never changes which widget occupies which stop.
   async distributeAttachedWidgetsEvenly() {
     if(this.updatingAttachedWidgets)
       return;
@@ -406,27 +406,22 @@ export class Line extends Widget {
     // open path instead pins the first stop at 0 and the last one at 1.
     const closed = this.isClosed();
     const gaps = closed ? stops.length : stops.length-1;
-    let positions = this.stopList().map(entry=>entry.position);
-    for(let iteration = 0; iteration < 3; ++iteration) {
-      const sizes = stops.map((stop, i)=>this.widgetLengthOnLine(stop, positions[i]));
-      const usedLength = sizes.reduce((sum, size)=>sum+size, 0) - (closed ? 0 : sizes[0]/2 + sizes[sizes.length-1]/2);
-      const requestedGap = (length - usedLength)/gaps;
-      // If the widgets do not fit, allow overlap but never enough to reverse
-      // two neighboring centers. This preserves the original stop order.
-      const neighbours = sizes.map((size, i)=>(size+sizes[(i+1)%sizes.length])/2).slice(0, gaps);
-      const gap = Math.max(requestedGap, -Math.min(...neighbours));
-      let distance = 0;
-      const targetDistances = stops.map((stop, i)=>{
-        if(i == 0)
-          return 0;
-        distance += sizes[i-1]/2 + gap + sizes[i]/2;
-        return distance;
-      });
-      const totalDistance = (closed ? length : targetDistances[targetDistances.length-1]) || length;
-      positions = targetDistances.map((distance, i)=>closed ? this.normalizePosition(distance/totalDistance) : i == 0 ? 0 : i == stops.length-1 ? 1 : distance/totalDistance);
-      await this.setStopPositions(positions);
-      await this.positionAttachedWidgets();
-    }
+    const sizes = stops.map(stop=>this.widgetLengthOnLine(stop));
+    const usedLength = sizes.reduce((sum, size)=>sum+size, 0) - (closed ? 0 : sizes[0]/2 + sizes[sizes.length-1]/2);
+    const requestedGap = (length - usedLength)/gaps;
+    // If the widgets do not fit, allow overlap but never enough to reverse
+    // two neighboring centers. This preserves the original stop order.
+    const neighbours = sizes.map((size, i)=>(size+sizes[(i+1)%sizes.length])/2).slice(0, gaps);
+    const gap = Math.max(requestedGap, -Math.min(...neighbours));
+    let distance = 0;
+    const targetDistances = stops.map((stop, i)=>{
+      if(i == 0)
+        return 0;
+      distance += sizes[i-1]/2 + gap + sizes[i]/2;
+      return distance;
+    });
+    const totalDistance = (closed ? length : targetDistances[targetDistances.length-1]) || length;
+    const positions = targetDistances.map((distance, i)=>closed ? this.normalizePosition(distance/totalDistance) : i == 0 ? 0 : i == stops.length-1 ? 1 : distance/totalDistance);
 
     let previousPosition = 0;
     const rounded = [];
@@ -455,15 +450,19 @@ export class Line extends Widget {
     await this.set('stops', swapped);
   }
 
-  widgetLengthOnLine(widget, position) {
+  // How much room a stop claims along the path: a stop that follows the line
+  // lays its width along it, one that keeps its own rotation is measured along
+  // that rotation. Either way this depends on the widget alone, so a curve
+  // turning underneath a stop does not change the space it takes up and equally
+  // sized stops stay equally far apart in arc length.
+  widgetLengthOnLine(widget) {
     const scale = Math.max(0, +widget.get('scale') || 0);
     const width = Math.max(0, +widget.get('width') || 0) * scale;
     const height = Math.max(0, +widget.get('height') || 0) * scale;
-    let rotation = +widget.get('rotation') || 0;
     if(this.shouldRotateStops() && width > height)
-      rotation = this.tangentAngleAtPosition(position);
-    const relativeRotation = (rotation - this.tangentAngleAtPosition(position))*Math.PI/180;
-    return Math.abs(width*Math.cos(relativeRotation)) + Math.abs(height*Math.sin(relativeRotation));
+      return width;
+    const rotation = (+widget.get('rotation') || 0)*Math.PI/180;
+    return Math.abs(width*Math.cos(rotation)) + Math.abs(height*Math.sin(rotation));
   }
 
   // The angle of the path's tangent in degrees at an arc-length position.

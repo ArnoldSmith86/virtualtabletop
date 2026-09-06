@@ -225,6 +225,57 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  describe('autoSpaceStops distributes along the path', () => {
+    // a C shaped curve: its tangent turns through 180 degrees, so anything that
+    // measures a stop against the local direction of the path drifts along it
+    function curve(defs) {
+      const line = createLine({ id: 'space-line', x: 0, y: 0, rotateStops: false, autoSpaceStops: true,
+        lineStart: { x: 0, y: 0 }, controlStart: { x: 400, y: 0 }, controlEnd: { x: 400, y: 400 }, lineEnd: { x: 0, y: 400 },
+        stops: defs.map((def, i) => ({ widget: def.id, position: i / (defs.length-1) })) });
+      const stops = defs.map(def => {
+        const stop = new Widget(def.id);
+        addWidget({ type: 'basic', width: 100, height: 100, parent: line.id, ...def }, stop);
+        return stop;
+      });
+      return { line, stops };
+    }
+
+    function cleanUp(stops) {
+      for(const stop of stops)
+        removeWidget(stop.id);
+      removeWidget('space-line');
+    }
+
+    // the arc length of the path between each pair of neighbouring stops
+    function stopDistances(line) {
+      const positions = line.stopList().map(entry => entry.position);
+      return positions.slice(1).map((position, i) => (position - positions[i]) * line.lineLength());
+    }
+
+    test('equally sized stops end up equally far apart along a curve', async () => {
+      const { line, stops } = curve([ 'c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6' ].map(id => ({ id })));
+
+      await line.distributeAttachedWidgetsEvenly();
+      const distances = stopDistances(line);
+      for(const distance of distances)
+        expect(near(distance, distances[0], 1)).toBe(true);
+
+      cleanUp(stops);
+    });
+
+    test('differently sized stops keep an equal gap between their edges', async () => {
+      const { line, stops } = curve([ { id: 'd0', width: 40, height: 40 }, { id: 'd1' }, { id: 'd2', width: 40, height: 40 }, { id: 'd3' } ]);
+
+      await line.distributeAttachedWidgetsEvenly();
+      const sizes = stops.map(stop => stop.get('width'));
+      const gaps = stopDistances(line).map((distance, i) => distance - sizes[i]/2 - sizes[i+1]/2);
+      for(const gap of gaps)
+        expect(near(gap, gaps[0], 1)).toBe(true);
+
+      cleanUp(stops);
+    });
+  });
+
   describe('the stops list', () => {
     test('keeps the chain order and drops entries whose widget is gone', async () => {
       const line = createLine({ id: 'list-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, autoSpaceStops: false,
