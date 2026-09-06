@@ -63,21 +63,6 @@ describe('legacy mode detection', () => {
     expect(flagsFor(at(20, { h: { id: 'h', type: 'holder' } })).disableHolderImageWidget).toBe(undefined);
   });
 
-  test('a line carrying stops gets rotateOnlyLandscapeLineStops', () => {
-    const state = at(24, { l: { id: 'l', type: 'line', stops: [ { widget: 's', position: 0.5 } ] } });
-    expect(flagsFor(state).rotateOnlyLandscapeLineStops).toBe(true);
-  });
-
-  test('a line that turns no stop at all does not get rotateOnlyLandscapeLineStops', () => {
-    const withoutStops = at(24, { l: { id: 'l', type: 'line' } });
-    expect(flagsFor(withoutStops).rotateOnlyLandscapeLineStops).toBe(undefined);
-    const notRotating = at(24, { l: { id: 'l', type: 'line', rotateStops: false, stops: [ { widget: 's', position: 0.5 } ] } });
-    expect(flagsFor(notRotating).rotateOnlyLandscapeLineStops).toBe(undefined);
-    // the property rotateStops was called before still wins where a game sets it
-    const legacyProperty = at(24, { l: { id: 'l', type: 'line', rotateStops: true, rotateAttachedWidgets: false, attachedWidgets: [ { widget: 's', position: 0.5 } ] } });
-    expect(flagsFor(legacyProperty).rotateOnlyLandscapeLineStops).toBe(undefined);
-  });
-
   test('a mode is not applied to a save that is already at or past its version', () => {
     // a v20 save predates v21, so the holder mode applies, but the var modes (v18) do not
     const state = at(20, {
@@ -118,8 +103,7 @@ describe('legacy mode detection', () => {
     const everything = at(1, {
       b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] },
       h: { id: 'h', type: 'holder', color: 'red' },
-      d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'html', value: 'x' } ] } ] },
-      l: { id: 'l', type: 'line', stops: [ { widget: 'h', position: 0.5 } ] }
+      d: { id: 'd', type: 'deck', faceTemplates: [ { objects: [ { type: 'html', value: 'x' } ] } ] }
     });
     expect(Object.keys(flagsFor(everything)).sort()).toEqual([ ...ALL_LEGACY_MODES ].sort());
   });
@@ -163,10 +147,7 @@ const CLASSIFICATION_FIXTURES = {
   'v19 holder with text': [ at(19, { h: { id: 'h', type: 'holder', text: 'draw' } }), [ 'disableHolderImageWidget' ] ],
   'v19 holder with nothing on it': [ at(19, { h: { id: 'h', type: 'holder' } }), [] ],
   'v20 holder with svgReplaces': [ at(20, { h: { id: 'h', type: 'holder', svgReplaces: { a: 'b' } } }), [ 'disableHolderImageWidget' ] ],
-  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [] ],
-  'v24 line with stops': [ at(24, { l: { id: 'l', type: 'line', stops: [ { widget: 's', position: 0 } ] } }), [ 'rotateOnlyLandscapeLineStops' ] ],
-  'v24 line without stops': [ at(24, { l: { id: 'l', type: 'line' } }), [] ],
-  'v24 line that turns none of its stops': [ at(24, { l: { id: 'l', type: 'line', rotateStops: false, stops: [ { widget: 's', position: 0 } ] } }), [] ]
+  'v20 game with a var routine and a bare holder': [ at(20, { b: { id: 'b', type: 'button', clickRoutine: [ 'var a = 1' ] }, h: { id: 'h', type: 'holder' } }), [] ]
 };
 
 describe('classification stability', () => {

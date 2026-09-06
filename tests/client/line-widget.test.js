@@ -7,9 +7,7 @@ import { removeWidget } from './client-util.js';
 // line.js relies on the concatenated global scope of the shipped bundle rather than
 // on imports, so expose the identifiers it references before importing it.
 let Line;
-const activeLegacyModes = {};
 beforeAll(async () => {
-  globalThis.legacyMode = name => activeLegacyModes[name];
   globalThis.Widget = Widget;
   globalThis.widgets = widgets;
   globalThis.widgetFilter = widgetFilter;
@@ -195,26 +193,6 @@ describe('Line widget geometry', () => {
 
     for(const stop of stops)
       removeWidget(stop.id);
-    removeWidget(line.id);
-  });
-
-  test('a game on the legacy mode still turns only the stops wider than they are tall', async () => {
-    activeLegacyModes.rotateOnlyLandscapeLineStops = true;
-    const shapes = [ { id: 'old-landscape', width: 80, height: 20 }, { id: 'old-square', width: 40, height: 40 } ];
-    const line = createLine({ id: 'old-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 300 }, autoSpaceStops: false,
-      stops: shapes.map((shape, i) => ({ widget: shape.id, position: (i+1)/4 })) });
-    for(const shape of shapes)
-      addWidget({ ...shape, type: 'basic', parent: line.id, rotation: 10 }, new Widget(shape.id));
-
-    await line.updateAttachedWidgets();
-    expect(Math.round(widgets.get('old-landscape').get('rotation'))).toBe(45);
-    expect(widgets.get('old-square').get('rotation')).toBe(10);
-    // and a stop the line leaves alone takes up its bounding box, not its width
-    expect(line.widgetLengthOnLine(widgets.get('old-square'), 45)).toBeCloseTo(40*(Math.abs(Math.cos(35*Math.PI/180)) + Math.abs(Math.sin(35*Math.PI/180))), 3);
-
-    delete activeLegacyModes.rotateOnlyLandscapeLineStops;
-    for(const shape of shapes)
-      removeWidget(shape.id);
     removeWidget(line.id);
   });
 
@@ -884,7 +862,7 @@ describe('dragging a widget onto a line to make it a stop', () => {
     const diagonal = createLine({ id: 'off-line', x: 0, y: 0, width: 400, height: 300, autoSpaceStops: false,
       lineStart: { x: 0, y: 0 }, lineEnd: { x: 400, y: 300 }, dropTarget: { type: null },
       stops: [ { widget: 'off-stop', position: 0.5 } ] });
-    // landscape, so the line rotates it to its tangent while it rides on it
+    // the line rotates it to its tangent while it rides on it
     const stop = new Widget('off-stop');
     addWidget({ id: 'off-stop', parent: 'off-line', width: 80, height: 30 }, stop);
     await diagonal.layoutStops();

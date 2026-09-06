@@ -1,6 +1,6 @@
 import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
 
-export const VERSION = 25;
+export const VERSION = 24;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;

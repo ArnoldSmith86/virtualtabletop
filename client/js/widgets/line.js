@@ -334,7 +334,7 @@ export class Line extends Widget {
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
       await stop.set('y', Math.round(p.y - stop.get('height')/2));
 
-      if(this.rotatesStop(stop)) {
+      if(this.shouldRotateStops()) {
         if(stop.get('lineOriginalRotation') === null)
           await stop.set('lineOriginalRotation', { value: stop.get('rotation'), explicit: stop.state.rotation !== undefined });
         await stop.set('rotation', this.stopRotationOnPath(stop, entry.position));
@@ -357,14 +357,6 @@ export class Line extends Widget {
 
   hasExternalStops() {
     return this.stopList().some(entry=>widgets.get(entry.widget).get('parent') != this.id);
-  }
-
-  // rotateStops turns every stop onto the path whatever its shape; a game on the
-  // legacy mode turns only the stops that are wider than they are tall.
-  rotatesStop(stop) {
-    if(!this.shouldRotateStops())
-      return false;
-    return !legacyMode('rotateOnlyLandscapeLineStops') || +stop.get('width') > +stop.get('height');
   }
 
   // The rotation that lays a stop along the path, turned by rotationOffset. The
@@ -502,7 +494,7 @@ export class Line extends Widget {
     const scale = this.stopScaleInLineFrame(widget);
     const width = Math.max(0, +widget.get('width') || 0) * scale;
     const height = Math.max(0, +widget.get('height') || 0) * scale;
-    if(this.rotatesStop(widget))
+    if(this.shouldRotateStops())
       return width;
     // referenceAngle is an angle in this line's frame, so the stop's own
     // rotation has to be read in that frame too before the two are compared
