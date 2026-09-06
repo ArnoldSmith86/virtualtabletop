@@ -7,7 +7,9 @@ import { removeWidget } from './client-util.js';
 // line.js relies on the concatenated global scope of the shipped bundle rather than
 // on imports, so expose the identifiers it references before importing it.
 let Line;
+const activeLegacyModes = {};
 beforeAll(async () => {
+  globalThis.legacyMode = name => activeLegacyModes[name];
   globalThis.Widget = Widget;
   globalThis.widgets = widgets;
   globalThis.widgetFilter = widgetFilter;
@@ -193,6 +195,26 @@ describe('Line widget geometry', () => {
 
     for(const stop of stops)
       removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
+  test('a game on the legacy mode still turns only the stops wider than they are tall', async () => {
+    activeLegacyModes.rotateOnlyLandscapeLineStops = true;
+    const shapes = [ { id: 'old-landscape', width: 80, height: 20 }, { id: 'old-square', width: 40, height: 40 } ];
+    const line = createLine({ id: 'old-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 300 }, autoSpaceStops: false,
+      stops: shapes.map((shape, i) => ({ widget: shape.id, position: (i+1)/4 })) });
+    for(const shape of shapes)
+      addWidget({ ...shape, type: 'basic', parent: line.id, rotation: 10 }, new Widget(shape.id));
+
+    await line.updateAttachedWidgets();
+    expect(Math.round(widgets.get('old-landscape').get('rotation'))).toBe(45);
+    expect(widgets.get('old-square').get('rotation')).toBe(10);
+    // and a stop the line leaves alone takes up its bounding box, not its width
+    expect(line.widgetLengthOnLine(widgets.get('old-square'), 45)).toBeCloseTo(40*(Math.abs(Math.cos(35*Math.PI/180)) + Math.abs(Math.sin(35*Math.PI/180))), 3);
+
+    delete activeLegacyModes.rotateOnlyLandscapeLineStops;
+    for(const shape of shapes)
+      removeWidget(shape.id);
     removeWidget(line.id);
   });
 
@@ -412,6 +434,45 @@ describe('Line widget geometry', () => {
 
       removeWidget('ext-stop');
       removeWidget('ext-board');
+      removeWidget(line.id);
+    });
+
+    test('turns a stop that is not a child of the line into the frame of its own parent', async () => {
+      // the path runs along the line's own x axis, which the line lays into the
+      // room turned by 90; the board the external stop lives in is turned by 20
+      const line = createLine({ id: 'frame-line', x: 0, y: 0, rotation: 90, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, autoSpaceStops: false,
+        stops: [ { widget: 'frame-ext', position: 0.5 }, { widget: 'frame-child', position: 0.25 } ] });
+      const board = new Widget('frame-board');
+      addWidget({ id: 'frame-board', type: 'basic', width: 400, height: 400, rotation: 20 }, board);
+      board.coordLocalFromCoordGlobal = coord => coord;
+      addWidget({ id: 'frame-ext', type: 'basic', parent: 'frame-board', width: 40, height: 40 }, new Widget('frame-ext'));
+      addWidget({ id: 'frame-child', type: 'basic', parent: line.id, width: 40, height: 40 }, new Widget('frame-child'));
+
+      await line.updateAttachedWidgets();
+
+      // 70 of rotation inside the board draws the same direction as 90 in the room
+      expect(widgets.get('frame-ext').get('rotation')).toBeCloseTo(70, 3);
+      // while a child of the line reads the tangent as it is
+      expect(widgets.get('frame-child').get('rotation')).toBeCloseTo(0, 3);
+
+      for(const id of [ 'frame-ext', 'frame-child', 'frame-board' ])
+        removeWidget(id);
+      removeWidget(line.id);
+    });
+
+    test('measures the footprint of a stop against the path in the line own frame', () => {
+      const line = createLine({ id: 'foot-line', x: 0, y: 0, rotation: 90, lineStart: { x: 0, y: 0 }, lineEnd: { x: 400, y: 0 }, rotateStops: false, autoSpaceStops: false,
+        stops: [ { widget: 'foot-stop', position: 0.5 } ] });
+      const board = new Widget('foot-board');
+      addWidget({ id: 'foot-board', type: 'basic', width: 400, height: 400 }, board);
+      addWidget({ id: 'foot-stop', type: 'basic', parent: 'foot-board', width: 100, height: 40, scale: 2 }, new Widget('foot-stop'));
+
+      // the stop lies flat in the board it belongs to, but the line is turned
+      // against that board, so what it lays along the path is its scaled height
+      expect(line.widgetLengthOnLine(widgets.get('foot-stop'), 0)).toBeCloseTo(80, 3);
+
+      removeWidget('foot-stop');
+      removeWidget('foot-board');
       removeWidget(line.id);
     });
   });

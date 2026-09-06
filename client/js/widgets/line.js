@@ -334,10 +334,10 @@ export class Line extends Widget {
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
       await stop.set('y', Math.round(p.y - stop.get('height')/2));
 
-      if(this.shouldRotateStops()) {
+      if(this.rotatesStop(stop)) {
         if(stop.get('lineOriginalRotation') === null)
           await stop.set('lineOriginalRotation', { value: stop.get('rotation'), explicit: stop.state.rotation !== undefined });
-        await stop.set('rotation', this.tangentAngleAtPosition(entry.position) + (+this.get('rotationOffset') || 0));
+        await stop.set('rotation', this.stopRotationOnPath(stop, entry.position));
       } else
         await this.restoreStopRotation(stop);
     }
@@ -357,6 +357,42 @@ export class Line extends Widget {
 
   hasExternalStops() {
     return this.stopList().some(entry=>widgets.get(entry.widget).get('parent') != this.id);
+  }
+
+  // rotateStops turns every stop onto the path whatever its shape; a game on the
+  // legacy mode turns only the stops that are wider than they are tall.
+  rotatesStop(stop) {
+    if(!this.shouldRotateStops())
+      return false;
+    return !legacyMode('rotateOnlyLandscapeLineStops') || +stop.get('width') > +stop.get('height');
+  }
+
+  // The rotation that lays a stop along the path, turned by rotationOffset. The
+  // tangent is an angle in this line's frame while a stop's rotation is an angle
+  // in the frame of its own parent, so the two are only the same for a stop that
+  // is a child of the line - any other one needs the difference between the
+  // frames on top.
+  stopRotationOnPath(stop, position) {
+    const frameOffset = this.get('_absoluteRotation') - this.stopParentRotation(stop);
+    const requested = +this.get('rotationOffset') || 0;
+    return Math.round((this.tangentAngleAtPosition(position) + requested + frameOffset)*1000)/1000;
+  }
+
+  // The absolute rotation of the frame a stop is placed in, which is this line's
+  // own for a child stop and 0 for a stop that sits directly in the room.
+  stopParentRotation(stop) {
+    const parent = widgets.get(stop.get('parent'));
+    return parent ? +parent.get('_absoluteRotation') || 0 : 0;
+  }
+
+  // How much a stop is scaled in the units the path is measured in: its own
+  // scale while it rides inside the line, and the ratio of the two scale chains
+  // once it lives somewhere else.
+  stopScaleInLineFrame(stop) {
+    if(stop.get('parent') == this.id)
+      return Math.max(0, +stop.get('scale') || 0);
+    const lineScale = Math.max(0, +this.get('_absoluteScale') || 0);
+    return lineScale ? Math.max(0, +stop.get('_absoluteScale') || 0)/lineScale : 0;
   }
 
   async restoreStopRotation(stop) {
@@ -463,12 +499,15 @@ export class Line extends Widget {
   // underneath a stop does not change the space it takes up and equally sized
   // stops stay equally far apart in arc length.
   widgetLengthOnLine(widget, referenceAngle) {
-    const scale = Math.max(0, +widget.get('scale') || 0);
+    const scale = this.stopScaleInLineFrame(widget);
     const width = Math.max(0, +widget.get('width') || 0) * scale;
     const height = Math.max(0, +widget.get('height') || 0) * scale;
-    if(this.shouldRotateStops())
+    if(this.rotatesStop(widget))
       return width;
-    const relativeRotation = ((+widget.get('rotation') || 0) - referenceAngle)*Math.PI/180;
+    // referenceAngle is an angle in this line's frame, so the stop's own
+    // rotation has to be read in that frame too before the two are compared
+    const rotationOnLine = (+widget.get('rotation') || 0) + this.stopParentRotation(widget) - this.get('_absoluteRotation');
+    const relativeRotation = (rotationOnLine - referenceAngle)*Math.PI/180;
     return Math.abs(width*Math.cos(relativeRotation)) + Math.abs(height*Math.sin(relativeRotation));
   }
 

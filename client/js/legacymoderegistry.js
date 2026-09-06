@@ -114,6 +114,37 @@ export const LEGACY_MODES = {
       <br><br>
       This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
       `
+  },
+  rotateOnlyLandscapeLineStops: {
+    since: 25,
+    pr: 3173,
+    interactsWith: [],
+    detect: function(state) {
+      for(const id in state) {
+        const properties = state[id];
+        // rotateAttachedWidgets is what rotateStops used to be called and still wins where it is set
+        if(properties && properties.type == 'line' && properties.rotateStops !== false && properties.rotateAttachedWidgets !== false) {
+          const stops = properties.stops || properties.attachedWidgets;
+          if(Array.isArray(stops) && stops.length)
+            return true;
+        }
+      }
+      return false;
+    },
+    label: 'Rotate only landscape line stops',
+    summary: 'A line turns a stop onto its path only when the stop is wider than it is tall.',
+    description: `
+      <b>Old behavior</b>: A line with <code>rotateStops</code> switched on turned a stop onto the direction of its path only if the stop was wider than it was tall. Square, round and upright stops kept whatever rotation they had.
+      <br><br>
+      <b>New behavior</b>: Every stop is turned to the direction of the path underneath it, whatever its shape. Switching <code>rotateStops</code> off keeps all of them upright instead of only the ones the line never turned anyway.
+      <br><br>
+      <b>Example:</b> a round token riding on a curved line
+      <br><br>
+      Old result: the token keeps its own rotation<br>
+      New result: the token follows the curve
+      <br><br>
+      This legacy mode restores the old rule for games that put square, round or upright widgets on a line and relied on them staying as they were.
+      `
   }
 };
 
