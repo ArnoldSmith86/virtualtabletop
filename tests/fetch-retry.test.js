@@ -52,10 +52,15 @@ test('retries a connection that drops during the body read', async () => {
   expect(calls.length).toBe(2);
 });
 
-test('rethrows once the attempts are used up', async () => {
+test('rethrows once the attempts are used up, naming the request and the attempts', async () => {
   const calls = stub(networkError(), networkError(), networkError());
-  await expect(fetchTextWithRetry('/state')).rejects.toThrow('fetch failed');
+  await expect(fetchTextWithRetry('/state')).rejects.toThrow('fetch failed (GET /state, 3 attempts)');
   expect(calls.length).toBe(3);
+});
+
+test('names the method of a failed request that is not a GET', async () => {
+  stub(networkError());
+  await expect(fetchTextWithRetry('/state', { method: 'PUT' }, 1)).rejects.toThrow('(PUT /state, 1 attempts)');
 });
 
 test('passes an HTTP error status through instead of retrying it', async () => {
