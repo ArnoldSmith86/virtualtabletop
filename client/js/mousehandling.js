@@ -193,7 +193,11 @@ async function handleInput(name, e, dragTarget) {
           moveTarget: widget
         };
         const ms = mouseStatus[target.id];
-        let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+        // a recorded trace is a playback with no server behind it, so a widget dragged out of place
+        // would simply stay there and stop showing what the record it belongs to looked like
+        if($('body').classList.contains('trace'))
+          ms.moveTarget = null;
+        let movable = ms.moveTarget && ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
         while (ms.moveTarget && !movable) {
           let parent = ms.moveTarget.get('parent');
           if(parent && widgets.has(parent)) {
