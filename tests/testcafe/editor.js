@@ -599,6 +599,43 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
 });
 
+// Widgets are parked outside the board on purpose - the zoomed out view exists to
+// reach them - so one that takes drops has to keep taking them there.
+test('A holder outside the board takes a drop in edit mode', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck:     { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    card:     { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 700, y: 400 },
+    offBoard: { id: 'offBoard', type: 'holder', x: 1750, y: 400, dropTarget: { type: 'card' } }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t.click('#editButton');
+  await t.expect(Selector('#editorSelection').exists).ok();
+  // the area beside the board is only on screen - and only reachable with the
+  // pointer - while the zoomed out view is on
+  await t.click('#editorToolbar [icon=zoom_out]');
+
+  // the right mouse button moves a widget while the editor is in select mode,
+  // which is the mode it starts in
+  const drop = ClientFunction(() => {
+    const center = id => {
+      const rectangle = document.getElementById(id).getBoundingClientRect();
+      return { x: rectangle.left + rectangle.width/2, y: rectangle.top + rectangle.height/2 };
+    };
+    const from = center('w_card'), to = center('w_offBoard');
+    document.querySelector('#w_card').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 2, buttons: 2, clientX: from.x, clientY: from.y }));
+    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 2, clientX: to.x, clientY: to.y }));
+    return new Promise(resolve => setTimeout(() => {
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 2, clientX: to.x, clientY: to.y }));
+      setTimeout(() => resolve(String(widgets.get('card').get('parent'))), 300);
+    }, 300));
+  });
+
+  await t.expect(drop()).eql('offBoard');
+});
+
 test('A holder picks what it accepts in the dropTarget editor', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
