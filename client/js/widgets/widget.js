@@ -4,6 +4,7 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
+import { getEditMode } from '../overlaystate.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -2901,6 +2902,13 @@ export class Widget extends StateManaged {
         return false;
       parent = parent.parentElement;
     }
+
+    // The area outside the board is part of the room while it is being edited:
+    // the zoomed out view shows it and widgets are parked there on purpose, so
+    // a holder or a line sitting in it stays something a drag can be dropped
+    // into. Only playing is confined to the board.
+    if (getEditMode())
+      return true;
 
     // Get the bounding rect of the element relative to the viewport
     const rect = this.domElement.getBoundingClientRect();
