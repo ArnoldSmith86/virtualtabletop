@@ -2890,7 +2890,17 @@ export class Widget extends StateManaged {
     return false;
   }
 
-  isVisible() {
+  // Whether a drag can be dropped into this widget. The area outside the board is
+  // part of the room while it is being edited: the zoomed out view shows it and
+  // widgets are parked there on purpose, so a holder or a line sitting in it stays
+  // something a drag can be dropped into. Only playing is confined to the board.
+  isDropCandidate() {
+    return getEditMode() ? this.isRendered() : this.isVisible();
+  }
+
+  // Whether the element is in the DOM and neither it nor any of its ancestors is
+  // hidden. Says nothing about where on screen it ends up.
+  isRendered() {
     // Ensure the element exists
     if (!this.domElement) return false;
 
@@ -2903,12 +2913,11 @@ export class Widget extends StateManaged {
       parent = parent.parentElement;
     }
 
-    // The area outside the board is part of the room while it is being edited:
-    // the zoomed out view shows it and widgets are parked there on purpose, so
-    // a holder or a line sitting in it stays something a drag can be dropped
-    // into. Only playing is confined to the board.
-    if (getEditMode())
-      return true;
+    return true;
+  }
+
+  isVisible() {
+    if (!this.isRendered()) return false;
 
     // Get the bounding rect of the element relative to the viewport
     const rect = this.domElement.getBoundingClientRect();
@@ -2958,7 +2967,7 @@ export class Widget extends StateManaged {
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
     // dragged in play: a stop is usually placed in edit mode.
-    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isDropCandidate());
 
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();

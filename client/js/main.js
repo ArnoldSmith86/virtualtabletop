@@ -55,7 +55,7 @@ export function exceedsDropLimit(target, count = 1, currentCount = null) {
 function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
-    if(!t.isVisible())
+    if(!t.isDropCandidate())
       continue;
 
     // if the holder has a drop limit and it's reached, skip the holder -

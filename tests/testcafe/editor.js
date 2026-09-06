@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, expectEventually, getStateObject, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -600,7 +600,8 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 });
 
 // Widgets are parked outside the board on purpose - the zoomed out view exists to
-// reach them - so one that takes drops has to keep taking them there.
+// reach them - so one that takes drops has to keep taking them there. Playing stays
+// confined to the board, where the same holder takes nothing.
 test('A holder outside the board takes a drop in edit mode', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
@@ -611,29 +612,45 @@ test('A holder outside the board takes a drop in edit mode', async t => {
   await ClientFunction(prepareClient)();
   await setEditorState(null);
   await setName(t);
+
+  // A drag marks every widget it can be dropped into as droppable and lands the card
+  // in the one under the pointer when it ends. The left mouse button drags a widget
+  // while playing; in edit mode it belongs to the editor's select mode - the mode the
+  // editor starts in - so a drag there uses the right one. widgets is not defined
+  // outside edit mode, which is why the card's position is read from the server.
+  const drag = ClientFunction(button => {
+    const center = id => {
+      const rectangle = document.getElementById(id).getBoundingClientRect();
+      return { x: rectangle.left + rectangle.width/2, y: rectangle.top + rectangle.height/2 };
+    };
+    const from = center('w_card'), to = center('w_offBoard');
+    const buttons = button == 2 ? 2 : 1;
+    document.querySelector('#w_card').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.x, clientY: from.y }));
+    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX: to.x, clientY: to.y }));
+    return new Promise(resolve => setTimeout(() => {
+      const droppable = document.getElementById('w_offBoard').classList.contains('droppable');
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX: to.x, clientY: to.y }));
+      setTimeout(() => resolve(droppable), 300);
+    }, 300));
+  });
+
+  // where the card ended up: the holder it went into, and whether the drag moved it at all
+  const card = async () => {
+    const state = (await getStateObject()).card;
+    return { parent: state.parent || null, moved: state.x != 700 };
+  };
+
+  await t.expect(drag(0)).notOk('the holder beside the board is not a drop target while playing');
+  await expectEventually(t, card, { parent: null, moved: true }, 'a drag during play moves the card but never into the holder beside the board');
+
   await t.click('#editButton');
   await t.expect(Selector('#editorSelection').exists).ok();
   // the area beside the board is only on screen - and only reachable with the
   // pointer - while the zoomed out view is on
   await t.click('#editorToolbar [icon=zoom_out]');
 
-  // the right mouse button moves a widget while the editor is in select mode,
-  // which is the mode it starts in
-  const drop = ClientFunction(() => {
-    const center = id => {
-      const rectangle = document.getElementById(id).getBoundingClientRect();
-      return { x: rectangle.left + rectangle.width/2, y: rectangle.top + rectangle.height/2 };
-    };
-    const from = center('w_card'), to = center('w_offBoard');
-    document.querySelector('#w_card').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 2, buttons: 2, clientX: from.x, clientY: from.y }));
-    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 2, clientX: to.x, clientY: to.y }));
-    return new Promise(resolve => setTimeout(() => {
-      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 2, clientX: to.x, clientY: to.y }));
-      setTimeout(() => resolve(String(widgets.get('card').get('parent'))), 300);
-    }, 300));
-  });
-
-  await t.expect(drop()).eql('offBoard');
+  await t.expect(drag(2)).ok('the holder beside the board is a drop target in edit mode');
+  await expectEventually(t, card, { parent: 'offBoard', moved: true }, 'the card lands in the holder beside the board');
 });
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
