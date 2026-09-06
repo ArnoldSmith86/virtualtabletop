@@ -32,6 +32,10 @@ const dispatchMouse = ClientFunction((type, clientX, clientY) => {
 
 export async function openRoom(t, combo, state) {
   await ClientFunction(prepareClient)();
+  // the room's first state is what opens the game list over an empty room, and a click that
+  // arrives before it is swallowed while the room is still loading - so wait for that state
+  // instead of closing an overlay that only opens afterwards
+  await t.expect(Selector('#loadingRoomIndicator').exists).notOk('the room finished loading', { timeout: 30000 });
   // closing the states overlay is what makes the surface accept pointer events at all
   await t.click('#activeGameButton');
   // a state that is already in the room creates no widget, so empty it before every fixture

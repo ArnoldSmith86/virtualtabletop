@@ -195,6 +195,38 @@ function closeFeedbackOverlay() {
     showOverlay(previousID);
 }
 
+// Ask for a recorded trace file and show it. loadTraceFile and the trace UI belong to the editor
+// bundle, which is only fetched on demand: the browser opens a file picker only while the keypress
+// still counts as a user activation, and that runs out long before a slow fetch of the bundle is
+// done - so the two happen side by side and the file waits for the bundle rather than the other
+// way round.
+//
+// One picker at a time: holding the keys down repeats the keydown, and every repeat would open a
+// picker of its own.
+let traceFileRequested = false;
+function openTraceFile() {
+  if(traceFileRequested)
+    return;
+
+  const editorReady = loadEditMode();
+  editorReady.catch(_=>{}); // the picker below reports it, but it may be cancelled instead
+  traceFileRequested = true;
+  selectFile('TEXT', null, [ '.trace' ]).then(async file=>{
+    // fetching the bundle and replaying the recording into the room both take a while on a long
+    // trace, and the room looks idle in the meantime
+    setStatusMessage(`Opening the recording ${file.name}...`, 'hourglass_empty');
+    if(await editorReady) {
+      await loadTraceFile(file);
+    } else {
+      // the overlay that has just come up talks about edit mode, which is not what was asked for
+      $('#editModeUnavailableTraceNote').classList.add('visible');
+    }
+  }).catch(e=>{
+    if(e.message !== 'File selection cancelled.')
+      alert(e.message);
+  }).finally(_=>traceFileRequested = false);
+}
+
 // registered before main.js's window.onkeyup (tracing.js is concatenated earlier), so
 // stopImmediatePropagation here pre-empts the generic Escape handling (which would just
 // close everything via #activeGameButton instead of restoring the previous overlay/tab)
@@ -209,13 +241,13 @@ onLoad(function() {
   on('#feedbackButton', 'click', openFeedbackOverlay);
 
   window.addEventListener('keydown', function(e) {
-    if(!jeEnabled && e.key == 'F9') {
-      if(e.ctrlKey)
-        selectFile('TEXT').then(loadTraceFile).catch(e=>{
-          if(e.message !== 'File selection cancelled.')
-            alert(`Error: ${e.toString()}`);
-        });
-      else if(!tracingEnabled)
+    // opening a recording is meant from anywhere, including from a room that is already being
+    // debugged with the JSON editor open - only plain F9 stays out of the editor's way, where it
+    // would report a bug for every press of a key that belongs to the text being edited
+    if(e.key == 'F9' && e.ctrlKey) {
+      openTraceFile();
+    } else if(!jeEnabled && e.key == 'F9') {
+      if(!tracingEnabled)
         enableTracing();
       else
         sendUserTraceEvent();
@@ -238,8 +270,7 @@ onLoad(function() {
   const reportError = function(description) {
     // close the connection before collecting the context: if that throws, the user still ends up
     // with a terminal overlay over a terminated session instead of a still running one
-    preventReconnect();
-    connection.close();
+    closeConnection();
 
     const details = {
       error: description,
