@@ -241,10 +241,13 @@ onLoad(function() {
   on('#feedbackButton', 'click', openFeedbackOverlay);
 
   window.addEventListener('keydown', function(e) {
-    if(!jeEnabled && e.key == 'F9') {
-      if(e.ctrlKey)
-        openTraceFile();
-      else if(!tracingEnabled)
+    // opening a recording is meant from anywhere, including from a room that is already being
+    // debugged with the JSON editor open - only plain F9 stays out of the editor's way, where it
+    // would report a bug for every press of a key that belongs to the text being edited
+    if(e.key == 'F9' && e.ctrlKey) {
+      openTraceFile();
+    } else if(!jeEnabled && e.key == 'F9') {
+      if(!tracingEnabled)
         enableTracing();
       else
         sendUserTraceEvent();
