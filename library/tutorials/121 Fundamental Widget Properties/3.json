@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1787512070712,
+      "lastUpdate": 1788709782002,
       "showName": false,
       "skill": "",
       "description": "",
@@ -27,7 +27,8 @@
       "variantImage": "",
       "variant": "Layer and Z",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAILayout": false
     }
   },
   "title": {
