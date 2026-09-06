@@ -80,8 +80,25 @@ export async function setName(t, name, color) {
     .click('#activeGameButton');
 }
 
+// Node reuses the connection to the server between requests, and one that the server has closed in
+// the meantime makes the next fetch() reject with a network-level 'TypeError: fetch failed' before the
+// request is ever sent. That is not a test failure - it just kills whichever test runs next, most
+// often in the beforeEach hook - so a rejected request is retried with a short backoff. An HTTP error
+// status is passed through untouched: that one is a real failure the tests have to see.
+async function fetchWithRetry(url, options, attempts=3) {
+  for(let attempt=1; ; attempt++) {
+    try {
+      return await fetch(url, options);
+    } catch(e) {
+      if(attempt == attempts)
+        throw e;
+      await new Promise(resolve => setTimeout(resolve, 100 * attempt));
+    }
+  }
+}
+
 export async function setRoomState(state) {
-  await fetch(`${server}/state/testcafe-testing`, {
+  await fetchWithRetry(`${server}/state/testcafe-testing`, {
     method: 'PUT',
     headers: {
       'Content-Type':'application/json'
@@ -91,7 +108,7 @@ export async function setRoomState(state) {
 }
 
 export async function setLegacyMode(name, value) {
-  await fetch(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
+  await fetchWithRetry(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
     method: 'PUT'
   });
 }
@@ -111,7 +128,7 @@ export async function applyLegacy(combo) {
 }
 
 export async function getState() {
-  const response = await fetch(`${server}/state/testcafe-testing/false`);
+  const response = await fetchWithRetry(`${server}/state/testcafe-testing/false`);
   return await response.text();
 }
 
@@ -135,7 +152,7 @@ export async function expectEventually(t, get, expected, message, timeout=1000) 
 
 // getState leaves _meta out - this is the version and the game settings the room is on
 export async function getMeta() {
-  const response = await fetch(`${server}/state/testcafe-testing`);
+  const response = await fetchWithRetry(`${server}/state/testcafe-testing`);
   return JSON.parse(await response.text())._meta;
 }
 
