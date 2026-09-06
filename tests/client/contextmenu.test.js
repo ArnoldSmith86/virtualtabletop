@@ -71,6 +71,54 @@ describe('Context menu input handling', () => {
     removeWidget(widget.get('id'));
   });
 
+  test('a finger held still on a widget opens its popup after the delay', () => {
+    jest.useFakeTimers();
+    const widget = createWidget({ id: 'context-hold', type: 'widget', movable: true, rotationSteps: 90 });
+
+    widget.touchstart({ touches: [ { clientX: 10, clientY: 10 } ] });
+    widget.touchmove({ touches: [ { clientX: 14, clientY: 12 } ] }); // the jitter of a finger that holds still
+    jest.advanceTimersByTime(500);
+
+    expect(popupIsOpen()).toBe(true);
+    expect(widget.domElement.classList.contains('longtouch')).toBe(true);
+
+    widget.touchend();
+    widget.domElement.classList.remove('longtouch');
+    removeWidget(widget.get('id'));
+  });
+
+  test('a finger that drags the widget on within the delay never opens its popup', () => {
+    jest.useFakeTimers();
+    const widget = createWidget({ id: 'context-drag', type: 'widget', movable: true, rotationSteps: 90 });
+
+    widget.touchstart({ touches: [ { clientX: 10, clientY: 10 } ] });
+    jest.advanceTimersByTime(200);
+    widget.touchmove({ touches: [ { clientX: 40, clientY: 10 } ] });
+    jest.advanceTimersByTime(500);
+
+    expect(popupIsOpen()).toBe(false);
+    expect(widget.domElement.classList.contains('longtouch')).toBe(false);
+
+    widget.touchend();
+    removeWidget(widget.get('id'));
+  });
+
+  test('swiping away from empty space within the delay does not arm hold-and-move', () => {
+    jest.useFakeTimers();
+    const widget = createWidget({ id: 'context-swipe', type: 'widget', rotationSteps: 90 });
+    document.elementsFromPoint = jest.fn(() => []);
+
+    handleContextMenuInput('touchstart', { touches: [ { clientX: 10, clientY: 10 } ] });
+    document.elementsFromPoint = jest.fn(() => [ widget.domElement ]);
+    expect(handleContextMenuInput('touchmove', { touches: [ { clientX: 40, clientY: 10 } ] })).toBe(false);
+    jest.advanceTimersByTime(500);
+
+    expect(popupIsOpen()).toBe(false);
+    expect(handleContextMenuInput('touchmove', { touches: [ { clientX: 40, clientY: 10 } ] })).toBe(false);
+
+    removeWidget(widget.get('id'));
+  });
+
   test('a long-touch rightClickRoutine suppresses the normal click', () => {
     const widget = createWidget({ id: 'context-routine', type: 'widget', rightClickRoutine: [] });
     widget.evaluateRoutine = jest.fn(() => Promise.resolve());
@@ -227,6 +275,19 @@ describe('Context menu input handling', () => {
     await new Promise(resolve => setTimeout(resolve, 0));
 
     expect(document.getElementById('contextMenuPreview').dataset.id).toBe('other');
+  });
+
+  test('opening the popup hides the enlarged copy of a widget that also has enlarge', () => {
+    const widget = createWidget({ id: 'context-enlarge-popup', type: 'widget', enlarge: 2, contextMenuOptions: { factor: 3 } });
+    const enlarged = document.getElementById('enlarged');
+    enlarged.className = 'widget';
+    enlarged.dataset.id = widget.get('id');
+
+    openContextMenuWithMenu(widget, []);
+
+    expect(popupIsOpen()).toBe(true);
+    expect(enlarged.classList.contains('hidden')).toBe(true);
+    removeWidget(widget.get('id'));
   });
 
   test('touchend on a popup action does not reach the room input handler', () => {
