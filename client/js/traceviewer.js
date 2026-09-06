@@ -32,10 +32,9 @@ function loadStateAtIndex(index) {
     $('#traceInput').value = index;
 }
 
-function loadTraceFile(file) {
+export function loadTraceFile(file) {
   loadedTrace = JSON.parse(file.content);
-  preventReconnect();
-  connection.close();
+  closeConnection();
 
   $('body').classList.add('trace');
   $('#traceInput').min = 0;
@@ -63,7 +62,7 @@ function loadTraceFile(file) {
       name: `Player ${p}`,
       context: '^Trace',
       call: async function() {
-        playerName = p;
+        setPlayerName(p);
         for(const [ id, widget ] of widgets)
           widget.updateOwner();
       }
