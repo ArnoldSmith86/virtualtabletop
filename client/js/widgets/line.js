@@ -387,10 +387,11 @@ export class Line extends Widget {
   async distributeAttachedWidgetsEvenlyInternal() {
     const stops = this.attachedWidgets();
     if(stops.length < 2) {
-      // a lone stop on a closed shape has nothing to space against, so it keeps
-      // its position; on an open path it belongs at the start
+      // a lone stop has no neighbour to keep a gap from, so an even
+      // distribution centers it on the path; on a closed shape every position
+      // is as central as every other one, so it keeps the one it has
       if(stops.length && !this.isClosed())
-        await this.setStopPositions([ 0 ]);
+        await this.setStopPositions([ 0.5 ]);
       await this.positionAttachedWidgets();
       return;
     }

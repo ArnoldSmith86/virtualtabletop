@@ -275,6 +275,19 @@ describe('Line widget geometry', () => {
       cleanUp(stops);
     });
 
+    test('a single stop ends up in the middle of the path', async () => {
+      const line = createLine({ id: 'space-line', x: 0, y: 0, rotateStops: false, autoSpaceStops: true,
+        lineStart: { x: 0, y: 0 }, lineEnd: { x: 400, y: 0 }, stops: [ { widget: 'lone', position: 0.9 } ] });
+      const stop = new Widget('lone');
+      addWidget({ id: 'lone', type: 'basic', parent: line.id, width: 100, height: 100 }, stop);
+
+      await line.distributeAttachedWidgetsEvenly();
+      expect(line.stopList()[0].position).toBe(0.5);
+      expect(near(stop.get('x'), 150)).toBe(true);
+
+      cleanUp([ stop ]);
+    });
+
     test('a stop is measured along the path even when the path is not horizontal', async () => {
       const line = createLine({ id: 'space-line', x: 0, y: 0, rotateStops: false, autoSpaceStops: true,
         lineStart: { x: 0, y: 0 }, lineEnd: { x: 0, y: 600 },
