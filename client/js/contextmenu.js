@@ -9,6 +9,8 @@ const CONTEXT_POPUP_ID = 'contextMenuPopup';
 const CONTEXT_DESCRIPTION_POPOVER_ID = 'contextMenuDescriptionPopover';
 const CONTEXT_TITLE_ROW_ID = 'contextMenuTitleRow';
 const DEFAULT_ENLARGE = 2;
+// how far a held finger may wander (in CSS pixels) before it counts as dragging instead of holding
+const LONG_TOUCH_SLOP = 10;
 
 let currentWidget = null;
 let enlargePreviewIndex = 0;
@@ -17,6 +19,7 @@ let touchActive = false;
 let longTouchHandled = false;
 let rightClickActive = false;
 let longTouchTimer = null;
+let longTouchStartPoint = null;
 let currentMenu = null;
 let descriptionPopoverOwner = null;
 let previewRepaintScheduled = false;
@@ -619,11 +622,19 @@ export function handleContextMenuInput(name, e) {
     return true;
   }
 
+  // a finger that moves on before the delay is over is swiping, not holding
+  if (name === 'touchmove' && longTouchTimer && touchLeftStartPoint(longTouchStartPoint, e)) {
+    clearTimeout(longTouchTimer);
+    longTouchTimer = null;
+    return false;
+  }
+
   if (name === 'touchstart' && e.touches.length === 1 && !isPopupOpen()) {
     // a long touch on empty space allows moving onto widgets to open their popup
     const t = e.touches[0];
     if (widgetsAtPoint(t.clientX, t.clientY).length === 0) {
       if (longTouchTimer) clearTimeout(longTouchTimer);
+      longTouchStartPoint = { clientX: t.clientX, clientY: t.clientY };
       longTouchTimer = setTimeout(() => {
         longTouchTimer = null;
         touchActive = true;
@@ -643,6 +654,15 @@ export function handleContextMenuInput(name, e) {
   }
 
   return false;
+}
+
+// whether the touch of a touchmove event has wandered off the point where it started far enough
+// to be a drag rather than the jitter of a finger that is holding still
+export function touchLeftStartPoint(startPoint, e) {
+  const t = e.touches && e.touches[0];
+  if (!startPoint || !t)
+    return false;
+  return Math.hypot(t.clientX - startPoint.clientX, t.clientY - startPoint.clientY) > LONG_TOUCH_SLOP;
 }
 
 export function onLongTouch(widget) {

@@ -6,7 +6,7 @@ import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } fro
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
-import { closeContextMenuFor, onLongTouch, onTouchEndContextMenu, openContextMenuWithMenu, updateContextMenuFor } from '../contextmenu.js';
+import { closeContextMenuFor, onLongTouch, onTouchEndContextMenu, openContextMenuWithMenu, touchLeftStartPoint, updateContextMenuFor } from '../contextmenu.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
 // A stop is listed in the line's stops property, so it can be any widget in the
@@ -187,12 +187,23 @@ export class Widget extends StateManaged {
     this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
-    this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
+    this.domElement.addEventListener("touchstart", e => this.touchstart(e), false);
+    this.domElement.addEventListener("touchmove", e => this.touchmove(e), { passive: true });
     this.domElement.addEventListener("touchend", e => this.touchend(), false);
+    this.domElement.addEventListener("touchcancel", e => this.touchend(), false);
 
-    this.touchstart = function() {
+    this.touchstart = function(e) {
       if (!this.timer) {
+        this.touchStartPoint = e.touches && e.touches[0] ? { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY } : null;
         this.timer = setTimeout(this.onlongtouch.bind(this), 500, false);
+      }
+    }
+
+    // a finger that moves on is dragging the widget, not holding it: that is never a long touch
+    this.touchmove = function(e) {
+      if (this.timer && touchLeftStartPoint(this.touchStartPoint, e)) {
+        clearTimeout(this.timer);
+        this.timer = null;
       }
     }
 
