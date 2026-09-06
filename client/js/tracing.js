@@ -201,8 +201,8 @@ function closeFeedbackOverlay() {
 // done - so the two happen side by side and the file waits for the bundle rather than the other
 // way round.
 //
-// One picker at a time: holding the keys down repeats the keydown, and a trace opened on top of
-// another one toggles the JSON editor back off and lists its commands twice.
+// One picker at a time: holding the keys down repeats the keydown, and every repeat would open a
+// picker of its own.
 let traceFileRequested = false;
 function openTraceFile() {
   if(traceFileRequested)
@@ -211,12 +211,19 @@ function openTraceFile() {
   const editorReady = loadEditMode();
   editorReady.catch(_=>{}); // the picker below reports it, but it may be cancelled instead
   traceFileRequested = true;
-  selectFile('TEXT').then(async file=>{
-    if(await editorReady)
-      loadTraceFile(file);
+  selectFile('TEXT', null, [ '.trace' ]).then(async file=>{
+    // fetching the bundle and replaying the recording into the room both take a while on a long
+    // trace, and the room looks idle in the meantime
+    setStatusMessage(`Opening the recording ${file.name}...`, 'hourglass_empty');
+    if(await editorReady) {
+      await loadTraceFile(file);
+    } else {
+      // the overlay that has just come up talks about edit mode, which is not what was asked for
+      $('#editModeUnavailableTraceNote').classList.add('visible');
+    }
   }).catch(e=>{
     if(e.message !== 'File selection cancelled.')
-      alert(`Error: ${e.toString()}`);
+      alert(e.message);
   }).finally(_=>traceFileRequested = false);
 }
 

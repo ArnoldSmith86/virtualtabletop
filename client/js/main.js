@@ -830,6 +830,9 @@ async function editModeUnavailable(error) {
     return false;
   }
   if(!serverAnswered) {
+    // the extra line about a picked trace file belongs on the overlay only while one is waiting for
+    // the bundle - openTraceFile() puts it back when that is the case
+    $('#editModeUnavailableTraceNote').classList.remove('visible');
     // while the connection is down its own overlay is up and forced, so it stays and this one does
     // not appear - which is the right way round: it already says the server is away, and unlike
     // this one it goes when the server comes back

@@ -1,17 +1,94 @@
-body.trace #toolbar {
-  background: red;
+:root {
+  --traceUIHeight: 34px;
 }
 
+/* The transport bar of the trace viewer: a recording is not a live room, so it takes the bottom
+   edge of the window in a color nothing else in the app uses, says which record is on screen and
+   carries the only way back to the room. */
 #traceUI {
   display: none;
-}
-
-#traceInput {
-  width: calc(100vw - 920px);
   position: fixed;
+  left: 0;
+  right: 0;
   bottom: 0;
+  z-index: 4;
+  box-sizing: border-box;
+  height: var(--traceUIHeight);
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  background: #9e2a2a;
+  color: white;
+  font-family: sans-serif;
+  font-size: 13px;
 }
 
 body.trace #traceUI {
-  display: block;
+  display: flex;
+}
+
+#traceLabel {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  flex: none;
+}
+
+#traceSummary {
+  flex: none;
+  white-space: nowrap;
+}
+
+#traceDetail {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+#traceInput {
+  flex: 1 1 auto;
+  min-width: 80px;
+  margin: 0;
+}
+
+#traceClose {
+  flex: none;
+  background: none;
+  border: 1px solid white;
+  border-radius: 4px;
+  color: white;
+  padding: 2px 8px 2px 4px;
+  margin: 0;
+}
+
+#traceClose:hover {
+  background: #7d1f1f;
+}
+
+#traceClose::before {
+  font-size: 18px;
+  width: 18px;
+}
+
+/* the room and the editor's own panels end above the bar instead of behind it */
+body.trace #editorSidebar,
+body.trace #editorModules {
+  bottom: var(--traceUIHeight);
+}
+
+/* the socket is closed on purpose while a recording is played back, so the corner would pulse
+   "Connection lost. Reconnecting..." for as long as the viewer is open */
+body.trace #statusOverlay {
+  display: none;
+}
+
+/* on a narrow window the bar keeps what it cannot do without: which record is showing, the
+   scrubber and the way out */
+@media (max-width: 900px) {
+  #traceLabel, #traceDetail {
+    display: none;
+  }
 }
