@@ -809,6 +809,7 @@
         <div icon="feedback">
           <p>Found a bug or have a suggestion? Let us know!</p>
           <p><textarea style="height: 150px; width: 100%"></textarea></p>
+          <p id="feedbackPrChoice"><label for="feedbackPrSelect">This beta server is testing a few new things — is your feedback about one of them?</label><br><select id="feedbackPrSelect" style="max-width: 100%"><option value="">I don't know / something else</option><option value="2258">#2258: added smart cloning to editor</option><option value="2871">#2871: insert operations with common properties</option><option value="2872">#2872: added file monitoring for live updates</option><option value="2986">#2986: Validator - Fix CALLs in cards</option><option value="3004">#3004: Never let an unusable statistics.json take the server down</option><option value="3018">#3018: Add Rooms toolbar tab: track visited rooms, claim/lock/password/copy/switch</option><option value="3030">#3030: Fix validator accepting undefined GET properties and uploads of files without VTT metadata</option><option value="3042">#3042: Add spinner tutorial page: CSS selectors, hover &amp; hue-rotate arrows</option><option value="3045">#3045: Add AI assistant for creating/editing widget routines in edit mode</option><option value="3055">#3055: Link the traditional decks' images as /i/ engine assets instead of /assets/ uploads</option><option value="3077">#3077: Add Tempest Cove to the public library</option><option value="3087">#3087: Add &quot;Rent Circuit&quot; to the public library</option><option value="3088">#3088: Add Dungeon Dash, a co-operative real-time card game, to the public library</option><option value="3091">#3091: Add Robo Rallye, a programmed-movement robot race, to the public library</option><option value="3096">#3096: Add Golden Cauldron, a push-your-luck dice game, to the public library</option><option value="3110">#3110: Rebuild the public-library game Don't Blow Up with new art and automation</option><option value="3122">#3122: Add a record button to the routine editor that turns room gestures into operations</option><option value="3124">#3124: Offer each routine the values and collections its trigger hands it, in the routine editor</option><option value="3136">#3136: Add &quot;Toad King Trail&quot; to the public library</option><option value="3145">#3145: Don't crash the game list when an uploaded file has no game metadata</option><option value="3154">#3154: Write background-color instead of the background shorthand from the editor's color pickers</option><option value="3158">#3158: Offer Chess960 starting positions in the Chess Next Game button</option><option value="3159">#3159: Hold Ctrl to open the widget-stack list and have it follow the pointer</option><option value="3163">#3163: Keep the Debug module logging when edit mode is entered again</option><option value="3164">#3164: Fix the editors claiming a just-renamed widget or deck id is already taken</option><option value="3170">#3170: Drop null-valued properties when a delta creates a widget</option><option value="3171">#3171: Make Ctrl+F9 open a recorded trace file again</option><option value="3172">#3172: Retry the TestCafe REST helpers so a dropped connection does not fail a job</option></select><br><span style="opacity:0.8">Details about each change are in the About window of this beta server.</span></p>
           <p class="feedbackError" style="display: none"></p>
           <p class="feedbackThanks" style="display: none">Thank you! Your feedback has been sent.</p>
           <p><input type="checkbox" id="feedbackIncludeState" checked> <label for="feedbackIncludeState">Include a snapshot of this room (URL, full page contents, game state, and player names)</label></p>
@@ -935,6 +936,28 @@
 
   <script type="module"> //*** CONFIG ***//  //*** JS ***// </script>
 
-</body>
+
+    <script>
+    window.addEventListener('load', function() {
+      var btn = document.querySelector('#feedbackOverlay button[icon=check]');
+      var sel = document.getElementById('feedbackPrSelect');
+      var open = document.getElementById('feedbackButton');
+      if(!btn || !sel) return;
+      if(open) open.addEventListener('click', function() { sel.value = ''; });
+      btn.addEventListener('click', function() {
+        var ta = document.querySelector('#feedbackOverlay textarea');
+        var msg = (ta && ta.value || '').trim();
+        if(!msg) return;
+        try {
+          fetch('https://agent.virtualtabletop.io/feedback', {
+            method: 'POST', mode: 'no-cors', keepalive: true,
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({ pr: sel.value ? Number(sel.value) : null, message: msg })
+          });
+        } catch(e) {}
+      });
+    });
+    </script>
+  </body>
 
 </html>
