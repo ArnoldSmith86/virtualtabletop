@@ -474,6 +474,9 @@ export class Line extends Widget {
   // The angle of the path's tangent in degrees at an arc-length position.
   // Sampling either side also works for both straight and cubic paths without
   // needing to convert an arc-length position back to a Bezier parameter.
+  // The angle ends up in the rotation of the stops, so it is rounded to the
+  // same three decimals the positions use: Math.atan2 is allowed to differ in
+  // its last bits between JavaScript engines, and a stored rotation must not.
   tangentAngleAtPosition(position) {
     const p = this.normalizePosition(position);
     const delta = 0.001;
@@ -481,7 +484,7 @@ export class Line extends Widget {
     // there instead of the one-sided one an open path has to fall back to
     const before = this.pointAtPosition(this.isClosed() ? p-delta : Math.max(0, p-delta));
     const after = this.pointAtPosition(this.isClosed() ? p+delta : Math.min(1, p+delta));
-    return Math.atan2(after.y-before.y, after.x-before.x) * 180 / Math.PI;
+    return Math.round(Math.atan2(after.y-before.y, after.x-before.x) * 180 / Math.PI * 1000)/1000;
   }
 
   // The position along the path closest to a point in this line's own frame,

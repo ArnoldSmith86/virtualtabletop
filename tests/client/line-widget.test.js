@@ -182,6 +182,25 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('a stop on a curve is turned by a rotation that carries three decimals at most', async () => {
+    const line = createLine({ id: 'angle-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 },
+      controlStart: { x: 30, y: -120 }, controlEnd: { x: 170, y: 120 }, autoSpaceStops: false,
+      stops: [ { widget: 'angle-stop', position: 0.3 } ] });
+    const stop = new Widget('angle-stop');
+    addWidget({ id: 'angle-stop', type: 'basic', parent: line.id, width: 60, height: 20 }, stop);
+
+    await line.updateAttachedWidgets();
+    const rotation = stop.get('rotation');
+    // the tangent angle is stored in the room state, where a value that depends
+    // on how precise the browser's Math.atan2 happens to be would make the same
+    // line differ between clients
+    expect(rotation).toBe(Math.round(rotation*1000)/1000);
+    expect(rotation).not.toBe(0);
+
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   test('direct and inherited stop geometry changes reposition the stop', async () => {
     const line = createLine({ id: 'stop-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
       stops: [ { widget: 'reactive-stop', position: 0.25 } ] });
