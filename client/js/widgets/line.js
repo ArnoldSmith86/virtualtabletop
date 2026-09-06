@@ -60,30 +60,40 @@ export class Line extends Widget {
   // A state whose stops carry no coordinates - or coordinates that stopped
   // matching the path, e.g. because the line was reshaped after the save - would
   // otherwise render them all in the line's top left corner until a player or
-  // the editor touches something. The widgets of a state arrive one by one, so
-  // the stops usually do not exist yet when the line does: place them once the
-  // whole batch of additions is through. A state whose stops already sit on the
-  // path is left exactly as it was loaded.
-  onAddedToRoom() {
-    if(this.initialStopLayout)
+  // the editor touches something. The room is complete here, which the line
+  // itself being added is not: its stops usually arrive after it.
+  async onStateLoaded() {
+    // A stop the state does not contain is dropped by stopList, so laying the
+    // line out would write that shortened list back and lose the entry for good.
+    // Nobody asked for a layout here, so leave a save that names one alone.
+    if(this.stopsMissingFromRoom())
       return;
-    this.initialStopLayout = setTimeout(async ()=>{
-      this.initialStopLayout = null;
-      // the widget can be gone again - or replaced by a newer state - by now
-      if(widgets.get(this.id) !== this || this.isBeingRemoved || !this.stopsOffPath())
-        return;
-      batchStart();
-      setDeltaCause(`line ${this.id} placed its stops`);
-      try {
-        await this.layoutStops();
-      } finally {
-        batchEnd();
-      }
-    });
+
+    // A stop that is not a child of the line is placed through the CSS
+    // transforms of its frame and of the line's, read out of the DOM - and a
+    // line inside an owner / onlyVisibleForSeat / display:false chain is not
+    // rendered at all on part of the clients, which all run this. Placing those
+    // would let whoever happens to load the room decide where they end up for
+    // everybody, so they stay with the interactions that position them.
+    if(this.hasExternalStops())
+      return;
+
+    if(!this.stopsOffPath())
+      return;
+
+    await this.layoutStops();
   }
 
-  // whether any stop sits somewhere other than where the line puts it - the same
-  // coordinates positionAttachedWidgets writes, compared instead of assigned
+  // an entry of the stops list whose widget is not part of the room
+  stopsMissingFromRoom() {
+    const stops = this.get('stops');
+    return Array.isArray(stops) && stops.some(entry=>entry && typeof entry == 'object' && !widgets.has(entry.widget));
+  }
+
+  // Whether any stop sits somewhere other than where the line puts it - the same
+  // coordinates positionAttachedWidgets writes, compared instead of assigned.
+  // Rotation is left out: it is only meaningful together with the
+  // lineOriginalRotation the line stores when it takes a stop's rotation over.
   stopsOffPath() {
     return this.stopList().some(entry=>{
       const stop = widgets.get(entry.widget);

@@ -741,7 +741,7 @@ describe('a line places its stops when a state is loaded', () => {
   const stopIDs = [ 'load-a', 'load-b', 'load-c' ];
 
   // what happens when a state arrives: every widget is added, and only once the
-  // whole batch is through does anything scheduled during it get a turn
+  // whole state is in the room does each of them get its onStateLoaded turn
   async function loadState(lineState, stopStates) {
     const line = createLine(lineState);
     const stops = stopStates.map(state => {
@@ -749,7 +749,8 @@ describe('a line places its stops when a state is loaded', () => {
       addWidget({ type: 'basic', parent: line.id, width: 40, height: 40, ...state }, stop);
       return stop;
     });
-    await new Promise(resolve => setTimeout(resolve));
+    for(const widget of [ line, ...stops ])
+      await widget.onStateLoaded();
     return { line, stops };
   }
 
@@ -811,5 +812,35 @@ describe('a line places its stops when a state is loaded', () => {
     for(const widget of [ line, ...stops ])
       expect(widget.state).toEqual(widget.unalteredState);
     unload(line, stops);
+  });
+
+  test('a stops list naming a widget the state does not contain is left as it is', async () => {
+    // laying the line out would write the list back without the missing entry,
+    // so the save would lose it - and it is what a routine adding a line and its
+    // stops one at a time looks like while it is still adding them
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: true, stops: [ ...stopIDs, 'load-later' ].map((widget, i) => ({ widget, position: i/10 })) },
+      stopIDs.map(id => ({ id }))
+    );
+
+    expect(line.get('stops').map(entry => entry.widget)).toEqual([ ...stopIDs, 'load-later' ]);
+    expect(coordinates(stops)).toEqual([ [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ]);
+    unload(line, stops);
+  });
+
+  test('a stop that is not a child of the line is left where the state put it', async () => {
+    // an external stop is placed through the CSS transforms of two frames, which
+    // read differently on a client that does not render the line at all - so
+    // every client agreeing on where it goes is not a given
+    const line = createLine({ ...geometry, id: 'external-line', autoSpaceStops: false, stops: [ { widget: 'load-a', position: 0.5 } ] });
+    const stop = new Widget('load-a');
+    addWidget({ id: 'load-a', type: 'basic', x: 7, y: 7, width: 40, height: 40 }, stop);
+
+    for(const widget of [ line, stop ])
+      await widget.onStateLoaded();
+
+    expect(line.hasExternalStops()).toBe(true);
+    expect([ stop.get('x'), stop.get('y') ]).toEqual([ 7, 7 ]);
+    unload(line, [ stop ]);
   });
 });

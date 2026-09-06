@@ -25,6 +25,11 @@ let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
 
+// the undo entry a state load pushes - and the cause of what the widgets write
+// while they finish loading, so it merges into that entry instead of coming
+// between the player and their own last action
+const stateLoadCause = 'received complete room state';
+
 function normalizeRoomID(roomID) {
   if(!config.roomNamesCaseSensitive)
     roomID = roomID.toLowerCase();
@@ -138,8 +143,6 @@ export function addWidget(widget, instance, allowMissingParent) {
     if(!widgets.has(c.id))
       addWidget(c);
   delete deferredChildren[widget.id];
-
-  w.onAddedToRoom();
 }
 
 // useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
@@ -467,7 +470,7 @@ function addStateEntryToUndoProtocol(state) {
     }
   }
 
-  undoProtocol.push({ delta: {s:redoDelta,c:'received complete room state'}, undoDelta });
+  undoProtocol.push({ delta: {s:redoDelta,c:stateLoadCause}, undoDelta });
 }
 
 function getUndoProtocol() {
@@ -601,16 +604,33 @@ function receiveStateFromServer(args) {
 
   cancelInputOverlay();
 
-  if(triggerGameStartRoutineOnNextStateLoad) {
-    triggerGameStartRoutineOnNextStateLoad = false;
-    (async function() {
+  const runGameStartRoutines = triggerGameStartRoutineOnNextStateLoad;
+  triggerGameStartRoutineOnNextStateLoad = false;
+
+  (async function() {
+    // The widgets of a state are added one by one, so a widget that needs the
+    // others - a line placing its stops on its path, for example - can only do
+    // its part once they are all there. One batch for all of them, and before
+    // the game start routines, which expect a room that is done loading.
+    batchStart();
+    setDeltaCause(stateLoadCause);
+    for(const w of [ ...widgets.values() ]) {
+      try {
+        await w.onStateLoaded();
+      } catch(e) {
+        console.error(`Could not finish loading widget!`, w.id, e);
+      }
+    }
+    batchEnd();
+
+    if(runGameStartRoutines) {
       batchStart();
       for(const [ id, w ] of widgets)
         if(w.get('gameStartRoutine'))
           await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
       batchEnd();
-    })();
-  }
+    }
+  })();
 }
 
 function cancelInputOverlay() {
