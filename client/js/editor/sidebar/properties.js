@@ -10971,7 +10971,7 @@ class PropertiesModule extends SidebarModule {
 
     new CheckboxInput(this, widget, 'Distribute evenly', {
       property: 'autoSpaceStops',
-      hint: 'Automatically distribute stops when line geometry changes.',
+      hint: 'The line keeps the same gap between its stops, measured along the path, and re-spaces them whenever it changes shape.',
       setValue: async checked=>{
         await lineEdit(`${checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', checked));
         renderStops();
@@ -11089,8 +11089,11 @@ class PropertiesModule extends SidebarModule {
         position.type = 'number';
         position.min = 0;
         position.max = 100;
+        position.step = 'any';
         position.className = 'lineStopPosition';
-        position.value = Math.round(widget.stopPosition(stop)*100);
+        // positions carry three decimals, so a whole-percent readout would show
+        // an evenly distributed line as an uneven list (0, 6, 11, 17, 22, ...)
+        position.value = Math.round(widget.stopPosition(stop)*1000)/10;
         // with even distribution on, the line owns the positions - a typed value
         // would be spaced away again right after, so don't offer the field
         position.disabled = !!widget.get('autoSpaceStops');

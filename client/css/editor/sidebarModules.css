@@ -1160,8 +1160,8 @@
   white-space: nowrap;
 }
 .editorModule .lineStopList .genericInput input.lineStopPosition {
-  width: 42px;
-  min-width: 42px;
+  width: 52px;
+  min-width: 52px;
 }
 /* clicking the picture or the "Stop n" caption selects the stop in the room */
 .editorModule .lineStopList .lineStopSelect {
