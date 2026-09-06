@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 22,
+    "version": 24,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1787512070708,
+      "lastUpdate": 1788709781998,
       "showName": false,
       "skill": "",
       "description": "",
@@ -27,7 +27,8 @@
       "variantImage": "",
       "variant": "Rotation",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAILayout": false
     }
   },
   "title": {
@@ -53,7 +54,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The <b>rotation</b> property is a number (in degrees) of the rotation of the widget. Positive numbers are rotation clockwise and negative numbers are rotation counter-clockwise. There is a function, <a href='https://virtualtabletop.io/tutorial/functions-rotate'>ROTATE</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#rotate'>wiki</a>), which can be used in automation or your routine can directly <a href='https://virtualtabletop.io/tutorial/functions-set'>SET</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#set'>wiki</a>) the <b>rotation</b> property. Similar to <b>scale</b>, any parent that is rotated also automatically rotates child widgets the same amount. Child widgets could also have their own <b>rotation</b> property which would add or subtract from the parent's value."
+    "html": "The <b>rotation</b> property is a number (in degrees) of the rotation of the widget. Positive numbers are rotation clockwise and negative numbers are rotation counter-clockwise. There is a function, <a href='https://virtualtabletop.io/tutorial/functions-rotate'>ROTATE</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#rotate'>wiki</a>), which can be used in automation. A routine can also directly <a href='https://virtualtabletop.io/tutorial/functions-set'>SET</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#set'>wiki</a>) the <b>rotation</b> property. And <b>rotationSteps</b> allows a user to change rotation through a pop up menu. Similar to <b>scale</b>, any parent that is rotated also automatically rotates child widgets the same amount. Child widgets could also have their own <b>rotation</b> property which would add or subtract from the parent's value."
   },
   "button3": {
     "type": "button",
@@ -702,8 +703,8 @@
   "holder": {
     "type": "holder",
     "id": "holder",
-    "x": 1064,
-    "y": 499,
+    "x": 876,
+    "y": 281,
     "z": 133,
     "dropTarget": {
       "type": "card"
@@ -1162,7 +1163,7 @@
   "button5": {
     "type": "button",
     "id": "button5",
-    "x": 1394,
+    "x": 1119,
     "y": 402,
     "layer": 2,
     "z": 22847,
@@ -1217,7 +1218,7 @@
   },
   "text5": {
     "id": "text5",
-    "x": 1294,
+    "x": 994,
     "y": 502,
     "width": 300,
     "height": 445,
@@ -1240,5 +1241,62 @@
       "border": "2px solid blue"
     },
     "z": 9744
+  },
+  "text6": {
+    "id": "text6",
+    "x": 1313,
+    "y": 502,
+    "width": 280,
+    "height": 445,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The red pawn has <b>rotationSteps</b> set to 30. Right clicking on it brings up a small menu to rotate the pawn in 30 degree steps in either direction. The green pawn has <b>rotationSteps</b> set to an array of [0,90,180,270]. Right clickong on it rotates it to the next stop on the array.<br><br>For the red pawn, 30 degrees is added to whatever rotation it currently has. The green pawn is forced into one of the array values."
+  },
+  "pawn1": {
+    "id": "pawn1",
+    "x": 1358,
+    "y": 382,
+    "width": 50.4,
+    "height": 90,
+    "z": 9746,
+    "color": "red",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "rotationSteps": 30
+  },
+  "pawn2": {
+    "id": "pawn2",
+    "x": 1458,
+    "y": 382,
+    "width": 50.4,
+    "height": 90,
+    "z": 9746,
+    "color": "green",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "rotationSteps": [
+      0,
+      90,
+      180,
+      270
+    ]
   }
 }

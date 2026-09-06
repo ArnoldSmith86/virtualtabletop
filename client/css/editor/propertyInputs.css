@@ -1647,7 +1647,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 /* up/down stacked so the row keeps its width for the values in the middle */
 .editorModule .diceFaceRow .faceOrderControls,
-.editorModule .faceRow .faceOrderControls {
+.editorModule .faceRow .faceOrderControls,
+.editorModule .contextMenuEntryActions .faceOrderControls {
   flex-direction: column;
 }
 
@@ -1735,7 +1736,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin: 4px 10px 4px 0;
 }
 
-.editorModule .facesEditor {
+.editorModule .facesEditor,
+.editorModule .contextMenuEntries {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -1746,7 +1748,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin: 4px 0;
 }
 
-.editorModule .faceRow {
+.editorModule .faceRow,
+.editorModule .contextMenuEntry {
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 6px;
   border-left-width: 3px;
@@ -1757,13 +1760,15 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   border-left-color: var(--VTTblue);
 }
 
-.editorModule .faceRowHead {
+.editorModule .faceRowHead,
+.editorModule .contextMenuEntryHead {
   display: flex;
   align-items: stretch;
   gap: 4px;
 }
 
-.editorModule .faceRowToggle {
+.editorModule .faceRowToggle,
+.editorModule .contextMenuEntryToggle {
   flex: 1 1 auto;
   min-width: 0;
   display: flex;
@@ -1777,7 +1782,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   cursor: pointer;
 }
 
-.editorModule .faceRowToggle:focus-visible {
+.editorModule .faceRowToggle:focus-visible,
+.editorModule .contextMenuEntryToggle:focus-visible {
   outline: 2px solid var(--VTTblue);
   outline-offset: -2px;
 }
@@ -1796,12 +1802,14 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   top: 0;
 }
 
-.editorModule .faceRowInfo {
+.editorModule .faceRowInfo,
+.editorModule .contextMenuEntryInfo {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.editorModule .faceRowTitle {
+.editorModule .faceRowTitle,
+.editorModule .contextMenuEntryTitle {
   font-weight: bold;
 }
 
@@ -1822,7 +1830,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   display: inline-block;
 }
 
-.editorModule .faceRowSummary {
+.editorModule .faceRowSummary,
+.editorModule .contextMenuEntrySummary {
   font-size: 0.85em;
   opacity: 0.8;
   overflow: hidden;
@@ -1831,12 +1840,14 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 /* scoped to .faceRow: the dice face rows share the .faceRowActions class */
-.editorModule .faceRow .faceRowActions {
+.editorModule .faceRow .faceRowActions,
+.editorModule .contextMenuEntryActions {
   gap: 2px;
   padding: 4px 4px 4px 0;
 }
 
-.editorModule .faceRow .faceRowActions button[icon] {
+.editorModule .faceRow .faceRowActions button[icon],
+.editorModule .contextMenuEntryActions button[icon] {
   padding: 2px 5px;
   justify-content: center;
 }
@@ -1845,7 +1856,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   color: var(--VTTblue);
 }
 
-.editorModule .faceRowBody {
+.editorModule .faceRowBody,
+.editorModule .contextMenuEntryBody {
   padding: 0 6px 6px;
 }
 
@@ -1907,9 +1919,87 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   min-width: 0;
 }
 
+/* context menu editor: the entry rows above share the face row rules */
+.editorModule .contextMenuEntryActions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.editorModule .contextMenuEntryTitle,
+.editorModule .contextMenuEntryBroken {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editorModule .contextMenuEntryBroken {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 4px;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.editorModule .contextMenuEntryIcon .propertyValueChip {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+}
+
+.editorModule .contextMenuAddEntry,
+.editorModule .contextMenuAddImage {
+  margin: 4px 0;
+}
+
+/* a submenu is the same list one level in, set off from the inputs above it */
+.editorModule .contextMenuSubmenu {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--backgroundHighlightColor1);
+}
+
+.editorModule .contextMenuSubmenu > .contextMenuEntries {
+  margin-right: 0;
+}
+
+.editorModule .contextMenuSubmenuActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.editorModule .contextMenuPreviewTitle {
+  margin-top: 8px;
+}
+
+/* the image inputs share their row with a remove button */
+.editorModule .contextMenuImageRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .contextMenuImageRow > .propertyInput {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.editorModule .contextMenuImageRemove {
+  flex: 0 0 auto;
+  padding: 2px 4px;
+}
+
+.editorModule .contextMenuWidgetsInput {
+  flex: 1 1 120px;
+  min-width: 80px;
+}
+
 /* snap grid editor */
 .editorModule .gridHelp,
 .editorModule .pileHelp,
+.editorModule .contextMenuHelp,
 .editorModule .gridSizeNote {
   font-size: 0.9em;
   opacity: 0.8;
