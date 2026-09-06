@@ -10,6 +10,7 @@ let overlayActive = false;
 let optionsHidden = true;
 
 let edit = null;
+let editModeLoad = null;
 export let jeEnabled = null;
 let zoom = 1;
 let offset = [ 0, 0 ];
@@ -841,7 +842,15 @@ async function editModeUnavailable(error) {
 
 // Resolves to whether edit mode is available: false means the editor could not be fetched, which
 // the user has been told about and can retry - the callers must not go on to use it.
-async function loadEditMode() {
+//
+// Everybody waits for the same fetch. What marks edit mode as loaded is set before the import
+// that loads it, so a second caller arriving in between would otherwise be told it is ready and
+// use names the editor has not defined yet.
+function loadEditMode() {
+  return editModeLoad || (editModeLoad = fetchEditMode());
+}
+
+async function fetchEditMode() {
   if(edit === null) {
     $('body').classList.add('loadingEditMode');
     let editmode;
@@ -873,6 +882,7 @@ async function loadEditMode() {
       editmode = await import(editModeURL());
     } catch(e) {
       edit = null;
+      editModeLoad = null; // a failed fetch is forgotten, so the next click tries again
       return await editModeUnavailable(e);
     } finally {
       $('body').classList.remove('loadingEditMode');

@@ -30,13 +30,17 @@ function windowAPINames() {
 }
 
 // Files are concatenated as they are, so everything a bundle declares for itself starts at the
-// beginning of a line - anything indented belongs to a scope inside one of them.
+// beginning of a line - anything indented belongs to a scope inside one of them. Only the name a
+// declaration starts with is read, so a second one in the same `let a, b` and a destructured
+// binding are not covered: this catches the shape the bundles are written in, it is not a proof.
 function topLevelDeclarationNames(js) {
   return [ ...new Set([ ...js.matchAll(/^(?:export\s+)?(?:async\s+)?(?:function|class|let|const|var)\s+([\w$]+)/gm) ].map(match => match[1])) ];
 }
 
 // validator/validate_gamefile.js also runs outside the browser (validate_gamefile_node.js), so it
-// brings its own copies of the handful of helpers it needs rather than relying on the handover.
+// declares the helpers it needs itself rather than relying on the handover. Its asArray is not the
+// same function as the handed over one - it turns null and undefined into an empty array where
+// domhelpers.js wraps them - and being a declaration, it is the one the whole editor bundle uses.
 const SHADOWED_ON_PURPOSE = [ 'asArray' ];
 
 function topLevelFunctionNames(js) {
@@ -87,6 +91,16 @@ describe('minifyHTML with minifyJavascript disabled', () => {
     const declared = topLevelDeclarationNames(build.editorJSmin);
     expect(declared.length).toBeGreaterThan(100);  // same for the bundle
     expect(names.filter(name => declared.includes(name) && !SHADOWED_ON_PURPOSE.includes(name))).toEqual([]);
+  });
+
+  // The way back is the same lookup: what edit mode exports ends up on the window as well, and the
+  // client bundle reads those names as globals - loadTraceFile, which the F9 handler calls, is one
+  // of them.
+  test('does not shadow a name edit mode hands back in the client bundle', () => {
+    const names = exportedNames(build.editorJSmin);
+    expect(names.length).toBeGreaterThan(20);  // the exports were found, not an empty match
+    const declared = topLevelDeclarationNames(inlineClientJS(build));
+    expect(names.filter(name => declared.includes(name))).toEqual([]);
   });
 
   // Nothing imports the client bundle, so its exports only stop terser from dropping code that

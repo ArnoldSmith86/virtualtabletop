@@ -25,6 +25,9 @@ function loadStateAtIndex(index) {
     }
   }
   receiveStateFromServer(state);
+  // the same notification a state from the server carries: every widget was just replaced, and
+  // the editor keeps hold of the ones that were selected until it is told
+  editorReceiveState(state);
   jeDisplayTrace(index);
 
   tracingActiveIndex = index;
