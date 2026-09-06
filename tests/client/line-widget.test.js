@@ -274,6 +274,27 @@ describe('Line widget geometry', () => {
 
       cleanUp(stops);
     });
+
+    test('a stop is measured along the path even when the path is not horizontal', async () => {
+      const line = createLine({ id: 'space-line', x: 0, y: 0, rotateStops: false, autoSpaceStops: true,
+        lineStart: { x: 0, y: 0 }, lineEnd: { x: 0, y: 600 },
+        stops: [ 'v0', 'v1', 'v2' ].map((widget, i) => ({ widget, position: i/2 })) });
+      const boxes = [ { width: 100, height: 40 }, { width: 40, height: 100 }, { width: 40, height: 100 } ];
+      const stops = boxes.map((box, i) => {
+        const stop = new Widget(`v${i}`);
+        addWidget({ id: `v${i}`, type: 'basic', parent: line.id, ...box }, stop);
+        return stop;
+      });
+
+      // going down the line a stop takes up its height, not its width, so the
+      // two gaps are (600 - 40/2 - 100 - 100/2)/2 each
+      await line.distributeAttachedWidgetsEvenly();
+      const gaps = stopDistances(line).map((distance, i) => distance - boxes[i].height/2 - boxes[i+1].height/2);
+      expect(near(gaps[0], 215, 1)).toBe(true);
+      expect(near(gaps[1], 215, 1)).toBe(true);
+
+      cleanUp(stops);
+    });
   });
 
   describe('the stops list', () => {
@@ -438,6 +459,36 @@ describe('Line widget closed shapes', () => {
 
     for(const id of [ 'r0', 'r1', 'r2', 'r3' ])
       removeWidget(id);
+    removeWidget(line.id);
+  });
+
+  test('sizes stops by their real footprint, so the whole perimeter is used up', async () => {
+    const boxes = [
+      { width: 200, height: 40, rotation: 90 },
+      { width: 80, height: 80 },
+      { width: 160, height: 60 },
+      { width: 80, height: 80 }
+    ];
+    const line = ellipse({ id: 'ring-sizes', x: 0, y: 0, lineEnd: { x: 400, y: 400 }, rotateStops: false,
+      stops: boxes.map((box, i) => ({ widget: `s${i}`, position: i/8 })) });
+    boxes.forEach((box, i) => addWidget({ id: `s${i}`, type: 'basic', parent: line.id, ...box }, new Widget(`s${i}`)));
+
+    await line.distributeAttachedWidgetsEvenly();
+    // a stop turned across the ring covers its height there, not its width; on
+    // a closed shape these footprints are used as absolute lengths, so they
+    // have to add up to the perimeter together with the four gaps
+    const footprints = [ 40, 80, 160, 80 ];
+    const length = line.lineLength();
+    const expected = (length - 360)/4;
+    const positions = line.stopList().map(entry => entry.position);
+    for(let i = 0; i < positions.length; ++i) {
+      const next = (i+1) % positions.length;
+      const distance = ((positions[next] - positions[i] + 1) % 1) * length;
+      expect(near(distance - footprints[i]/2 - footprints[next]/2, expected, 2)).toBe(true);
+    }
+
+    for(let i = 0; i < boxes.length; ++i)
+      removeWidget(`s${i}`);
     removeWidget(line.id);
   });
 

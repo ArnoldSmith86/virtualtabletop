@@ -406,7 +406,11 @@ export class Line extends Widget {
     // open path instead pins the first stop at 0 and the last one at 1.
     const closed = this.isClosed();
     const gaps = closed ? stops.length : stops.length-1;
-    const sizes = stops.map(stop=>this.widgetLengthOnLine(stop));
+    // One direction for the whole line, taken from the path itself: exact for a
+    // straight line at any angle and an even compromise on a curve, while
+    // staying independent of where each stop currently sits.
+    const reference = this.tangentAngleAtPosition(0.5);
+    const sizes = stops.map(stop=>this.widgetLengthOnLine(stop, reference));
     const usedLength = sizes.reduce((sum, size)=>sum+size, 0) - (closed ? 0 : sizes[0]/2 + sizes[sizes.length-1]/2);
     const requestedGap = (length - usedLength)/gaps;
     // If the widgets do not fit, allow overlap but never enough to reverse
@@ -450,19 +454,21 @@ export class Line extends Widget {
     await this.set('stops', swapped);
   }
 
-  // How much room a stop claims along the path: a stop that follows the line
-  // lays its width along it, one that keeps its own rotation is measured along
-  // that rotation. Either way this depends on the widget alone, so a curve
-  // turning underneath a stop does not change the space it takes up and equally
-  // sized stops stay equally far apart in arc length.
-  widgetLengthOnLine(widget) {
+  // How much room a stop claims along the path, measured against referenceAngle
+  // instead of against the tangent below the stop itself: a stop that gets
+  // turned onto the line always lays its width along it, one that keeps its own
+  // rotation contributes the extent of its bounding box in that direction.
+  // Either way the result depends on the widget alone, so a curve turning
+  // underneath a stop does not change the space it takes up and equally sized
+  // stops stay equally far apart in arc length.
+  widgetLengthOnLine(widget, referenceAngle) {
     const scale = Math.max(0, +widget.get('scale') || 0);
     const width = Math.max(0, +widget.get('width') || 0) * scale;
     const height = Math.max(0, +widget.get('height') || 0) * scale;
     if(this.shouldRotateStops() && width > height)
       return width;
-    const rotation = (+widget.get('rotation') || 0)*Math.PI/180;
-    return Math.abs(width*Math.cos(rotation)) + Math.abs(height*Math.sin(rotation));
+    const relativeRotation = ((+widget.get('rotation') || 0) - referenceAngle)*Math.PI/180;
+    return Math.abs(width*Math.cos(relativeRotation)) + Math.abs(height*Math.sin(relativeRotation));
   }
 
   // The angle of the path's tangent in degrees at an arc-length position.
