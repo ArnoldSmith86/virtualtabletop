@@ -195,6 +195,31 @@ function closeFeedbackOverlay() {
     showOverlay(previousID);
 }
 
+// Ask for a recorded trace file and show it. loadTraceFile and the trace UI belong to the editor
+// bundle, which is only fetched on demand: the browser opens a file picker only while the keypress
+// still counts as a user activation, and that runs out long before a slow fetch of the bundle is
+// done - so the two happen side by side and the file waits for the bundle rather than the other
+// way round.
+//
+// One picker at a time: holding the keys down repeats the keydown, and a trace opened on top of
+// another one toggles the JSON editor back off and lists its commands twice.
+let traceFileRequested = false;
+function openTraceFile() {
+  if(traceFileRequested)
+    return;
+
+  const editorReady = loadEditMode();
+  editorReady.catch(_=>{}); // the picker below reports it, but it may be cancelled instead
+  traceFileRequested = true;
+  selectFile('TEXT').then(async file=>{
+    if(await editorReady)
+      loadTraceFile(file);
+  }).catch(e=>{
+    if(e.message !== 'File selection cancelled.')
+      alert(`Error: ${e.toString()}`);
+  }).finally(_=>traceFileRequested = false);
+}
+
 // registered before main.js's window.onkeyup (tracing.js is concatenated earlier), so
 // stopImmediatePropagation here pre-empts the generic Escape handling (which would just
 // close everything via #activeGameButton instead of restoring the previous overlay/tab)
@@ -208,18 +233,11 @@ window.addEventListener('keyup', function(e) {
 onLoad(function() {
   on('#feedbackButton', 'click', openFeedbackOverlay);
 
-  window.addEventListener('keydown', async function(e) {
+  window.addEventListener('keydown', function(e) {
     if(!jeEnabled && e.key == 'F9') {
-      if(e.ctrlKey) {
-        // loadTraceFile and the trace UI belong to the editor bundle, which is only fetched on
-        // demand - asking for it before the file picker means a bundle that cannot be loaded is
-        // reported right away instead of after the user has picked a file
-        if(await loadEditMode())
-          selectFile('TEXT').then(loadTraceFile).catch(e=>{
-            if(e.message !== 'File selection cancelled.')
-              alert(`Error: ${e.toString()}`);
-          });
-      } else if(!tracingEnabled)
+      if(e.ctrlKey)
+        openTraceFile();
+      else if(!tracingEnabled)
         enableTracing();
       else
         sendUserTraceEvent();
