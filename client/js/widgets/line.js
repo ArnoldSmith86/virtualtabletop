@@ -26,8 +26,8 @@ export class Line extends Widget {
       // [ { widget: <id>, position: <0..1 along the path> }, ... ]
       stops: [],
 
-      // when enabled, landscape stops follow the direction of the line at
-      // their position; portrait and square stops keep their own rotation
+      // when enabled, every stop follows the direction of the line at its
+      // position, whatever its shape; when off, each keeps its own rotation
       rotateStops: true,
       autoSpaceStops: true,
 
@@ -333,8 +333,7 @@ export class Line extends Widget {
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
       await stop.set('y', Math.round(p.y - stop.get('height')/2));
 
-      const landscape = +stop.get('width') > +stop.get('height');
-      if(this.shouldRotateStops() && landscape) {
+      if(this.shouldRotateStops()) {
         if(stop.get('lineOriginalRotation') === null)
           await stop.set('lineOriginalRotation', { value: stop.get('rotation'), explicit: stop.state.rotation !== undefined });
         await stop.set('rotation', this.tangentAngleAtPosition(entry.position));
@@ -370,9 +369,9 @@ export class Line extends Widget {
     await stop.set('lineOriginalRotation', null);
   }
 
-  // Move stops so the gaps between their edges are equal. The stops array is
-  // captured once in line order and is used for every update, so distributing
-  // never changes which widget occupies which stop.
+  // Move stops so the gaps between their edges are equal, measured as arc
+  // length along the path. The stops array is captured once in line order, so
+  // distributing never changes which widget occupies which stop.
   async distributeAttachedWidgetsEvenly() {
     if(this.updatingAttachedWidgets)
       return;
@@ -387,10 +386,11 @@ export class Line extends Widget {
   async distributeAttachedWidgetsEvenlyInternal() {
     const stops = this.attachedWidgets();
     if(stops.length < 2) {
-      // a lone stop on a closed shape has nothing to space against, so it keeps
-      // its position; on an open path it belongs at the start
+      // a lone stop has no neighbour to keep a gap from, so an even
+      // distribution centers it on the path; on a closed shape every position
+      // is as central as every other one, so it keeps the one it has
       if(stops.length && !this.isClosed())
-        await this.setStopPositions([ 0 ]);
+        await this.setStopPositions([ 0.5 ]);
       await this.positionAttachedWidgets();
       return;
     }
@@ -406,27 +406,26 @@ export class Line extends Widget {
     // open path instead pins the first stop at 0 and the last one at 1.
     const closed = this.isClosed();
     const gaps = closed ? stops.length : stops.length-1;
-    let positions = this.stopList().map(entry=>entry.position);
-    for(let iteration = 0; iteration < 3; ++iteration) {
-      const sizes = stops.map((stop, i)=>this.widgetLengthOnLine(stop, positions[i]));
-      const usedLength = sizes.reduce((sum, size)=>sum+size, 0) - (closed ? 0 : sizes[0]/2 + sizes[sizes.length-1]/2);
-      const requestedGap = (length - usedLength)/gaps;
-      // If the widgets do not fit, allow overlap but never enough to reverse
-      // two neighboring centers. This preserves the original stop order.
-      const neighbours = sizes.map((size, i)=>(size+sizes[(i+1)%sizes.length])/2).slice(0, gaps);
-      const gap = Math.max(requestedGap, -Math.min(...neighbours));
-      let distance = 0;
-      const targetDistances = stops.map((stop, i)=>{
-        if(i == 0)
-          return 0;
-        distance += sizes[i-1]/2 + gap + sizes[i]/2;
-        return distance;
-      });
-      const totalDistance = (closed ? length : targetDistances[targetDistances.length-1]) || length;
-      positions = targetDistances.map((distance, i)=>closed ? this.normalizePosition(distance/totalDistance) : i == 0 ? 0 : i == stops.length-1 ? 1 : distance/totalDistance);
-      await this.setStopPositions(positions);
-      await this.positionAttachedWidgets();
-    }
+    // One direction for the whole line, taken from the path itself: exact for a
+    // straight line at any angle and an even compromise on a curve, while
+    // staying independent of where each stop currently sits.
+    const reference = this.tangentAngleAtPosition(0.5);
+    const sizes = stops.map(stop=>this.widgetLengthOnLine(stop, reference));
+    const usedLength = sizes.reduce((sum, size)=>sum+size, 0) - (closed ? 0 : sizes[0]/2 + sizes[sizes.length-1]/2);
+    const requestedGap = (length - usedLength)/gaps;
+    // If the widgets do not fit, allow overlap but never enough to reverse
+    // two neighboring centers. This preserves the original stop order.
+    const neighbours = sizes.map((size, i)=>(size+sizes[(i+1)%sizes.length])/2).slice(0, gaps);
+    const gap = Math.max(requestedGap, -Math.min(...neighbours));
+    let distance = 0;
+    const targetDistances = stops.map((stop, i)=>{
+      if(i == 0)
+        return 0;
+      distance += sizes[i-1]/2 + gap + sizes[i]/2;
+      return distance;
+    });
+    const totalDistance = (closed ? length : targetDistances[targetDistances.length-1]) || length;
+    const positions = targetDistances.map((distance, i)=>closed ? this.normalizePosition(distance/totalDistance) : i == 0 ? 0 : i == stops.length-1 ? 1 : distance/totalDistance);
 
     let previousPosition = 0;
     const rounded = [];
@@ -455,20 +454,29 @@ export class Line extends Widget {
     await this.set('stops', swapped);
   }
 
-  widgetLengthOnLine(widget, position) {
+  // How much room a stop claims along the path, measured against referenceAngle
+  // instead of against the tangent below the stop itself: a stop that gets
+  // turned onto the line lays its width along it, one that keeps its own
+  // rotation contributes the extent of its bounding box in that direction.
+  // Either way the result depends on the widget alone, so a curve turning
+  // underneath a stop does not change the space it takes up and equally sized
+  // stops stay equally far apart in arc length.
+  widgetLengthOnLine(widget, referenceAngle) {
     const scale = Math.max(0, +widget.get('scale') || 0);
     const width = Math.max(0, +widget.get('width') || 0) * scale;
     const height = Math.max(0, +widget.get('height') || 0) * scale;
-    let rotation = +widget.get('rotation') || 0;
-    if(this.shouldRotateStops() && width > height)
-      rotation = this.tangentAngleAtPosition(position);
-    const relativeRotation = (rotation - this.tangentAngleAtPosition(position))*Math.PI/180;
+    if(this.shouldRotateStops())
+      return width;
+    const relativeRotation = ((+widget.get('rotation') || 0) - referenceAngle)*Math.PI/180;
     return Math.abs(width*Math.cos(relativeRotation)) + Math.abs(height*Math.sin(relativeRotation));
   }
 
   // The angle of the path's tangent in degrees at an arc-length position.
   // Sampling either side also works for both straight and cubic paths without
   // needing to convert an arc-length position back to a Bezier parameter.
+  // The angle ends up in the rotation of the stops, so it is rounded to the
+  // same three decimals the positions use: Math.atan2 is allowed to differ in
+  // its last bits between JavaScript engines, and a stored rotation must not.
   tangentAngleAtPosition(position) {
     const p = this.normalizePosition(position);
     const delta = 0.001;
@@ -476,7 +484,7 @@ export class Line extends Widget {
     // there instead of the one-sided one an open path has to fall back to
     const before = this.pointAtPosition(this.isClosed() ? p-delta : Math.max(0, p-delta));
     const after = this.pointAtPosition(this.isClosed() ? p+delta : Math.min(1, p+delta));
-    return Math.atan2(after.y-before.y, after.x-before.x) * 180 / Math.PI;
+    return Math.round(Math.atan2(after.y-before.y, after.x-before.x) * 180 / Math.PI * 1000)/1000;
   }
 
   // The position along the path closest to a point in this line's own frame,

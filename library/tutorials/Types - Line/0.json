@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 24,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1785900352201,
+      "lastUpdate": 1788727115874,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -27,7 +27,8 @@
       "players": "1",
       "language": "en-US",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAILayout": false
     }
   },
   "title": {
@@ -109,7 +110,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> to connect to basic widgets (the black circles). You can drag the circles around to see how the lines move together. The red line holders auto rotate to follow the shape of the line. The landscape-oriented orange line holders do rotate, but not necessarily in a predictable way (more or less they try to stay perpendicular). The green line uses specific spacing and not automatic spacing between the holders.",
+    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> to connect to basic widgets (the black circles). You can drag the circles around to see how the lines move together. The red and green line widgets auto rotate to follow the shape of the line. The orange line widgets do not rotate. The green line uses specific spacing and not automatic spacing between the holders.",
     "layer": -3
   },
   "line2": {
@@ -555,7 +556,9 @@
   },
   "line5M0": {
     "type": "holder",
-    "inheritFrom": "line4M0",
+    "inheritFrom": {
+      "line4M0": "!rotation"
+    },
     "parent": "line5",
     "fixedParent": true,
     "movableInEdit": false,
@@ -566,7 +569,9 @@
   },
   "line5M1": {
     "type": "holder",
-    "inheritFrom": "line4M0",
+    "inheritFrom": {
+      "line4M0": "!rotation"
+    },
     "parent": "line5",
     "fixedParent": true,
     "movableInEdit": false,
@@ -625,7 +630,8 @@
       "line": "point4",
       "position": 0.5,
       "offset": 0
-    }
+    },
+    "rotateStops": false
   },
   "line6S0": {
     "type": "holder",
@@ -818,7 +824,9 @@
     "x": 61,
     "y": 126,
     "movableInEdit": false,
-    "inheritFrom": "line4M0",
+    "inheritFrom": {
+      "line4M0": "!rotation"
+    },
     "text": 5
   },
   "line5M4": {
@@ -829,7 +837,9 @@
     "x": 72,
     "y": 97,
     "movableInEdit": false,
-    "inheritFrom": "line4M0",
+    "inheritFrom": {
+      "line4M0": "!rotation"
+    },
     "text": 4
   },
   "line5M2": {
