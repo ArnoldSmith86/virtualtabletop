@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { compareState, expectEventually, getStateObject, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, expectEventually, getMeta, getStateObject, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -6928,5 +6928,94 @@ test('The context commands still insert while a semantic error is shown', async 
     .pressKey('end')
     .expect(jsonError()).eql('')
     .expect(widgetProperty('one', 'layer')).eql(2);
+  await setEditorState(null);
+});
+
+// A recording is opened through a file picker, which a test cannot drive - so the file is handed to
+// loadTraceFile() the way the picker hands it over. Everything downstream of the picker is the same.
+const loadTrace = ClientFunction(content => loadTraceFile({ name: 'testcafe.trace', content }).then(_=>'', e=>e.message));
+
+// A recording as the server writes it: one JSON record per line, each followed by a comma, and the
+// array closed only when the room unloads - so a file taken while the room is still open has none.
+function traceFile(records, roomUnloaded) {
+  return `[\n${records.map(record=>`  ${JSON.stringify(record)}`).join(',\n')}${roomUnloaded ? '\n]' : ',\n'}`;
+}
+
+// Two widgets that turn their own text on click, and a delta that removes one of them.
+function traceRecords(meta) {
+  const recorded = (id, x) => ({ id, type: 'basic', x, y: 200, width: 100, height: 100, text: 'One', clickRoutine: [ { func: 'SET', collection: 'thisButton', property: 'text', value: 'CLICKED' } ] });
+  return [
+    { source: 'init', servertime: 1000, initialState: { _meta: { version: meta.version, deltaID: 0, gameSettings: {} }, recA: recorded('recA', 200), recB: recorded('recB', 400) } },
+    { source: 'broadcast', func: 'delta', servertime: 11000, args: { s: { recB: null }, c: 'Bob removed recB' } }
+  ];
+}
+
+test('A recorded trace opens in the editor and replays without changing what it shows', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 100, y: 100, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const records = traceRecords(await getMeta());
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  // the file of a room that is still open ends in a comma instead of ']', which is the usual way to
+  // get hold of a recording - it opens like any other
+  await t.expect(await loadTrace(traceFile(records, false))).eql('');
+
+  await t
+    // the recording docks into the JSON module, whichever module edit mode was showing
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .expect(Selector('body.trace').exists).ok()
+    .expect(Selector('#traceUI').visible).ok()
+    .expect(Selector('#traceClose').visible).ok()
+    .expect(Selector('#traceInput').clientWidth).gt(100)
+    .expect(Selector('#traceSummary').textContent).eql('record 0 / 1')
+    .expect(Selector('#w_recA').exists).ok()
+    .expect(Selector('#w_recB').exists).ok()
+    // the deltas are applied on top of the state the recording opened with
+    .click('#je_traceNextDelta')
+    .expect(Selector('#traceSummary').textContent).eql('record 1 / 1')
+    .expect(Selector('#w_recB').exists).notOk()
+    .expect(Selector('#traceDetail').textContent).contains('Bob removed recB');
+
+  // A recording is a playback with no server behind it, so the game must not run in it - not even
+  // once the editor has been closed, which is the natural thing to do to see the whole board.
+  await t.click('#editorSidebar button[icon=data_object]');
+  await ClientFunction(() => toggleEditMode())();
+  await t
+    .expect(Selector('body.edit').exists).notOk()
+    .click('#w_recA')
+    .expect(widgetProperty('recA', 'text')).eql('One')
+    .expect(Selector('body.trace').exists).ok();
+  await setEditorState(null);
+});
+
+test('A file that is no recording is rejected without dropping the recording that is open', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 100, y: 100, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  const records = traceRecords(await getMeta());
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  await t.expect(await loadTrace(traceFile(records, true))).eql('');
+
+  // a file that is not JSON at all is a different problem from a JSON file that is no recording
+  await t.expect(await loadTrace('not json at all')).contains('could not be read');
+  await t.expect(await loadTrace('[ { "id": "one" } ]')).eql('testcafe.trace is not a VirtualTabletop trace recording.');
+  await t
+    // and neither of them takes the recording that is open away
+    .expect(Selector('#traceSummary').textContent).eql('record 0 / 1')
+    .expect(Selector('#w_recA').exists).ok();
   await setEditorState(null);
 });
