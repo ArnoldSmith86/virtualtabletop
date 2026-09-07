@@ -165,7 +165,12 @@ async function handleInput(name, e, dragTarget) {
     // throws: batchStart() increments batchDepth and sendDelta() only sends anything
     // while that is 0, so a leaked batch stops this client from syncing altogether.
     try {
-      if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
+      // A recorded trace is a playback with no server behind it: a widget dragged out of place
+      // would simply stay there, and a click would run the game's routines against the record on
+      // screen - both silently rewrite what is being inspected. Only selecting a widget for the
+      // editor is left, which is what the viewer opens the JSON editor for.
+      const traceReplay = $('body').classList.contains('trace');
+      if(!edit && (!jeEnabled || !e.ctrlKey) && !traceReplay && widget.passthroughMouse) {
         if(name == 'mousedown' || name == 'touchstart') {
           await widget.mouseRaw('down', coords);
         } else if (name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
@@ -181,9 +186,7 @@ async function handleInput(name, e, dragTarget) {
           moveTarget: widget
         };
         const ms = mouseStatus[target.id];
-        // a recorded trace is a playback with no server behind it, so a widget dragged out of place
-        // would simply stay there and stop showing what the record it belongs to looked like
-        if($('body').classList.contains('trace'))
+        if(traceReplay)
           ms.moveTarget = null;
         let movable = ms.moveTarget && ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
         while (ms.moveTarget && !movable) {
@@ -222,7 +225,7 @@ async function handleInput(name, e, dragTarget) {
             editClickHandled = await jeClick(widget, e);
 
           if(!editClickHandled) {
-            if(!target.classList.contains('longtouch')) {
+            if(!target.classList.contains('longtouch') && !traceReplay) {
               if(!widget.get('doubleClickRoutine')) {
                 setDeltaCause(`${playerName} clicked ${widget.id}`);
                 await widget.click();

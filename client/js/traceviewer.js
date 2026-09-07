@@ -62,14 +62,28 @@ async function openTraceEditor() {
     $('#editorSidebar button[icon=data_object]').click();
 }
 
-export async function loadTraceFile(file) {
-  let records;
+// The server closes the JSON array of a recording only when the room unloads - until then every
+// record is written followed by a comma. A file copied off a room that is still open, which is the
+// usual way to get hold of one, is therefore a complete recording missing nothing but its last
+// character, so a failed parse is retried with the array closed.
+function parseTraceRecords(file) {
   try {
-    records = JSON.parse(file.content);
-  } catch(e) {}
+    return JSON.parse(file.content);
+  } catch(parseError) {
+    try {
+      return JSON.parse(file.content.replace(/,\s*$/, '') + '\n]');
+    } catch(e) {}
+    // a file that is not JSON at all, or one that was cut off in the middle of a record, is a
+    // different problem from a JSON file that is not a recording - the parse error says which
+    throw new Error(`${file.name} could not be read: ${parseError.message}`);
+  }
+}
+
+export async function loadTraceFile(file) {
+  const records = parseTraceRecords(file);
   // a recording is the list of everything that went over the socket, opened by the state the room
-  // was in when it started - checked here so that picking the wrong file says so instead of
-  // failing as a raw parse error, and so that it leaves a recording that is already open alone
+  // was in when it started - checked here so that picking the wrong file says so, and so that it
+  // leaves a recording that is already open alone
   if(!Array.isArray(records) || !records.length || !records[0].initialState)
     throw new Error(`${file.name} is not a VirtualTabletop trace recording.`);
 

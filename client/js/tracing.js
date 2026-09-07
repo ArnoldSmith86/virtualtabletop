@@ -208,8 +208,13 @@ function openTraceFile() {
   if(traceFileRequested)
     return;
 
-  const editorReady = loadEditMode();
-  editorReady.catch(_=>{}); // the picker below reports it, but it may be cancelled instead
+  // an editor bundle that is broken rather than merely unreachable is re-thrown by
+  // editModeUnavailable(), which is how it reaches the error report - keep it on its way there
+  // instead of alerting it below as if it were a problem with the file the user picked
+  const editorReady = loadEditMode().catch(error=>{
+    setTimeout(_=>{ throw error; });
+    return false;
+  });
   traceFileRequested = true;
   selectFile('TEXT', null, [ '.trace' ]).then(async file=>{
     // fetching the bundle and replaying the recording into the room both take a while on a long
@@ -224,6 +229,10 @@ function openTraceFile() {
   }).catch(e=>{
     if(e.message !== 'File selection cancelled.')
       alert(e.message);
+    // the bundle was only being fetched for a file that is now not coming, so an overlay about
+    // edit mode being unavailable is about a request the user has taken back
+    else if(getCurrentOverlayId() == 'editModeUnavailableOverlay')
+      showOverlay();
   }).finally(_=>traceFileRequested = false);
 }
 
