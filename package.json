@@ -77,5 +77,8 @@
     "json-diff": "^1.0.6",
     "nodemon": "^3.1.10",
     "testcafe": "^3.7.3"
+  },
+  "overrides": {
+    "path-to-regexp": "8.4.0"
   }
 }
