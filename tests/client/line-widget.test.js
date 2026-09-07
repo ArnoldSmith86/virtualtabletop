@@ -1,4 +1,4 @@
-import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
+import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta, finishLoadingWidgets } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 import { compareDropTarget, exceedsDropLimit } from '../../client/js/main.js';
 
@@ -749,8 +749,7 @@ describe('a line places its stops when a state is loaded', () => {
       addWidget({ type: 'basic', parent: line.id, width: 40, height: 40, ...state }, stop);
       return stop;
     });
-    for(const widget of [ line, ...stops ])
-      await widget.onStateLoaded();
+    await finishLoadingWidgets();
     return { line, stops };
   }
 
@@ -836,11 +835,37 @@ describe('a line places its stops when a state is loaded', () => {
     const stop = new Widget('load-a');
     addWidget({ id: 'load-a', type: 'basic', x: 7, y: 7, width: 40, height: 40 }, stop);
 
-    for(const widget of [ line, stop ])
-      await widget.onStateLoaded();
+    await finishLoadingWidgets();
 
     expect(line.hasExternalStops()).toBe(true);
     expect([ stop.get('x'), stop.get('y') ]).toEqual([ 7, 7 ]);
+    unload(line, [ stop ]);
+  });
+
+  test('placing the stops runs none of the routines the game listens with', async () => {
+    // every client loads the same state, so a routine running here would run
+    // once per client on nothing but the room being opened - and an INPUT in it
+    // would hold the load batch open until that one client answers it
+    const line = createLine({ ...geometry, id: 'load-line', autoSpaceStops: false, stops: [ { widget: 'load-a', position: 0.5 } ] });
+    const stop = new Widget('load-a');
+    addWidget({ id: 'load-a', type: 'basic', parent: 'load-line', width: 40, height: 40, xChangeRoutine: [ { func: 'INPUT' } ] }, stop);
+    const listener = new Widget('load-listener');
+    addWidget({ id: 'load-listener', type: 'basic', xGlobalUpdateRoutine: [ { func: 'INPUT' } ] }, listener);
+
+    const evaluated = [];
+    for(const widget of [ line, stop, listener ])
+      widget.evaluateRoutine = async routine => { evaluated.push([ widget.id, routine ]); };
+
+    await finishLoadingWidgets();
+
+    expect(evaluated).toEqual([]);
+    expect([ stop.get('x'), stop.get('y') ]).toEqual([ 150, 50 ]);
+
+    // and the game gets its routines back for what happens after the load
+    await stop.set('x', 42);
+    expect(evaluated).toEqual([ [ 'load-a', 'xChangeRoutine' ], [ 'load-listener', 'xGlobalUpdateRoutine' ] ]);
+
+    removeWidget('load-listener');
     unload(line, [ stop ]);
   });
 });
