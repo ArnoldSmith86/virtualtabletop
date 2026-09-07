@@ -1450,6 +1450,22 @@ function jeAddRoutineOperationCommands(command, defaults) {
   }
 }
 
+// GET and SET also address a value inside a property with an array of keys - the plain 'property'
+// button inserts a string, so the key path gets a button of its own to make the shape discoverable.
+function jeAddPropertyPathCommand(command) {
+  jeCommands.push({
+    id: 'default_' + command + '_propertyPath',
+    name: 'property (key path)',
+    context: `^.* ↦ \\(${command}\\) ↦ `,
+    call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      jeInsert(jeContext.slice(1, routineIndex+2), 'property', [ 'css', 'default', 'background' ]);
+    }, false, command),
+    show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      return operation && operation['property'] === undefined;
+    }, true)
+  });
+}
+
 function jeAddCommands() {
   const widgetTypes = [ 'all' ];
   const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats', 'activeSeats' ];
@@ -1499,6 +1515,9 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
   jeAddRoutineOperationCommands('VAR', { variables: {} });
+
+  jeAddPropertyPathCommand('GET');
+  jeAddPropertyPathCommand('SET');
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
   jeAddRoutineExpressionCommands('increment', '${variableName} + 1');
