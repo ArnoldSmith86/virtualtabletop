@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1788727115874,
+      "lastUpdate": 1788746924530,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -110,7 +110,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> to connect to basic widgets (the black circles). You can drag the circles around to see how the lines move together. The red and green line widgets auto rotate to follow the shape of the line. The orange line widgets do not rotate. The green line uses specific spacing and not automatic spacing between the holders.",
+    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> to connect to basic widgets (the black circles). You can drag the circles around to see how the lines move together. The red and green line widgets auto rotate to follow the shape of the line. The orange line widgets do not rotate. The green line uses specific spacing and not automatic spacing between the holders. The blue line's <b>rotationOffset</b> is at 90 and it allows the arrow to point up instead of left.",
     "layer": -3
   },
   "line2": {
@@ -679,28 +679,8 @@
     "dropTarget": {
       "type": null
     },
-    "x": 127,
-    "y": 246
-  },
-  "line6M1": {
-    "type": "holder",
-    "inheritFrom": "line6M0",
-    "parent": "line6",
-    "fixedParent": true,
-    "movableInEdit": false,
-    "id": "line6M1",
-    "x": 82,
-    "y": 162
-  },
-  "line6M2": {
-    "type": "holder",
-    "inheritFrom": "line6M0",
-    "parent": "line6",
-    "fixedParent": true,
-    "movableInEdit": false,
-    "id": "line6M2",
-    "x": 23,
-    "y": 50
+    "y": 246,
+    "x": 127
   },
   "line1": {
     "type": "line",
@@ -865,5 +845,149 @@
     "css": {
       "border": "1px solid black"
     }
+  },
+  "line7": {
+    "type": "line",
+    "id": "line7",
+    "x": 1232,
+    "y": 216,
+    "lineStart": {
+      "x": 11,
+      "y": 11
+    },
+    "lineEnd": {
+      "x": 15,
+      "y": 326
+    },
+    "z": 9751,
+    "lineColor": "#0000ff",
+    "lineWidth": 2,
+    "stops": [
+      {
+        "widget": "line6S0",
+        "position": 0
+      },
+      {
+        "widget": "line7M0",
+        "position": 0.336
+      },
+      {
+        "widget": "line7M1",
+        "position": 0.664
+      },
+      {
+        "widget": "line6S1",
+        "position": 1
+      }
+    ],
+    "width": 26,
+    "connectStart": {
+      "line": "point4",
+      "position": 0.5,
+      "offset": 0
+    },
+    "connectEnd": {
+      "line": "point5",
+      "position": 0.5,
+      "offset": 0
+    },
+    "height": 337,
+    "rotationOffset": 90
+  },
+  "line6S2": {
+    "type": "holder",
+    "id": "line6S2",
+    "parent": "line7",
+    "fixedParent": true,
+    "width": 40,
+    "height": 40,
+    "borderRadius": 20,
+    "movableInEdit": false,
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "dropTarget": {
+      "type": false
+    },
+    "classes": "transparent",
+    "x": 139,
+    "y": 272
+  },
+  "line6S3": {
+    "type": "holder",
+    "id": "line6S3",
+    "parent": "line7",
+    "fixedParent": true,
+    "x": -9,
+    "y": -9,
+    "movableInEdit": false,
+    "inheritFrom": "line6S0"
+  },
+  "point5": {
+    "id": "point5",
+    "x": 1237,
+    "y": 532,
+    "width": 20,
+    "height": 20,
+    "borderRadius": 100,
+    "z": 300,
+    "css": {
+      "border": "1px solid black"
+    }
+  },
+  "line6M1": {
+    "type": "holder",
+    "inheritFrom": "line6M0",
+    "parent": "line6",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "id": "line6M1",
+    "x": 82,
+    "y": 162
+  },
+  "line7M0": {
+    "type": "holder",
+    "inheritFrom": "line6M1",
+    "parent": "line7",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "id": "line7M0",
+    "x": -5,
+    "y": 99,
+    "icon": {
+      "name": "delapouite/plain-arrow",
+      "scale": 1.5,
+      "opacity": 1,
+      "color": "#0000ff"
+    },
+    "lineOriginalRotation": {
+      "value": 0,
+      "explicit": false
+    },
+    "rotation": 179.272
+  },
+  "line6M2": {
+    "type": "holder",
+    "inheritFrom": "line6M1",
+    "parent": "line6",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "id": "line6M2",
+    "x": 23,
+    "y": 50
+  },
+  "line7M1": {
+    "type": "holder",
+    "inheritFrom": "line7M0",
+    "parent": "line7",
+    "fixedParent": true,
+    "movableInEdit": false,
+    "id": "line7M1",
+    "x": -4,
+    "y": 203,
+    "lineOriginalRotation": {
+      "value": 188.673,
+      "explicit": false
+    },
+    "rotation": 179.272
   }
 }
