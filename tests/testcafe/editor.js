@@ -600,9 +600,10 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 });
 
 // Widgets are parked outside the board on purpose - the zoomed out view exists to
-// reach them - so one that takes drops has to keep taking them there. Playing stays
-// confined to the board, where the same holder takes nothing.
-test('A holder outside the board takes a drop in edit mode', async t => {
+// reach them - so one that takes drops has to keep taking them there. Wherever the
+// surface is clipped to the board - while playing and in the normal edit view - the
+// same holder is off screen and takes nothing.
+test('A holder outside the board takes a drop in the zoomed out edit view', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
     deck:     { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
@@ -645,11 +646,17 @@ test('A holder outside the board takes a drop in edit mode', async t => {
 
   await t.click('#editButton');
   await t.expect(Selector('#editorSelection').exists).ok();
+
+  // the normal edit view clips the board just like play mode does, so the holder
+  // beside it is as invisible - and as undroppable - there as it is while playing
+  await t.expect(drag(2)).notOk('the holder beside the board is not a drop target in the normal edit view');
+  await expectEventually(t, card, { parent: null, moved: true }, 'a drag in the normal edit view moves the card but never into the holder beside the board');
+
   // the area beside the board is only on screen - and only reachable with the
   // pointer - while the zoomed out view is on
   await t.click('#editorToolbar [icon=zoom_out]');
 
-  await t.expect(drag(2)).ok('the holder beside the board is a drop target in edit mode');
+  await t.expect(drag(2)).ok('the holder beside the board is a drop target in the zoomed out edit view');
   await expectEventually(t, card, { parent: 'offBoard', moved: true }, 'the card lands in the holder beside the board');
 });
 

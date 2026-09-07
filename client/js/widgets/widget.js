@@ -2890,12 +2890,16 @@ export class Widget extends StateManaged {
     return false;
   }
 
-  // Whether a drag can be dropped into this widget. The area outside the board is
-  // part of the room while it is being edited: the zoomed out view shows it and
-  // widgets are parked there on purpose, so a holder or a line sitting in it stays
-  // something a drag can be dropped into. Only playing is confined to the board.
+  // Whether a drag can be dropped into this widget. Playing is confined to the
+  // board. Editing is not - widgets are parked outside it on purpose and the
+  // zoomed out view exists to work with them, so while that view is on, a holder
+  // or a line out there takes drops as well. Everywhere else the surface is
+  // clipped to the board, and a widget dropped into something that is not on
+  // screen just looks like it vanished.
   isDropCandidate() {
-    return getEditMode() ? this.isRendered() : this.isVisible();
+    if(getEditMode() && $('body').classList.contains('zoomedOut'))
+      return this.isOnScreen();
+    return this.isVisible();
   }
 
   // Whether the element is in the DOM and neither it nor any of its ancestors is
@@ -2916,22 +2920,31 @@ export class Widget extends StateManaged {
     return true;
   }
 
-  isVisible() {
+  // Whether the element is rendered and its box overlaps the given rectangle,
+  // both in screen coordinates.
+  isWithin(rect) {
     if (!this.isRendered()) return false;
 
-    // Get the bounding rect of the element relative to the viewport
-    const rect = this.domElement.getBoundingClientRect();
-
-    // Get the bounding rect of the #room element
-    const roomRect = $('#roomArea').getBoundingClientRect();
-
-    // Check if the element is within the viewport of the room
+    const own = this.domElement.getBoundingClientRect();
     return (
-      rect.top < roomRect.bottom &&
-      rect.left < roomRect.right &&
-      rect.bottom > roomRect.top &&
-      rect.right > roomRect.left
+      own.top < rect.bottom &&
+      own.left < rect.right &&
+      own.bottom > rect.top &&
+      own.right > rect.left
     );
+  }
+
+  // Whether the element is rendered somewhere in the browser window. Only the
+  // zoomed out view draws anything outside the board, so anywhere else this is
+  // wider than what the user actually sees.
+  isOnScreen() {
+    return this.isWithin(new DOMRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight));
+  }
+
+  // Whether the element is rendered within the part of the surface that is
+  // clipped to the board, i.e. what is on screen outside the zoomed out view.
+  isVisible() {
+    return this.isWithin($('#roomArea').getBoundingClientRect());
   }
 
   async moveToHolder(holder) {
