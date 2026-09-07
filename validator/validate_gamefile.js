@@ -962,6 +962,22 @@ function customRoutineChecks(operation, problems, context, operationPath) {
             message: 'IF uses both operand1 and condition - did you mean to use relation instead?'
         });
     }
+    if(operation.func === 'TURN' && operation.turnCycle === 'position' && operation.turn === 0) {
+        problems.push({
+            widget: context.widgetId,
+            property: operationPath,
+            message: 'TURN uses position 0 - positions start at 1, negative positions count back from the last seat'
+        });
+    }
+    if(operation.func === 'TURN' && ['first','last'].includes(operation.turn)) {
+        const turnCycle = operation.turnCycle === undefined ? 'forward' : operation.turnCycle;
+        if(typeof turnCycle === 'string' && !turnCycle.includes('${') && turnCycle !== 'position')
+            problems.push({
+                widget: context.widgetId,
+                property: operationPath,
+                message: `TURN uses turn '${operation.turn}' with turnCycle '${turnCycle}' - first and last are only valid with turnCycle position`
+            });
+    }
 }
 
 function customWidgetChecks(widget, widgets, problems) {
