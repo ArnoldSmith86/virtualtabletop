@@ -40,6 +40,8 @@ const validators = {
     property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || p.customProperties.includes(v) || `property '${v}' not found`,
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
+    collectionOrAll: (v,p,propertyPath)=>v === 'all' || validators.inCollection(v,p,propertyPath),
+    numberOrNull: v=>v === null || typeof v === 'number' || 'number or null expected',
     any: v=>true
 };
 
@@ -796,7 +798,7 @@ const operationProps = {
         'holder':     'idArray', 
         'collection': 'inCollection', 
         'count':      'countOrAll',
-        'face':       'number',
+        'face':       'numberOrNull',
         'faceCycle':  getEnumValidator(['forward', 'backward', 'random'])
     },
     'FOREACH': {
@@ -943,7 +945,7 @@ const operationProps = {
     'TURN': {
         'turn': v=>typeof v === 'number' && Number.isInteger(v) || v === 'first' || v === 'last',
         'turnCycle': getEnumValidator(['forward','backward','random','position','seat']),
-        'source': 'inCollection',
+        'source': 'collectionOrAll',
         'collection': 'string'
     },
     'UPLOAD': {
