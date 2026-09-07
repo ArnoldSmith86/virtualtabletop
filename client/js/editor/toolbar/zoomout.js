@@ -1,6 +1,6 @@
 class ZoomOutButton extends ToolbarToggleButton {
   constructor() {
-    super('zoom_out', 'Toggle zoom out', 'Zoom out to see the area around the board.\n\nWidgets are parked there to keep them off screen while playing. In this view they can be moved, and a holder there takes drops while you edit - during play, only the board does.');
+    super('zoom_out', 'Toggle zoom out', 'Toggle between the normal view and a zoomed out view that allows to hide widgets off screen.');
   }
 
   toggle(state) {

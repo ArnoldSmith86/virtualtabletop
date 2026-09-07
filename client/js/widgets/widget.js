@@ -4,7 +4,6 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
-import { getEditMode } from '../overlaystate.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
@@ -2890,21 +2889,7 @@ export class Widget extends StateManaged {
     return false;
   }
 
-  // Whether a drag can be dropped into this widget. Playing is confined to the
-  // board. Editing is not - widgets are parked outside it on purpose and the
-  // zoomed out view exists to work with them, so while that view is on, a holder
-  // or a line out there takes drops as well. Everywhere else the surface is
-  // clipped to the board, and a widget dropped into something that is not on
-  // screen just looks like it vanished.
-  isDropCandidate() {
-    if(getEditMode() && $('body').classList.contains('zoomedOut'))
-      return this.isOnScreen();
-    return this.isVisible();
-  }
-
-  // Whether the element is in the DOM and neither it nor any of its ancestors is
-  // hidden. Says nothing about where on screen it ends up.
-  isRendered() {
+  isVisible() {
     // Ensure the element exists
     if (!this.domElement) return false;
 
@@ -2917,34 +2902,21 @@ export class Widget extends StateManaged {
       parent = parent.parentElement;
     }
 
-    return true;
-  }
+    // Get the bounding rect of the element relative to the viewport
+    const rect = this.domElement.getBoundingClientRect();
 
-  // Whether the element is rendered and its box overlaps the given rectangle,
-  // both in screen coordinates.
-  isWithin(rect) {
-    if (!this.isRendered()) return false;
+    // The zoomed out edit view also renders widgets outside the board.
+    const roomRect = $('body').matches('.edit.zoomedOut')
+      ? new DOMRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
+      : $('#roomArea').getBoundingClientRect();
 
-    const own = this.domElement.getBoundingClientRect();
+    // Check if the element is within the viewport of the room
     return (
-      own.top < rect.bottom &&
-      own.left < rect.right &&
-      own.bottom > rect.top &&
-      own.right > rect.left
+      rect.top < roomRect.bottom &&
+      rect.left < roomRect.right &&
+      rect.bottom > roomRect.top &&
+      rect.right > roomRect.left
     );
-  }
-
-  // Whether the element is rendered somewhere in the browser window. Only the
-  // zoomed out view draws anything outside the board, so anywhere else this is
-  // wider than what the user actually sees.
-  isOnScreen() {
-    return this.isWithin(new DOMRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight));
-  }
-
-  // Whether the element is rendered within the part of the surface that is
-  // clipped to the board, i.e. what is on screen outside the zoomed out view.
-  isVisible() {
-    return this.isWithin($('#roomArea').getBoundingClientRect());
   }
 
   async moveToHolder(holder) {
@@ -2980,7 +2952,7 @@ export class Widget extends StateManaged {
     // Lines that take a widget dropped onto their path as a stop. Collected once
     // like the drop targets below, but not restricted to widgets that can be
     // dragged in play: a stop is usually placed in edit mode.
-    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isDropCandidate());
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('dropTarget') && w.isVisible());
 
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();

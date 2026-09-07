@@ -599,124 +599,59 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
 });
 
-// Widgets are parked outside the board on purpose - the zoomed out view exists to
-// reach them - so one that takes drops has to keep taking them there. Wherever the
-// surface is clipped to the board - while playing and in the normal edit view - the
-// same holder is off screen and takes nothing.
-test('A holder outside the board takes a drop in the zoomed out edit view', async t => {
-  await t.resizeWindow(1280, 800);
-  await setRoomState({
-    deck:     { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
-    card:     { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 700, y: 400 },
-    offBoard: { id: 'offBoard', type: 'holder', x: 1750, y: 400, dropTarget: { type: 'card' } }
-  });
-  await ClientFunction(prepareClient)();
-  await setEditorState(null);
-  await setName(t);
+for(const type of [ 'holder', 'line' ]) {
+  test(`A ${type} outside the board takes a drop only in the zoomed out edit view`, async t => {
+    await t.resizeWindow(1280, 800);
+    await setRoomState({
+      deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+      card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 700, y: 400 },
+      offBoard: {
+        id: 'offBoard', type, x: 1750, y: 340, width: 220, height: 120, dropTarget: { type: 'card' },
+        ...(type == 'line' ? { lineStart: { x: 0, y: 60 }, lineEnd: { x: 220, y: 60 }, lineWidth: 10 } : {})
+      }
+    });
+    await ClientFunction(prepareClient)();
+    await setEditorState(null);
+    await setName(t);
 
-  // A drag marks every widget it can be dropped into as droppable and lands the card
-  // in the one under the pointer when it ends. The left mouse button drags a widget
-  // while playing; in edit mode it belongs to the editor's select mode - the mode the
-  // editor starts in - so a drag there uses the right one. widgets is not defined
-  // outside edit mode, which is why the card's position is read from the server.
-  const drag = ClientFunction(button => {
-    const center = id => {
-      const rectangle = document.getElementById(id).getBoundingClientRect();
-      return { x: rectangle.left + rectangle.width/2, y: rectangle.top + rectangle.height/2 };
+    // Synthetic coordinates can reach the clipped target; edit mode uses right-drag to move widgets.
+    const drag = ClientFunction((button, highlight) => {
+      const card = document.getElementById('w_card'), target = document.getElementById('w_offBoard');
+      const from = card.getBoundingClientRect(), to = target.getBoundingClientRect();
+      const buttons = button == 2 ? 2 : 1;
+      const clientX = to.left + to.width/2, clientY = to.top + to.height/2;
+      card.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.left + from.width/2, clientY: from.top + from.height/2 }));
+      document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX, clientY }));
+      return new Promise(resolve => setTimeout(() => {
+        const highlighted = target.classList.contains(highlight);
+        document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX, clientY }));
+        setTimeout(() => resolve(highlighted), 300);
+      }, 300));
+    });
+    const dropState = async () => {
+      const state = await getStateObject();
+      return {
+        parent: state.card.parent || null,
+        moved: state.card.x != 700,
+        stops: (state.offBoard.stops || []).map(stop=>stop.widget)
+      };
     };
-    const from = center('w_card'), to = center('w_offBoard');
-    const buttons = button == 2 ? 2 : 1;
-    document.querySelector('#w_card').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.x, clientY: from.y }));
-    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX: to.x, clientY: to.y }));
-    return new Promise(resolve => setTimeout(() => {
-      const droppable = document.getElementById('w_offBoard').classList.contains('droppable');
-      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX: to.x, clientY: to.y }));
-      setTimeout(() => resolve(droppable), 300);
-    }, 300));
+    const highlight = type == 'line' ? 'lineDropTarget' : 'droppable';
+    const refused = { parent: null, moved: true, stops: [] };
+
+    await t.expect(drag(0, highlight)).notOk('no off-board drop target during play');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editButton');
+    await t.expect(Selector('#editorSelection').exists).ok();
+    await t.expect(drag(2, highlight)).notOk('no off-board drop target in the clipped edit view');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editorToolbar [icon=zoom_out]');
+    await t.expect(drag(2, highlight)).ok('off-board drop target in the zoomed out edit view');
+    await expectEventually(t, dropState, { parent: 'offBoard', moved: true, stops: type == 'line' ? [ 'card' ] : [] });
   });
-
-  // where the card ended up: the holder it went into, and whether the drag moved it at all
-  const card = async () => {
-    const state = (await getStateObject()).card;
-    return { parent: state.parent || null, moved: state.x != 700 };
-  };
-
-  await t.expect(drag(0)).notOk('the holder beside the board is not a drop target while playing');
-  await expectEventually(t, card, { parent: null, moved: true }, 'a drag during play moves the card but never into the holder beside the board');
-
-  await t.click('#editButton');
-  await t.expect(Selector('#editorSelection').exists).ok();
-
-  // the normal edit view clips the board just like play mode does, so the holder
-  // beside it is as invisible - and as undroppable - there as it is while playing
-  await t.expect(drag(2)).notOk('the holder beside the board is not a drop target in the normal edit view');
-  await expectEventually(t, card, { parent: null, moved: true }, 'a drag in the normal edit view moves the card but never into the holder beside the board');
-
-  // the area beside the board is only on screen - and only reachable with the
-  // pointer - while the zoomed out view is on
-  await t.click('#editorToolbar [icon=zoom_out]');
-
-  await t.expect(drag(2)).ok('the holder beside the board is a drop target in the zoomed out edit view');
-  await expectEventually(t, card, { parent: 'offBoard', moved: true }, 'the card lands in the holder beside the board');
-});
-
-// A line that takes stops resolves a drop along its path rather than through the
-// drop target under the pointer, so it has its own way in and out of the same rule:
-// off the board it takes a stop only where the zoomed out view puts it on screen.
-test('A line outside the board takes a stop in the zoomed out edit view', async t => {
-  await t.resizeWindow(1280, 800);
-  await setRoomState({
-    token: { id: 'token', type: 'basic', x: 700, y: 370, width: 60, height: 60 },
-    offBoard: { id: 'offBoard', type: 'line', x: 1680, y: 340, width: 220, height: 120, lineStart: { x: 0, y: 60 }, lineEnd: { x: 220, y: 60 }, lineWidth: 10, dropTarget: {} }
-  });
-  await ClientFunction(prepareClient)();
-  await setEditorState(null);
-  await setName(t);
-
-  // A drag marks the line it would attach to while it is under way and adds the token
-  // to that line's stops when it ends. Both ends of the drag are element centers, so
-  // the token travels centered on the pointer and arrives on the line's path. As in
-  // the holder test above, playing drags with the left button and editing - where the
-  // left one belongs to select mode - with the right one.
-  const drag = ClientFunction(button => {
-    const center = id => {
-      const rectangle = document.getElementById(id).getBoundingClientRect();
-      return { x: rectangle.left + rectangle.width/2, y: rectangle.top + rectangle.height/2 };
-    };
-    const from = center('w_token'), to = center('w_offBoard');
-    const buttons = button == 2 ? 2 : 1;
-    document.querySelector('#w_token').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.x, clientY: from.y }));
-    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX: to.x, clientY: to.y }));
-    return new Promise(resolve => setTimeout(() => {
-      const highlighted = document.getElementById('w_offBoard').classList.contains('lineDropTarget');
-      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX: to.x, clientY: to.y }));
-      setTimeout(() => resolve(highlighted), 300);
-    }, 300));
-  });
-
-  // what the drag did: the stops the line ended up with, where the token hangs and
-  // whether it was dragged at all
-  const stops = async () => {
-    const state = await getStateObject();
-    return { stops: (state.offBoard.stops || []).map(stop=>stop.widget).join(), parent: state.token.parent || null, moved: state.token.x != 700 };
-  };
-
-  await t.expect(drag(0)).notOk('the line beside the board takes no stop while playing');
-  await expectEventually(t, stops, { stops: '', parent: null, moved: true }, 'a drag during play moves the token but never onto the line beside the board');
-
-  await t.click('#editButton');
-  await t.expect(Selector('#editorSelection').exists).ok();
-
-  // the normal edit view clips the board just like play mode does, so the line
-  // beside it is as invisible - and takes as little - there as it does while playing
-  await t.expect(drag(2)).notOk('the line beside the board takes no stop in the normal edit view');
-  await expectEventually(t, stops, { stops: '', parent: null, moved: true }, 'a drag in the normal edit view moves the token but never onto the line beside the board');
-
-  await t.click('#editorToolbar [icon=zoom_out]');
-
-  await t.expect(drag(2)).ok('the line beside the board is highlighted as a stop target in the zoomed out edit view');
-  await expectEventually(t, stops, { stops: 'token', parent: 'offBoard', moved: true }, 'the token becomes a stop of the line beside the board');
-});
+}
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
   await t.resizeWindow(1280, 800);

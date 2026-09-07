@@ -8,13 +8,8 @@
   border-color: #d8d8d8 #ccc #ccc #d8d8d8;
 }
 
-/* The dark border reads on the board, which is light. A holder beside the board
-   sits on the dark surround of the zoomed out view, where it disappears - hence
-   the light halo around it as well, one that survives the scale that view is
-   drawn at. */
 .holder.droppable.droptarget{
   border-color: #333!important;
-  box-shadow: 0 0 0 calc(2px / var(--scale)) #ffffff99;
 }
 
 .holder > .widget {
