@@ -476,7 +476,7 @@ class AssetsModule extends SidebarModule {
   async replaceAsset(asset, newAsset) {
     for(const use of asset.uses) {
       const property = widgets.get(use.widget).get(use.keys[0]);
-      const newValue = JSON.parse(JSON.stringify(property).replaceAll(asset.asset, newAsset));
+      const newValue = JSON.parse(JSON.stringify(property).split(asset.asset).join(newAsset));
       await widgets.get(use.widget).set(use.keys[0], newValue);
     }
   }
@@ -486,7 +486,7 @@ class AssetsModule extends SidebarModule {
     for(const propertyName in widget.state) {
       const property = JSON.stringify(widget.get(propertyName));
       if(property.includes(oldLink))
-        await widget.set(propertyName, JSON.parse(property.replaceAll(oldLink, newLink)));
+        await widget.set(propertyName, JSON.parse(property.split(oldLink).join(newLink)));
     }
   }
 }
