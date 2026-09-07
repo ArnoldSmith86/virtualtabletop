@@ -815,9 +815,12 @@ export default class Room {
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
-      } else if(this.state[widgetID] === undefined) {
-        this.state[widgetID] = delta.s[widgetID];
       } else {
+        // a delta can create a widget and reset one of its properties to the
+        // default in one go - null means "remove the property", also for a
+        // widget that only starts existing with this delta
+        if(this.state[widgetID] === undefined)
+          this.state[widgetID] = {};
         for(const property in delta.s[widgetID]) {
           if(delta.s[widgetID][property] === null) {
             delete this.state[widgetID][property];

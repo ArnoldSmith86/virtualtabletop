@@ -34,6 +34,15 @@ function roomLoadingStates(states) {
   return room;
 }
 
+// a room that applies deltas and talks to nobody
+function roomReceivingDeltas(state) {
+  const room = Object.create(Room.prototype);
+  room.state = state;
+  room.deltaID = 0;
+  room.broadcast = ()=>{};
+  return room;
+}
+
 // a room that traces into the temporary directory and talks to nobody
 function tracingRoom(meta) {
   const room = Object.create(Room.prototype);
@@ -204,5 +213,25 @@ describe('server/room.mjs', function() {
     jest.advanceTimersByTime(5000);
     expect(room.unload).toHaveBeenCalled();
     jest.useRealTimers();
+  });
+
+  test('receiveDelta does not store null properties of a widget it creates', function() {
+    const room = roomReceivingDeltas({ _meta: {} });
+    const delta = { s: { card1: { id: 'card1', type: 'card', x: null, y: null, z: 3 } } };
+
+    room.receiveDelta(player, delta);
+
+    expect(room.state.card1).toEqual({ id: 'card1', type: 'card', z: 3 });
+    // the delta is kept by the other players to detect conflicts, so later property
+    // writes to the room state must not reach through into it
+    expect(room.state.card1).not.toBe(delta.s.card1);
+  });
+
+  test('receiveDelta removes null properties of a widget that already exists', function() {
+    const room = roomReceivingDeltas({ _meta: {}, card1: { id: 'card1', type: 'card', x: 10, z: 3 } });
+
+    room.receiveDelta(player, { s: { card1: { x: null, z: 4 } } });
+
+    expect(room.state.card1).toEqual({ id: 'card1', type: 'card', z: 4 });
   });
 });
