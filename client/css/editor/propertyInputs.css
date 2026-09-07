@@ -1294,13 +1294,22 @@
 .editorModule .widgetHeader .widgetHeaderIdInput {
   color: inherit;
   font: inherit;
+  /* the element sizes itself to the id it holds, so this only caps how much of
+     the panel a long one may take */
   max-width: 80%;
-  padding: 0 3px;
+  padding: 2px 3px;
   border: 0;
   border-bottom: 1px dashed currentColor;
   border-radius: 2px;
   background: transparent;
   text-align: left;
+}
+
+/* the field is disabled while its rename runs - the room does not have the
+   widget under either id in that moment, so there is nothing to commit */
+.editorModule .widgetHeader .widgetHeaderIdInput:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 .editorModule .widgetHeader .widgetHeaderIdInput:hover {
