@@ -956,6 +956,20 @@ function parsePropertyFromCSS(css, prop, defaultValue='', cssClass="default") {
   return defaultValue;
 }
 
+// The declarations a css class writes itself, in the order it has them - what
+// parsePropertyFromCSS cannot say, because it answers a state class with the
+// "default" one when the class does not carry the property, and because two
+// declarations of the same rule are decided by which one comes last.
+function cssClassOwnDeclarations(css, cssClass='default') {
+  const source = typeof css === 'string' ? cssStringToObject(css) : css;
+  if (!isObjectLike(source))
+    return [];
+  const className = cssClass || 'default';
+  if (hasNestedCSSClasses(source))
+    return isObjectLike(source[className]) ? cssDeclarationList(source[className]) : [];
+  return className === 'default' ? cssDeclarationList(source) : [];
+}
+
 function cssStringToObject(str) {
   const out = {};
   if (!str || typeof str !== 'string') return out;
@@ -1128,6 +1142,49 @@ function cssValueIsColor(value) {
   if(text.match(/^(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\([^()]*\)$/))
     return true;
   return cssNamedColors.indexOf(text) != -1;
+}
+
+// The keywords every css property takes, whatever it is: they stand for a value
+// from somewhere else instead of naming one, so a color input can neither show
+// them nor take them for the color a declaration paints.
+function cssValueIsCssWideKeyword(value) {
+  return !!String(value === null || value === undefined ? '' : value).trim().match(/^(inherit|initial|unset|revert|revert-layer)$/i);
+}
+
+// Whether css takes a value as a color, asked of the css parser instead of
+// matched by hand: a value it does not understand never makes it onto the
+// declaration, so what is left there is the answer. A var() passes - it is a
+// valid color value, whatever the custom property behind it holds.
+let cssColorProbe = null;
+function cssColorIsValid(value) {
+  const text = String(value === null || value === undefined ? '' : value).trim();
+  if(!text || cssValueIsCssWideKeyword(text))
+    return false;
+  if(typeof document == 'undefined')
+    return cssValueIsColor(text);
+  cssColorProbe = cssColorProbe || document.createElement('div');
+  cssColorProbe.style.color = '';
+  cssColorProbe.style.color = text;
+  return cssColorProbe.style.color !== '';
+}
+
+// A declaration value without its "!important" priority - the color inputs
+// cannot represent it and would show it as part of the color
+function cssValueWithoutImportant(value) {
+  return String(value === null || value === undefined ? '' : value).replace(/\s*!important\s*$/i, '').trim();
+}
+
+// Whether a "background" shorthand only paints a color, so the color inputs can
+// move it into the background-color longhand without losing anything. A
+// gradient, an image or a multi-part shorthand cannot be moved that way. A
+// var() is taken at its word: a custom property can hold an image just as well
+// (holder.css defines --bgImage), but telling the two apart needs the widget
+// rendered, which this helper does not have.
+function cssBackgroundIsPlainColor(value) {
+  const text = cssValueWithoutImportant(value);
+  if(text.match(/^var\(\s*--[^()]*\)$/))
+    return true;
+  return cssColorIsValid(text);
 }
 
 // colors an <input type="color"> cannot represent, so the row shows them
@@ -1366,7 +1423,7 @@ const editorTypeSections = {
     ],
     colors: [
       { label: 'Text',          kind: 'color', labelIcon: 'format_color_text', cssKey: 'color' },
-      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background' },
+      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background-color' },
       { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' },
       // only shown where it paints something - see basicColorIsUsed
       { label: 'Icon/Symbol',   property: 'color', kind: 'color', labelIcon: 'category',
@@ -1463,10 +1520,10 @@ const editorTypeSections = {
     // --lineColor from its properties, overriding the css property
     colors: [
       { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
-      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background', cssProperty: 'backgroundCSS', effectiveSelector: '.background' },
+      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background-color', cssProperty: 'backgroundCSS', effectiveSelector: '.background' },
       { label: 'Line',          property: 'lineColor',    kind: 'color', labelIcon: 'border_color' },
       { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', labelIconNoFill: true, cssKey: 'color', cssProperty: 'valueCSS', effectiveSelector: '.value' },
-      { label: 'Value background', kind: 'color', labelIcon: 'counter_1', cssKey: 'background', cssProperty: 'valueCSS', effectiveSelector: '.value' }
+      { label: 'Value background', kind: 'color', labelIcon: 'counter_1', cssKey: 'background-color', cssProperty: 'valueCSS', effectiveSelector: '.value' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },
@@ -1474,7 +1531,7 @@ const editorTypeSections = {
     stateClasses: { '.alert': 'alert', '.paused': 'paused' },
     colors: [
       { label: 'Text',       cssKey: 'color',      kind: 'color', labelIcon: 'format_color_text' },
-      { label: 'Background', cssKey: 'background', kind: 'color', labelIcon: 'format_color_fill' }
+      { label: 'Background', cssKey: 'background-color', kind: 'color', labelIcon: 'format_color_fill' }
     ]
   }
 };
@@ -8768,7 +8825,7 @@ class PropertiesModule extends SidebarModule {
     // width and a style as well - those are one CSS section below
     for(const color of [
       { label: 'Text', key: 'color', labelIcon: 'format_color_text' },
-      { label: 'Background', key: 'background', labelIcon: 'format_color_fill' }
+      { label: 'Background', key: 'background-color', labelIcon: 'format_color_fill' }
     ])
       new ColorInput(this, widget, color.label, cssValueOptions(this, widget, color.key, 'handleCSS', 'default', {
         pickerGroup: handleGroup,
@@ -10392,9 +10449,9 @@ class PropertiesModule extends SidebarModule {
     const row = div(this.moduleDOM, 'colorFlexRow');
     const pickerArea = div(this.moduleDOM, 'contentMediaPickers');
     const group = { target: pickerArea, current: null };
-    new ColorInput(this, widget, 'Text',       cssValueOptions(this, widget, 'color',        'css', cssClass, { pickerGroup: group, labelIcon: 'format_color_text' })).render(row);
-    new ColorInput(this, widget, 'Background', cssValueOptions(this, widget, 'background',   'css', cssClass, { pickerGroup: group, labelIcon: 'format_color_fill' })).render(row);
-    new ColorInput(this, widget, 'Border',     cssValueOptions(this, widget, 'border-color', 'css', cssClass, { pickerGroup: group, labelIcon: 'border_color' })).render(row);
+    new ColorInput(this, widget, 'Text',       cssValueOptions(this, widget, 'color',            'css', cssClass, { pickerGroup: group, labelIcon: 'format_color_text' })).render(row);
+    new ColorInput(this, widget, 'Background', cssValueOptions(this, widget, 'background-color', 'css', cssClass, { pickerGroup: group, labelIcon: 'format_color_fill' })).render(row);
+    new ColorInput(this, widget, 'Border',     cssValueOptions(this, widget, 'border-color',     'css', cssClass, { pickerGroup: group, labelIcon: 'border_color' })).render(row);
 
     new NumberInput(this, widget, 'Brightness', {
       min: 0, max: 1, step: 0.05, slider: true, nullIfEmpty: true, placeholder: '1', listenTo: [ 'css' ],
