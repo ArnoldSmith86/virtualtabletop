@@ -234,6 +234,8 @@ const EDITOR_JS = [
   'client/js/editor/sidebar/undo.js',
   'client/js/editor/sidebar/json.js',
   'client/js/editor/sidebar/assets.js',
+  'client/js/editor/sidebar/fileHandlers.js',
+  'client/js/editor/sidebar/files.js',
   'client/js/editor/sidebar/toolbox.js',
   'client/js/editor/sidebar/gameSettings.js',
   'client/js/editor/sidebar/widgets.js',
