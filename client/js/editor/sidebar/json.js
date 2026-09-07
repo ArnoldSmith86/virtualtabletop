@@ -76,7 +76,6 @@ class DebugModule extends SidebarModule {
 
   button_clearButton() {
     jeLoggingClear();
-    $('#jeLog').innerHTML = '';
   }
 
   button_clearCheckbox() {
@@ -121,6 +120,24 @@ class DebugModule extends SidebarModule {
     this.updateValidation();
   }
 
+  // Routines are only logged while this panel is open to show the log, so playing the game costs
+  // nothing - which is why the flag follows edit mode in both directions and not just the panel:
+  // a panel that is still open when the editor is closed and reopened has to log again.
+  onEditorClose() {
+    super.onEditorClose();
+    setJEroutineLogging(jeRoutineLogging = false);
+  }
+
+  onEditorOpen() {
+    super.onEditorOpen();
+    // Keyed on the flag actually being off rather than on onEditorClose() having run: edit mode can
+    // also be left in ways that never reach it, and then nothing was missed and nothing is stale.
+    if(this.moduleDOM && !jeRoutineLogging) {
+      setJEroutineLogging(jeRoutineLogging = true);
+      jeLoggingResumed();
+    }
+  }
+
   onStateReceivedWhileActive() {
     this.button_clearButton();
     this.updateValidation();
@@ -144,7 +161,7 @@ class DebugModule extends SidebarModule {
     `);
     this.setClearButtonTitle();
     target.append($('#jeLog'));
-    div(target, 'jeLogNote jeLogEmptyNote', 'Nothing has been logged yet. Middle-click a widget to run it as if you were playing - or right-click one that is already selected - and every operation of the routine it starts shows up here.');
+    div(target, 'jeLogNote jeLogEmptyNote', 'Nothing has been logged yet. Routines are only logged while this Debug panel is open in edit mode.');
 
     on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
