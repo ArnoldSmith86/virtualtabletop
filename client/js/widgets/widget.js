@@ -2905,8 +2905,10 @@ export class Widget extends StateManaged {
     // Get the bounding rect of the element relative to the viewport
     const rect = this.domElement.getBoundingClientRect();
 
-    // Get the bounding rect of the #room element
-    const roomRect = $('#roomArea').getBoundingClientRect();
+    // The zoomed out edit view also renders widgets outside the board.
+    const roomRect = $('body').matches('.edit.zoomedOut')
+      ? new DOMRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
+      : $('#roomArea').getBoundingClientRect();
 
     // Check if the element is within the viewport of the room
     return (
