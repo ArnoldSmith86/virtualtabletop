@@ -109,7 +109,7 @@ function gameFileInfo(json) {
   if(!json || typeof json != 'object' || Array.isArray(json))
     return null;
   const meta = json._meta;
-  if(!meta || typeof meta != 'object' || !meta.info || typeof meta.info != 'object')
+  if(!meta || typeof meta != 'object' || !meta.info || typeof meta.info != 'object' || Array.isArray(meta.info))
     return null;
   return meta.info;
 }
@@ -139,6 +139,7 @@ function selectVTTfile(callback) {
   });
 }
 
+// returns the upload, so a caller can wait for it to finish
 function addStateFile(f) {
   const stateDOM = domByTemplate('template-stateslist-entry');
   let id;
@@ -147,12 +148,15 @@ function addStateFile(f) {
   } while($(`.roomState[data-id="${id}"]`));
   stateDOM.dataset.id = id;
   stateDOM.className = 'uploading visible roomState noImage';
+  // the badge belongs to games that declare AI imagery, but the template shows it by default
+  $('.ai-badge', stateDOM).classList.add('hidden');
 
   let isSave = false;
   function metaCallback(name, similarName, image, variants, savePlayers, saveDate) {
     if(image) {
       stateDOM.classList.remove('noImage');
-      $('img', stateDOM).src = image;
+      $('img:not(.emoji)', stateDOM).onerror = _=>stateDOM.classList.add('noImage');
+      $('img:not(.emoji)', stateDOM).src = image;
     }
 
     isSave = !!savePlayers;
@@ -172,10 +176,29 @@ function addStateFile(f) {
   }
   function doneCallback() {
     uploadingStates[isSave ? 0 : 1] = uploadingStates[isSave ? 0 : 1].filter(s=>s!=stateDOM);
-    removeFromDOM(stateDOM);
+    // a file the client rejects before it is sent never reaches metaCallback, so its tile was
+    // never inserted into the list - remove() tolerates that, removeChild does not
+    stateDOM.remove();
   }
 
-  uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
+  return uploadStateFile(f, `addState/${roomID}/${id}/file/${f.name}`, metaCallback, progressCallback, doneCallback);
+}
+
+// the extensions the server removes from the name of an uploaded file (see Room.addState) - the
+// tile has to remove the same ones so its provisional name is the one the game ends up with
+const gameFileExtension = /\.(vtt|vttc|vtts|pcio|zip)$/i;
+
+// the file types readStatesFromBuffer can read, named the way a first-time user knows them
+function alertNotAGameFile(fileName) {
+  alert(`${fileName} does not contain a game. You can add VTT files (.vtt, .vttc, .vtts), playingcards.io files (.pcio) and Tabletop Simulator workshop files (.zip).`);
+}
+
+function parseJSONorNull(bytes) {
+  try {
+    return JSON.parse(fflate.strFromU8(bytes));
+  } catch(e) {
+    return null;
+  }
 }
 
 async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCallback, loadCallback) {
@@ -189,21 +212,27 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
     entries = zipIndex(buffer);
     jsonFiles = await unzipBuffer(buffer, isVariantFile);
   } catch(e) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
+    alertNotAGameFile(sourceFile.name);
+    loadCallback(true);
     return;
   }
 
+  const fileName = sourceFile.name.replace(gameFileExtension, '');
   let info = null;
+  const variants = [];
   const assets = {};
   for(const [ filename, entry ] of Object.entries(entries)) {
     if(jsonFiles[filename]) {
-      const variantInfo = gameFileInfo(JSON.parse(fflate.strFromU8(jsonFiles[filename])));
-      if(variantInfo) {
-        // the first variant is the one whose metadata describes the whole file, and it lists
-        // every variant in the file including itself
+      // a game file written by hand or by another tool can be missing its metadata entirely, and
+      // JSON the client cannot read at all is for the server to report - neither is a reason to
+      // drop the variant, which is one per file either way
+      const content = parseJSONorNull(jsonFiles[filename]);
+      if(content && content._meta) {
+        const variantInfo = gameFileInfo(content);
+        variants.push(variantInfo || {});
+        // the first variant that has metadata is the one that describes the whole file
         if(!info)
-          (info = variantInfo).variants = [];
-        info.variants.push(variantInfo);
+          info = variantInfo;
       }
     }
     if(filename.match(/^\/?(user)?assets/) && entry.size)
@@ -211,12 +240,13 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   }
 
   if(!Object.keys(entries).some(filename=>filename.match(/\.json$/))) {
-    alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
+    alertNotAGameFile(sourceFile.name);
+    loadCallback(true);
     return;
   } else if(!info) {
-    // a PCIO or TTS export, which the server turns into a game on arrival: until then the file
-    // name is everything there is to show for it
-    metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
+    // a PCIO or TTS export, or a file whose metadata is missing: until the server has read it the
+    // file name is everything the tile has to show for it
+    metaCallback(fileName, '', null, variants.length ? variants : [{}], null, null);
   } else {
     let imageURL = null;
 
@@ -232,7 +262,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       }
     }
 
-    metaCallback(info.name, info.similarName, imageURL, info.variants, info.savePlayers, info.saveDate);
+    metaCallback(info.name || fileName, info.similarName, imageURL, variants, info.savePlayers, info.saveDate);
   }
 
   const result = await fetch('assetcheck', {
@@ -267,9 +297,11 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
 
   var req = new XMLHttpRequest();
   req.onload = function(e) {
-    if(e.target.status != 200)
-      alert(`${e.target.status}: ${e.target.response}`);
-    loadCallback();
+    if(e.target.status != 200) {
+      console.error(`Uploading ${sourceFile.name} failed with status ${e.target.status}: ${e.target.response}`);
+      alert(`${sourceFile.name}: ${e.target.response || 'The server did not accept the file.'}`);
+    }
+    loadCallback(e.target.status != 200);
   };
   req.upload.onprogress = e=>progressCallback(e.loaded/e.total);
 
@@ -546,9 +578,18 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   for(const state of Object.values(states)) {
     state.starred = starred && starred[state.publicLibrary];
     state.stars = state.stars || 0;
-    for(const variant of state.variants)
+    // metadata written by hand or by another tool can hold anything, and everything that shows
+    // one of the images of a game here expects a string or nothing
+    if(typeof state.image != 'string')
+      state.image = '';
+    if(typeof state.similarImage != 'string')
+      state.similarImage = '';
+    for(const variant of state.variants) {
+      if(typeof variant.variantImage != 'string')
+        variant.variantImage = '';
       if(variant.plStateID)
         publicLibraryLinksFound[`${variant.plStateID} - ${variant.plVariantID}`] = true;
+    }
   }
 
   const categories = {
@@ -606,6 +647,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     if(state.image) {
       const mappedURL = mapAssetURLs(state.image);
+      $('img:not(.emoji)', entry).onerror = _=>entry.classList.add('noImage');
       if(loadedLibraryImages[mappedURL]) {
         $('img:not(.emoji)', entry).dataset.src = $('img:not(.emoji)', entry).src = mappedURL;
       } else {
@@ -911,11 +953,21 @@ function fillStateDetails(states, state, dom) {
     if(variant.plStateID)
       variant = states[variant.plStateID].variants[variant.plVariantID];
 
+    // an uploaded file reaches this with the metadata it was written with, which can hold anything
+    // where a string belongs - fillStatesList only normalizes what the server has already read
+    if(typeof variant.variantImage != 'string')
+      variant.variantImage = '';
     if(!variant.variantImage)
       variant.variantImage = state.image;
 
     const vEntry = domByTemplate('template-variantslist-entry', variant);
     vEntry.className = isLinkedVariant ? 'linked variant' : 'variant';
+
+    // a variant without a name of its own renders as a blank row, which gives the user nothing to
+    // tell several of them apart - the number is its position in the list. The details list only
+    // shows it while the game has more than one variant, the name field uses it as its hint always
+    if(!variant.variant)
+      $('.variant-name', vEntry).dataset.placeholder = `Variant ${+variantID + 1}`;
 
     if(isLinkedVariant)
       for(const dom of $a('[data-field]', vEntry))
@@ -1024,12 +1076,14 @@ function fillStateDetails(states, state, dom) {
 
       const variantDOM = [];
       const filenameSuffix = rand().toString(36).substring(3, 11);
+      let createOperation = null;
 
       function metaCallback(name, similarName, image, variants) {
-        variantOperationQueue.push({
+        createOperation = {
           operation: 'create',
           filenameSuffix
-        });
+        };
+        variantOperationQueue.push(createOperation);
         for(const variant of variants) {
           const vEntry = addVariant($a('#stateDetailsOverlay .variant').length, variant);
           vEntry.classList.add('uploading');
@@ -1041,7 +1095,18 @@ function fillStateDetails(states, state, dom) {
         for(const d of variantDOM)
           d.style.setProperty('--progress', percent);
       }
-      function doneCallback() {
+      function doneCallback(failed) {
+        // the rows and the operation were added before the server saw the file, so a rejected
+        // upload has to take them back: saving them would send more variants than the game has,
+        // which makes the server drop the whole edit
+        if(failed) {
+          for(const d of variantDOM)
+            d.remove();
+          variantDOM.length = 0;
+          updateEmptyVariantsHint();
+          if(createOperation)
+            variantOperationQueue.splice(variantOperationQueue.indexOf(createOperation), 1);
+        }
         for(const d of variantDOM)
           d.classList.remove('uploading');
         if(!$('#stateDetailsOverlay .uploading.variant'))

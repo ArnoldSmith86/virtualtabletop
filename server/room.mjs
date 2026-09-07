@@ -143,8 +143,11 @@ export default class Room {
         let name = type == 'file' && srcName || 'Unnamed';
 
         const variant = states[state][v];
+        // only an object holds metadata - assigning a string here would spread it into the game
+        // as one property per character, and an array as one property per element
+        const variantInfo = variant._meta && typeof variant._meta.info == 'object' && !Array.isArray(variant._meta.info) ? variant._meta.info : null;
         const meta = Object.assign({
-          name: name.replace(/\.pcio/, ''),
+          name: name.replace(/\.(vtt|vttc|vtts|pcio|zip)$/i, ''),
           image: '',
           rules: '',
           bgg: '',
@@ -156,7 +159,7 @@ export default class Room {
           variant: '',
           link: '',
           attribution: ''
-        }, (variant._meta || {}).info || {});
+        }, variantInfo || {});
 
         if(stateID.match(/^PL:/)) {
           this.writePublicLibraryToFilesystem(stateID, newVariantID, variant);
@@ -771,8 +774,12 @@ export default class Room {
         return;
     }
 
+    // a client whose optimistic variant rows got ahead of the game - an upload it added a row
+    // for and the server then rejected - sends input for variants that do not exist, and losing
+    // the rest of the edit over that is worse than ignoring it
     for(const variantID in variantInput)
-      Object.assign(variants[variantID], variantInput[variantID]);
+      if(variants[variantID])
+        Object.assign(variants[variantID], variantInput[variantID]);
 
     meta.variants = variants;
     Object.assign(this.state._meta.states[id], meta);

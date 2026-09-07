@@ -856,6 +856,12 @@ div:nth-of-type(2) > .list > .roomState .star {
   word-break: break-all;
 }
 
+.variant:not(:only-child) .variant-name:empty::before {
+  content: attr(data-placeholder);
+  color: gray;
+  font-style: italic;
+}
+
 .variant .variant-name>div {
   line-height: 34px;
 }
