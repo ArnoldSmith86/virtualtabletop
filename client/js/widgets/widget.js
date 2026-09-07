@@ -89,6 +89,8 @@ function collectUnnamedWidgetStyles() {
       continue;
     if($(`#STYLES_${scope}`))
       removeFromDOM($(`#STYLES_${scope}`));
+    if($(`#FONTS_${scope}`))
+      removeFromDOM($(`#FONTS_${scope}`));
     unnamedWidgetStyles.delete(scope);
   }
 }
@@ -132,6 +134,7 @@ export class Widget extends StateManaged {
       typeClasses: 'widget',
       classes: '',
       css: '',
+      fonts: [],
       movable: true,
       movableInEdit: true,
       clickable: true,
@@ -270,7 +273,10 @@ export class Widget extends StateManaged {
     }
 
     this.applyCSS(delta);
-    
+
+    if(delta.fonts !== undefined)
+      this.applyFonts();
+
     if(delta.z !== undefined)
       this.applyZ(true);
 
@@ -409,6 +415,31 @@ export class Widget extends StateManaged {
     this.activateAnimation = true;
   }
 
+  // The web fonts this widget brought along, as @font-face rules in a style element of its own. A font
+  // family is global to the document once it is declared, so the families one widget imports can be used
+  // by its own texts through its "css", and by any other widget of the game as well.
+  applyFonts() {
+    const existing = $(`#FONTS_${this.cssScope}`);
+    if(existing)
+      removeFromDOM(existing);
+
+    const rules = this.fontFaceCSS();
+    if(rules) {
+      const style = document.createElement('style');
+      style.id = `FONTS_${this.cssScope}`;
+      style.appendChild(document.createTextNode(rules));
+      $('head').appendChild(style);
+    }
+
+    // see unnamedWidgetStyles - a read-only copy is never removed from the state, so its rules are
+    // collected once the element they were declared for is gone from the document
+    if(this.id === undefined || this.id === null) {
+      unnamedWidgetStyles.set(this.cssScope, this.domElement);
+      if(!unnamedWidgetStyleCollection)
+        unnamedWidgetStyleCollection = setTimeout(collectUnnamedWidgetStyles);
+    }
+  }
+
   applyRemove() {
     if(this.get('parent') && widgets.has(this.get('parent')))
       widgets.get(this.get('parent')).applyChildRemove(this);
@@ -419,6 +450,8 @@ export class Widget extends StateManaged {
       this.deck.removeCard(this);
     if($(`#STYLES_${this.cssScope}`))
       removeFromDOM($(`#STYLES_${this.cssScope}`));
+    if($(`#FONTS_${this.cssScope}`))
+      removeFromDOM($(`#FONTS_${this.cssScope}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
@@ -804,6 +837,21 @@ export class Widget extends StateManaged {
     if(this.get('ignoreZoom'))
       properties.push('parent');
     return properties;
+  }
+
+  fontFaceCSS() {
+    const fonts = this.get('fonts');
+    if(!Array.isArray(fonts))
+      return '';
+    return fonts.filter(font=>font && font.family && font.src).map(font=>{
+      // both values end up inside a css rule, so anything that could close it and start something
+      // else of its own is dropped rather than escaped
+      const family = String(font.family).replace(/[;{}"'\\]/g, '').trim();
+      const src = mapAssetURLs(String(font.src).replace(/[;{}"'()\\]/g, '').trim());
+      const weight = String(font.weight || 400).replace(/[^0-9]/g, '') || '400';
+      const style = font.style == 'italic' ? 'italic' : 'normal';
+      return family && src ? `@font-face { font-family: "${family}"; src: url("${src}"); font-weight: ${weight}; font-style: ${style}; font-display: swap; }` : '';
+    }).join('\n');
   }
 
   isNestedInWidget() {

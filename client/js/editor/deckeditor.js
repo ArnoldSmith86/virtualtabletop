@@ -191,6 +191,10 @@ class DeckEditorRotateButton extends DeckEditorDragButton {
   }
 }
 
+// The deck properties the editor keeps a working copy of: everything it can change, edited locally and
+// committed to the deck widget as a whole (see commit/loadWorkingCopies/snapshot).
+const deckEditorWorkingCopies = [ 'faceTemplates', 'cardTypes', 'cardDefaults', 'fonts' ];
+
 class DeckEditor {
   constructor() {
     this.deckID = null;
@@ -206,6 +210,7 @@ class DeckEditor {
     this.faceTemplates = [];
     this.cardTypes = {};
     this.cardDefaults = {};
+    this.fonts = [];
     this.showAllAreas = false;
     this.expandedDecks = new Set(); // tree branches the user explicitly expanded (beyond the current deck)
     this.expandedFaces = new Set(); // keyed "deckID:faceIndex"
@@ -1003,6 +1008,7 @@ class DeckEditor {
     this.faceTemplates = [];
     this.cardTypes = {};
     this.cardDefaults = {};
+    this.fonts = [];
     this.cardType = null;
     this.selectedObject = null;
     this.treeLevel = 'deck';
@@ -1135,11 +1141,13 @@ class DeckEditor {
     return this[property];
   }
 
-  loadWorkingCopies(properties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ]) {
+  loadWorkingCopies(properties = deckEditorWorkingCopies) {
     const deck = this.deck();
-    if(properties.includes('faceTemplates')) {
-      const faceTemplates = deck.get('faceTemplates');
-      this.faceTemplates = Array.isArray(faceTemplates) ? JSON.parse(JSON.stringify(faceTemplates)) : [];
+    for(const property of [ 'faceTemplates', 'fonts' ]) {
+      if(properties.includes(property)) {
+        const value = deck.get(property);
+        this[property] = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : [];
+      }
     }
     for(const property of [ 'cardTypes', 'cardDefaults' ]) {
       if(properties.includes(property)) {
@@ -1156,7 +1164,7 @@ class DeckEditor {
     return !!deck && JSON.stringify(deck.get(property)) == JSON.stringify(this.workingCopy(property));
   }
 
-  reload(properties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ]) {
+  reload(properties = deckEditorWorkingCopies) {
     if(!this.deck())
       return this.close();
     for(const property of properties) {
@@ -1265,14 +1273,10 @@ class DeckEditor {
   }
 
   snapshot(cause, actionId, label) {
-    return {
-      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates)),
-      cardTypes: JSON.parse(JSON.stringify(this.cardTypes)),
-      cardDefaults: JSON.parse(JSON.stringify(this.cardDefaults)),
-      cause,
-      actionId,
-      label: label || this.historyLabel(cause)
-    };
+    const snapshot = { cause, actionId, label: label || this.historyLabel(cause) };
+    for(const property of deckEditorWorkingCopies)
+      snapshot[property] = JSON.parse(JSON.stringify(this.workingCopy(property)));
+    return snapshot;
   }
 
   resetHistory() {
@@ -1355,7 +1359,7 @@ class DeckEditor {
     this.historyIndex = index;
     const snapshot = this.history[index];
 
-    const changed = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ].filter(property=>JSON.stringify(this.workingCopy(property)) !== JSON.stringify(snapshot[property]));
+    const changed = deckEditorWorkingCopies.filter(property=>JSON.stringify(this.workingCopy(property)) !== JSON.stringify(snapshot[property]));
     for(const property of changed)
       this[property] = JSON.parse(JSON.stringify(snapshot[property]));
 
@@ -2133,11 +2137,18 @@ class DeckEditor {
     // of the selected objects has still gets a row, so it can be given to all of them in one go.
     const objectProperties = [...new Set(objects.flatMap(o=>Object.keys(o)))].filter(property=>property != 'dynamicProperties');
     const commonType = this.commonPropertyValue(objects, 'type');
+    // Objects that draw text always offer the font row, whether or not they name a font yet: choosing one is
+    // what the row is for, and an object without the property would otherwise have no way to get one.
+    const drawsText = !commonType.mixed && [ 'text', 'write', 'html' ].indexOf(commonType.value || 'text') != -1;
+    if(drawsText && objectProperties.indexOf('font') == -1)
+      objectProperties.push('font');
     this.renderPropertyGroups(sidebar, objectProperties, 'object', (property, objectProps)=>{
       // The object's structural "type" is a dropdown of the valid types (not a free-typed field that could
       // be broken by a typo) and can't be deleted.
       if(property == 'type')
         return this.renderObjectTypeRow(objectProps, objects, objectFieldArgs('type'));
+      if(property == 'font' && drawsText)
+        return this.renderFontRow(objectProps, objects, objectFieldArgs('font'), this.commonPropertyValue(objects, 'font').mixed);
       // Known object properties get a fixed field type (number or text) with no type selector; the value's
       // JS type decides for anything custom. A "(mixed)" row has no value to read that type from, so it is
       // taken from the first object that has the property set - otherwise a mixed checkbox/JSON row would
@@ -3169,7 +3180,7 @@ class DeckEditor {
       { id: 'position',   title: 'Position',   properties: [ 'x', 'y', 'rotation' ], collapsed: true },
       { id: 'size',       title: 'Size',       properties: [ 'width', 'height', 'size', 'scale' ], collapsed: true },
       { id: 'colors',     title: 'Colors',     properties: [ 'color', 'strokeColor', 'hoverColor', 'hoverStrokeColor' ] },
-      { id: 'appearance', title: 'Appearance', properties: [ 'fontSize', 'textAlign', 'strokeWidth', 'hoverStrokeWidth', 'opacity', 'hoverOpacity', 'offsetX', 'offsetY', 'flip', 'display', 'classes', 'css', 'svgReplaces', 'border', 'radius', 'note' ] },
+      { id: 'appearance', title: 'Appearance', properties: [ 'font', 'fontSize', 'textAlign', 'strokeWidth', 'hoverStrokeWidth', 'opacity', 'hoverOpacity', 'offsetX', 'offsetY', 'flip', 'display', 'classes', 'css', 'svgReplaces', 'border', 'radius', 'note' ] },
       { id: 'custom',     title: 'Custom',     properties: null } // everything else, in the order it is stored
     ];
   }
@@ -3231,7 +3242,7 @@ class DeckEditor {
   objectFieldType(property) {
     if([ 'x', 'y', 'width', 'height', 'fontSize', 'size', 'strokeWidth', 'rotation' ].indexOf(property) != -1)
       return 'number';
-    if([ 'textAlign', 'color', 'value', 'strokeColor', 'type', 'placeholder', 'backgroundColor', 'borderColor' ].indexOf(property) != -1)
+    if([ 'font', 'textAlign', 'color', 'value', 'strokeColor', 'type', 'placeholder', 'backgroundColor', 'borderColor' ].indexOf(property) != -1)
       return 'text';
     return undefined;
   }
@@ -3538,6 +3549,188 @@ class DeckEditor {
     const show = this.deck() && !this.deckSymbolSelected && this.selectedObject === null && this.faceTemplates.length;
     hint.textContent = show ? 'Click a face object on the card, or in the "Face objects" list, to select, edit, or drag it around.' : '';
     hint.classList.toggle('active', !!show);
+  }
+
+  // ---- fonts -------------------------------------------------------------------------------------------
+  // A face object names its font family in its "font" property; the family itself has to be declared for the
+  // document, which is either one of the ones the client ships (client/css/fonts.css) or one this deck
+  // imported from Google Fonts into its "fonts" property (see Widget.fontFaceCSS).
+
+  // The families this deck has imported, in the order they were added.
+  deckFontFamilies() {
+    return fontFamilyList(this.fonts);
+  }
+
+  // The font row of the Appearance block: which family the selected text is drawn in, and the button that
+  // fetches another one from Google Fonts. Only the families the game can actually render are offered, so
+  // picking one here can not end up as a font nobody but the author sees.
+  renderFontRow(target, objects, args, mixed) {
+    const row = div(target, 'genericInput deckEditorTypedInput deckEditorFontRow');
+    const labelEl = document.createElement('label');
+    labelEl.className = 'deckEditorPropertyLabel';
+    labelEl.textContent = 'font';
+    labelEl.title = 'font - the font family this text is drawn in';
+
+    const current = mixed ? '' : String(this.commonPropertyValue(objects, 'font').value || '');
+    // The font can come from the card type instead of from the object (dynamicProperties: { font: ... }).
+    // A static value shadows that binding (card.js only fills a bound property that is undefined), so the
+    // entry that writes no value is what the binding reads from - and picking a family here shadows it
+    // again, reversibly, rather than the row claiming a font the card is not drawn in.
+    const bound = this.commonPropertyValue(objects.map(object=>object.dynamicProperties || {}), 'font');
+    const select = document.createElement('select');
+    const addOption = (value, text, group)=>{
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = text;
+      option.selected = !mixed && value == current;
+      if(value)
+        option.style.fontFamily = `"${value}"`;
+      (group || select).append(option);
+    };
+    // A "(mixed)" row starts on an entry of its own that writes nothing, so opening the dropdown and
+    // closing it again does not give every selected object the first font in the list.
+    if(mixed) {
+      addOption('', 'Mixed — the selected objects use different fonts');
+      select.firstChild.dataset.mixed = '1';
+      select.firstChild.selected = true;
+    }
+    addOption('', bound.mixed ? 'Default or from the card type' : bound.value ? `From the card type — ${bound.value}` : 'Default');
+    addFontFamilyOptions(select, addOption, {
+      owned: this.deckFontFamilies(),
+      ownScope: this.deck() ? this.deck().cssScope : null,
+      ownLabel: 'Google fonts of this deck',
+      otherLabel: 'Google fonts of another widget in this game',
+      current
+    });
+
+    select.onchange = _=>this.queueFieldEdit(async _=>{
+      if(select.selectedOptions[0] && select.selectedOptions[0].dataset.mixed)
+        return;
+      await this.flushPendingCommitForOtherField('faceTemplates', args[1]);
+      for(const object of objects) {
+        if(select.value)
+          object.font = select.value;
+        else
+          delete object.font;
+      }
+      this.refreshMainCardFaces();
+      this.scheduleCommit('faceTemplates', ...args);
+    });
+
+    const button = document.createElement('button');
+    button.className = 'deckEditorFontPickerButton';
+    button.setAttribute('icon', 'font_download');
+    button.title = 'Get a font from Google Fonts';
+    button.setAttribute('aria-label', 'Get a font from Google Fonts');
+    button.onclick = _=>this.openFontOverlay(objects);
+
+    row.append(labelEl, select, button);
+    return row;
+  }
+
+  // The Google Fonts dialog on this deck. The objects are the face objects the font is for - adding a font
+  // applies it to them right away, which is what opening the dialog from their row means. They are
+  // remembered by their position rather than by reference: the dialog stays open across a remote change, and
+  // a reload deep-clones a fresh faceTemplates the objects held here would no longer be part of.
+  openFontOverlay(objects) {
+    if(!this.deck())
+      return;
+    const onFace = (this.faceTemplates[this.face] || {}).objects || [];
+    const indices = (objects || []).map(object=>onFace.indexOf(object)).filter(index=>index != -1);
+    this.fontTarget = { face: this.face, indices };
+    fontPicker.open({
+      title: `Fonts of deck ${this.deckID}`,
+      intro: 'Pick a font from Google Fonts to use for the texts on these cards. It is downloaded into this game\'s assets, so it is saved and shared with the game and no player\'s browser ever has to ask Google for it.',
+      // Opened from a text's font row the button does two things, so it says both; opened from the JSON
+      // editor there is nothing to apply it to and it only fills the deck's "fonts".
+      addLabel: updating=>`${updating ? 'Update in deck' : 'Add to deck'}${this.fontTargetObjects().length ? ' & use for this text' : ''}`,
+      fonts: _=>this.fonts,
+      usageText: family=>this.fontUsageText(family),
+      add: (fonts, family, updating)=>this.addFontToDeck(fonts, family, updating),
+      remove: family=>this.removeDeckFont(family),
+      refresh: _=>this.renderSidebar()
+    });
+  }
+
+  // The face objects the dialog was opened for, looked up again every time they are needed so that they are
+  // the ones the working copy holds now.
+  fontTargetObjects() {
+    if(!this.fontTarget)
+      return [];
+    const onFace = (this.faceTemplates[this.fontTarget.face] || {}).objects || [];
+    return this.fontTarget.indices.map(index=>onFace[index]).filter(Boolean);
+  }
+
+  // What a card property of this deck resolves to for one card type - the card type first, then the face it
+  // is on, then the deck's defaults, which is the order a card reads it in (see Deck.cardPropertyGet).
+  cardPropertyValue(cardType, face, property) {
+    const type = this.cardTypes[cardType];
+    if(type && type[property] !== undefined)
+      return type[property];
+    const template = this.faceTemplates[face];
+    if(template && template.properties && template.properties[property] !== undefined)
+      return template.properties[property];
+    return this.cardDefaults[property];
+  }
+
+  // How many face objects of this deck are drawn in a family, so dropping it says what it costs rather than
+  // only asking. A text can name the family itself, or read it from a card property (dynamicProperties) -
+  // the second kind counts as soon as one of the card types puts this family into that property.
+  fontUsage(family) {
+    const usage = { direct: 0, bound: 0 };
+    for(let face=0; face<this.faceTemplates.length; ++face) {
+      for(const object of this.faceTemplates[face].objects || []) {
+        const binding = object.dynamicProperties && object.dynamicProperties.font;
+        if(object.font !== undefined) {
+          if(object.font == family)
+            usage.direct++;
+        } else if(typeof binding == 'string' && Object.keys(this.cardTypes).some(cardType=>this.cardPropertyValue(cardType, face, binding) == family)) {
+          usage.bound++;
+        }
+      }
+    }
+    return usage;
+  }
+
+  // What the deck's font list says a family costs to keep, in the terms the remove button asks about.
+  fontUsageText(family) {
+    const { direct, bound } = this.fontUsage(family);
+    const total = direct+bound;
+    const texts = `used by ${total} text${total == 1 ? '' : 's'}`;
+    if(!bound)
+      return texts;
+    return direct ? `${texts}, ${bound} of them through a card type` : `${texts} through a card type`;
+  }
+
+  // Lists the downloaded font files in the deck's "fonts" and hands the family to the face objects the
+  // dialog was opened from, as one action.
+  async addFontToDeck(fonts, family, updating) {
+    if(!this.deck())
+      return;
+    await this.flushPendingCommits();
+    this.fonts = fonts;
+    const action = this.newAction();
+    const verb = updating ? 'updated the font' : 'added the font';
+    const cause = `${getPlayerDetails().playerName} ${verb} "${family}" ${updating ? 'of' : 'to'} deck ${this.deckID} in deck editor`;
+    await this.commit('fonts', cause, action);
+
+    const targetObjects = this.fontTargetObjects();
+    if(targetObjects.length) {
+      for(const object of targetObjects)
+        object.font = family;
+      this.refreshMainCardFaces();
+      await this.commit('faceTemplates', cause, action);
+    }
+  }
+
+  // Dropping a font takes its files out of the deck. Face objects keep naming it, so the text falls back to
+  // the default font - which is what a deck that was copied without its fonts looks like too.
+  async removeDeckFont(family) {
+    if(!this.deck())
+      return;
+    await this.flushPendingCommits();
+    this.fonts = this.fonts.filter(font=>!font || font.family != family);
+    await this.commit('fonts', `${getPlayerDetails().playerName} removed the font "${family}" from deck ${this.deckID} in deck editor`);
   }
 
   renderCardDefaults(sidebar, addHeader, addPropertyRow) {
@@ -4160,7 +4353,8 @@ class DeckEditor {
       y: 41,
       cardDefaults: JSON.parse(JSON.stringify(this.cardDefaults)),
       cardTypes: JSON.parse(JSON.stringify(this.cardTypes)),
-      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates))
+      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates)),
+      fonts: JSON.parse(JSON.stringify(this.fonts))
     });
     batchEnd();
     await this.open(id+'D');
@@ -4602,7 +4796,7 @@ async function deckEditorReceiveDelta(delta) {
   // deck.set() in commit() echoes back into here synchronously (before commit() even returns); reloading on
   // that self-echo would wipe out the sidebar mid-edit and revert any other property still pending a commit.
   // A delta that exactly matches the current working copy is that self-echo, not a genuine remote change.
-  const changedProperties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ].filter(property=>deckDelta[property] !== undefined && !deckEditor.matchesWorkingCopy(property));
+  const changedProperties = deckEditorWorkingCopies.filter(property=>deckDelta[property] !== undefined && !deckEditor.matchesWorkingCopy(property));
   if(!changedProperties.length)
     return;
 

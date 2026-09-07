@@ -47,6 +47,14 @@ const signatures = [
   { type: 'audio/ogg',     test: c=>matches(c, 0, 'OggS') },
   { type: 'audio/flac',    test: c=>matches(c, 0, 'fLaC') },
   { type: 'video/webm',    test: c=>matches(c, 0, [ 0x1a, 0x45, 0xdf, 0xa3 ]) },
+  // The formats a font file arrives in - a deck importing a family from Google Fonts stores one asset per
+  // style. A TrueType file opens on the version number 1.0 written as a fixed point number, or on "true" for
+  // the ones Apple's tools wrote; the other three name themselves in their first four bytes.
+  { type: 'font/ttf',      test: c=>matches(c, 0, [ 0x00, 0x01, 0x00, 0x00 ]) || matches(c, 0, 'true') },
+  { type: 'font/otf',      test: c=>matches(c, 0, 'OTTO') },
+  { type: 'font/collection', test: c=>matches(c, 0, 'ttcf') },
+  { type: 'font/woff',     test: c=>matches(c, 0, 'wOFF') },
+  { type: 'font/woff2',    test: c=>matches(c, 0, 'wOF2') },
   // an mp3 either carries an ID3 tag or starts straight on a frame header: eleven set sync bits
   { type: 'audio/mpeg',    test: c=>matches(c, 0, 'ID3') || (c[0] === 0xff && (c[1] & 0xe0) === 0xe0) },
   // SVGs are the only text format in here, and they are stored with or without an xml prolog

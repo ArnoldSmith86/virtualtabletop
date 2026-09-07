@@ -18,6 +18,29 @@ function plainTextEditable() {
   return plainTextEditableSupport;
 }
 
+// Keywords that stand for a font instead of naming one: quoting them would turn them into the name of a
+// family nobody has.
+const cssFontKeywords = [ 'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'system-ui', 'ui-serif',
+  'ui-sans-serif', 'ui-monospace', 'ui-rounded', 'math', 'emoji', 'fangsong',
+  'inherit', 'initial', 'unset', 'revert', 'revert-layer' ];
+
+// The "font" of a face object, ready to be put behind "font-family:". It is a family name (or a list of
+// them), so anything that could close the declaration and start another one is dropped rather than escaped.
+// Every name is then quoted: an unquoted family has to be a sequence of css identifiers, which no family
+// with a word starting with a digit is ("Exo 2", "Press Start 2P") - a browser drops the whole declaration
+// for those and the text silently falls back to the default font.
+// The family has to be declared somewhere the document can see it - client/css/fonts.css ships a handful,
+// and a deck declares the web fonts listed in its "fonts" property (see Deck.fontFaceCSS).
+export function cardFaceObjectFont(object) {
+  if(!object.font)
+    return '';
+  return String(object.font).split(',')
+    .map(family=>family.replace(/[;{}"'\\]/g, '').trim())
+    .filter(family=>family)
+    .map(family=>cssFontKeywords.indexOf(family.toLowerCase()) != -1 ? family : `"${family}"`)
+    .join(', ');
+}
+
 export class Card extends Widget {
   constructor(id) {
     super(id);
@@ -126,6 +149,7 @@ export class Card extends Widget {
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
     this.writeBoxes = [];
+    this.embeddedFontObjects = [];
     for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
@@ -201,6 +225,9 @@ export class Card extends Widget {
             const y = face.border ? object.y-face.border : object.y;
             let css = object.css ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
             css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
+            const font = cardFaceObjectFont(object);
+            if(font)
+              css += `; font-family: ${font}`;
             css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
             if(typeof object.display !== 'undefined' && !object.display)
               css += '; display: none';
@@ -246,8 +273,11 @@ export class Card extends Widget {
                 // nested CSS style rules.
                 const css = object['css'];
                 const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
+                // A frame is its own document, so the fonts the deck imported have to be declared in it
+                // again - the styles of the page around it do not reach inside.
+                const deckFonts = this.deck ? this.deck.fontFaceCSS() : '';
                 const html = `<!DOCTYPE html>\n` +
-                    `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
+                    `<html><head><link rel="stylesheet" href="fonts.css"><style>${deckFonts}html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: ${font ? `${font}, ` : ''}'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
                     `</style></head><body class="${object.classes || ""}">${mapAssetURLs(content)}</body></html>`;
                 objectDiv.srcdoc = html;
               } else {
@@ -339,6 +369,12 @@ export class Card extends Widget {
             return usedProperties;
           }
 
+          // A frame is its own document and carries a copy of the deck's @font-face rules (see above), so it
+          // has to be built again when the deck's fonts change - an object on the page instead picks up the
+          // rules the deck declares in the document.
+          if(useIframe)
+            this.embeddedFontObjects.push(setValue);
+
           // add a callback that makes sure dynamic property changes are reflected on the DOM
           const properties = setValue();
           if (original.svgReplaces)
@@ -360,6 +396,14 @@ export class Card extends Widget {
       this.domElement.appendChild(faceDiv);
     }
     this.updateOverflowHints();
+  }
+
+  // Called by the deck when its "fonts" change: the face objects that carry a copy of its @font-face rules
+  // instead of reading them from the document are built again, so a family added or removed also reaches the
+  // cards that are already on the table.
+  refreshEmbeddedFonts() {
+    for(const setValue of this.embeddedFontObjects || [])
+      setValue();
   }
 
   // Marks the write boxes holding more text than they show, so that css can say so (see card.css). Called
