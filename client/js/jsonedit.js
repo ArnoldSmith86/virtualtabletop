@@ -1205,6 +1205,47 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_smartCloneFlipX',
+    name: 'flip horizontally',
+    context: '^([^ ]+) ↦ editorSmartClone',
+    call: async function() {
+      const current = jeStateNow.editorSmartClone.flipX;
+      jeStateNow.editorSmartClone.flipX = '###SELECT ME###';
+      jeSetAndSelect(!current);
+    }
+  },
+  {
+    id: 'je_smartCloneFlipY',
+    name: 'flip vertically',
+    context: '^([^ ]+) ↦ editorSmartClone',
+    call: async function() {
+      const current = jeStateNow.editorSmartClone.flipY;
+      jeStateNow.editorSmartClone.flipY = '###SELECT ME###';
+      jeSetAndSelect(!current);
+    }
+  },
+  {
+    id: 'je_smartCloneReplaces',
+    name: 'add text replacement',
+    context: '^([^ ]+) ↦ editorSmartClone',
+    call: async function() {
+      if(!jeStateNow.editorSmartClone.replaces)
+        jeStateNow.editorSmartClone.replaces = {};
+      jeStateNow.editorSmartClone.replaces['SOURCE TEXT'] = '###SELECT ME###';
+      jeSetAndSelect('REPLACEMENT');
+    }
+  },
+  {
+    id: 'je_smartCloneIncludeCards',
+    name: 'include cards without their deck',
+    context: '^([^ ]+) ↦ editorSmartClone',
+    call: async function() {
+      const current = jeStateNow.editorSmartClone.includeCards;
+      jeStateNow.editorSmartClone.includeCards = '###SELECT ME###';
+      jeSetAndSelect(!current);
+    }
+  },
+  {
     id: 'je_openDeck',
     name: 'Open deck',
     icon: '[deck]',

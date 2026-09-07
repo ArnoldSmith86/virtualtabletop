@@ -248,6 +248,12 @@ function selectionChanged(previousSelection, newSelection) {
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
 
+  // A selection that reaches into a smart clone stands for the clone as a whole,
+  // so it is normalized before anything else looks at it - including the check
+  // below, which compares against selectedWidgets and therefore has to see the
+  // same normalized form.
+  const smartClonedWidgets = smartCloneProcessSelection(newSelectedWidgets);
+
   // Whatever the editor has open belongs to the widget that was being edited, so
   // moving on to another one takes it along: the sound library is an overlay
   // that outlives the editor it was opened from (it does not cover the sidebar,
@@ -261,11 +267,11 @@ function setSelection(newSelectedWidgets) {
   // link something else than the editor moving on, so it ends with its popup.
   endWidgetPickerWithoutTarget();
   const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
-                        && selectionChanged(previousSelectedWidgets, newSelectedWidgets);
+                        && selectionChanged(previousSelectedWidgets, smartClonedWidgets);
   if(editorMovedOn)
     cancelAudioPicker();
 
-  selectedWidgets = newSelectedWidgets;
+  selectedWidgets = smartClonedWidgets;
 
   // before the modules are notified: the panels they build carry a selection bar
   // that shows where in the history the editor now is
@@ -335,6 +341,7 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
@@ -344,6 +351,9 @@ function receiveStateFromServer(state) {
   // with the dead widgets already dropped, so nothing re-renders an editor for
   // one of them and follows its dangling links (a card looks up its deck).
   // The selection survives leaving edit mode, so this happens while playing too.
+  // The smart clones are rebuilt from the new widgets for the same reason: the
+  // map they are tracked in still points at the replaced ones.
+  smartCloneInit();
   deckEditorStateReplaced();
   endDrill();
   setSelection([]);

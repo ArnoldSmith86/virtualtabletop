@@ -1,6 +1,11 @@
 class CloneDragButton extends DragButton {
-  constructor() {
-    super('content_copy', 'Clone', 'Drag to clone the selected widgets into a grid.');
+  constructor(smartClone = false) {
+    if(smartClone) {
+      super('auto_awesome', 'Smart clone', 'Drag to clone the selected widgets into a grid and keep the copies updated.');
+    } else {
+      super('content_copy', 'Clone', 'Drag to clone the selected widgets into a grid.');
+    }
+    this.smartClone = smartClone;
     this.clones = [];
   }
 
@@ -137,8 +142,8 @@ class CloneDragButton extends DragButton {
       const offsetY = this.useGridSteps ? Math.round(this.gridStepY * signY) : (signY ? Math.round(this.dy / getScale() * signY) : 0);
       const clonedWidgets = await duplicateWidget(
         widget,
-        true,
-        useInheritFrom,
+        !this.smartClone,
+        useInheritFrom && !this.smartClone,
         inheritProperties,
         'Numbers',
         'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text'.split(','),
@@ -161,12 +166,23 @@ class CloneDragButton extends DragButton {
                 await clonedWidget.set(p, snapped.grid[p]);
           }
         }
-        newSelection.push(...clonedWidgets);
+      if(this.smartClone) {
+        for(const clone of clonedWidgets) {
+          for(const property in clone.state)
+            if(!['x', 'y', 'rotation', 'parent', 'type', 'id'].includes(property))
+              await clone.set(property, null);
+          const def = inheritDef(widget);
+          const exceptions = typeof def == 'object' ? def[widget.get('id')] : [];
+          await clone.set('inheritFrom', { [widget.get('id')]: [...new Set([ '!x', '!y', '!rotation', '!parent', ...exceptions ])] });
+          await clone.set('editorSmartClone', {});
+        }
       }
+      newSelection.push(...clonedWidgets);
+    }
 
-      const selectedIds = new Set(newSelection.map(w => w.get('id')));
-      const filteredSelection = newSelection.filter(w => !selectedIds.has(w.get('parent')));
-      setSelection(filteredSelection);
+    const selectedIds = new Set(newSelection.map(w => w.get('id')));
+    const filteredSelection = newSelection.filter(w => !selectedIds.has(w.get('parent')));
+    setSelection(filteredSelection);
   }
 
   removeAllClones() {
