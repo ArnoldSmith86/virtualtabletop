@@ -4453,6 +4453,567 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
   await setEditorState(null);
 });
 
+// The list is a click away and takes the stack where the pointer came to rest,
+// which the panel it replaces did not: that one stood permanently in the JSON
+// editor and followed every mouse move. Holding Ctrl is that panel back.
+// testcafe cannot hold a key down across other actions, so the two events the
+// peek is built on are dispatched by hand - together with the modifier state a
+// real browser would carry into whatever is pressed in between.
+const holdPeekKey = ClientFunction(down => {
+  window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key: 'Control', ctrlKey: down, bubbles: true, cancelable: true }));
+});
+// A real browser carries the modifier state into the mouse events as well, which
+// is what opens the list when the key went down before the pointer ever reached
+// the room. The move is dispatched on the element it lands on, since testcafe
+// cannot hold a key down across a hover either. Given several selectors the
+// pointer travels over them one frame at a time: the list takes the stack of
+// every spot on the way, and no spot is held long enough to count as the pointer
+// having come to rest on it - which is the trip to a row of the list, and which
+// a hover cannot do either since it moves at a speed of its own.
+const movePointerWithPeekKey = ClientFunction(selectors => {
+  const move = selector => {
+    const rect = document.querySelector(selector).getBoundingClientRect();
+    const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
+    document.elementFromPoint(x, y).dispatchEvent(new MouseEvent('mousemove', { clientX: x, clientY: y, ctrlKey: true, bubbles: true }));
+  };
+  const frame = _=>new Promise(resolve=>requestAnimationFrame(_=>requestAnimationFrame(resolve)));
+  return [].concat(selectors).reduce((chain, selector)=>chain.then(_=>{ move(selector); return frame(); }), Promise.resolve());
+});
+const pressKeyWithoutPeekKey = ClientFunction(key => {
+  const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
+});
+const pressKeyWithPeekKey = ClientFunction(key => {
+  const event = new KeyboardEvent('keydown', { key, ctrlKey: true, bubbles: true, cancelable: true });
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
+});
+// The list must not be there in the same tick the key goes down: a chord starts
+// with the same key, and a dropdown the width of the panel flashing over it for
+// the length of a keystroke is what the hold has to be told apart from.
+const peekKeyDownOpensListAtOnce = ClientFunction(_=>{
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Control', ctrlKey: true, bubbles: true, cancelable: true }));
+  return document.querySelector('#editorModuleTopLeft .selectionBar').classList.contains('stackVisible');
+});
+const pressEscapeWithPeekKey = ClientFunction(_=>{
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', ctrlKey: true, bubbles: true, cancelable: true }));
+});
+const pressFunctionKeyWithPeekKey = ClientFunction((key, shift) => {
+  const event = new KeyboardEvent('keydown', { key, ctrlKey: true, shiftKey: !!shift, bubbles: true, cancelable: true });
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
+});
+// A turn of the wheel where the pointer is, dispatched on the element under it
+// so it travels the same way a real one does - the room's zoom-to-cursor listens
+// on #roomArea on the way back up. Returns whether the event was used up.
+const turnWheel = ClientFunction((selector, deltaY, withPeekKey) => {
+  const rect = document.querySelector(selector).getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
+  const event = new WheelEvent('wheel', { deltaY, ctrlKey: withPeekKey, clientX: x, clientY: y, bubbles: true, cancelable: true });
+  document.elementFromPoint(x, y).dispatchEvent(event);
+  return event.defaultPrevented;
+});
+// A click of the middle button where the pointer is, dispatched on the element
+// under it the way the wheel turn above is. The release goes with it, or a press
+// the room did get to see would leave the widget latched into a drag. Returns
+// whether the list took the press: the room's own input handling listens on the
+// window on the way back up, so a press the list used up never gets there - and
+// the room preventDefault()s everything it does see, which makes the default the
+// wrong thing to ask about here.
+const pressMiddleButton = ClientFunction((selector, withPeekKey, shift) => {
+  const rect = document.querySelector(selector).getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width/2), y = Math.round(rect.top + rect.height/2);
+  const options = { button: 1, buttons: 4, ctrlKey: withPeekKey, shiftKey: !!shift, clientX: x, clientY: y, bubbles: true, cancelable: true };
+  const target = document.elementFromPoint(x, y);
+  let reachedRoom = false;
+  const spy = _=>{ reachedRoom = true; };
+  window.addEventListener('mousedown', spy);
+  target.dispatchEvent(new MouseEvent('mousedown', options));
+  window.removeEventListener('mousedown', spy);
+  target.dispatchEvent(new MouseEvent('mouseup', Object.assign({}, options, { buttons: 0 })));
+  return !reachedRoom;
+});
+const roomZoom = ClientFunction(_=>getComputedStyle(document.documentElement).getPropertyValue('--zoom').trim());
+const storedStackOpen = ClientFunction(_=>{
+  const state = JSON.parse(localStorage.getItem('editorState') || '{}');
+  return !!(state.selectionBar || {}).stackOpen;
+});
+const storedTreeOpen = ClientFunction(_=>{
+  const state = JSON.parse(localStorage.getItem('editorState') || '{}');
+  return !!(state.selectionBar || {}).treeOpen;
+});
+
+test('Holding Ctrl opens the stack list and has it follow the pointer', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+  const tree = Selector('#editorModuleTopLeft .selectionBarTree #jeTree');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_checker')
+    .expect(bar.hasClass('stackVisible')).notOk()
+    // the key says "what is under the pointer", so it does nothing while the
+    // pointer is not in the room - a dropdown covers the panel it hangs in, and
+    // a Ctrl+click in the sidebar must not have the list drop onto it
+    .hover(bar.find('.selectionBarCrumbs'));
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await holdPeekKey(false);
+
+  // the same key starts Ctrl+Z, Ctrl+J and every other chord of the editor, so
+  // it has to be held to mean the list: nothing drops over the panel in the tick
+  // the key goes down
+  await t.hover('#w_checker');
+  await t
+    .expect(peekKeyDownOpensListAtOnce()).notOk()
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(3)
+    // nothing else holds the keyboard here, so the arrows and Enter reach the
+    // list and the help line offers them
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('step through the list')
+    // and it follows the pointer while the key is down instead of standing on
+    // the spot the pointer last came to rest on
+    .hover('#w_board', { offsetX: 20, offsetY: 20 })
+    .expect(stackRows.count).eql(1)
+    .expect(stackRows.nth(0).textContent).contains('board')
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3)
+    // the key that holds the list open is not read as a modifier while it does,
+    // so the keys of the rows mean what the rows say they mean: the key of a row
+    // selects it, and Shift with that key adds it to the selection
+    .expect(pressFunctionKeyWithPeekKey('F3')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk()
+    .expect(pressFunctionKeyWithPeekKey('F1', true)).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+
+  await holdPeekKey(false);
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    // a list that only stood while the key was down is not the dropdown that
+    // comes back with the module the next time it is opened
+    .expect(storedStackOpen()).notOk();
+
+  // a chord is the key plus a key the list knows nothing about, and it leaves
+  // the list away for the rest of the hold rather than opening it once the chord
+  // is over. The letter stands for Ctrl+Z, Ctrl+J and the rest of them - it is
+  // one the editor has no shortcut on, so the room it is typed over is left
+  // exactly as it was.
+  await t.hover('#w_checker');
+  await holdPeekKey(true);
+  await pressKeyWithPeekKey('q');
+  await t
+    .wait(600)
+    .expect(bar.hasClass('stackVisible')).notOk();
+  // the list stays away, but the stack behind it goes on being taken where the
+  // pointer rests: the count on the button and the widget an F key addresses are
+  // the ones under the pointer now, not the ones it was over when the chord was
+  // typed. The move carries the key that is still held, the way a real one does.
+  await movePointerWithPeekKey('#w_board');
+  await t
+    .expect(bar.find('.selectionBarStackCount').textContent).eql('1')
+    .expect(pressFunctionKeyWithPeekKey('F1')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk()
+    .expect(bar.hasClass('stackVisible')).notOk();
+  await holdPeekKey(false);
+  // pressed again, on its own, it opens as before
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).ok();
+
+  // Escape puts a peeked list away like any other, and the key that is still
+  // held must not bring it straight back
+  await pressEscapeWithPeekKey();
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await movePointerWithPeekKey('#w_checker');
+  await t
+    .wait(600)
+    .expect(bar.hasClass('stackVisible')).notOk();
+  await holdPeekKey(false);
+
+  // an OS-level menu or shortcut can take the keyup without ever blurring the
+  // window, which would leave the list latched open and scanning every frame -
+  // the next keystroke says the key is not down after all
+  await t.hover('#w_checker');
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).ok();
+  await pressKeyWithoutPeekKey('Control');
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+
+  // a list somebody opened themselves is only made live by the key, and stays
+  // open when it is let go
+  await t
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(3);
+  await holdPeekKey(true);
+  await holdPeekKey(false);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(storedStackOpen()).ok()
+    .click(bar.find('button[icon=layers]'));
+
+  // the tree is the other dropdown and they share the space below the bar, so
+  // showing the list where the tree is would mean taking the tree down - which
+  // is somebody's filter box, keyboard and scroll position. The key leaves it
+  // standing and only makes the stack follow the pointer.
+  await t
+    .click(bar.find('button[icon=account_tree]'))
+    .expect(tree.exists).ok()
+    .expect(activeElementID()).eql('jeWidgetSearchBox')
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    // with no list on screen the button the stack belongs to is what says the
+    // key is doing anything
+    .expect(bar.find('button[icon=layers]').hasClass('peeking')).ok()
+    .expect(tree.exists).ok()
+    .expect(bar.hasClass('stackVisible')).notOk()
+    // so a capital typed into the filter box still goes into it
+    .expect(activeElementID()).eql('jeWidgetSearchBox')
+    .expect(storedTreeOpen()).ok();
+  await holdPeekKey(false);
+  await t
+    .expect(bar.find('button[icon=layers]').hasClass('peeking')).notOk()
+    .expect(tree.exists).ok()
+    .expect(storedTreeOpen()).ok()
+    .click(bar.find('button[icon=account_tree]'));
+  await setEditorState(null);
+});
+
+// Reading a widget's name off the room while the caret sits in the JSON text
+// area is what the panel this list replaces was there for, so the key works
+// with the keyboard in a text field - it takes nothing away from it.
+test('The peek key works with the caret in the JSON text area', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    checker: { id: 'checker', type: 'basic', x: 40, y: 60, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_checker')
+    .click('#jeText')
+    .expect(activeElementID()).eql('jeText')
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(2)
+    // the caret stays where it was: the list is a dropdown of the bar, not
+    // something that takes the keyboard off what is being typed in
+    .expect(activeElementID()).eql('jeText')
+    // ... and the keys of the list reach it all the same while the key holds it
+    // open, which is the whole posture: caret in a line of JSON, pointer on a
+    // widget. The arrows step the rows and the caret stays where it is.
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('or the wheel step through the list');
+  await t.expect(await pressKeyWithPeekKey('ArrowDown')).ok();
+  await t
+    .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
+    .expect(activeElementID()).eql('jeText');
+  await pressKeyWithPeekKey('ArrowDown');
+  await t.expect(stackRows.nth(1).hasClass('selectionBarKeyRow')).ok();
+  await pressKeyWithPeekKey('ArrowUp');
+  await t
+    .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
+    .expect(activeElementID()).eql('jeText')
+    .hover('#w_board', { offsetX: 20, offsetY: 20 })
+    .expect(stackRows.count).eql(1);
+  await holdPeekKey(false);
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .expect(activeElementID()).eql('jeText')
+    .expect(storedStackOpen()).notOk();
+
+  // Putting the caret on a line leaves the pointer over the editor, so in this
+  // module the key is normally down before the pointer gets anywhere near the
+  // room: the pointer arriving there has to open the list just as the key going
+  // down does.
+  await t.hover(bar.find('.selectionBarCrumbs'));
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await movePointerWithPeekKey('#w_checker');
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(2)
+    .expect(activeElementID()).eql('jeText');
+  await holdPeekKey(false);
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await setEditorState(null);
+});
+
+// Getting to a row of the list means taking the pointer off the widget it was
+// read on and across the rest of the room, and a list that followed it all the
+// way out would be showing whatever it crossed by the time the pointer arrived -
+// the row that was aimed at gone from under the click.
+test('The peeked list stops on the stack the pointer last rested on', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    checker: { id: 'checker', type: 'basic', x: 40, y: 60, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(stackRows.count).eql(2)
+    .expect(stackRows.nth(0).find('.selectionBarStackId').textContent).eql('checker');
+
+  // the trip to a row: across the middle of the board, where the checker is not,
+  // and out of the room. The list takes the board on the way, and is back on the
+  // stack it was read at by the time the pointer is out
+  await movePointerWithPeekKey([ '#w_board', '#editorModuleTopLeft .selectionBarCrumbs' ]);
+  await t
+    .expect(stackRows.count).eql(2)
+    .expect(stackRows.nth(0).find('.selectionBarStackId').textContent).eql('checker')
+    .expect(bar.find('.selectionBarStackHelp').textContent).notContains('Following the pointer');
+  await holdPeekKey(false);
+  await setEditorState(null);
+});
+
+// The hand that holds the key is on the mouse, so the wheel walks the list the
+// way the arrow keys do - and the room's zoom-to-cursor, which is what a turn of
+// the wheel means there otherwise, gives way for as long as the key is held.
+test('The wheel steps the peeked list instead of zooming the room', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .hover('#w_checker');
+  const zoom = await roomZoom();
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(3);
+
+  await t.expect(await turnWheel('#w_checker', 120, true)).ok();
+  await t
+    .expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok()
+    // the row the wheel is on is outlined in the room, the way the arrows do it
+    .expect(Selector('#w_checker').hasClass('selectionBarHover')).ok()
+    .expect(roomZoom()).eql(zoom);
+  await turnWheel('#w_checker', 120, true);
+  await turnWheel('#w_checker', 120, true);
+  await t.expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok();
+  // it wraps at the end of the list and turns back the other way
+  await turnWheel('#w_checker', 120, true);
+  await t.expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok();
+  await turnWheel('#w_checker', -120, true);
+  await t.expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok();
+  await holdPeekKey(false);
+
+  // with the list gone the wheel is the room zoom again
+  await t.expect(bar.hasClass('stackVisible')).notOk();
+  await t.expect(await turnWheel('#w_checker', -120, false)).ok();
+  await t.expect(roomZoom()).notEql(zoom);
+  await setEditorState(null);
+});
+
+// Stepping the list with the wheel leaves the hand on the mouse, so the middle
+// button takes the row it landed on - the same thing Enter does on it, and the
+// half of the gesture that keeps the pointer on the widget being read.
+test('The middle mouse button takes the row the wheel stepped to', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic',  x: 0,   y: 0,   width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    point:   { id: 'point',   type: 'holder', x: 300, y: 200, width: 200,  height: 400, classes: 'transparent' },
+    checker: { id: 'checker', type: 'basic',  x: 40,  y: 60,  width: 100,  height: 100, parent: 'point' }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_board')
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(stackRows.count).eql(3)
+    // the help line names the button next to the key that does the same thing
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('Enter or the middle mouse button selects');
+
+  // a press that no key and no wheel has aimed at a row is left where it was:
+  // in edit mode the middle button is what plays a widget
+  await t.expect(await pressMiddleButton('#w_checker', true)).notOk();
+  await t.expect(Selector('#w_checker').hasClass('selectedInEdit')).notOk();
+
+  await turnWheel('#w_checker', 120, true);
+  await turnWheel('#w_checker', 120, true);
+  await t.expect(stackRows.nth(1).hasClass('selectionBarKeyRow')).ok();
+  await t.expect(await pressMiddleButton('#w_checker', true)).ok();
+  await t
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).notOk();
+
+  // Shift with it adds the row to the selection, the way it does with Enter
+  await turnWheel('#w_checker', 120, true);
+  await t.expect(stackRows.nth(2).hasClass('selectionBarKeyRow')).ok();
+  await t.expect(await pressMiddleButton('#w_checker', true, true)).ok();
+  await t
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).ok()
+    .expect(Selector('#w_point').hasClass('selectedInEdit')).ok();
+
+  // out on a row of the list the pointer has a row of its own to click, so the
+  // button is left to whatever it means in the editor
+  await movePointerWithPeekKey([ '#editorModuleTopLeft .selectionBarCrumbs' ]);
+  await t.expect(await pressMiddleButton('#editorModuleTopLeft .selectionBarStackRow', true)).notOk();
+  await holdPeekKey(false);
+
+  // and with nothing holding the list open the button is the room's again
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .hover('#w_checker');
+  await t.expect(await pressMiddleButton('#w_checker', false)).notOk();
+  await setEditorState(null);
+});
+
+// The list only has the arrow keys for as long as the key is held: they belong
+// to whatever owns the keyboard, and with the caret in a line of JSON that is
+// the text area. A keystroke that reports the key as up hands them back - which
+// is also what puts a list away whose keyup went to an OS-level shortcut.
+test('The arrow keys go back to the caret when the peek key is let go of', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    checker: { id: 'checker', type: 'basic', x: 40, y: 60, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_checker')
+    .click('#jeText')
+    .hover('#w_checker');
+  await holdPeekKey(true);
+  await t.expect(bar.hasClass('stackVisible')).ok();
+  await t.expect(await pressKeyWithPeekKey('ArrowDown')).ok();
+  await t.expect(stackRows.nth(0).hasClass('selectionBarKeyRow')).ok();
+
+  await t.expect(await pressKeyWithoutPeekKey('ArrowDown')).notOk();
+  await t
+    .expect(bar.hasClass('stackVisible')).notOk()
+    .expect(activeElementID()).eql('jeText');
+  await setEditorState(null);
+});
+
+// Pasting the id of a row into the JSON text is what Ctrl has always meant here,
+// and it is now also the key that holds the peeked list open. Which of the two it
+// is is decided by where the pointer is: from a row of the list - or anywhere
+// else outside the room - it is the modifier, whether the list was opened by hand
+// or is being held open by the key.
+test('Ctrl pastes the id of a row into the JSON text from outside the room', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    board:   { id: 'board',   type: 'basic', x: 0,  y: 0,  width: 1600, height: 1000, layer: -4, movableInEdit: false },
+    checker: { id: 'checker', type: 'basic', x: 40, y: 60, width: 100,  height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  const bar = Selector('#editorModuleTopLeft .selectionBar');
+  const stackRows = bar.find('.selectionBarStackRow');
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_checker')
+    .click(bar.find('button[icon=layers]'))
+    .hover('#w_checker')
+    .expect(stackRows.count).eql(2)
+    // the rows say so themselves while the JSON editor is what an id would go into
+    .expect(stackRows.nth(1).getAttribute('title')).contains('Ctrl+click pastes the id')
+    // travelling to the list takes the pointer out of the room, which is where
+    // the key goes back to being the modifier
+    .hover(stackRows.nth(1));
+  await putCursorBehind('"width": 100');
+  await t
+    .expect(pressFunctionKeyWithPeekKey('F2')).ok()
+    .expect(jsonEditorText()).contains('"width": 100board')
+    // the row the key names pastes the same id when it is clicked with Ctrl
+    .expect(Selector('#w_board').hasClass('selectedInEdit')).notOk();
+  await putCursorBehind('"width": 100');
+  await t
+    .click(stackRows.nth(0), { modifiers: { ctrl: true } })
+    .expect(jsonEditorText()).contains('"width": 100checker')
+    .expect(Selector('#w_checker').hasClass('selectedInEdit')).ok();
+
+  // a list the key is holding open is no different once the pointer is on one of
+  // its rows: it stopped following the pointer when that left the room, and it
+  // says so rather than going on claiming to follow it
+  await t.hover('#w_checker');
+  await holdPeekKey(true);
+  await t
+    .expect(bar.hasClass('stackVisible')).ok()
+    .expect(bar.find('.selectionBarStackHelp').textContent).contains('Following the pointer')
+    .hover(stackRows.nth(0))
+    .expect(bar.find('.selectionBarStackHelp').textContent).notContains('Following the pointer');
+  // the list stops on the stack the pointer set out from, but a hover travels at
+  // a speed of its own and can come to rest again on the way, so which widget the
+  // top row names is read off the list rather than assumed
+  const rowID = await stackRows.nth(0).find('.selectionBarStackId').textContent;
+  await putCursorBehind('"width": 100');
+  await t
+    .click(stackRows.nth(0), { modifiers: { ctrl: true } })
+    .expect(jsonEditorText()).contains(`"width": 100${rowID}`);
+  await holdPeekKey(false);
+  await setEditorState(null);
+});
+
 // What the panel paints under an open dropdown. A widget preview is a real
 // widget, so it carries the widget's own z-index ((layer + 10) * 100000 + z) -
 // which, off the table, beats everything the module draws around it. The seat
