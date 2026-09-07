@@ -525,6 +525,8 @@ async function addBag(o, imp, parent) {
     id,
     parent: bagID,
     type: 'holder',
+    // the contents pile up in place like they do inside a TTS bag
+    layout: 'custom',
     // the button positions its children inside its 4px border, and a holder that is
     // wider than the button hangs over both of its sides evenly
     x: Math.round(-4 + (130-width)/2),
@@ -997,6 +999,8 @@ async function convertTTS(content, linkContent, workshop={}) {
     widgets.hand = {
       id: 'hand',
       type: 'holder',
+      // the classic hand fan the stack offset below describes
+      layout: 'custom',
       onEnter: { activeFace: 1 },
       onLeave: { activeFace: 0 },
       dropOffsetX: 10,

@@ -7,6 +7,7 @@ export default {
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   projects: ["<rootDir>/client"],
+  setupFiles: ['<rootDir>/tests/client/pre-setup.js'],
   setupFilesAfterEnv: ['<rootDir>/tests/client/setup.js'],
   testEnvironment: "<rootDir>/tests/jsdom-environment.mjs",
   // the server modules are tested in the jsdom environment as well, so dependencies have

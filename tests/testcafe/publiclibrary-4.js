@@ -7,4 +7,4 @@ publicLibraryButtons('Functions - SCORE', 0, '6b5ebb760203e9a73da57674d21115aa',
 publicLibraryButtons('Types - Scoreboard', 2, 'd6b973dc8ddf23c68e5b87dc376d2b21', [ 'button1', 'button2', 'button3', 'button4']);
 
 publicLibraryButtons('Types - Dice', 0, 'c2baa316f0f7e04f64af7701cd41b0a9', [ 'dice3', 'dice4', 'dice5',]);
-publicLibraryButtons('Types - Dice', 3, '92066ae0af20d6e26ef447d024fb740a', [ 'dice2', 'dice1', 'button2', 'dice4']);
+publicLibraryButtons('Types - Dice', 3, 'e5c90ed263af12f3bc1557cedc62759e', [ 'dice2', 'dice1', 'button2', 'dice4']);
