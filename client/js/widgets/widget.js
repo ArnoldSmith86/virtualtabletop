@@ -4,7 +4,7 @@ import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
-import { tracingEnabled } from '../tracing.js';
+import { describeError, reportErrorSilently, tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
@@ -87,8 +87,7 @@ function collectUnnamedWidgetStyles() {
   for(const [ scope, element ] of unnamedWidgetStyles) {
     if(element.isConnected)
       continue;
-    if($(`#STYLES_${scope}`))
-      removeFromDOM($(`#STYLES_${scope}`));
+    removeFromDOM($(`#STYLES_${scope}`));
     unnamedWidgetStyles.delete(scope);
   }
 }
@@ -417,17 +416,41 @@ export class Widget extends StateManaged {
     // resolving the property again
     if(this.deck)
       this.deck.removeCard(this);
-    if($(`#STYLES_${this.cssScope}`))
-      removeFromDOM($(`#STYLES_${this.cssScope}`));
+    removeFromDOM($(`#STYLES_${this.cssScope}`));
     removeFromDOM(this.domElement);
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
   }
 
-  applyRemoveRecursive() {
+  // `removed` keeps a widget from being torn down twice when it is reached both as the
+  // child of another widget and as a widget the caller starts from, and ends the recursion
+  // on a parent/child cycle. A widget that cannot be removed must not take the rest of the
+  // tree with it, so every widget is torn down on its own.
+  applyRemoveRecursive(removed=new Set()) {
+    if(removed.has(this))
+      return;
+    removed.add(this);
     for(const child of Widget.prototype.children.call(this)) // use Widget.children even for holders so it doesn't filter
-      child.applyRemoveRecursive();
-    this.applyRemove();
+      child.applyRemoveRecursive(removed);
+    try {
+      this.applyRemove();
+    } catch(e) {
+      console.error(`Could not remove widget!`, this.id, e);
+      reportErrorSilently(`Could not remove widget ${this.id}\n${describeError(e, 'Unknown error')}`);
+      try {
+        // applyRemove can throw before it gets around to any part of its cleanup, so redo what
+        // does not depend on the widget being intact: an object of a room that is gone must not
+        // stay painted on the next one, and it must not keep listening for its updates either.
+        // Whatever of that fails in turn must not escape either - one widget cannot be allowed
+        // to take the teardown of the whole room with it, no matter where it breaks.
+        removeFromDOM($(`#STYLES_${this.cssScope}`));
+        removeFromDOM(this.domElement);
+        this.inheritFromUnregister();
+        this.globalUpdateListenersUnregister();
+      } catch(fallbackError) {
+        console.error(`Could not clean up after a widget that failed to be removed!`, this.id, fallbackError);
+      }
+    }
   }
 
   applyZ(force) {
@@ -657,8 +680,7 @@ export class Widget extends StateManaged {
   }
 
   css() {
-    if($(`#STYLES_${this.cssScope}`))
-      removeFromDOM($(`#STYLES_${this.cssScope}`));
+    removeFromDOM($(`#STYLES_${this.cssScope}`));
     const usedProperties = new Set();
     let css = this.cssReplaceProperties(this.cssAsText(this.get('css'), usedProperties), usedProperties);
     this.propertiesUsedInProperty['css'] = Array.from(usedProperties);
