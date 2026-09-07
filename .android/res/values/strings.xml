@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">VirtualTabletop</string>
+  <string name="logo_description">VirtualTabletop</string>
+  <string name="install">Install</string>
+  <string name="update">Update</string>
+  <string name="start_server">Start server</string>
+  <string name="quit">Quit</string>
+  <string name="open">Open</string>
+  <string name="share">Share</string>
+  <string name="share_title">VirtualTabletop room</string>
+  <string name="notification_channel">Server status</string>
+  <string name="notification_title">VirtualTabletop is running</string>
+  <string name="notification_starting">VirtualTabletop is starting</string>
+  <string name="notification_installing">VirtualTabletop is installing</string>
+  <string name="notification_updating">VirtualTabletop is updating</string>
+  <string name="toast_address_changed">The network changed - restarting the server on %1$s</string>
+  <string name="state_not_installed">Not installed yet</string>
+  <string name="hint_not_installed">Install downloads Node.js, git and VirtualTabletop. It needs an internet connection once - after that the server runs offline.</string>
+  <string name="storage_warning">Only %1$s of storage are free on this phone. The installation takes about %2$s, so it may well run out of space - free some room first.</string>
+  <string name="state_installing">Installing</string>
+  <string name="state_updating">Updating</string>
+  <string name="state_starting">Starting the server</string>
+  <string name="state_ready">Ready to play</string>
+  <string name="state_running">Players open this address</string>
+  <string name="state_install_failed">The installation stopped</string>
+  <string name="state_update_failed">The update stopped</string>
+  <string name="state_server_failed">The server stopped</string>
+  <string name="hint_ready">Start the server and open the room on any device in the same network.</string>
+  <string name="hint_starting">Node.js takes a few seconds to come up on a phone.</string>
+  <string name="hint_failed">%1$s\n\nPress %2$s again to carry on where it stopped.</string>
+  <string name="hint_server_failed">%1$s\n\nPress %2$s to try again.</string>
+  <string name="address_description">Open the room in the browser</string>
+  <string name="confirm_quit_title">Quit VirtualTabletop</string>
+  <string name="confirm_quit_running">The server stops and everyone playing is disconnected. The rooms are saved and are still there next time.</string>
+  <string name="confirm_quit_working">The download stops where it is. Nothing that arrived is lost - pressing the button again later carries on from there.</string>
+  <string name="introduction">Just want to play? Open virtualtabletop.io in a browser - that is the game itself, always up to date, and it needs no app at all.\n\nThis app is for playing with no internet around. It runs the VirtualTabletop server on this phone, so the phone, a tablet and a laptop on the same WiFi - or on this phone\'s hotspot - can play together on a train, in a garden or anywhere else offline.\n\nInstall fetches Node.js, git and VirtualTabletop once. That needs a connection and about %1$s of storage, and everything it does is printed here. It can be pressed again to carry on if the connection breaks. Start server then hands out the address the other devices open.\n\nThank you to the Termux project (termux.dev): Node.js and git for Android are their work, built and kept up to date by them, and this app simply installs their packages.</string>
+</resources>

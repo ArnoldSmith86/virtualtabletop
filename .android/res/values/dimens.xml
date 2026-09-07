@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="screen_padding">20dp</dimen>
+  <!-- the logo is given a height rather than the screen's width, so that a wide screen does not
+       turn it into a banner that pushes the console and the buttons off the bottom -->
+  <dimen name="logo_height">72dp</dimen>
+  <dimen name="logo_margin_top">8dp</dimen>
+  <dimen name="logo_margin_bottom">24dp</dimen>
+</resources>
