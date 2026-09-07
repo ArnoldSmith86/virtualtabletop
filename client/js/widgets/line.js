@@ -58,6 +58,63 @@ export class Line extends Widget {
     }
   }
 
+  // A state whose stops carry no coordinates - or coordinates that stopped
+  // matching the path, e.g. because the line was reshaped after the save - would
+  // otherwise render them all in the line's top left corner until a player or
+  // the editor touches something. The room is complete here, which the line
+  // itself being added is not: its stops usually arrive after it.
+  async onStateLoaded() {
+    // A stop the state does not contain is dropped by stopList, so laying the
+    // line out would write that shortened list back and lose the entry for good.
+    // Nobody asked for a layout here, so leave a save that names one alone.
+    if(this.stopsMissingFromRoom())
+      return;
+
+    // A stop that is not a child of the line is placed through the CSS
+    // transforms of its frame and of the line's, read out of the DOM - and a
+    // line inside an owner / onlyVisibleForSeat / display:false chain is not
+    // rendered at all on part of the clients, which all run this. Placing those
+    // would let whoever happens to load the room decide where they end up for
+    // everybody, so they stay with the interactions that position them.
+    if(this.hasExternalStops())
+      return;
+
+    if(!this.stopsOffPath())
+      return;
+
+    await this.layoutStops();
+  }
+
+  // an entry of the stops list whose widget is not part of the room
+  stopsMissingFromRoom() {
+    const stops = this.get('stops');
+    return Array.isArray(stops) && stops.some(entry=>entry && typeof entry == 'object' && !widgets.has(entry.widget));
+  }
+
+  // Whether any stop sits somewhere other than where the line puts it - the same
+  // coordinates and rotation positionAttachedWidgets writes, compared instead of
+  // assigned.
+  stopsOffPath() {
+    return this.stopList().some(entry=>{
+      const stop = widgets.get(entry.widget);
+      const point = this.stopCoordInParentFrame(stop, this.pointAtPosition(entry.position));
+      return Math.round(point.x - stop.get('width')/2) != stop.get('x')
+          || Math.round(point.y - stop.get('height')/2) != stop.get('y')
+          || this.stopRotationOffPath(stop, entry.position);
+    });
+  }
+
+  // A stop the line turns onto the path is off it while it carries any other
+  // rotation - a save that only stores where a stop sits would otherwise load it
+  // unrotated and snap it onto the tangent on the first interaction. A stop the
+  // line does not turn is off it while the line still holds the rotation it took
+  // over earlier, which a layout hands back.
+  stopRotationOffPath(stop, position) {
+    if(this.shouldRotateStops())
+      return (+stop.get('rotation') || 0) != this.stopRotationOnPath(stop, position);
+    return stop.get('lineOriginalRotation') !== null;
+  }
+
   isEllipse() {
     return this.get('lineShape') == 'ellipse';
   }

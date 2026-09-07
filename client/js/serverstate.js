@@ -25,6 +25,21 @@ let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
 
+// the undo entry a state load pushes - and the cause of what the widgets write
+// while they finish loading, so it merges into that entry instead of coming
+// between the player and their own last action
+const stateLoadCause = 'received complete room state';
+
+// set() dispatches the change and global-update routines a game defines. While
+// the widgets of an arriving state finish loading it does not: what they write
+// there is the engine making the state render the way it was saved, not the game
+// changing anything. Every client loads the same state, so a stop's
+// xChangeRoutine would otherwise run once per client just because somebody
+// opened the room - and an INPUT or DELAY in it would hold the load batch, and
+// with it the game start routines, open until that client answers it.
+// applyInitialDelta leaves them out for the state itself for the same reason.
+export let dispatchChangeRoutines = true;
+
 function normalizeRoomID(roomID) {
   if(!config.roomNamesCaseSensitive)
     roomID = roomID.toLowerCase();
@@ -465,7 +480,7 @@ function addStateEntryToUndoProtocol(state) {
     }
   }
 
-  undoProtocol.push({ delta: {s:redoDelta,c:'received complete room state'}, undoDelta });
+  undoProtocol.push({ delta: {s:redoDelta,c:stateLoadCause}, undoDelta });
 }
 
 function getUndoProtocol() {
@@ -599,15 +614,48 @@ function receiveStateFromServer(args) {
 
   cancelInputOverlay();
 
-  if(triggerGameStartRoutineOnNextStateLoad) {
-    triggerGameStartRoutineOnNextStateLoad = false;
-    (async function() {
+  const runGameStartRoutines = triggerGameStartRoutineOnNextStateLoad;
+  triggerGameStartRoutineOnNextStateLoad = false;
+
+  (async function() {
+    // the game start routines are what the loaded room does next, so they run
+    // whether or not the widgets managed to finish loading
+    try {
+      await finishLoadingWidgets();
+    } catch(e) {
+      console.error(`Could not finish loading the room!`, e);
+    }
+
+    if(runGameStartRoutines) {
       batchStart();
       for(const [ id, w ] of widgets)
         if(w.get('gameStartRoutine'))
           await w.evaluateRoutine('gameStartRoutine', { widgetID: id }, { widget: [ w ] });
       batchEnd();
-    })();
+    }
+  })();
+}
+
+// The widgets of a state are added one by one, so a widget that needs the others
+// - a line placing its stops on its path, for example - can only do its part
+// once they are all there. One batch for all of them, and before the game start
+// routines, which expect a room that is done loading.
+export async function finishLoadingWidgets() {
+  batchStart();
+  setDeltaCause(stateLoadCause);
+  const dispatchAfterwards = dispatchChangeRoutines;
+  dispatchChangeRoutines = false;
+  try {
+    for(const w of [ ...widgets.values() ]) {
+      try {
+        await w.onStateLoaded();
+      } catch(e) {
+        console.error(`Could not finish loading widget!`, w.id, e);
+      }
+    }
+  } finally {
+    dispatchChangeRoutines = dispatchAfterwards;
+    batchEnd();
   }
 }
 
