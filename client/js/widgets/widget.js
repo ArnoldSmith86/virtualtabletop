@@ -1,4 +1,4 @@
-import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, mod, timeToMS } from '../domhelpers.js';
+import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, mod, stringifyForDisplay, timeToMS } from '../domhelpers.js';
 import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
@@ -38,6 +38,51 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteX',
   '_localOriginAbsoluteY'
 ]);
+
+// Routines re-enter evaluateRoutine through CALL, CLICK, change routines and more, and none of
+// those paths bounded the nesting - a routine that (indirectly) triggers itself used to take the
+// client down with a stack overflow. Abort once the nesting gets absurd and report it as a problem
+// in the routine that caused it. (#1405, #1455)
+// Only routines that were entered by name count towards the limit. An IF branch, a FOREACH body or
+// the MOVE list of a Moves operation is written inline in the routine that runs it, so its nesting
+// is bounded by the game file and it can never re-enter anything on its own. Counting those too
+// would mean a routine recursing through the usual `IF -> CALL itself` base case gets half of the
+// limit the message names, and a third of it inside a FOREACH.
+// The problem is reported twice: once in the innermost routine, which is where it happened, and
+// once in the outermost one, which is the only place the user can realistically find it - the
+// innermost one is hundreds of collapsed levels deep in the routine log.
+const maxRoutineDepth = 250;
+let routineDepth = 0;
+let routineDepthProblem = null;
+let routineDepthProblemForOutermost = null;
+
+// What re-entered the routine, so that the message names the operation the user has to go and look
+// at. CALL and click() set it immediately before they hand over; every other way in - the first
+// click on the table, a change routine - leaves it null and gets the generic hint.
+let routineEntry = null;
+const routineEntryHint = {
+  CALL: 'This is likely a recursive routine calling itself.',
+  click: 'This is likely a recursive click on itself.'
+};
+
+// A routine waiting in DELAY or INPUT has nothing running inside it, so it gives its level back for
+// as long as it waits. Otherwise a game that keeps a handful of timer driven routines in flight -
+// each of them legitimately waiting, none of them calling itself - would run into the nesting limit.
+// An inline branch shares the level of the routine it is written in, so exactly one level is given
+// back no matter how deep inside IF branches and LOOP bodies the wait sits.
+async function whileSuspended(promise) {
+  --routineDepth;
+  try {
+    return await promise;
+  } finally {
+    ++routineDepth;
+  }
+}
+
+// wouldCreateParentCycle reads the parent of every widget it walks, which can come back into
+// getDefaultValue for a widget whose inherited parent is still being resolved. StateManaged's own
+// inheritance guard is released by then, so the check keeps its own re-entrancy set. (#684)
+const parentDefaultLookups = new Set();
 
 function inputFieldValueForPlayer(value, player, playerIndex) {
   if(!value || typeof value != 'object' || Array.isArray(value))
@@ -347,10 +392,19 @@ export class Widget extends StateManaged {
       this.isDraggable = delta.movable;
     }
 
-    for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
-      const inheritedDelta = {};
-      this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
-      inheriting.applyInheritedDeltaToDOM(inheritedDelta);
+    // Widgets can inherit from each other in a circle, so a delta must not be handed on to a widget
+    // that is already passing it around - that never comes back. (#684, #833)
+    if(!StateManaged.inheritPropagations.has(this)) {
+      StateManaged.inheritPropagations.add(this);
+      try {
+        for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
+          const inheritedDelta = {};
+          this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
+          inheriting.applyInheritedDeltaToDOM(inheritedDelta);
+        }
+      } finally {
+        StateManaged.inheritPropagations.delete(this);
+      }
     }
 
     // inherit properties again when overriding ones are removed
@@ -380,18 +434,31 @@ export class Widget extends StateManaged {
   }
 
   applyInheritedValuesToObject(inheritDefinition, sourceDelta, targetDelta, targetWidget) {
-    for(const key in sourceDelta)
+    for(const key in sourceDelta) {
+      // inheriting the parent of a descendant would make the target its own ancestor (#684)
+      if(key == 'parent' && targetWidget.wouldCreateParentCycle(sourceDelta[key]))
+        continue;
       if(this.inheritFromIsValid(inheritDefinition, key) && targetWidget.state[key] === undefined)
         targetDelta[key] = JSON.stringify(sourceDelta[key]) === JSON.stringify(this.defaults[key]) ? null : sourceDelta[key];
+    }
   }
 
-  applyInheritedValuesToDOM(inheritFrom, pushasArray) {
+  // 'seen' holds the widgets on the way down to the current one, so that widgets inheriting from
+  // each other are not walked forever. Entries are removed again on the way back up, so that a
+  // widget inherited from through two different branches is still visited in both. (#684, #833)
+  applyInheritedValuesToDOM(inheritFrom, pushasArray, seen = new Set([ this.id ])) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
-      if(widgets.has(id)) {
+      if(widgets.has(id) && !seen.has(id)) {
         const w = widgets.get(id);
-        if(w.state.inheritFrom)
-          this.applyInheritedValuesToDOM(w.inheritFrom());
+        if(w.state.inheritFrom) {
+          seen.add(id);
+          try {
+            this.applyInheritedValuesToDOM(w.inheritFrom(), false, seen);
+          } finally {
+            seen.delete(id);
+          }
+        }
         this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
@@ -559,6 +626,7 @@ export class Widget extends StateManaged {
     }
 
     if(Array.isArray(this.get('clickRoutine')) && !(mode == 'ignoreClickRoutine' || mode =='ignoreAll')) {
+      routineEntry = 'click';
       await this.evaluateRoutine('clickRoutine', {}, {});
       return true;
     } else {
@@ -1188,6 +1256,46 @@ export class Widget extends StateManaged {
   }
 
   async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+    const entry = routineEntry;
+    routineEntry = null;
+    // a routine reached by name is a re-entry and nests; an inline branch is part of the routine it
+    // is written in and runs within its level
+    const nestsRoutine = !byReference || typeof property == 'string';
+    if(nestsRoutine && routineDepth >= maxRoutineDepth) {
+      const hint = routineEntryHint[entry] || 'Something is probably triggering it again while it is still running.';
+      routineDepthProblem = routineDepthProblemForOutermost = `Not running ${typeof property == 'string' ? property : 'routine'} of ${this.get('id')} more than ${maxRoutineDepth} times. ${hint}`;
+      return { variable: null, collection: [] };
+    }
+
+    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
+      return;
+
+    // An operation throwing must not leave the batch that the routine opened behind, because that
+    // would keep the client from sending any further delta at all. The batch is opened here and
+    // closed exactly once so that this stays true while routines overlap: two routines suspended
+    // in DELAY or INPUT share the batch counter, so closing everything down to a depth remembered
+    // at entry would close the batch of whichever routine started in between.
+    if(nestsRoutine)
+      ++routineDepth;
+    batchStart();
+    try {
+      return await this.evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, nestsRoutine);
+    } finally {
+      batchEnd();
+      if(nestsRoutine && !--routineDepth) {
+        // Nothing is left that could report it - that happens when the routine that hit the limit
+        // was aborted by an exception, or when every routine that is still alive is suspended in
+        // DELAY or INPUT. The message names the routine it came from, so the console still tells
+        // the whole story.
+        for(const problem of [ routineDepthProblem, routineDepthProblemForOutermost ])
+          if(problem)
+            console.log(problem);
+        routineDepthProblem = routineDepthProblemForOutermost = null;
+      }
+    }
+  }
+
+  async evaluateRoutineOperations(property, initialVariables, initialCollections, depth, byReference, nestsRoutine) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -1277,11 +1385,6 @@ export class Widget extends StateManaged {
       for(const a of widgetFilter(w=>asArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
-
-    if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
-      return;
-
-    batchStart();
 
     let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
 
@@ -1406,7 +1509,7 @@ export class Widget extends StateManaged {
             variables[variable][index] = await getValue(variables[variable][index]);
           else
             variables[variable] = await getValue(variables[variable]);
-          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), JSON.stringify(variables[variable]));
+          if(routineLogging) jeLoggingRoutineOperationSummary(a.substr(4), stringifyForDisplay(variables[variable]));
         } else {
           const comment = a.match(new RegExp('^(?://(.*))?\x24'));
           if (comment) {
@@ -1453,7 +1556,7 @@ export class Widget extends StateManaged {
                 // and it does so on the whole operation, so a variable whose name contains one of
                 // those words would make every one of its operations look substituted.
                 const writtenExpression = a.replace(new RegExp(`^${left} += +`), '').replace(/ +\/\/.*$/, '');
-                jeLoggingRoutineOperationSummary(a.substr(4) + (writtenExpression == mathExpression[5] ? '' : ' => ' + mathExpression[5]), JSON.stringify(result));
+                jeLoggingRoutineOperationSummary(a.substr(4) + (writtenExpression == mathExpression[5] ? '' : ' => ' + mathExpression[5]), stringifyForDisplay(result));
               }
             } else {
               problems.push(`String '${a}' could not be interpreted as a valid expression. Please check your syntax and note that many characters have to be escaped.`);
@@ -1493,11 +1596,25 @@ export class Widget extends StateManaged {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
             // make sure everything is passed in a way that the variables and collections of this routine won't be changed
-            const inheritVariables = Object.assign(JSON.parse(JSON.stringify(variables)), a.arguments);
+            const inheritVariables = {};
+            for(const [ key, value ] of Object.entries(variables)) {
+              let json;
+              try {
+                json = JSON.stringify(value);
+              } catch(e) {
+                // a variable can contain itself and can then not be copied at all (#1415)
+                problems.push(`Variable ${key} contains itself and is not passed on to ${a.routine}.`);
+                continue;
+              }
+              if(json !== undefined)
+                inheritVariables[key] = JSON.parse(json);
+            }
+            Object.assign(inheritVariables, a.arguments);
             const inheritCollections = {};
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
+            routineEntry = 'CALL';
             const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
@@ -1510,7 +1627,7 @@ export class Widget extends StateManaged {
                   returnCollection = `(${result.collection.length} widgets)`;
                 jeLoggingRoutineOperationSummary(
                   `${a.routine} ${theWidget} and return variable '${a.variable}' and collection '${a.collection}'`,
-                  `${JSON.stringify(variables[a.variable])}; ${returnCollection}`)
+                  `${stringifyForDisplay(variables[a.variable])}; ${returnCollection}`)
               } else {
                 jeLoggingRoutineOperationSummary( `${a.routine} ${theWidget} and abort caller processing`)
               }
@@ -1575,13 +1692,13 @@ export class Widget extends StateManaged {
 
         if(routineLogging) {
           if(a.mode == 'set')
-            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${JSON.stringify(a.value)}`)
+            jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `${stringifyForDisplay(a.value)}`)
           else if(a.mode == 'change')
-            jeLoggingRoutineOperationSummary(`index ${JSON.stringify(a.value)} of ${phrase}`, `${JSON.stringify(a.color)}`)
+            jeLoggingRoutineOperationSummary(`index ${stringifyForDisplay(a.value)} of ${phrase}`, `${stringifyForDisplay(a.color)}`)
           else if(a.mode == 'reset')
             jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `0`)
           else if(a.mode == 'setPixel')
-            jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${JSON.stringify(a.value)}`, `${JSON.stringify(a.color)}`)
+            jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${stringifyForDisplay(a.value)}`, `${stringifyForDisplay(a.color)}`)
         }
       }
 
@@ -1620,7 +1737,7 @@ export class Widget extends StateManaged {
           }
           collections[a.collection]=c;
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${JSON.stringify(a.collection)}'`);
+            jeLoggingRoutineOperationSummary( `'${a.source}'`, `'${stringifyForDisplay(a.collection)}'`);
         }
       }
 
@@ -1669,14 +1786,14 @@ export class Widget extends StateManaged {
           theItem = `${a.collection}`
         }
         if(routineLogging)
-          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
+          jeLoggingRoutineOperationSummary( `'${theItem}'`, `${stringifyForDisplay(variables[a.variable])}`)
 
       }
 
       if(a.func == 'DELAY') {
         setDefaults(a, { milliseconds: 0 });
         flushDelta();
-        await sleep(a.milliseconds);
+        await whileSuspended(sleep(a.milliseconds));
         if(routineLogging)
           jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
@@ -1758,7 +1875,7 @@ export class Widget extends StateManaged {
           for(const key in a.in)
             await callWithAdditionalValues({ key, value: a.in[key] }, {});
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
+            jeLoggingRoutineOperationSummary( `elements in '${stringifyForDisplay(a.in)}'`);
         } else if(a.range) {
           let range = [...asArray(a.range)];
 
@@ -1770,13 +1887,13 @@ export class Widget extends StateManaged {
             range.unshift(1);
           let start = parseFloat(range[0]);
           if(isNaN(start)) {
-            problems.push(`Invalid start of range ${JSON.stringify(range[0])}, 1 used`);
+            problems.push(`Invalid start of range ${stringifyForDisplay(range[0])}, 1 used`);
             start = 1;
           }
 
           let end = parseFloat(range[1]);
           if(isNaN(end)) {
-            problems.push(`Invalid end of range ${JSON.stringify(range[1])}, 1 used`);
+            problems.push(`Invalid end of range ${stringifyForDisplay(range[1])}, 1 used`);
             end = 1;
           }
 
@@ -1785,7 +1902,7 @@ export class Widget extends StateManaged {
           let step = parseFloat(range[2]);
           if(isNaN(step) || step == 0) {
             step = end > start ? 1 : -1;
-            problems.push(`Invalid step value ${JSON.stringify(range[2])}, ${step} used`);
+            problems.push(`Invalid step value ${stringifyForDisplay(range[2])}, ${step} used`);
           }
 
           if(start>end && step>0 || start<end && step<0) {
@@ -1796,7 +1913,7 @@ export class Widget extends StateManaged {
           for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
             await callWithAdditionalValues({ value: index });
           if(routineLogging)
-            jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
+            jeLoggingRoutineOperationSummary( `values in range '${stringifyForDisplay(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
             await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
@@ -1856,7 +1973,7 @@ export class Widget extends StateManaged {
             problems.push(`Collection ${a.collection} is empty.`);
           }
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`${a.aggregation} of '${mainProperty}' in '${a.collection}'`, `var ${a.variable} = ${stringifyForDisplay(variables[a.variable])}`);
         }
       }
 
@@ -1875,9 +1992,9 @@ export class Widget extends StateManaged {
             await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
           if(routineLogging) {
             if (a.condition === undefined)
-              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
+              jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${stringifyForDisplay(condition)}`)
             else
-              jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${JSON.stringify(condition)}`)
+              jeLoggingRoutineOperationSummary(`'${original.condition}'`, `${stringifyForDisplay(condition)}`)
           }
         } else
           problems.push(`IF operation is missing the 'condition' or 'operand1' parameter.`);
@@ -1911,7 +2028,7 @@ export class Widget extends StateManaged {
         try {
           const usePlayerSpecificOverlay = hasPlayerSpecificChooseField(a);
           const overlaysByPlayer = usePlayerSpecificOverlay ? Object.fromEntries(players.map((p, i)=>[ p, cloneInputOverlayForPlayer(a, p, i) ])) : null;
-          const results = await runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal });
+          const results = await whileSuspended(runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal }));
           if(isMulti) {
             // Return each field's value keyed by the player who entered it.
             for(const field of a.fields || []) {
@@ -1947,7 +2064,7 @@ export class Widget extends StateManaged {
             a.fields.forEach(f=>{
               if(f.variable) {
                 varList.push(f.variable);
-                valueList.push(JSON.stringify(variables[f.variable]));
+                valueList.push(stringifyForDisplay(variables[f.variable]));
               }
             });
             jeLoggingRoutineOperationSummary(`${varList.join(', ')}`,`${valueList.join(', ')}`);
@@ -2169,7 +2286,9 @@ export class Widget extends StateManaged {
             if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
               problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
             } else {
-              await widget.set(key, value);
+              const refused = await widget.set(key, value);
+              if(refused)
+                problems.push(`Skipping ${refused}.`);
             }
           }
         }
@@ -2244,9 +2363,9 @@ export class Widget extends StateManaged {
           const phrase = round===null ? 'new round' : `round ${a.round}`;
           const seatIds = seats.map(w => w.get('id'));
           if(a.mode == 'inc' || a.mode == 'dec')
-            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${JSON.stringify(seatIds)} by ${a.value}`)
+            jeLoggingRoutineOperationSummary(`${a.mode} ${phrase} in seats ${stringifyForDisplay(seatIds)} by ${a.value}`)
           else
-            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${JSON.stringify(seatIds)} to ${a.value}`)
+            jeLoggingRoutineOperationSummary(`set ${phrase} in seats ${stringifyForDisplay(seatIds)} to ${a.value}`)
         }
       }
 
@@ -2304,7 +2423,7 @@ export class Widget extends StateManaged {
             let selectedWidgets = collections[a.collection].map(w=>w.get('id')).join(',');
             if(!collections[a.collection].length || collections[a.collection].length >= 5)
               selectedWidgets = `(${collections[a.collection].length} widgets)`;
-            jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${JSON.stringify(a.value)} from '${a.source}'`, `${a.mode} ${JSON.stringify(a.collection)} = ${selectedWidgets}`);
+            jeLoggingRoutineOperationSummary(`${a.type == 'all' ? '' : a.type} widgets with '${a.property}' ${a.relation} ${stringifyForDisplay(a.value)} from '${a.source}'`, `${a.mode} ${stringifyForDisplay(a.collection)} = ${selectedWidgets}`);
           }
         }
       }
@@ -2344,15 +2463,19 @@ export class Widget extends StateManaged {
 
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
-              if(a.relation == '+' && a.value == null)
+              if(a.relation == '+' && a.value == null) {
                 problems.push(`null value being appended, SET ignored`);
-              else
-                await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
+              } else {
+                const newValue = await compute(a.relation, null, w.get(String(a.property)), a.value);
+                const refused = await w.set(String(a.property), newValue);
+                if(refused)
+                  problems.push(`Skipping ${refused}.`);
+              }
             }
           }
         }
         if(routineLogging)
-          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
+          jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${stringifyForDisplay(a.value)} for widgets in '${a.collection}'`);
       }
 
       if(a.func == 'SHIFT') {
@@ -2650,7 +2773,7 @@ export class Widget extends StateManaged {
         } else {
           variables[a.variable] = uploadedAsset;
           if(routineLogging)
-            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${stringifyForDisplay(variables[a.variable])}`);
         }
       }
 
@@ -2728,7 +2851,7 @@ export class Widget extends StateManaged {
             if (target) {
               const indexList = c.map(w => w.get('index'));
               const turn = target.get('index');
-              jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${JSON.stringify(indexList)}`);
+              jeLoggingRoutineOperationSummary(`Changed turn of seats to ${turn} - active seats: ${stringifyForDisplay(indexList)}`);
             } else {
               jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
             }
@@ -2742,8 +2865,19 @@ export class Widget extends StateManaged {
           variables[key] = value;
 
         if(routineLogging) {
-          jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${JSON.stringify(e[1])}`).join(', ')}`);
+          jeLoggingRoutineOperationSummary(`${Object.entries(a.variables||{}).map(e=>`${e[0]}=${stringifyForDisplay(e[1])}`).join(', ')}`);
         }
+      }
+
+      if(routineDepthProblem) {
+        problems.push(routineDepthProblem);
+        routineDepthProblem = null;
+      }
+
+      // repeat it in the outermost routine so that it is visible without expanding the whole nesting
+      if(routineDepthProblemForOutermost && nestsRoutine && routineDepth == 1) {
+        problems.push(routineDepthProblemForOutermost);
+        routineDepthProblemForOutermost = null;
       }
 
       if(routineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, false);
@@ -2760,8 +2894,6 @@ export class Widget extends StateManaged {
       jeLoggingRoutineEnd(variables, collections);
     else if(jeRoutineLogging)
       jeLoggingRoutineNotLogged(this, property); // logging was enabled while this routine was running
-
-    batchEnd();
 
     if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
       const hexColor = toHex(variables.playerColor);
@@ -2804,6 +2936,21 @@ export class Widget extends StateManaged {
           return super.get(property);
       }
     }
+  }
+
+  getDefaultValue(property) {
+    const value = super.getDefaultValue(property);
+    // inheriting the parent of a descendant would make this widget its own ancestor (#684)
+    if(property == 'parent' && typeof value == 'string' && !parentDefaultLookups.has(this)) {
+      parentDefaultLookups.add(this);
+      try {
+        if(this.wouldCreateParentCycle(value))
+          return this.defaults[property];
+      } finally {
+        parentDefaultLookups.delete(this);
+      }
+    }
+    return value;
   }
 
   getWithPropertyReplacements(property, valueOverride) {
@@ -2871,11 +3018,24 @@ export class Widget extends StateManaged {
   }
 
   isDescendantOf(widget) {
-    if (this.get('parent') == widget.get('id')) {
-      return true;
+    const seen = new Set();
+    for(let w = this; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+      seen.add(w);
+      if(w.get('parent') == widget.get('id'))
+        return true;
     }
-    if (widgets.has(this.get('parent'))) {
-      return widgets.get(this.get('parent')).isDescendantOf(widget);
+    return false;
+  }
+
+  // A widget that ends up as its own ancestor cannot be rendered (appendChild refuses to nest an
+  // element into itself) and sends every walk up the parent chain into infinite recursion. MOVE
+  // has always refused such a move, SET and the JSON editor did not. (#1414, #684)
+  wouldCreateParentCycle(newParentID) {
+    const seen = new Set();
+    for(let id = newParentID; id && !seen.has(id); id = widgets.has(id) ? widgets.get(id).get('parent') : null) {
+      if(id == this.id)
+        return true;
+      seen.add(id);
     }
     return false;
   }
@@ -3377,6 +3537,21 @@ export class Widget extends StateManaged {
       await this.set('rotation', (this.get('rotation') + degrees) % 360);
     else
       await this.set('rotation', degrees);
+  }
+
+  // The parent invariant is enforced here so that every writer is safe by construction: a widget
+  // that becomes its own ancestor cannot be rendered and sends every walk up the parent chain into
+  // infinite recursion. A refused write returns the reason for it, which the operations a user can
+  // reach turn into a problem entry. (#1414, #684)
+  async set(property, value) {
+    if(property == 'parent' && typeof value == 'string' && this.wouldCreateParentCycle(value)) {
+      const reason = value == this.id
+        ? `parent change of ${this.id} to itself`
+        : `parent change of ${this.id} to ${value}: ${value} is inside ${this.id}`;
+      console.log(`Skipping ${reason}.`);
+      return reason;
+    }
+    return await super.set(property, value);
   }
 
   setHighlighted(isHighlighted) {

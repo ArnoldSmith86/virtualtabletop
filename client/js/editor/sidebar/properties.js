@@ -5159,7 +5159,7 @@ class PropertiesModule extends SidebarModule {
     for(const target of targets) {
       if(newParent == target)
         return 'A widget cannot be its own parent.';
-      if(newParent && newParent.isDescendantOf(target))
+      if(newParent && target.wouldCreateParentCycle(newParent.id))
         return `Widget ${newParent.id} is inside ${target.id}, so using it as the parent would create a loop.`;
     }
 
