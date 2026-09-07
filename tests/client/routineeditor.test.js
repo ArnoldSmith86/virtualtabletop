@@ -21,12 +21,14 @@ beforeAll(() => {
   window.widgets = new Map();
   window.config = { aiRoutineEndpoint: 'https://agent.virtualtabletop.io/routine-assist' }; // inlined into room.html by the server
   window.validateGameFile = validateGameFile; // the editor bundle carries the validator
+  window.widgetFilter = filter => [ ...window.widgets.values() ].filter(filter);
   window.roomID = 'testroom'; // the tutorial links of info popups use it
   window.undoneChanges = 0;
   window.undoLastChange = () => window.undoneChanges++; // the editor toolbar's own action (toolbar/undo.js)
   window.undoProtocol = [ { delta: { s: {} } } ]; // the room as it was loaded (serverstate.js)
   window.getUndoProtocol = () => window.undoProtocol;
   window.setSelection = () => {};
+  window.getPlayerDetails = () => ({ playerName: 'Alice' }); // the recorder tells its own deltas from other players'
   window.closePropertyInfoPopup = () => {}; // the sidebar's own info tips (propertyInputs.js)
   window.closeEmojiVariantFlyout = () => {}; // the icon picker's skin tone flyout (emojivariants.js)
   window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
@@ -45,9 +47,12 @@ beforeAll(() => {
     'client/js/editor/controls/popup.js',
     'client/js/editor/controls/routine.js',
     'client/js/editor/controls/aiRoutine.js',
+    'client/js/editor/controls/routinerecorder.js',
     'client/js/editor/controls/events.js'
   ];
-  const code = files.map(f => fs.readFileSync(f, 'utf8')).join('\n');
+  // the recorder exports the hooks mousehandling.js calls; the bundle keeps them
+  // (main.js imports it), but eval has no module scope to export from
+  const code = files.map(f => fs.readFileSync(f, 'utf8')).join('\n').replace(/^export /gm, '');
   const exposed = [
     'RoutineEditor', 'RoutineOperationEditor', 'IfRoutineOperationEditor', 'ForeachRoutineOperationEditor',
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
@@ -60,6 +65,8 @@ beforeAll(() => {
     'parseVarStatement', 'writeVarStatement', 'encodeVarOperand', 'decodeVarOperand',
     'EventsEditor', 'propertyAutomations', 'AddEventPopup', 'cardDefaultRoutines', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup', 'RoutinePropertyNamePopup',
     'RoutineColorPopup', 'RoutineIconPopup', 'RoutineSoundPopup', 'RoutineJSONPopup', 'RoutineFullOperationJSONPopup', 'RoutineKeyValuePopup', 'RoutineWidgetIDPopup', 'RoutineEnumMenu',
+    'isRoutineRecording', 'startRoutineRecording', 'stopRoutineRecording', 'routineRecorderPointerDown',
+    'routineRecorderPointerUp', 'routineRecorderReceiveDelta', 'handleRoutineRecorderClick', 'routineGestureSuggestions',
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
@@ -1256,7 +1263,7 @@ describe('picking how an operation works and which options it uses', () => {
     const ifEditor = editorForOperation({ func: 'IF', operand1: 1 });
     ifEditor.setOperationDetails({ state: {} }, { func: 'IF', operand1: 1 }, [], []);
     const rendered = ifEditor.render();
-    expect([...rendered.querySelectorAll('button')].map(b => b.textContent)).toEqual([ 'add operation', 'add else' ]);
+    expect([...rendered.querySelectorAll('button')].map(b => b.textContent)).toEqual([ 'add operation', 'fiber_manual_recordrecord', 'add else' ]);
   });
 
   test('parameters no variant and no option words become an option of their own', () => {
@@ -4530,5 +4537,481 @@ describe('AI routine assistant', () => {
     const next = new EventsEditor(widget, () => {});
     expect(next.domElement.querySelector('.ai-routine-note')).toBe(null);
     expect(marksOf(next)).toEqual([ false, false ]);
+  });
+});
+
+// The record button next to "add operation": what a press-drag-release in the
+// room turns into, and that nothing of it reaches the routine until it is picked.
+describe('recording a routine from the room', () => {
+  // a stand-in for a widget in the room: the recorder only ever reads properties
+  // through get(), the way every other part of the editor does
+  const roomWidget = state => {
+    const widget = {
+      state,
+      get: property => state[property] === undefined ? null : state[property],
+      set: (property, value) => { state[property] = value; }
+    };
+    // only Card and BasicWidget have a flip() - FLIP passes over everything else,
+    // and the recorder asks the widget rather than its type name
+    if([ 'card', 'basic' ].indexOf(state.type) != -1)
+      widget.flip = () => {};
+    widgets.set(state.id, widget);
+    return widget;
+  };
+
+  const gesture = properties => Object.assign({
+    key: 1, widgetID: 'card1', type: 'card', from: null, to: null, x: 0, y: 0,
+    dragged: true, reparented: false, count: 1, changes: {}
+  }, properties, { widget: widgets.get(properties.widgetID || 'card1') });
+
+  const operations = suggestions => suggestions.flatMap(s => s.operations);
+
+  let editor;
+  beforeEach(() => {
+    widgets.clear();
+    stopRoutineRecording();
+    editor = new RoutineEditor({ state: { id: 'button1' }, get: p => ({ id: 'button1' })[p] || null }, []);
+    document.getElementById('editor').append(editor.domElement);
+  });
+  afterEach(() => {
+    stopRoutineRecording();
+    editor.domElement.remove();
+  });
+
+  test('the button sits next to "add operation" and shows what it is doing without changing width', () => {
+    const record = () => editor.domElement.querySelector('.routine-editor-record-operation');
+    expect(record().textContent).toBe('fiber_manual_recordrecord');
+    expect(isRoutineRecording()).toBe(false);
+    record().click();
+    expect(isRoutineRecording()).toBe(true);
+    // the label is the same word armed - only the fill changes, so the button
+    // keeps its width and does not push "add operation" onto a line of its own
+    expect(record().textContent).toBe('fiber_manual_recordrecord');
+    expect(record().classList.contains('recording')).toBe(true);
+    expect(document.body.classList.contains('editorRoutineRecording')).toBe(true);
+    expect(editor.domElement.querySelector('.routine-editor-recording')).not.toBeNull();
+    editor.domElement.querySelector('.routine-editor-recording-done').click();
+    expect(isRoutineRecording()).toBe(false);
+    expect(document.body.classList.contains('editorRoutineRecording')).toBe(false);
+    expect(editor.domElement.querySelector('.routine-editor-recording')).toBeNull();
+  });
+
+  test('a click in the room while recording is the recording\'s, not the widget\'s', () => {
+    expect(handleRoutineRecorderClick()).toBe(false);
+    startRoutineRecording(editor);
+    expect(handleRoutineRecorderClick()).toBe(true);
+  });
+
+  test('a drag from one holder into another offers the move it was, and nothing much beside it', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'discard', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    card.set('parent', 'discard');
+    routineRecorderPointerUp();
+
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    // the ids of a real game are generated as often as they are chosen, so the
+    // headline says what kind of thing each of them is as well
+    expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged the card card1 from the holder hand to the holder discard');
+    // no seats, no deck: nothing about this drag reads any other way, so the one
+    // reading of it stands alone rather than among ways of rewording it
+    expect(sentences).toEqual([ 'Move 1 widget from hand to discard' ]);
+  });
+
+  test('the same drag done again raises the count instead of writing another card', () => {
+    roomWidget({ id: 'deckHolder', type: 'holder' });
+    roomWidget({ id: 'hand', type: 'holder' });
+    const cards = [ 1, 2, 3 ].map(n => roomWidget({ id: `card${n}`, type: 'card', parent: 'deckHolder' }));
+    startRoutineRecording(editor);
+    for(const card of cards) {
+      routineRecorderPointerDown(card);
+      card.set('parent', 'hand');
+      routineRecorderPointerUp();
+    }
+
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(1);
+    // the id of the card that happened to be dragged last says nothing about
+    // three drags, so the headline counts them instead
+    expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged 3 widgets from the holder deckHolder to the holder hand');
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences).toEqual([ 'Move 3 widgets from deckHolder to hand' ]);
+
+    // the way back is not the same gesture done again
+    routineRecorderPointerDown(cards[0]);
+    cards[0].set('parent', 'deckHolder');
+    routineRecorderPointerUp();
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(2);
+  });
+
+  test('a card taken off a stack in a holder comes out of the holder, not out of the stack', () => {
+    roomWidget({ id: 'deckHolder', type: 'holder' });
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'pile1', type: 'pile', parent: 'deckHolder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'pile1' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    card.set('parent', 'hand');
+    routineRecorderPointerUp();
+
+    // no operation takes widgets out of a pile, and the pile is gone again as
+    // soon as it holds one card - what the card came out of is the holder
+    expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged the card card1 from the holder deckHolder to the holder hand');
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences).toEqual([ 'Move 1 widget from deckHolder to hand' ]);
+  });
+
+  test('a gesture nobody meant is taken off the card, and what was already added stays', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'discard', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    card.set('parent', 'discard');
+    routineRecorderPointerUp();
+    editor.domElement.querySelector('.routine-editor-suggestion').click();
+
+    // and now a drag nobody meant: the way back, done only to put the room right
+    routineRecorderPointerDown(card);
+    card.set('parent', 'hand');
+    routineRecorderPointerUp();
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(1);
+    editor.domElement.querySelector('.routine-editor-gesture-forget').click();
+
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(0);
+    expect(isRoutineRecording()).toBe(true); // only that reading goes, not the recording
+    expect(editor.routine).toEqual([ { func: 'MOVE', from: 'hand', to: 'discard', count: 1 } ]);
+  });
+
+  test('dropping into a hand offers dealing to that seat and to every player', () => {
+    roomWidget({ id: 'deckHolder', type: 'holder' });
+    roomWidget({ id: 'hand-p1', type: 'holder' });
+    roomWidget({ id: 'hand-p2', type: 'holder' });
+    roomWidget({ id: 'seat-p1', type: 'seat', hand: 'hand-p1' });
+    roomWidget({ id: 'seat-p2', type: 'seat', hand: 'hand-p2' });
+    const suggested = operations(routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'deckHolder', to: 'hand-p1', reparented: true
+    })));
+    expect(suggested).toContainEqual({ func: 'MOVE', from: 'deckHolder', to: 'seat-p1', count: 1 });
+    expect(suggested).toContainEqual({ func: 'MOVE', from: 'deckHolder', to: [ 'seat-p1', 'seat-p2' ], count: 1 });
+  });
+
+  test('the holder a deck lies in is offered as somewhere to put every card back into', () => {
+    roomWidget({ id: 'deckHolder', type: 'holder' });
+    roomWidget({ id: 'deck1', type: 'deck', parent: 'deckHolder' });
+    roomWidget({ id: 'discard', type: 'holder' });
+    // whichever end of the drag it is: dealing out of the deck is the gesture a
+    // "recall and shuffle" button is written after just as often as tidying up
+    const intoDeck = operations(routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'discard', to: 'deckHolder', reparented: true
+    })));
+    expect(intoDeck).toContainEqual({ func: 'RECALL', holder: 'deckHolder' });
+    const outOfDeck = operations(routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'deckHolder', to: 'discard', reparented: true
+    })));
+    expect(outOfDeck).toContainEqual({ func: 'RECALL', holder: 'deckHolder' });
+    // a holder without a deck has nothing to gather - RECALL would do nothing
+    expect(outOfDeck).not.toContainEqual({ func: 'RECALL', holder: 'discard' });
+  });
+
+  test('what the room did on its own during the gesture becomes a suggestion of its own', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'table', type: 'holder' });
+    roomWidget({ id: 'card1', type: 'card' });
+    const suggested = operations(routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'hand', to: 'table', reparented: true,
+      changes: { card1: { activeFace: 1, x: 10, parent: 'table', someFlag: true } }
+    })));
+    expect(suggested).toContainEqual({ func: 'FLIP', collection: [ 'card1' ], face: 1 });
+    expect(suggested).toContainEqual({ func: 'SET', property: 'someFlag', value: true, collection: [ 'card1' ] });
+    // the drag itself is what the move says - it is not also a "Set parent of"
+    expect(suggested.filter(o => o.func == 'SET').map(o => o.property)).not.toContain('parent');
+    expect(suggested.filter(o => o.func == 'SET').map(o => o.property)).not.toContain('x');
+  });
+
+  test('what the room did survives a gesture that has more readings than fit', () => {
+    // the ordinary dealing gesture in a room with seats: it alone reads more ways
+    // than the list is long, and what the hand did to the card as it went in must
+    // not be what falls off the end
+    roomWidget({ id: 'deckHolder', type: 'holder' });
+    roomWidget({ id: 'deck1', type: 'deck', parent: 'deckHolder' });
+    for(const seat of [ 1, 2, 3 ]) {
+      roomWidget({ id: `hand-p${seat}`, type: 'holder' });
+      roomWidget({ id: `seat-p${seat}`, type: 'seat', hand: `hand-p${seat}` });
+    }
+    roomWidget({ id: 'card1', type: 'card' });
+    const suggestions = routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'deckHolder', to: 'hand-p1', reparented: true,
+      changes: { card1: { activeFace: 1, rotation: 90, parent: 'hand-p1' } }
+    }));
+    const suggested = operations(suggestions);
+    expect(suggestions.length).toBeLessThanOrEqual(5);
+    expect(suggested).toContainEqual({ func: 'MOVE', from: 'deckHolder', to: 'hand-p1', count: 1 });
+    expect(suggested).toContainEqual({ func: 'FLIP', collection: [ 'card1' ], face: 1 });
+    expect(suggested).toContainEqual({ func: 'ROTATE', collection: [ 'card1' ], mode: 'set', angle: 90 });
+  });
+
+  test('taking a widget out onto the table offers the position that keeps it there', () => {
+    roomWidget({ id: 'pile1', type: 'pile' });
+    roomWidget({ id: 'card1', type: 'card', parent: 'pile1' });
+    // x and y are counted from the parent, so dropping the parent alone would put
+    // the widget wherever those coordinates land in the room instead
+    const suggestions = routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'pile1', to: null, reparented: true, x: 300, y: 200
+    }));
+    // and all three are one reading rather than three: half of them done is a
+    // widget somewhere nobody dropped it
+    expect(suggestions[0].operations).toEqual([
+      { func: 'SET', property: 'parent', value: null, collection: [ 'card1' ] },
+      { func: 'SET', property: 'x', value: 300, collection: [ 'card1' ] },
+      { func: 'SET', property: 'y', value: 200, collection: [ 'card1' ] }
+    ]);
+  });
+
+  test('a click offers the ways a routine does what a click does', () => {
+    roomWidget({ id: 'card1', type: 'card' });
+    const suggested = operations(routineGestureSuggestions(gesture({ widgetID: 'card1', dragged: false })));
+    expect(suggested).toContainEqual({ func: 'CLICK', collection: [ 'card1' ] });
+    expect(suggested).toContainEqual({ func: 'FLIP', collection: [ 'card1' ], face: 1 });
+    roomWidget({ id: 'h1', type: 'holder' });
+    const holder = operations(routineGestureSuggestions(gesture({ widgetID: 'h1', type: 'holder', dragged: false })));
+    expect(holder).toContainEqual({ func: 'SHUFFLE', holder: 'h1' });
+  });
+
+  test('clicking a die offers rolling it and putting it on a face, and nothing else', () => {
+    roomWidget({ id: 'die1', type: 'dice', clickable: true, activeFace: 2 });
+    const suggested = routineGestureSuggestions(gesture({ widgetID: 'die1', type: 'dice', dragged: false }));
+    // rolling a die is what clicking one does - there is no operation for it,
+    // and "click it" as a second reading of the same click says nothing
+    expect(operations(suggested)).toEqual([
+      { func: 'CLICK', collection: [ 'die1' ] },
+      { func: 'SET', property: 'activeFace', value: 2, collection: [ 'die1' ] }
+    ]);
+    expect(suggested[0].why).toContain('roll');
+  });
+
+  test('clicking a canvas offers wiping it and what the next stroke looks like', () => {
+    const canvas = roomWidget({ id: 'canvas1', type: 'canvas', activeColor: 2, lineWidth: 3 });
+    canvas.getColorMap = () => [ '#000000', '#ff0000', '#00ff00' ];
+    const suggested = routineGestureSuggestions(gesture({ widgetID: 'canvas1', type: 'canvas', dragged: false }));
+    expect(operations(suggested)).toEqual([
+      { func: 'CANVAS', collection: [ 'canvas1' ], mode: 'reset' },
+      { func: 'SET', property: 'activeColor', value: 2, collection: [ 'canvas1' ] },
+      { func: 'SET', property: 'lineWidth', value: 3, collection: [ 'canvas1' ] }
+    ]);
+    // activeColor is a place in the color map rather than a color, so the
+    // reading says which color that place holds
+    expect(suggested[1].why).toContain('#00ff00');
+  });
+
+  test('a die that has something else to do when clicked still rolls by leaving that out', () => {
+    roomWidget({ id: 'die1', type: 'dice', clickable: true, clickRoutine: [ { func: 'FLIP' } ] });
+    const withRoutine = operations(routineGestureSuggestions(gesture({ widgetID: 'die1', type: 'dice', dragged: false })));
+    expect(withRoutine).toContainEqual({ func: 'CLICK', collection: [ 'die1' ], mode: 'ignoreClickRoutine' });
+    // and the same for a die players are not allowed to click at all
+    roomWidget({ id: 'die2', type: 'dice', clickable: false });
+    const unclickable = operations(routineGestureSuggestions(gesture({ widgetID: 'die2', type: 'dice', dragged: false })));
+    expect(unclickable).toContainEqual({ func: 'CLICK', collection: [ 'die2' ], mode: 'ignoreClickable' });
+  });
+
+  test('a die the room rolled during the gesture is set to that face, not flipped to it', () => {
+    roomWidget({ id: 'table', type: 'holder' });
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'die1', type: 'dice' });
+    roomWidget({ id: 'card1', type: 'card' });
+    const suggested = operations(routineGestureSuggestions(gesture({
+      widgetID: 'card1', from: 'hand', to: 'table', reparented: true,
+      changes: { die1: { activeFace: 4, rollCount: 7 } }
+    })));
+    // FLIP has no effect on a die: Dice has no flip() for it to call
+    expect(suggested).toContainEqual({ func: 'SET', property: 'activeFace', value: 4, collection: [ 'die1' ] });
+    expect(suggested).not.toContainEqual({ func: 'FLIP', collection: [ 'die1' ], face: 4 });
+    // and the counter the roll animation runs off is not a second reading of it
+    expect(suggested.filter(o => o.func == 'SET').map(o => o.property)).not.toContain('rollCount');
+  });
+
+  test('every suggestion reads as a finished sentence, with nothing of the template left in it', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'deckHolder', type: 'holder' });
+    roomWidget({ id: 'deck1', type: 'deck', parent: 'deckHolder' });
+    roomWidget({ id: 'seat-p1', type: 'seat', hand: 'hand' });
+    roomWidget({ id: 'card1', type: 'card', parent: 'deckHolder' });
+    roomWidget({ id: 'timer1', type: 'timer' });
+    roomWidget({ id: 'die1', type: 'dice', clickable: true });
+    roomWidget({ id: 'canvas1', type: 'canvas', activeColor: 1, lineWidth: 1 });
+    const gestures = [
+      gesture({ widgetID: 'card1', from: 'deckHolder', to: 'hand', reparented: true }),
+      gesture({ widgetID: 'card1', from: 'deckHolder', to: 'hand', reparented: true, count: 4 }),
+      gesture({ widgetID: 'card1', from: 'hand', to: null, reparented: true, x: 300, y: 200 }),
+      gesture({ widgetID: 'card1', from: null, to: null, x: 300, y: 200 }),
+      gesture({ widgetID: 'card1', dragged: false }),
+      gesture({ widgetID: 'timer1', type: 'timer', dragged: false }),
+      gesture({ widgetID: 'die1', type: 'dice', dragged: false }),
+      gesture({ widgetID: 'canvas1', type: 'canvas', dragged: false })
+    ];
+    for(const g of gestures) {
+      const suggestions = routineGestureSuggestions(g);
+      expect(suggestions.length).toBeGreaterThan(0);
+      for(const { operations, why } of suggestions) {
+        expect(operations.length).toBeGreaterThan(0);
+        for(const operation of operations) {
+          const operationEditor = editorForOperation(operation);
+          operationEditor.setOperationDetails(null, operation, [], []);
+          const sentence = operationEditor.getSentenceText();
+          expect(sentence).not.toMatch(/\{[a-zA-Z,]+\}/);
+          expect(sentence).not.toContain('undefined');
+        }
+        expect(why.length).toBeGreaterThan(3);
+      }
+    }
+  });
+
+  test('nothing reaches the routine until a suggestion is picked, and then exactly that operation does', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'discard', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    card.set('parent', 'discard');
+    routineRecorderPointerUp();
+    expect(editor.routine).toEqual([]);
+
+    editor.domElement.querySelector('.routine-editor-suggestion').click();
+    expect(editor.routine).toEqual([ { func: 'MOVE', from: 'hand', to: 'discard', count: 1 } ]);
+    // the card is answered and closes: a second operation out of the same
+    // gesture is had by doing the gesture again
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(0);
+    expect(isRoutineRecording()).toBe(true);
+  });
+
+  test('a gesture the pointer never finished in the room does not become the next one', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    routineRecorderPointerUp(); // a click, which is a gesture of its own
+    routineRecorderPointerUp(); // the release that never had a press
+    expect(editor.domElement.querySelectorAll('.routine-editor-gesture').length).toBe(1);
+  });
+
+  test('the deltas of a gesture only count while one is running', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'table', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderReceiveDelta({ s: { card1: { activeFace: 1 } } }); // before the press
+    routineRecorderPointerDown(card);
+    routineRecorderReceiveDelta({ s: { card1: { activeFace: 0 } } });
+    card.set('parent', 'table');
+    routineRecorderPointerUp();
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences).toContain('Turn card1 face down');
+  });
+
+  test('what another player does at the same time is not part of the gesture', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    roomWidget({ id: 'table', type: 'holder' });
+    roomWidget({ id: 'card2', type: 'card' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    routineRecorderReceiveDelta({ s: { card2: { activeFace: 1 } }, c: 'Bob dragged card2' });
+    routineRecorderReceiveDelta({ s: { card1: { activeFace: 1 } }, c: 'Alice dragged card1' });
+    card.set('parent', 'table');
+    routineRecorderPointerUp();
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences).toContain('Turn card1 face up');
+    expect(sentences).not.toContain('Turn card2 face up');
+  });
+
+  test('a widget the gesture created is not offered as something to set properties on', () => {
+    roomWidget({ id: 'hand', type: 'holder' });
+    const card = roomWidget({ id: 'card1', type: 'card', parent: 'hand' });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    // dropping a card onto a card makes a pile around them, and the pile reports
+    // everything it is as it appears - none of which a routine would ever set
+    roomWidget({ id: 'pile1', type: 'pile', parent: 'hand' });
+    routineRecorderReceiveDelta({ s: { pile1: { width: 103, height: 160 }, card1: { activeFace: 1 } } });
+    card.set('parent', 'pile1');
+    routineRecorderPointerUp();
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences).toContain('Turn card1 face up');
+    expect(sentences).not.toContain('Set width of pile1 to 103');
+    // and no operation is offered that would have to name it either: the card
+    // went into a pile that stands in the hand, which is where the card already was
+    expect(sentences.join(' ')).not.toContain('pile1');
+  });
+
+  test('stacking two cards on the table puts one where the other is, not into the pile the drop invented', () => {
+    const card = roomWidget({ id: 'card1', type: 'card', x: 100, y: 100 });
+    roomWidget({ id: 'card2', type: 'card', x: 300, y: 200 });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(card);
+    // what the engine does when a card lands on a card: a pile appears where the
+    // other card was, with an id nobody typed and that is gone again as soon as
+    // the pile holds one card, and both cards go into it at its own coordinates
+    roomWidget({ id: 'o0ur', type: 'pile', x: 300, y: 200 });
+    card.set('parent', 'o0ur');
+    card.set('x', 0);
+    card.set('y', 0);
+    routineRecorderPointerUp();
+
+    // no operation moves anything into a pile - MOVE takes holders and seats -
+    // so what the gesture did is read as the place that pile stands in
+    expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('dragged the card card1 to 300, 200');
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences.join(' ')).not.toContain('o0ur');
+    // where it was put is one row to pick, spelling out both operations it adds
+    expect(editor.domElement.querySelectorAll('.routine-editor-suggestion').length).toBe(1);
+    expect(sentences).toEqual([ 'Set x of card1 to 300', 'Set y of card1 to 200' ]);
+    // and picking it writes both
+    editor.domElement.querySelector('.routine-editor-suggestion').click();
+    expect(editor.routine).toEqual([
+      { func: 'SET', property: 'x', value: 300, collection: [ 'card1' ] },
+      { func: 'SET', property: 'y', value: 200, collection: [ 'card1' ] }
+    ]);
+  });
+
+  test('a release the engine calls a click is recorded as one, however far the widget slid', () => {
+    const die = roomWidget({ id: 'die1', type: 'dice', clickable: true, x: 400, y: 300 });
+    startRoutineRecording(editor);
+    routineRecorderPointerDown(die);
+    // every mousemove moves the widget for real, so a hand that shakes by three
+    // pixels does leave it three pixels away - but a release under 10px and 250ms
+    // is a click to the engine, which is what runs the hook below
+    die.set('x', 403);
+    expect(handleRoutineRecorderClick()).toBe(true);
+    routineRecorderPointerUp();
+
+    expect(editor.domElement.querySelector('.routine-editor-gesture-what').textContent).toBe('clicked the dice die1');
+    const sentences = [ ...editor.domElement.querySelectorAll('.routine-editor-suggestion-sentence') ].map(s => s.textContent);
+    expect(sentences.join(' ')).not.toContain('403');
+    editor.domElement.querySelector('.routine-editor-suggestion').click();
+    expect(editor.routine).toEqual([ { func: 'CLICK', collection: [ 'die1' ] } ]);
+  });
+
+  test('a recording does not outlive the editor it was started in', () => {
+    startRoutineRecording(editor);
+    expect(document.body.classList.contains('editorRoutineRecording')).toBe(true);
+    // what the properties module does when it closes: the routine editor goes
+    // with the sidebar, and leaving edit mode only display:none's the editor, so
+    // nothing else would take the crosshair and the frame off the room again
+    editor.domElement.remove();
+    stopRoutineRecording();
+    expect(isRoutineRecording()).toBe(false);
+    expect(document.body.classList.contains('editorRoutineRecording')).toBe(false);
+  });
+
+  test('only one routine is recorded at a time - starting another one moves it there', () => {
+    const other = new RoutineEditor({ state: { id: 'button2' }, get: p => ({ id: 'button2' })[p] || null }, []);
+    document.getElementById('editor').append(other.domElement);
+    startRoutineRecording(editor);
+    expect(editor.domElement.querySelector('.routine-editor-recording')).not.toBeNull();
+    other.domElement.querySelector('.routine-editor-record-operation').click();
+    expect(editor.domElement.querySelector('.routine-editor-recording')).toBeNull();
+    expect(other.domElement.querySelector('.routine-editor-recording')).not.toBeNull();
+    other.domElement.remove();
   });
 });
