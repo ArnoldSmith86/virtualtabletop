@@ -660,6 +660,64 @@ test('A holder outside the board takes a drop in the zoomed out edit view', asyn
   await expectEventually(t, card, { parent: 'offBoard', moved: true }, 'the card lands in the holder beside the board');
 });
 
+// A line that takes stops resolves a drop along its path rather than through the
+// drop target under the pointer, so it has its own way in and out of the same rule:
+// off the board it takes a stop only where the zoomed out view puts it on screen.
+test('A line outside the board takes a stop in the zoomed out edit view', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    token: { id: 'token', type: 'basic', x: 700, y: 370, width: 60, height: 60 },
+    offBoard: { id: 'offBoard', type: 'line', x: 1680, y: 340, width: 220, height: 120, lineStart: { x: 0, y: 60 }, lineEnd: { x: 220, y: 60 }, lineWidth: 10, dropTarget: {} }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  // A drag marks the line it would attach to while it is under way and adds the token
+  // to that line's stops when it ends. Both ends of the drag are element centers, so
+  // the token travels centered on the pointer and arrives on the line's path. As in
+  // the holder test above, playing drags with the left button and editing - where the
+  // left one belongs to select mode - with the right one.
+  const drag = ClientFunction(button => {
+    const center = id => {
+      const rectangle = document.getElementById(id).getBoundingClientRect();
+      return { x: rectangle.left + rectangle.width/2, y: rectangle.top + rectangle.height/2 };
+    };
+    const from = center('w_token'), to = center('w_offBoard');
+    const buttons = button == 2 ? 2 : 1;
+    document.querySelector('#w_token').dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.x, clientY: from.y }));
+    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX: to.x, clientY: to.y }));
+    return new Promise(resolve => setTimeout(() => {
+      const highlighted = document.getElementById('w_offBoard').classList.contains('lineDropTarget');
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX: to.x, clientY: to.y }));
+      setTimeout(() => resolve(highlighted), 300);
+    }, 300));
+  });
+
+  // what the drag did: the stops the line ended up with, where the token hangs and
+  // whether it was dragged at all
+  const stops = async () => {
+    const state = await getStateObject();
+    return { stops: (state.offBoard.stops || []).map(stop=>stop.widget).join(), parent: state.token.parent || null, moved: state.token.x != 700 };
+  };
+
+  await t.expect(drag(0)).notOk('the line beside the board takes no stop while playing');
+  await expectEventually(t, stops, { stops: '', parent: null, moved: true }, 'a drag during play moves the token but never onto the line beside the board');
+
+  await t.click('#editButton');
+  await t.expect(Selector('#editorSelection').exists).ok();
+
+  // the normal edit view clips the board just like play mode does, so the line
+  // beside it is as invisible - and takes as little - there as it does while playing
+  await t.expect(drag(2)).notOk('the line beside the board takes no stop in the normal edit view');
+  await expectEventually(t, stops, { stops: '', parent: null, moved: true }, 'a drag in the normal edit view moves the token but never onto the line beside the board');
+
+  await t.click('#editorToolbar [icon=zoom_out]');
+
+  await t.expect(drag(2)).ok('the line beside the board is highlighted as a stop target in the zoomed out edit view');
+  await expectEventually(t, stops, { stops: 'token', parent: 'offBoard', moved: true }, 'the token becomes a stop of the line beside the board');
+});
+
 test('A holder picks what it accepts in the dropTarget editor', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
