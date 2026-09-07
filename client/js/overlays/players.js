@@ -22,6 +22,12 @@ export {
   mouseCoords
 }
 
+// The trace viewer shows a recording through the eyes of one of the players who were in the room,
+// which means changing who this client considers itself to be without renaming anybody.
+export function setPlayerName(name) {
+  playerName = name;
+}
+
 function getPlayerDetails() {
   return {
     playerName,
