@@ -92,16 +92,27 @@ export class Line extends Widget {
   }
 
   // Whether any stop sits somewhere other than where the line puts it - the same
-  // coordinates positionAttachedWidgets writes, compared instead of assigned.
-  // Rotation is left out: it is only meaningful together with the
-  // lineOriginalRotation the line stores when it takes a stop's rotation over.
+  // coordinates and rotation positionAttachedWidgets writes, compared instead of
+  // assigned.
   stopsOffPath() {
     return this.stopList().some(entry=>{
       const stop = widgets.get(entry.widget);
       const point = this.stopCoordInParentFrame(stop, this.pointAtPosition(entry.position));
       return Math.round(point.x - stop.get('width')/2) != stop.get('x')
-          || Math.round(point.y - stop.get('height')/2) != stop.get('y');
+          || Math.round(point.y - stop.get('height')/2) != stop.get('y')
+          || this.stopRotationOffPath(stop, entry.position);
     });
+  }
+
+  // A stop the line turns onto the path is off it while it carries any other
+  // rotation - a save that only stores where a stop sits would otherwise load it
+  // unrotated and snap it onto the tangent on the first interaction. A stop the
+  // line does not turn is off it while the line still holds the rotation it took
+  // over earlier, which a layout hands back.
+  stopRotationOffPath(stop, position) {
+    if(this.shouldRotateStops())
+      return (+stop.get('rotation') || 0) != this.stopRotationOnPath(stop, position);
+    return stop.get('lineOriginalRotation') !== null;
   }
 
   isEllipse() {

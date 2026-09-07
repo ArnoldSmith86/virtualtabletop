@@ -1014,6 +1014,24 @@ describe('a line places its stops when a state is loaded', () => {
     unload(line, stops);
   });
 
+  test('a stop that sits on the path but is not turned onto it is rotated', async () => {
+    // a state that stores where a stop sits but not how it is turned renders it
+    // unrotated and snaps it onto the tangent on the first interaction - the
+    // same before/after split as a stop with no coordinates at all
+    const curve = { ...geometry, id: 'load-line', rotateStops: true, autoSpaceStops: false, controlStart: { x: 20, y: -80 }, controlEnd: { x: 320, y: 220 }, stops: [ { widget: 'load-a', position: 0.5 } ] };
+    const stopState = { id: 'load-a', width: 60, height: 40 };
+
+    const placed = await loadState(curve, [ stopState ]);
+    const [ x, y ] = coordinates(placed.stops)[0];
+    const rotation = placed.stops[0].get('rotation');
+    unload(placed.line, placed.stops);
+    expect(rotation).not.toBe(0);
+
+    const { line, stops } = await loadState(curve, [ { ...stopState, x, y } ]);
+    expect(stops[0].get('rotation')).toBe(rotation);
+    unload(line, stops);
+  });
+
   test('a save whose stops already sit on the path is not written to again', async () => {
     const lineState = { ...geometry, id: 'saved-line', autoSpaceStops: true, stops: stopIDs.map((widget, i) => ({ widget, position: i/2 })) };
     const saved = await loadState(lineState, stopIDs.map(id => ({ id })));
