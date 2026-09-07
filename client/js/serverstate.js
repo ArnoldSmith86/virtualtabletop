@@ -618,7 +618,13 @@ function receiveStateFromServer(args) {
   triggerGameStartRoutineOnNextStateLoad = false;
 
   (async function() {
-    await finishLoadingWidgets();
+    // the game start routines are what the loaded room does next, so they run
+    // whether or not the widgets managed to finish loading
+    try {
+      await finishLoadingWidgets();
+    } catch(e) {
+      console.error(`Could not finish loading the room!`, e);
+    }
 
     if(runGameStartRoutines) {
       batchStart();
