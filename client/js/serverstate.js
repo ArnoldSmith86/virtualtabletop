@@ -624,13 +624,18 @@ function cancelInputOverlay() {
 }
 
 function removeWidget(widgetID) {
+  const widget = widgets.get(widgetID);
   try {
-    widgets.get(widgetID).applyRemove();
+    widget.applyRemove();
   } catch(e) {
     console.error(`Could not remove widget!`, widgetID, e);
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+  // only with the widget out of the room does re-reading an inherited property give
+  // the value the inheritor falls back to instead of the one that is going away
+  if(widget)
+    widget.revertInheritedValues();
 }
 
 async function removeWidgetLocal(widgetID, keepChildren) {
@@ -648,13 +653,30 @@ async function removeWidgetLocal(widgetID, keepChildren) {
   if(widgets.get(widgetID).inRemovalQueue)
     return;
 
-  for(const w of getWidgetsToRemove(widgetID)) {
+  const removing = getWidgetsToRemove(widgetID);
+  // A widget that inherits from one of these falls back to its own defaults once it is
+  // gone, so it can end up a different size than the one a line placed it by. Only
+  // collected for the games that have a line at all - the flush below is not worth it
+  // otherwise.
+  const inheriting = widgetFilter(w=>w.get('type') == 'line').length
+    ? [ ...new Set(removing.flatMap(w=>w.inheritingWidgets())) ].filter(w=>!removing.includes(w))
+    : [];
+
+  for(const w of removing) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
     if(!w.isLimbo)
       await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(w.id, null);
+  }
+
+  // the removal only takes effect once the delta is applied, so the new sizes
+  // are only there to lay out by after it has been
+  if(inheriting.length) {
+    flushDelta();
+    for(const w of inheriting)
+      await w.updateLinesForStopLayout();
   }
 }
 

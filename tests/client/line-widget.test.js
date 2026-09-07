@@ -233,6 +233,28 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('removing the widget a stop inherits its size from places it by the size it falls back to', async () => {
+    const line = createLine({ id: 'orphan-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
+      stops: [ { widget: 'orphaned-stop', position: 0.25 } ] });
+    const source = new Widget('orphan-source');
+    addWidget({ id: 'orphan-source', type: 'basic', width: 20, height: 20 }, source);
+    const stop = new Widget('orphaned-stop');
+    addWidget({ id: 'orphaned-stop', type: 'basic', parent: line.id, inheritFrom: source.id }, stop);
+
+    await line.setStopPosition(stop.id, 0.5);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    // the stop is now a different size than the one it was placed by
+    removeWidget(source.id);
+    await stop.updateLinesForStopLayout();
+
+    expect(stop.get('width')).toBe(stop.defaults.width);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   test('renaming a stop keeps a single entry in place, at its own position', async () => {
     const line = createLine({ id: 'rename-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, autoSpaceStops: true,
       stops: [ 'rename-a', 'rename-b', 'rename-c' ].map((widget, i) => ({ widget, position: i / 2 })) });

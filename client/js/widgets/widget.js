@@ -404,6 +404,36 @@ export class Widget extends StateManaged {
     this.applyInheritedDeltaToDOM(delta);
   }
 
+  // The widgets that take their unset properties from this one.
+  inheritingWidgets() {
+    return (StateManaged.inheritFromMapping[this.id] || []).slice();
+  }
+
+  // A widget inheriting from this one falls back to its remaining sources - or to its
+  // own defaults - the moment this one is gone, which is what get() reports from then
+  // on. Hand it that fallback, or it keeps rendering the values it inherited: a stop
+  // that inherits its size from a deleted widget would sit on the line by one size and
+  // be drawn at another. Only makes sense once this widget has left the room, since
+  // that is what makes re-reading the values give the fallback rather than this widget.
+  revertInheritedValues() {
+    for(const inheriting of this.inheritingWidgets()) {
+      const properties = inheriting.inheritFrom()[this.id] || [];
+      const reverted = {};
+      for(const key of new Set([ ...Object.keys(this.state), ...Object.keys(this.inheritedProperties || {}) ]))
+        if(this.inheritFromIsValid(properties, key) && inheriting.state[key] === undefined)
+          reverted[key] = null;
+      if(!Object.keys(reverted).length)
+        continue;
+      inheriting.applyInheritedDeltaToDOM(reverted);
+      // the same property can come from more than one source, so whatever the others
+      // still provide goes back on after the blanket revert
+      const remaining = { ...inheriting.inheritFrom() };
+      delete remaining[this.id];
+      if(Object.keys(remaining).length)
+        inheriting.applyInheritedValuesToDOM(remaining);
+    }
+  }
+
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
     this.activateAnimation = true;
@@ -3299,6 +3329,13 @@ export class Widget extends StateManaged {
         inheriting.widgetsInheritingProperty(property, result);
     }
     return result;
+  }
+
+  // Ask every line carrying this widget as a stop to place it again. Used when the
+  // size it is laid out by changed without a property of its own changing.
+  async updateLinesForStopLayout() {
+    for(const line of linesWithStop(this.id))
+      await line.onStopPropertyChange(this);
   }
 
   // Connections are expressed against a target's global transform. A change
