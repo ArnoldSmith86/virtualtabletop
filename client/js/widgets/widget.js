@@ -3331,15 +3331,25 @@ export class Widget extends StateManaged {
     return result;
   }
 
-  // The stops a line would place differently because of this widget: everything that
-  // takes one of the properties a stop is laid out by from here, through however many
-  // levels of inheritance, and that some line lists as a stop.
-  stopLayoutInheritors(result = new Set) {
-    for(const property of stopLayoutProperties)
+  // The widgets a line would draw differently because of this one: everything that takes
+  // one of the properties a line reacts to from here, through however many levels of
+  // inheritance, and that some line either lays out as a stop or glues an end point to.
+  lineLayoutInheritors(lines, result = new Set) {
+    const connected = lines.filter(line=>line.get('connectStart') || line.get('connectEnd'));
+    for(const property of lineRelevantProperties)
       for(const widget of this.widgetsInheritingProperty(property))
-        if(linesWithStop(widget.id).length)
+        if(linesWithStop(widget.id).length || widget.hasConnectedEndPoint(connected))
           result.add(widget);
     return result;
+  }
+
+  // Whether one of the lines glues an end point to this widget or to something inside
+  // it - either way that end point moves when the transform of this widget changes.
+  hasConnectedEndPoint(lines) {
+    return lines.some(line=>[ line.get('connectStart'), line.get('connectEnd') ].some(connection=>{
+      const target = connection && widgets.get(connection.line);
+      return target && (target == this || target.isDescendantOf(this));
+    }));
   }
 
   // Ask every line carrying this widget as a stop to place it again. Used when the

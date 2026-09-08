@@ -270,7 +270,7 @@ describe('Line widget geometry', () => {
     expect(stop.get('x') + stop.get('width')/2).toBe(50);
 
     // what the removal collects beforehand to place again once the widget is gone
-    const inheritors = [ ...source.stopLayoutInheritors() ];
+    const inheritors = [ ...source.lineLayoutInheritors(widgetFilter(w=>w.get('type') == 'line')) ];
     expect(inheritors).toContain(stop);
 
     removeWidget(source.id);
@@ -751,6 +751,34 @@ describe('Line widget connections', () => {
     const depEndGlobal = { x: dep.get('x') + dep.pointProperty('lineEnd').x, y: dep.get('y') + dep.pointProperty('lineEnd').y };
     const targetStartGlobal = { x: target.get('x') + target.pointProperty('lineStart').x, y: target.get('y') + target.pointProperty('lineStart').y };
     expect(depEndGlobal).toEqual(targetStartGlobal);
+  });
+
+  test('an end point follows a target whose inherited geometry is gone', async () => {
+    const source = new Widget('connect-source');
+    addWidget({ id: 'connect-source', type: 'basic', x: 400, y: 300, width: 100, height: 40 }, source);
+    const target = new Widget('connect-target');
+    addWidget({ id: 'connect-target', type: 'basic', inheritFrom: source.id }, target);
+    target.coordGlobalFromCoordLocal = coord => ({ x: target.get('x') + coord.x, y: target.get('y') + coord.y });
+    const dep = createLine({ id: 'dep', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 },
+      connectStart: { line: target.id, position: 0.5 } });
+
+    const startGlobal = () => dep.coordGlobalFromCoordLocal(dep.pointProperty('lineStart'));
+    const targetCenter = () => target.coordGlobalFromCoordLocal({ x: target.get('width')/2, y: target.get('height')/2 });
+    await dep.applyConnections();
+    expect(startGlobal()).toEqual(targetCenter());
+
+    // what the removal collects beforehand to update once the widget is gone
+    const inheritors = [ ...source.lineLayoutInheritors(widgetFilter(w=>w.get('type') == 'line')) ];
+    expect(inheritors).toContain(target);
+
+    removeWidget(source.id);
+    for(const w of inheritors)
+      await w.updateConnectedLineEndpoints();
+
+    expect(target.get('x')).toBe(target.defaults.x);
+    expect(startGlobal()).toEqual(targetCenter());
+
+    removeWidget(target.id);
   });
 
   test('a curved connected line keeps its shape (control points follow the ends) when the target moves', async () => {

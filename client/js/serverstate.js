@@ -655,14 +655,16 @@ async function removeWidgetLocal(widgetID, keepChildren, isBeingReplaced) {
 
   const removing = getWidgetsToRemove(widgetID);
   // A widget that inherits from one of these falls back to its own defaults once it is
-  // gone, so it can end up a different size than the one a line placed it by. A rename
-  // or a type change takes the widget out only to add it straight back, which hands the
-  // same values down again - there is nothing to lay out for those. Only collected for
-  // the games that have a line at all, since the flush below is not worth it otherwise.
+  // gone, so it can end up somewhere else or a different size than a line placed it by
+  // and glued its end points to. A rename or a type change takes the widget out only to
+  // add it straight back, which hands the same values down again - there is nothing to
+  // lay out for those. Only collected for the games that have a line at all, since the
+  // flush below is not worth it otherwise.
+  const lines = widgetFilter(w=>w.get('type') == 'line');
   const inheritors = new Set();
-  if(!isBeingReplaced && widgetFilter(w=>w.get('type') == 'line').length)
+  if(!isBeingReplaced && lines.length)
     for(const w of removing)
-      w.stopLayoutInheritors(inheritors);
+      w.lineLayoutInheritors(lines, inheritors);
   const inheriting = [ ...inheritors ].filter(w=>!removing.includes(w));
 
   for(const w of removing) {
@@ -674,12 +676,14 @@ async function removeWidgetLocal(widgetID, keepChildren, isBeingReplaced) {
     sendPropertyUpdate(w.id, null);
   }
 
-  // the removal only takes effect once the delta is applied, so the new sizes
-  // are only there to lay out by after it has been
+  // the removal only takes effect once the delta is applied, so the values that are
+  // fallen back to are only there to lay out by after it has been
   if(inheriting.length) {
     flushDelta();
-    for(const w of inheriting)
+    for(const w of inheriting) {
+      await w.updateConnectedLineEndpoints();
       await w.updateLinesForStopLayout();
+    }
   }
 }
 
