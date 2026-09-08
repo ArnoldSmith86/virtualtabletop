@@ -87,10 +87,18 @@ async function openRoom(t, combo, state) {
 
 // A room that is still settling - a deferred layout, an asset that has not arrived - would
 // record a baseline nobody can reproduce, so read until two consecutive captures agree.
+//
+// The pause between two captures has to outlast the longest change the client makes on its own
+// once a widget is there, or "agree" only means the machine was fast enough to read the same
+// intermediate state twice: a spinner hides its value the moment angle and value arrive and
+// reveals it 1300 ms later, so with a shorter pause the tree that gets recorded - and compared
+// against the baseline - is whichever side of that timer this machine happened to land on.
+const SETTLE_PAUSE = 1600;
+
 async function settledSnapshot(t) {
   let previous = await captureSnapshot(STYLE_PROPERTIES);
-  for(let wait=100; wait<2000; wait*=2) {
-    await t.wait(wait);
+  for(let attempt=0; attempt<4; ++attempt) {
+    await t.wait(SETTLE_PAUSE);
     const snapshot = await captureSnapshot(STYLE_PROPERTIES);
     if(diff(previous, snapshot) === undefined)
       return snapshot;
