@@ -40,6 +40,18 @@ describe('Removing a widget that other widgets inherit from', () => {
     expect(inheritor.get('width')).toBe(inheritor.defaults.width);
   });
 
+  test('the inheritor can be moved again once an inherited lock is gone', () => {
+    createWidget({ id: 'lockedSource', type: 'basic', movable: false });
+    const inheritor = createWidget({ id: 'inheritsMovable', type: 'basic', inheritFrom: 'lockedSource' });
+    expect(inheritor.get('movable')).toBe(false);
+    expect(inheritor.domElement.className).not.toContain('movable');
+
+    removeWidget('lockedSource');
+
+    expect(inheritor.get('movable')).toBe(true);
+    expect(inheritor.domElement.className).toContain('movable');
+  });
+
   test('a second source takes over the properties the removed one provided', () => {
     createWidget({ id: 'firstSource', type: 'basic', height: 40 });
     createWidget({ id: 'secondSource', type: 'basic', height: 55 });

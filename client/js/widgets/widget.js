@@ -3331,6 +3331,17 @@ export class Widget extends StateManaged {
     return result;
   }
 
+  // The stops a line would place differently because of this widget: everything that
+  // takes one of the properties a stop is laid out by from here, through however many
+  // levels of inheritance, and that some line lists as a stop.
+  stopLayoutInheritors(result = new Set) {
+    for(const property of stopLayoutProperties)
+      for(const widget of this.widgetsInheritingProperty(property))
+        if(linesWithStop(widget.id).length)
+          result.add(widget);
+    return result;
+  }
+
   // Ask every line carrying this widget as a stop to place it again. Used when the
   // size it is laid out by changed without a property of its own changing.
   async updateLinesForStopLayout() {

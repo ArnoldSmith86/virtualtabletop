@@ -255,6 +255,36 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('a stop that inherits its size through another widget is collected for re-layout', async () => {
+    const line = createLine({ id: 'chain-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
+      stops: [ { widget: 'chained-stop', position: 0.25 } ] });
+    const source = new Widget('chain-source');
+    addWidget({ id: 'chain-source', type: 'basic', width: 20, height: 20 }, source);
+    const middle = new Widget('chain-middle');
+    addWidget({ id: 'chain-middle', type: 'basic', inheritFrom: source.id }, middle);
+    const stop = new Widget('chained-stop');
+    addWidget({ id: 'chained-stop', type: 'basic', parent: line.id, inheritFrom: middle.id }, stop);
+
+    await line.setStopPosition(stop.id, 0.5);
+    expect(stop.get('width')).toBe(20);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    // what the removal collects beforehand to place again once the widget is gone
+    const inheritors = [ ...source.stopLayoutInheritors() ];
+    expect(inheritors).toContain(stop);
+
+    removeWidget(source.id);
+    for(const w of inheritors)
+      await w.updateLinesForStopLayout();
+
+    expect(stop.get('width')).toBe(stop.defaults.width);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    removeWidget(middle.id);
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   test('renaming a stop keeps a single entry in place, at its own position', async () => {
     const line = createLine({ id: 'rename-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, autoSpaceStops: true,
       stops: [ 'rename-a', 'rename-b', 'rename-c' ].map((widget, i) => ({ widget, position: i / 2 })) });

@@ -190,7 +190,7 @@ async function updateWidgetId(widget, oldID) {
     sendPropertyUpdate(child.get('id'), 'parent', null);
   for(const card of cards)
     sendPropertyUpdate(card.get('id'), 'deck', null);
-  await removeWidgetLocal(oldID, true);
+  await removeWidgetLocal(oldID, true, true);
 
   const id = await addWidgetLocal(widget);
 
@@ -638,7 +638,7 @@ function removeWidget(widgetID) {
     widget.revertInheritedValues();
 }
 
-async function removeWidgetLocal(widgetID, keepChildren) {
+async function removeWidgetLocal(widgetID, keepChildren, isBeingReplaced) {
   function getWidgetsToRemove(widgetID) {
     const children = [];
     if(!keepChildren)
@@ -655,12 +655,15 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 
   const removing = getWidgetsToRemove(widgetID);
   // A widget that inherits from one of these falls back to its own defaults once it is
-  // gone, so it can end up a different size than the one a line placed it by. Only
-  // collected for the games that have a line at all - the flush below is not worth it
-  // otherwise.
-  const inheriting = widgetFilter(w=>w.get('type') == 'line').length
-    ? [ ...new Set(removing.flatMap(w=>w.inheritingWidgets())) ].filter(w=>!removing.includes(w))
-    : [];
+  // gone, so it can end up a different size than the one a line placed it by. A rename
+  // or a type change takes the widget out only to add it straight back, which hands the
+  // same values down again - there is nothing to lay out for those. Only collected for
+  // the games that have a line at all, since the flush below is not worth it otherwise.
+  const inheritors = new Set();
+  if(!isBeingReplaced && widgetFilter(w=>w.get('type') == 'line').length)
+    for(const w of removing)
+      w.stopLayoutInheritors(inheritors);
+  const inheriting = [ ...inheritors ].filter(w=>!removing.includes(w));
 
   for(const w of removing) {
     w.isBeingRemoved = true;
