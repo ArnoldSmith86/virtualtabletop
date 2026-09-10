@@ -511,7 +511,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763605491579,
+      "lastUpdate": 1789005565456,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -523,7 +523,9 @@
       "variantImage": "",
       "variant": "Modifying - Basic",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false,
+      "usesAILayout": false
     }
   }
 }
