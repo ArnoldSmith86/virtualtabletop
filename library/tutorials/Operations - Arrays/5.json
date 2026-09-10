@@ -41,7 +41,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763605491581,
+      "lastUpdate": 1789005565462,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -53,7 +53,9 @@
       "variantImage": "",
       "variant": "Example: Random Word",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false,
+      "usesAILayout": false
     }
   },
   "Word 5-5": {

@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763605491576,
+      "lastUpdate": 1789005565449,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -23,7 +23,9 @@
       "variantImage": "",
       "variant": "Creating",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false,
+      "usesAILayout": false
     }
   },
   "title": {
