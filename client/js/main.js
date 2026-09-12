@@ -25,15 +25,21 @@ export const clientPointer = $('#clientPointer');
 export function compareDropTarget(widget, t, existingChild=false){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;
+    let hasPersistentCondition = false;
     for(const key in dropTargetObject) {
       // dragging is cleared on release, after the holder has accepted the child
       if(existingChild && key == 'dragging')
         continue;
+      hasPersistentCondition = true;
       if(dropTargetObject[key] != widget.get(key) && (existingChild || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
         isValidObject = false;
         break;
       }
     }
+    // A dragging-only filter still uses the holder's default card membership,
+    // keeping fixed controls and deck definitions out of children().
+    if(existingChild && !hasPersistentCondition && 'dragging' in dropTargetObject && widget.get('type') != 'card')
+      isValidObject = false;
     if(isValidObject) {
       return true;
     }

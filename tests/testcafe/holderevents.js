@@ -184,22 +184,36 @@ test('A card dragged onto a full holder is refused and stays on the table', asyn
   await t.expect(String((after.log||{}).trace||'')).eql('', 'no holder event fired');
 });
 
-test('A dragging-based drop target counts accepted cards and applies its drop limit', async t => {
+test('A dragging-only drop target excludes a deck holder\'s structural children from COUNT', async t => {
   const state = fixtureState({
-    handB: { dropTarget: { dragging: 'TestCafe' }, dropLimit: 1 },
-    go: { clickRoutine: [
+    handB: { dropTarget: { dragging: 'TestCafe' }, enterRoutine: [
       { func: 'COUNT', holder: 'handB', variable: 'count' },
-      { func: 'SET', collection: 'thisButton', property: 'count', value: '${count}' }
+      { func: 'SELECT', property: 'id', value: 'log', collection: 'log' },
+      { func: 'SET', collection: 'log', property: 'count', value: '${count}' }
     ] }
   });
+  state.deck.parent = 'handB';
+  state.recall = { id: 'recall', type: 'button', parent: 'handB', fixedParent: true, text: 'Recall & Shuffle' };
+  await openRoom(t, 'modern', state);
+  await setName(t, 'TestCafe');
+
+  await dragPath(t, CARD, [ { onto: 'handB' } ]);
+  const counted = await stateWhen(s=>s.log && s.log.count !== undefined);
+  await t.expect(counted.card1.parent).eql('handB', 'the card was accepted');
+  await t.expect(counted.log.count).eql(1, 'enterRoutine counts the card but not the deck definition or fixed control');
+});
+
+test('A dragging-based drop target applies its drop limit', async t => {
+  const state = fixtureState({ handB: { dropTarget: { dragging: 'TestCafe' }, dropLimit: 1 } });
+  state.deck.parent = 'handB';
+  state.recall = { id: 'recall', type: 'button', parent: 'handB', fixedParent: true, text: 'Recall & Shuffle' };
   state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', x: 900, y: 60 };
   await openRoom(t, 'modern', state);
   await setName(t, 'TestCafe');
 
   await dragPath(t, CARD, [ { onto: 'handB' } ]);
-  await clickGo(t);
-  const counted = await stateWhen(s=>s.go && s.go.count !== undefined);
-  await t.expect(counted.go.count).eql(1, 'COUNT sees the accepted card after dragging is cleared');
+  const accepted = await stateWhen(s=>s.card1 && s.card1.parent == 'handB');
+  await t.expect(accepted.card1.parent).eql('handB', 'structural children do not make the holder full');
 
   await dragPath(t, 'card2', [ { onto: 'handB' } ]);
   await t.wait(500);
