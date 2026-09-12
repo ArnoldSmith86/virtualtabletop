@@ -22,7 +22,7 @@ export const dropTargets = new Map();
 
 export const clientPointer = $('#clientPointer');
 
-export function compareDropTarget(widget, t, existingChild=false){
+export function compareDropTarget(widget, t, existingChild=false, dragged=widget){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;
     let hasPersistentCondition = false;
@@ -31,7 +31,10 @@ export function compareDropTarget(widget, t, existingChild=false){
       if(existingChild && key == 'dragging')
         continue;
       hasPersistentCondition = true;
-      if(dropTargetObject[key] != widget.get(key) && (existingChild || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
+      // Pile targeting can match card properties through its first card, but
+      // the live drag state belongs to the pile being moved.
+      const propertyWidget = key == 'dragging' ? dragged : widget;
+      if(dropTargetObject[key] != propertyWidget.get(key) && (existingChild || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
         isValidObject = false;
         break;
       }
@@ -67,12 +70,14 @@ function getValidDropTargets(widget, dragged = widget) {
     if(!t.isVisible())
       continue;
 
-    // if the holder has a drop limit and it's reached, skip the holder -
-    // unless the dragged widget is already its child and just goes back in
-    if(exceedsDropLimit(t) && t.children().indexOf(widget) == -1)
+    // A pile contributes its cards to a holder or pile, while a line takes the
+    // whole pile as one stop. Something already in the target can go back even
+    // when the target is full.
+    const dropCount = dragged.get('type') == 'pile' && [ 'holder', 'pile' ].includes(t.get('type')) ? dragged.children().length : 1;
+    if(exceedsDropLimit(t, dropCount) && t.children().indexOf(widget) == -1 && dragged.get('_ancestor') != t.get('id'))
       continue;
 
-    let isValid = compareDropTarget(widget, t);
+    let isValid = compareDropTarget(widget, t, false, dragged);
 
     let tt = t;
     while(isValid) {
