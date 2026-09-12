@@ -22,11 +22,14 @@ export const dropTargets = new Map();
 
 export const clientPointer = $('#clientPointer');
 
-export function compareDropTarget(widget, t, exclude){
+export function compareDropTarget(widget, t, existingChild=false){
   for(const dropTargetObject of asArray(t.get('dropTarget'))) {
     let isValidObject = true;
     for(const key in dropTargetObject) {
-      if(dropTargetObject[key] != widget.get(key) && (exclude == true || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
+      // dragging is cleared on release, after the holder has accepted the child
+      if(existingChild && key == 'dragging')
+        continue;
+      if(dropTargetObject[key] != widget.get(key) && (existingChild || (key != 'type' || widget.get(key) != 'deck' || dropTargetObject[key] != 'card'))) {
         isValidObject = false;
         break;
       }

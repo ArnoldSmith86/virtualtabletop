@@ -184,6 +184,29 @@ test('A card dragged onto a full holder is refused and stays on the table', asyn
   await t.expect(String((after.log||{}).trace||'')).eql('', 'no holder event fired');
 });
 
+test('A dragging-based drop target counts accepted cards and applies its drop limit', async t => {
+  const state = fixtureState({
+    handB: { dropTarget: { dragging: 'TestCafe' }, dropLimit: 1 },
+    go: { clickRoutine: [
+      { func: 'COUNT', holder: 'handB', variable: 'count' },
+      { func: 'SET', collection: 'thisButton', property: 'count', value: '${count}' }
+    ] }
+  });
+  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', x: 900, y: 60 };
+  await openRoom(t, 'modern', state);
+  await setName(t, 'TestCafe');
+
+  await dragPath(t, CARD, [ { onto: 'handB' } ]);
+  await clickGo(t);
+  const counted = await stateWhen(s=>s.go && s.go.count !== undefined);
+  await t.expect(counted.go.count).eql(1, 'COUNT sees the accepted card after dragging is cleared');
+
+  await dragPath(t, 'card2', [ { onto: 'handB' } ]);
+  await t.wait(500);
+  const after = await getStateObject();
+  await t.expect(after.card2.parent).eql(undefined, 'the second card stayed on the table');
+});
+
 // ---------------------------------------------------------------------------------------------
 // The properties that change what an event does
 // ---------------------------------------------------------------------------------------------
