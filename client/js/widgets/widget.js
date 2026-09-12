@@ -3337,9 +3337,12 @@ export class Widget extends StateManaged {
   lineLayoutInheritors(lines, result = new Set) {
     const connected = lines.filter(line=>line.get('connectStart') || line.get('connectEnd'));
     for(const property of lineRelevantProperties)
-      for(const widget of this.widgetsInheritingProperty(property))
-        if(linesWithStop(widget.id).length || widget.hasConnectedEndPoint(connected))
+      for(const widget of this.widgetsInheritingProperty(property)) {
+        if(result.has(widget))
+          continue;
+        if(lines.some(line=>lineListsStop(line, widget.id)) || widget.hasConnectedEndPoint(connected))
           result.add(widget);
+      }
     return result;
   }
 

@@ -1,4 +1,4 @@
-class Spinner extends Widget {
+export class Spinner extends Widget {
   constructor(id) {
     super(id);
 

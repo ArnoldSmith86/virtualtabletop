@@ -634,8 +634,12 @@ function removeWidget(widgetID) {
   dropTargets.delete(widgetID);
   // only with the widget out of the room does re-reading an inherited property give
   // the value the inheritor falls back to instead of the one that is going away
-  if(widget)
-    widget.revertInheritedValues();
+  try {
+    if(widget)
+      widget.revertInheritedValues();
+  } catch(e) {
+    console.error(`Could not revert inherited values!`, widgetID, e);
+  }
 }
 
 async function removeWidgetLocal(widgetID, keepChildren, isBeingReplaced) {

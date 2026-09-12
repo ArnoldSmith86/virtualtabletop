@@ -1,11 +1,18 @@
-import { widgets } from '../../client/js/serverstate.js';
+import { addWidget, widgets } from '../../client/js/serverstate.js';
+import { asArray, mapAssetURLs } from '../../client/js/domhelpers.js';
+import { Widget } from '../../client/js/widgets/widget.js';
 
 import { createWidget, removeWidget } from './client-util.js';
 
-// getDefaultValue() resolves inheritance through the concatenated global scope of the
-// shipped bundle rather than through an import, so expose the widget map it reads.
-beforeAll(() => {
+// Inheritance and spinner.js read these names from the concatenated global scope
+// of the shipped bundle, so expose them before importing the spinner class.
+let Spinner;
+beforeAll(async () => {
   globalThis.widgets = widgets;
+  globalThis.Widget = Widget;
+  globalThis.asArray = asArray;
+  globalThis.mapAssetURLs = mapAssetURLs;
+  ({ Spinner } = await import('../../client/js/widgets/spinner.js'));
 });
 
 // A widget with inheritFrom takes every property it does not set itself from another widget.
@@ -62,5 +69,18 @@ describe('Removing a widget that other widgets inherit from', () => {
 
     expect(inheritor.get('height')).toBe(55);
     expect(inheritor.domElement.style.height).toBe('55px');
+  });
+
+  test('a spinner renders the angle it falls back to', () => {
+    createWidget({ id: 'angleSource', type: 'basic', angle: 720 });
+    const spinner = new Spinner('inheritsAngle');
+    addWidget({ id: spinner.id, type: 'spinner', inheritFrom: { angleSource: [ 'angle' ] } }, spinner);
+    expect(spinner.get('angle')).toBe(720);
+    expect(spinner.spinner.style.transform).toBe('rotate(720deg)');
+
+    removeWidget('angleSource');
+
+    expect(spinner.get('angle')).toBe(0);
+    expect(spinner.spinner.style.transform).toBe('rotate(0deg)');
   });
 });
