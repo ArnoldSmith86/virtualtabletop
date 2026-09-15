@@ -2,10 +2,13 @@ import Config from './config.mjs';
 import Logging from './logging.mjs';
 
 export default class Player {
+  static nextSessionID = 1;
+
   constructor(connection, name, room) {
     this.connection = connection;
     this.name = name;
     this.room = room;
+    this.sessionID = Player.nextSessionID++;
 
     this.latestDeltaIDbyDifferentPlayer = this.room.deltaID;
     this.waitingForStateConfirmation = false;
@@ -24,6 +27,8 @@ export default class Player {
       this.trace('messageReceived', { func, args });
 
     try {
+      if(func == 'addLocalPlayer')
+        this.room.addLocalPlayer(this, args.player);
       if(func == 'addStateToPublicLibrary')
         this.room.addStateToPublicLibrary(this, args);
       if(func == 'audio')
@@ -42,10 +47,12 @@ export default class Player {
         this.room.moveStateWithinPublicLibrary(this, args);
       if(func == 'playerColor')
         this.room.recolorPlayer(this, args.player, args.color);
+      if(func == 'removeLocalPlayer')
+        this.room.removeLocalPlayer(this, args.player);
       if(func == 'removeState')
         this.room.removeState(this, args);
       if(func == 'rename')
-        this.room.renamePlayer(this, args.oldName, args.newName);
+        this.room.renamePlayer(this, args.oldName, args.newName, args.updateWidgets, args.sessionID);
       if(func == 'saveState')
         this.room.saveState(this, args.players, args.updateCurrentSave);
       if(func == 'setGameSettings')
@@ -58,6 +65,18 @@ export default class Player {
         this.trace('client', args);
       if(func == 'unlinkState')
         await this.room.unlinkState(this, args);
+      if(func == 'requestInput')
+        this.room.requestInput(this, args);
+      if(func == 'inputResult')
+        this.room.inputResult(this, args);
+      if(func == 'abortInput')
+        this.room.abortInput(this, args);
+      if(func == 'cancelInput')
+        this.room.cancelInput(this, args);
+      if(func == 'inputBlock')
+        this.room.inputBlock(this, args);
+      if(func == 'inputBlockAnswered')
+        this.room.inputBlockAnswered(this, args);
     } catch(e) {
       if(e instanceof Logging.UserError) {
         this.send('error', `${e.code} - ${e.message}`);

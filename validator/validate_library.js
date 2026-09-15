@@ -3,6 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { validateGameFile } from './validate_gamefile.js';
+import { readUpdatedGameFile } from './updated_gamefile.js';
 
 // Configuration
 const GAMES_DIR = '../library/games';
@@ -434,7 +435,7 @@ async function validateLibrary() {
             if (fs.existsSync(jsonFile)) {
                 const gameStartTime = Date.now();
                 try {
-                    const data = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
+                    const data = readUpdatedGameFile(jsonFile);
                     const problems = validateGameFile(data, true);
                     const gameTime = Date.now() - gameStartTime;
                     
@@ -493,7 +494,7 @@ async function validateLibrary() {
             if (fs.existsSync(jsonFile)) {
                 const tutorialStartTime = Date.now();
                 try {
-                    const data = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
+                    const data = readUpdatedGameFile(jsonFile);
                     const problems = validateGameFile(data, false); // Don't check meta for tutorials
                     const tutorialTime = Date.now() - tutorialStartTime;
                     

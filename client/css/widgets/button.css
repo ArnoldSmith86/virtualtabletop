@@ -15,7 +15,7 @@
   --wcBorderOH: var(--wcMain);
   --wcMainOH: var(--wcBorder);
   --wcFontOH: var(--wcFont);
-  --wcImageOH: url();
+  --wcImageOH: none;
 }
 
 .button:hover {

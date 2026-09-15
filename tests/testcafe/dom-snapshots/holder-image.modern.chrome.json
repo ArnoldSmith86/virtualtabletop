@@ -1,0 +1,78 @@
+[
+  {
+    "tag": "div",
+    "id": "w_decorated",
+    "classes": "clickable hasImage holder widget",
+    "box": [
+      20,
+      20,
+      400,
+      200
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "700000",
+      "background-color": "color(srgb 0.2 0.4 0.6)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "holderTextOnly",
+        "box": [
+          41,
+          31,
+          358,
+          178
+        ],
+        "style": {
+          "display": "flex",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(255, 204, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "center"
+        },
+        "children": []
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_plain",
+    "classes": "clickable holder widget",
+    "box": [
+      500,
+      20,
+      400,
+      200
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "700000",
+      "background-color": "color(srgb 1 1 1)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": []
+  }
+]

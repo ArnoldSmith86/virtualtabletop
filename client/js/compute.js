@@ -646,7 +646,7 @@ const compute_ops = [
   {
     name: 'numericStringSort',
     desc: 'sorts the string and number elements in array x numerically, and returns the resulting array',
-    sample: 'var a = ${x} numericSort',
+    sample: 'var a = ${x} numericStringSort',
     call: function(v, x) { return v = x.sort((a, b) => a.toString().localeCompare(b, 'en', {numeric: true, ignorePunctuation: true})) },
     hash: '080058deb4a93b597eef9b5db479ba31'
   },

@@ -1,0 +1,1909 @@
+[
+  {
+    "tag": "div",
+    "id": "w_deck",
+    "classes": "deck movable widget",
+    "box": [
+      -57,
+      -18,
+      0,
+      0
+    ],
+    "style": {
+      "display": "none",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "1000000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": []
+  },
+  {
+    "tag": "div",
+    "id": "w_card",
+    "classes": "card clickable movable widget",
+    "box": [
+      200,
+      20,
+      103,
+      160
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "hidden",
+      "z-index": "1000000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "active cardFace",
+        "box": [
+          200,
+          20,
+          103,
+          160
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "cardFaceObject",
+            "box": [
+              205,
+              25,
+              90,
+              30
+            ],
+            "style": {
+              "display": "block",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_basic",
+    "classes": "basic clickable movable widget",
+    "box": [
+      400,
+      20,
+      100,
+      100
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "1100000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": []
+  },
+  {
+    "tag": "div",
+    "id": "w_button",
+    "classes": "button clickable widget",
+    "box": [
+      600,
+      20,
+      80,
+      80
+    ],
+    "style": {
+      "display": "flex",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "900000",
+      "background-color": "rgb(31, 92, 166)",
+      "color": "rgb(255, 255, 255)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "center"
+    },
+    "children": []
+  },
+  {
+    "tag": "div",
+    "id": "w_label",
+    "classes": "label widget",
+    "box": [
+      800,
+      20,
+      200,
+      20
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "800000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(109, 109, 109)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "center"
+    },
+    "children": [
+      {
+        "tag": "textarea",
+        "id": "",
+        "classes": "",
+        "box": [
+          800,
+          20,
+          200,
+          20
+        ],
+        "style": {
+          "display": "block",
+          "position": "static",
+          "visibility": "visible",
+          "overflow": "auto hidden",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(109, 109, 109)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "center"
+        },
+        "children": []
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_dice",
+    "classes": "clickable dice shaking widget",
+    "box": [
+      1050,
+      20,
+      50,
+      50
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "1100000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "diceFaces shake6",
+        "box": [
+          1050,
+          20,
+          50,
+          50
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "visible",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "active animate1active diceFace dicePip face1",
+            "box": [
+              1050,
+              20,
+              50,
+              50
+            ],
+            "style": {
+              "display": "flex",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgb(255, 255, 255)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "center"
+            },
+            "children": [
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              },
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "diceFace dicePip face2",
+            "box": [
+              -57,
+              -18,
+              0,
+              0
+            ],
+            "style": {
+              "display": "none",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgb(255, 255, 255)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "center"
+            },
+            "children": [
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              },
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "animate2active diceFace dicePip face3",
+            "box": [
+              -57,
+              -18,
+              0,
+              0
+            ],
+            "style": {
+              "display": "none",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgb(255, 255, 255)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "center"
+            },
+            "children": [
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              },
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "diceFace dicePip face4",
+            "box": [
+              -57,
+              -18,
+              0,
+              0
+            ],
+            "style": {
+              "display": "none",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgb(255, 255, 255)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "center"
+            },
+            "children": [
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              },
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "diceFace dicePip face5",
+            "box": [
+              -57,
+              -18,
+              0,
+              0
+            ],
+            "style": {
+              "display": "none",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgb(255, 255, 255)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "center"
+            },
+            "children": [
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              },
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "diceFace dicePip face6",
+            "box": [
+              -57,
+              -18,
+              0,
+              0
+            ],
+            "style": {
+              "display": "none",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgb(255, 255, 255)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "center"
+            },
+            "children": [
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              },
+              {
+                "tag": "span",
+                "id": "",
+                "classes": "polygonBorder",
+                "box": [
+                  -57,
+                  -18,
+                  0,
+                  0
+                ],
+                "style": {
+                  "display": "none",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "center"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_spinner",
+    "classes": "clickable movable spinner widget",
+    "box": [
+      1250,
+      20,
+      110,
+      110
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "1000000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "svg",
+        "id": "",
+        "classes": "background",
+        "box": [
+          1250,
+          20,
+          110,
+          110
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "auto",
+          "background-color": "rgb(255, 255, 255)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "line",
+            "id": "",
+            "classes": "",
+            "box": [
+              1305,
+              75,
+              54,
+              0
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "text",
+            "id": "",
+            "classes": "",
+            "box": [
+              1335,
+              85,
+              10,
+              21
+            ],
+            "style": {
+              "display": "block",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "line",
+            "id": "",
+            "classes": "",
+            "box": [
+              1305,
+              28,
+              27,
+              47
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "text",
+            "id": "",
+            "classes": "",
+            "box": [
+              1300,
+              106,
+              10,
+              21
+            ],
+            "style": {
+              "display": "block",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "line",
+            "id": "",
+            "classes": "",
+            "box": [
+              1278,
+              28,
+              27,
+              47
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "text",
+            "id": "",
+            "classes": "",
+            "box": [
+              1264,
+              85,
+              10,
+              21
+            ],
+            "style": {
+              "display": "block",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "line",
+            "id": "",
+            "classes": "",
+            "box": [
+              1251,
+              75,
+              54,
+              0
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "text",
+            "id": "",
+            "classes": "",
+            "box": [
+              1264,
+              44,
+              10,
+              21
+            ],
+            "style": {
+              "display": "block",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "line",
+            "id": "",
+            "classes": "",
+            "box": [
+              1278,
+              75,
+              27,
+              47
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "text",
+            "id": "",
+            "classes": "",
+            "box": [
+              1300,
+              24,
+              10,
+              21
+            ],
+            "style": {
+              "display": "block",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "line",
+            "id": "",
+            "classes": "",
+            "box": [
+              1305,
+              75,
+              27,
+              47
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "text",
+            "id": "",
+            "classes": "",
+            "box": [
+              1335,
+              44,
+              10,
+              21
+            ],
+            "style": {
+              "display": "block",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "spinningPart",
+        "box": [
+          1250,
+          20,
+          110,
+          110
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "visible",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "url(SpinnerVTTblue.svg)",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": []
+      },
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "hidden value",
+        "box": [
+          1280,
+          50,
+          49,
+          49
+        ],
+        "style": {
+          "display": "flex",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "visible",
+          "z-index": "auto",
+          "background-color": "rgb(31, 92, 166)",
+          "color": "rgb(255, 255, 255)",
+          "opacity": "0",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "center"
+        },
+        "children": []
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_canvas",
+    "classes": "canvas clickable movable widget",
+    "box": [
+      20,
+      250,
+      202,
+      202
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "1000000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "canvas",
+        "id": "",
+        "classes": "",
+        "box": [
+          21,
+          251,
+          200,
+          200
+        ],
+        "style": {
+          "display": "inline",
+          "position": "static",
+          "visibility": "visible",
+          "overflow": "clip",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": []
+      },
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "canvasCursor",
+        "box": [
+          -57,
+          -18,
+          0,
+          0
+        ],
+        "style": {
+          "display": "none",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "visible",
+          "z-index": "auto",
+          "background-color": "rgb(31, 92, 166)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": []
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_line",
+    "classes": "line widget",
+    "box": [
+      300,
+      250,
+      400,
+      60
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "700000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "svg",
+        "id": "",
+        "classes": "lineSVG",
+        "box": [
+          300,
+          250,
+          400,
+          60
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "visible",
+          "z-index": "auto",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "path",
+            "id": "",
+            "classes": "lineGuide",
+            "box": [
+              -57,
+              -18,
+              0,
+              0
+            ],
+            "style": {
+              "display": "none",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "path",
+            "id": "",
+            "classes": "lineHitPath",
+            "box": [
+              300,
+              280,
+              400,
+              0
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          },
+          {
+            "tag": "path",
+            "id": "",
+            "classes": "linePath",
+            "box": [
+              300,
+              280,
+              400,
+              0
+            ],
+            "style": {
+              "display": "inline",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_score",
+    "classes": "clickable equalWidth movable scoreboard widget",
+    "box": [
+      800,
+      250,
+      300,
+      200
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "900000",
+      "background-color": "rgb(255, 255, 255)",
+      "color": "rgb(51, 51, 51)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "scoreboardIntermediate",
+        "box": [
+          800,
+          250,
+          300,
+          200
+        ],
+        "style": {
+          "display": "block",
+          "position": "relative",
+          "visibility": "visible",
+          "overflow": "auto",
+          "z-index": "0",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(51, 51, 51)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "table",
+            "id": "",
+            "classes": "",
+            "box": [
+              802,
+              252,
+              296,
+              60
+            ],
+            "style": {
+              "display": "table",
+              "position": "static",
+              "visibility": "visible",
+              "overflow": "visible",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(51, 51, 51)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": [
+              {
+                "tag": "tbody",
+                "id": "",
+                "classes": "",
+                "box": [
+                  802,
+                  252,
+                  296,
+                  60
+                ],
+                "style": {
+                  "display": "table-row-group",
+                  "position": "static",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(51, 51, 51)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "start"
+                },
+                "children": [
+                  {
+                    "tag": "tr",
+                    "id": "",
+                    "classes": "",
+                    "box": [
+                      802,
+                      252,
+                      296,
+                      30
+                    ],
+                    "style": {
+                      "display": "table-row",
+                      "position": "static",
+                      "visibility": "visible",
+                      "overflow": "visible",
+                      "z-index": "auto",
+                      "background-color": "rgba(0, 0, 0, 0)",
+                      "color": "rgb(51, 51, 51)",
+                      "opacity": "1",
+                      "background-image": "none",
+                      "font-style": "normal",
+                      "text-align": "start"
+                    },
+                    "children": [
+                      {
+                        "tag": "td",
+                        "id": "",
+                        "classes": "",
+                        "box": [
+                          802,
+                          252,
+                          296,
+                          30
+                        ],
+                        "style": {
+                          "display": "table-cell",
+                          "position": "sticky",
+                          "visibility": "visible",
+                          "overflow": "visible",
+                          "z-index": "2",
+                          "background-color": "rgb(221, 221, 221)",
+                          "color": "rgb(51, 51, 51)",
+                          "opacity": "1",
+                          "background-image": "none",
+                          "font-style": "normal",
+                          "text-align": "center"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "tr",
+                    "id": "",
+                    "classes": "",
+                    "box": [
+                      802,
+                      282,
+                      296,
+                      30
+                    ],
+                    "style": {
+                      "display": "table-row",
+                      "position": "static",
+                      "visibility": "visible",
+                      "overflow": "visible",
+                      "z-index": "auto",
+                      "background-color": "rgba(0, 0, 0, 0)",
+                      "color": "rgb(51, 51, 51)",
+                      "opacity": "1",
+                      "background-image": "none",
+                      "font-style": "normal",
+                      "text-align": "start"
+                    },
+                    "children": [
+                      {
+                        "tag": "td",
+                        "id": "",
+                        "classes": "totalsLine",
+                        "box": [
+                          802,
+                          282,
+                          296,
+                          30
+                        ],
+                        "style": {
+                          "display": "table-cell",
+                          "position": "sticky",
+                          "visibility": "visible",
+                          "overflow": "visible",
+                          "z-index": "1",
+                          "background-color": "rgb(221, 221, 221)",
+                          "color": "rgb(51, 51, 51)",
+                          "opacity": "1",
+                          "background-image": "none",
+                          "font-style": "normal",
+                          "text-align": "center"
+                        },
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_holder",
+    "classes": "clickable holder widget",
+    "box": [
+      20,
+      550,
+      400,
+      180
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "700000",
+      "background-color": "color(srgb 1 1 1)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "id": "w_inHand1",
+        "classes": "card clickable movable widget",
+        "box": [
+          20,
+          550,
+          103,
+          160
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "1000000",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "active cardFace",
+            "box": [
+              20,
+              550,
+              103,
+              160
+            ],
+            "style": {
+              "display": "block",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "hidden",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "classes": "cardFaceObject",
+                "box": [
+                  25,
+                  555,
+                  90,
+                  30
+                ],
+                "style": {
+                  "display": "block",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "start"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "div",
+        "id": "w_inHand2",
+        "classes": "card clickable movable widget",
+        "box": [
+          20,
+          550,
+          103,
+          160
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "1000000",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "active cardFace",
+            "box": [
+              20,
+              550,
+              103,
+              160
+            ],
+            "style": {
+              "display": "block",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "hidden",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "classes": "cardFaceObject",
+                "box": [
+                  25,
+                  555,
+                  90,
+                  30
+                ],
+                "style": {
+                  "display": "block",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "start"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "w_pile",
+    "classes": "clickable movable pile widget",
+    "box": [
+      600,
+      550,
+      1,
+      1
+    ],
+    "style": {
+      "display": "block",
+      "position": "absolute",
+      "visibility": "visible",
+      "overflow": "visible",
+      "z-index": "1000000",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "color": "rgb(0, 0, 0)",
+      "opacity": "1",
+      "background-image": "none",
+      "font-style": "normal",
+      "text-align": "start"
+    },
+    "children": [
+      {
+        "tag": "div",
+        "id": "",
+        "classes": "handle right small",
+        "box": [
+          596,
+          535,
+          20,
+          20
+        ],
+        "style": {
+          "display": "flex",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "visible",
+          "z-index": "9999999",
+          "background-color": "rgb(228, 228, 228)",
+          "color": "rgb(109, 109, 109)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "center"
+        },
+        "children": []
+      },
+      {
+        "tag": "div",
+        "id": "w_inPile1",
+        "classes": "card clickable movable widget",
+        "box": [
+          600,
+          550,
+          103,
+          160
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "1000000",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "active cardFace",
+            "box": [
+              600,
+              550,
+              103,
+              160
+            ],
+            "style": {
+              "display": "block",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "hidden",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "classes": "cardFaceObject",
+                "box": [
+                  605,
+                  555,
+                  90,
+                  30
+                ],
+                "style": {
+                  "display": "block",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "start"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "div",
+        "id": "w_inPile2",
+        "classes": "card clickable movable widget",
+        "box": [
+          600,
+          550,
+          103,
+          160
+        ],
+        "style": {
+          "display": "block",
+          "position": "absolute",
+          "visibility": "visible",
+          "overflow": "hidden",
+          "z-index": "1000000",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "background-image": "none",
+          "font-style": "normal",
+          "text-align": "start"
+        },
+        "children": [
+          {
+            "tag": "div",
+            "id": "",
+            "classes": "active cardFace",
+            "box": [
+              600,
+              550,
+              103,
+              160
+            ],
+            "style": {
+              "display": "block",
+              "position": "absolute",
+              "visibility": "visible",
+              "overflow": "hidden",
+              "z-index": "auto",
+              "background-color": "rgba(0, 0, 0, 0)",
+              "color": "rgb(0, 0, 0)",
+              "opacity": "1",
+              "background-image": "none",
+              "font-style": "normal",
+              "text-align": "start"
+            },
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "classes": "cardFaceObject",
+                "box": [
+                  605,
+                  555,
+                  90,
+                  30
+                ],
+                "style": {
+                  "display": "block",
+                  "position": "absolute",
+                  "visibility": "visible",
+                  "overflow": "visible",
+                  "z-index": "auto",
+                  "background-color": "rgba(0, 0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "opacity": "1",
+                  "background-image": "none",
+                  "font-style": "normal",
+                  "text-align": "start"
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,321 @@
+{
+  "name": "Mahjong tiles",
+  "description": "Full mahjong set of 152 tiles: circles, bamboos, characters, winds and dragons (four of each), flowers, seasons and eight jokers.",
+  "attribution": "Tile designs by 碧海风, available under CC BY-SA 4.0 at Wikimedia Commons. Joker tile by Cangjie6 (modified), available under CC BY-SA 4.0.",
+  "deck": {
+    "type": "deck",
+    "cardTypes": {
+      "Circle1": {
+        "image": "/assets/-1339016030_4616",
+        "tileNum": 1,
+        "rank": 1
+      },
+      "Circle2": {
+        "image": "/assets/1136467358_3083",
+        "tileNum": 2,
+        "rank": 2
+      },
+      "Circle3": {
+        "image": "/assets/-1532421072_3520",
+        "tileNum": 3,
+        "rank": 3
+      },
+      "Circle4": {
+        "image": "/assets/133475317_4420",
+        "tileNum": 4,
+        "rank": 4
+      },
+      "Circle5": {
+        "image": "/assets/1137488059_5603",
+        "tileNum": 5,
+        "rank": 5
+      },
+      "Circle6": {
+        "image": "/assets/-2135528845_6064",
+        "tileNum": 6,
+        "rank": 6
+      },
+      "Circle7": {
+        "image": "/assets/-1706428169_6941",
+        "tileNum": 7,
+        "rank": 7
+      },
+      "Circle8": {
+        "image": "/assets/-1074382683_7722",
+        "tileNum": 8,
+        "rank": 8
+      },
+      "Circle9": {
+        "image": "/assets/-1540116520_9700",
+        "tileNum": 9,
+        "rank": 9
+      },
+      "Bamboo1": {
+        "image": "/assets/539657358_11999",
+        "tileNum": 1,
+        "rank": 10
+      },
+      "Bamboo2": {
+        "image": "/assets/-2084632949_1227",
+        "tileNum": 2,
+        "rank": 11
+      },
+      "Bamboo3": {
+        "image": "/assets/-325975543_1705",
+        "tileNum": 3,
+        "rank": 12
+      },
+      "Bamboo4": {
+        "image": "/assets/-1729922331_2223",
+        "tileNum": 4,
+        "rank": 13
+      },
+      "Bamboo5": {
+        "image": "/assets/1007546639_2785",
+        "tileNum": 5,
+        "rank": 14
+      },
+      "Bamboo6": {
+        "image": "/assets/773320592_3156",
+        "tileNum": 6,
+        "rank": 15
+      },
+      "Bamboo7": {
+        "image": "/assets/54550778_3591",
+        "tileNum": 7,
+        "rank": 16
+      },
+      "Bamboo8": {
+        "image": "/assets/1732477204_3721",
+        "tileNum": 8,
+        "rank": 17
+      },
+      "Bamboo9": {
+        "image": "/assets/-975954993_4571",
+        "tileNum": 9,
+        "rank": 18
+      },
+      "Character1": {
+        "image": "/assets/-514147078_2701",
+        "tileNum": 1,
+        "rank": 19
+      },
+      "Character2": {
+        "image": "/assets/-2074161958_2906",
+        "tileNum": 2,
+        "rank": 20
+      },
+      "Character3": {
+        "image": "/assets/755134343_3230",
+        "tileNum": 3,
+        "rank": 21
+      },
+      "Character4": {
+        "image": "/assets/-2036596958_3393",
+        "tileNum": 4,
+        "rank": 22
+      },
+      "Character5": {
+        "image": "/assets/396998050_3683",
+        "tileNum": 5,
+        "rank": 23
+      },
+      "Character6": {
+        "image": "/assets/733238342_3524",
+        "tileNum": 6,
+        "rank": 24
+      },
+      "Character7": {
+        "image": "/assets/-632255122_2958",
+        "tileNum": 7,
+        "rank": 25
+      },
+      "Character8": {
+        "image": "/assets/-1080627014_2924",
+        "tileNum": 8,
+        "rank": 26
+      },
+      "Character9": {
+        "image": "/assets/1883354284_3171",
+        "tileNum": 9,
+        "rank": 27
+      },
+      "WindEast": {
+        "image": "/assets/2076338660_1877",
+        "tileNum": "E",
+        "rank": 28
+      },
+      "WindSouth": {
+        "image": "/assets/114170744_2138",
+        "tileNum": "S",
+        "rank": 29
+      },
+      "WindWest": {
+        "image": "/assets/454033274_1573",
+        "tileNum": "W",
+        "rank": 30
+      },
+      "WindNorth": {
+        "image": "/assets/-2112967810_1540",
+        "tileNum": "N",
+        "rank": 31
+      },
+      "DragonRed": {
+        "image": "/assets/2128461418_1352",
+        "rank": 32
+      },
+      "DragonGreen": {
+        "image": "/assets/987530906_2416",
+        "rank": 33
+      },
+      "DragonWhite": {
+        "image": "/assets/143502043_2260",
+        "rank": 34
+      },
+      "Spring": {
+        "image": "/assets/1343024375_9182",
+        "tileNum": "1     Spr",
+        "rank": 35
+      },
+      "Summer": {
+        "image": "/assets/1777414827_7686",
+        "tileNum": "2    Sum",
+        "rank": 36
+      },
+      "Autumn": {
+        "image": "/assets/685124225_8743",
+        "tileNum": "3     Aut",
+        "rank": 37
+      },
+      "Winter": {
+        "image": "/assets/-205388515_8642",
+        "tileNum": "4    Win",
+        "rank": 38
+      },
+      "Plum": {
+        "image": "/assets/-931410288_7127",
+        "tileNum": 1,
+        "rank": 39
+      },
+      "Orchid": {
+        "image": "/assets/165858226_6580",
+        "tileNum": 2,
+        "rank": 40
+      },
+      "Chrysanthemum": {
+        "image": "/assets/1018203540_11633",
+        "tileNum": 3,
+        "rank": 41
+      },
+      "Bamboo": {
+        "image": "/assets/720691094_5319",
+        "tileNum": 4,
+        "rank": 42
+      },
+      "Joker": {
+        "image": "/assets/-2068045230_13962",
+        "rank": 43
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "beige",
+            "width": 75,
+            "height": 100
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "color": "white",
+            "width": 75,
+            "height": 100
+          },
+          {
+            "type": "image",
+            "color": "transparent",
+            "x": 5,
+            "y": 10,
+            "width": 63.75,
+            "height": 85,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 0,
+            "width": 75,
+            "height": 10,
+            "color": "red",
+            "css": "font-size:20px",
+            "dynamicProperties": {
+              "value": "tileNum"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 75,
+      "height": 100
+    }
+  },
+  "counts": {
+    "Winter": 1,
+    "Circle7": 4,
+    "Character8": 4,
+    "Bamboo1": 4,
+    "Bamboo2": 4,
+    "Bamboo3": 4,
+    "Bamboo4": 4,
+    "Bamboo5": 4,
+    "Bamboo6": 4,
+    "Bamboo7": 4,
+    "Bamboo8": 4,
+    "Bamboo9": 4,
+    "Character1": 4,
+    "Character2": 4,
+    "Character3": 4,
+    "Character4": 4,
+    "Character5": 4,
+    "Character6": 4,
+    "Character7": 4,
+    "Character9": 4,
+    "Circle1": 4,
+    "Circle2": 4,
+    "Circle3": 4,
+    "Circle4": 4,
+    "Circle5": 4,
+    "Circle6": 4,
+    "Circle8": 4,
+    "Circle9": 4,
+    "WindEast": 4,
+    "WindSouth": 4,
+    "WindWest": 4,
+    "WindNorth": 4,
+    "DragonRed": 4,
+    "DragonGreen": 4,
+    "DragonWhite": 4,
+    "Spring": 1,
+    "Summer": 1,
+    "Autumn": 1,
+    "Plum": 1,
+    "Orchid": 1,
+    "Chrysanthemum": 1,
+    "Bamboo": 1,
+    "Joker": 8
+  }
+}

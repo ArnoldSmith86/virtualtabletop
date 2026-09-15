@@ -1,0 +1,10 @@
+<svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+    <!-- crown -->
+    <path d="M16 18 L13 6 L24 13 L32 2 L40 13 L51 6 L48 18 Z"/>
+    <!-- paw (same as scout) -->
+    <ellipse cx="32" cy="46" rx="11" ry="9"/>
+    <circle cx="20" cy="35" r="4.5"/>
+    <circle cx="28" cy="30" r="4.5"/>
+    <circle cx="36" cy="30" r="4.5"/>
+    <circle cx="44" cy="35" r="4.5"/>
+</svg>

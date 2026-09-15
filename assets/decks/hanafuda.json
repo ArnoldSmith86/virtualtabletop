@@ -1,0 +1,384 @@
+{
+  "name": "Hanafuda",
+  "description": "Japanese flower cards: 48 cards in 12 monthly suits for games like Koi-Koi and Hachi-Hachi.",
+  "attribution": "Card images by Louie Mantia and すけじょ, available under CC BY-SA 4.0 at Wikimedia Commons.",
+  "deck": {
+    "type": "deck",
+    "cardTypes": {
+      "January Hikari": {
+        "image": "/i/cards-hanafuda/01-hikari.svg",
+        "month": 1,
+        "flower": "Pine",
+        "category": "hikari",
+        "points": 20
+      },
+      "January Kasu 1": {
+        "image": "/i/cards-hanafuda/01-kasu1.svg",
+        "month": 1,
+        "flower": "Pine",
+        "category": "kasu",
+        "points": 1
+      },
+      "January Kasu 2": {
+        "image": "/i/cards-hanafuda/01-kasu2.svg",
+        "month": 1,
+        "flower": "Pine",
+        "category": "kasu",
+        "points": 1
+      },
+      "January Tanzaku": {
+        "image": "/i/cards-hanafuda/01-tanzaku.svg",
+        "month": 1,
+        "flower": "Pine",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "February Kasu 1": {
+        "image": "/i/cards-hanafuda/02-kasu1.svg",
+        "month": 2,
+        "flower": "Plum Blossom",
+        "category": "kasu",
+        "points": 1
+      },
+      "February Kasu 2": {
+        "image": "/i/cards-hanafuda/02-kasu2.svg",
+        "month": 2,
+        "flower": "Plum Blossom",
+        "category": "kasu",
+        "points": 1
+      },
+      "February Tane": {
+        "image": "/i/cards-hanafuda/02-tane.svg",
+        "month": 2,
+        "flower": "Plum Blossom",
+        "category": "tane",
+        "points": 10
+      },
+      "February Tanzaku": {
+        "image": "/i/cards-hanafuda/02-tanzaku.svg",
+        "month": 2,
+        "flower": "Plum Blossom",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "March Hikari": {
+        "image": "/i/cards-hanafuda/03-hikari.svg",
+        "month": 3,
+        "flower": "Cherry Blossom",
+        "category": "hikari",
+        "points": 20
+      },
+      "March Kasu 1": {
+        "image": "/i/cards-hanafuda/03-kasu1.svg",
+        "month": 3,
+        "flower": "Cherry Blossom",
+        "category": "kasu",
+        "points": 1
+      },
+      "March Kasu 2": {
+        "image": "/i/cards-hanafuda/03-kasu2.svg",
+        "month": 3,
+        "flower": "Cherry Blossom",
+        "category": "kasu",
+        "points": 1
+      },
+      "March Tanzaku": {
+        "image": "/i/cards-hanafuda/03-tanzaku.svg",
+        "month": 3,
+        "flower": "Cherry Blossom",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "April Kasu 1": {
+        "image": "/i/cards-hanafuda/04-kasu1.svg",
+        "month": 4,
+        "flower": "Wisteria",
+        "category": "kasu",
+        "points": 1
+      },
+      "April Kasu 2": {
+        "image": "/i/cards-hanafuda/04-kasu2.svg",
+        "month": 4,
+        "flower": "Wisteria",
+        "category": "kasu",
+        "points": 1
+      },
+      "April Tane": {
+        "image": "/i/cards-hanafuda/04-tane.svg",
+        "month": 4,
+        "flower": "Wisteria",
+        "category": "tane",
+        "points": 10
+      },
+      "April Tanzaku": {
+        "image": "/i/cards-hanafuda/04-tanzaku.svg",
+        "month": 4,
+        "flower": "Wisteria",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "May Kasu 1": {
+        "image": "/i/cards-hanafuda/05-kasu1.svg",
+        "month": 5,
+        "flower": "Iris",
+        "category": "kasu",
+        "points": 1
+      },
+      "May Kasu 2": {
+        "image": "/i/cards-hanafuda/05-kasu2.svg",
+        "month": 5,
+        "flower": "Iris",
+        "category": "kasu",
+        "points": 1
+      },
+      "May Tane": {
+        "image": "/i/cards-hanafuda/05-tane.svg",
+        "month": 5,
+        "flower": "Iris",
+        "category": "tane",
+        "points": 10
+      },
+      "May Tanzaku": {
+        "image": "/i/cards-hanafuda/05-tanzaku.svg",
+        "month": 5,
+        "flower": "Iris",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "June Kasu 1": {
+        "image": "/i/cards-hanafuda/06-kasu1.svg",
+        "month": 6,
+        "flower": "Peony",
+        "category": "kasu",
+        "points": 1
+      },
+      "June Kasu 2": {
+        "image": "/i/cards-hanafuda/06-kasu2.svg",
+        "month": 6,
+        "flower": "Peony",
+        "category": "kasu",
+        "points": 1
+      },
+      "June Tane": {
+        "image": "/i/cards-hanafuda/06-tane.svg",
+        "month": 6,
+        "flower": "Peony",
+        "category": "tane",
+        "points": 10
+      },
+      "June Tanzaku": {
+        "image": "/i/cards-hanafuda/06-tanzaku.svg",
+        "month": 6,
+        "flower": "Peony",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "July Kasu 1": {
+        "image": "/i/cards-hanafuda/07-kasu1.svg",
+        "month": 7,
+        "flower": "Bush Clover",
+        "category": "kasu",
+        "points": 1
+      },
+      "July Kasu 2": {
+        "image": "/i/cards-hanafuda/07-kasu2.svg",
+        "month": 7,
+        "flower": "Bush Clover",
+        "category": "kasu",
+        "points": 1
+      },
+      "July Tane": {
+        "image": "/i/cards-hanafuda/07-tane.svg",
+        "month": 7,
+        "flower": "Bush Clover",
+        "category": "tane",
+        "points": 10
+      },
+      "July Tanzaku": {
+        "image": "/i/cards-hanafuda/07-tanzaku.svg",
+        "month": 7,
+        "flower": "Bush Clover",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "August Hikari": {
+        "image": "/i/cards-hanafuda/08-hikari.svg",
+        "month": 8,
+        "flower": "Pampas Grass",
+        "category": "hikari",
+        "points": 20
+      },
+      "August Kasu 1": {
+        "image": "/i/cards-hanafuda/08-kasu1.svg",
+        "month": 8,
+        "flower": "Pampas Grass",
+        "category": "kasu",
+        "points": 1
+      },
+      "August Kasu 2": {
+        "image": "/i/cards-hanafuda/08-kasu2.svg",
+        "month": 8,
+        "flower": "Pampas Grass",
+        "category": "kasu",
+        "points": 1
+      },
+      "August Tane": {
+        "image": "/i/cards-hanafuda/08-tane.svg",
+        "month": 8,
+        "flower": "Pampas Grass",
+        "category": "tane",
+        "points": 10
+      },
+      "September Kasu 1": {
+        "image": "/i/cards-hanafuda/09-kasu1.svg",
+        "month": 9,
+        "flower": "Chrysanthemum",
+        "category": "kasu",
+        "points": 1
+      },
+      "September Kasu 2": {
+        "image": "/i/cards-hanafuda/09-kasu2.svg",
+        "month": 9,
+        "flower": "Chrysanthemum",
+        "category": "kasu",
+        "points": 1
+      },
+      "September Tane": {
+        "image": "/i/cards-hanafuda/09-tane.svg",
+        "month": 9,
+        "flower": "Chrysanthemum",
+        "category": "tane",
+        "points": 10
+      },
+      "September Tanzaku": {
+        "image": "/i/cards-hanafuda/09-tanzaku.svg",
+        "month": 9,
+        "flower": "Chrysanthemum",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "October Kasu 1": {
+        "image": "/i/cards-hanafuda/10-kasu1.svg",
+        "month": 10,
+        "flower": "Maple",
+        "category": "kasu",
+        "points": 1
+      },
+      "October Kasu 2": {
+        "image": "/i/cards-hanafuda/10-kasu2.svg",
+        "month": 10,
+        "flower": "Maple",
+        "category": "kasu",
+        "points": 1
+      },
+      "October Tane": {
+        "image": "/i/cards-hanafuda/10-tane.svg",
+        "month": 10,
+        "flower": "Maple",
+        "category": "tane",
+        "points": 10
+      },
+      "October Tanzaku": {
+        "image": "/i/cards-hanafuda/10-tanzaku.svg",
+        "month": 10,
+        "flower": "Maple",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "November Hikari": {
+        "image": "/i/cards-hanafuda/11-hikari.svg",
+        "month": 11,
+        "flower": "Willow",
+        "category": "hikari",
+        "points": 20
+      },
+      "November Kasu 1": {
+        "image": "/i/cards-hanafuda/11-kasu1.svg",
+        "month": 11,
+        "flower": "Willow",
+        "category": "kasu",
+        "points": 1
+      },
+      "November Tane": {
+        "image": "/i/cards-hanafuda/11-tane.svg",
+        "month": 11,
+        "flower": "Willow",
+        "category": "tane",
+        "points": 10
+      },
+      "November Tanzaku": {
+        "image": "/i/cards-hanafuda/11-tanzaku.svg",
+        "month": 11,
+        "flower": "Willow",
+        "category": "tanzaku",
+        "points": 5
+      },
+      "December Hikari": {
+        "image": "/i/cards-hanafuda/12-hikari.svg",
+        "month": 12,
+        "flower": "Paulownia",
+        "category": "hikari",
+        "points": 20
+      },
+      "December Kasu 1": {
+        "image": "/i/cards-hanafuda/12-kasu1.svg",
+        "month": 12,
+        "flower": "Paulownia",
+        "category": "kasu",
+        "points": 1
+      },
+      "December Kasu 2": {
+        "image": "/i/cards-hanafuda/12-kasu2.svg",
+        "month": 12,
+        "flower": "Paulownia",
+        "category": "kasu",
+        "points": 1
+      },
+      "December Kasu 3": {
+        "image": "/i/cards-hanafuda/12-kasu3.svg",
+        "month": 12,
+        "flower": "Paulownia",
+        "category": "kasu",
+        "points": 1
+      }
+    },
+    "cardDefaults": {
+      "width": 98,
+      "height": 160
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 98,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-hanafuda/back.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 98,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

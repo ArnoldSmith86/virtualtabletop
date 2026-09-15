@@ -11,7 +11,10 @@
     "id": "8fr3"
   },
   "_meta": {
-    "version": 20,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Timer",
       "image": "/assets/1382176810_3946",
@@ -22,7 +25,7 @@
       "time": "",
       "attribution": "The clock face, by temas, is in the Public Domain under CC0, and is available at https://openclipart.org/detail/134335/diy-clock-face-by-temas-134335.\n\nThe stopwatch face is the based on the clock face, but the numbers were modified by LawDawg96.  It is released to the Public Domain under CC0.\n\nThe hour and minute hands are in the Public Domain under CC0, and are available at https://freesvg.org/minute-hand-mitchell-joh.",
       "showName": false,
-      "lastUpdate": 1768669757025,
+      "lastUpdate": 1785122716095,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -33,19 +36,18 @@
       "similarDesigner": "",
       "players": "1",
       "language": "en-US",
-      "variant": "Basics"
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "variant": "Basics",
+      "variantImage": "",
+      "usesAIImagery": false
     }
   },
   "ekxj": {
-    "text": "This tutorial demonstrates the basic operations of the timer widget. Remember, one important limitation of the timer is that it is controlled by the player that started the timer. If that person leaves the room or the player's internet connection is disrupted while the timer is running, the timer will stop.",
+    "text": "This tutorial demonstrates the basic operations of the timer widget. Remember, one important limitation of the timer is that it is controlled by the player that started the timer. If that person leaves the room or the player's internet connection is disrupted while the timer is running, the timer will stop. In the JSON editor, timers support using either milliseconds or minutes:seconds format for the start and end properties of the timer widget as well as the value and seconds parameters of the TIMER function.",
     "css": "font-size: 20px",
     "height": 50,
     "width": 900,
     "x": 359,
-    "y": 103,
+    "y": 83,
     "z": 92,
     "id": "ekxj"
   },

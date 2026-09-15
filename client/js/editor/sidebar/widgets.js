@@ -50,6 +50,309 @@ function deepReplace(obj, idMap) {
   }
 }
 
+// Prepares one widget state of a saved widget for the drag image. Every id
+// reference is remapped to the temporary preview ids the same way
+// placeSavedWidgetFromBuffer does for the real placement, so references like
+// inheritFrom or a line's stops point at the preview copies instead of at the
+// library ids (or at an unrelated room widget that happens to use one of them).
+// Returns null for a card whose deck is not part of the preview.
+function remapPreviewState(state, tempId, idMap, minX, minY) {
+  if (state.deck && !idMap.has(state.deck)) {
+    return null;
+  }
+
+  const tempState = JSON.parse(JSON.stringify(state));
+  tempState.id = tempId;
+  deepReplace(tempState, Object.fromEntries(idMap));
+
+  // roots of the buffer are placed side by side in the drag image instead of
+  // keeping the coordinates they had in the library
+  if (!hasPreviewParent(state, idMap)) {
+    tempState.x = (state.x || 0) - minX;
+    tempState.y = (state.y || 0) - minY;
+  }
+
+  return tempState;
+}
+
+function hasPreviewParent(state, idMap) {
+  return !!state.parent && idMap.has(state.parent);
+}
+
+// The saved widget library, shared by the Widgets sidebar and by anything else
+// that offers to place one of them (e.g. adding a stop to a line).
+async function getSavedWidgets(source) {
+  let data;
+  if (source === 'server') {
+    const response = await fetch(`${config.urlPrefix}/api/widgets`);
+    data = await response.json();
+  } else {
+    const rawData = localStorage.getItem('customWidgets');
+    if (!rawData) return { widgets: [], groups: [] };
+    try {
+      data = JSON.parse(rawData);
+    } catch (e) {
+      return { widgets: [], groups: [] };
+    }
+  }
+
+  if (Array.isArray(data)) {
+    return { widgets: data, groups: [] };
+  }
+
+  if (typeof data === 'object' && data !== null) {
+    const widgets = Array.isArray(data.widgets) ? data.widgets : [];
+    const groups = Array.isArray(data.groups) ? data.groups : [];
+    return { widgets, groups };
+  }
+
+  return { widgets: [], groups: [] };
+}
+
+// Entries can explain themselves in plain language through an optional
+// description. In grid view the name is all that is shown, so the tooltip is
+// the only place that can tell apart e.g. a line with stops from a plain one.
+function tooltipAttribute(state) {
+  const tooltip = [ state.name || state.id, state.description ].filter(t=>t).join('\n');
+  return ` title="${html(tooltip)}"`;
+}
+
+// Render preview markup from a URL or a Material Symbol reference like "symbol:heading"
+function renderSavedWidgetPreviewHTML(preview) {
+  if (!preview) return '';
+  if (typeof preview === 'string' && preview.startsWith('symbol:')) {
+    const rawName = preview.slice('symbol:'.length);
+    const alias = { heading: 'title' };
+    const symbolName = alias[rawName] || rawName;
+    const safe = html(symbolName || 'help');
+    return `<i class="material-symbols" style="font-size: 64px; line-height: 1; color: #333;">${safe}</i>`;
+  }
+  return `<img src="${preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;" draggable="false">`;
+}
+
+// The line a room drop landed on, if any. Only the drawn path and the widgets
+// riding on a line accept pointer events, so walking up from the drop target
+// finds the line exactly when the drop was aimed at one.
+function lineUnderElement(element) {
+  for(let node = element; node; node = node.parentElement)
+    if(node.classList && node.classList.contains('line'))
+      for(const line of widgetFilter(w=>w.get('type') == 'line'))
+        if(line.domElement === node)
+          return line;
+  return null;
+}
+
+let highlightedLineDropTarget = null;
+function highlightLineDropTarget(line) {
+  if(highlightedLineDropTarget === line)
+    return;
+  if(highlightedLineDropTarget)
+    highlightedLineDropTarget.domElement.classList.remove('lineDropTarget');
+  highlightedLineDropTarget = line;
+  if(line)
+    line.domElement.classList.add('lineDropTarget');
+}
+
+// Place a saved widget in the room. options.line makes it a stop on that line
+// (at the point of the path the coords are closest to) instead of a loose
+// widget - used both by dropping onto a line and by the line's own stop picker.
+async function placeSavedWidget(widgetId, source, coords, options = {}) {
+  const { widgets: allWidgets } = await getSavedWidgets(source);
+  const widgetData = allWidgets.find(w => w.id === widgetId);
+
+  if (!widgetData) {
+    console.error(`Widget with id ${widgetId} not found in ${source}.`);
+    return [];
+  }
+
+  const widgetDataCopy = JSON.parse(JSON.stringify(widgetData));
+  const line = options.line;
+  const newWidgetIds = await placeSavedWidgetFromBuffer(widgetDataCopy, coords, line ? {
+    rootProperties: { parent: line.id, fixedParent: true, movableInEdit: false }
+  } : {});
+  if (line) {
+    const position = coords ? line.positionAtPoint(line.coordLocalFromCoordGlobal(coords)) : line.nextStopPosition();
+    for (const id of newWidgetIds)
+      await line.addStop(id, position);
+  }
+
+  const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
+  for (const widget of newWidgets) {
+    if (widget.get('editorAddToRoomRoutine')) {
+      await widget.evaluateRoutine('editorAddToRoomRoutine');
+      if (widgets.has(widget.id)) {
+        widget.set('editorAddToRoomRoutine');
+      }
+    }
+  }
+  const existingNewWidgets = newWidgets.filter(w => widgets.has(w.id));
+  if (existingNewWidgets.length > 0) {
+    setSelection(existingNewWidgets);
+  }
+  return newWidgetIds;
+}
+
+// options.rootProperties is merged into every root widget of the buffer after
+// the ids have been remapped, so a caller can place the new widget somewhere
+// specific (e.g. as a stop on a line) without duplicating any of this.
+async function placeSavedWidgetFromBuffer(widgetData, coords, options = {}) {
+    const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
+    if (!await confirmLegacyModeDifferences(legacyModeDifferences(widgetData.legacyModes, widgetBuffer)))
+      return [];
+    const idMap = {};
+
+    const newIds = new Set();
+    for (const widget of widgetBuffer) {
+      let newId = widget.id;
+      // If the widget ID already exists, find a new one.
+      if (widgets.has(newId) || newIds.has(newId)) {
+        // Find the base name by removing any trailing number and optional underscore
+        const baseName = widget.id.replace(/_?\d+$/, '');
+        let i = 0;
+
+        // Find the highest existing number for this baseName among ALL widgets (in room and being added)
+        for (const existingId of [...widgets.keys(), ...newIds]) {
+            if (existingId.startsWith(baseName)) {
+                const numStr = existingId.substring(baseName.length);
+                if (/^\d+$/.test(numStr)) {
+                    i = Math.max(i, parseInt(numStr, 10));
+                }
+            }
+        }
+        
+        do {
+          i++;
+          newId = `${baseName}${i}`;
+        } while (widgets.has(newId) || newIds.has(newId));
+      }
+      idMap[widget.id] = newId;
+      newIds.add(newId);
+    }
+    for (const widget of widgetBuffer) {
+      // Update the widget's own ID first.
+      widget.id = idMap[widget.id];
+      // Then, update all references within the widget.
+      deepReplace(widget, idMap);
+    }
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
+
+    const newRootWidgetIds = [];
+    const rootWidgets = widgetBuffer.filter(state => !state.parent || !widgetBuffer.some(w => w.id === state.parent));
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (coords && rootWidgets.length > 0) {
+        const widgetMap = new Map(widgetBuffer.map(s => [s.id, s]));
+        const absolutePositions = new Map();
+
+        function calculateAbsolutePosition(widgetId) {
+          if (absolutePositions.has(widgetId)) {
+            return absolutePositions.get(widgetId);
+          }
+
+          const widget = widgetMap.get(widgetId);
+          if (!widget) {
+            return { x: 0, y: 0 };
+          }
+
+          if (!widget.parent || !widgetMap.has(widget.parent)) {
+            const pos = { x: widget.x || 0, y: widget.y || 0 };
+            absolutePositions.set(widgetId, pos);
+            return pos;
+          }
+
+          const parentPos = calculateAbsolutePosition(widget.parent);
+          const pos = {
+            x: parentPos.x + (widget.x || 0),
+            y: parentPos.y + (widget.y || 0)
+          };
+          absolutePositions.set(widgetId, pos);
+          return pos;
+        }
+
+        for (const widget of widgetBuffer) {
+          calculateAbsolutePosition(widget.id);
+        }
+
+        let minX = Infinity;
+        let minY = Infinity;
+
+        for (const pos of absolutePositions.values()) {
+          minX = Math.min(minX, pos.x);
+          minY = Math.min(minY, pos.y);
+        }
+        offsetX = coords.x - minX;
+        offsetY = coords.y - minY;
+    }
+
+    const widgetStates = new Map(widgetBuffer.map(w => [w.id, w]));
+    const sortedWidgets = [];
+    const visited = new Set();
+
+    function topologicalSort(widgetId) {
+        if (visited.has(widgetId)) {
+            return;
+        }
+        const state = widgetStates.get(widgetId);
+        if (!state) return;
+
+        // Recurse for parent dependency
+        if (state.parent && widgetStates.has(state.parent)) {
+            topologicalSort(state.parent);
+        }
+
+        // Recurse for deck dependency
+        if (state.deck && widgetStates.has(state.deck)) {
+            topologicalSort(state.deck);
+        }
+
+        // Recurse for inheritFrom dependencies
+        if (state.inheritFrom) {
+            for (const idToInheritFrom of Object.keys(state.inheritFrom)) {
+                if (widgetStates.has(idToInheritFrom)) {
+                    topologicalSort(idToInheritFrom);
+                }
+            }
+        }
+
+        if (!visited.has(widgetId)) {
+            sortedWidgets.push(state);
+            visited.add(widgetId);
+        }
+    }
+
+    for (const state of widgetBuffer) {
+        topologicalSort(state.id);
+    }
+
+    for (const state of sortedWidgets) {
+        const isRoot = rootWidgets.some(w => w.id === state.id);
+
+        if (isRoot) {
+            if (coords) {
+                state.x = Math.round(((state.x || 0) + offsetX) * 2) / 2;
+                state.y = Math.round(((state.y || 0) + offsetY) * 2) / 2;
+            }
+            delete state.parent;
+            Object.assign(state, options.rootProperties || {});
+        }
+
+        if (state.type === 'card' && state.deck && !widgetBuffer.some(w => w.id === state.deck) && !widgets.has(state.deck)) {
+            console.error(`Widget ${state.id} references a deck ${state.deck} that is not in the buffer and is not already in the room. It will not be loaded.`);
+            continue;
+        }
+
+        const newId = await addWidgetLocal(state);
+        if (isRoot) {
+            newRootWidgetIds.push(newId);
+        }
+    }
+
+    batchEnd();
+    return newRootWidgetIds;
+}
+
 class WidgetsModule extends SidebarModule {
   constructor() {
     super('widgets', 'Widgets', 'Manage widgets.');
@@ -61,20 +364,14 @@ class WidgetsModule extends SidebarModule {
     $('#roomArea').addEventListener('dragover', e => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
+      // show which line a drop would attach the widget to as a stop
+      highlightLineDropTarget(lineUnderElement(e.target));
     });
+    $('#roomArea').addEventListener('dragleave', e => highlightLineDropTarget(null));
     }
 
-  // Render preview markup from a URL or a Material Symbol reference like "symbol:heading"
   renderPreviewHTML(preview) {
-    if (!preview) return '';
-    if (typeof preview === 'string' && preview.startsWith('symbol:')) {
-      const rawName = preview.slice('symbol:'.length);
-      const alias = { heading: 'title' };
-      const symbolName = alias[rawName] || rawName;
-      const safe = html(symbolName || 'help');
-      return `<i class="material-symbols" style="font-size: 64px; line-height: 1; color: #333;">${safe}</i>`;
-    }
-    return `<img src="${preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;" draggable="false">`;
+    return renderSavedWidgetPreviewHTML(preview);
   }
 
   renderModule(target) {
@@ -85,7 +382,8 @@ class WidgetsModule extends SidebarModule {
     const d = div(target, '', `
       <div class ="legend-text" style="margin-bottom: 10px;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="hasRoutine" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm-24 60v137q0 16 15 19.5t23-10.5l121-237q5-10-1-19.5t-17-9.5h-87v-139q0-16-15-20t-23 10L346-449q-5 11 .5 20t16.5 9h93Z"/></svg>: Has a routine that runs when added to a room.<br>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>: Is a unique widget. Recommended one per room.
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>: Is a unique widget. Recommended one per room.<br>
+        ${legacyModeWarningBadgeSVG}: Was saved in a game with legacy modes that differ from this one.
       </div>
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
         <span class="widgetFilerIcon">search</span>
@@ -134,31 +432,7 @@ class WidgetsModule extends SidebarModule {
   }
 
   async getWidgets(source) {
-    let data;
-    if (source === 'server') {
-      const response = await fetch(`${config.urlPrefix}/api/widgets`);
-      data = await response.json();
-    } else {
-      const rawData = localStorage.getItem('customWidgets');
-      if (!rawData) return { widgets: [], groups: [] };
-      try {
-        data = JSON.parse(rawData);
-      } catch (e) {
-        return { widgets: [], groups: [] };
-      }
-    }
-
-    if (Array.isArray(data)) {
-      return { widgets: data, groups: [] };
-    }
-
-    if (typeof data === 'object' && data !== null) {
-      const widgets = Array.isArray(data.widgets) ? data.widgets : [];
-      const groups = Array.isArray(data.groups) ? data.groups : [];
-      return { widgets, groups };
-    }
-
-    return { widgets: [], groups: [] };
+    return await getSavedWidgets(source);
   }
 
   async createWidget(widgetData, target) {
@@ -227,6 +501,9 @@ class WidgetsModule extends SidebarModule {
         if (!filter) return true;
         const nameMatch = (widgetData.name || widgetData.id || '').toLowerCase().includes(lowerCaseFilter);
         if (nameMatch) return true;
+        // the description doubles as the entry's tooltip, so searching it also
+        // finds a widget by what it does instead of just by its name
+        if ((widgetData.description || '').toLowerCase().includes(lowerCaseFilter)) return true;
         if (widgetData.widgets && Array.isArray(widgetData.widgets)) {
           return widgetData.widgets.some(subWidget =>
             (subWidget.type || 'basic').toLowerCase().includes(lowerCaseFilter)
@@ -346,7 +623,7 @@ class WidgetsModule extends SidebarModule {
         list += `
           <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
               <div class="widget-group-header">
-                  <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
+                  ${collapseArrowHTML(isCollapsed)}
                   <input class="group-name-input" value="${html(group.name)}" readonly>
               </div>
               <div class="widget-grid" ${isCollapsed ? 'style="display: none;"' : ''}>
@@ -359,7 +636,7 @@ class WidgetsModule extends SidebarModule {
             <div class="widget-group" data-group-name="${html(group.name)}" data-source="${source}">
                 <div class="widget-group-header" draggable="${isEditing}">
                     <span class="drag-handle"></span>
-                    <span class="collapse-arrow material-symbols">${isCollapsed ? 'expand_less' : 'expand_more'}</span>
+                    ${collapseArrowHTML(isCollapsed)}
                     <input class="group-name-input" value="${html(group.name)}" readonly>
                 </div>
                 <ul class="widget-group-body" ${isCollapsed ? 'style="display: none;"' : ''}>
@@ -388,7 +665,25 @@ class WidgetsModule extends SidebarModule {
     return list;
   }
 
+  // The legacy mode badges compare the current game against the modes an entry was saved with,
+  // so they go stale when a mode is switched under Game settings while the module is open.
+  // Rendering the library fetches the server-wide widget list, so only a changed set of modes is
+  // worth the rerender - not every unrelated meta or state event.
+  rerenderOnLegacyModeChange() {
+    if(JSON.stringify(currentLegacyModes()) != this.renderedLegacyModes)
+      this.renderWidgetBuffer($('#widgetFilter') ? $('#widgetFilter').value : '');
+  }
+
+  onMetaReceivedWhileActive(meta) {
+    this.rerenderOnLegacyModeChange();
+  }
+
+  onStateReceivedWhileActive(state) {
+    this.rerenderOnLegacyModeChange();
+  }
+
   async renderWidgetBuffer(filter = '') {
+    this.renderedLegacyModes = JSON.stringify(currentLegacyModes());
     const { widgets: serverWidgets, groups: serverGroups } = await this.getWidgets('server');
     const { widgets: localWidgets, groups: localGroups } = await this.getWidgets('local');
 
@@ -420,7 +715,7 @@ class WidgetsModule extends SidebarModule {
       serverListHTML = `
         <div class="widget-list-container ${isServerListCollapsed ? 'collapsed' : ''}" data-list-key="server">
           <div class="widget-list-header">
-          <span class="collapse-arrow material-symbols">${isServerListCollapsed ? 'expand_less' : 'expand_more'}</span>
+          ${collapseArrowHTML(isServerListCollapsed)}
             <span class="widget-list-header-text">On The Server</span>
             <div class="widget-list-actions">
               ${config.allowPublicLibraryEdits ? `<button icon="upload" class="sidebarButton import-widgets" data-source="server"><span>Import Server-Wide</span></button>` : ''}
@@ -437,7 +732,7 @@ class WidgetsModule extends SidebarModule {
       ${serverListHTML}
       <div class="widget-list-container ${isLocalListCollapsed ? 'collapsed' : ''}" data-list-key="local">
         <div class="widget-list-header">
-          <span class="collapse-arrow material-symbols">${isLocalListCollapsed ? 'expand_less' : 'expand_more'}</span>
+          ${collapseArrowHTML(isLocalListCollapsed)}
           <span class="widget-list-header-text">In Local Storage</span>
           <div class="widget-list-actions">
             <div class="segmented-control sort-control">
@@ -482,8 +777,7 @@ class WidgetsModule extends SidebarModule {
         if (!listKey) return;
         const isCollapsed = container.classList.toggle('collapsed');
         localStorage.setItem(`vtt-widget-list-collapsed-${listKey}`, isCollapsed);
-        const arrow = header.querySelector('.collapse-arrow');
-        arrow.textContent = isCollapsed ? 'expand_less' : 'expand_more';
+        setCollapseArrow(header.querySelector('.collapseArrow'), isCollapsed);
       };
     }
 
@@ -613,6 +907,7 @@ class WidgetsModule extends SidebarModule {
                 case 'dice': previewWidget = new Dice(tempId); break;
                 case 'holder': previewWidget = new Holder(tempId); break;
                 case 'label': previewWidget = new Label(tempId); break;
+                case 'line': previewWidget = new Line(tempId); break;
                 case 'pile': previewWidget = new Pile(tempId); break;
                 case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
                 case 'seat': previewWidget = new Seat(tempId); break;
@@ -631,25 +926,14 @@ class WidgetsModule extends SidebarModule {
               const previewWidget = tempWidgetInstances.get(tempId);
               widgets.set(tempId, previewWidget);
 
-              const tempState = JSON.parse(JSON.stringify(s));
-              tempState.id = tempId;
-
-              const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-              if (parentId) {
-                tempState.parent = parentId;
-              } else {
-                tempState.x = (s.x || 0) - minX;
-                tempState.y = (s.y || 0) - minY;
-              }
-              if (tempState.deck) {
-                if(!idMap.has(tempState.deck))
-                  continue;
-                tempState.deck = idMap.get(tempState.deck);
+              const tempState = remapPreviewState(s, tempId, idMap, minX, minY);
+              if (!tempState) {
+                continue;
               }
 
               previewWidget.applyInitialDelta(tempState);
 
-              if (!parentId) {
+              if (!hasPreviewParent(s, idMap)) {
                 scaleWrapper.appendChild(previewWidget.domElement);
               }
             }
@@ -861,6 +1145,7 @@ class WidgetsModule extends SidebarModule {
               case 'dice': previewWidget = new Dice(tempId); break;
               case 'holder': previewWidget = new Holder(tempId); break;
               case 'label': previewWidget = new Label(tempId); break;
+              case 'line': previewWidget = new Line(tempId); break;
               case 'pile': previewWidget = new Pile(tempId); break;
               case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
               case 'seat': previewWidget = new Seat(tempId); break;
@@ -879,24 +1164,14 @@ class WidgetsModule extends SidebarModule {
             const previewWidget = tempWidgetInstances.get(tempId);
             widgets.set(tempId, previewWidget);
 
-            const tempState = JSON.parse(JSON.stringify(s));
-            tempState.id = tempId;
-            const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
-            if (parentId) {
-              tempState.parent = parentId;
-            } else {
-              tempState.x = (s.x || 0) - minX;
-              tempState.y = (s.y || 0) - minY;
-            }
-            if (tempState.deck) {
-              if(!idMap.has(tempState.deck))
-                continue;
-              tempState.deck = idMap.get(tempState.deck);
+            const tempState = remapPreviewState(s, tempId, idMap, minX, minY);
+            if (!tempState) {
+              continue;
             }
 
             previewWidget.applyInitialDelta(tempState);
 
-            if (!parentId) {
+            if (!hasPreviewParent(s, idMap)) {
               scaleWrapper.appendChild(previewWidget.domElement);
             }
           }
@@ -1120,8 +1395,9 @@ class WidgetsModule extends SidebarModule {
     };
     const widgetTypes = getWidgetTypesString(state);
     const hasAddToRoomRoutine = state.widgets.some(w => w.editorAddToRoomRoutine);
+    const legacyModeDiff = legacyModeDifferences(state.legacyModes, state.widgets);
     return `
-          <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}" style="display: flex; align-items: center; margin-bottom: 5px;">
+          <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}"${tooltipAttribute(state)} style="display: flex; align-items: center; margin-bottom: 5px;">
               <span class="drag-handle"></span>
               <div class="widget-preview">
                 ${this.renderPreviewHTML(state.preview)}
@@ -1129,7 +1405,7 @@ class WidgetsModule extends SidebarModule {
               <div class="widget-info" style="flex-grow: 1;">
                   <label class="name-widget-label widget-label" style="display: none;">Name</label>
                   <input value="${html(state.name || state.id)}" readonly>
-                  <div class="widget-type">${widgetTypes}${hasAddToRoomRoutine ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="hasRoutine" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm-24 60v137q0 16 15 19.5t23-10.5l121-237q5-10-1-19.5t-17-9.5h-87v-139q0-16-15-20t-23 10L346-449q-5 11 .5 20t16.5 9h93Z"/></svg>' : ''}${state.unique ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>' : ''}</div>
+                  <div class="widget-type">${widgetTypes}${hasAddToRoomRoutine ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="hasRoutine" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm-24 60v137q0 16 15 19.5t23-10.5l121-237q5-10-1-19.5t-17-9.5h-87v-139q0-16-15-20t-23 10L346-449q-5 11 .5 20t16.5 9h93Z"/></svg>' : ''}${state.unique ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>' : ''}${legacyModeDiff.length ? `<span title="${html(legacyModeWarningText(legacyModeDiff))}">${legacyModeWarningBadgeSVG}</span>` : ''}</div>
                   <label class="preview-widget-label widget-label">Preview</label>
                   <input class="preview-url-input" type="text" value="${html(state.preview || '')}" placeholder="https://... or symbol:NAME">
                   <label class="unique-widget-label widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
@@ -1143,13 +1419,14 @@ class WidgetsModule extends SidebarModule {
   }
 
   renderGridWidget(state, source, isEditing) {
+    const legacyModeDiff = legacyModeDifferences(state.legacyModes, state.widgets);
     return `
-      <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true">
+      <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true"${tooltipAttribute(state)}>
         <div class="widget-preview">
           ${this.renderPreviewHTML(state.preview)}
           <button icon="add" class="sidebarButton add-to-room-grid"><span>Add widget to room</span></button>
         </div>
-        <div class="widget-name">${html(state.name || state.id)}</div>
+        <div class="widget-name">${html(state.name || state.id)}${legacyModeDiff.length ? `<span title="${html(legacyModeWarningText(legacyModeDiff))}">${legacyModeWarningBadgeSVG}</span>` : ''}</div>
       </div>
     `;
   }
@@ -1187,7 +1464,7 @@ class WidgetsModule extends SidebarModule {
       const type = w.state.type || 'widget';
       name = `${w.id} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
     }
-    this.createWidget({ name, widgets: widgetBuffer }, defaultTarget)
+    this.createWidget({ name, widgets: widgetBuffer, legacyModes: currentLegacyModes() }, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }
 
@@ -1233,160 +1510,10 @@ class WidgetsModule extends SidebarModule {
     showOverlay('editJSONoverlay');
   }
 
-  async placeWidgetFromBuffer(widgetData, coords) {
-    const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
-    const idMap = {};
-
-    const newIds = new Set();
-    for (const widget of widgetBuffer) {
-      let newId = widget.id;
-      // If the widget ID already exists, find a new one.
-      if (widgets.has(newId) || newIds.has(newId)) {
-        // Find the base name by removing any trailing number and optional underscore
-        const baseName = widget.id.replace(/_?\d+$/, '');
-        let i = 0;
-
-        // Find the highest existing number for this baseName among ALL widgets (in room and being added)
-        for (const existingId of [...widgets.keys(), ...newIds]) {
-            if (existingId.startsWith(baseName)) {
-                const numStr = existingId.substring(baseName.length);
-                if (/^\d+$/.test(numStr)) {
-                    i = Math.max(i, parseInt(numStr, 10));
-                }
-            }
-        }
-        
-        do {
-          i++;
-          newId = `${baseName}${i}`;
-        } while (widgets.has(newId) || newIds.has(newId));
-      }
-      idMap[widget.id] = newId;
-      newIds.add(newId);
-    }
-    for (const widget of widgetBuffer) {
-      // Update the widget's own ID first.
-      widget.id = idMap[widget.id];
-      // Then, update all references within the widget.
-      deepReplace(widget, idMap);
-    }
-    batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
-
-    const newRootWidgetIds = [];
-    const rootWidgets = widgetBuffer.filter(state => !state.parent || !widgetBuffer.some(w => w.id === state.parent));
-    let offsetX = 0;
-    let offsetY = 0;
-
-    if (coords && rootWidgets.length > 0) {
-        const widgetMap = new Map(widgetBuffer.map(s => [s.id, s]));
-        const absolutePositions = new Map();
-
-        function calculateAbsolutePosition(widgetId) {
-          if (absolutePositions.has(widgetId)) {
-            return absolutePositions.get(widgetId);
-          }
-
-          const widget = widgetMap.get(widgetId);
-          if (!widget) {
-            return { x: 0, y: 0 };
-          }
-
-          if (!widget.parent || !widgetMap.has(widget.parent)) {
-            const pos = { x: widget.x || 0, y: widget.y || 0 };
-            absolutePositions.set(widgetId, pos);
-            return pos;
-          }
-
-          const parentPos = calculateAbsolutePosition(widget.parent);
-          const pos = {
-            x: parentPos.x + (widget.x || 0),
-            y: parentPos.y + (widget.y || 0)
-          };
-          absolutePositions.set(widgetId, pos);
-          return pos;
-        }
-
-        for (const widget of widgetBuffer) {
-          calculateAbsolutePosition(widget.id);
-        }
-
-        let minX = Infinity;
-        let minY = Infinity;
-
-        for (const pos of absolutePositions.values()) {
-          minX = Math.min(minX, pos.x);
-          minY = Math.min(minY, pos.y);
-        }
-        offsetX = coords.x - minX;
-        offsetY = coords.y - minY;
-    }
-
-    const widgetStates = new Map(widgetBuffer.map(w => [w.id, w]));
-    const sortedWidgets = [];
-    const visited = new Set();
-
-    function topologicalSort(widgetId) {
-        if (visited.has(widgetId)) {
-            return;
-        }
-        const state = widgetStates.get(widgetId);
-        if (!state) return;
-
-        // Recurse for parent dependency
-        if (state.parent && widgetStates.has(state.parent)) {
-            topologicalSort(state.parent);
-        }
-
-        // Recurse for deck dependency
-        if (state.deck && widgetStates.has(state.deck)) {
-            topologicalSort(state.deck);
-        }
-
-        // Recurse for inheritFrom dependencies
-        if (state.inheritFrom) {
-            for (const idToInheritFrom of Object.keys(state.inheritFrom)) {
-                if (widgetStates.has(idToInheritFrom)) {
-                    topologicalSort(idToInheritFrom);
-                }
-            }
-        }
-
-        if (!visited.has(widgetId)) {
-            sortedWidgets.push(state);
-            visited.add(widgetId);
-        }
-    }
-
-    for (const state of widgetBuffer) {
-        topologicalSort(state.id);
-    }
-
-    for (const state of sortedWidgets) {
-        const isRoot = rootWidgets.some(w => w.id === state.id);
-
-        if (isRoot) {
-            if (coords) {
-                state.x = Math.round(((state.x || 0) + offsetX) * 2) / 2;
-                state.y = Math.round(((state.y || 0) + offsetY) * 2) / 2;
-            }
-            delete state.parent;
-        }
-
-        if (state.type === 'card' && state.deck && !widgetBuffer.some(w => w.id === state.deck) && !widgets.has(state.deck)) {
-            console.error(`Widget ${state.id} references a deck ${state.deck} that is not in the buffer and is not already in the room. It will not be loaded.`);
-            continue;
-        }
-
-        const newId = await addWidgetLocal(state);
-        if (isRoot) {
-            newRootWidgetIds.push(newId);
-        }
-    }
-
-    batchEnd();
-    return newRootWidgetIds;
+  async placeWidgetFromBuffer(widgetData, coords, options = {}) {
+    return await placeSavedWidgetFromBuffer(widgetData, coords, options);
   }
+
 
   async onRoomAreaDrop(e) {
     e.preventDefault();
@@ -1396,38 +1523,19 @@ class WidgetsModule extends SidebarModule {
     try {
       const { id, source } = JSON.parse(data);
       const coords = eventCoords('drop', e);
-      await this.placeWidget(id, source, coords);
+      const line = lineUnderElement(e.target);
+      highlightLineDropTarget(null);
+      await this.placeWidget(id, source, coords, { line });
     } catch (error) {
       console.error('Failed to parse widget data on drop:', error);
     }
   }
-  
-  async placeWidget(widgetId, source, coords) {
-    const { widgets: allWidgets } = await this.getWidgets(source);
-    const widgetData = allWidgets.find(w => w.id === widgetId);
-  
-    if (widgetData) {
-      const widgetDataCopy = JSON.parse(JSON.stringify(widgetData));
-  
-      const newWidgetIds = await this.placeWidgetFromBuffer(widgetDataCopy, coords);
-      const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
-      for (const widget of newWidgets) {
-        if (widget.get('editorAddToRoomRoutine')) {
-          await widget.evaluateRoutine('editorAddToRoomRoutine');
-          if (widgets.has(widget.id)) {
-            widget.set('editorAddToRoomRoutine');
-          }
-        }
-      }
-      const existingNewWidgets = newWidgets.filter(w => widgets.has(w.id));
-      if (existingNewWidgets.length > 0) {
-        setSelection(existingNewWidgets);
-      }
-    } else {
-      console.error(`Widget with id ${widgetId} not found in ${source}.`);
-    }
+
+  async placeWidget(widgetId, source, coords, options = {}) {
+    await placeSavedWidget(widgetId, source, coords, options);
   }
-  
+
+
   async button_loadWidgetFromBuffer(widgetData) {
     this.placeWidgetFromBuffer(widgetData);
   }

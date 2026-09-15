@@ -398,6 +398,7 @@
   "score": {
     "type": "scoreboard",
     "id": "score",
+    "scoreEntry": "auto",
     "x": 500,
     "y": 389,
     "z": 232,

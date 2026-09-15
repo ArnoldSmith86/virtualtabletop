@@ -1823,6 +1823,7 @@
   },
   "vedq": {
     "type": "scoreboard",
+    "scoreEntry": "auto",
     "x": 647,
     "y": 7,
     "id": "vedq",

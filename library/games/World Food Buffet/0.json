@@ -96,6 +96,7 @@
   "scoreboard": {
     "id": "scoreboard",
     "type": "scoreboard",
+    "scoreEntry": "auto",
     "x": 25,
     "y": 105,
     "width": 490,

@@ -1,0 +1,70 @@
+name: Corpus replay (loads every public library game and clicks through it)
+
+# Deliberately not a pull request check. Replaying the library is a broad crash finder over
+# real content, but it is a biased sample - most games are not in the public library - and
+# clicking buttons is a thin probe of any real game. A clean run is a floor, not a certificate,
+# so it runs nightly and never gates a merge.
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+    inputs:
+      games:
+        description: 'Comma separated game directory names (empty = the whole library)'
+        required: false
+        default: ''
+
+concurrency:
+  group: corpus-replay-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  census:
+    name: Post-updater census
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+        cache: npm
+    - run: npm ci
+    # what the library looks like after the file updater has run, which is the only version of
+    # that number that describes what is actually played
+    - run: npm run corpus-census | tee -a $GITHUB_STEP_SUMMARY
+
+  replay:
+    name: Replay shard ${{ matrix.shard }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+        cache: npm
+    - run: npm ci
+    - name: Start virtualtabletop server
+      run: |
+        npm start &
+        timeout 30 bash -c 'until curl -sf http://localhost:8272 -o /dev/null; do sleep 0.5; done'
+    - name: Replay
+      env:
+        CORPUS_SHARD: ${{ matrix.shard }}/16
+        CORPUS_GAMES: ${{ github.event.inputs.games }}
+        CORPUS_FLAGS_OFF: '1'
+      uses: DevExpress/testcafe-action@latest
+      with:
+        version: "3.7.3"
+        args: "chrome:headless tests/testcafe/corpusreplay.js"
+    - name: Upload the per game reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: corpus-replay-${{ matrix.shard }}
+        path: save/corpus-replay/

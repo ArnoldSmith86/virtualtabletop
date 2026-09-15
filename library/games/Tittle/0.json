@@ -1753,6 +1753,7 @@
   "scoreboard": {
     "type": "scoreboard",
     "id": "scoreboard",
+    "scoreEntry": "auto",
     "y": 800,
     "z": 2101,
     "css": {
