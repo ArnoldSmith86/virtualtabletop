@@ -256,7 +256,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763605491578,
+      "lastUpdate": 1789005565453,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -268,7 +268,9 @@
       "variantImage": "",
       "variant": "Evaluating",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false,
+      "usesAILayout": false
     }
   },
   "kibv": {
