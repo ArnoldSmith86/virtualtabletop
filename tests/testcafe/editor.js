@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, expectEventually, getStateObject, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -598,6 +598,60 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
 });
+
+for(const type of [ 'holder', 'line' ]) {
+  test(`A ${type} outside the board takes a drop only in the zoomed out edit view`, async t => {
+    await t.resizeWindow(1280, 800);
+    await setRoomState({
+      deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+      card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 700, y: 400 },
+      offBoard: {
+        id: 'offBoard', type, x: 1750, y: 340, width: 220, height: 120, dropTarget: { type: 'card' },
+        ...(type == 'line' ? { lineStart: { x: 0, y: 60 }, lineEnd: { x: 220, y: 60 }, lineWidth: 10 } : {})
+      }
+    });
+    await ClientFunction(prepareClient)();
+    await setEditorState(null);
+    await setName(t);
+
+    // Synthetic coordinates can reach the clipped target; edit mode uses right-drag to move widgets.
+    const drag = ClientFunction((button, highlight) => {
+      const card = document.getElementById('w_card'), target = document.getElementById('w_offBoard');
+      const from = card.getBoundingClientRect(), to = target.getBoundingClientRect();
+      const buttons = button == 2 ? 2 : 1;
+      const clientX = to.left + to.width/2, clientY = to.top + to.height/2;
+      card.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.left + from.width/2, clientY: from.top + from.height/2 }));
+      document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX, clientY }));
+      return new Promise(resolve => setTimeout(() => {
+        const highlighted = target.classList.contains(highlight);
+        document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX, clientY }));
+        setTimeout(() => resolve(highlighted), 300);
+      }, 300));
+    });
+    const dropState = async () => {
+      const state = await getStateObject();
+      return {
+        parent: state.card.parent || null,
+        moved: state.card.x != 700,
+        stops: (state.offBoard.stops || []).map(stop=>stop.widget)
+      };
+    };
+    const highlight = type == 'line' ? 'lineDropTarget' : 'droppable';
+    const refused = { parent: null, moved: true, stops: [] };
+
+    await t.expect(drag(0, highlight)).notOk('no off-board drop target during play');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editButton');
+    await t.expect(Selector('#editorSelection').exists).ok();
+    await t.expect(drag(2, highlight)).notOk('no off-board drop target in the clipped edit view');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editorToolbar [icon=zoom_out]');
+    await t.expect(drag(2, highlight)).ok('off-board drop target in the zoomed out edit view');
+    await expectEventually(t, dropState, { parent: 'offBoard', moved: true, stops: type == 'line' ? [ 'card' ] : [] });
+  });
+}
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
   await t.resizeWindow(1280, 800);
