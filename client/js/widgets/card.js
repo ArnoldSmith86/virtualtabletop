@@ -191,6 +191,7 @@ export class Card extends Widget {
           const setValue = _=>{
             const usedProperties = new Set();
             const object = JSON.parse(JSON.stringify(original));
+            const previousBackgroundImage = objectDiv.style.backgroundImage;
 
             if(typeof object.dynamicProperties == 'object')
               for(const dp of Object.keys(object.dynamicProperties))
@@ -211,13 +212,16 @@ export class Card extends Widget {
             if(object.type == 'image') {
               if(object.value) {
                 if(object.svgReplaces) {
+                  if(previousBackgroundImage)
+                    objectDiv.style.backgroundImage = previousBackgroundImage;
                   const replaces = { ...object.svgReplaces };
                   for(const key in replaces)
                     replaces[key] = this.get(replaces[key]);
                   const svgResult = getSVG(object.value, replaces, _=>{
                     objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
                   });
-                  objectDiv.style.backgroundImage = `url("${svgResult}")`;
+                  if(!previousBackgroundImage || svgResult.startsWith('data:image/svg+xml,'))
+                    objectDiv.style.backgroundImage = `url("${svgResult}")`;
                 } else {
                   objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
                 }
