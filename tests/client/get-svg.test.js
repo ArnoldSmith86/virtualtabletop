@@ -56,6 +56,7 @@ async function loadImage(url, replaces) {
 
 test('an SVG has its replacements applied', async () => {
   mockFetch('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#000000"/></svg>', 'image/svg+xml');
+  expect(getSVG('/assets/1_1', { '#000000': '#ff0000' }, _=>{})).toBe('assets/1_1');
   const image = await loadImage('/assets/1_1', { '#000000': '#ff0000' });
   expect(image).toBe(getSVG('/assets/1_1', { '#000000': '#ff0000' }));
   expect(decodeURIComponent(image)).toBe('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#ff0000"/></svg>');
