@@ -214,6 +214,7 @@ export class Card extends Widget {
               if(object.value) {
                 if(object.svgReplaces) {
                   const request = ++svgImageRequest;
+                  let latestImageLoad = 0;
                   if(previousBackgroundImage)
                     objectDiv.style.backgroundImage = previousBackgroundImage;
                   const replaces = { ...object.svgReplaces };
@@ -222,9 +223,10 @@ export class Card extends Widget {
                   const showSVG = svgResult => {
                     if(!svgResult)
                       return;
+                    const imageLoad = ++latestImageLoad;
                     const image = new Image();
                     const show = () => {
-                      if(request == svgImageRequest)
+                      if(request == svgImageRequest && imageLoad == latestImageLoad)
                         objectDiv.style.backgroundImage = `url("${svgResult}")`;
                     };
                     image.onload = () => {
@@ -234,7 +236,7 @@ export class Card extends Widget {
                     image.onerror = show;
                     image.src = svgResult;
                   };
-                  showSVG(getSVG(object.value, replaces, _=>showSVG(getSVG(object.value, replaces))));
+                  showSVG(getSVG(object.value, replaces, showSVG));
                 } else {
                   objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
                 }

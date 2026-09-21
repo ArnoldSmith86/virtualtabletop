@@ -148,6 +148,22 @@ function reservedBindingCardRoom() {
   };
 }
 
+function svgReplacedCardRoom() {
+  return {
+    deck: {
+      id: 'deck', type: 'deck', x: 20, y: 20,
+      cardDefaults: { width: 212, height: 329 },
+      cardTypes: { ace: { replacement: '#ff0000' } },
+      faceTemplates: [
+        { objects: [
+          { type: 'image', value: '/i/cards-default/AC.svg', svgReplaces: { black: 'replacement' }, x: 0, y: 0, width: 212, height: 329 }
+        ] }
+      ]
+    },
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'ace', x: 400, y: 200 }
+  };
+}
+
 async function cardProperty(property) {
   return JSON.parse(await getState()).card[property];
 }
@@ -202,6 +218,41 @@ test('A write object stores what is typed on the card and survives a reload', as
   // clicking the card next to its text area still flips it
   await t.click('#w_card', { offsetX: 100, offsetY: 15 });
   await expectEventually(t, ()=>cardProperty('activeFace'), 1);
+});
+
+test('An image object keeps its SVG replacements after the original image finishes loading', async t => {
+  await ClientFunction(()=>{
+    const NativeImage = window.Image;
+    window.nativeImageForCardTest = NativeImage;
+    window.Image = function() {
+      const image = new NativeImage();
+      Object.defineProperty(image, 'src', {
+        set: value => setTimeout(()=>image.setAttribute('src', value), value.startsWith('data:') ? 0 : 150)
+      });
+      return image;
+    };
+  })();
+  await setRoomState(svgReplacedCardRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const background = ClientFunction(()=>document.querySelector('#w_card .cardFaceObject').style.backgroundImage);
+  let settledBackground;
+  for(let wait=50; wait<1000; wait*=2) {
+    settledBackground = await background();
+    if(settledBackground.includes('data:image/svg+xml,'))
+      break;
+    await new Promise(resolve=>setTimeout(resolve, wait));
+  }
+  await new Promise(resolve=>setTimeout(resolve, 250));
+  settledBackground = await background();
+  await ClientFunction(()=>{
+    window.Image = window.nativeImageForCardTest;
+    delete window.nativeImageForCardTest;
+  })();
+  await t
+    .expect(settledBackground).contains('data:image/svg+xml,')
+    .expect(decodeURIComponent(settledBackground)).contains('stroke="#ff0000"');
 });
 
 test('A locked write object is shown as a plain text object that overflows instead of being clipped', async t => {
