@@ -618,8 +618,8 @@ test('A holder layout is picked in the Layout section and takes over what it dec
   const dropShadow = Selector('#editorModules .checkboxInput').withText('Drop shadow');
   const pilesGap = Selector('#editorModules .numberPairRow').withText('Piles gap');
   const pilesOffset = Selector('#editorModules .numberPairRow').withText('Piles offset');
+  const dropOffset = Selector('#editorModules .numberPairRow').withText('Drop offset');
   const stackOffset = Selector('#editorModules .numberPairRow').withText('Stack offset');
-  const centerSpread = Selector('#editorModules .checkboxInput').withText('Center spread');
   const spreadMin = Selector('#editorModules .numberInput').withText('Spread min');
   const gridColumns = Selector('#editorModules .numberInput').withText('Grid columns');
 
@@ -632,8 +632,25 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(layout.find('select').value).eql('"auto"')
     .expect(align.visible).notOk()
     .expect(pilesGap.visible).notOk()
-    .expect(centerSpread.visible).notOk()
+    .expect(dropOffset.visible).ok()
+    .expect(stackOffset.visible).ok()
     .expect(gridColumns.visible).ok();
+
+  // a fixed stack offset stays under Auto and can use the perpendicular drop
+  // offset; neither input makes the select fall back to Custom
+  await t
+    .typeText(stackOffset.find('input').nth(0), '40', { replace: true })
+    .pressKey('tab')
+    .typeText(dropOffset.find('input').nth(1), '30', { replace: true })
+    .pressKey('tab')
+    .expect(layout.find('select').value).eql('"auto"')
+    .expect(stateOf('stackOffsetX')).eql('40')
+    .expect(stateOf('dropOffsetY')).eql('30')
+    .click(stackOffset.find('input').nth(0))
+    .pressKey('ctrl+a delete tab')
+    .click(dropOffset.find('input').nth(1))
+    .pressKey('ctrl+a delete tab')
+    .expect(layout.find('select').value).eql('"auto"');
 
   // a multi spread arranges piles: it brings the group spacing (and a starting fan) with
   // it, and the switches it decides stay hidden; the grid pins wrap its groups
@@ -670,11 +687,6 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('8')
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"singleSpread"'))
-    .expect(centerSpread.visible).ok()
-    .click(centerSpread.find('label.switchbox'))
-    .expect(stateOf('centerSpread')).eql('true')
-    .click(centerSpread.find('label.switchbox'))
-    .expect(stateOf('centerSpread')).eql('null')
     .expect(spreadMin.visible).ok()
     .expect(pilesOffset.visible).notOk()
     .expect(stackOffset.find('input').nth(0).value).eql('')
@@ -685,7 +697,6 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"arc"'))
     .expect(stateOf('layout')).eql('"arc"')
-    .expect(centerSpread.visible).notOk()
     .expect(stackOffset.visible).ok()
     .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('40')
     .expect(pilesOffset.visible).notOk()
@@ -695,7 +706,6 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(align.visible).ok();
 
   // random scatters inside the drop offset margin: that pair is its only knob
-  const dropOffset = Selector('#editorModules .numberPairRow').withText('Drop offset');
   await t
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"random"'))

@@ -243,7 +243,7 @@ test('Dragging a kept pile out of the holder keeps it together', async t => {
   await t.expect(byZ(state, 'pile').map(c=>c.id)).eql([ 'p0', 'p1', 'p2' ], 'with all its cards');
 });
 
-test('A holder inheriting classic arrangement properties follows them like their template', async t => {
+test('An auto holder inherits a fixed stack offset as a centered spread', async t => {
   await openRoom(t, 'modern', baseState({
     template: { id: 'template', type: 'holder', x: 100, y: 500, width: 600, height: 300, dropTarget: { type: 'card' }, stackOffsetX: 40 },
     holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' }, inheritFrom: 'template' },
@@ -253,8 +253,26 @@ test('A holder inheriting classic arrangement properties follows them like their
   await dragPath(t, 'loose', [ { onto: 'holder' } ]);
 
   const state = await stateWhen(s=>s.loose.parent == 'holder');
-  await t.expect(state.loose.x).eql(4, 'the classic drop offset the inherited property implies, not the center');
-  await t.expect(state.loose.y).eql(4);
+  await t.expect(state.loose.x).eql(248.5, 'the inherited X step centers the row');
+  await t.expect(state.loose.y).eql(4, 'the zero-step Y axis follows the drop offset');
+});
+
+test('A fixed auto spread keeps its exact step and perpendicular drop offset', async t => {
+  await openRoom(t, 'modern', baseState({
+    holder: { id: 'holder', type: 'holder', layout: 'auto', x: 100, y: 100, width: 600, height: 300, dropTarget: { type: 'card' }, stackOffsetX: 40, dropOffsetY: 30 },
+    source: { id: 'source', type: 'holder', layout: 'pile', x: 1200, y: 100, dropTarget: { type: 'card' } },
+    c1: card('c1', { parent: 'source', x: 4, y: 4, z: 1 }),
+    c2: card('c2', { parent: 'source', x: 4, y: 4, z: 2 }),
+    c3: card('c3', { parent: 'source', x: 4, y: 4, z: 3 }),
+    deal: { id: 'deal', type: 'button', x: 1200, y: 400, text: 'deal', clickRoutine: [ { func: 'MOVE', from: 'source', to: 'holder', count: 3 } ] }
+  }));
+
+  await t.click('#w_deal');
+
+  const state = await stateWhen(s=>s.c3.parent == 'holder' && s.c3.x == 288.5);
+  const row = byZ(state, 'holder');
+  await t.expect(row.map(c=>c.x)).eql([ 208.5, 248.5, 288.5 ], 'the fixed 40px step is centered without stretching');
+  await t.expect(row.map(c=>c.y)).eql([ 30, 30, 30 ], 'the zero-step axis follows dropOffsetY');
 });
 
 test('MOVE into an auto holder spreads the cards into a centered row', async t => {

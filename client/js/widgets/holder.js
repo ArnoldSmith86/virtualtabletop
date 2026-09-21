@@ -25,12 +25,11 @@ const layoutDerivableProperties = new Set([ 'alignChildren', 'preventPiles', 'st
 
 // The raw arrangement properties that switch an auto layout off: while any of
 // them is written to a value that differs from its classic default, the holder
-// behaves exactly as if its layout were 'custom'. That way JSON written
-// against the classic properties - copied from an older game or from the wiki -
-// keeps meaning exactly what it always did, while a written default (like
-// stackOffsetX: 0) stays the classic no-op it always was and leaves the
-// auto layout in charge.
-const autoDeferProperties = [ 'alignChildren', 'preventPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
+// behaves exactly as if its layout were 'custom'. Stack offsets are the one
+// exception: they pin a centered, unbounded straight spread under auto. A drop
+// offset can then place the spread on an axis whose stack offset is zero.
+const autoDeferProperties = [ 'alignChildren', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
+const autoDropOffsetProperties = [ 'dropOffsetX', 'dropOffsetY' ];
 
 // The padding the auto layout keeps between its children and to the border.
 const autoLayoutPadding = 4;
@@ -82,7 +81,6 @@ export class Holder extends ImageWidget {
       pilesOffsetY: null,
       pilesGapX: null,
       pilesGapY: null,
-      centerSpread: false,
       spreadMin: null,
       gridColumns: null,
       gridRows: null,
@@ -108,10 +106,11 @@ export class Holder extends ImageWidget {
     return value;
   }
 
-  // The layout the holder actually follows. 'auto' only applies while the game
-  // leaves the raw arrangement properties at their classic defaults - as soon
-  // as one of them is written to something else, in the holder's own state or
-  // served through inheritFrom, the holder answers to it like it always has.
+  // The layout the holder actually follows. 'auto' normally applies while the
+  // game leaves the raw arrangement properties at their classic defaults.
+  // A stack offset is the exception: it selects auto's fixed centered spread,
+  // where a drop offset can position the zero-step axis. Other non-default
+  // arrangement properties hand control back to the classic behavior.
   // getDefaultValue resolves what inheritFrom serves (or the class default),
   // so the check below compares the value each property actually follows.
   // The optional parameter lets a property change ask what another layout
@@ -125,8 +124,11 @@ export class Holder extends ImageWidget {
     let layout = layoutValue !== undefined ? layoutValue : super.get('layout');
     if(layout === null || layout === undefined)
       layout = 'custom';
-    if(layout == 'auto' && autoDeferProperties.some(p=>(this.state[p] !== undefined ? this.state[p] : super.getDefaultValue(p)) !== this.defaults[p]))
-      layout = 'custom';
+    if(layout == 'auto') {
+      const fixedSpread = this.autoHasFixedStackOffset();
+      if(autoDeferProperties.some(p=>this.autoArrangementValue(p) !== this.defaults[p]) || !fixedSpread && autoDropOffsetProperties.some(p=>this.autoArrangementValue(p) !== this.defaults[p]))
+        layout = 'custom';
+    }
     if(cacheable) {
       this.cachedLayoutVersion = arrangementStateVersion();
       this.cachedLayout = layout;
@@ -136,6 +138,18 @@ export class Holder extends ImageWidget {
 
   usesAutoLayout() {
     return this.effectiveLayout() == 'auto';
+  }
+
+  autoArrangementValue(property) {
+    return this.state[property] !== undefined ? this.state[property] : super.getDefaultValue(property);
+  }
+
+  autoHasFixedStackOffset() {
+    return [ 'stackOffsetX', 'stackOffsetY' ].some(property=>this.autoArrangementValue(property) !== this.defaults[property]);
+  }
+
+  usesAutoFixedSpread() {
+    return this.usesAutoLayout() && this.autoHasFixedStackOffset();
   }
 
   // Whether the game provides a value for the property itself - written in
@@ -474,7 +488,7 @@ export class Holder extends ImageWidget {
       const [ axis, direction ] = this.spreadDirection();
       // a layout that wraps into rows ends on both axes, so "the end" is the
       // far corner there
-      const wraps = this.usesAutoLayout() || this.multiSpreadWraps();
+      const wraps = this.usesAutoLayout() && !this.usesAutoFixedSpread() || this.multiSpreadWraps();
       await this.receiveCard(child, [ axis == 'X' || wraps ? direction*999999 : 0, axis == 'Y' || wraps ? direction*999999 : 0 ]);
     } else {
       const x = child.get('x') - this.absoluteCoord('x');
@@ -770,15 +784,15 @@ export class Holder extends ImageWidget {
       for(const entry of this.childrenFilter(super.children(), true))
         for(const w of entry.get('type') == 'pile' ? entry.children() : [ entry ])
           await w.set('rotation', w.getDefaultValue('rotation'));
-    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'centerSpread', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
+    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle();
     // the layouts that decide the arrangement from the holder's size react to it changing
-    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread', 'arc' ].indexOf(this.get('layout')) != -1 || this.effectiveLayout() == 'singleSpread' && this.get('centerSpread')))
+    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread', 'arc' ].indexOf(this.get('layout')) != -1))
       await this.updateAfterShuffle();
   }
 
   async receiveCard(card, pos) {
-    if(this.usesAutoLayout())
+    if(this.usesAutoLayout() && !this.usesAutoFixedSpread())
       return await this.receiveCardAuto(card, pos);
     // a stack in a grid cell that changes notifies its holder like any other
     // arrangement change - the grid pass is what lays the cells out. While a
@@ -920,21 +934,10 @@ export class Holder extends ImageWidget {
       yOffset += this.childSpacing(child, 'Y', squish, i, children.length);
     }
 
-    let originX = this.get('dropOffsetX');
-    let originY = this.get('dropOffsetY');
-    if(this.effectiveLayout() == 'singleSpread' && this.get('centerSpread') && placements.length) {
-      const minX = Math.min(...placements.map(p=>p.x));
-      const minY = Math.min(...placements.map(p=>p.y));
-      const maxX = Math.max(...placements.map(p=>p.x + p.child.spreadExtent('X')));
-      const maxY = Math.max(...placements.map(p=>p.y + p.child.spreadExtent('Y')));
-      originX = (this.get('width') - (maxX - minX)) / 2 - minX;
-      originY = (this.get('height') - (maxY - minY)) / 2 - minY;
-    }
-
     let z = 1;
     for(const { child, x, y } of placements) {
       const newZ = z;
-      await child.setPosition(originX + x, originY + y, newZ);
+      await child.setPosition(this.get('dropOffsetX') + x, this.get('dropOffsetY') + y, newZ);
 
       // a pile renders at the highest z among its own value and its cards'
       // pile-local ones, so the next entry starts above all of them - with a
@@ -973,6 +976,8 @@ export class Holder extends ImageWidget {
   // Whether the auto layout has room to line its children up instead of letting
   // them gather in the center: one and a half cards along either axis.
   autoSpreads() {
+    if(this.autoHasFixedStackOffset())
+      return true;
     const size = this.autoCardSize();
     return size !== null && (size.width * 1.5 < this.get('width') || size.height * 1.5 < this.get('height'));
   }
@@ -984,16 +989,20 @@ export class Holder extends ImageWidget {
     return Math.max(0, (this.get(axis == 'X' ? 'width' : 'height') - (axis == 'X' ? size.width : size.height)) / 2);
   }
 
-  // The auto layout: the children are centered and lined up in as many rows as
-  // give each of them the most visible area, the objective from #2708. The
-  // spacing degrades continuously when the holder gets tight, so what does not
-  // fit side by side overlaps instead of spilling out of the holder. Piles
-  // only exist while the holder has no room to line cards up: updateAfterShuffle
-  // empties them out when a resize creates that room and gathers the loose
-  // cards back into one when it goes away again.
+  // The auto layout: a written stack offset selects a centered straight spread
+  // with that exact step. Otherwise the children are centered and lined up in
+  // as many rows as give each of them the most visible area, the objective from
+  // #2708. The spacing degrades continuously when the holder gets tight, so
+  // what does not fit side by side overlaps instead of spilling out of the
+  // holder. Piles only exist while the holder has no room to line cards up:
+  // updateAfterShuffle empties them out when a resize creates that room and
+  // gathers the loose cards back into one when it goes away again.
   async rearrangeChildrenAuto(children) {
     if(this.preventRearrangeDuringPileDrop || !children.length)
       return;
+
+    if(this.autoHasFixedStackOffset())
+      return await this.rearrangeChildrenAutoFixed(children);
 
     const pad = autoLayoutPadding;
     const holderWidth = this.get('width');
@@ -1096,6 +1105,35 @@ export class Holder extends ImageWidget {
       }
       y += stepsY[row];
     }
+  }
+
+  // A stack offset under auto fixes a straight spread instead of asking the
+  // holder to derive, wrap or squish one. Each axis with a stack offset is
+  // centered independently; a zero-offset axis stays at its drop offset.
+  async rearrangeChildrenAutoFixed(children) {
+    const placements = [];
+    let xOffset = 0;
+    let yOffset = 0;
+    for(let i = 0; i < children.length; ++i) {
+      const child = children[i];
+      placements.push({ child, x: xOffset, y: yOffset });
+      xOffset += this.childSpacing(child, 'X', null, i, children.length);
+      yOffset += this.childSpacing(child, 'Y', null, i, children.length);
+    }
+
+    const origin = axis=>{
+      const coordinate = axis.toLowerCase();
+      if(!this.get('stackOffset' + axis))
+        return this.get('dropOffset' + axis);
+      const min = Math.min(...placements.map(p=>p[coordinate]));
+      const max = Math.max(...placements.map(p=>p[coordinate] + p.child.spreadExtent(axis)));
+      return (this.get(axis == 'X' ? 'width' : 'height') - (max - min)) / 2 - min;
+    };
+    const originX = origin('X');
+    const originY = origin('Y');
+    let z = 1;
+    for(const { child, x, y } of placements)
+      await child.setPosition(originX + x, originY + y, z++);
   }
 
   // The arc layout: a singleSpread bent into the fan a hand of cards makes on
@@ -1710,6 +1748,13 @@ export class Holder extends ImageWidget {
   // inside the piles.
   spreadDirection() {
     if(this.usesAutoLayout()) {
+      if(this.autoHasFixedStackOffset()) {
+        for(const axis of [ 'X', 'Y' ]) {
+          const stackOffset = this.get('stackOffset' + axis);
+          if(stackOffset)
+            return [ axis, Math.sign(stackOffset) ];
+        }
+      }
       const size = this.autoCardSize();
       return [ size !== null && !(size.width * 1.5 < this.get('width')) && size.height * 1.5 < this.get('height') ? 'Y' : 'X', 1 ];
     }

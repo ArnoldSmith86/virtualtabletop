@@ -1322,8 +1322,7 @@ const editorPropertyHints = {
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
   stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
   stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
-  centerSpread: 'Center the complete single spread inside the holder without changing its stack offsets. A spread wider or taller than the holder overflows equally on opposite sides.',
-  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not - as long as every arrangement property below is left alone. It only keeps piles while the holder is smaller than one and a half cards along both axes; with room to spread, a dropped pile is emptied out.\nPile stacks everything in one spot.\nSingle spread fans it out.\nArc bends that fan into the curve of a hand held over the table: the cards tilt along a circle, up to 30 degrees at the outer ends, as far as the holder has height for the dip.\nMulti spread lines up several groups (piles) side by side.\nGrid fills rows and columns; a drop is inserted at the cell it points at and the other cards flow around it.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
+  layout: 'How the holder arranges what is dropped into it.\nAuto decides from the size of the holder: it centers its cards, spreads and wraps them into rows when there is room, and gathers them in the middle when there is not. Setting a stack offset instead makes one straight spread at exactly that step, centered along that axis without wrapping or shrinking; its other axis follows the drop offset. Other arrangement properties switch Auto to Custom.\nPile stacks everything in one spot.\nSingle spread fans it out.\nArc bends that fan into the curve of a hand held over the table: the cards tilt along a circle, up to 30 degrees at the outer ends, as far as the holder has height for the dip.\nMulti spread lines up several groups (piles) side by side.\nGrid fills rows and columns; a drop is inserted at the cell it points at and the other cards flow around it.\nRandom scatters the pieces like dice thrown into a tray: each lands on a free spot with a small tilt, inside the drop offset margin.\nFreeform leaves everything where it was dropped.\nCustom follows the properties below.',
   pilesOffsetX: 'The next group starts this many pixels right of the previous one, whatever it holds. In a grid it pins the horizontal pitch of the cells instead - a pitch of the card width packs them flush.',
   pilesOffsetY: 'The next group starts this many pixels below the previous one, whatever it holds. In a grid it pins the vertical pitch of the cells instead.',
   pilesGapX: 'The next group starts right of the cards of the previous one, plus this many pixels.',
@@ -1370,7 +1369,7 @@ const editorPropertyHints = {
 // Holder.effectiveLayout), plus everything the layout-dependent controls
 // listen to.
 const holderArrangementProperties = [ 'alignChildren', 'preventPiles', 'stackOffsetX', 'stackOffsetY', 'dropOffsetX', 'dropOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin' ];
-const holderArrangementListenTo = [ 'layout', ...holderArrangementProperties, 'centerSpread' ];
+const holderArrangementListenTo = [ 'layout', ...holderArrangementProperties ];
 
 // The layout a holder actually follows; a multi-selection facade has no
 // effectiveLayout(), so it falls back to showing every low-level input.
@@ -10410,7 +10409,7 @@ class PropertiesModule extends SidebarModule {
     });
 
     // onEnter / onLeave are edited in the Automations section below
-    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'layout', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'centerSpread', 'spreadMin', 'gridColumns', 'gridRows', 'showInactiveFaceToSeat' ]);
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'layout', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows', 'showInactiveFaceToSeat' ]);
   }
 
   // The arrangement of the holder: the layout select and the offsets that act
@@ -10511,15 +10510,8 @@ class PropertiesModule extends SidebarModule {
       input.render(this.moduleDOM);
       rows.push({ row: input.dom, layouts, properties: [ property ] });
     };
-    const addCheckboxRow = (title, property, layouts)=>{
-      const input = new CheckboxInput(this, widget, title, { property, hint: editorPropertyHints[property] });
-      input.render(this.moduleDOM);
-      rows.push({ row: input.dom, layouts, properties: [ property ] });
-    };
-
-    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'custom', 'pile', 'singleSpread', 'arc', 'multiSpread', 'grid', 'random' ]);
-    addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'custom', 'singleSpread', 'arc', 'multiSpread', 'grid' ]);
-    addCheckboxRow('Center spread', 'centerSpread', [ 'singleSpread' ]);
+    addPairRow('Drop offset',  'dropOffsetX',  'dropOffsetY',  [ 'auto', 'custom', 'pile', 'singleSpread', 'arc', 'multiSpread', 'grid', 'random' ]);
+    addPairRow('Stack offset', 'stackOffsetX', 'stackOffsetY', [ 'auto', 'custom', 'singleSpread', 'arc', 'multiSpread', 'grid' ]);
     addPairRow('Piles offset', 'pilesOffsetX', 'pilesOffsetY', [ 'multiSpread', 'grid' ]);
     addPairRow('Piles gap',    'pilesGapX',    'pilesGapY',    [ 'multiSpread' ]);
     addNumberRow('Spread min',   'spreadMin',   [ 'multiSpread', 'singleSpread', 'custom' ]);

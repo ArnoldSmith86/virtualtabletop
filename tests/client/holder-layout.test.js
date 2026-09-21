@@ -153,11 +153,6 @@ describe('what each layout derives for the holder', () => {
     expect(holder.get('stackOffsetY')).toBe(30);
   });
 
-  test('singleSpread does not center unless requested', () => {
-    const holder = createHolder({ id: 'h', layout: 'singleSpread' });
-    expect(holder.get('centerSpread')).toBe(false);
-  });
-
   test('multiSpread arranges piles, shows the drop shadow and spaces the groups a default gap apart', () => {
     const holder = createHolder({ id: 'h', layout: 'multiSpread' });
     expect(holder.keepsPiles()).toBe(true);
@@ -206,8 +201,8 @@ describe('what each layout derives for the holder', () => {
 });
 
 describe('when the auto layout applies', () => {
-  test('it steps aside while any classic arrangement property is written to a non-default value', () => {
-    for(const deferring of [ { stackOffsetX: 40 }, { dropOffsetY: 10 }, { alignChildren: false }, { preventPiles: true }, { pilesGapX: 20 }, { spreadMin: 3 } ]) {
+  test('it steps aside while an incompatible arrangement property is written to a non-default value', () => {
+    for(const deferring of [ { dropOffsetY: 10 }, { alignChildren: false }, { preventPiles: true }, { pilesGapX: 20 }, { spreadMin: 3 } ]) {
       const holder = createHolder({ id: 'h', ...deferring });
       expect(holder.get('layout')).toBe('auto');
       expect(holder.effectiveLayout()).toBe('custom');
@@ -227,11 +222,12 @@ describe('when the auto layout applies', () => {
     }
   });
 
-  test('so JSON written against the classic properties keeps meaning what it always did', () => {
-    const holder = createHolder({ id: 'h', stackOffsetX: 40 });
+  test('a stack offset selects the fixed-spread form of auto', () => {
+    const holder = createHolder({ id: 'h', stackOffsetX: 40, dropOffsetY: 30 });
     expect(holder.get('stackOffsetX')).toBe(40);
-    expect(holder.get('dropOffsetX')).toBe(4);
+    expect(holder.get('dropOffsetY')).toBe(30);
     expect(holder.spreadDirection()).toEqual([ 'X', 1 ]);
+    expect(holder.usesAutoFixedSpread()).toBe(true);
   });
 
   test('clearing the property hands the holder back to auto', async () => {
@@ -240,12 +236,12 @@ describe('when the auto layout applies', () => {
     expect(holder.usesAutoLayout()).toBe(true);
   });
 
-  test('it also steps aside when a classic property arrives through inheritFrom', () => {
+  test('an inherited stack offset selects the fixed spread too', () => {
     createHolder({ id: 'template', stackOffsetX: 40 });
     const holder = createHolder({ id: 'h', inheritFrom: 'template' });
     expect(holder.get('stackOffsetX')).toBe(40);
-    expect(holder.effectiveLayout()).toBe('custom');
-    expect(holder.usesAutoLayout()).toBe(false);
+    expect(holder.effectiveLayout()).toBe('auto');
+    expect(holder.usesAutoFixedSpread()).toBe(true);
   });
 
   test('but an inherited value that equals the classic default leaves auto in charge', () => {
@@ -286,6 +282,24 @@ describe('the auto layout arranging its children', () => {
       createCard(`c${i}`, { parent: 'h', z: i+1 });
     await holder.updateAfterShuffle();
     expect(positionsByZ(holder)).toEqual([ [ 146, 10 ], [ 250, 10 ], [ 354, 10 ] ]);
+  });
+
+  test('a fixed X step centers the straight spread and leaves Y at its drop offset', async () => {
+    const holder = createHolder({ id: 'h', width: 500, height: 300, stackOffsetX: 40, dropOffsetY: 35 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 160, 35 ], [ 200, 35 ], [ 240, 35 ] ]);
+    await holder.set('width', 600);
+    expect(positionsByZ(holder)).toEqual([ [ 210, 35 ], [ 250, 35 ], [ 290, 35 ] ]);
+  });
+
+  test('fixed steps center each configured axis without wrapping or staying inside the holder', async () => {
+    const holder = createHolder({ id: 'h', width: 100, height: 200, stackOffsetX: -80, stackOffsetY: 20, gridColumns: 2 });
+    for(let i=0; i<4; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 120, 20 ], [ 40, 40 ], [ -40, 60 ], [ -120, 80 ] ]);
   });
 
   test('a tall holder stacks them into one centered column instead', async () => {
@@ -1528,9 +1542,9 @@ describe('the drop shadow in holders that do not arrange piles', () => {
   });
 
   test('a classic spread holder keeps the shadow visible over its cards', async () => {
-    // the exact shape every classic hand has: no layout property, a written
-    // stack offset - the auto layout defers to it
-    const holder = createHolder({ id: 'h', stackOffsetX: 40, width: 500, height: 120 });
+    // the file updater writes custom onto existing holders, so their written
+    // stack offset keeps its classic origin
+    const holder = createHolder({ id: 'h', layout: 'custom', stackOffsetX: 40, width: 500, height: 120 });
     expect(holder.effectiveLayout()).toBe('custom');
     for(let i=0; i<3; ++i)
       createCard('c' + i, { parent: 'h', x: 4 + 40*i, y: 4, z: i+1, onPileCreation: {} });
@@ -1811,26 +1825,6 @@ describe('switching layouts with piles inside', () => {
 });
 
 describe('spreadMin on the holder row (singleSpread and custom)', () => {
-  test('centerSpread centers the complete fan on both axes without changing its steps', async () => {
-    const holder = createHolder({ id: 'h', layout: 'singleSpread', centerSpread: true, stackOffsetX: 40, stackOffsetY: 20, width: 500, height: 300 });
-    for(let i=0; i<3; ++i)
-      createCard(`c${i}`, { parent: 'h', z: i+1 });
-    await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 160, 80 ], [ 200, 100 ], [ 240, 120 ] ]);
-    await holder.set('width', 600);
-    await holder.set('height', 400);
-    expect(positionsByZ(holder)).toEqual([ [ 210, 130 ], [ 250, 150 ], [ 290, 170 ] ]);
-  });
-
-  test('centerSpread preserves spreadMin compression and lets an oversized fan overflow symmetrically', async () => {
-    const holder = createHolder({ id: 'h', layout: 'singleSpread', centerSpread: true, stackOffsetX: -80, spreadMin: 2, width: 100, height: 200 });
-    for(let i=0; i<4; ++i)
-      createCard(`c${i}`, { parent: 'h', z: i+1 });
-    await holder.updateAfterShuffle();
-    expect(positionsByZ(holder)).toEqual([ [ 48, 50 ], [ 40, 50 ], [ 32, 50 ], [ -48, 50 ] ]);
-    expect(holder.children()[0].get('x') + 100 - holder.get('width')).toBe(-holder.children()[3].get('x'));
-  });
-
   test('a singleSpread compresses the row below the topmost spreadMin cards', async () => {
     const holder = createHolder({ id: 'h', layout: 'singleSpread', spreadMin: 2, width: 680, height: 200 });
     for(let i=0; i<5; ++i)
