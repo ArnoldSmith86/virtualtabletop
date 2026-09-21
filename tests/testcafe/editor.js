@@ -619,6 +619,7 @@ test('A holder layout is picked in the Layout section and takes over what it dec
   const pilesGap = Selector('#editorModules .numberPairRow').withText('Piles gap');
   const pilesOffset = Selector('#editorModules .numberPairRow').withText('Piles offset');
   const stackOffset = Selector('#editorModules .numberPairRow').withText('Stack offset');
+  const centerSpread = Selector('#editorModules .checkboxInput').withText('Center spread');
   const spreadMin = Selector('#editorModules .numberInput').withText('Spread min');
   const gridColumns = Selector('#editorModules .numberInput').withText('Grid columns');
 
@@ -631,6 +632,7 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(layout.find('select').value).eql('"auto"')
     .expect(align.visible).notOk()
     .expect(pilesGap.visible).notOk()
+    .expect(centerSpread.visible).notOk()
     .expect(gridColumns.visible).ok();
 
   // a multi spread arranges piles: it brings the group spacing (and a starting fan) with
@@ -668,6 +670,11 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('8')
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"singleSpread"'))
+    .expect(centerSpread.visible).ok()
+    .click(centerSpread.find('label.switchbox'))
+    .expect(stateOf('centerSpread')).eql('true')
+    .click(centerSpread.find('label.switchbox'))
+    .expect(stateOf('centerSpread')).eql('null')
     .expect(spreadMin.visible).ok()
     .expect(pilesOffset.visible).notOk()
     .expect(stackOffset.find('input').nth(0).value).eql('')
@@ -678,6 +685,7 @@ test('A holder layout is picked in the Layout section and takes over what it dec
     .click(layout.find('select'))
     .click(layout.find('option').withAttribute('value', '"arc"'))
     .expect(stateOf('layout')).eql('"arc"')
+    .expect(centerSpread.visible).notOk()
     .expect(stackOffset.visible).ok()
     .expect(stackOffset.find('input').nth(0).getAttribute('placeholder')).eql('40')
     .expect(pilesOffset.visible).notOk()

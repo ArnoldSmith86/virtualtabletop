@@ -82,6 +82,7 @@ export class Holder extends ImageWidget {
       pilesOffsetY: null,
       pilesGapX: null,
       pilesGapY: null,
+      centerSpread: false,
       spreadMin: null,
       gridColumns: null,
       gridRows: null,
@@ -769,10 +770,10 @@ export class Holder extends ImageWidget {
       for(const entry of this.childrenFilter(super.children(), true))
         for(const w of entry.get('type') == 'pile' ? entry.children() : [ entry ])
           await w.set('rotation', w.getDefaultValue('rotation'));
-    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
+    if([ 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'layout', 'preventPiles', 'pilesOffsetX', 'pilesOffsetY', 'pilesGapX', 'pilesGapY', 'centerSpread', 'spreadMin', 'gridColumns', 'gridRows' ].indexOf(property) != -1)
       await this.updateAfterShuffle();
     // the layouts that decide the arrangement from the holder's size react to it changing
-    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread', 'arc' ].indexOf(this.get('layout')) != -1))
+    if((property == 'width' || property == 'height') && (this.usesAutoLayout() || [ 'grid', 'random', 'multiSpread', 'arc' ].indexOf(this.get('layout')) != -1 || this.effectiveLayout() == 'singleSpread' && this.get('centerSpread')))
       await this.updateAfterShuffle();
   }
 
@@ -909,17 +910,31 @@ export class Holder extends ImageWidget {
       return;
     }
 
+    const placements = [];
     let xOffset = 0;
     let yOffset = 0;
-    let z = 1;
-
     for(let i = 0; i < children.length; ++i) {
       const child = children[i];
-      const newX = this.get('dropOffsetX') + xOffset;
-      const newY = this.get('dropOffsetY') + yOffset;
-      const newZ = z;
+      placements.push({ child, x: xOffset, y: yOffset });
+      xOffset += this.childSpacing(child, 'X', squish, i, children.length);
+      yOffset += this.childSpacing(child, 'Y', squish, i, children.length);
+    }
 
-      await child.setPosition(newX, newY, newZ);
+    let originX = this.get('dropOffsetX');
+    let originY = this.get('dropOffsetY');
+    if(this.effectiveLayout() == 'singleSpread' && this.get('centerSpread') && placements.length) {
+      const minX = Math.min(...placements.map(p=>p.x));
+      const minY = Math.min(...placements.map(p=>p.y));
+      const maxX = Math.max(...placements.map(p=>p.x + p.child.spreadExtent('X')));
+      const maxY = Math.max(...placements.map(p=>p.y + p.child.spreadExtent('Y')));
+      originX = (this.get('width') - (maxX - minX)) / 2 - minX;
+      originY = (this.get('height') - (maxY - minY)) / 2 - minY;
+    }
+
+    let z = 1;
+    for(const { child, x, y } of placements) {
+      const newZ = z;
+      await child.setPosition(originX + x, originY + y, newZ);
 
       // a pile renders at the highest z among its own value and its cards'
       // pile-local ones, so the next entry starts above all of them - with a
@@ -928,9 +943,6 @@ export class Holder extends ImageWidget {
       // every group above the one before it, the way a fan of cards reads.
       const childZ = child.get('type') == 'pile' ? child.children().map(c=>c.get('z')) : [];
       z = Math.max(newZ, ...childZ) + 1;
-
-      xOffset += this.childSpacing(child, 'X', squish, i, children.length);
-      yOffset += this.childSpacing(child, 'Y', squish, i, children.length);
     }
   }
 

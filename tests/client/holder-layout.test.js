@@ -153,6 +153,11 @@ describe('what each layout derives for the holder', () => {
     expect(holder.get('stackOffsetY')).toBe(30);
   });
 
+  test('singleSpread does not center unless requested', () => {
+    const holder = createHolder({ id: 'h', layout: 'singleSpread' });
+    expect(holder.get('centerSpread')).toBe(false);
+  });
+
   test('multiSpread arranges piles, shows the drop shadow and spaces the groups a default gap apart', () => {
     const holder = createHolder({ id: 'h', layout: 'multiSpread' });
     expect(holder.keepsPiles()).toBe(true);
@@ -1806,6 +1811,26 @@ describe('switching layouts with piles inside', () => {
 });
 
 describe('spreadMin on the holder row (singleSpread and custom)', () => {
+  test('centerSpread centers the complete fan on both axes without changing its steps', async () => {
+    const holder = createHolder({ id: 'h', layout: 'singleSpread', centerSpread: true, stackOffsetX: 40, stackOffsetY: 20, width: 500, height: 300 });
+    for(let i=0; i<3; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 160, 80 ], [ 200, 100 ], [ 240, 120 ] ]);
+    await holder.set('width', 600);
+    await holder.set('height', 400);
+    expect(positionsByZ(holder)).toEqual([ [ 210, 130 ], [ 250, 150 ], [ 290, 170 ] ]);
+  });
+
+  test('centerSpread preserves spreadMin compression and lets an oversized fan overflow symmetrically', async () => {
+    const holder = createHolder({ id: 'h', layout: 'singleSpread', centerSpread: true, stackOffsetX: -80, spreadMin: 2, width: 100, height: 200 });
+    for(let i=0; i<4; ++i)
+      createCard(`c${i}`, { parent: 'h', z: i+1 });
+    await holder.updateAfterShuffle();
+    expect(positionsByZ(holder)).toEqual([ [ 48, 50 ], [ 40, 50 ], [ 32, 50 ], [ -48, 50 ] ]);
+    expect(holder.children()[0].get('x') + 100 - holder.get('width')).toBe(-holder.children()[3].get('x'));
+  });
+
   test('a singleSpread compresses the row below the topmost spreadMin cards', async () => {
     const holder = createHolder({ id: 'h', layout: 'singleSpread', spreadMin: 2, width: 680, height: 200 });
     for(let i=0; i<5; ++i)
