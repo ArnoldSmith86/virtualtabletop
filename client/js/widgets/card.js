@@ -159,6 +159,7 @@ export class Card extends Widget {
           // What was last typed here, so that a card property arriving back from the server as the echo of
           // it does not rewrite the text under the caret (see setValue below).
           let lastTyped = null;
+          let svgImageRequest = 0;
 
           // A write object is made writable with contenteditable rather than being a text area, so that it
           // stays the same div in all three of its states - writable, locked and the readonly copy the deck
@@ -212,16 +213,28 @@ export class Card extends Widget {
             if(object.type == 'image') {
               if(object.value) {
                 if(object.svgReplaces) {
+                  const request = ++svgImageRequest;
                   if(previousBackgroundImage)
                     objectDiv.style.backgroundImage = previousBackgroundImage;
                   const replaces = { ...object.svgReplaces };
                   for(const key in replaces)
                     replaces[key] = this.get(replaces[key]);
-                  const svgResult = getSVG(object.value, replaces, _=>{
-                    objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
-                  });
-                  if(!previousBackgroundImage || svgResult.startsWith('data:image/svg+xml,'))
-                    objectDiv.style.backgroundImage = `url("${svgResult}")`;
+                  const showSVG = svgResult => {
+                    if(!svgResult)
+                      return;
+                    const image = new Image();
+                    const show = () => {
+                      if(request == svgImageRequest)
+                        objectDiv.style.backgroundImage = `url("${svgResult}")`;
+                    };
+                    image.onload = () => {
+                      const decoded = typeof image.decode == 'function' ? image.decode() : Promise.resolve();
+                      decoded.catch(_=>{}).then(show);
+                    };
+                    image.onerror = show;
+                    image.src = svgResult;
+                  };
+                  showSVG(getSVG(object.value, replaces, _=>showSVG(getSVG(object.value, replaces))));
                 } else {
                   objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
                 }
