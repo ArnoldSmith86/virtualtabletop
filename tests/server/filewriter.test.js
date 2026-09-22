@@ -34,36 +34,6 @@ describe('server/filewriter.mjs', function() {
     expect(Buffer.compare(fs.readFileSync(filename), Buffer.from([ 0, 1, 2, 255 ]))).toEqual(0);
   });
 
-  test('writes a file asynchronously and leaves no temporary file behind', async function() {
-    await FileWriter.writeFile(filename, '{"a":1}');
-    expect(fs.readFileSync(filename, 'utf8')).toEqual('{"a":1}');
-    expect(fs.readdirSync(directory)).toEqual([ 'test.json' ]);
-  });
-
-  test('keeps the event loop running while writing', async function() {
-    let ticks = 0;
-    const ticker = setInterval(()=>++ticks, 1);
-    await FileWriter.writeFile(filename, Buffer.alloc(8 * 1024 * 1024));
-    clearInterval(ticker);
-
-    expect(ticks).toBeGreaterThan(0);
-  });
-
-  test('does not replace a newer synchronous write', async function() {
-    const write = FileWriter.writeFile(filename, Buffer.alloc(8 * 1024 * 1024, 'a'));
-    FileWriter.writeFileSync(filename, 'new');
-    await write;
-
-    expect(fs.readFileSync(filename, 'utf8')).toEqual('new');
-    expect(fs.readdirSync(directory)).toEqual([ 'test.json' ]);
-  });
-
-  test('removes the temporary file when an asynchronous rename fails', async function() {
-    fs.mkdirSync(filename);
-    await expect(FileWriter.writeFile(filename, 'new')).rejects.toThrow();
-    expect(fs.readdirSync(directory)).toEqual([ 'test.json' ]);
-  });
-
   test('keeps the old file when writing the temporary file fails', function() {
     fs.writeFileSync(filename, 'old');
     // a directory in the place of the temporary file makes writing it fail

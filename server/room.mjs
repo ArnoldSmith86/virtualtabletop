@@ -10,6 +10,8 @@ import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js
 import Statistics from './statistics.mjs';
 import Zip from './zip.mjs';
 
+let nextRoomWriteID = 0;
+
 export default class Room {
   players = [];
   state = {};
@@ -1169,7 +1171,10 @@ export default class Room {
   }
 
   roomFilename() {
-    return Config.directory('save') + '/rooms/' + this.id + '.json';
+    const id = String(this.id);
+    if(!id.match(/^[A-Za-z0-9_-]+$/))
+      throw new Error('Invalid room ID');
+    return Config.directory('save') + '/rooms/' + id + '.json';
   }
 
   saveCurrentState(mode, name) {
@@ -1448,6 +1453,7 @@ export default class Room {
   }
 
   unload() {
+    this.pendingFilesystemWrite = null;
     if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
@@ -1575,10 +1581,30 @@ export default class Room {
   }
 
   async writeToFilesystemAsync() {
-    await FileWriter.writeFile(this.roomFilename(), this.stateForFilesystem());
+    const write = this.pendingFilesystemWrite = {};
+    const filename = this.roomFilename();
+    const tempFilename = `${filename}.tmp-${process.pid}-${++nextRoomWriteID}`;
+    try {
+      await fs.promises.writeFile(tempFilename, this.stateForFilesystem());
+      if(this.pendingFilesystemWrite == write)
+        // The check and rename stay in one event-loop turn so a newer synchronous save cannot land
+        // between them and then be overwritten by this write.
+        fs.renameSync(tempFilename, filename);
+      else
+        await fs.promises.unlink(tempFilename);
+    } catch(e) {
+      try {
+        await fs.promises.unlink(tempFilename);
+      } catch(unlinkError) {}
+      throw e;
+    } finally {
+      if(this.pendingFilesystemWrite == write)
+        this.pendingFilesystemWrite = null;
+    }
   }
 
   writeToFilesystem() {
+    this.pendingFilesystemWrite = null;
     FileWriter.writeFileSync(this.roomFilename(), this.stateForFilesystem());
   }
 

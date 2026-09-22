@@ -182,6 +182,67 @@ describe('server/room.mjs', function() {
     expect(autosave._meta.states).toEqual({ game: room.state._meta.states.game });
   });
 
+  test('keeps the event loop running while writing a room autosave', async function() {
+    const room = roomWithStates({});
+    room.state.widget = { text: 'x'.repeat(8 * 1024 * 1024) };
+    room.roomFilename = ()=>path.join(directory, 'autosave.json');
+    let ticks = 0;
+    const ticker = setInterval(()=>++ticks, 1);
+
+    await room.writeToFilesystemAsync();
+    clearInterval(ticker);
+
+    expect(ticks).toBeGreaterThan(0);
+  });
+
+  test('an older autosave does not replace a newer synchronous room save', async function() {
+    const room = roomWithStates({});
+    room.state.widget = { text: 'x'.repeat(8 * 1024 * 1024) };
+    room.roomFilename = ()=>path.join(directory, 'autosave.json');
+    const autosave = room.writeToFilesystemAsync();
+
+    room.state.widget = { text: 'new' };
+    room.writeToFilesystem();
+    await autosave;
+
+    expect(JSON.parse(fs.readFileSync(room.roomFilename())).widget.text).toEqual('new');
+    expect(fs.readdirSync(directory).sort()).toEqual([ '0.json', 'autosave.json' ]);
+  });
+
+  test('a failed autosave leaves no temporary room file behind', async function() {
+    const room = roomWithStates({});
+    room.roomFilename = ()=>path.join(directory, 'autosave.json');
+    fs.mkdirSync(room.roomFilename());
+
+    await expect(room.writeToFilesystemAsync()).rejects.toThrow();
+
+    expect(fs.readdirSync(directory).sort()).toEqual([ '0.json', 'autosave.json' ]);
+  });
+
+  test('destroying an empty room cancels its pending autosave', async function() {
+    const room = roomWithStates({});
+    room.id = 'room';
+    room.state._meta.starred = {};
+    room.state._meta.padding = 'x'.repeat(8 * 1024 * 1024);
+    room.roomFilename = ()=>path.join(directory, 'autosave.json');
+    room.unloadCallback = ()=>{};
+    fs.writeFileSync(room.roomFilename(), 'old');
+    const autosave = room.writeToFilesystemAsync();
+
+    room.unload();
+    await autosave;
+
+    expect(fs.existsSync(room.roomFilename())).toBe(false);
+    expect(fs.readdirSync(directory)).toEqual([ '0.json' ]);
+  });
+
+  test('room filenames cannot escape the rooms directory', function() {
+    const room = Object.create(Room.prototype);
+    room.id = '../outside';
+
+    expect(()=>room.roomFilename()).toThrow('Invalid room ID');
+  });
+
   test('trace opens a trace file for a room that was loaded with tracing already enabled', function() {
     const room = tracingRoom({ tracingEnabled: true });
 
