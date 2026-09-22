@@ -153,14 +153,22 @@ function svgReplacedCardRoom() {
     deck: {
       id: 'deck', type: 'deck', x: 20, y: 20,
       cardDefaults: { width: 212, height: 329 },
-      cardTypes: { ace: { replacement: '#ff0000' } },
+      cardTypes: { ace: { replacement: '#ff0000', picture: '/i/cards-default/AC.svg' } },
       faceTemplates: [
         { objects: [
-          { type: 'image', value: '/i/cards-default/AC.svg', svgReplaces: { black: 'replacement' }, x: 0, y: 0, width: 212, height: 329 }
+          { type: 'image', dynamicProperties: { value: 'picture' }, svgReplaces: { black: 'replacement' }, x: 0, y: 0, width: 212, height: 329 }
         ] }
       ]
     },
-    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'ace', x: 400, y: 200 }
+    card: { id: 'card', type: 'card', deck: 'deck', cardType: 'ace', x: 400, y: 200 },
+    replace: { id: 'replace', type: 'button', x: 700, y: 200, text: 'Replace color', clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'card' },
+      { func: 'SET', property: 'replacement', value: '#00ff00' }
+    ] },
+    clear: { id: 'clear', type: 'button', x: 700, y: 300, text: 'Clear image', clickRoutine: [
+      { func: 'SELECT', property: 'id', value: 'card' },
+      { func: 'SET', property: 'picture', value: '' }
+    ] }
   };
 }
 
@@ -253,6 +261,42 @@ test('An image object keeps its SVG replacements after the original image finish
   await t
     .expect(settledBackground).contains('data:image/svg+xml,')
     .expect(decodeURIComponent(settledBackground)).contains('stroke="#ff0000"');
+});
+
+test('Clearing an image object keeps a pending SVG preload from restoring it', async t => {
+  await setRoomState(svgReplacedCardRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const background = ClientFunction(()=>document.querySelector('#w_card .cardFaceObject').style.backgroundImage);
+  for(let wait=50; wait<1000 && !(await background()).includes('data:image/svg+xml,'); wait*=2)
+    await new Promise(resolve=>setTimeout(resolve, wait));
+  await t.expect(await background()).contains('data:image/svg+xml,');
+
+  await ClientFunction(()=>{
+    const NativeImage = window.Image;
+    window.nativeImageForCardTest = NativeImage;
+    window.pendingCardImages = [];
+    window.Image = function() {
+      const image = new NativeImage();
+      Object.defineProperty(image, 'src', {
+        set: value => window.pendingCardImages.push(()=>image.setAttribute('src', value))
+      });
+      return image;
+    };
+  })();
+  await t.click('#w_replace');
+  await t.expect(ClientFunction(()=>window.pendingCardImages.length)()).eql(1);
+  await t.click('#w_clear');
+  await ClientFunction(()=>window.pendingCardImages.splice(0).forEach(load=>load()))();
+  await new Promise(resolve=>setTimeout(resolve, 100));
+  const clearedBackground = await background();
+  await ClientFunction(()=>{
+    window.Image = window.nativeImageForCardTest;
+    delete window.nativeImageForCardTest;
+    delete window.pendingCardImages;
+  })();
+  await t.expect(clearedBackground).eql('');
 });
 
 test('A locked write object is shown as a plain text object that overflows instead of being clipped', async t => {

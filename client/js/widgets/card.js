@@ -190,6 +190,7 @@ export class Card extends Widget {
           }
 
           const setValue = _=>{
+            const request = ++svgImageRequest;
             const usedProperties = new Set();
             const object = JSON.parse(JSON.stringify(original));
             const previousBackgroundImage = objectDiv.style.backgroundImage;
@@ -213,7 +214,6 @@ export class Card extends Widget {
             if(object.type == 'image') {
               if(object.value) {
                 if(object.svgReplaces) {
-                  const request = ++svgImageRequest;
                   let latestImageLoad = 0;
                   if(previousBackgroundImage)
                     objectDiv.style.backgroundImage = previousBackgroundImage;
