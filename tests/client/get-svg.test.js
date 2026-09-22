@@ -45,8 +45,8 @@ function mockFetchStatus(status) {
   return fetched;
 }
 
-// the first call only starts the fetch and returns an empty string; the callback fires once the
-// file is there, which is when the widget recomputes its CSS
+// the first call starts the fetch and returns the original URL; the callback fires once the file
+// is there, which is when the widget recomputes its CSS with the replaced copy
 async function loadImage(url, replaces) {
   let fromCallback = null;
   getSVG(url, replaces, result => fromCallback = result);
