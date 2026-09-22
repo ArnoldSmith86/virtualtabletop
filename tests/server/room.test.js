@@ -167,6 +167,21 @@ describe('server/room.mjs', function() {
     expect(states['PL:games/Empty']).toBeDefined();
   });
 
+  test('writes room autosaves asynchronously without public library state', async function() {
+    const room = roomWithStates({
+      game: { name: 'Game', variants: [ {} ] },
+      'PL:games/Library': { name: 'Library', variants: [ {} ] }
+    });
+    room.state.widget = { id: 'widget', type: 'basic' };
+    room.roomFilename = ()=>path.join(directory, 'autosave.json');
+
+    await room.writeToFilesystemAsync();
+
+    const autosave = JSON.parse(fs.readFileSync(room.roomFilename(), 'utf8'));
+    expect(autosave.widget).toEqual(room.state.widget);
+    expect(autosave._meta.states).toEqual({ game: room.state._meta.states.game });
+  });
+
   test('trace opens a trace file for a room that was loaded with tracing already enabled', function() {
     const room = tracingRoom({ tracingEnabled: true });
 

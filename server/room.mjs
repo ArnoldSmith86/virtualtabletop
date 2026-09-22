@@ -1566,13 +1566,20 @@ export default class Room {
     FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
-  writeToFilesystem() {
-    const copy = JSON.parse(JSON.stringify(this.state));
+  stateForFilesystem() {
+    const copy = { ...this.state, _meta: { ...this.state._meta, states: { ...this.state._meta.states } } };
     for(const id in copy._meta.states)
       if(id.match(/^PL:/))
         delete copy._meta.states[id];
-    const json = JSON.stringify(copy);
-    FileWriter.writeFileSync(this.roomFilename(), json);
+    return JSON.stringify(copy);
+  }
+
+  async writeToFilesystemAsync() {
+    await FileWriter.writeFile(this.roomFilename(), this.stateForFilesystem());
+  }
+
+  writeToFilesystem() {
+    FileWriter.writeFileSync(this.roomFilename(), this.stateForFilesystem());
   }
 
   variantFilename(stateID, variantID) {
