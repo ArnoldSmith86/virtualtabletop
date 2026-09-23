@@ -802,9 +802,9 @@ export function getSVG(url, replaces, callback) {
   // a file still within its retry delay has no request to wait for
   if(svgCache[url])
     svgCache[url].push([ callback, replaces ]);
-  // while a retry is in flight the widget keeps displaying the URL it already has rather than
-  // blinking to nothing, and is told through its callback once the file did arrive after all
-  return unreadableCache[url] ? mapAssetURLs(url) : '';
+  // while a fetch is in flight the widget keeps displaying the original image rather than
+  // blinking to nothing, and is told through its callback once the replaced copy is ready
+  return mapAssetURLs(url);
 }
 
 // Decides what the user gets when the editor bundle did not load, by asking the server what it is:
