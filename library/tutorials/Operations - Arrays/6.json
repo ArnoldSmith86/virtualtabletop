@@ -48,7 +48,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763605491582,
+      "lastUpdate": 1789005565465,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -60,7 +60,9 @@
       "variantImage": "",
       "variant": "Example: Moving Widget",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false,
+      "usesAILayout": false
     }
   },
   "arrayText": {

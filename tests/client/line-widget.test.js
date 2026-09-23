@@ -153,6 +153,68 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('auto-rotation applies the line rotation offset', async () => {
+    const line = createLine({ id: 'rotation-offset-line', x: 0, y: 0,
+      lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, rotationOffset: 90,
+      autoSpaceStops: false, stops: [ { widget: 'rotation-offset-stop', position: 0.5 } ] });
+    const stop = new Widget('rotation-offset-stop');
+    addWidget({ id: 'rotation-offset-stop', type: 'basic', parent: line.id, width: 20, height: 20 }, stop);
+
+    await line.updateAttachedWidgets();
+
+    expect(Math.round(stop.get('rotation'))).toBe(135);
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
+  test('stops of every shape are turned onto the line, and let go of again', async () => {
+    const shapes = [ { id: 'shape-landscape', width: 80, height: 20 }, { id: 'shape-portrait', width: 20, height: 80 }, { id: 'shape-square', width: 40, height: 40 } ];
+    const line = createLine({ id: 'shape-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 300 }, autoSpaceStops: false,
+      stops: shapes.map((shape, i) => ({ widget: shape.id, position: (i+1)/4 })) });
+    const stops = shapes.map(shape => {
+      const stop = new Widget(shape.id);
+      addWidget({ ...shape, type: 'basic', parent: line.id }, stop);
+      return stop;
+    });
+
+    await line.updateAttachedWidgets();
+    for(const stop of stops) {
+      expect(Math.round(stop.get('rotation'))).toBe(45);
+      // a stop that is turned onto the line lays its own width along it
+      expect(line.widgetLengthOnLine(stop, 45)).toBe(+stop.get('width'));
+    }
+
+    // none of them was given a rotation of its own, so they all fall back to 0
+    await line.set('rotateStops', false);
+    for(const stop of stops) {
+      expect(stop.get('rotation')).toBe(0);
+      expect(stop.get('lineOriginalRotation')).toBeNull();
+    }
+
+    for(const stop of stops)
+      removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
+  test('a stop on a curve is turned by a rotation that carries three decimals at most', async () => {
+    const line = createLine({ id: 'angle-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 },
+      controlStart: { x: 30, y: -120 }, controlEnd: { x: 170, y: 120 }, autoSpaceStops: false,
+      stops: [ { widget: 'angle-stop', position: 0.3 } ] });
+    const stop = new Widget('angle-stop');
+    addWidget({ id: 'angle-stop', type: 'basic', parent: line.id, width: 60, height: 20 }, stop);
+
+    await line.updateAttachedWidgets();
+    const rotation = stop.get('rotation');
+    // the tangent angle is stored in the room state, where a value that depends
+    // on how precise the browser's Math.atan2 happens to be would make the same
+    // line differ between clients
+    expect(rotation).toBe(Math.round(rotation*1000)/1000);
+    expect(rotation).not.toBe(0);
+
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   test('direct and inherited stop geometry changes reposition the stop', async () => {
     const line = createLine({ id: 'stop-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
       stops: [ { widget: 'reactive-stop', position: 0.25 } ] });
@@ -225,6 +287,91 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  describe('autoSpaceStops distributes along the path', () => {
+    // a C shaped curve: its tangent turns through 180 degrees, so anything that
+    // measures a stop against the local direction of the path drifts along it
+    function curve(defs) {
+      const line = createLine({ id: 'space-line', x: 0, y: 0, rotateStops: false, autoSpaceStops: true,
+        lineStart: { x: 0, y: 0 }, controlStart: { x: 400, y: 0 }, controlEnd: { x: 400, y: 400 }, lineEnd: { x: 0, y: 400 },
+        stops: defs.map((def, i) => ({ widget: def.id, position: i / (defs.length-1) })) });
+      const stops = defs.map(def => {
+        const stop = new Widget(def.id);
+        addWidget({ type: 'basic', width: 100, height: 100, parent: line.id, ...def }, stop);
+        return stop;
+      });
+      return { line, stops };
+    }
+
+    function cleanUp(stops) {
+      for(const stop of stops)
+        removeWidget(stop.id);
+      removeWidget('space-line');
+    }
+
+    // the arc length of the path between each pair of neighbouring stops
+    function stopDistances(line) {
+      const positions = line.stopList().map(entry => entry.position);
+      return positions.slice(1).map((position, i) => (position - positions[i]) * line.lineLength());
+    }
+
+    test('equally sized stops end up equally far apart along a curve', async () => {
+      const { line, stops } = curve([ 'c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6' ].map(id => ({ id })));
+
+      await line.distributeAttachedWidgetsEvenly();
+      const distances = stopDistances(line);
+      for(const distance of distances)
+        expect(near(distance, distances[0], 1)).toBe(true);
+
+      cleanUp(stops);
+    });
+
+    test('differently sized stops keep an equal gap between their edges', async () => {
+      const { line, stops } = curve([ { id: 'd0', width: 40, height: 40 }, { id: 'd1' }, { id: 'd2', width: 40, height: 40 }, { id: 'd3' } ]);
+
+      await line.distributeAttachedWidgetsEvenly();
+      const sizes = stops.map(stop => stop.get('width'));
+      const gaps = stopDistances(line).map((distance, i) => distance - sizes[i]/2 - sizes[i+1]/2);
+      for(const gap of gaps)
+        expect(near(gap, gaps[0], 1)).toBe(true);
+
+      cleanUp(stops);
+    });
+
+    test('a single stop ends up in the middle of the path', async () => {
+      const line = createLine({ id: 'space-line', x: 0, y: 0, rotateStops: false, autoSpaceStops: true,
+        lineStart: { x: 0, y: 0 }, lineEnd: { x: 400, y: 0 }, stops: [ { widget: 'lone', position: 0.9 } ] });
+      const stop = new Widget('lone');
+      addWidget({ id: 'lone', type: 'basic', parent: line.id, width: 100, height: 100 }, stop);
+
+      await line.distributeAttachedWidgetsEvenly();
+      expect(line.stopList()[0].position).toBe(0.5);
+      expect(near(stop.get('x'), 150)).toBe(true);
+
+      cleanUp([ stop ]);
+    });
+
+    test('a stop is measured along the path even when the path is not horizontal', async () => {
+      const line = createLine({ id: 'space-line', x: 0, y: 0, rotateStops: false, autoSpaceStops: true,
+        lineStart: { x: 0, y: 0 }, lineEnd: { x: 0, y: 600 },
+        stops: [ 'v0', 'v1', 'v2' ].map((widget, i) => ({ widget, position: i/2 })) });
+      const boxes = [ { width: 100, height: 40 }, { width: 40, height: 100 }, { width: 40, height: 100 } ];
+      const stops = boxes.map((box, i) => {
+        const stop = new Widget(`v${i}`);
+        addWidget({ id: `v${i}`, type: 'basic', parent: line.id, ...box }, stop);
+        return stop;
+      });
+
+      // going down the line a stop takes up its height, not its width, so the
+      // two gaps are (600 - 40/2 - 100 - 100/2)/2 each
+      await line.distributeAttachedWidgetsEvenly();
+      const gaps = stopDistances(line).map((distance, i) => distance - boxes[i].height/2 - boxes[i+1].height/2);
+      expect(near(gaps[0], 215, 1)).toBe(true);
+      expect(near(gaps[1], 215, 1)).toBe(true);
+
+      cleanUp(stops);
+    });
+  });
+
   describe('the stops list', () => {
     test('keeps the chain order and drops entries whose widget is gone', async () => {
       const line = createLine({ id: 'list-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, autoSpaceStops: false,
@@ -265,6 +412,45 @@ describe('Line widget geometry', () => {
 
       removeWidget('ext-stop');
       removeWidget('ext-board');
+      removeWidget(line.id);
+    });
+
+    test('turns a stop that is not a child of the line into the frame of its own parent', async () => {
+      // the path runs along the line's own x axis, which the line lays into the
+      // room turned by 90; the board the external stop lives in is turned by 20
+      const line = createLine({ id: 'frame-line', x: 0, y: 0, rotation: 90, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, autoSpaceStops: false,
+        stops: [ { widget: 'frame-ext', position: 0.5 }, { widget: 'frame-child', position: 0.25 } ] });
+      const board = new Widget('frame-board');
+      addWidget({ id: 'frame-board', type: 'basic', width: 400, height: 400, rotation: 20 }, board);
+      board.coordLocalFromCoordGlobal = coord => coord;
+      addWidget({ id: 'frame-ext', type: 'basic', parent: 'frame-board', width: 40, height: 40 }, new Widget('frame-ext'));
+      addWidget({ id: 'frame-child', type: 'basic', parent: line.id, width: 40, height: 40 }, new Widget('frame-child'));
+
+      await line.updateAttachedWidgets();
+
+      // 70 of rotation inside the board draws the same direction as 90 in the room
+      expect(widgets.get('frame-ext').get('rotation')).toBeCloseTo(70, 3);
+      // while a child of the line reads the tangent as it is
+      expect(widgets.get('frame-child').get('rotation')).toBeCloseTo(0, 3);
+
+      for(const id of [ 'frame-ext', 'frame-child', 'frame-board' ])
+        removeWidget(id);
+      removeWidget(line.id);
+    });
+
+    test('measures the footprint of a stop against the path in the line own frame', () => {
+      const line = createLine({ id: 'foot-line', x: 0, y: 0, rotation: 90, lineStart: { x: 0, y: 0 }, lineEnd: { x: 400, y: 0 }, rotateStops: false, autoSpaceStops: false,
+        stops: [ { widget: 'foot-stop', position: 0.5 } ] });
+      const board = new Widget('foot-board');
+      addWidget({ id: 'foot-board', type: 'basic', width: 400, height: 400 }, board);
+      addWidget({ id: 'foot-stop', type: 'basic', parent: 'foot-board', width: 100, height: 40, scale: 2 }, new Widget('foot-stop'));
+
+      // the stop lies flat in the board it belongs to, but the line is turned
+      // against that board, so what it lays along the path is its scaled height
+      expect(line.widgetLengthOnLine(widgets.get('foot-stop'), 0)).toBeCloseTo(80, 3);
+
+      removeWidget('foot-stop');
+      removeWidget('foot-board');
       removeWidget(line.id);
     });
   });
@@ -387,6 +573,36 @@ describe('Line widget closed shapes', () => {
 
     for(const id of [ 'r0', 'r1', 'r2', 'r3' ])
       removeWidget(id);
+    removeWidget(line.id);
+  });
+
+  test('sizes stops by their real footprint, so the whole perimeter is used up', async () => {
+    const boxes = [
+      { width: 200, height: 40, rotation: 90 },
+      { width: 80, height: 80 },
+      { width: 160, height: 60 },
+      { width: 80, height: 80 }
+    ];
+    const line = ellipse({ id: 'ring-sizes', x: 0, y: 0, lineEnd: { x: 400, y: 400 }, rotateStops: false,
+      stops: boxes.map((box, i) => ({ widget: `s${i}`, position: i/8 })) });
+    boxes.forEach((box, i) => addWidget({ id: `s${i}`, type: 'basic', parent: line.id, ...box }, new Widget(`s${i}`)));
+
+    await line.distributeAttachedWidgetsEvenly();
+    // a stop turned across the ring covers its height there, not its width; on
+    // a closed shape these footprints are used as absolute lengths, so they
+    // have to add up to the perimeter together with the four gaps
+    const footprints = [ 40, 80, 160, 80 ];
+    const length = line.lineLength();
+    const expected = (length - 360)/4;
+    const positions = line.stopList().map(entry => entry.position);
+    for(let i = 0; i < positions.length; ++i) {
+      const next = (i+1) % positions.length;
+      const distance = ((positions[next] - positions[i] + 1) % 1) * length;
+      expect(near(distance - footprints[i]/2 - footprints[next]/2, expected, 2)).toBe(true);
+    }
+
+    for(let i = 0; i < boxes.length; ++i)
+      removeWidget(`s${i}`);
     removeWidget(line.id);
   });
 
@@ -646,7 +862,7 @@ describe('dragging a widget onto a line to make it a stop', () => {
     const diagonal = createLine({ id: 'off-line', x: 0, y: 0, width: 400, height: 300, autoSpaceStops: false,
       lineStart: { x: 0, y: 0 }, lineEnd: { x: 400, y: 300 }, dropTarget: { type: null },
       stops: [ { widget: 'off-stop', position: 0.5 } ] });
-    // landscape, so the line rotates it to its tangent while it rides on it
+    // the line rotates it to its tangent while it rides on it
     const stop = new Widget('off-stop');
     addWidget({ id: 'off-stop', parent: 'off-line', width: 80, height: 30 }, stop);
     await diagonal.layoutStops();

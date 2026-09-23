@@ -10,10 +10,13 @@ import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js
 import Statistics from './statistics.mjs';
 import Zip from './zip.mjs';
 
+let nextRoomWriteID = 0;
+
 export default class Room {
   players = [];
   state = {};
   deltaID = 0;
+  isLoading = false;
   lastStatisticsDeltaID = 0;
   lastMouseState = new Map();
 
@@ -21,10 +24,21 @@ export default class Room {
     this.id = id;
     this.unloadCallback = unloadCallback;
     this.publicLibraryUpdatedCallback = publicLibraryUpdatedCallback;
+    this.startUnloadTimeout();
+  }
+
+  // loading a room can take a while because linked states are fetched over the network - unloading
+  // it in the middle of that would write a half loaded room to disk, so wait for the load to finish
+  startUnloadTimeout() {
+    clearTimeout(this.unloadTimeout);
     this.unloadTimeout = setTimeout(_=>{
       if(this.players.length == 0) {
-        Logging.log(`unloading room ${this.id} after 5s without player connection`);
-        this.unload();
+        if(this.isLoading) {
+          this.startUnloadTimeout();
+        } else {
+          Logging.log(`unloading room ${this.id} after 5s without player connection`);
+          this.unload();
+        }
       }
     }, 5000);
   }
@@ -550,63 +564,65 @@ export default class Room {
   }
 
   async load(fileOrLink, player, delayForGameStartRoutine) {
-    const emptyState = {
-      _meta: {
-        version: 1,
-        metaVersion: 1,
-        players: {},
-        states: {},
-        starred: {}
-      }
-    };
+    this.isLoading = true;
+    try {
+      const emptyState = {
+        _meta: {
+          version: 1,
+          metaVersion: 1,
+          players: {},
+          states: {},
+          starred: {}
+        }
+      };
 
-    if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
-      Logging.log(`creating room ${this.id}`);
-      this.state = FileUpdater(emptyState);
-      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
-      this.traceIsEnabled(Config.get('forceTracing'));
-    } else if(!fileOrLink) {
-      Logging.log(`loading room ${this.id}`);
-      this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
-      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+      if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
+        Logging.log(`creating room ${this.id}`);
+        this.state = FileUpdater(emptyState);
+        this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+        this.traceIsEnabled(Config.get('forceTracing'));
+      } else if(!fileOrLink) {
+        Logging.log(`loading room ${this.id}`);
+        this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+        this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+        this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
 
-      this.migrateOldPublicLibraryLinks();
-      this.migrateBrokenSaveWithoutVersion();
-      await this.updateLinkedStates();
-      this.removeInvalidPublicLibraryLinks(player);
-      this.removeStatesWithoutVariants(player);
+        this.migrateOldPublicLibraryLinks();
+        this.migrateBrokenSaveWithoutVersion();
+        await this.updateLinkedStates();
+        this.removeInvalidPublicLibraryLinks(player);
+        this.removeStatesWithoutVariants(player);
 
-      this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
-      this.normalizeGameSettings(this.state._meta.gameSettings);
-      this.broadcast('state', this.state);
-    } else {
-      let newState = emptyState;
-      let errorMessage = 'Error loading state.';
-      try {
-        if(fileOrLink.match(/^http/))
-          newState = await FileLoader.readVariantFromLink(fileOrLink);
-        else
-          newState = JSON.parse(fs.readFileSync(fileOrLink));
-      } catch(e) {
-        errorMessage = `Error loading state:\n${e.toString()}`;
-        newState = null;
-      }
-      if(newState) {
-        Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-        this.setState(newState, player, delayForGameStartRoutine);
+        this.normalizeGameSettings(this.state._meta.gameSettings);
+        this.broadcast('state', this.state);
       } else {
-        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
-        this.setState(emptyState, player, false);
-        if(player)
-          player.send('error', errorMessage);
+        let newState = emptyState;
+        let errorMessage = 'Error loading state.';
+        try {
+          if(fileOrLink.match(/^http/))
+            newState = await FileLoader.readVariantFromLink(fileOrLink);
+          else
+            newState = JSON.parse(fs.readFileSync(fileOrLink));
+        } catch(e) {
+          errorMessage = `Error loading state:\n${e.toString()}`;
+          newState = null;
+        }
+        if(newState) {
+          Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+          this.setState(newState, player, delayForGameStartRoutine);
+        } else {
+          Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
+          this.setState(emptyState, player, false);
+          if(player)
+            player.send('error', errorMessage);
+        }
       }
+
+      if(!this.state._meta || typeof this.state._meta.version !== 'number')
+        throw Error('Room state has invalid meta information.');
+    } finally {
+      this.isLoading = false;
     }
-
-    if(!this.state._meta || typeof this.state._meta.version !== 'number')
-      throw Error('Room state has invalid meta information.');
-
-    if(!fileOrLink)
-      this.trace('init', { initialState: this.state });
   }
 
   async loadState(player, stateID, variantID, linkSourceStateID, delayForGameStartRoutine) {
@@ -1155,7 +1171,10 @@ export default class Room {
   }
 
   roomFilename() {
-    return Config.directory('save') + '/rooms/' + this.id + '.json';
+    const id = String(this.id);
+    if(!id.match(/^[A-Za-z0-9_-]+$/))
+      throw new Error('Invalid room ID');
+    return Config.directory('save') + '/rooms/' + id + '.json';
   }
 
   saveCurrentState(mode, name) {
@@ -1385,6 +1404,15 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  // the trace viewer replays a trace on top of the initialState of its first record, so a trace
+  // file always starts with the room state at the moment the file was opened
+  openTraceFile() {
+    this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+    fs.writeFileSync(this.tracingFilename, '[\n');
+    Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    this.trace('init', { initialState: this.state });
+  }
+
   trace(source, payload) {
     if(!this.traceIsEnabled() && source == 'client' && payload.type == 'enable') {
       this.traceIsEnabled(true);
@@ -1392,6 +1420,10 @@ export default class Room {
     }
 
     if(this.traceIsEnabled()) {
+      // a saved room comes back with tracing already enabled, so the room state can ask for tracing
+      // before load() opened a file for it - whatever is traced until then opens the file itself
+      if(!this.tracingFilename)
+        this.openTraceFile();
       payload.servertime = +new Date;
       payload.source = source;
       payload.serverDeltaID = this.deltaID;
@@ -1404,10 +1436,8 @@ export default class Room {
     if(setEnabled && this.state && this.state._meta) {
       this.state._meta.tracingEnabled = true;
 
-      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+      this.openTraceFile();
       this.broadcast('tracing', 'enable');
-      fs.writeFileSync(this.tracingFilename, '[\n');
-      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
     return this.state && this.state._meta && this.state._meta.tracingEnabled;
   }
@@ -1423,6 +1453,7 @@ export default class Room {
   }
 
   unload() {
+    this.pendingFilesystemWrite = null;
     if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
@@ -1541,13 +1572,40 @@ export default class Room {
     FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
-  writeToFilesystem() {
-    const copy = JSON.parse(JSON.stringify(this.state));
+  stateForFilesystem() {
+    const copy = { ...this.state, _meta: { ...this.state._meta, states: { ...this.state._meta.states } } };
     for(const id in copy._meta.states)
       if(id.match(/^PL:/))
         delete copy._meta.states[id];
-    const json = JSON.stringify(copy);
-    FileWriter.writeFileSync(this.roomFilename(), json);
+    return JSON.stringify(copy);
+  }
+
+  async writeToFilesystemAsync() {
+    const write = this.pendingFilesystemWrite = {};
+    const filename = this.roomFilename();
+    const tempFilename = `${filename}.tmp-${process.pid}-${++nextRoomWriteID}`;
+    try {
+      await fs.promises.writeFile(tempFilename, this.stateForFilesystem());
+      if(this.pendingFilesystemWrite == write)
+        // The check and rename stay in one event-loop turn so a newer synchronous save cannot land
+        // between them and then be overwritten by this write.
+        fs.renameSync(tempFilename, filename);
+      else
+        await fs.promises.unlink(tempFilename);
+    } catch(e) {
+      try {
+        await fs.promises.unlink(tempFilename);
+      } catch(unlinkError) {}
+      throw e;
+    } finally {
+      if(this.pendingFilesystemWrite == write)
+        this.pendingFilesystemWrite = null;
+    }
+  }
+
+  writeToFilesystem() {
+    this.pendingFilesystemWrite = null;
+    FileWriter.writeFileSync(this.roomFilename(), this.stateForFilesystem());
   }
 
   variantFilename(stateID, variantID) {

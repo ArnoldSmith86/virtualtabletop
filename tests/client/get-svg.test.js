@@ -45,8 +45,8 @@ function mockFetchStatus(status) {
   return fetched;
 }
 
-// the first call only starts the fetch and returns an empty string; the callback fires once the
-// file is there, which is when the widget recomputes its CSS
+// the first call starts the fetch and returns the original URL; the callback fires once the file
+// is there, which is when the widget recomputes its CSS with the replaced copy
 async function loadImage(url, replaces) {
   let fromCallback = null;
   getSVG(url, replaces, result => fromCallback = result);
@@ -56,6 +56,7 @@ async function loadImage(url, replaces) {
 
 test('an SVG has its replacements applied', async () => {
   mockFetch('<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#000000"/></svg>', 'image/svg+xml');
+  expect(getSVG('/assets/1_1', { '#000000': '#ff0000' }, _=>{})).toBe('assets/1_1');
   const image = await loadImage('/assets/1_1', { '#000000': '#ff0000' });
   expect(image).toBe(getSVG('/assets/1_1', { '#000000': '#ff0000' }));
   expect(decodeURIComponent(image)).toBe('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><rect fill="#ff0000"/></svg>');
