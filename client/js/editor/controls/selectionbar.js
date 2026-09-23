@@ -1102,12 +1102,14 @@ function selectionBarRenderStack(bar) {
     ? '<br>↑ ↓ step through the list, Enter selects, Esc closes it.'
     : '<br>Esc closes it.';
   const following = selectionBarPeekActive && selectionBarPointerInRoom;
+  const ctrlHelp = !selectionBarStackFromTouch && !selectionBarPeekActive
+    ? '<br>Hold Ctrl while pointing at the room to open this list and have it follow the pointer.' : '';
   if(selectionBarStack.length)
     div(bar.stackList, 'selectionBarStackHelp', selectionBarStackFromTouch
       ? 'Tap a row to select that widget.'
       : following
       ? 'Following the pointer while Ctrl is held - the key shown selects, Shift with it adds.' + keyHelp
-      : 'Click to select, shift-click to add to the selection, or press the key shown.' + keyHelp);
+      : 'Click to select, shift-click to add to the selection, or press the key shown.' + keyHelp + ctrlHelp);
 
   for(const [ index, widget ] of selectionBarStack.entries()) {
     const hotkey = index < 3 ? `F${index+1}` : index < 10 ? `F${index+3}` : '';
@@ -1144,7 +1146,7 @@ function selectionBarRenderStack(bar) {
   if(!selectionBarStack.length)
     div(bar.stackList, 'selectionBarStackEmpty', following
       ? 'Nothing under the pointer - move it over a widget while Ctrl is held.'
-      : 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.');
+      : 'Rest the pointer on a widget in the room, or tap one - everything stacked at that spot is listed here.' + ctrlHelp);
 
   selectionBarRenderStackCursor(bar);
 }
