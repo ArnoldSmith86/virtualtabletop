@@ -24,7 +24,9 @@ export class Timer extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.milliseconds !== undefined) {
       const s = Math.floor(Math.abs(delta.milliseconds)/1000);
-      setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
+      const pad = value => String(value).padStart(2, '0');
+      const time = s < 3600 ? `${Math.floor(s/60)}:${pad(s%60)}` : `${Math.floor(s/3600)}:${pad(Math.floor(s/60)%60)}:${pad(s%60)}`;
+      setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${time}`);
     }
 
     if(this.interval && (delta.paused !== undefined || delta.precision !== undefined)) {
