@@ -5,19 +5,15 @@ class JsonModule extends SidebarModule {
 
   onClose() {
     jeToggle();
-    jeToggleTreeDropdown(true);
-    $('#jsonEditor').append($('#jeWidgetSwitcher'));
+    removeSelectionBar(this.selectionBar);
+    delete this.selectionBar;
     $('#jsonEditor').append($('#jeTextHighlight'));
     $('#jsonEditor').append($('#jeText'));
     $('#jsonEditor').append($('#jeCommands'));
-    $('#jsonEditor').append($('#jeWidgetLayers'));
   }
 
   onDeltaReceivedWhileActive(delta) {
     jeApplyDelta(delta);
-    if(jeTreeIsVisible())
-      jeUpdateTree(delta.s);
-    jeUpdateWidgetSwitcher();
   }
 
   onEditorClose() {
@@ -53,25 +49,15 @@ class JsonModule extends SidebarModule {
     $('#jeText').blur();
   }
 
-  onStateReceivedWhileActive() {
-    if(jeTreeIsVisible())
-      jeDisplayTree();
-    jeUpdateWidgetSwitcher();
-  }
-
   renderModule(target) {
     // openInTarget() fires onSelectionChanged() right after this, which is where the deck is picked up.
     this.showDeckEditorDeck = deckEditor.isOpen() && !!deckEditor.deck();
     jeToggle();
-    target.append($('#jeWidgetSwitcher'));
+    this.selectionBar = renderSelectionBar(target, { key: this.title });
     target.append($('#jeTextHighlight'));
     target.append($('#jeText'));
     target.append($('#jeCommands'));
-    target.append($('#jeWidgetLayers'));
     $('#jsonEditor').style.display = 'none';
-    jeUpdateWidgetSwitcher();
-    if(jeTreeIsPinned())
-      jeToggleTreeDropdown();
   }
 }
 
@@ -97,6 +83,7 @@ class DebugModule extends SidebarModule {
     jeRoutineAutoReset = !$('#clearLogButton').disabled;
 
     $('#clearLogButton').disabled = $('#autoClearLog').checked;
+    this.setClearButtonTitle();
     if($('#clearLogButton').disabled)
       jeLoggingClear();
   }
@@ -139,13 +126,25 @@ class DebugModule extends SidebarModule {
     this.updateValidation();
   }
 
+  // The Clear button spends most of its life disabled because the log clears itself. Saying so in
+  // its tooltip keeps it from reading like a button that is simply broken.
+  setClearButtonTitle() {
+    $('#clearLogButton').title = $('#clearLogButton').disabled
+      ? 'The log is cleared automatically. Uncheck the box to keep it and clear it yourself.'
+      : 'Empty the log now.';
+  }
+
   renderModule(target) {
+    this.addHeader('Debug', target);
+    this.addSubHeader('Routine log', target);
     div(target, 'buttonBar', `
       <input type=text id=jeLogFilter placeholder="Filter log...">
-      <input type=checkbox id=autoClearLog checked><label for=autoClearLog> Clear after each interaction</label>
+      <label id=autoClearLogLabel title="Keep only the routines started by the most recent interaction with the room."><input type=checkbox id=autoClearLog checked> Clear after each interaction</label>
       <button icon=backspace id=clearLogButton disabled>Clear</button>
     `);
+    this.setClearButtonTitle();
     target.append($('#jeLog'));
+    div(target, 'jeLogNote jeLogEmptyNote', 'Nothing has been logged yet. Middle-click a widget to run it as if you were playing - or right-click one that is already selected - and every operation of the routine it starts shows up here.');
 
     on('#jeLogFilter', 'input', e=>this.button_filter());
     on('#autoClearLog', 'change', e=>this.button_clearCheckbox());
@@ -153,6 +152,7 @@ class DebugModule extends SidebarModule {
 
     setJEroutineLogging(jeRoutineLogging = true);
 
+    this.addSubHeader('Validation', target);
     div(target, 'staticErrors', `
       <div class="validation-controls" style="margin-top: 10px; display: none;">
         <button id="runValidationButton" icon=data_check>Run Validation</button>

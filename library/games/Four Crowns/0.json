@@ -1,0 +1,4833 @@
+{
+  "_meta": {
+    "version": 15,
+    "info": {
+      "name": "Four Crowns",
+      "image": "/assets/1318042633_28602",
+      "rules": "https://en.wikipedia.org/wiki/Four-player_chess",
+      "bgg": "https://boardgamegeek.com/boardgame/2173/4-player-chess",
+      "year": "1784",
+      "mode": "vs, teams",
+      "time": "60",
+      "players": "4",
+      "language": "en-US",
+      "similarName": "4 Player Chess",
+      "description": "Chess for four players on a cross shaped 14x14 board of 160 squares, with four armies of sixteen pieces attacking each other at the same time. Capturing enemy pieces and checkmating opponents scores points, and the player with the most points when only one king is left standing wins. Turn order, captures and scorekeeping are done by the table.",
+      "helpText": "<b>Seats</b> Four players, one per corner panel: Red plays first, then Blue, Yellow and Green, going clockwise around the board. The big coloured tile on the left and the glowing seat both show whose turn it is.<div><br></div><b>Moving</b> Just drag your pieces. No move is ever refused and legal moves are not checked, so promotions, castling and en passant are done by hand.<div><br></div><b>Capturing</b> Drop a piece on top of an enemy piece: the table moves the captured piece into your capture tray and adds its value to your score (pawn 1, knight 3, bishop 5, rook 5, queen 9, king 20 - the values are listed on the right).<div><br></div><b>Score buttons</b> Every panel has -1 / +1 for corrections and a +20 button for the checkmate or stalemate bonus. The score field itself can also be typed into.<div><br></div><b>Skull button</b> Marks a player as out. Their army turns grey, stays on the board as an obstacle and is worth no points any more, and their seat is skipped in the turn order. Press it again to bring the player back.<div><br></div><b>Skip button</b> Passes the turn to the next player without moving a piece.<div><br></div><b>Gear button</b> Switches all table automation off (green = on, grey = off): no capturing, no scoring and no turn passing, so you can set up a position by hand. Press it again to switch it back on.<div><br></div><b>Queen + button</b> Puts an extra piece of any colour next to the board - pick the piece in the overlay. Use it to promote a pawn (drag the new piece onto the pawn's square); the extra pieces disappear again when the game is restarted.<div><br></div><b>Restart button</b> Sends every piece home, sets all scores to 0 and gives the turn back to Red.<div><br></div><b>Board</b> The four coloured lines across the board are the promotion rows: a pawn promotes when it reaches the line in its own colour. The tinted squares are each player's home camp.",
+      "attribution": "Room layout, board, JSON game file and help text created by Claude (Anthropic AI assistant, https://claude.ai) for this repository, from the prompt \"based on the existing Chess, create a 4 player Chess as its own game\", and released to the public domain under CC0. No AI generated imagery is used.\n\nChess piece images (pawn, knight, bishop, rook, queen, king) by Skoll and the skull image by sbed, taken from the game-icons.net icon set that ships with VirtualTabletop (https://game-icons.net/), licensed CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/):\n  - https://game-icons.net/1x1/skoll/chess-pawn.html\n  - https://game-icons.net/1x1/skoll/chess-knight.html\n  - https://game-icons.net/1x1/skoll/chess-bishop.html\n  - https://game-icons.net/1x1/skoll/chess-rook.html\n  - https://game-icons.net/1x1/skoll/chess-queen.html\n  - https://game-icons.net/1x1/skoll/chess-king.html\n  - https://game-icons.net/1x1/sbed/death-skull.html\n\nThe remaining button icons are VirtualTabletop's own VTT-Symbols font.\n\nThe library preview image is a screenshot of this room taken by the author, CC0.",
+      "showName": true,
+      "skill": "",
+      "similarImage": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "variant": "",
+      "variantImage": "",
+      "lastUpdate": 1786747386000,
+      "usesAILayout": true
+    }
+  },
+  "a4": {
+    "id": "a4",
+    "type": "holder",
+    "x": 310,
+    "y": 710,
+    "width": 70,
+    "height": 70,
+    "classes": "transparent",
+    "borderRadius": 0,
+    "dropTarget": {},
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887",
+    "enterRoutine": [
+      "// which piece just arrived and which army does it belong to?",
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id",
+        "variable": "mover"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "army",
+        "variable": "moverArmy"
+      },
+      "// highlight the piece that moved last",
+      {
+        "func": "SELECT",
+        "property": "highlight",
+        "relation": "!=",
+        "collection": "lit"
+      },
+      {
+        "func": "SET",
+        "collection": "lit",
+        "property": "highlight"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "highlight",
+        "value": 3
+      },
+      {
+        "func": "IF",
+        "comment": "everything below can be switched off with the automation button",
+        "operand1": "${PROPERTY auto OF Auto Button}",
+        "operand2": true,
+        "thenRoutine": [
+          "// capture whatever was standing on this square",
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}",
+            "collection": "here"
+          },
+          {
+            "func": "SELECT",
+            "source": "here",
+            "property": "id",
+            "relation": "!=",
+            "value": "${mover}",
+            "collection": "captured"
+          },
+          {
+            "func": "COUNT",
+            "collection": "captured",
+            "variable": "captureCount"
+          },
+          {
+            "func": "IF",
+            "condition": "${captureCount}",
+            "thenRoutine": [
+              "var gain = 0",
+              {
+                "func": "FOREACH",
+                "collection": "captured",
+                "loopRoutine": [
+                  "var victim = ${widgetID}",
+                  "var victimIsDead = ${PROPERTY dead OF $victim}",
+                  {
+                    "func": "IF",
+                    "comment": "pieces of a knocked out player are worth nothing",
+                    "condition": "${victimIsDead}",
+                    "elseRoutine": [
+                      "var victimPts = ${PROPERTY pts OF $victim}",
+                      "var gain = ${gain} + ${victimPts}"
+                    ]
+                  }
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "captured",
+                "property": "parent",
+                "value": "${moverArmy} Captures"
+              },
+              {
+                "func": "LABEL",
+                "label": "${moverArmy} Points",
+                "mode": "inc",
+                "value": "${gain}"
+              }
+            ]
+          },
+          "// hand the turn to the next player that is still in the game",
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "side",
+            "value": "${moverArmy}",
+            "collection": "moverSeat"
+          },
+          {
+            "func": "GET",
+            "collection": "moverSeat",
+            "property": "index",
+            "variable": "fromIndex"
+          },
+          {
+            "func": "CALL",
+            "widget": "Pass Button",
+            "routine": "advanceTurnRoutine"
+          }
+        ]
+      }
+    ]
+  },
+  "a5": {
+    "id": "a5",
+    "type": "holder",
+    "x": 310,
+    "y": 640,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "a6": {
+    "id": "a6",
+    "type": "holder",
+    "x": 310,
+    "y": 570,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "a7": {
+    "id": "a7",
+    "type": "holder",
+    "x": 310,
+    "y": 500,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "a8": {
+    "id": "a8",
+    "type": "holder",
+    "x": 310,
+    "y": 430,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "a9": {
+    "id": "a9",
+    "type": "holder",
+    "x": 310,
+    "y": 360,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "a10": {
+    "id": "a10",
+    "type": "holder",
+    "x": 310,
+    "y": 290,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "a11": {
+    "id": "a11",
+    "type": "holder",
+    "x": 310,
+    "y": 220,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "b4": {
+    "id": "b4",
+    "type": "holder",
+    "x": 380,
+    "y": 710,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "b5": {
+    "id": "b5",
+    "type": "holder",
+    "x": 380,
+    "y": 640,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "b6": {
+    "id": "b6",
+    "type": "holder",
+    "x": 380,
+    "y": 570,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "b7": {
+    "id": "b7",
+    "type": "holder",
+    "x": 380,
+    "y": 500,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "b8": {
+    "id": "b8",
+    "type": "holder",
+    "x": 380,
+    "y": 430,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "b9": {
+    "id": "b9",
+    "type": "holder",
+    "x": 380,
+    "y": 360,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "b10": {
+    "id": "b10",
+    "type": "holder",
+    "x": 380,
+    "y": 290,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "b11": {
+    "id": "b11",
+    "type": "holder",
+    "x": 380,
+    "y": 220,
+    "css": "background:linear-gradient(#0072B226,#0072B226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "c4": {
+    "id": "c4",
+    "type": "holder",
+    "x": 450,
+    "y": 710,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "c5": {
+    "id": "c5",
+    "type": "holder",
+    "x": 450,
+    "y": 640,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "c6": {
+    "id": "c6",
+    "type": "holder",
+    "x": 450,
+    "y": 570,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "c7": {
+    "id": "c7",
+    "type": "holder",
+    "x": 450,
+    "y": 500,
+    "css": "background:#d8d3c7;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "c8": {
+    "id": "c8",
+    "type": "holder",
+    "x": 450,
+    "y": 430,
+    "css": "background:#9e9887;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "c9": {
+    "id": "c9",
+    "type": "holder",
+    "x": 450,
+    "y": 360,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "c10": {
+    "id": "c10",
+    "type": "holder",
+    "x": 450,
+    "y": 290,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "c11": {
+    "id": "c11",
+    "type": "holder",
+    "x": 450,
+    "y": 220,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "d1": {
+    "id": "d1",
+    "type": "holder",
+    "x": 520,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "d2": {
+    "id": "d2",
+    "type": "holder",
+    "x": 520,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "d3": {
+    "id": "d3",
+    "type": "holder",
+    "x": 520,
+    "y": 780,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "d4": {
+    "id": "d4",
+    "type": "holder",
+    "x": 520,
+    "y": 710,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "d5": {
+    "id": "d5",
+    "type": "holder",
+    "x": 520,
+    "y": 640,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "d6": {
+    "id": "d6",
+    "type": "holder",
+    "x": 520,
+    "y": 570,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "d7": {
+    "id": "d7",
+    "type": "holder",
+    "x": 520,
+    "y": 500,
+    "css": "background:#9e9887;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "d8": {
+    "id": "d8",
+    "type": "holder",
+    "x": 520,
+    "y": 430,
+    "css": "background:#d8d3c7;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "d9": {
+    "id": "d9",
+    "type": "holder",
+    "x": 520,
+    "y": 360,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "d10": {
+    "id": "d10",
+    "type": "holder",
+    "x": 520,
+    "y": 290,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "d11": {
+    "id": "d11",
+    "type": "holder",
+    "x": 520,
+    "y": 220,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "d12": {
+    "id": "d12",
+    "type": "holder",
+    "x": 520,
+    "y": 150,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "d13": {
+    "id": "d13",
+    "type": "holder",
+    "x": 520,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "d14": {
+    "id": "d14",
+    "type": "holder",
+    "x": 520,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "e1": {
+    "id": "e1",
+    "type": "holder",
+    "x": 590,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "e2": {
+    "id": "e2",
+    "type": "holder",
+    "x": 590,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "e3": {
+    "id": "e3",
+    "type": "holder",
+    "x": 590,
+    "y": 780,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "e4": {
+    "id": "e4",
+    "type": "holder",
+    "x": 590,
+    "y": 710,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "e5": {
+    "id": "e5",
+    "type": "holder",
+    "x": 590,
+    "y": 640,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "e6": {
+    "id": "e6",
+    "type": "holder",
+    "x": 590,
+    "y": 570,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "e7": {
+    "id": "e7",
+    "type": "holder",
+    "x": 590,
+    "y": 500,
+    "css": "background:#d8d3c7;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "e8": {
+    "id": "e8",
+    "type": "holder",
+    "x": 590,
+    "y": 430,
+    "css": "background:#9e9887;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "e9": {
+    "id": "e9",
+    "type": "holder",
+    "x": 590,
+    "y": 360,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "e10": {
+    "id": "e10",
+    "type": "holder",
+    "x": 590,
+    "y": 290,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "e11": {
+    "id": "e11",
+    "type": "holder",
+    "x": 590,
+    "y": 220,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "e12": {
+    "id": "e12",
+    "type": "holder",
+    "x": 590,
+    "y": 150,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "e13": {
+    "id": "e13",
+    "type": "holder",
+    "x": 590,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "e14": {
+    "id": "e14",
+    "type": "holder",
+    "x": 590,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "f1": {
+    "id": "f1",
+    "type": "holder",
+    "x": 660,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "f2": {
+    "id": "f2",
+    "type": "holder",
+    "x": 660,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "f3": {
+    "id": "f3",
+    "type": "holder",
+    "x": 660,
+    "y": 780,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "f4": {
+    "id": "f4",
+    "type": "holder",
+    "x": 660,
+    "y": 710,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "f5": {
+    "id": "f5",
+    "type": "holder",
+    "x": 660,
+    "y": 640,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "f6": {
+    "id": "f6",
+    "type": "holder",
+    "x": 660,
+    "y": 570,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "f7": {
+    "id": "f7",
+    "type": "holder",
+    "x": 660,
+    "y": 500,
+    "css": "background:#9e9887;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "f8": {
+    "id": "f8",
+    "type": "holder",
+    "x": 660,
+    "y": 430,
+    "css": "background:#d8d3c7;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "f9": {
+    "id": "f9",
+    "type": "holder",
+    "x": 660,
+    "y": 360,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "f10": {
+    "id": "f10",
+    "type": "holder",
+    "x": 660,
+    "y": 290,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "f11": {
+    "id": "f11",
+    "type": "holder",
+    "x": 660,
+    "y": 220,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "f12": {
+    "id": "f12",
+    "type": "holder",
+    "x": 660,
+    "y": 150,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "f13": {
+    "id": "f13",
+    "type": "holder",
+    "x": 660,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "f14": {
+    "id": "f14",
+    "type": "holder",
+    "x": 660,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "g1": {
+    "id": "g1",
+    "type": "holder",
+    "x": 730,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g2": {
+    "id": "g2",
+    "type": "holder",
+    "x": 730,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g3": {
+    "id": "g3",
+    "type": "holder",
+    "x": 730,
+    "y": 780,
+    "css": "background:#d8d3c7;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g4": {
+    "id": "g4",
+    "type": "holder",
+    "x": 730,
+    "y": 710,
+    "css": "background:#9e9887;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g5": {
+    "id": "g5",
+    "type": "holder",
+    "x": 730,
+    "y": 640,
+    "css": "background:#d8d3c7;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g6": {
+    "id": "g6",
+    "type": "holder",
+    "x": 730,
+    "y": 570,
+    "css": "background:#9e9887;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g7": {
+    "id": "g7",
+    "type": "holder",
+    "x": 730,
+    "y": 500,
+    "css": "background:#d8d3c7;box-shadow:inset 0 -4px 0 0 #F0E442,inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g8": {
+    "id": "g8",
+    "type": "holder",
+    "x": 730,
+    "y": 430,
+    "css": "background:#9e9887;box-shadow:inset 0 4px 0 0 #D55E00,inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g9": {
+    "id": "g9",
+    "type": "holder",
+    "x": 730,
+    "y": 360,
+    "css": "background:#d8d3c7;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g10": {
+    "id": "g10",
+    "type": "holder",
+    "x": 730,
+    "y": 290,
+    "css": "background:#9e9887;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g11": {
+    "id": "g11",
+    "type": "holder",
+    "x": 730,
+    "y": 220,
+    "css": "background:#d8d3c7;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g12": {
+    "id": "g12",
+    "type": "holder",
+    "x": 730,
+    "y": 150,
+    "css": "background:#9e9887;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g13": {
+    "id": "g13",
+    "type": "holder",
+    "x": 730,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "g14": {
+    "id": "g14",
+    "type": "holder",
+    "x": 730,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887;box-shadow:inset 4px 0 0 0 #009E73",
+    "inheritFrom": "a4"
+  },
+  "h1": {
+    "id": "h1",
+    "type": "holder",
+    "x": 800,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h2": {
+    "id": "h2",
+    "type": "holder",
+    "x": 800,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h3": {
+    "id": "h3",
+    "type": "holder",
+    "x": 800,
+    "y": 780,
+    "css": "background:#9e9887;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h4": {
+    "id": "h4",
+    "type": "holder",
+    "x": 800,
+    "y": 710,
+    "css": "background:#d8d3c7;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h5": {
+    "id": "h5",
+    "type": "holder",
+    "x": 800,
+    "y": 640,
+    "css": "background:#9e9887;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h6": {
+    "id": "h6",
+    "type": "holder",
+    "x": 800,
+    "y": 570,
+    "css": "background:#d8d3c7;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h7": {
+    "id": "h7",
+    "type": "holder",
+    "x": 800,
+    "y": 500,
+    "css": "background:#9e9887;box-shadow:inset 0 -4px 0 0 #F0E442,inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h8": {
+    "id": "h8",
+    "type": "holder",
+    "x": 800,
+    "y": 430,
+    "css": "background:#d8d3c7;box-shadow:inset 0 4px 0 0 #D55E00,inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h9": {
+    "id": "h9",
+    "type": "holder",
+    "x": 800,
+    "y": 360,
+    "css": "background:#9e9887;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h10": {
+    "id": "h10",
+    "type": "holder",
+    "x": 800,
+    "y": 290,
+    "css": "background:#d8d3c7;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h11": {
+    "id": "h11",
+    "type": "holder",
+    "x": 800,
+    "y": 220,
+    "css": "background:#9e9887;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h12": {
+    "id": "h12",
+    "type": "holder",
+    "x": 800,
+    "y": 150,
+    "css": "background:#d8d3c7;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h13": {
+    "id": "h13",
+    "type": "holder",
+    "x": 800,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "h14": {
+    "id": "h14",
+    "type": "holder",
+    "x": 800,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7;box-shadow:inset -4px 0 0 0 #0072B2",
+    "inheritFrom": "a4"
+  },
+  "i1": {
+    "id": "i1",
+    "type": "holder",
+    "x": 870,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "i2": {
+    "id": "i2",
+    "type": "holder",
+    "x": 870,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "i3": {
+    "id": "i3",
+    "type": "holder",
+    "x": 870,
+    "y": 780,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "i4": {
+    "id": "i4",
+    "type": "holder",
+    "x": 870,
+    "y": 710,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "i5": {
+    "id": "i5",
+    "type": "holder",
+    "x": 870,
+    "y": 640,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "i6": {
+    "id": "i6",
+    "type": "holder",
+    "x": 870,
+    "y": 570,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "i7": {
+    "id": "i7",
+    "type": "holder",
+    "x": 870,
+    "y": 500,
+    "css": "background:#d8d3c7;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "i8": {
+    "id": "i8",
+    "type": "holder",
+    "x": 870,
+    "y": 430,
+    "css": "background:#9e9887;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "i9": {
+    "id": "i9",
+    "type": "holder",
+    "x": 870,
+    "y": 360,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "i10": {
+    "id": "i10",
+    "type": "holder",
+    "x": 870,
+    "y": 290,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "i11": {
+    "id": "i11",
+    "type": "holder",
+    "x": 870,
+    "y": 220,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "i12": {
+    "id": "i12",
+    "type": "holder",
+    "x": 870,
+    "y": 150,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "i13": {
+    "id": "i13",
+    "type": "holder",
+    "x": 870,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "i14": {
+    "id": "i14",
+    "type": "holder",
+    "x": 870,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "j1": {
+    "id": "j1",
+    "type": "holder",
+    "x": 940,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "j2": {
+    "id": "j2",
+    "type": "holder",
+    "x": 940,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "j3": {
+    "id": "j3",
+    "type": "holder",
+    "x": 940,
+    "y": 780,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "j4": {
+    "id": "j4",
+    "type": "holder",
+    "x": 940,
+    "y": 710,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "j5": {
+    "id": "j5",
+    "type": "holder",
+    "x": 940,
+    "y": 640,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "j6": {
+    "id": "j6",
+    "type": "holder",
+    "x": 940,
+    "y": 570,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "j7": {
+    "id": "j7",
+    "type": "holder",
+    "x": 940,
+    "y": 500,
+    "css": "background:#9e9887;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "j8": {
+    "id": "j8",
+    "type": "holder",
+    "x": 940,
+    "y": 430,
+    "css": "background:#d8d3c7;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "j9": {
+    "id": "j9",
+    "type": "holder",
+    "x": 940,
+    "y": 360,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "j10": {
+    "id": "j10",
+    "type": "holder",
+    "x": 940,
+    "y": 290,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "j11": {
+    "id": "j11",
+    "type": "holder",
+    "x": 940,
+    "y": 220,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "j12": {
+    "id": "j12",
+    "type": "holder",
+    "x": 940,
+    "y": 150,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "j13": {
+    "id": "j13",
+    "type": "holder",
+    "x": 940,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "j14": {
+    "id": "j14",
+    "type": "holder",
+    "x": 940,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "k1": {
+    "id": "k1",
+    "type": "holder",
+    "x": 1010,
+    "y": 920,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "k2": {
+    "id": "k2",
+    "type": "holder",
+    "x": 1010,
+    "y": 850,
+    "css": "background:linear-gradient(#D55E0026,#D55E0026),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "k3": {
+    "id": "k3",
+    "type": "holder",
+    "x": 1010,
+    "y": 780,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "k4": {
+    "id": "k4",
+    "type": "holder",
+    "x": 1010,
+    "y": 710,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "k5": {
+    "id": "k5",
+    "type": "holder",
+    "x": 1010,
+    "y": 640,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "k6": {
+    "id": "k6",
+    "type": "holder",
+    "x": 1010,
+    "y": 570,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "k7": {
+    "id": "k7",
+    "type": "holder",
+    "x": 1010,
+    "y": 500,
+    "css": "background:#d8d3c7;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "k8": {
+    "id": "k8",
+    "type": "holder",
+    "x": 1010,
+    "y": 430,
+    "css": "background:#9e9887;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "k9": {
+    "id": "k9",
+    "type": "holder",
+    "x": 1010,
+    "y": 360,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "k10": {
+    "id": "k10",
+    "type": "holder",
+    "x": 1010,
+    "y": 290,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "k11": {
+    "id": "k11",
+    "type": "holder",
+    "x": 1010,
+    "y": 220,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "k12": {
+    "id": "k12",
+    "type": "holder",
+    "x": 1010,
+    "y": 150,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "k13": {
+    "id": "k13",
+    "type": "holder",
+    "x": 1010,
+    "y": 80,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "k14": {
+    "id": "k14",
+    "type": "holder",
+    "x": 1010,
+    "y": 10,
+    "css": "background:linear-gradient(#F0E44226,#F0E44226),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "l4": {
+    "id": "l4",
+    "type": "holder",
+    "x": 1080,
+    "y": 710,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "l5": {
+    "id": "l5",
+    "type": "holder",
+    "x": 1080,
+    "y": 640,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "l6": {
+    "id": "l6",
+    "type": "holder",
+    "x": 1080,
+    "y": 570,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "l7": {
+    "id": "l7",
+    "type": "holder",
+    "x": 1080,
+    "y": 500,
+    "css": "background:#9e9887;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "l8": {
+    "id": "l8",
+    "type": "holder",
+    "x": 1080,
+    "y": 430,
+    "css": "background:#d8d3c7;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "l9": {
+    "id": "l9",
+    "type": "holder",
+    "x": 1080,
+    "y": 360,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "l10": {
+    "id": "l10",
+    "type": "holder",
+    "x": 1080,
+    "y": 290,
+    "css": "background:#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "l11": {
+    "id": "l11",
+    "type": "holder",
+    "x": 1080,
+    "y": 220,
+    "css": "background:#9e9887",
+    "inheritFrom": "a4"
+  },
+  "m4": {
+    "id": "m4",
+    "type": "holder",
+    "x": 1150,
+    "y": 710,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "m5": {
+    "id": "m5",
+    "type": "holder",
+    "x": 1150,
+    "y": 640,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "m6": {
+    "id": "m6",
+    "type": "holder",
+    "x": 1150,
+    "y": 570,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "m7": {
+    "id": "m7",
+    "type": "holder",
+    "x": 1150,
+    "y": 500,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "m8": {
+    "id": "m8",
+    "type": "holder",
+    "x": 1150,
+    "y": 430,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "m9": {
+    "id": "m9",
+    "type": "holder",
+    "x": 1150,
+    "y": 360,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "m10": {
+    "id": "m10",
+    "type": "holder",
+    "x": 1150,
+    "y": 290,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "m11": {
+    "id": "m11",
+    "type": "holder",
+    "x": 1150,
+    "y": 220,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "n4": {
+    "id": "n4",
+    "type": "holder",
+    "x": 1220,
+    "y": 710,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "n5": {
+    "id": "n5",
+    "type": "holder",
+    "x": 1220,
+    "y": 640,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "n6": {
+    "id": "n6",
+    "type": "holder",
+    "x": 1220,
+    "y": 570,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "n7": {
+    "id": "n7",
+    "type": "holder",
+    "x": 1220,
+    "y": 500,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887;box-shadow:inset 0 -4px 0 0 #F0E442",
+    "inheritFrom": "a4"
+  },
+  "n8": {
+    "id": "n8",
+    "type": "holder",
+    "x": 1220,
+    "y": 430,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7;box-shadow:inset 0 4px 0 0 #D55E00",
+    "inheritFrom": "a4"
+  },
+  "n9": {
+    "id": "n9",
+    "type": "holder",
+    "x": 1220,
+    "y": 360,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "n10": {
+    "id": "n10",
+    "type": "holder",
+    "x": 1220,
+    "y": 290,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#d8d3c7",
+    "inheritFrom": "a4"
+  },
+  "n11": {
+    "id": "n11",
+    "type": "holder",
+    "x": 1220,
+    "y": 220,
+    "css": "background:linear-gradient(#009E7326,#009E7326),#9e9887",
+    "inheritFrom": "a4"
+  },
+  "Red Rook 1": {
+    "id": "Red Rook 1",
+    "parent": "d1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "d1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "css": {
+      "filter": "drop-shadow(0 0 2px rgba(0,0,0,.85))",
+      "outline": "${PROPERTY highlight}px solid #ff9800",
+      "outline-offset": "-1px",
+      "border-radius": "6px"
+    }
+  },
+  "Red Knight 1": {
+    "id": "Red Knight 1",
+    "parent": "e1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "e1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Bishop 1": {
+    "id": "Red Bishop 1",
+    "parent": "f1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "f1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Queen": {
+    "id": "Red Queen",
+    "parent": "g1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 9,
+    "resetProperties": {
+      "parent": "g1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red King": {
+    "id": "Red King",
+    "parent": "h1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-king.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 20,
+    "resetProperties": {
+      "parent": "h1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Bishop 2": {
+    "id": "Red Bishop 2",
+    "parent": "i1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "i1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Knight 2": {
+    "id": "Red Knight 2",
+    "parent": "j1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "j1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Rook 2": {
+    "id": "Red Rook 2",
+    "parent": "k1",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "k1",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 1": {
+    "id": "Red Pawn 1",
+    "parent": "d2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "d2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 2": {
+    "id": "Red Pawn 2",
+    "parent": "e2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "e2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 3": {
+    "id": "Red Pawn 3",
+    "parent": "f2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "f2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 4": {
+    "id": "Red Pawn 4",
+    "parent": "g2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "g2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 5": {
+    "id": "Red Pawn 5",
+    "parent": "h2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "h2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 6": {
+    "id": "Red Pawn 6",
+    "parent": "i2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "i2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 7": {
+    "id": "Red Pawn 7",
+    "parent": "j2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "j2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Pawn 8": {
+    "id": "Red Pawn 8",
+    "parent": "k2",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#D55E00",
+    "army": "Red",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "k2",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#D55E00",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Rook 1": {
+    "id": "Blue Rook 1",
+    "parent": "a11",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "a11",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Knight 1": {
+    "id": "Blue Knight 1",
+    "parent": "a10",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "a10",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Bishop 1": {
+    "id": "Blue Bishop 1",
+    "parent": "a9",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "a9",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Queen": {
+    "id": "Blue Queen",
+    "parent": "a8",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 9,
+    "resetProperties": {
+      "parent": "a8",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue King": {
+    "id": "Blue King",
+    "parent": "a7",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-king.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 20,
+    "resetProperties": {
+      "parent": "a7",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Bishop 2": {
+    "id": "Blue Bishop 2",
+    "parent": "a6",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "a6",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Knight 2": {
+    "id": "Blue Knight 2",
+    "parent": "a5",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "a5",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Rook 2": {
+    "id": "Blue Rook 2",
+    "parent": "a4",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "a4",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 1": {
+    "id": "Blue Pawn 1",
+    "parent": "b11",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b11",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 2": {
+    "id": "Blue Pawn 2",
+    "parent": "b10",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b10",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 3": {
+    "id": "Blue Pawn 3",
+    "parent": "b9",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b9",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 4": {
+    "id": "Blue Pawn 4",
+    "parent": "b8",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b8",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 5": {
+    "id": "Blue Pawn 5",
+    "parent": "b7",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b7",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 6": {
+    "id": "Blue Pawn 6",
+    "parent": "b6",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b6",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 7": {
+    "id": "Blue Pawn 7",
+    "parent": "b5",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b5",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Blue Pawn 8": {
+    "id": "Blue Pawn 8",
+    "parent": "b4",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#0072B2",
+    "army": "Blue",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "b4",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#0072B2",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Rook 1": {
+    "id": "Yellow Rook 1",
+    "parent": "k14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "k14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Knight 1": {
+    "id": "Yellow Knight 1",
+    "parent": "j14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "j14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Bishop 1": {
+    "id": "Yellow Bishop 1",
+    "parent": "i14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "i14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Queen": {
+    "id": "Yellow Queen",
+    "parent": "h14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 9,
+    "resetProperties": {
+      "parent": "h14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow King": {
+    "id": "Yellow King",
+    "parent": "g14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-king.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 20,
+    "resetProperties": {
+      "parent": "g14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Bishop 2": {
+    "id": "Yellow Bishop 2",
+    "parent": "f14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "f14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Knight 2": {
+    "id": "Yellow Knight 2",
+    "parent": "e14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "e14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Rook 2": {
+    "id": "Yellow Rook 2",
+    "parent": "d14",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "d14",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 1": {
+    "id": "Yellow Pawn 1",
+    "parent": "k13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "k13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 2": {
+    "id": "Yellow Pawn 2",
+    "parent": "j13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "j13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 3": {
+    "id": "Yellow Pawn 3",
+    "parent": "i13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "i13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 4": {
+    "id": "Yellow Pawn 4",
+    "parent": "h13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "h13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 5": {
+    "id": "Yellow Pawn 5",
+    "parent": "g13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "g13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 6": {
+    "id": "Yellow Pawn 6",
+    "parent": "f13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "f13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 7": {
+    "id": "Yellow Pawn 7",
+    "parent": "e13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "e13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Yellow Pawn 8": {
+    "id": "Yellow Pawn 8",
+    "parent": "d13",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#F0E442",
+    "army": "Yellow",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "d13",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#F0E442",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Rook 1": {
+    "id": "Green Rook 1",
+    "parent": "n4",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "n4",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Knight 1": {
+    "id": "Green Knight 1",
+    "parent": "n5",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "n5",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Bishop 1": {
+    "id": "Green Bishop 1",
+    "parent": "n6",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "n6",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Queen": {
+    "id": "Green Queen",
+    "parent": "n7",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 9,
+    "resetProperties": {
+      "parent": "n7",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green King": {
+    "id": "Green King",
+    "parent": "n8",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-king.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 20,
+    "resetProperties": {
+      "parent": "n8",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Bishop 2": {
+    "id": "Green Bishop 2",
+    "parent": "n9",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "n9",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Knight 2": {
+    "id": "Green Knight 2",
+    "parent": "n10",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 3,
+    "resetProperties": {
+      "parent": "n10",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Rook 2": {
+    "id": "Green Rook 2",
+    "parent": "n11",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 5,
+    "resetProperties": {
+      "parent": "n11",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 1": {
+    "id": "Green Pawn 1",
+    "parent": "m4",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m4",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 2": {
+    "id": "Green Pawn 2",
+    "parent": "m5",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m5",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 3": {
+    "id": "Green Pawn 3",
+    "parent": "m6",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m6",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 4": {
+    "id": "Green Pawn 4",
+    "parent": "m7",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m7",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 5": {
+    "id": "Green Pawn 5",
+    "parent": "m8",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m8",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 6": {
+    "id": "Green Pawn 6",
+    "parent": "m9",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m9",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 7": {
+    "id": "Green Pawn 7",
+    "parent": "m10",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m10",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Green Pawn 8": {
+    "id": "Green Pawn 8",
+    "parent": "m11",
+    "x": 4,
+    "y": 4,
+    "width": 62,
+    "height": 62,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#009E73",
+    "army": "Green",
+    "pts": 1,
+    "resetProperties": {
+      "parent": "m11",
+      "width": 62,
+      "height": 62,
+      "x": 4,
+      "y": 4,
+      "hue": "#009E73",
+      "dead": null,
+      "highlight": null
+    },
+    "inheritFrom": {
+      "Red Rook 1": [
+        "css"
+      ]
+    }
+  },
+  "Red Panel": {
+    "id": "Red Panel",
+    "x": 310,
+    "y": 780,
+    "width": 210,
+    "height": 170,
+    "movable": false,
+    "clickable": false,
+    "layer": -5,
+    "css": "background:#D55E001f;border:3px solid #D55E00;border-radius:12px;box-sizing:border-box"
+  },
+  "Red Seat": {
+    "type": "seat",
+    "id": "Red Seat",
+    "index": 1,
+    "x": 315,
+    "y": 786,
+    "width": 200,
+    "height": 54,
+    "color": "#D55E00",
+    "colorEmpty": "#D55E00",
+    "hue": "#D55E00",
+    "side": "Red",
+    "turn": true,
+    "css": {
+      "box-sizing": "border-box"
+    }
+  },
+  "Red Points": {
+    "type": "label",
+    "id": "Red Points",
+    "x": 315,
+    "y": 846,
+    "width": 96,
+    "height": 46,
+    "text": 0,
+    "editable": true,
+    "css": "font-size:30px;text-align:center;background:#D55E0033;border-radius:6px"
+  },
+  "Red Minus": {
+    "type": "button",
+    "id": "Red Minus",
+    "x": 417,
+    "y": 846,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "remove",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Red Points",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "Red Plus": {
+    "type": "button",
+    "id": "Red Plus",
+    "x": 469,
+    "y": 846,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "add",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Red Points",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "Red Bonus": {
+    "type": "button",
+    "id": "Red Bonus",
+    "x": 315,
+    "y": 898,
+    "width": 96,
+    "height": 46,
+    "text": "+20",
+    "css": "font-size:26px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Red Points",
+        "mode": "inc",
+        "value": 20
+      }
+    ]
+  },
+  "Red Out": {
+    "type": "button",
+    "id": "Red Out",
+    "x": 417,
+    "y": 898,
+    "width": 98,
+    "height": 46,
+    "image": "/i/game-icons.net/sbed/death-skull.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#444444",
+    "css": "background-size:34px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a",
+    "clickRoutine": [
+      "var wasOut = ${PROPERTY out OF Red Seat}",
+      {
+        "func": "SELECT",
+        "property": "army",
+        "value": "Red",
+        "collection": "army"
+      },
+      {
+        "func": "IF",
+        "condition": "${wasOut}",
+        "thenRoutine": [
+          "// back into the game",
+          {
+            "func": "SET",
+            "collection": [
+              "Red Seat"
+            ],
+            "property": "out"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Red Seat"
+            ],
+            "property": "skipTurn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead"
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#D55E00"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#444444"
+          }
+        ],
+        "elseRoutine": [
+          "// knocked out: the pieces stay on the board but are worth nothing",
+          {
+            "func": "SET",
+            "collection": [
+              "Red Seat"
+            ],
+            "property": "out",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Red Seat"
+            ],
+            "property": "skipTurn",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#8f8f8f"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#D55E00"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY turn OF Red Seat}",
+            "operand2": true,
+            "thenRoutine": [
+              "var fromIndex = 1",
+              {
+                "func": "CALL",
+                "widget": "Pass Button",
+                "routine": "advanceTurnRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Red Captures": {
+    "type": "holder",
+    "id": "Red Captures",
+    "x": 230,
+    "y": 520,
+    "width": 70,
+    "height": 440,
+    "classes": "transparent",
+    "borderRadius": 6,
+    "dropTarget": {},
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "stackOffsetY": 25,
+    "css": "background:#D55E0026;border:3px solid #D55E00;box-sizing:border-box",
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "pts",
+        "reverse": true
+      }
+    ]
+  },
+  "Blue Panel": {
+    "id": "Blue Panel",
+    "x": 310,
+    "y": 10,
+    "width": 210,
+    "height": 170,
+    "movable": false,
+    "clickable": false,
+    "layer": -5,
+    "css": "background:#0072B21f;border:3px solid #0072B2;border-radius:12px;box-sizing:border-box"
+  },
+  "Blue Seat": {
+    "type": "seat",
+    "id": "Blue Seat",
+    "index": 2,
+    "x": 315,
+    "y": 16,
+    "width": 200,
+    "height": 54,
+    "color": "#0072B2",
+    "colorEmpty": "#0072B2",
+    "hue": "#0072B2",
+    "side": "Blue",
+    "turn": false,
+    "css": {
+      "box-sizing": "border-box"
+    }
+  },
+  "Blue Points": {
+    "type": "label",
+    "id": "Blue Points",
+    "x": 315,
+    "y": 76,
+    "width": 96,
+    "height": 46,
+    "text": 0,
+    "editable": true,
+    "css": "font-size:30px;text-align:center;background:#0072B233;border-radius:6px"
+  },
+  "Blue Minus": {
+    "type": "button",
+    "id": "Blue Minus",
+    "x": 417,
+    "y": 76,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "remove",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Blue Points",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "Blue Plus": {
+    "type": "button",
+    "id": "Blue Plus",
+    "x": 469,
+    "y": 76,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "add",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Blue Points",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "Blue Bonus": {
+    "type": "button",
+    "id": "Blue Bonus",
+    "x": 315,
+    "y": 128,
+    "width": 96,
+    "height": 46,
+    "text": "+20",
+    "css": "font-size:26px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Blue Points",
+        "mode": "inc",
+        "value": 20
+      }
+    ]
+  },
+  "Blue Out": {
+    "type": "button",
+    "id": "Blue Out",
+    "x": 417,
+    "y": 128,
+    "width": 98,
+    "height": 46,
+    "image": "/i/game-icons.net/sbed/death-skull.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#444444",
+    "css": "background-size:34px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a",
+    "clickRoutine": [
+      "var wasOut = ${PROPERTY out OF Blue Seat}",
+      {
+        "func": "SELECT",
+        "property": "army",
+        "value": "Blue",
+        "collection": "army"
+      },
+      {
+        "func": "IF",
+        "condition": "${wasOut}",
+        "thenRoutine": [
+          "// back into the game",
+          {
+            "func": "SET",
+            "collection": [
+              "Blue Seat"
+            ],
+            "property": "out"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Blue Seat"
+            ],
+            "property": "skipTurn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead"
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#0072B2"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#444444"
+          }
+        ],
+        "elseRoutine": [
+          "// knocked out: the pieces stay on the board but are worth nothing",
+          {
+            "func": "SET",
+            "collection": [
+              "Blue Seat"
+            ],
+            "property": "out",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Blue Seat"
+            ],
+            "property": "skipTurn",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#8f8f8f"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#0072B2"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY turn OF Blue Seat}",
+            "operand2": true,
+            "thenRoutine": [
+              "var fromIndex = 2",
+              {
+                "func": "CALL",
+                "widget": "Pass Button",
+                "routine": "advanceTurnRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Blue Captures": {
+    "type": "holder",
+    "id": "Blue Captures",
+    "x": 230,
+    "y": 20,
+    "width": 70,
+    "height": 440,
+    "classes": "transparent",
+    "borderRadius": 6,
+    "dropTarget": {},
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "stackOffsetY": 25,
+    "css": "background:#0072B226;border:3px solid #0072B2;box-sizing:border-box",
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "pts",
+        "reverse": true
+      }
+    ]
+  },
+  "Yellow Panel": {
+    "id": "Yellow Panel",
+    "x": 1080,
+    "y": 10,
+    "width": 210,
+    "height": 170,
+    "movable": false,
+    "clickable": false,
+    "layer": -5,
+    "css": "background:#F0E4421f;border:3px solid #F0E442;border-radius:12px;box-sizing:border-box"
+  },
+  "Yellow Seat": {
+    "type": "seat",
+    "id": "Yellow Seat",
+    "index": 3,
+    "x": 1085,
+    "y": 16,
+    "width": 200,
+    "height": 54,
+    "color": "#F0E442",
+    "colorEmpty": "#F0E442",
+    "hue": "#F0E442",
+    "side": "Yellow",
+    "turn": false,
+    "css": {
+      "box-sizing": "border-box"
+    }
+  },
+  "Yellow Points": {
+    "type": "label",
+    "id": "Yellow Points",
+    "x": 1085,
+    "y": 76,
+    "width": 96,
+    "height": 46,
+    "text": 0,
+    "editable": true,
+    "css": "font-size:30px;text-align:center;background:#F0E44233;border-radius:6px"
+  },
+  "Yellow Minus": {
+    "type": "button",
+    "id": "Yellow Minus",
+    "x": 1187,
+    "y": 76,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "remove",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Yellow Points",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "Yellow Plus": {
+    "type": "button",
+    "id": "Yellow Plus",
+    "x": 1239,
+    "y": 76,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "add",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Yellow Points",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "Yellow Bonus": {
+    "type": "button",
+    "id": "Yellow Bonus",
+    "x": 1085,
+    "y": 128,
+    "width": 96,
+    "height": 46,
+    "text": "+20",
+    "css": "font-size:26px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Yellow Points",
+        "mode": "inc",
+        "value": 20
+      }
+    ]
+  },
+  "Yellow Out": {
+    "type": "button",
+    "id": "Yellow Out",
+    "x": 1187,
+    "y": 128,
+    "width": 98,
+    "height": 46,
+    "image": "/i/game-icons.net/sbed/death-skull.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#444444",
+    "css": "background-size:34px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a",
+    "clickRoutine": [
+      "var wasOut = ${PROPERTY out OF Yellow Seat}",
+      {
+        "func": "SELECT",
+        "property": "army",
+        "value": "Yellow",
+        "collection": "army"
+      },
+      {
+        "func": "IF",
+        "condition": "${wasOut}",
+        "thenRoutine": [
+          "// back into the game",
+          {
+            "func": "SET",
+            "collection": [
+              "Yellow Seat"
+            ],
+            "property": "out"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Yellow Seat"
+            ],
+            "property": "skipTurn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead"
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#F0E442"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#444444"
+          }
+        ],
+        "elseRoutine": [
+          "// knocked out: the pieces stay on the board but are worth nothing",
+          {
+            "func": "SET",
+            "collection": [
+              "Yellow Seat"
+            ],
+            "property": "out",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Yellow Seat"
+            ],
+            "property": "skipTurn",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#8f8f8f"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#F0E442"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY turn OF Yellow Seat}",
+            "operand2": true,
+            "thenRoutine": [
+              "var fromIndex = 3",
+              {
+                "func": "CALL",
+                "widget": "Pass Button",
+                "routine": "advanceTurnRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Yellow Captures": {
+    "type": "holder",
+    "id": "Yellow Captures",
+    "x": 1300,
+    "y": 20,
+    "width": 70,
+    "height": 440,
+    "classes": "transparent",
+    "borderRadius": 6,
+    "dropTarget": {},
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "stackOffsetY": 25,
+    "css": "background:#F0E44226;border:3px solid #F0E442;box-sizing:border-box",
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "pts",
+        "reverse": true
+      }
+    ]
+  },
+  "Green Panel": {
+    "id": "Green Panel",
+    "x": 1080,
+    "y": 780,
+    "width": 210,
+    "height": 170,
+    "movable": false,
+    "clickable": false,
+    "layer": -5,
+    "css": "background:#009E731f;border:3px solid #009E73;border-radius:12px;box-sizing:border-box"
+  },
+  "Green Seat": {
+    "type": "seat",
+    "id": "Green Seat",
+    "index": 4,
+    "x": 1085,
+    "y": 786,
+    "width": 200,
+    "height": 54,
+    "color": "#009E73",
+    "colorEmpty": "#009E73",
+    "hue": "#009E73",
+    "side": "Green",
+    "turn": false,
+    "css": {
+      "box-sizing": "border-box"
+    }
+  },
+  "Green Points": {
+    "type": "label",
+    "id": "Green Points",
+    "x": 1085,
+    "y": 846,
+    "width": 96,
+    "height": 46,
+    "text": 0,
+    "editable": true,
+    "css": "font-size:30px;text-align:center;background:#009E7333;border-radius:6px"
+  },
+  "Green Minus": {
+    "type": "button",
+    "id": "Green Minus",
+    "x": 1187,
+    "y": 846,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "remove",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Green Points",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "Green Plus": {
+    "type": "button",
+    "id": "Green Plus",
+    "x": 1239,
+    "y": 846,
+    "width": 46,
+    "height": 46,
+    "classes": "symbols",
+    "text": "add",
+    "css": "font-size:30px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Green Points",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "Green Bonus": {
+    "type": "button",
+    "id": "Green Bonus",
+    "x": 1085,
+    "y": 898,
+    "width": 96,
+    "height": 46,
+    "text": "+20",
+    "css": "font-size:26px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "Green Points",
+        "mode": "inc",
+        "value": 20
+      }
+    ]
+  },
+  "Green Out": {
+    "type": "button",
+    "id": "Green Out",
+    "x": 1187,
+    "y": 898,
+    "width": 98,
+    "height": 46,
+    "image": "/i/game-icons.net/sbed/death-skull.svg",
+    "svgReplaces": {
+      "#000": "hue"
+    },
+    "hue": "#444444",
+    "css": "background-size:34px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a",
+    "clickRoutine": [
+      "var wasOut = ${PROPERTY out OF Green Seat}",
+      {
+        "func": "SELECT",
+        "property": "army",
+        "value": "Green",
+        "collection": "army"
+      },
+      {
+        "func": "IF",
+        "condition": "${wasOut}",
+        "thenRoutine": [
+          "// back into the game",
+          {
+            "func": "SET",
+            "collection": [
+              "Green Seat"
+            ],
+            "property": "out"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Green Seat"
+            ],
+            "property": "skipTurn",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead"
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#009E73"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#444444"
+          }
+        ],
+        "elseRoutine": [
+          "// knocked out: the pieces stay on the board but are worth nothing",
+          {
+            "func": "SET",
+            "collection": [
+              "Green Seat"
+            ],
+            "property": "out",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "Green Seat"
+            ],
+            "property": "skipTurn",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "dead",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "army",
+            "property": "hue",
+            "value": "#8f8f8f"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "hue",
+            "value": "#009E73"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY turn OF Green Seat}",
+            "operand2": true,
+            "thenRoutine": [
+              "var fromIndex = 4",
+              {
+                "func": "CALL",
+                "widget": "Pass Button",
+                "routine": "advanceTurnRoutine"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Green Captures": {
+    "type": "holder",
+    "id": "Green Captures",
+    "x": 1300,
+    "y": 520,
+    "width": 70,
+    "height": 440,
+    "classes": "transparent",
+    "borderRadius": 6,
+    "dropTarget": {},
+    "dropOffsetX": 4,
+    "dropOffsetY": 4,
+    "stackOffsetY": 25,
+    "css": "background:#009E7326;border:3px solid #009E73;box-sizing:border-box",
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "pts",
+        "reverse": true
+      }
+    ]
+  },
+  "Turn Indicator": {
+    "id": "Turn Indicator",
+    "x": 15,
+    "y": 330,
+    "width": 200,
+    "height": 90,
+    "movable": false,
+    "clickable": false,
+    "layer": -2,
+    "image": "/i/game-icons.net/skoll/chess-king.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#1c1c1c",
+    "hue": "#D55E00",
+    "css": {
+      "background": "${PROPERTY hue}",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "background-size": "70px",
+      "border-radius": "10px",
+      "border": "3px solid #4a4a4a"
+    }
+  },
+  "Pass Button": {
+    "type": "button",
+    "id": "Pass Button",
+    "x": 15,
+    "y": 516,
+    "width": 96,
+    "height": 66,
+    "classes": "symbols",
+    "text": "skip_next",
+    "css": "font-size:38px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      "// give the turn to the next player without moving a piece",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true,
+        "collection": "current"
+      },
+      {
+        "func": "GET",
+        "collection": "current",
+        "property": "index",
+        "variable": "fromIndex"
+      },
+      {
+        "func": "IF",
+        "condition": "${fromIndex}",
+        "elseRoutine": [
+          "var fromIndex = 4"
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "advanceTurnRoutine"
+      }
+    ],
+    "advanceTurnRoutine": [
+      "var next = ${fromIndex} + 1",
+      {
+        "func": "IF",
+        "operand1": "${next}",
+        "relation": ">",
+        "operand2": 4,
+        "thenRoutine": [
+          "var next = 1"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "comment": "skip up to three players that are out of the game",
+        "range": [
+          1,
+          3
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "index",
+            "value": "${next}",
+            "collection": "candidate"
+          },
+          {
+            "func": "GET",
+            "collection": "candidate",
+            "property": "out",
+            "variable": "candidateIsOut"
+          },
+          {
+            "func": "IF",
+            "condition": "${candidateIsOut}",
+            "thenRoutine": [
+              "var next = ${next} + 1",
+              {
+                "func": "IF",
+                "operand1": "${next}",
+                "relation": ">",
+                "operand2": 4,
+                "thenRoutine": [
+                  "var next = 1"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "type",
+        "value": "seat",
+        "collection": "seats"
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "index",
+        "value": "${next}",
+        "collection": "nextSeat"
+      },
+      {
+        "func": "SET",
+        "collection": "nextSeat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "collection": "nextSeat",
+        "property": "hue",
+        "variable": "nextHue"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Turn Indicator"
+        ],
+        "property": "hue",
+        "value": "${nextHue}"
+      }
+    ]
+  },
+  "Auto Button": {
+    "type": "button",
+    "id": "Auto Button",
+    "x": 119,
+    "y": 516,
+    "width": 96,
+    "height": 66,
+    "classes": "symbols",
+    "text": "auto_settings",
+    "auto": true,
+    "css": "font-size:38px;--wcMain:#79b473;--wcBorder:#3f6b3a;color:#12300f",
+    "clickRoutine": [
+      "// switch the table automation (capturing, scoring, turn order) on and off",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY auto}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "auto",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "font-size:38px;--wcMain:#bdbdbd;--wcBorder:#8a8a8a;color:#5a5a5a"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "auto",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "css",
+            "value": "font-size:38px;--wcMain:#79b473;--wcBorder:#3f6b3a;color:#12300f"
+          }
+        ]
+      }
+    ]
+  },
+  "New Game Button": {
+    "type": "button",
+    "id": "New Game Button",
+    "x": 15,
+    "y": 440,
+    "width": 200,
+    "height": 66,
+    "classes": "symbols",
+    "text": "restart",
+    "css": "font-size:38px;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "New game?"
+          },
+          {
+            "type": "subtitle",
+            "text": "All pieces go home, all scores go back to zero."
+          }
+        ],
+        "confirmButtonIcon": "check",
+        "confirmButtonText": null,
+        "cancelButtonIcon": "close",
+        "cancelButtonText": null
+      },
+      "// every piece carries its starting square in resetProperties",
+      {
+        "func": "RESET"
+      },
+      "// remove the extra pieces that were added during the game",
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null,
+        "collection": "clones"
+      },
+      {
+        "func": "DELETE",
+        "collection": "clones"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "type",
+        "value": "seat",
+        "collection": "seats"
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "out"
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "skipTurn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": "seats",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Red Seat"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Turn Indicator"
+        ],
+        "property": "hue",
+        "value": "#D55E00"
+      },
+      {
+        "func": "LABEL",
+        "label": "Red Points",
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Red Out"
+        ],
+        "property": "hue",
+        "value": "#444444"
+      },
+      {
+        "func": "LABEL",
+        "label": "Blue Points",
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Blue Out"
+        ],
+        "property": "hue",
+        "value": "#444444"
+      },
+      {
+        "func": "LABEL",
+        "label": "Yellow Points",
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Yellow Out"
+        ],
+        "property": "hue",
+        "value": "#444444"
+      },
+      {
+        "func": "LABEL",
+        "label": "Green Points",
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Green Out"
+        ],
+        "property": "hue",
+        "value": "#444444"
+      }
+    ]
+  },
+  "Add Piece Button": {
+    "type": "button",
+    "id": "Add Piece Button",
+    "x": 15,
+    "y": 592,
+    "width": 200,
+    "height": 60,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#2a2a2a",
+    "text": "+",
+    "css": "font-size:36px;background-size:36px;background-position:62px center;padding-left:96px;justify-content:flex-start;box-sizing:border-box;--wcMain:#e9e9e9;--wcBorder:#8a8a8a;color:#222",
+    "clickRoutine": [
+      "// put a fresh piece next to the board, mostly for promoting a pawn",
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "choose",
+            "source": [
+              "Red Queen",
+              "Red Rook 1",
+              "Red Bishop 1",
+              "Red Knight 1",
+              "Blue Queen",
+              "Blue Rook 1",
+              "Blue Bishop 1",
+              "Blue Knight 1",
+              "Yellow Queen",
+              "Yellow Rook 1",
+              "Yellow Bishop 1",
+              "Yellow Knight 1",
+              "Green Queen",
+              "Green Rook 1",
+              "Green Bishop 1",
+              "Green Knight 1"
+            ],
+            "variable": "newPiece",
+            "collection": "newPieceChoice",
+            "max": 1
+          }
+        ]
+      },
+      {
+        "func": "CLONE",
+        "source": [
+          "${newPiece}"
+        ],
+        "properties": {
+          "parent": null,
+          "x": 100,
+          "y": 700,
+          "z": 900,
+          "highlight": null,
+          "resetProperties": null
+        }
+      }
+    ]
+  },
+  "Value Pawn": {
+    "id": "Value Pawn",
+    "x": 1400,
+    "y": 290,
+    "width": 180,
+    "height": 56,
+    "movable": false,
+    "clickable": false,
+    "layer": -2,
+    "image": "/i/game-icons.net/skoll/chess-pawn.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#2a2a2a",
+    "text": "1",
+    "css": {
+      "background-size": "42px",
+      "background-position": "18px center",
+      "font-size": "30px",
+      "color": "#2a2a2a",
+      "text-align": "right",
+      "padding-right": "22px",
+      "line-height": "56px",
+      "box-sizing": "border-box"
+    }
+  },
+  "Value Knight": {
+    "id": "Value Knight",
+    "x": 1400,
+    "y": 352,
+    "width": 180,
+    "height": 56,
+    "movable": false,
+    "clickable": false,
+    "layer": -2,
+    "image": "/i/game-icons.net/skoll/chess-knight.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#2a2a2a",
+    "text": "3",
+    "css": {
+      "background-size": "42px",
+      "background-position": "18px center",
+      "font-size": "30px",
+      "color": "#2a2a2a",
+      "text-align": "right",
+      "padding-right": "22px",
+      "line-height": "56px",
+      "box-sizing": "border-box"
+    }
+  },
+  "Value Bishop": {
+    "id": "Value Bishop",
+    "x": 1400,
+    "y": 414,
+    "width": 180,
+    "height": 56,
+    "movable": false,
+    "clickable": false,
+    "layer": -2,
+    "image": "/i/game-icons.net/skoll/chess-bishop.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#2a2a2a",
+    "text": "5",
+    "css": {
+      "background-size": "42px",
+      "background-position": "18px center",
+      "font-size": "30px",
+      "color": "#2a2a2a",
+      "text-align": "right",
+      "padding-right": "22px",
+      "line-height": "56px",
+      "box-sizing": "border-box"
+    }
+  },
+  "Value Rook": {
+    "id": "Value Rook",
+    "x": 1400,
+    "y": 476,
+    "width": 180,
+    "height": 56,
+    "movable": false,
+    "clickable": false,
+    "layer": -2,
+    "image": "/i/game-icons.net/skoll/chess-rook.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#2a2a2a",
+    "text": "5",
+    "css": {
+      "background-size": "42px",
+      "background-position": "18px center",
+      "font-size": "30px",
+      "color": "#2a2a2a",
+      "text-align": "right",
+      "padding-right": "22px",
+      "line-height": "56px",
+      "box-sizing": "border-box"
+    }
+  },
+  "Value Queen": {
+    "id": "Value Queen",
+    "x": 1400,
+    "y": 538,
+    "width": 180,
+    "height": 56,
+    "movable": false,
+    "clickable": false,
+    "layer": -2,
+    "image": "/i/game-icons.net/skoll/chess-queen.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#2a2a2a",
+    "text": "9",
+    "css": {
+      "background-size": "42px",
+      "background-position": "18px center",
+      "font-size": "30px",
+      "color": "#2a2a2a",
+      "text-align": "right",
+      "padding-right": "22px",
+      "line-height": "56px",
+      "box-sizing": "border-box"
+    }
+  },
+  "Value King": {
+    "id": "Value King",
+    "x": 1400,
+    "y": 600,
+    "width": 180,
+    "height": 56,
+    "movable": false,
+    "clickable": false,
+    "layer": -2,
+    "image": "/i/game-icons.net/skoll/chess-king.svg",
+    "svgReplaces": {
+      "#000": "iconColor"
+    },
+    "iconColor": "#2a2a2a",
+    "text": "20",
+    "css": {
+      "background-size": "42px",
+      "background-position": "18px center",
+      "font-size": "30px",
+      "color": "#2a2a2a",
+      "text-align": "right",
+      "padding-right": "22px",
+      "line-height": "56px",
+      "box-sizing": "border-box"
+    }
+  }
+}

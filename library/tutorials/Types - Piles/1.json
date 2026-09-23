@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 20,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Pile",
       "image": "/assets/-507593653_3537",
@@ -11,7 +14,7 @@
       "time": "",
       "attribution": "BASIC: N/A<div><br></div><div>--------</div><div><br></div><div>ADVANCED:&nbsp;&nbsp;<span style=\"color: var(--overlayFontColor);\">The rank icon images are by user Ingegneus and are released into the Public Domain through CC0.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">--------</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">DECORATION:&nbsp;&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The brown envelope images are by user mousewax and are released into the Public Domain through CC0.</div><div><br></div><div>--------</div><div><br></div><div>PILESNAPRANGE: N/A</div>",
       "showName": false,
-      "lastUpdate": 1770580693108,
+      "lastUpdate": 1785900229106,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -25,9 +28,6 @@
       "variant": "Advanced",
       "language": "en-US",
       "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {}
     }
   },
   "8fr3": {
@@ -844,7 +844,9 @@
               }
             ]
           }
-        ]
+        ],
+        "dropLimit": 11,
+        "showLimit": true
       }
     },
     "parent": "staticHolder"
@@ -983,7 +985,7 @@
     "css": "font-size: 25px; ",
     "width": 1500,
     "height": 500,
-    "text": "Piles can also have routines added to them such as 'clickRoutine' or 'enterRoutine'.\n\nDeck #4 creates a 'clickRoutine' on a pile. You can use the 'INPUT' function to customize what happens when a pile handle is clicked.  This particular input example allows a pile to be flipped and shuffled at the same time.  It also shows how to change the handle to an image. In this case a pentagon is shown. It may take some trial and error with the CSS to get the image to display properly.\n\nDeck #5 takes this a step further and automates what happens when the pile handle is clicked.  In this case, it spreads out the cards.  Click again and it puts them back in a pile.\n\nDeck #6 shows how you could make the piles on the floor different than the piles in the holder.  Create a new pile with a few cards to see.\n\nDeck #7 uses enter and leave routines to count the cards and change the color of the pile handle depending on the number of cards.  Less than 5 is green, 5-8 is orange, and 9-10 is red.\n\nDeck #8 shows how you can use an array of assets, that are displayed depending on the number of cards in a pile. In this case \"rank\" symbols are used.",
+    "text": "Piles can also have routines added to them such as 'clickRoutine' or 'enterRoutine'.\n\nDeck #4 creates a 'clickRoutine' on a pile. You can use the 'INPUT' function to customize what happens when a pile handle is clicked.  This particular input example allows a pile to be flipped and shuffled at the same time.  It also shows how to change the handle to an image. In this case a pentagon is shown. It may take some trial and error with the CSS to get the image to display properly.\n\nDeck #5 takes this a step further and automates what happens when the pile handle is clicked.  In this case, it spreads out the cards.  Click again and it puts them back in a pile.\n\nDeck #6 shows how you could make the piles on the floor different than the piles in the holder.  Create a new pile with a few cards to see. It also shows how to set a maximum amount of cards the pile will accept (dropLimit) and how to show that on the pile handle.\n\nDeck #7 uses enter and leave routines to count the cards and change the color of the pile handle depending on the number of cards.  Less than 5 is green, 5-8 is orange, and 9-10 is red.\n\nDeck #8 shows how you can use an array of assets, that are displayed depending on the number of cards in a pile. In this case \"rank\" symbols are used.",
     "movable": false,
     "movableInEdit": false,
     "layer": -3
@@ -1396,7 +1398,9 @@
         ]
       }
     ],
-    "id": "7a8a"
+    "id": "7a8a",
+    "dropLimit": 11,
+    "showLimit": true
   },
   "hzsu": {
     "type": "pile",

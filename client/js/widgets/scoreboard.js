@@ -1,7 +1,47 @@
-import { $, $a, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
+import { $, $a, div, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
+import { expressionNumber } from '../expression.js';
 import { Widget } from './widget.js';
 
-class Scoreboard extends Widget {
+// The surfaces a score can be entered on. 'auto' asks the device - a finger
+// gets the keypad, a keyboard gets the cell itself - and lets the player's own
+// choice on this browser overrule that; the other values name one surface for
+// everybody at the table.
+const scoreEntryModes = [ 'auto', 'keypad', 'pane', 'type' ];
+
+// The keypad, row by row: the digit block, with the corrections and the two
+// operators a score sheet is added up with beside it. A key whose face is not
+// what it types - the minus sign is drawn properly and types a hyphen - says so
+// in 'value'.
+const keypadKeys = [
+  [ { text: '7' }, { text: '8' }, { text: '9' }, { icon: 'backspace', action: 'delete', title: 'Delete the last character' } ],
+  [ { text: '4' }, { text: '5' }, { text: '6' }, { text: '+', title: 'Add' } ],
+  [ { text: '1' }, { text: '2' }, { text: '3' }, { text: '\u2212', value: '-', title: 'Subtract, or a negative score' } ],
+  [ { text: '.' }, { text: '0' }, { text: 'C', action: 'clear', title: 'Clear' }, { icon: 'check', action: 'enter', title: 'Enter the score' } ]
+];
+
+// What a key of a physical keyboard does on the open keypad, so that a player
+// on a device with both does not have to aim for the buttons. Everything the
+// keypad itself offers, and the comma that a numeric block types on a good many
+// layouts; anything else is left to the room.
+function keypadKeyFor(key) {
+  if(/^[0-9+-]$/.test(key))
+    return key;
+  if(key == '.' || key == ',')
+    return '.';
+  return { Enter: 'enter', Escape: 'cancel', Backspace: 'delete', Delete: 'clear', c: 'clear', C: 'clear' }[key] || null;
+}
+
+// Whether a key press belongs to something other than the open keypad: an
+// overlay on top of it - which the CSS hides the pad for - or a field being
+// typed into. The pad has no field of its own, so a key aimed at one is never
+// meant for it.
+function keyboardTakenFromKeypad(e) {
+  const target = e.target || {};
+  return document.body.classList.contains('overlayActive')
+      || [ 'INPUT', 'TEXTAREA' ].indexOf(target.tagName) != -1 || !!target.isContentEditable;
+}
+
+export class Scoreboard extends Widget {
   constructor(object, surface) {
     super(object, surface);
 
@@ -16,6 +56,7 @@ class Scoreboard extends Widget {
       roundLabel: 'Round',
       totalsLabel: 'Totals',
       scoreProperty: 'score',
+      scoreEntry: 'auto',
       firstColWidth: 50,
       verticalHeader: false,
       seats: null,
@@ -30,12 +71,33 @@ class Scoreboard extends Widget {
       borderRadius: 8,
       editPaneTitle: 'Set score'
     });
+
+    // the rounds the player has asked for with the add-round button, which are
+    // shown empty until a score is entered into them
+    this.requestedRounds = 0;
+
+    // mousehandling.js calls click() without the event, so the cell a press
+    // landed on is noted here and read when the click arrives. A press that
+    // misses the table notes nothing, so it falls back to the edit pane instead
+    // of reopening the cell that was pressed before it.
+    for(const event of [ 'mousedown', 'touchstart' ])
+      this.domElement.addEventListener(event, e=>this.notePressedCell(e.target.closest('td')));
+  }
+
+  applyRemove() {
+    // the surfaces hang off <body> rather than off the widget, so removing the
+    // board does not take them with it
+    this.closeEntrySurface();
+    super.applyRemove();
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     const updateTableProps = [
       'showTotals',
+      'scoreEntry',
+      'clickable',
+      'clickRoutine',
       'scoreProperty',
       'sortField',
       'totalsLabel',
@@ -73,65 +135,586 @@ class Scoreboard extends Widget {
   }
 
   async click(mode='respect') {
-    if(!await super.click(mode)) {
-      const scoreProperty = this.get('scoreProperty');
-      const seats = this.getIncludedSeats();
-      const seatsArray = Array.isArray(seats)? seats : [];
-      let players = [];
-      if(Array.isArray(seats))
-        players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-', selected: s.get('player') == playerName }; });
-      else { // Teams
-        for (const team in seats) {
-          players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})`, selected: s.get('player') == playerName } }));
-          seatsArray.push(...seats[team]);
-        }
-      }
+    if(!await super.click(mode))
+      await this.enterScore();
+  }
 
-      let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
-      const everyPlayerFilledLatestRound = !seatsArray.map(s=>(s.get(scoreProperty) || []).length != rounds.length - 1).reduce((a,b)=>a||b, false);
+  // A click that landed on a score cell opens the surface the board asks for; one
+  // that did not - a hotkey, a CLICK operation, a press on a header or on a
+  // computed total - has no cell to enter and falls back to the pane, which picks
+  // the cell it writes itself.
+  async enterScore() {
+    const cell = this.pressedCell();
+    const mode = cell && this.cellAddress(cell) ? this.scoreEntryMode() : 'pane';
+    if(mode == 'pane')
+      await this.showScorePane(cell);
+    else
+      this.openEntrySurface(mode, cell);
+  }
 
-      if(this.totalsOnly)
-        rounds = [{text: this.get('totalsLabel'), value: 0}];
+  // Whether a click on a cell starts entering a score: a board that is not
+  // clickable is a printed table, and one with a clickRoutine has its own
+  // answer to a click.
+  cellEntryEnabled() {
+    return !!this.get('clickable') && !Array.isArray(this.get('clickRoutine'));
+  }
 
-      if(!players.length || !rounds.length)
-        return;
+  // Whether the table carries the button that starts the next round. Only a
+  // board whose cells are entered into needs one - the edit pane offers that
+  // round in its round list, and a board of teams adds up columns that no click
+  // can enter - and only for as long as the board can hold another round.
+  addRoundOffered(seats) {
+    return Array.isArray(seats) && this.cellEntryEnabled() && this.get('scoreEntry') != 'pane'
+        && !this.totalsOnly && (this.displayedRounds || []).length < this.roundLimit();
+  }
 
-      try {
-        const result = await this.showInputOverlay({
-          header: this.get('editPaneTitle'),
-          fields: [
-            {
-              type: 'select',
-              label: 'Player',
-              options: players,
-              variable: 'player',
-            },
-            {
-              type: 'select',
-              label: this.get('roundLabel'),
-              options: rounds,
-              variable: 'round',
-              value: everyPlayerFilledLatestRound ? rounds.length : rounds.length - 1
-            },
-            {
-              type: 'number',
-              label: 'Value',
-              variable: 'score'
-            }
-          ]
-        });
-        const seat = widgets.get(result.variables.player);
-        let scores = seat.get(scoreProperty);
-        if(!this.totalsOnly) {
-          scores = [...scores];
-          scores[result.variables.round-1] = +result.variables.score;
-        } else
-          scores = +result.variables.score;
-        await seat.set(scoreProperty, scores);
-      } catch(e) {
-        console.log('The input overlay for the scoreboard failed to load.', e);
+  // How many rounds the board can ever show: a game that names its rounds has
+  // said how many there are, anything else grows for as long as scores are
+  // entered into it.
+  roundLimit() {
+    const rounds = this.get('rounds');
+    return Array.isArray(rounds) ? rounds.length : Infinity;
+  }
+
+  // Show a round nobody has scored yet, so that there is a cell to enter it in.
+  // Nothing is written to any seat until a score is: the round is a request of
+  // this browser, so one asked for by mistake costs the table nothing, and the
+  // round reaches the other players with the first score entered into it.
+  addRound(round) {
+    if(round > this.roundLimit())
+      return;
+    this.requestedRounds = Math.max(this.requestedRounds, round);
+    this.updateTable();
+  }
+
+  // Which surface a cell opens. A board that names one gets it everywhere;
+  // 'auto' hands the decision to the device the player is holding, and to the
+  // player, who can switch surfaces from the surface itself.
+  scoreEntryMode() {
+    const mode = this.get('scoreEntry');
+    if(scoreEntryModes.includes(mode) && mode != 'auto')
+      return mode;
+    return this.playerScoreEntry() || (typeof matchMedia == 'function' && matchMedia('(pointer: coarse)').matches ? 'keypad' : 'type');
+  }
+
+  // The surface this player last switched to, on this browser. It only applies
+  // where the board left the choice open, so it never overrules a game that
+  // deliberately picked one.
+  playerScoreEntry() {
+    try {
+      const pinned = localStorage.getItem('scoreEntry');
+      return pinned == 'keypad' || pinned == 'type' ? pinned : null;
+    } catch(e) {
+      return null; // a browser that refuses storage still gets the device's answer
+    }
+  }
+
+  pinPlayerScoreEntry(mode) {
+    try {
+      localStorage.setItem('scoreEntry', mode);
+    } catch(e) {}
+  }
+
+  async showScorePane(cell) {
+    const address = cell && this.cellAddress(cell);
+    // a cell that holds no round of its own - the computed total of a seat - still
+    // says whose column it is in, so the pane opens on that player
+    const pressedSeat = address ? address.seat.get('id') : (cell && cell.dataset.seat);
+    const scoreProperty = this.get('scoreProperty');
+    const seats = this.getIncludedSeats();
+    const seatsArray = Array.isArray(seats)? seats : [];
+    let players = [];
+    if(Array.isArray(seats))
+      players = seats.map(function(s) { return { value: s.get('id'), text: s.get('player') || '-', selected: s.get('player') == playerName }; });
+    else { // Teams
+      for (const team in seats) {
+        players = players.concat(seats[team].map(function(s) { return { value: s.get('id'), text: `${s.get('player') || '-'} (${team})`, selected: s.get('player') == playerName } }));
+        seatsArray.push(...seats[team]);
       }
     }
+
+    let rounds = this.getRounds(seats, scoreProperty, 1).map(function(r, i) { return { text: r, value: i+1 }; });
+    const everyPlayerFilledLatestRound = !seatsArray.map(s=>(s.get(scoreProperty) || []).length != rounds.length - 1).reduce((a,b)=>a||b, false);
+
+    if(this.totalsOnly)
+      rounds = [{text: this.get('totalsLabel'), value: 0}];
+
+    if(!players.length || !rounds.length)
+      return;
+
+    try {
+      const result = await this.showInputOverlay({
+        header: this.get('editPaneTitle'),
+        fields: [
+          {
+            type: 'select',
+            label: 'Player',
+            options: players,
+            variable: 'player',
+            value: pressedSeat || null
+          },
+          {
+            type: 'select',
+            label: this.get('roundLabel'),
+            options: rounds,
+            variable: 'round',
+            value: address ? address.round : (everyPlayerFilledLatestRound ? rounds.length : rounds.length - 1)
+          },
+          {
+            type: 'number',
+            label: 'Value',
+            variable: 'score',
+            value: address ? this.cellText(address) : undefined
+          }
+        ]
+      });
+      // an empty Value erases the cell, the way an empty entry does on the other
+      // surfaces, rather than writing the 0 an empty number field reads as
+      const value = this.parseScore(result.variables.score);
+      if(value !== null)
+        await this.setCellScore({ seat: widgets.get(result.variables.player), round: this.totalsOnly ? 0 : +result.variables.round }, value);
+    } catch(e) {
+      console.log('The input overlay for the scoreboard failed to load.', e);
+    }
+  }
+
+  // A press notes the cell it landed on, both as the node and as the seat and
+  // round that node showed. The node alone is not enough: committing a cell
+  // that was typed into rebuilds the table, and clicking straight from it into
+  // another cell does exactly that between the press and the click.
+  notePressedCell(cell) {
+    this.pressedCellDOM = cell;
+    this.pressedCellKey = cell && cell.dataset.seat ? { seat: cell.dataset.seat, round: cell.dataset.round, total: cell.dataset.total !== undefined } : null;
+  }
+
+  // The cell the press that led to this click landed on, read once: the press
+  // noted it on the way down, and a click no press of ours preceded - a hotkey,
+  // a CLICK operation - finds nothing here. A cell whose table has been rebuilt
+  // since is looked up again on the new one.
+  pressedCell() {
+    const cell = this.pressedCellDOM;
+    const key = this.pressedCellKey;
+    this.pressedCellDOM = this.pressedCellKey = null;
+    if(!this.tableDOM)
+      return null;
+    if(cell && this.tableDOM.contains(cell))
+      return cell;
+    return key ? this.cellShowing(key) : null;
+  }
+
+  // The cell of the table as it stands now that shows what the given one showed.
+  cellShowing(key) {
+    for(const cell of $a('td', this.tableDOM))
+      if(cell.dataset.seat == key.seat && cell.dataset.round == key.round && (cell.dataset.total !== undefined) == key.total)
+        return cell;
+    return null;
+  }
+
+  // The seat and the round a cell holds the score of. Round 0 is the single
+  // score of a board that has no rounds at all. Anything else - a header, a
+  // computed total, a team column - has no address and cannot be written to.
+  cellAddress(cell) {
+    if(!cell || !cell.classList.contains('scoreCell') || !widgets.has(cell.dataset.seat))
+      return null;
+    return { seat: widgets.get(cell.dataset.seat), round: +cell.dataset.round || 0 };
+  }
+
+  // Cells are addressed by the seat and the round whose score they show, so
+  // that a click finds its way back to the seat property it writes - and so
+  // that a game can style a single row or column from its own CSS.
+  addressCell(cell, seat, round, enterable) {
+    if(!cell || !seat)
+      return;
+    cell.dataset.seat = seat.get('id');
+    if(round)
+      cell.dataset.round = round;
+    else
+      cell.dataset.total = '';
+    // the totals column is computed - unless the board has no rounds at all, in
+    // which case it is the one score each seat has
+    if(enterable && (round || this.totalsOnly && !this.displayedRounds.length))
+      cell.classList.add('scoreCell');
+  }
+
+  cellFor(seatID, round) {
+    if(!this.tableDOM)
+      return null;
+    for(const cell of $a('td.scoreCell', this.tableDOM))
+      if(cell.dataset.seat == seatID && (+cell.dataset.round || 0) == round)
+        return cell;
+    return null;
+  }
+
+  // What is in a cell, as text: the empty string for a round nobody has scored.
+  cellText(address) {
+    const score = address.seat.get(this.get('scoreProperty'));
+    const value = address.round ? (Array.isArray(score) ? score[address.round-1] : undefined) : score;
+    return value === undefined || value === null ? '' : String(value);
+  }
+
+  // The name of a round as the table shows it, for a surface that says which
+  // cell it is entering.
+  roundName(round) {
+    if(!round)
+      return this.get('totalsLabel');
+    const name = Array.isArray(this.get('rounds')) ? (this.displayedRounds || [])[round-1] : '';
+    return name ? String(name) : `${this.get('roundLabel')} ${round}`;
+  }
+
+  // Every surface writes the score through here, which is the line the edit
+  // pane has always used: the score stays a property of the seat.
+  async setCellScore(address, value) {
+    const scoreProperty = this.get('scoreProperty');
+    let scores = value;
+    if(address.round) {
+      const score = address.seat.get(scoreProperty);
+      scores = Array.isArray(score) ? [...score] : [];
+      // a round nobody has scored yet would be left as a hole in the array,
+      // which reads back as undefined instead of as an empty cell
+      for(let i=0; i < address.round; i++)
+        if(scores[i] === undefined)
+          scores[i] = '';
+      scores[address.round-1] = value;
+    }
+    batchStart();
+    try {
+      setDeltaCause(`${playerName} scored ${address.seat.get('id')}`);
+      await address.seat.set(scoreProperty, scores);
+    } finally {
+      batchEnd();
+    }
+  }
+
+  // What a player typed, as the value to write: a number - including the
+  // arithmetic expressions that dragLimit and the grid conditions already speak
+  // ("10+15+8-5") - or the empty string for an entry left empty, which is the
+  // erased cell the table renders for a round nobody has scored. Text that is
+  // not a score at all is null and is not written anywhere.
+  parseScore(text) {
+    text = String(text === undefined || text === null ? '' : text).trim();
+    return text === '' ? '' : expressionNumber(text, _=>null, null);
+  }
+
+  // --- the surfaces a score is entered on ----------------------------------
+
+  openEntrySurface(mode, cell, text, selection) {
+    const address = cell && this.cellAddress(cell);
+    if(!address)
+      return;
+    this.closeEntrySurface();
+    if(mode == 'keypad')
+      this.openKeypad(cell, address, text || '');
+    else
+      this.openCellInput(cell, address, text !== undefined ? text : this.cellText(address), selection);
+  }
+
+  closeEntrySurface() {
+    const surface = this.entrySurface;
+    this.entrySurface = null;
+    if(!surface)
+      return;
+    if(surface.cleanup)
+      surface.cleanup();
+    if(surface.dom)
+      removeFromDOM(surface.dom);
+    surface.cell.classList.remove('entering');
+    if(surface.input && surface.cell.contains(surface.input)) {
+      // where the caret was, for the surface a rebuild of the table puts back
+      surface.selection = [ surface.input.selectionStart, surface.input.selectionEnd ];
+      removeFromDOM(surface.input);
+      surface.cell.innerText = surface.shown;
+    }
+  }
+
+  // The table is thrown away and rebuilt on every score change, including the
+  // one the player just entered - so the open surface is put back on the cell
+  // it was on, with what has been typed into it so far.
+  reopenEntrySurface(surface) {
+    const cell = this.cellFor(surface.seatID, surface.round);
+    if(cell)
+      this.openEntrySurface(surface.mode, cell, surface.text, surface.selection);
+  }
+
+  // A fixed-size overlay beside the board rather than inside the table, positioned
+  // against the viewport: the keypad stays thumb-sized whatever the board is scaled
+  // to, and a room area shorter than the pad - a phone in portrait - would clip the
+  // row the enter key is on. Beside the whole board rather than beside the cell,
+  // because a score sheet is read down a column and covering one hides the running
+  // total that is being added to; only where neither side has room does it fall
+  // back to under the cell, or over it.
+  anchorToCell(dom, cell) {
+    if(dom.parentNode !== document.body)
+      document.body.appendChild(dom);
+    const target = cell.getBoundingClientRect();
+    const board = this.domElement.getBoundingClientRect();
+    const box = dom.getBoundingClientRect();
+    const gap = 6;
+    const maxLeft = window.innerWidth - box.width - 4;
+    const maxTop = window.innerHeight - box.height - 4;
+    let left = board.right + gap;
+    let top = target.top;
+    if(left > maxLeft) {
+      left = board.left - box.width - gap;
+      if(left < 4) {
+        left = target.left + target.width/2 - box.width/2;
+        top = target.bottom + gap;
+        if(top > maxTop)
+          top = target.top - box.height - gap;
+      }
+    }
+    dom.style.left = `${Math.max(4, Math.min(left, maxLeft))}px`;
+    dom.style.top = `${Math.max(4, Math.min(top, maxTop))}px`;
+  }
+
+  // The table scrolls under the surface and the room is laid out again when the
+  // window changes, so the surface is put back beside its cell instead of being
+  // left floating over rows it has nothing to do with.
+  keepAnchoredToCell(surface, dom, cell) {
+    const reanchor = _=>this.anchorToCell(dom, cell);
+    const scroller = cell.closest('.scoreboardIntermediate');
+    if(scroller)
+      scroller.addEventListener('scroll', reanchor);
+    window.addEventListener('resize', reanchor);
+    const inner = surface.cleanup;
+    surface.cleanup = _=>{
+      if(scroller)
+        scroller.removeEventListener('scroll', reanchor);
+      window.removeEventListener('resize', reanchor);
+      if(inner)
+        inner();
+    };
+    reanchor();
+  }
+
+  // The button that switches to the other surface. It is offered only where the
+  // board left the choice to the device, and what it chooses is remembered for
+  // this browser.
+  addSurfaceSwitch(parent, mode, cell) {
+    if(this.get('scoreEntry') != 'auto')
+      return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'scoreEntrySwitch';
+    button.setAttribute('icon', mode == 'keypad' ? 'dialpad' : 'keyboard');
+    button.title = mode == 'keypad' ? 'Use the keypad on this device' : 'Type with the keyboard on this device';
+    // the press must not blur the cell being typed into before the click arrives
+    button.addEventListener('mousedown', e=>e.preventDefault());
+    button.addEventListener('click', _=>{
+      // what has been entered so far moves to the other surface, whichever way round
+      const text = this.entrySurface ? this.entrySurface.text : '';
+      this.pinPlayerScoreEntry(mode);
+      this.openEntrySurface(mode, cell, text);
+    });
+    parent.appendChild(button);
+  }
+
+  openKeypad(cell, address, text) {
+    const pad = div(null, 'scoreboardKeypad');
+    const header = div(pad, 'scoreboardKeypadHeader');
+    const title = div(header, 'scoreboardKeypadTitle');
+    title.textContent = `${address.seat.get('player') || '-'} · ${this.roundName(address.round)}`;
+    this.addSurfaceSwitch(header, 'type', cell);
+    // closing belongs with the title of the pad rather than among the keys,
+    // where a cross reads as an operator next to the ones that are
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'scoreEntryClose';
+    close.setAttribute('icon', 'close');
+    close.title = 'Close without entering a score';
+    close.addEventListener('click', _=>this.keypadPress('cancel'));
+    header.appendChild(close);
+
+    const current = this.cellText(address);
+    if(current !== '')
+      div(pad, 'scoreboardKeypadCurrent').textContent = `was ${current}`;
+
+    const display = div(pad, 'scoreboardKeypadValue');
+    display.textContent = text;
+
+    const keys = div(pad, 'scoreboardKeypadKeys');
+    for(const row of keypadKeys) {
+      for(const key of row) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        if(key.icon)
+          button.setAttribute('icon', key.icon);
+        else
+          button.textContent = key.text;
+        if(key.title)
+          button.title = key.title;
+        if(key.action)
+          button.classList.add(key.action);
+        button.addEventListener('click', _=>this.keypadPress(key.action || key.value || key.text));
+        keys.appendChild(button);
+      }
+    }
+
+    const surface = this.entrySurface = { mode: 'keypad', seatID: address.seat.get('id'), round: address.round, text, cell, dom: pad, display };
+    cell.classList.add('entering');
+    const outside = e=>{
+      if(!pad.contains(e.target) && this.entrySurface === surface)
+        this.closeEntrySurface();
+    };
+    for(const event of [ 'mousedown', 'touchstart' ])
+      document.addEventListener(event, outside);
+    // a key the keypad answers to is consumed here, so that it types into the
+    // pad instead of reaching the hotkeys of the room behind it
+    const typed = e=>{
+      const key = this.entrySurface === surface && !keyboardTakenFromKeypad(e) && !e.ctrlKey && !e.metaKey && !e.altKey && keypadKeyFor(e.key);
+      if(!key)
+        return;
+      e.preventDefault();
+      e.stopPropagation();
+      this.keypadPress(key);
+    };
+    document.addEventListener('keydown', typed);
+    surface.cleanup = _=>{
+      document.removeEventListener('keydown', typed);
+      for(const event of [ 'mousedown', 'touchstart' ])
+        document.removeEventListener(event, outside);
+    };
+
+    this.keepAnchoredToCell(surface, pad, cell);
+  }
+
+  async keypadPress(key) {
+    const surface = this.entrySurface;
+    if(!surface || surface.mode != 'keypad')
+      return;
+    if(key == 'cancel')
+      return this.closeEntrySurface();
+    if(key == 'enter') {
+      const value = this.parseScore(surface.text);
+      if(value === null)
+        return this.rejectEntry(surface);
+      const seat = widgets.get(surface.seatID);
+      const address = seat && { seat, round: surface.round };
+      this.closeEntrySurface();
+      if(address && String(value) !== this.cellText(address))
+        await this.setCellScore(address, value);
+      return;
+    }
+    surface.text = this.keypadText(surface.text, key);
+    surface.display.textContent = surface.text;
+    surface.display.classList.remove('rejected');
+  }
+
+  // An entry that is not a score at all is neither written nor thrown away: the
+  // surface stays open with what was typed still on it, marked, so that it can
+  // be corrected. Dropping it silently would look exactly like erasing a cell,
+  // which is what an entry left empty does.
+  rejectEntry(surface) {
+    const shown = surface.input || surface.display;
+    if(shown)
+      shown.classList.add('rejected');
+  }
+
+  // What a key does to what has been typed so far. Operators do not stack and a
+  // plus does not open an entry, but a trailing operator and a lone decimal
+  // point are entries in the making that no score can be read from yet.
+  keypadText(text, key) {
+    if(key == 'clear')
+      return '';
+    if(key == 'delete')
+      return text.slice(0, -1);
+    if(key == '+' || key == '-') {
+      const base = text.replace(/[-+]$/, '');
+      return base === '' && key == '+' ? base : base + key;
+    }
+    if(text.length >= 12)
+      return text;
+    if(key == '.')
+      return /\.\d*$/.test(text) ? text : text + '.';
+    return text + key;
+  }
+
+  openCellInput(cell, address, text, selection) {
+    const input = document.createElement('input');
+    input.className = 'scoreCellInput';
+    input.type = 'text';
+    input.inputMode = 'decimal';
+    input.size = 1; // an input is 20 characters wide by default, which would widen the column
+    input.value = text;
+
+    const surface = this.entrySurface = { mode: 'type', seatID: address.seat.get('id'), round: address.round, text, cell, input, shown: cell.innerText };
+    cell.classList.add('entering');
+    cell.innerText = '';
+    cell.appendChild(input);
+
+    const switchBar = div(null, 'scoreEntrySwitchBar');
+    this.addSurfaceSwitch(switchBar, 'keypad', cell);
+    if(switchBar.firstChild) {
+      surface.dom = switchBar;
+      this.keepAnchoredToCell(surface, switchBar, cell);
+    }
+
+    input.addEventListener('input', _=>{
+      surface.text = input.value;
+      input.classList.remove('rejected');
+    });
+    input.addEventListener('blur', _=>this.commitCellInput(surface, null));
+    input.addEventListener('keydown', e=>{
+      if(e.key == 'Enter')
+        this.commitCellInput(surface, 'nextSeat');
+      else if(e.key == 'Tab')
+        this.commitCellInput(surface, e.shiftKey ? 'previousRound' : 'nextRound');
+      else if(e.key != 'Escape')
+        return;
+      else
+        this.closeEntrySurface();
+      e.preventDefault();
+    });
+
+    input.focus();
+    // a score of another seat rebuilds the table under an open entry, which puts
+    // it back: the caret goes back where it was rather than selecting what has
+    // been typed so far, which the next key would replace
+    if(selection)
+      input.setSelectionRange(selection[0], selection[1]);
+    else
+      input.select();
+  }
+
+  // Enter goes on to the next player in the same round, Tab to the next round
+  // of the same player - the way a score sheet is filled in.
+  async commitCellInput(surface, move) {
+    const seat = widgets.get(surface.seatID);
+    if(this.entrySurface !== surface)
+      return;
+    if(!seat)
+      return this.closeEntrySurface();
+    const address = { seat, round: surface.round };
+    const value = this.parseScore(surface.text);
+    if(value === null)
+      return this.rejectEntry(surface);
+    const next = move && this.neighbourCell(surface, move);
+    this.closeEntrySurface();
+    if(String(value) !== this.cellText(address))
+      await this.setCellScore(address, value);
+    if(next) {
+      // typing past the last round of the sheet asks for the next one, the way
+      // the button under the table does - the move is the player saying they
+      // want it - and a board whose rounds are named stops at the last of them
+      if(next.round > this.displayedRounds.length)
+        this.addRound(next.round);
+      const cell = this.cellFor(next.seatID, next.round);
+      if(cell)
+        this.openEntrySurface('type', cell, '');
+    }
+  }
+
+  neighbourCell(surface, move) {
+    const seats = this.getIncludedSeats();
+    const index = Array.isArray(seats) ? seats.findIndex(s=>s.get('id') == surface.seatID) : -1;
+    if(index == -1 || !surface.round)
+      return null;
+    if(move == 'nextRound')
+      return { seatID: surface.seatID, round: surface.round + 1 };
+    if(move == 'previousRound')
+      return { seatID: surface.seatID, round: surface.round - 1 };
+    if(index + 1 < seats.length)
+      return { seatID: seats[index+1].get('id'), round: surface.round };
+    return { seatID: seats[0].get('id'), round: surface.round + 1 };
   }
 
   css() {
@@ -291,6 +874,35 @@ class Scoreboard extends Widget {
     return tr;
   }
 
+  // A strip along the foot of the table carrying the button that starts the next
+  // round. A round is a row where the players are columns and a column where
+  // they are rows, but the button sits under the sheet either way: it is out of
+  // the run of the scores there, and it is as wide as the table rather than as
+  // wide as a cell, which gives a finger something to hit.
+  // mousehandling.js leaves a press on a <button> in a widget alone, so pressing
+  // this one adds the round instead of opening the score pane behind it.
+  addRoundStrip(numCols, aboveTotals) {
+    const body = this.tableDOM.tBodies[0];
+    if(!body)
+      return;
+    const row = document.createElement('tr');
+    row.className = 'addRoundRow';
+    const cell = document.createElement('td');
+    cell.colSpan = numCols;
+    row.appendChild(cell);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'addRound';
+    button.setAttribute('icon', 'add');
+    button.textContent = this.get('roundLabel');
+    button.title = `New ${this.get('roundLabel')}`;
+    button.addEventListener('click', _=>this.addRound(this.displayedRounds.length + 1));
+    cell.appendChild(button);
+
+    body.insertBefore(row, aboveTotals ? body.rows[body.rows.length-1] : null);
+  }
+
   updateTable() {
     /* This routine creates the HTML table for display in the scoreboard. It is
      * complicated by the fact that the `seats` property can be either an array of
@@ -304,6 +916,10 @@ class Scoreboard extends Widget {
      */
 
     const seats = this.getIncludedSeats();
+    // an open entry surface is anchored to a cell of the table that is about to
+    // be thrown away, so it is put back on the rebuilt one further down
+    const reopen = this.entrySurface;
+    this.closeEntrySurface();
     // First, empty the table
     if(!this.tableDOM) {
       this.tableDOM = document.createElement('table');
@@ -324,9 +940,16 @@ class Scoreboard extends Widget {
     const scoreProperty = this.get('scoreProperty');
     let sortField = this.get('sortField');
 
-    // Compute number of scoring rounds to show and create round names table
+    // Compute number of scoring rounds to show and create round names table.
+    // The table shows the rounds that have been scored, plus the ones the player
+    // has asked for with the add-round button and nobody has scored yet.
+    const enterable = this.cellEntryEnabled();
     let rounds = this.getRounds(seats, scoreProperty);
+    const requested = Math.min(this.requestedRounds, this.roundLimit());
+    if(!this.totalsOnly && requested > rounds.length)
+      rounds = this.getRounds(seats, scoreProperty, requested - rounds.length);
     let numRounds = rounds.length;
+    this.displayedRounds = [...rounds];
     if(showTotals)
       rounds.push(this.get('totalsLabel'));
     rounds.unshift(this.get('roundLabel'));
@@ -404,6 +1027,9 @@ class Scoreboard extends Widget {
         const pRow = pScores.map(x => x[r]);
         pRow.unshift(rounds[r]);
         const tr = this.addRowToTable($('tbody',this.tableDOM), pRow);
+        if(Array.isArray(seats))
+          for(let c=0; c < seats.length; c++)
+            this.addressCell(tr.cells[c+1], seats[c], r <= numRounds ? r : 0, enterable);
         if(r == currentRound)
           for(let c=1; c < numCols; c++)
             tr.cells[c].classList.add('currentRound');
@@ -422,6 +1048,9 @@ class Scoreboard extends Widget {
       // Remaining rows are one row per player.
       for( let r=0; r < pScores.length; r++) {
         const tr = this.addRowToTable(this.tableDOM, pScores[r]);
+        if(Array.isArray(seats))
+          for(let c=1; c < numCols; c++)
+            this.addressCell(tr.cells[c], seats[r], c <= numRounds ? c : 0, enterable);
         if(showPlayerColors) {
           const bgColor = pScores[r][0]=='-' ? defaultColor : seats.filter(x=> x.get('player') == pScores[r][0])[0].get('color');
           tr.cells[0].style.backgroundColor = bgColor;
@@ -436,6 +1065,10 @@ class Scoreboard extends Widget {
       }
     }
     this.numCols = numCols;
+    if(this.addRoundOffered(seats))
+      this.addRoundStrip(numCols, showTotals && this.get('playersInColumns'));
     this.domElement.style.cssText = mapAssetURLs(this.css());
+    if(reopen)
+      this.reopenEntrySurface(reopen);
   }
 }

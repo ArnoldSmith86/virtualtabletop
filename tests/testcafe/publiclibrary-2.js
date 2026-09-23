@@ -1,5 +1,3 @@
-import { Selector } from 'testcafe';
-
 import { publicLibraryButtons } from './publiclibrary-util.js';
 import { setupTestEnvironment } from './test-util.js';
 
@@ -7,13 +5,13 @@ setupTestEnvironment();
 
 publicLibraryButtons('Reversi',            0, '35e0017570f9ecd206a2317c1528be36',
        [
-         [ ()=>Selector("#w_zpiece15"), ()=>Selector("#w_sq23") ],
-         [ ()=>Selector("#w_zpiece78"), ()=>Selector("#w_sq22") ],
-         [ ()=>Selector("#w_zpiece40"), ()=>Selector("#w_sq32") ],
-         [ ()=>Selector("#w_zpiece72"), ()=>Selector("#w_sq12") ],
-         [ ()=>Selector("#w_zpiece72"), ()=>Selector("#w_sq24") ],
-         [ ()=>Selector("#w_zpiece19"), ()=>Selector("#w_sq35") ],
-         [ ()=>Selector("#w_zpiece08"), ()=>Selector("#w_sq53") ]
+         { from: 'zpiece15', to: 'sq23', sticks: true  },
+         { from: 'zpiece78', to: 'sq22', sticks: true  },
+         { from: 'zpiece40', to: 'sq32', sticks: true  },
+         { from: 'zpiece72', to: 'sq12', sticks: false }, // not a legal move: the piece bounces back into the holder
+         { from: 'zpiece72', to: 'sq24', sticks: true  },
+         { from: 'zpiece19', to: 'sq35', sticks: true  },
+         { from: 'zpiece08', to: 'sq53', sticks: true  }
        ]);
 publicLibraryButtons('Reward',             0, '5290d9113f42a3c0e458a788b5a1ea99', [
   'gmex', 'kprc', 'oksq', 'j1wz', 'vfhn', 'seat1', 'next'

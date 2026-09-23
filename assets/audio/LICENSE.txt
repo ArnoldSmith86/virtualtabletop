@@ -1,0 +1,25 @@
+Sound effects in this directory were created by Kenney (https://kenney.nl) and
+are released under the Creative Commons Zero (CC0) license, dedicating them to
+the public domain: https://creativecommons.org/publicdomain/zero/1.0/
+
+They are the complete set of free audio packs from Kenney's Audio category
+(https://kenney.nl/assets/category:Audio):
+
+  casino/            - "Casino Audio"        (https://kenney.nl/assets/casino-audio)
+  interface/         - "Interface Sounds"    (https://kenney.nl/assets/interface-sounds)
+  ui/                - "UI Audio"            (https://kenney.nl/assets/ui-audio)
+  impact/            - "Impact Sounds"       (https://kenney.nl/assets/impact-sounds)
+  rpg/               - "RPG Audio"           (https://kenney.nl/assets/rpg-audio)
+  scifi/             - "Sci-fi Sounds"       (https://kenney.nl/assets/sci-fi-sounds)
+  digital/           - "Digital Audio"       (https://kenney.nl/assets/digital-audio)
+  music/             - "Music Jingles"       (https://kenney.nl/assets/music-jingles)
+  voiceover/         - "Voiceover Pack"      (https://kenney.nl/assets/voiceover-pack)
+  voiceover-fighter/ - "Voiceover Pack (Fighter)" (https://kenney.nl/assets/voiceover-pack-fighter)
+
+The originals are distributed as Ogg Vorbis. They were transcoded to MP3
+(LAME VBR -q:a 5, ~130 kbps) so they play on every browser including Safari/iOS
+while keeping the bundle small. Preview/montage tracks were omitted; files from
+packs with sub-folders (e.g. the Voiceover Male/Female sets) were flattened with
+a folder-name prefix to keep every filename unique.
+
+Crediting Kenney or www.kenney.nl is appreciated but not required.

@@ -40,7 +40,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 120,
+    "x": 329,
     "y": 250,
     "z": 273,
     "id": "mwyl",
@@ -86,7 +86,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 374,
+    "x": 538,
     "y": 250,
     "z": 274,
     "id": "uc3i",
@@ -133,7 +133,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 619,
+    "x": 747,
     "y": 250,
     "z": 289,
     "id": "2rti",
@@ -179,7 +179,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 872,
+    "x": 956,
     "y": 250,
     "z": 288,
     "id": "0zgn",
@@ -236,7 +236,7 @@
         "value": "${mixedArray}"
       }
     ],
-    "x": 1115,
+    "x": 1165,
     "y": 250,
     "z": 287,
     "id": "l1ak",
@@ -298,7 +298,7 @@
       "var mixedArray = ${PROPERTY mixedArray OF theArray}",
       "var pos1 = ${PROPERTY text OF atString7a}",
       "var pos2 = ${PROPERTY text OF atString7b}",
-      "var wordArray = remove ${pos1} ${pos2} //Removes elements of the array starting from the position of the first number (and optionally limited to the number of elements in the second number)",
+      "var wordArray = remove ${pos1} ${pos2} //Removes elements of the array starting from the position of the first number and limited to the number of elements in the second number",
       "var numArray = remove ${pos1} ${pos2}",
       "var mixedArray = remove ${pos1} ${pos2}",
       {
@@ -559,7 +559,7 @@
   "atString5": {
     "type": "label",
     "id": "atString5",
-    "x": 1105,
+    "x": 1147,
     "y": 361,
     "height": 40,
     "z": 26432,
@@ -570,7 +570,7 @@
   "atString3": {
     "type": "label",
     "id": "atString3",
-    "x": 609,
+    "x": 729,
     "y": 361,
     "height": 40,
     "z": 26434,
@@ -579,7 +579,7 @@
     "text": "addme"
   },
   "_meta": {
-    "version": 19,
+    "version": 24,
     "gameSettings": {
       "legacyModes": {
         "convertNumericVarParametersToNumbers": true,
@@ -596,7 +596,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763605491580,
+      "lastUpdate": 1789005565459,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -608,7 +608,9 @@
       "variantImage": "",
       "variant": "Modifying - Advanced",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false,
+      "usesAILayout": false
     }
   },
   "output2": {
@@ -822,7 +824,7 @@
   "atString": {
     "type": "label",
     "id": "atString",
-    "x": 100,
+    "x": 314,
     "y": 361,
     "height": 40,
     "z": 26425,
@@ -1033,5 +1035,75 @@
     "z": 280,
     "id": "0y7s",
     "text": "shuffle"
+  },
+  "mwyl1": {
+    "type": "button",
+    "clickRoutine": [
+      "var wordArray = ${PROPERTY wordArray OF theArray}",
+      "var numArray = ${PROPERTY numArray OF theArray}",
+      "var mixedArray = ${PROPERTY mixedArray OF theArray}",
+      "var pos1 = ${PROPERTY text OF atString1a}",
+      "var pos2 = ${PROPERTY text OF atString1b}",
+      "var wordArray = ${pos1} insert ${pos2} //Inserts the reference string into the index position of the second operand ",
+      "var numArray = ${pos1} insert ${pos2} ",
+      "var mixedArray = ${pos1} insert ${pos2} ",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${wordArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${numArray}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "output3"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${mixedArray}"
+      }
+    ],
+    "x": 120,
+    "y": 250,
+    "z": 273,
+    "id": "mwyl1",
+    "text": "insert"
+  },
+  "atString1a": {
+    "type": "label",
+    "id": "atString1a",
+    "x": 100,
+    "y": 361,
+    "height": 40,
+    "z": 26425,
+    "css": "background-color:white; border-style: solid;",
+    "editable": true,
+    "text": 999
+  },
+  "atString1b": {
+    "type": "label",
+    "id": "atString1b",
+    "x": 100,
+    "y": 407,
+    "height": 40,
+    "z": 26425,
+    "css": "background-color:white; border-style: solid;",
+    "editable": true,
+    "text": 4
   }
 }

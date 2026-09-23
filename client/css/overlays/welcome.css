@@ -172,14 +172,14 @@
 }
 
 
-@media (min-width: 1400px) and (min-height: 875px) {
+@container roomArea ((min-width: 1400px) and (min-height: 875px)) {
   #linkDetailsOverlay {
     justify-content: center;
   }
 }
 
 
-@media (max-width: 960px), (max-height: 600px) {
+@container roomArea ((max-width: 960px) or (max-height: 600px)) {
   #linkDetailsOverlay {
     --mainDetailsHeight: 200px;
   }
@@ -201,7 +201,7 @@
 }
 
 
-@media (max-width: 660px), (max-height: 412px) {
+@container roomArea ((max-width: 660px) or (max-height: 412px)) {
   #linkDetailsOverlay {
     --mainDetailsHeight: 150px;
     padding: 0;
@@ -245,7 +245,7 @@
 }
 
 
-@media (max-width: 500px), (max-height: 312px) {
+@container roomArea ((max-width: 500px) or (max-height: 312px)) {
   #linkDetailsOverlay {
     --mainDetailsHeight: 50px;
   }
@@ -280,7 +280,7 @@
 }
 
 
-@media (max-width: 360px), (max-height: 225px) {
+@container roomArea ((max-width: 360px) or (max-height: 225px)) {
   #linkDetailsOverlay .welcomeInput {
     margin: 0;
   }

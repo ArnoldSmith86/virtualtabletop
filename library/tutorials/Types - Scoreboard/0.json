@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 20,
+    "version": 24,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -18,15 +21,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1768190453826,
+      "lastUpdate": 1787513918360,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Basic",
       "language": "en-US",
-      "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "seat1": {
@@ -154,13 +155,12 @@
   "overview": {
     "id": "overview",
     "x": 108,
-    "y": 114,
+    "y": 74,
     "width": 1400,
     "height": 150,
     "layer": -3,
     "z": 125,
     "css": "font-size: 25px; ",
-    "text": "Scoreboard uses a property in seats to display numerical information in table form and total those numbers. Working in conjunction with routines and the SCORE function (shown in a different tutorial), the property on the seat can be updated and cause real-time changes to the scoreboard data. This room shows most of the options available when using scoreboards. The seats along the left side are pre-filled with player and score information to populate the data on the scoreboards in this room. Use the JSON Editor (ctrl-J) to look in the seats and scoreboards to see how missing or non-numeric data is handled.",
     "movable": false,
     "movableInEdit": false,
     "clickRoutine": [
@@ -172,7 +172,8 @@
           "dummy2": "${PROPERTY bids}"
         }
       }
-    ]
+    ],
+    "html": "Scoreboard uses a property in seats to display numerical information in table form and total those numbers. Working in conjunction with routines and the <a href='https://virtualtabletop.io/tutorial/functions-score'>SCORE function</a> tutorial, the property on the seat can be updated and cause real-time changes to the scoreboard data. This room shows most of the options available when using scoreboards. The seats along the left side are pre-filled with player and score information to populate the data on the scoreboards in this room. Use the JSON Editor (ctrl-J) to look in the seats and scoreboards to see how missing or non-numeric data is handled. Depending on the configuration, some scoreboards will have a &quot+ Round&quot button added to allow players to add another round row or column."
   },
   "header": {
     "id": "header",
@@ -193,7 +194,7 @@
     "width": 300,
     "z": 10076,
     "movable": false,
-    "text": "This scoreboard has 'showTotals' set to false so it does not show the sum of all the data for each player. It also sets 'showPlayerColors' to false to change the appearance of the header row.",
+    "html": "This scoreboard has <b>'showTotals'</b> set to false so it does not show the sum of all the data for each player. It also sets <b>'showPlayerColors'</b> to false to change the appearance of the header row.",
     "layer": -2
   },
   "scoreboard1": {
@@ -235,7 +236,7 @@
     "width": 300,
     "z": 10076,
     "movable": false,
-    "text": "This scoreboard has 'showAllSeats' set to true. It shows Player 6 data (header is '-') even though that seat is not occupied. It also has 'autosizeColumns' set to false so you scroll across to see all player data.",
+    "html": "This scoreboard has <b>'showAllSeats'</b> set to true. It shows Player 6 data (header is '-') even though that seat is not occupied. It also has <b>'autosizeColumns'</b> set to false so you scroll across to see all player data.",
     "layer": -2
   },
   "seat6": {
@@ -275,7 +276,7 @@
     "width": 525,
     "z": 10076,
     "movable": false,
-    "text": "This scoreboard has 'playersInColumns' set to false. It swaps rows and columns in the display. You can also click on this scoreboard to enter data. This is the default but it has been disabled on the other scoreboards in the room. When clicking, use the pop-up menu to select the player, round, and score, and the information will be added to the scoreboard.",
+    "html": "This scoreboard has <b>'playersInColumns'</b> set to false. It swaps rows and columns in the display. You can also click on this scoreboard to enter data: clicking a cell types the score straight into that cell. This is the default but <b>'clickable'</b> has been set to false on several of the other scoreboards in the room, which turns it off.",
     "layer": -2
   },
   "scoreboard5": {
@@ -306,7 +307,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard uses the 'rounds' property to name the rounds. The default is sequential whole numbers starting at 1, but you can specifiy anything, including text. It also sets the 'showAllRounds' property to true. Since there is only data for 6 rounds in each seat, the 7th round ('Not Used Yet') is displayed, but shows blank. If left false, the widget would only show 6 rows of data. ",
+    "html": "This scoreboard uses the <b>'rounds'</b> property to name the rounds. The default is sequential whole numbers starting at 1, but you can specifiy anything, including text. It also sets the <b>'showAllRounds'</b> property to true. Since there is only data for 6 rounds in each seat, the 7th round ('Not Used Yet') is displayed, but shows blank. If left false, the widget would only show 6 rows of data. ",
     "layer": -2
   },
   "scoreboard6": {
@@ -320,6 +321,7 @@
     "scoreProperty": "bids",
     "roundLabel": "Bids",
     "autosizeColumns": false,
+    "scoreEntry": "pane",
     "editPaneTitle": "Enter Bids"
   },
   "comment6": {
@@ -329,7 +331,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard uses 'scoreProperty' property to pull different data from the seat. The default is 'score'. This example uses 'bids'. It also changes the text in the first cell from 'Round' to 'Bids' using the `roundLabel' property. The 'editPaneTitle' property was also changed, which shows up when you click to change the score.",
+    "html": "This scoreboard uses <b>'scoreProperty'</b> property to pull different data from the seat. The default is 'score'. This example uses 'bids'. It also changes the text in the first cell from 'Round' to 'Bids' using the <b>`roundLabel'</b> property. <b>'scoreEntry'</b> is set to 'pane', so clicking opens the pop-up pane instead of typing in the cell, and the <b>'editPaneTitle'</b> property changes its title.",
     "layer": -2
   },
   "scoreboard7": {
@@ -346,7 +348,7 @@
       "seat4"
     ],
     "currentRound": 3,
-    "clickable": false
+    "scoreEntry": "keypad"
   },
   "scoreboard8": {
     "type": "scoreboard",
@@ -368,7 +370,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard sets the 'seats' property to only display data for seats 2, 3, and 4. it also sets the 'currentRound' property to 3.",
+    "html": "This scoreboard sets the <b>'seats'</b> property to only display data for seats 2, 3, and 4. it also sets the <b>'currentRound'</b> property to 3. It uses the <b>'scoreEntry'</b> property to choose what a click on a cell opens: 'keypad' here, so a keypad appears next to the cell you clicked. The default is 'auto', which types in the cell on a device with a keyboard and shows the keypad on a touchscreen.",
     "layer": -2
   },
   "comment8": {
@@ -378,201 +380,7 @@
     "width": 300,
     "z": 10075,
     "movable": false,
-    "text": "This scoreboard sets the 'sortField' property to 'total' and 'sortAscending' to false. This will sort the columns by highest to lowest score. 'sortField' defaults to show alphabetical player names, but can be any property of the seat or 'total'. It also displayes the header line vertically or rotated using 'verticalHeader'",
-    "layer": -2
-  },
-  "highlight1": {
-    "id": "highlight1",
-    "x": 570,
-    "y": 485,
-    "width": 90,
-    "height": 20,
-    "z": 79,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight2": {
-    "id": "highlight2",
-    "x": 424,
-    "y": 541,
-    "width": 135,
-    "height": 20,
-    "z": 80,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight3": {
-    "id": "highlight3",
-    "x": 895,
-    "y": 484,
-    "width": 105,
-    "height": 20,
-    "z": 81,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight4": {
-    "id": "highlight4",
-    "x": 1223,
-    "y": 485,
-    "width": 135,
-    "height": 20,
-    "z": 99,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight5": {
-    "id": "highlight5",
-    "x": 281,
-    "y": 811,
-    "width": 60,
-    "height": 20,
-    "z": 83,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight6": {
-    "id": "highlight6",
-    "x": 581,
-    "y": 810,
-    "width": 110,
-    "height": 20,
-    "z": 84,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight7": {
-    "id": "highlight7",
-    "x": 424,
-    "y": 904,
-    "width": 90,
-    "height": 20,
-    "z": 86,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight8": {
-    "id": "highlight8",
-    "x": 924,
-    "y": 809,
-    "width": 50,
-    "height": 20,
-    "z": 87,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight10": {
-    "id": "highlight10",
-    "x": 1230,
-    "y": 827,
-    "width": 110,
-    "height": 20,
-    "z": 90,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight13": {
-    "id": "highlight13",
-    "x": 243,
-    "y": 886,
-    "width": 120,
-    "height": 20,
-    "z": 96,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight14": {
-    "id": "highlight14",
-    "x": 844,
-    "y": 847,
-    "height": 20,
-    "z": 98,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "width": 105,
-    "layer": -2
-  },
-  "highlight15": {
-    "id": "highlight15",
-    "x": 813,
-    "y": 541,
-    "width": 135,
-    "height": 20,
-    "z": 102,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight11": {
-    "id": "highlight11",
-    "x": 1255,
-    "y": 807,
-    "width": 65,
-    "height": 20,
-    "z": 90,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight9": {
-    "id": "highlight9",
-    "x": 615,
-    "y": 904,
-    "height": 20,
-    "z": 86,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
-    "layer": -2
-  },
-  "highlight12": {
-    "id": "highlight12",
-    "x": 1075,
-    "y": 959,
-    "width": 110,
-    "height": 20,
-    "z": 90,
-    "movable": false,
-    "css": {
-      "background": "#f668b580"
-    },
+    "html": "This scoreboard sets the <b>'sortField'</b> property to 'total' and <b>'sortAscending'</b> to false. This will sort the columns by highest to lowest score. <b>'sortField'</b> defaults to show alphabetical player names, but can be any property of the seat or 'total'. It also displayes the header line vertically or rotated using <b>'verticalHeader'</b>",
     "layer": -2
   }
 }

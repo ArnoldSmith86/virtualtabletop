@@ -172,6 +172,7 @@
   "scoreboard": {
     "type": "scoreboard",
     "id": "scoreboard",
+    "scoreEntry": "auto",
     "width": 350,
     "height": 610,
     "x": 1245,

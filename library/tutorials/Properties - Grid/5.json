@@ -1,0 +1,297 @@
+{
+  "_meta": {
+    "version": 22,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Properties - Grid",
+      "image": "/assets/1094524990_4827",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
+      "showName": false,
+      "lastUpdate": 1786283918088,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Condition Limit",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -4,
+    "width": 800,
+    "height": 60,
+    "css": "font-size: 60px;text-align: center;",
+    "text": "Grid: Condition Limit",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 100
+  },
+  "intro": {
+    "id": "intro",
+    "x": 60,
+    "y": 72,
+    "width": 1480,
+    "height": 150,
+    "css": "font-size: 24px;",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 10,
+    "html": "A grid <b>condition</b> limits it to any area that can be written down as math: one inequality in <b>x</b> and <b>y</b>, the position the widget is dropped at, or a list of them. Outside the area the grid is not applied. Inside it the widget lands on the nearest lattice point that is inside the area as well, never on the one just past its edge. Under Edit Widgets, the <b>Conditions</b> field sits under <b>Position &rarr; Snap grid &rarr; More options</b>, and the area is outlined on the board, with a snap point marked only inside it."
+  },
+  "areaA": {
+    "id": "areaA",
+    "x": 120,
+    "y": 270,
+    "width": 340,
+    "height": 340,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background: rgba(228,87,46,0.12); box-shadow: inset 0 0 0 3px rgba(228,87,46,0.75); border-radius: 50%;"
+  },
+  "pieceA": {
+    "id": "pieceA",
+    "x": 160,
+    "y": 320,
+    "width": 80,
+    "height": 80,
+    "z": 20,
+    "text": "A",
+    "css": "background: #e4572e; border-radius: 12px; color: white; font-size: 26px; text-align: center; line-height: 80px;",
+    "grid": [
+      {
+        "x": 80,
+        "y": 80,
+        "condition": "(x - 290)^2 + (y - 440)^2 < 170^2"
+      }
+    ]
+  },
+  "codeA": {
+    "id": "codeA",
+    "x": 60,
+    "y": 640,
+    "width": 460,
+    "height": 130,
+    "css": "font-size: 17px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
+    "text": "\"grid\": [ {\n  \"x\": 80, \"y\": 80,\n  \"condition\":\n    \"(x - 290)^2 + (y - 440)^2 < 170^2\"\n} ]",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 10
+  },
+  "noteA": {
+    "id": "noteA",
+    "x": 60,
+    "y": 795,
+    "width": 460,
+    "height": 180,
+    "css": "font-size: 20px;",
+    "html": "Drop <b>A</b> inside the circle and it snaps to the nearest 80 px lattice point that is inside it too; drop it outside and it stays exactly where you let go. <b>x</b> and <b>y</b> are the piece's <b>top left corner</b>, so the circle is where that corner may land. The piece hangs out of it by its own width and height.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 10
+  },
+  "areaB": {
+    "id": "areaB",
+    "x": 560,
+    "y": 270,
+    "width": 340,
+    "height": 340,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background: linear-gradient(to top right, rgba(59,130,246,0.16) 50%, rgba(59,130,246,0.4) 50%); box-shadow: inset 0 0 0 3px rgba(96,165,250,0.75);"
+  },
+  "pieceB": {
+    "id": "pieceB",
+    "x": 600,
+    "y": 480,
+    "width": 80,
+    "height": 80,
+    "z": 20,
+    "text": "B",
+    "css": "background: #3b82f6; border-radius: 12px; color: white; font-size: 26px; text-align: center; line-height: 80px;",
+    "grid": [
+      {
+        "x": 60,
+        "y": 60,
+        "minX": 560,
+        "maxX": 900,
+        "minY": 270,
+        "maxY": 610,
+        "condition": "y > x - 290"
+      },
+      {
+        "x": 180,
+        "y": 180,
+        "minX": 560,
+        "maxX": 900,
+        "minY": 270,
+        "maxY": 610,
+        "condition": "y <= x - 290"
+      }
+    ]
+  },
+  "codeB": {
+    "id": "codeB",
+    "x": 560,
+    "y": 640,
+    "width": 460,
+    "height": 130,
+    "css": "font-size: 17px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
+    "text": "\"grid\": [\n  { \"x\": 60,  \"y\": 60,  ... \"condition\": \"y > x - 290\"  },\n  { \"x\": 180, \"y\": 180, ... \"condition\": \"y <= x - 290\" }\n]",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 10
+  },
+  "noteB": {
+    "id": "noteB",
+    "x": 560,
+    "y": 795,
+    "width": 460,
+    "height": 180,
+    "css": "font-size: 20px;",
+    "html": "Two grids on one piece, split along the diagonal: <b>B</b> snaps in 60 px steps below it and in 180 px steps above it. Both entries also carry the rectangle, so outside the square nothing snaps at all",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 10
+  },
+  "narrowArea": {
+    "type": "button",
+    "id": "narrowArea",
+    "x": 1060,
+    "y": 208,
+    "width": 150,
+    "height": 46,
+    "z": 30,
+    "text": "Narrow area",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "areaC"
+      },
+      {
+        "func": "SET",
+        "property": "width",
+        "value": 220
+      }
+    ]
+  },
+  "wideArea": {
+    "type": "button",
+    "id": "wideArea",
+    "x": 1230,
+    "y": 208,
+    "width": 150,
+    "height": 46,
+    "z": 30,
+    "text": "Wide area",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "areaC"
+      },
+      {
+        "func": "SET",
+        "property": "width",
+        "value": 460
+      }
+    ]
+  },
+  "areaC": {
+    "id": "areaC",
+    "x": 1060,
+    "y": 270,
+    "width": 220,
+    "height": 340,
+    "z": 1,
+    "layer": -2,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": "background: rgba(34,197,94,0.14); box-shadow: inset 0 0 0 3px rgba(34,197,94,0.75);"
+  },
+  "pieceC": {
+    "id": "pieceC",
+    "x": 1100,
+    "y": 320,
+    "width": 80,
+    "height": 80,
+    "z": 20,
+    "text": "C",
+    "css": "background: #22c55e; border-radius: 12px; color: white; font-size: 26px; text-align: center; line-height: 80px;",
+    "grid": [
+      {
+        "x": 80,
+        "y": 80,
+        "minY": 270,
+        "maxY": 610,
+        "condition": [
+          "x >= ${PROPERTY x OF areaC}",
+          "x < ${PROPERTY x OF areaC} + ${PROPERTY width OF areaC}"
+        ]
+      }
+    ]
+  },
+  "codeC": {
+    "id": "codeC",
+    "x": 1060,
+    "y": 640,
+    "width": 460,
+    "height": 130,
+    "css": "font-size: 17px; font-family: monospace; white-space: pre-wrap; line-height: 1.35; background: rgba(0,0,0,0.28); border-radius: 8px; padding: 10px;",
+    "text": "\"condition\": [\n  \"x >= ${PROPERTY x OF areaC}\",\n  \"x < ${PROPERTY x OF areaC}\n     + ${PROPERTY width OF areaC}\"\n]",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 10
+  },
+  "noteC": {
+    "id": "noteC",
+    "x": 1060,
+    "y": 795,
+    "width": 460,
+    "height": 180,
+    "css": "font-size: 20px;",
+    "html": "A property is read the way a routine reads one, so the area can follow the game: <b>&#36;{PROPERTY width OF areaC}</b> is the green box's own width. Widen it with the button and <b>C</b> snaps further to the right at once due to the property change.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "layer": -1,
+    "z": 10
+  }
+}

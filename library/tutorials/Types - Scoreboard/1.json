@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 20,
+    "version": 24,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -18,15 +21,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1768190453827,
+      "lastUpdate": 1787513918365,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Appearance",
       "language": "en-US",
-      "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "seat1": {
@@ -398,5 +399,35 @@
     "text": "This makes every other row light gray and the totals row light blue.",
     "layer": -2,
     "x": 750
+  },
+  "comment9": {
+    "id": "comment9",
+    "y": 855,
+    "width": 300,
+    "z": 10076,
+    "movable": false,
+    "text": "Scoreboards that are clickable, have a 'scoreEntry' property anything other than 'pane', and do not have the 'rounds' property set will have a '+ Round' button added at the bottom. This shows how to change the formatting of that button.",
+    "layer": -2,
+    "x": 1075
+  },
+  "scoreboard9": {
+    "type": "scoreboard",
+    "id": "scoreboard9",
+    "x": 1075,
+    "y": 650,
+    "z": 4,
+    "movableInEdit": false,
+    "css": {
+      ".scoreboard > div.scoreboardIntermediate > table tbody tr.addRoundRow > td": {
+        "background": "black",
+        "color": "white"
+      },
+      ".scoreboard > div.scoreboardIntermediate > table button.addRound": {
+        "justify-content": "left",
+        "font-size": "16px"
+      }
+    },
+    "movable": false,
+    "autosizeColumns": false
   }
 }

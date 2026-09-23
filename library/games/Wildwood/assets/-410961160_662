@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 200 200"
+     width="200" height="200"
+     role="img"
+     aria-label="Quadrat nehmen (Pip oben links)">
+
+  <defs>
+    <style>
+      .line { fill:none; stroke:#000; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; }
+      .fill { fill:#000; }
+    </style>
+  </defs>
+
+  <!-- Pfeil nach oben (nehmen) -->
+  <path class="line" d="M100 18 L100 62"/>
+  <path class="line" d="M82 40 L100 18 L118 40"/>
+
+  <!-- Quadrat -->
+  <rect class="line" x="50" y="75" width="100" height="100" rx="10" ry="10"/>
+
+  <!-- Pip (kleiner Punkt oben links) -->
+  <circle class="fill" cx="70" cy="95" r="7"/>
+
+</svg>

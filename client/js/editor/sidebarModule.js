@@ -1,3 +1,71 @@
+// The arrow of every block in the editor that can be folded away. The glyph
+// lives in CSS (.editorModule .collapseArrow), so the markup is the same empty
+// span everywhere and one rule sizes, centers and flips all of them - it points
+// down while the block is open and sideways while it carries 'collapsed'.
+function collapseArrowHTML(collapsed) {
+  return `<span class="collapseArrow${collapsed ? ' collapsed' : ''}"></span>`;
+}
+
+function renderCollapseArrow(target, collapsed) {
+  const arrow = document.createElement('span');
+  arrow.className = 'collapseArrow';
+  setCollapseArrow(arrow, collapsed);
+  if(target)
+    target.appendChild(arrow);
+  return arrow;
+}
+
+function setCollapseArrow(arrow, collapsed) {
+  arrow.classList.toggle('collapsed', !!collapsed);
+}
+
+// A block whose body can be folded away by clicking the header. collapsedStates
+// is where the fold is remembered across rebuilds (an object keyed by stateKey),
+// so this works for anything that renders sections, not just a sidebar module.
+function collapsibleSection(target, title, collapsed, renderBody, collapsedStates = null, stateKey = null, options = {}) {
+  if(collapsedStates && stateKey !== null && collapsedStates[stateKey] !== undefined)
+    collapsed = collapsedStates[stateKey];
+  const wrap = div(target, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
+  const header = document.createElement('button');
+  header.type = 'button';
+  header.className = 'collapsibleHeader';
+  header.setAttribute('aria-expanded', String(!collapsed));
+  const arrow = renderCollapseArrow(header, collapsed);
+  const heading = document.createElement('span');
+  heading.className = 'collapsibleTitle';
+  heading.textContent = title;
+  header.appendChild(heading);
+  if(options.renderSummary) {
+    const summary = document.createElement('span');
+    summary.className = 'collapsibleSummary';
+    header.appendChild(summary);
+    options.renderSummary(summary);
+  }
+  wrap.appendChild(header);
+  const body = div(wrap, 'collapsibleBody');
+  header.onclick = _=>{
+    const nowCollapsed = wrap.classList.toggle('collapsed');
+    setCollapseArrow(arrow, nowCollapsed);
+    header.setAttribute('aria-expanded', String(!nowCollapsed));
+    if(collapsedStates && stateKey !== null)
+      collapsedStates[stateKey] = nowCollapsed;
+  };
+  renderBody(body);
+  return wrap;
+}
+
+// showOverlay() hides every overlay, including the one a sidebar module can be opened into by
+// shift-clicking its sidebar button, and a dialog leaves it hidden when it closes. A confirmation
+// asked from inside a module therefore puts that overlay back, so answering the question does not
+// take the panel it was asked from with it.
+async function confirmInEditor(...args) {
+  const confirmed = await confirmOverlay(...args);
+  const moduleInOverlay = $('#editorModuleInOverlay');
+  if(moduleInOverlay && moduleInOverlay.classList.contains('active'))
+    showOverlay('editorModuleOverlay');
+  return confirmed;
+}
+
 class SidebarModule {
   constructor(icon, title, tooltip) {
     this.icon = icon;
@@ -16,6 +84,11 @@ class SidebarModule {
     h.innerText = text;
     (target || this.moduleDOM).append(h);
     return h;
+  }
+
+  addLineBreak(target) {
+    const h = document.createElement('br');
+    (target || this.moduleDOM).append(h);
   }
 
   addLineBreak(target) {
@@ -113,7 +186,19 @@ class SidebarModule {
   onStateReceivedWhileActive(state) {
   }
 
+  onUndoProtocolChanged() {
+    if(this.moduleDOM)
+      this.onUndoProtocolChangedWhileActive();
+  }
+
+  onUndoProtocolChangedWhileActive() {
+  }
+
   openInTarget(target) {
+    // the content width is only for the panel that opened itself - once a module is opened or closed
+    // by hand, the panel goes back to the width the user has (or hasn't) set (see renderSidebar)
+    dropDefaultModuleWidth();
+
     if(this.moduleDOM) {
       this.moduleDOM.dataset.currentlyLoaded = '';
       this.moduleDOM.classList.remove('active');

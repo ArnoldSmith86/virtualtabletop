@@ -9,6 +9,64 @@ let selectionRectangleEnd = null;
 let draggingDragButton = null;
 let widgetRectangles = null;
 
+// Alt+click drills down: clicking the same spot again means "not that one, the
+// one under it". The stack is taken once and then walked, so a widget getting
+// its selection outline (which changes what elementsFromPoint returns) does not
+// reshuffle the list halfway through. It is the stack in the order the selection
+// bar lists it, so "2/3" in the badge is row 2 (and F2) of the very same list.
+let drill = { anchor: null, index: 0, stack: [] };
+const DRILL_TOLERANCE = 4; // px; a click further away than this starts a new drill
+
+function drillTo(clientX, clientY, e) {
+  // no anchor means no drill is running - a coordinate cannot say that, (0, 0)
+  // is a corner of the window like any other
+  const near = !!drill.anchor && Math.abs(clientX - drill.anchor.x) <= DRILL_TOLERANCE && Math.abs(clientY - drill.anchor.y) <= DRILL_TOLERANCE;
+  const stack = near && drill.stack.every(w=>widgets.get(w.id) === w) ? drill.stack : widgetStackAtSorted(clientX, clientY);
+  if(!stack.length) {
+    endDrill(); // empty room space: nothing to drill, and the old anchor is stale
+    return null;
+  }
+
+  const step = e.shiftKey ? -1 : 1;
+  drill = { anchor: { x: clientX, y: clientY }, stack, index: near ? (drill.index + step + stack.length) % stack.length : Math.min(1, stack.length-1) };
+  // the bar lists what is under the pointer, and this is a fresher answer for
+  // that very point than the last scan - so the list and the drill readout above
+  // it always count the same widgets
+  selectionBarAdoptStack(stack, clientX, clientY);
+  showDrillBadge(clientX, clientY);
+  return stack[drill.index];
+}
+
+function endDrill() {
+  drill = { anchor: null, index: 0, stack: [] };
+  if($('#editorDrillBadge'))
+    $('#editorDrillBadge').remove();
+}
+
+// Where in the stack the drill currently is - the editor is the only thing that
+// can say so, the room looks exactly the same as after a plain click. Only while
+// the pointer is still on the spot that was drilled: the bar shows this next to
+// the list of widgets under the pointer, and the two must not count different
+// spots at the same time.
+function drillPosition() {
+  const stack = selectionBarWidgetStack();
+  const onDrilledSpot = drill.stack.length == stack.length && drill.stack.every((w, i)=>stack[i] === w);
+  return onDrilledSpot && drill.stack.length > 1 && selectedWidgets.length == 1 && selectedWidgets[0] === drill.stack[drill.index]
+    ? { index: drill.index + 1, total: drill.stack.length } : null;
+}
+
+// Built from scratch every time so its fade-out animation starts over
+function showDrillBadge(clientX, clientY) {
+  if($('#editorDrillBadge'))
+    $('#editorDrillBadge').remove();
+  const widget = drill.stack[drill.index];
+  const badge = div($('body'), '');
+  badge.id = 'editorDrillBadge';
+  badge.textContent = `${drill.index+1}/${drill.stack.length} · ${widget.get('type') || 'basic'} ${widget.id}`;
+  badge.style.left = `${clientX}px`;
+  badge.style.top = `${clientY}px`;
+}
+
 export function editInputHandler(name, e) {
   // While Space is held (edit-space-pan), never show selection rectangles
   if(document.body.classList.contains('spacePanActive')) {
@@ -48,7 +106,7 @@ export function editInputHandler(name, e) {
   } else if(name == 'mouseup' || name == 'touchend' || name == 'touchcancel') {
     if(selectionRectangleActive) {
       hideSelectionRectangle();
-      applySelectionRectangle(e.shiftKey);
+      applySelectionRectangle(e.shiftKey && !e.altKey, e);
     }
     if(draggingDragButton)
       draggingDragButton.mouseup(name, e);
@@ -128,47 +186,96 @@ function updateDragToolbar(invertSelectionMode) {
   }
 }
 
-function applySelectionRectangle(addToSelection) {
+function applySelectionRectangle(addToSelection, e) {
   const s = getSelectionRectangle();
 
   let newlySelected = [];
   if(s.right - s.left < 5 || s.bottom - s.top < 5) {
-    // resolve each element under the click to its owning widget: some widgets (e.g. a
-    // line) only expose an inner element for hit-testing while their own box has
-    // pointer-events:none, so climb to the nearest ancestor carrying the widget id
-    const clicked = document.elementsFromPoint(s.left, s.top)
-      .map(el => el.closest('[id^="w_"]'))
-      .map(el => el && widgets.get(unescapeID(el.id.slice(2))))
-      .filter(w => w);
-    if(clicked.length)
-      newlySelected = [ clicked[0] ];
+    if(e && e.altKey) {
+      const drilled = drillTo(s.left, s.top, e);
+      if(drilled)
+        newlySelected = [ drilled ];
+    } else {
+      endDrill();
+      // resolve each element under the click to its owning widget: some widgets only
+      // expose an inner element for hit-testing while their own box has
+      // pointer-events:none (a line), and parts a widget renders on top of its own box
+      // (the handle of a pile) have no widget id themselves - so climb to the nearest
+      // ancestor carrying the widget id
+      const clicked = document.elementsFromPoint(s.left, s.top)
+        .map(el => el.closest('[id^="w_"]'))
+        .map(el => el && widgets.get(unescapeID(el.id.slice(2))))
+        .filter(w => w);
+      if(clicked.length)
+        newlySelected = [ clicked[0] ];
+    }
   } else {
+    endDrill();
     newlySelected = selectedWidgetsPreview;
   }
 
-  if(!addToSelection) {
-    setSelection(newlySelected);
-  } else {
-    let selectionToApply = [...selectedWidgets];
-    for(const widget of newlySelected) {
-      if(selectedWidgets.indexOf(widget) == -1)
-        selectionToApply.push(widget);
-      else
-        selectionToApply = selectionToApply.filter(w=>w!=widget);
+  // in selection mode a click on a widget arrives here instead of as editClick,
+  // so this is where a running picker takes it - a selection change would not
+  // reach it for the widget the picker belongs to, which stays selected
+  if(newlySelected.length == 1 && handleWidgetPickerClick(newlySelected[0]))
+    return;
+
+  // a band drawn in the room is the one selection change a running picker owns:
+  // it is how widgets are picked with a band rather than a click
+  selectWidgetsInRoom(_=>{
+    if(!addToSelection) {
+      setSelection(newlySelected);
+    } else {
+      let selectionToApply = [...selectedWidgets];
+      for(const widget of newlySelected) {
+        if(selectedWidgets.indexOf(widget) == -1)
+          selectionToApply.push(widget);
+        else
+          selectionToApply = selectionToApply.filter(w=>w!=widget);
+      }
+      setSelection(selectionToApply);
     }
-    setSelection(selectionToApply);
-  }
+  });
+}
+
+// whether a selection is a different set of widgets than the one before it -
+// re-selecting the same widget (clicking the one that already is selected) is
+// not the editor moving on to another one
+function selectionChanged(previousSelection, newSelection) {
+  return previousSelection.length != newSelection.length || newSelection.some(widget=>previousSelection.indexOf(widget) == -1);
 }
 
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
+
+  // Whatever the editor has open belongs to the widget that was being edited, so
+  // moving on to another one takes it along: the sound library is an overlay
+  // that outlives the editor it was opened from (it does not cover the sidebar,
+  // and a widget can also be selected without clicking in the room), and the
+  // popups hang off controls this very selection change is about to throw away -
+  // the ones that let widgets be picked in the room ignore clicks in there, so
+  // nothing else ever closes them. Picking widgets in the room is not the editor
+  // moving on: the picker restores the selection it started from after every
+  // pick. Every other way to select another widget is - a picker waiting for a
+  // click in the room does not make the JSON editor's tree or an "Edit line ..."
+  // link something else than the editor moving on, so it ends with its popup.
+  endWidgetPickerWithoutTarget();
+  const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
+                        && selectionChanged(previousSelectedWidgets, newSelectedWidgets);
+  if(editorMovedOn)
+    cancelAudioPicker();
+
   selectedWidgets = newSelectedWidgets;
+
+  // before the modules are notified: the panels they build carry a selection bar
+  // that shows where in the history the editor now is
+  selectionBarSelectionChanged(selectedWidgets);
 
   for(const widget of previousSelectedWidgets)
     widget.setHighlighted(false);
 
   for(const widget of selectedWidgets)
-    widget.setHighlighted(true);
+    widget.setHighlighted(jeWidgetHighlightingEnabled());
 
   for(const button of toolbarButtons)
     button.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
@@ -176,11 +283,38 @@ function setSelection(newSelectedWidgets) {
     button.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
   for(const module of sidebarModules)
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
+  updateSelectionBars();
 
   updateDragToolbar();
+
+  // last, once the editor really is on the new selection: closing a popup that
+  // applies on close writes the picked value to the widget it belonged to, and
+  // that delta can come straight back in here (a widget dropping out of the
+  // selection re-enters setSelection) - which must not happen half way through.
+  if(editorMovedOn)
+    closeEditorPopups();
 }
 
-export async function editClick(widget) {
+export async function editClick(widget, button, e) {
+  // "drag to move" is the other way a click in the room arrives, so the drill
+  // gesture has to be here too or it only works in one of the two select modes.
+  // It always counts as handled: drilling back onto the widget that already is
+  // selected must not fall through to running its click routine.
+  if(e && e.altKey) {
+    const drilled = drillTo(e.clientX, e.clientY, e);
+    if(drilled) {
+      if(!handleWidgetPickerClick(drilled))
+        setSelection([ drilled ]);
+      return true;
+    }
+  }
+  endDrill();
+
+  // a running widget picker owns the clicks in the room; without this the click
+  // falls through to widget.click() for the widget the picker belongs to,
+  // because that one is selected the whole time the picker runs
+  if(handleWidgetPickerClick(widget))
+    return true;
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
     return true;
@@ -188,23 +322,34 @@ export async function editClick(widget) {
 }
 
 export function editorReceiveDelta(delta) {
+  // a widget can disappear while it is selected - a pile removes itself as soon
+  // as it holds a single card. Its sidebar inputs would keep writing to the
+  // dead id, and the server re-creates an unknown id as a typeless widget that
+  // then ends up in the saved game, so drop it from the selection first.
+  if(selectedWidgets.some(w=>widgets.get(w.id) !== w))
+    setSelection(selectedWidgets.filter(w=>widgets.get(w.id) === w));
+
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
+  for(const button of toolbarButtons)
+    button.onDeltaReceived(delta);
+  selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
 }
 
 function receiveStateFromServer(state) {
-  // The incoming full state has already replaced the widgets map, so the previously selected widgets may no
-  // longer exist. Reset the deck editor and pass an EMPTY new selection to the modules (previous selection as
-  // the old one) so none of them try to render a now-removed widget - rendering e.g. a removed deck's card
-  // types would dereference the missing deck and throw (crash on switching games while a deck was selected).
+  // A new state replaces every widget in the room, so anything still selected
+  // points at a widget object that is gone by the time this runs. Clearing the
+  // selection first is the same notification the modules got before - just
+  // with the dead widgets already dropped, so nothing re-renders an editor for
+  // one of them and follows its dangling links (a card looks up its deck).
+  // The selection survives leaving edit mode, so this happens while playing too.
   deckEditorStateReplaced();
-  const previousSelection = selectedWidgets;
-  for(const module of sidebarModules) {
-    module.onSelectionChanged([], previousSelection);
-    module.onStateReceived(state);
-  }
+  endDrill();
   setSelection([]);
+  for(const module of sidebarModules)
+    module.onStateReceived(state);
+  selectionBarStateReceived();
 }
 
 function registerSelectionEventHandlers() {
