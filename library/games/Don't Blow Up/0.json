@@ -23,7 +23,11 @@
         "copies": "x4",
         "exploding": true,
         "defuse": false,
-        "sortOrder": 0
+        "sortOrder": 0,
+        "kind": "DANGER",
+        "kindBG": "#7d0c18",
+        "kindInk": "#fff3d6",
+        "kindBorder": "#f2c14e"
       },
       "defuse": {
         "name": "Laser Pointer",
@@ -37,7 +41,11 @@
         "copies": "x6",
         "exploding": false,
         "defuse": true,
-        "sortOrder": 1
+        "sortOrder": 1,
+        "kind": "ACTION",
+        "kindBG": "#21132f",
+        "kindInk": "#f2c14e",
+        "kindBorder": "#f2c14e"
       },
       "nope": {
         "name": "Nope",
@@ -51,7 +59,11 @@
         "copies": "x5",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 2
+        "sortOrder": 2,
+        "kind": "ACTION",
+        "kindBG": "#21132f",
+        "kindInk": "#f2c14e",
+        "kindBorder": "#f2c14e"
       },
       "peek": {
         "name": "Peek",
@@ -65,7 +77,11 @@
         "copies": "x5",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 3
+        "sortOrder": 3,
+        "kind": "ACTION",
+        "kindBG": "#21132f",
+        "kindInk": "#f2c14e",
+        "kindBorder": "#f2c14e"
       },
       "favor": {
         "name": "Favor",
@@ -79,7 +95,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 4
+        "sortOrder": 4,
+        "kind": "ACTION",
+        "kindBG": "#21132f",
+        "kindInk": "#f2c14e",
+        "kindBorder": "#f2c14e"
       },
       "skip": {
         "name": "Skip",
@@ -93,7 +113,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 5
+        "sortOrder": 5,
+        "kind": "ACTION",
+        "kindBG": "#21132f",
+        "kindInk": "#f2c14e",
+        "kindBorder": "#f2c14e"
       },
       "attack": {
         "name": "Attack",
@@ -107,7 +131,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 6
+        "sortOrder": 6,
+        "kind": "ACTION",
+        "kindBG": "#21132f",
+        "kindInk": "#f2c14e",
+        "kindBorder": "#f2c14e"
       },
       "shuffle": {
         "name": "Shuffle",
@@ -121,7 +149,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 7
+        "sortOrder": 7,
+        "kind": "ACTION",
+        "kindBG": "#21132f",
+        "kindInk": "#f2c14e",
+        "kindBorder": "#f2c14e"
       },
       "cat-loaf": {
         "name": "Loaf Cat",
@@ -135,7 +167,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 8
+        "sortOrder": 8,
+        "kind": "CAT CARD",
+        "kindBG": "#fff8e9",
+        "kindInk": "#4a2a06",
+        "kindBorder": "#4a2a06"
       },
       "cat-beans": {
         "name": "Toe Beans",
@@ -149,7 +185,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 9
+        "sortOrder": 9,
+        "kind": "CAT CARD",
+        "kindBG": "#fff8e9",
+        "kindInk": "#4a2a06",
+        "kindBorder": "#4a2a06"
       },
       "cat-void": {
         "name": "Void Cat",
@@ -163,7 +203,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 10
+        "sortOrder": 10,
+        "kind": "CAT CARD",
+        "kindBG": "#fff8e9",
+        "kindInk": "#4a2a06",
+        "kindBorder": "#4a2a06"
       },
       "cat-chonk": {
         "name": "Chonk Cat",
@@ -177,7 +221,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 11
+        "sortOrder": 11,
+        "kind": "CAT CARD",
+        "kindBG": "#fff8e9",
+        "kindInk": "#4a2a06",
+        "kindBorder": "#4a2a06"
       },
       "cat-yowl": {
         "name": "Yowl Cat",
@@ -191,7 +239,11 @@
         "copies": "x4",
         "exploding": false,
         "defuse": false,
-        "sortOrder": 12
+        "sortOrder": 12,
+        "kind": "CAT CARD",
+        "kindBG": "#fff8e9",
+        "kindInk": "#4a2a06",
+        "kindBorder": "#4a2a06"
       }
     },
     "faceTemplates": [
@@ -305,7 +357,7 @@
                 "border-radius": "14px",
                 "overflow": "hidden",
                 "background": "linear-gradient(158deg, ${PROPERTY tint1} 0%, ${PROPERTY tint2} 100%)",
-                "box-shadow": "inset 0 0 0 2px rgba(255,255,255,.28), inset 0 0 26px rgba(0,0,0,.28)"
+                "box-shadow": "inset 0 0 0 5px ${PROPERTY kindBorder}, inset 0 0 26px rgba(0,0,0,.28)"
               },
               ".weave": {
                 "position": "absolute",
@@ -324,30 +376,10 @@
                 "border-radius": "50%",
                 "background": "radial-gradient(circle, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 68%)"
               },
-              ".chip": {
-                "position": "absolute",
-                "left": "8px",
-                "top": "8px",
-                "width": "48px",
-                "height": "48px",
-                "border-radius": "12px",
-                "background": "rgba(0,0,0,.22)",
-                "box-shadow": "inset 0 0 0 1px rgba(255,255,255,.22)"
-              },
-              ".ci": {
-                "position": "absolute",
-                "left": "15px",
-                "top": "15px",
-                "width": "34px",
-                "height": "34px",
-                "background": "${PROPERTY ink}",
-                "-webkit-mask": "url('/i/game-icons.net/${PROPERTY icon}.svg') center/contain no-repeat",
-                "mask": "url('/i/game-icons.net/${PROPERTY icon}.svg') center/contain no-repeat"
-              },
               ".copies": {
                 "position": "absolute",
                 "right": "12px",
-                "top": "12px",
+                "top": "40px",
                 "font-family": "'Roboto Condensed', sans-serif",
                 "font-size": "13px",
                 "font-weight": "700",
@@ -401,17 +433,47 @@
                 "line-height": "12px",
                 "color": "${PROPERTY ink}",
                 "opacity": ".62"
+              },
+              ".kind": {
+                "position": "absolute",
+                "left": "5px",
+                "right": "5px",
+                "top": "5px",
+                "height": "29px",
+                "border-radius": "8px 8px 4px 4px",
+                "background": "${PROPERTY kindBG}",
+                "color": "${PROPERTY kindInk}",
+                "font-family": "'Roboto Condensed', sans-serif",
+                "font-size": "17px",
+                "font-weight": "900",
+                "letter-spacing": "1.5px",
+                "line-height": "29px",
+                "padding-left": "7px",
+                "text-align": "left",
+                "box-shadow": "0 2px 0 rgba(0,0,0,.24)"
               }
             },
-            "value": "<div class=\"weave\"></div><div class=\"halo\"></div><div class=\"chip\"></div><div class=\"ci\"></div><div class=\"copies\">${PROPERTY copies}</div><div class=\"plate\"></div><div class=\"name\">${PROPERTY name}</div><div class=\"act\">${PROPERTY action}</div><div class=\"fla\">${PROPERTY flavor}</div>"
+            "value": "<div class=\"weave\"></div><div class=\"halo\"></div><div class=\"kind\">${PROPERTY kind}</div><div class=\"copies\">${PROPERTY copies}</div><div class=\"plate\"></div><div class=\"name\">${PROPERTY name}</div><div class=\"act\">${PROPERTY action}</div><div class=\"fla\">${PROPERTY flavor}</div>"
           },
           {
             "type": "icon",
-            "x": 30,
-            "y": 44,
-            "width": 145,
-            "height": 145,
-            "size": 145,
+            "x": 12,
+            "y": 40,
+            "width": 42,
+            "height": 42,
+            "size": 42,
+            "dynamicProperties": {
+              "value": "icon",
+              "color": "ink"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 42,
+            "y": 62,
+            "width": 122,
+            "height": 122,
+            "size": 122,
             "dynamicProperties": {
               "value": "icon",
               "color": "ink"
@@ -3772,7 +3834,7 @@
     "version": 21,
     "info": {
       "name": "Don't Blow Up",
-      "image": "/assets/1236149984_41814",
+      "image": "/assets/1933576336_47724",
       "rules": "",
       "ruleText": "<div>The deck is full of cards that let you avoid, delay and sabotage - and of exploding cats. On your turn you may play any number of cards and then you must draw one. Draw an exploding cat and you are out of the game, unless you can play a Laser Pointer, which lets you secretly slide the cat back into the deck anywhere you like.</div><div><br></div><div>Cat cards have no power on their own, but two matching cats let you take a random card from another player, three matching cats let you name the card you take, and five different cats let you pick any card out of the discard pile.</div><div><br></div><div>There is always one exploding cat less in the deck than there are players, so the game always ends with exactly one survivor.</div>",
       "bgg": "https://boardgamegeek.com/boardgame/172225/exploding-kittens",
