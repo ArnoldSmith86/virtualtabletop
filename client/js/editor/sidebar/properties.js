@@ -1038,24 +1038,19 @@ function formatTimerMs(ms) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds - minutes * 60;
   const secondsString = (seconds < 10 ? '0' : '') + (Number.isInteger(seconds) ? seconds : +seconds.toFixed(3));
-  // an hour or more gets an hours field, the same way the timer widget shows it
-  const hours = Math.floor(minutes / 60);
-  const minutesString = hours ? `${hours}:${String(minutes - hours*60).padStart(2, '0')}` : `${minutes}`;
-  return `${negative ? '-' : ''}${minutesString}:${secondsString}`;
+  return `${negative ? '-' : ''}${minutes}:${secondsString}`;
 }
 
-// accepts "mm:ss", "m:ss.s", "h:mm:ss" or plain seconds; returns milliseconds,
+// accepts "mm:ss", "m:ss.s" or plain seconds; returns milliseconds,
 // null for empty input and undefined for unparseable input
 function parseTimerInput(text) {
   const trimmed = String(text).trim();
   if(trimmed === '')
     return null;
-  const match = trimmed.match(/^(-)?(?:(\d+):)?(?:(\d+):)?(\d+(?:\.\d+)?)$/);
+  const match = trimmed.match(/^(-)?(?:(\d+):)?(\d+(?:\.\d+)?)$/);
   if(!match)
     return undefined;
-  // one number in front of the seconds is the minutes, two are hours and minutes
-  const [ hours, minutes ] = match[3] === undefined ? [ 0, +match[2] || 0 ] : [ +match[2], +match[3] ];
-  return Math.round(((hours * 60 + minutes) * 60 + +match[4]) * 1000) * (match[1] ? -1 : 1);
+  return Math.round(((+match[2] || 0) * 60 + +match[3]) * 1000) * (match[1] ? -1 : 1);
 }
 
 function parseFontSize(fontSize) {
@@ -9126,7 +9121,7 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
-  // a text input showing a milliseconds property as mm:ss, with an hours field from an hour on
+  // a text input showing a milliseconds property as mm:ss
   renderTimerTimeInput(widget, labelText, property, target, options = {}) {
     const wrap = div(target, 'propertyInput timeInput');
     const label = document.createElement('label');
@@ -9137,7 +9132,7 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.placeholder = '[h:]mm:ss';
+    input.placeholder = 'mm:ss';
     input.onchange = () => {
       const ms = parseTimerInput(input.value);
       if(ms === undefined || (ms === null && !options.nullable)) {
