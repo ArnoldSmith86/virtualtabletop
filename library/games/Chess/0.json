@@ -1201,12 +1201,29 @@
         "value": "${position}"
       },
       {
-        "func": "SET",
-        "collection": [
-          "Position Number"
+        "func": "IF",
+        "operand1": "${setup}",
+        "operand2": "standard",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "Position Number"
+            ],
+            "property": "text",
+            "value": ""
+          }
         ],
-        "property": "text",
-        "value": "#${position}"
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "Position Number"
+            ],
+            "property": "text",
+            "value": "#${position}"
+          }
+        ]
       },
       "// BACK RANK",
       "// bishops, queen and the knight/rook/king pattern are derived from the position number",
@@ -1436,7 +1453,7 @@
     "width": 80,
     "height": 30,
     "css": "font-size: 22px; text-align: center; color: #666",
-    "text": "#518"
+    "text": ""
   },
   "White Score": {
     "type": "label",
@@ -1581,7 +1598,7 @@
       "similarName": "Chess",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "Both players click a seat (Black plays from the top, White from the bottom). Drag a piece onto an occupied square and the piece that was standing there moves to its owner's capture row, the square is highlighted and the turn passes to the other seat. Nothing is ever refused: check, en passant, castling and promotion are up to the players.\n\nNext Game clears the board, swaps the colors and scores of the two seats and asks for the starting position: the classic line-up, a random Chess960 / Fischer Random position, or a Chess960 position of your choice. All 960 positions are numbered from 0 to 959 (the classic one is 518), so both players can agree on a number; the number in play is shown below the button. Chess960 always gives the bishops opposite colors and puts the king between the two rooks, and its castling ends with king and rook on the same squares as in classic chess.\n\nAdd Piece puts a copy of any piece on the table - for a promotion or for setting up a study - and lets you choose which way it faces. The checkbox in the Next Game dialog removes those extra pieces again. The + and - buttons next to each seat keep the match score in steps of half a point.",
+      "helpText": "Both players click a seat (Black plays from the top, White from the bottom). Drag a piece onto an occupied square and the piece that was standing there moves to its owner's capture row, the square is highlighted and the turn passes to the other seat. Nothing is ever refused: check, en passant, castling and promotion are up to the players.\n\nNext Game clears the board, swaps the colors and scores of the two seats and asks for the starting position: the classic line-up, a random Chess960 / Fischer Random position, or a Chess960 position of your choice. All 960 positions are numbered from 0 to 959 (the classic one is 518), so both players can agree on a number; Chess960 positions show their number below the button. Chess960 always gives the bishops opposite colors and puts the king between the two rooks, and its castling ends with king and rook on the same squares as in classic chess.\n\nAdd Piece puts a copy of any piece on the table - for a promotion or for setting up a study - and lets you choose which way it faces. The checkbox in the Next Game dialog removes those extra pieces again. The + and - buttons next to each seat keep the match score in steps of half a point.",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
