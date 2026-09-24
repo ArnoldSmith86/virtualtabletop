@@ -24,7 +24,7 @@ export function startWebSocket() {
 
   connection.onopen = () => {
     if(!urlProperties.askID) {
-      toServer('room', { playerName, roomID });
+      toServer('room', { playerName, roomID, collection: getCollectionID(), password: getRoomPassword(roomID) });
       if(urlProperties.trace)
         toServer('enableTrace');
     }

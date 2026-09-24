@@ -31,6 +31,17 @@ function normalizeRoomID(roomID) {
   return roomID;
 }
 
+// used when switching to another room without reloading the page
+function setRoomID(newRoomID) {
+  roomID = normalizeRoomID(newRoomID);
+  undoProtocol = [];
+  delta = { s: {} };
+  deltaChanged = false;
+  batchDepth = 0;
+  // the editor bundle resolves its bare roomID references through window
+  window.roomID = roomID;
+}
+
 function applyCustomCss(gameSettings) {
   let style = document.getElementById('globalCss');
   if (style)
@@ -586,6 +597,9 @@ function receiveStateFromServer(args) {
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     if(urlProperties.about) {
       $('#aboutButton').click();
+    } else if(document.body.classList.contains('roomLocked')) {
+      // the game shelf is disabled in locked rooms
+      $('#activeGameButton').click();
     } else {
       $('#statesButton').click();
     }
