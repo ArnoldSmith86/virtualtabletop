@@ -115,8 +115,6 @@ export function openEditor() {
 }
 
 function closeEditor() {
-  setJEroutineLogging(jeRoutineLogging = false);
-
   deckEditor.close();
 
   for(const module of sidebarModules)
