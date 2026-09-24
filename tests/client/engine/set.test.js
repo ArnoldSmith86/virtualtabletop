@@ -45,11 +45,11 @@ forEachLegacy(({ name, legacy }) => {
     });
 
     // https://github.com/ArnoldSmith86/virtualtabletop/issues/3059 (3): the '+' -> '=' fallback
-    // is written back onto the operation object inside the per-widget loop, so the first widget
-    // whose property is null converts every later widget from append to overwrite. c3 keeps its
-    // 'x' in a correct implementation; it does not here, and it only misbehaves because c2 comes
-    // before it - which is why this is asserted per widget and not as a total.
-    test("relation '+' leaks the fallback to later widgets (issue #3059.3)", async () => {
+    // used to be written back onto the operation object inside the per-widget loop, so the first
+    // widget whose property is null converted every later widget from append to overwrite. Each
+    // widget decides for itself now, so c3 keeps its 'x' even though c2 comes before it - which
+    // is why this is asserted per widget and not as a total.
+    test("relation '+' falls back to '=' per widget (issue #3059.3)", async () => {
       expect(await children([
         selectChildren,
         { func: 'SET', property: 'p', value: 'x' },
@@ -57,7 +57,7 @@ forEachLegacy(({ name, legacy }) => {
         { func: 'SET', property: 'p', value: null },
         selectChildren,
         { func: 'SET', property: 'p', value: '!', relation: '+' }
-      ], legacy, 'p')).toEqual([ 'x!', '!', '!' ]);
+      ], legacy, 'p')).toEqual([ 'x!', '!', 'x!' ]);
     });
 
     test('a read-only property is refused', async () => {
