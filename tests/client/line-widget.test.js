@@ -1,4 +1,4 @@
-import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta } from '../../client/js/serverstate.js';
+import { widgets, addWidget, batchStart, batchEnd, widgetFilter, flushDelta, finishLoadingWidgets } from '../../client/js/serverstate.js';
 import { Widget } from '../../client/js/widgets/widget.js';
 import { compareDropTarget, exceedsDropLimit } from '../../client/js/main.js';
 
@@ -950,5 +950,156 @@ describe('dragging a widget onto a line to make it a stop', () => {
       expect(line.get('dropLimit')).toBe(-1);
       expect(token.lineStopDropTarget()).not.toBeNull();
     });
+  });
+});
+
+describe('a line places its stops when a state is loaded', () => {
+  const stopIDs = [ 'load-a', 'load-b', 'load-c' ];
+
+  // what happens when a state arrives: every widget is added, and only once the
+  // whole state is in the room does each of them get its onStateLoaded turn
+  async function loadState(lineState, stopStates) {
+    const line = createLine(lineState);
+    const stops = stopStates.map(state => {
+      const stop = new Widget(state.id);
+      addWidget({ type: 'basic', parent: line.id, width: 40, height: 40, ...state }, stop);
+      return stop;
+    });
+    await finishLoadingWidgets();
+    return { line, stops };
+  }
+
+  function unload(line, stops) {
+    for(const stop of stops)
+      removeWidget(stop.id);
+    removeWidget(line.id);
+  }
+
+  // 300 long, offset from the line's own origin so a placed stop cannot be
+  // confused with one that was never placed at all
+  const geometry = { x: 100, y: 100, lineStart: { x: 20, y: 70 }, lineEnd: { x: 320, y: 70 }, rotateStops: false };
+  const coordinates = stops => stops.map(stop => [ stop.get('x'), stop.get('y') ]);
+
+  test('stops that carry no coordinates end up on the path instead of in the corner', async () => {
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: false, stops: stopIDs.map((widget, i) => ({ widget, position: i/2 })) },
+      stopIDs.map(id => ({ id }))
+    );
+
+    expect(coordinates(stops)).toEqual([ [ 0, 50 ], [ 150, 50 ], [ 300, 50 ] ]);
+    unload(line, stops);
+  });
+
+  test('autoSpaceStops re-spaces stops whose stored positions do not match the line anymore', async () => {
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: true, stops: stopIDs.map((widget, i) => ({ widget, position: i/10 })) },
+      stopIDs.map(id => ({ id }))
+    );
+
+    expect(line.stopList().map(entry => entry.position)).toEqual([ 0, 0.5, 1 ]);
+    expect(coordinates(stops)).toEqual([ [ 0, 50 ], [ 150, 50 ], [ 300, 50 ] ]);
+    unload(line, stops);
+  });
+
+  test('stops that sit on the path keep the positions they were saved with', async () => {
+    // uneven positions the line would re-space away from if it laid them out
+    // again: a state that renders correctly is a deliberate one
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: true, stops: stopIDs.map((widget, i) => ({ widget, position: i/10 })) },
+      stopIDs.map((id, i) => ({ id, x: i*30, y: 50 }))
+    );
+
+    expect(line.stopList().map(entry => entry.position)).toEqual([ 0, 0.1, 0.2 ]);
+    expect(coordinates(stops)).toEqual([ [ 0, 50 ], [ 30, 50 ], [ 60, 50 ] ]);
+    unload(line, stops);
+  });
+
+  test('a stop that sits on the path but is not turned onto it is rotated', async () => {
+    // a state that stores where a stop sits but not how it is turned renders it
+    // unrotated and snaps it onto the tangent on the first interaction - the
+    // same before/after split as a stop with no coordinates at all
+    const curve = { ...geometry, id: 'load-line', rotateStops: true, autoSpaceStops: false, controlStart: { x: 20, y: -80 }, controlEnd: { x: 320, y: 220 }, stops: [ { widget: 'load-a', position: 0.5 } ] };
+    const stopState = { id: 'load-a', width: 60, height: 40 };
+
+    const placed = await loadState(curve, [ stopState ]);
+    const [ x, y ] = coordinates(placed.stops)[0];
+    const rotation = placed.stops[0].get('rotation');
+    unload(placed.line, placed.stops);
+    expect(rotation).not.toBe(0);
+
+    const { line, stops } = await loadState(curve, [ { ...stopState, x, y } ]);
+    expect(stops[0].get('rotation')).toBe(rotation);
+    unload(line, stops);
+  });
+
+  test('a save whose stops already sit on the path is not written to again', async () => {
+    const lineState = { ...geometry, id: 'saved-line', autoSpaceStops: true, stops: stopIDs.map((widget, i) => ({ widget, position: i/2 })) };
+    const saved = await loadState(lineState, stopIDs.map(id => ({ id })));
+    const savedLine = JSON.parse(JSON.stringify(saved.line.state));
+    const savedStops = saved.stops.map(stop => JSON.parse(JSON.stringify(stop.state)));
+    unload(saved.line, saved.stops);
+
+    const { line, stops } = await loadState(savedLine, savedStops);
+    // set() writes to state only, so a widget nothing has written to still
+    // equals the state it was loaded with - down to the last property
+    for(const widget of [ line, ...stops ])
+      expect(widget.state).toEqual(widget.unalteredState);
+    unload(line, stops);
+  });
+
+  test('a stops list naming a widget the state does not contain is left as it is', async () => {
+    // laying the line out would write the list back without the missing entry,
+    // so the save would lose it - and it is what a routine adding a line and its
+    // stops one at a time looks like while it is still adding them
+    const { line, stops } = await loadState(
+      { ...geometry, id: 'load-line', autoSpaceStops: true, stops: [ ...stopIDs, 'load-later' ].map((widget, i) => ({ widget, position: i/10 })) },
+      stopIDs.map(id => ({ id }))
+    );
+
+    expect(line.get('stops').map(entry => entry.widget)).toEqual([ ...stopIDs, 'load-later' ]);
+    expect(coordinates(stops)).toEqual([ [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ]);
+    unload(line, stops);
+  });
+
+  test('a stop that is not a child of the line is left where the state put it', async () => {
+    // an external stop is placed through the CSS transforms of two frames, which
+    // read differently on a client that does not render the line at all - so
+    // every client agreeing on where it goes is not a given
+    const line = createLine({ ...geometry, id: 'external-line', autoSpaceStops: false, stops: [ { widget: 'load-a', position: 0.5 } ] });
+    const stop = new Widget('load-a');
+    addWidget({ id: 'load-a', type: 'basic', x: 7, y: 7, width: 40, height: 40 }, stop);
+
+    await finishLoadingWidgets();
+
+    expect(line.hasExternalStops()).toBe(true);
+    expect([ stop.get('x'), stop.get('y') ]).toEqual([ 7, 7 ]);
+    unload(line, [ stop ]);
+  });
+
+  test('placing the stops runs none of the routines the game listens with', async () => {
+    // every client loads the same state, so a routine running here would run
+    // once per client on nothing but the room being opened - and an INPUT in it
+    // would hold the load batch open until that one client answers it
+    const line = createLine({ ...geometry, id: 'load-line', autoSpaceStops: false, stops: [ { widget: 'load-a', position: 0.5 } ] });
+    const stop = new Widget('load-a');
+    addWidget({ id: 'load-a', type: 'basic', parent: 'load-line', width: 40, height: 40, xChangeRoutine: [ { func: 'INPUT' } ] }, stop);
+    const listener = new Widget('load-listener');
+    addWidget({ id: 'load-listener', type: 'basic', xGlobalUpdateRoutine: [ { func: 'INPUT' } ] }, listener);
+
+    const evaluated = [];
+    for(const widget of [ line, stop, listener ])
+      widget.evaluateRoutine = async routine => { evaluated.push([ widget.id, routine ]); };
+
+    await finishLoadingWidgets();
+
+    expect(evaluated).toEqual([]);
+    expect([ stop.get('x'), stop.get('y') ]).toEqual([ 150, 50 ]);
+
+    // and the game gets its routines back for what happens after the load
+    await stop.set('x', 42);
+    expect(evaluated).toEqual([ [ 'load-a', 'xChangeRoutine' ], [ 'load-listener', 'xGlobalUpdateRoutine' ] ]);
+
+    removeWidget('load-listener');
+    unload(line, [ stop ]);
   });
 });
