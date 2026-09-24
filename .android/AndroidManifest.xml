@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.virtualtabletop.server">
+
+  <!-- no versionCode or versionName here: build-apk.sh derives both from the commit the app is
+       built from and aapt2 only fills them in when the manifest leaves them out -->
+
+  <!-- Android 10 and newer refuse to execute files an app downloaded into its own data
+       directory once the app targets API 29, so the target stays at 28 - the same reason
+       Termux does. minSdk 24 is what the downloaded Termux binaries are built for. -->
+  <uses-sdk android:minSdkVersion="24" android:targetSdkVersion="28"/>
+
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <!-- Android 13 and newer shows no notification at all until this is granted, including the one
+       a foreground service carries - which is where the address, Open, Share and Quit live. The
+       app targets 28, so the system asks for it on its own once the channel exists and an
+       activity is on screen; a runtime request is not the app's to make. -->
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+  <application
+      android:label="@string/app_name"
+      android:icon="@drawable/ic_launcher"
+      android:theme="@style/Theme.VirtualTabletop"
+      android:allowBackup="false">
+
+    <activity
+        android:name=".MainActivity"
+        android:exported="true"
+        android:launchMode="singleTask">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+
+    <service android:name=".ServerService" android:exported="false"/>
+  </application>
+</manifest>

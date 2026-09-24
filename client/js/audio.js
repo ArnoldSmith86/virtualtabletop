@@ -119,13 +119,22 @@ const events = ['mousedown', 'keydown', 'touchstart'];
 let audioBufferObj = {}
 let audioSettings = {};
 
+// Safari only dropped the prefix in 14.1; before that `new AudioContext()` is a ReferenceError
+// on the first click anywhere in the room, so every game sound is lost. Everything below already
+// checks whether there is a context, so a browser with neither constructor just stays silent.
+const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+
+function createAudioContext() {
+  return AudioContextConstructor ? new AudioContextConstructor() : undefined;
+}
+
 events.forEach(event => {
   document.addEventListener(event, initializeAudioContext, { once: true });
 });
 // Initialize AudioContext after user event
 function initializeAudioContext() {
   if (!audioContext) {
-    audioContext = new AudioContext();
+    audioContext = createAudioContext();
   }
 }
 
@@ -188,7 +197,7 @@ onMessage('audio', async function(args) {
     try {
       if (audioContext) {
         audioContext.close();
-        audioContext = new AudioContext();
+        audioContext = createAudioContext();
       }
     } catch (err) {
       console.error(`Error resetting audio context: ${err.message}`);

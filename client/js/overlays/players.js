@@ -1,4 +1,5 @@
 import { asArray, onLoad, rand, shareURL } from '../domhelpers.js';
+import { setStatusMessage, setMyName, setActivePlayersList } from './status.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -8,6 +9,7 @@ let activePlayers = [];
 let activeColors = [];
 let mouseCoords = [];
 let mySessionID = null;
+let prevSessions = null;
 let metaUpdateResolves = [];
 let inviteStatusTimeout = null;
 localStorage.setItem('playerName', playerName);
@@ -117,9 +119,46 @@ function showInviteStatus(text, isError) {
     inviteStatusTimeout = setTimeout(_=>showInviteStatus(''), 5000);
 }
 
+// describes the joins, leaves and renames between two session lists of a meta update
+// session IDs are per connection, so a reconnect or a second tab of the same player appears as a new
+// session for a name that is already there - as with closing one of two tabs, that is not announced
+export function sessionChangeMessages(previous, current, ownSessionID) {
+  const currentNames = new Set(current.values());
+  const previousNames = new Set(previous.values());
+  const parts = new Set();
+  for(const [ sessionID, player ] of previous)
+    if(!current.has(sessionID) && !currentNames.has(player))
+      parts.add(`${player} left`);
+  for(const [ sessionID, player ] of current) {
+    const before = previous.get(sessionID);
+    if(before === undefined) {
+      if(!previousNames.has(player))
+        parts.add(`${player} joined`);
+    // a rename of this tab is already announced by the 'rename' message handler
+    } else if(before != player && sessionID != ownSessionID) {
+      parts.add(`${before} renamed to ${player}`);
+    }
+  }
+  return [ ...parts ];
+}
+
+function announceSessionChanges(sessions) {
+  const current = new Map((sessions || []).map(s=>[ s.sessionID, s.player ]));
+  const previous = prevSessions;
+  prevSessions = current;
+  if(!previous)
+    return;
+
+  const parts = sessionChangeMessages(previous, current, mySessionID);
+  if(parts.length)
+    setStatusMessage(parts.join('; '));
+}
+
 function fillPlayerList(players, active, sessions) {
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
+  setActivePlayersList(activePlayers);
+  setMyName(playerName);
   removeFromDOM('#playersTable tbody > tr, #playerCursors > .cursor');
 
   if(players[playerName] !== undefined)
@@ -241,12 +280,6 @@ function updatePlayerCountDisplay() {
   const tooltip = $('.tooltip', playersButton);
   if (tooltip) tooltip.textContent = `Players: ${playerCount}`;
   updateToolbarLayout(); // the player count is part of the toolbar in some layouts
-
-  [playersButton, tooltip].forEach(element => element.classList.add('playerChange'));
-  
-  setTimeout(() => {
-    [playersButton, tooltip].forEach(element => element.classList.remove('playerChange'));
-  }, 1000);
 }
 
 onLoad(function() {
@@ -258,6 +291,7 @@ onLoad(function() {
   onMessage('meta', function(args) {
     lastMetaArgs = args;
     fillPlayerList(args.meta.players, args.activePlayers, args.sessions);
+    announceSessionChanges(args.sessions);
     metaUpdateResolves = metaUpdateResolves.filter(entry=>!entry(args));
   });
   onMessage('sessionID', function(args) {
@@ -279,7 +313,7 @@ onLoad(function() {
       playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {
         playerCursors[args.player].classList.remove('pressed','active','foreign');
-      } else {
+      } else if(args.mouseState.x !== undefined) {
         const x = args.mouseState.x*scale;
         const y = args.mouseState.y*scale;
         playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
@@ -306,6 +340,7 @@ onLoad(function() {
   onMessage('rename', function(args) {
     const oldName = playerName;
     playerName = args;
+    setStatusMessage(`You renamed to ${playerName}`);
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
       widget.updateOwner();

@@ -45,13 +45,17 @@ export class Card extends Widget {
         this.domElement.innerHTML = '';
         this.deck.removeCard(this);
       }
-      if(delta.deck) {
-        this.deck = widgets.get(delta.deck);
+      // a deck that is not in the room, or an id that names a widget which is no deck,
+      // leaves the card without faces instead of throwing halfway through updating the
+      // DOM - the same widgets a state load refuses to build a card for
+      const referenced = delta.deck && widgets.get(delta.deck) || null;
+      this.deck = referenced instanceof Deck ? referenced : null;
+      if(this.deck) {
         this.deck.addCard(this);
         const faceTemplates = this.deck.get('faceTemplates');
         this.createFaces(Array.isArray(faceTemplates) ? faceTemplates : []);
-      } else {
-        this.deck = null;
+      } else if(delta.deck) {
+        console.error(`Card ${this.get('id')} has no faces because ${referenced ? `widget ${delta.deck} is not a deck` : `its deck ${delta.deck} does not exist`}!`);
       }
       for(const child of childNodes)
         if(!child.className.match(/cardFace/))
@@ -155,6 +159,7 @@ export class Card extends Widget {
           // What was last typed here, so that a card property arriving back from the server as the echo of
           // it does not rewrite the text under the caret (see setValue below).
           let lastTyped = null;
+          let svgImageRequest = 0;
 
           // A write object is made writable with contenteditable rather than being a text area, so that it
           // stays the same div in all three of its states - writable, locked and the readonly copy the deck
@@ -185,8 +190,10 @@ export class Card extends Widget {
           }
 
           const setValue = _=>{
+            const request = ++svgImageRequest;
             const usedProperties = new Set();
             const object = JSON.parse(JSON.stringify(original));
+            const previousBackgroundImage = objectDiv.style.backgroundImage;
 
             if(typeof object.dynamicProperties == 'object')
               for(const dp of Object.keys(object.dynamicProperties))
@@ -207,13 +214,29 @@ export class Card extends Widget {
             if(object.type == 'image') {
               if(object.value) {
                 if(object.svgReplaces) {
+                  let latestImageLoad = 0;
+                  if(previousBackgroundImage)
+                    objectDiv.style.backgroundImage = previousBackgroundImage;
                   const replaces = { ...object.svgReplaces };
                   for(const key in replaces)
                     replaces[key] = this.get(replaces[key]);
-                  const svgResult = getSVG(object.value, replaces, _=>{
-                    objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
-                  });
-                  objectDiv.style.backgroundImage = `url("${svgResult}")`;
+                  const showSVG = svgResult => {
+                    if(!svgResult)
+                      return;
+                    const imageLoad = ++latestImageLoad;
+                    const image = new Image();
+                    const show = () => {
+                      if(request == svgImageRequest && imageLoad == latestImageLoad)
+                        objectDiv.style.backgroundImage = `url("${svgResult}")`;
+                    };
+                    image.onload = () => {
+                      const decoded = typeof image.decode == 'function' ? image.decode() : Promise.resolve();
+                      decoded.catch(_=>{}).then(show);
+                    };
+                    image.onerror = show;
+                    image.src = svgResult;
+                  };
+                  showSVG(getSVG(object.value, replaces, showSVG));
                 } else {
                   objectDiv.style.backgroundImage = mapAssetURLs(`url("${object.value}")`);
                 }
@@ -424,7 +447,7 @@ export class Card extends Widget {
   }
 
   getFaceCount() {
-    const faceTemplates = this.deck.get('faceTemplates');
+    const faceTemplates = this.deck && this.deck.get('faceTemplates');
     if(Array.isArray(faceTemplates))
       return faceTemplates.length;
     else

@@ -215,7 +215,7 @@ const WIDGET_PROPERTIES = {
     },
     Line: {
         ...COMMON_PROPERTIES,
-        layer: 'any', movable: 'boolean', lineShape: v=>[ 'line', 'ellipse' ].includes(v) || 'lineShape must be "line" or "ellipse"', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', stops: v=>Array.isArray(v) && v.every(e=>e && typeof e === 'object' && typeof e.widget === 'string' && typeof e.position === 'number') || 'stops must be an array of { widget, position } objects', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', autoSpaceStops: 'boolean', dropTarget: 'any', onEnter: 'object', onLeave: 'object', connectStart: 'any', connectEnd: 'any'
+        layer: 'any', movable: 'boolean', lineShape: v=>[ 'line', 'ellipse' ].includes(v) || 'lineShape must be "line" or "ellipse"', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', stops: v=>Array.isArray(v) && v.every(e=>e && typeof e === 'object' && typeof e.widget === 'string' && typeof e.position === 'number') || 'stops must be an array of { widget, position } objects', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', rotationOffset: 'number', autoSpaceStops: 'boolean', dropTarget: 'any', onEnter: 'object', onLeave: 'object', connectStart: 'any', connectEnd: 'any'
     },
     Pile: {
         ...COMMON_PROPERTIES,
@@ -1196,11 +1196,7 @@ function getCustomPropertyUsage(data) {
 function validateGameFile(data, checkMeta) {
     const problems = [];
     
-    // Get all custom properties used in the game file
-    const customProperties = getCustomPropertyUsage(data);
-    const calledCustomRoutines = [];
-    
-    // Basic structure validation
+    // Basic structure validation, before anything walks the data
     if (typeof data !== 'object' || data === null) {
         problems.push({
             widget: '',
@@ -1209,6 +1205,10 @@ function validateGameFile(data, checkMeta) {
         });
         return problems;
     }
+    
+    // Get all custom properties used in the game file
+    const customProperties = getCustomPropertyUsage(data);
+    const calledCustomRoutines = [];
     
     // Check for _meta
     if (checkMeta && !data._meta) {
@@ -1263,7 +1263,7 @@ function validateGameFile(data, checkMeta) {
                 'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
                 'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
                 'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
-                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery',
+                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery', 'usesAILayout',
                 'importerTemp', 'importerWarnings', 'importerSchemaVersion'
             ];
             for (const prop of Object.keys(data._meta.info)) {

@@ -20,6 +20,9 @@ jobs:
         testfile:
           - card.js
           - editor.js
+          - connection.js
+          - gameshelf.js
+          - gamelink.js
           - toolbar.js
           - boardsize.js
           - draglimit.js

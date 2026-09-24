@@ -10,20 +10,35 @@ import { MIN_BOARD_SIZE, MAX_BOARD_SIZE, normalizeBoardSize } from '../client/js
 import Statistics from './statistics.mjs';
 import Zip from './zip.mjs';
 
+let nextRoomWriteID = 0;
+
 export default class Room {
   players = [];
   state = {};
   deltaID = 0;
+  isLoading = false;
   lastStatisticsDeltaID = 0;
+  lastMouseState = new Map();
 
   constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
     this.unloadCallback = unloadCallback;
     this.publicLibraryUpdatedCallback = publicLibraryUpdatedCallback;
+    this.startUnloadTimeout();
+  }
+
+  // loading a room can take a while because linked states are fetched over the network - unloading
+  // it in the middle of that would write a half loaded room to disk, so wait for the load to finish
+  startUnloadTimeout() {
+    clearTimeout(this.unloadTimeout);
     this.unloadTimeout = setTimeout(_=>{
       if(this.players.length == 0) {
-        Logging.log(`unloading room ${this.id} after 5s without player connection`);
-        this.unload();
+        if(this.isLoading) {
+          this.startUnloadTimeout();
+        } else {
+          Logging.log(`unloading room ${this.id} after 5s without player connection`);
+          this.unload();
+        }
       }
     }, 5000);
   }
@@ -52,6 +67,14 @@ export default class Room {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
     } else {
       player.send('state', this.state);
+      // only the activity status is meaningful for somebody who just joined - replaying the whole
+      // mouse state would show every other player's cursor as active or even pressed at a position
+      // that can be minutes old
+      for(const other of this.players) {
+        const mouseState = this.lastMouseState.get(other);
+        if(other != player && mouseState)
+          player.send('mouse', { player: other.name, mouseState: { inactive: true, editMode: mouseState.editMode, activeOverlay: mouseState.activeOverlay } });
+      }
     }
 
     if(this.traceIsEnabled()) {
@@ -355,8 +378,12 @@ export default class Room {
   editState(player, id, meta, variantInput, variantOperationQueue) {
     const variants = this.state._meta.states[id].variants;
 
+    // reordering parks a save file under a name of its own while the variants it swaps with move.
+    // variants are addressed by their numeric index, so a non-numeric name cannot collide with one
+    const tempVariantID = '--TEMP--';
+
     const renameVariantFile = (stateID, oldVariantID, newVariantID)=>{
-      if(oldVariantID == player.name && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != player.name && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
+      if(oldVariantID == tempVariantID && fs.existsSync(this.variantFilename(stateID, oldVariantID)) || oldVariantID != tempVariantID && !variants[oldVariantID].plStateID && !variants[oldVariantID].link)
         this.moveFile(this.variantFilename(stateID, oldVariantID), this.variantFilename(stateID, newVariantID));
     };
 
@@ -379,16 +406,16 @@ export default class Room {
 
       if(o.operation == 'up') {
         if(o.variantID) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID-1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID-1);
+          renameVariantFile(id, tempVariantID, o.variantID-1);
 
           variants.splice(o.variantID-1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=1; i<variants.length; ++i)
             renameVariantFile(id, i, i-1);
-          renameVariantFile(id, player.name, variants.length-1);
+          renameVariantFile(id, tempVariantID, variants.length-1);
 
           variants.push(variants.shift());
         }
@@ -396,16 +423,16 @@ export default class Room {
 
       if(o.operation == 'down') {
         if(o.variantID < variants.length-1) {
-          renameVariantFile(id, o.variantID,   player.name);
+          renameVariantFile(id, o.variantID,   tempVariantID);
           renameVariantFile(id, o.variantID+1, o.variantID);
-          renameVariantFile(id, player.name,   o.variantID+1);
+          renameVariantFile(id, tempVariantID, o.variantID+1);
 
           variants.splice(o.variantID+1, 0, variants.splice(o.variantID, 1)[0]);
         } else {
-          renameVariantFile(id, o.variantID, player.name);
+          renameVariantFile(id, o.variantID, tempVariantID);
           for(let i=variants.length-2; i>=0; --i)
             renameVariantFile(id, i, i+1);
-          renameVariantFile(id, player.name, 0);
+          renameVariantFile(id, tempVariantID, 0);
 
           variants.unshift(variants.pop());
         }
@@ -420,6 +447,17 @@ export default class Room {
         variants.splice(o.variantID, 1);
       }
 
+    }
+
+    // a game is nothing but its variants, and the save files of the deleted ones are already gone -
+    // keeping the metadata of a game without a single variant would leave an entry that the game
+    // list has nothing to show for and that nobody can reach again. removeState refuses public
+    // library games on servers that do not allow editing them, so the game can survive the call -
+    // its metadata is then updated like in any other edit.
+    if(!variants.length) {
+      this.removeState(player, id);
+      if(!this.state._meta.states[id])
+        return;
     }
 
     for(const variantID in variantInput)
@@ -526,62 +564,65 @@ export default class Room {
   }
 
   async load(fileOrLink, player, delayForGameStartRoutine) {
-    const emptyState = {
-      _meta: {
-        version: 1,
-        metaVersion: 1,
-        players: {},
-        states: {},
-        starred: {}
-      }
-    };
+    this.isLoading = true;
+    try {
+      const emptyState = {
+        _meta: {
+          version: 1,
+          metaVersion: 1,
+          players: {},
+          states: {},
+          starred: {}
+        }
+      };
 
-    if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
-      Logging.log(`creating room ${this.id}`);
-      this.state = FileUpdater(emptyState);
-      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
-      this.traceIsEnabled(Config.get('forceTracing'));
-    } else if(!fileOrLink) {
-      Logging.log(`loading room ${this.id}`);
-      this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
-      this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+      if(!fileOrLink && !fs.existsSync(this.roomFilename())) {
+        Logging.log(`creating room ${this.id}`);
+        this.state = FileUpdater(emptyState);
+        this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+        this.traceIsEnabled(Config.get('forceTracing'));
+      } else if(!fileOrLink) {
+        Logging.log(`loading room ${this.id}`);
+        this.state = FileUpdater(JSON.parse(fs.readFileSync(this.roomFilename())));
+        this.state._meta.states = Object.assign(this.state._meta.states, this.getPublicLibraryGames());
+        this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
 
-      this.migrateOldPublicLibraryLinks();
-      this.migrateBrokenSaveWithoutVersion();
-      await this.updateLinkedStates();
-      this.removeInvalidPublicLibraryLinks(player);
+        this.migrateOldPublicLibraryLinks();
+        this.migrateBrokenSaveWithoutVersion();
+        await this.updateLinkedStates();
+        this.removeInvalidPublicLibraryLinks(player);
+        this.removeStatesWithoutVariants(player);
 
-      this.traceIsEnabled(Config.get('forceTracing') || this.traceIsEnabled());
-      this.normalizeGameSettings(this.state._meta.gameSettings);
-      this.broadcast('state', this.state);
-    } else {
-      let newState = emptyState;
-      let errorMessage = 'Error loading state.';
-      try {
-        if(fileOrLink.match(/^http/))
-          newState = await FileLoader.readVariantFromLink(fileOrLink);
-        else
-          newState = JSON.parse(fs.readFileSync(fileOrLink));
-      } catch(e) {
-        errorMessage = `Error loading state:\n${e.toString()}`;
-        newState = null;
-      }
-      if(newState) {
-        Logging.log(`loading room ${this.id} from ${fileOrLink}`);
-        this.setState(newState, player, delayForGameStartRoutine);
+        this.normalizeGameSettings(this.state._meta.gameSettings);
+        this.broadcast('state', this.state);
       } else {
-        Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
-        this.setState(emptyState, player, false);
-        if(player)
-          player.send('error', errorMessage);
+        let newState = emptyState;
+        let errorMessage = 'Error loading state.';
+        try {
+          if(fileOrLink.match(/^http/))
+            newState = await FileLoader.readVariantFromLink(fileOrLink);
+          else
+            newState = JSON.parse(fs.readFileSync(fileOrLink));
+        } catch(e) {
+          errorMessage = `Error loading state:\n${e.toString()}`;
+          newState = null;
+        }
+        if(newState) {
+          Logging.log(`loading room ${this.id} from ${fileOrLink}`);
+          this.setState(newState, player, delayForGameStartRoutine);
+        } else {
+          Logging.log(`loading room ${this.id} from ${fileOrLink} FAILED: ${errorMessage}`);
+          this.setState(emptyState, player, false);
+          if(player)
+            player.send('error', errorMessage);
+        }
       }
+
+      if(!this.state._meta || typeof this.state._meta.version !== 'number')
+        throw Error('Room state has invalid meta information.');
+    } finally {
+      this.isLoading = false;
     }
-
-    if(!this.state._meta || typeof this.state._meta.version !== 'number')
-      throw Error('Room state has invalid meta information.');
-
-    if(!fileOrLink)
-      this.trace('init', { initialState: this.state });
   }
 
   async loadState(player, stateID, variantID, linkSourceStateID, delayForGameStartRoutine) {
@@ -751,6 +792,7 @@ export default class Room {
   }
 
   mouseMove(player, mouseState) {
+    this.lastMouseState.set(player, mouseState);
     this.broadcast('mouse', { player: player.name, mouseState });
   }
 
@@ -788,6 +830,11 @@ export default class Room {
       }
     }
     delta.id = ++this.deltaID;
+
+    if(delta.deltaSendId) {
+      player.send('deltaConfirm', { id: delta.deltaSendId });
+      delete delta.deltaSendId;
+    }
 
     if(this.waitingForDeltaFromPlayer == player) {
       delete this.waitingForDeltaFromPlayer;
@@ -854,7 +901,10 @@ export default class Room {
       const operations = [];
       for(const [ variantID, variant ] of Object.entries(state.variants))
         if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
-          operations.push({ operation: 'delete', variantID });
+          operations.push({ operation: 'delete', variantID: +variantID });
+      // deleting a variant shifts every later one down by one index, so the queue runs from the last
+      // dead link to the first - that way each operation still addresses the variant it was collected for
+      operations.reverse();
       if(operations.length)
         this.editState(player, id, state, state.variants, operations);
     }
@@ -877,6 +927,7 @@ export default class Room {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
 
+    this.lastMouseState.delete(player);
     this.players = this.players.filter(e => e != player);
     this.cleanupInputForPlayer(player);
     if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
@@ -889,7 +940,7 @@ export default class Room {
   }
 
   removeState(player, stateID) {
-    if(stateID.match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
+    if(String(stateID).match(/^PL:/) && !Config.get('allowPublicLibraryEdits'))
       return;
 
     for(const variantID in this.state._meta.states[stateID].variants) {
@@ -898,7 +949,7 @@ export default class Room {
         fs.unlinkSync(savefile);
     }
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       this.state._meta.states[stateID].variants = [];
       this.writePublicLibraryAssetsToFilesystem(stateID);
 
@@ -909,12 +960,22 @@ export default class Room {
 
     delete this.state._meta.states[stateID];
 
-    if(stateID.match(/^PL:/)) {
+    if(String(stateID).match(/^PL:/)) {
       delete Room.publicLibrary;
       this.publicLibraryUpdatedCallback();
     } else {
       this.sendMetaUpdate();
     }
+  }
+
+  // older versions kept a game whose last variant was deleted, leaving an entry with an empty
+  // variant list that the game list has nothing to show for, so it can neither be played nor
+  // deleted. Public library games are left alone - their variants come from the filesystem and are
+  // emptied for a moment while their game directory is removed.
+  removeStatesWithoutVariants(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states))
+      if(!String(id).match(/^PL:/) && !Object.keys(state.variants || {}).length)
+        this.removeState(player, id);
   }
 
   renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
@@ -1110,7 +1171,10 @@ export default class Room {
   }
 
   roomFilename() {
-    return Config.directory('save') + '/rooms/' + this.id + '.json';
+    const id = String(this.id);
+    if(!id.match(/^[A-Za-z0-9_-]+$/))
+      throw new Error('Invalid room ID');
+    return Config.directory('save') + '/rooms/' + id + '.json';
   }
 
   saveCurrentState(mode, name) {
@@ -1340,6 +1404,15 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  // the trace viewer replays a trace on top of the initialState of its first record, so a trace
+  // file always starts with the room state at the moment the file was opened
+  openTraceFile() {
+    this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+    fs.writeFileSync(this.tracingFilename, '[\n');
+    Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
+    this.trace('init', { initialState: this.state });
+  }
+
   trace(source, payload) {
     if(!this.traceIsEnabled() && source == 'client' && payload.type == 'enable') {
       this.traceIsEnabled(true);
@@ -1347,6 +1420,10 @@ export default class Room {
     }
 
     if(this.traceIsEnabled()) {
+      // a saved room comes back with tracing already enabled, so the room state can ask for tracing
+      // before load() opened a file for it - whatever is traced until then opens the file itself
+      if(!this.tracingFilename)
+        this.openTraceFile();
       payload.servertime = +new Date;
       payload.source = source;
       payload.serverDeltaID = this.deltaID;
@@ -1359,10 +1436,8 @@ export default class Room {
     if(setEnabled && this.state && this.state._meta) {
       this.state._meta.tracingEnabled = true;
 
-      this.tracingFilename = `${Config.directory('save')}/${this.id}-${+new Date}.trace`;
+      this.openTraceFile();
       this.broadcast('tracing', 'enable');
-      fs.writeFileSync(this.tracingFilename, '[\n');
-      Logging.log(`tracing enabled for room ${this.id} to file ${this.tracingFilename}`);
     }
     return this.state && this.state._meta && this.state._meta.tracingEnabled;
   }
@@ -1378,6 +1453,7 @@ export default class Room {
   }
 
   unload() {
+    this.pendingFilesystemWrite = null;
     if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer) {
@@ -1496,13 +1572,40 @@ export default class Room {
     FileWriter.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
-  writeToFilesystem() {
-    const copy = JSON.parse(JSON.stringify(this.state));
+  stateForFilesystem() {
+    const copy = { ...this.state, _meta: { ...this.state._meta, states: { ...this.state._meta.states } } };
     for(const id in copy._meta.states)
       if(id.match(/^PL:/))
         delete copy._meta.states[id];
-    const json = JSON.stringify(copy);
-    FileWriter.writeFileSync(this.roomFilename(), json);
+    return JSON.stringify(copy);
+  }
+
+  async writeToFilesystemAsync() {
+    const write = this.pendingFilesystemWrite = {};
+    const filename = this.roomFilename();
+    const tempFilename = `${filename}.tmp-${process.pid}-${++nextRoomWriteID}`;
+    try {
+      await fs.promises.writeFile(tempFilename, this.stateForFilesystem());
+      if(this.pendingFilesystemWrite == write)
+        // The check and rename stay in one event-loop turn so a newer synchronous save cannot land
+        // between them and then be overwritten by this write.
+        fs.renameSync(tempFilename, filename);
+      else
+        await fs.promises.unlink(tempFilename);
+    } catch(e) {
+      try {
+        await fs.promises.unlink(tempFilename);
+      } catch(unlinkError) {}
+      throw e;
+    } finally {
+      if(this.pendingFilesystemWrite == write)
+        this.pendingFilesystemWrite = null;
+    }
+  }
+
+  writeToFilesystem() {
+    this.pendingFilesystemWrite = null;
+    FileWriter.writeFileSync(this.roomFilename(), this.stateForFilesystem());
   }
 
   variantFilename(stateID, variantID) {

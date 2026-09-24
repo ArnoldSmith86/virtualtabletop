@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, expectEventually, getStateObject, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -427,6 +427,223 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   await t.expect(result.y).notEql(200);
 });
 
+test('A rename that the browser commits twice does not claim the new id is taken', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    old: { id: 'old', type: 'basic', x: 200, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_old')
+    .expect(Selector('[aria-label="Widget id"]').exists).ok();
+
+  // Chrome commits an edited field with a change event, and depending on how
+  // the field loses focus it can send a second one for the same edit, so a
+  // rename must survive being asked for twice.
+  const result = await ClientFunction(() => {
+    const input = document.querySelector('[aria-label="Widget id"]');
+    const alerts = [];
+    const originalAlert = window.alert;
+    window.alert = message => alerts.push(message);
+    input.value = 'new';
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    return new Promise(resolve => setTimeout(() => {
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      setTimeout(() => {
+        window.alert = originalAlert;
+        resolve({ alerts, renamed: widgets.has('new'), gone: !widgets.has('old') });
+      }, 200);
+    }, 500));
+  })();
+
+  await t.expect(result).eql({ alerts: [], renamed: true, gone: true });
+});
+
+// Committing a widget id and then blurring the input can hand the same change event to the client twice -
+// Chrome does that once the rename has replaced the widget under the input. The second one must not be read
+// as an attempt to take the id that the first one just created, whether it arrives after the rename or while
+// it is still running. The waiter widget's id routine holds every rename open long enough for the latter.
+const idRenameDelay = 1500;
+const idRenameWaiter = { id: 'waiter', type: 'basic', x: 600, y: 200, idGlobalUpdateRoutine: [ { func: 'DELAY', milliseconds: idRenameDelay } ] };
+
+// Commit a new id through the input and hand the same change event over a second time while the rename is
+// still running, the way the browser does on the blur that follows the commit.
+const commitIdTwice = ClientFunction((selector, newID, delay) => {
+  const input = document.querySelector(selector);
+  input.value = newID;
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+  setTimeout(() => input.dispatchEvent(new Event('change', { bubbles: true })), delay);
+});
+
+test('The id input renaming a widget does not claim the id is taken when its change event repeats', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    old: { id: 'old', type: 'basic', x: 200, y: 200 },
+    other: { id: 'other', type: 'basic', x: 400, y: 200 },
+    waiter: idRenameWaiter
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_old')
+    .expect(Selector('[aria-label="Widget id"]').exists).ok();
+
+  // the input the rename is typed into: the panel draws a new one for the renamed widget, so a repeated
+  // change event is one this element sends after the widget it was drawn for is gone
+  await ClientFunction(() => { window.renamedIdInput = document.querySelector('[aria-label="Widget id"]'); })();
+
+  await t
+    .typeText('[aria-label="Widget id"]', 'new', { replace: true })
+    .pressKey('enter')
+    .expect(Selector('#w_new').exists).ok({ timeout: 10000 })
+    .expect(Selector('[aria-label="Widget id"]').value).eql('new');
+
+  await ClientFunction(() => window.renamedIdInput.dispatchEvent(new Event('change', { bubbles: true })))();
+  await t.wait(500);
+
+  const widgetIDs = ClientFunction(()=>Array.from(widgets.keys()).sort());
+  await t.expect(await t.getNativeDialogHistory()).eql([]);
+  await t.expect(await widgetIDs()).eql([ 'new', 'other', 'waiter' ]);
+
+  // Escape restores the id the input stands for now, not the one the widget carried when the panel was drawn.
+  // Dispatched without bubbling so the editor's own Escape handling doesn't drop the selection along with it.
+  const escapeIdInput = ClientFunction(() => {
+    const input = document.querySelector('[aria-label="Widget id"]');
+    input.value = 'discarded';
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    return input.value;
+  });
+  await t.expect(await escapeIdInput()).eql('new');
+
+  // an id that really is taken still says so and puts the input back
+  await t
+    .typeText('[aria-label="Widget id"]', 'other', { replace: true })
+    .pressKey('enter');
+  await t.expect((await t.getNativeDialogHistory())[0].text).eql('A widget with the id "other" already exists. Please choose a different id.');
+  await t
+    .expect(Selector('[aria-label="Widget id"]').value).eql('new')
+    .expect(await widgetIDs()).eql([ 'new', 'other', 'waiter' ]);
+
+  // the repeat arriving mid-rename: the new id exists at that point, so it is the one that used to alert
+  await commitIdTwice('[aria-label="Widget id"]', 'renamed', Math.round(idRenameDelay / 3));
+  // the widget is out of the room while the rename runs, so the panel says what it is waiting for instead of
+  // falling back to the module that offers to add a widget
+  await t
+    .expect(Selector('.renameInProgress').innerText).eql('Renaming new to renamed…')
+    .expect(Selector('.noSelectionButton').exists).notOk()
+    .expect(Selector('#w_renamed').exists).ok({ timeout: 10000 })
+    .wait(1000)
+    .expect((await t.getNativeDialogHistory()).length).eql(1) // still only the one the taken id put there
+    .expect(await widgetIDs()).eql([ 'other', 'renamed', 'waiter' ]);
+});
+
+// The deck editor's inline deck-id field commits the same way and renames through the same helper, so the
+// repeated change event reaches it too.
+test('The deck editor id field does not start a second rename when its change event repeats', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({ waiter: idRenameWaiter });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  const currentDeckID = ClientFunction(() => {
+    let id = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') id = w.get('id'); });
+    return id;
+  });
+  await t.expect(currentDeckID()).notEql(null, { timeout: 10000 }); // every widget added waits for the id routine
+  const deckID = await currentDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#propertiesOpenDeckEditor')
+    .expect(Selector('.deckEditorTreeDeckId').exists).ok()
+    .click('.deckEditorTreeDeckId') // also selects the deck node, which redraws the tree and the field
+    .wait(300);
+
+  await commitIdTwice('.deckEditorTreeDeckId', 'renamedDeck', Math.round(idRenameDelay / 3));
+  await t
+    .expect(ClientFunction(()=>widgets.has('renamedDeck'))()).ok({ timeout: 10000 })
+    .wait(1000)
+    .expect(await t.getNativeDialogHistory()).eql([])
+    .expect(ClientFunction(deckID=>widgets.has(deckID))(deckID)).notOk()
+    .expect(Selector('.deckEditorTreeDeckId').value).eql('renamedDeck');
+  await t.pressKey('esc');
+});
+
+// updateWidgetId runs game-authored id routines, so it can throw halfway through a rename. What it must not
+// leave behind is the state the rename put up for its own duration: the editor ignores every delta while a
+// rename of its deck runs, and the delta batch it opened swallows every later edit until it is closed.
+test('A deck rename that throws leaves neither the deck editor nor its deltas stuck', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({});
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  const currentDeckID = ClientFunction(() => {
+    let id = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') id = w.get('id'); });
+    return id;
+  });
+  await t.expect(currentDeckID()).notEql(null, { timeout: 10000 });
+  const deckID = await currentDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#propertiesOpenDeckEditor')
+    .expect(Selector('.deckEditorTreeDeckId').exists).ok()
+    .click('.deckEditorTreeDeckId')
+    .wait(300);
+
+  // fail the rename where it hurts: after the batch was opened and with the deck already taken apart
+  await ClientFunction(() => {
+    window.originalUpdateWidgetId = window.updateWidgetId;
+    window.updateWidgetId = _=>Promise.reject(new Error('rename failed'));
+  })();
+  await t
+    .typeText('.deckEditorTreeDeckId', 'failedRename', { replace: true })
+    .pressKey('enter')
+    .wait(500);
+  await t.expect((await t.getNativeDialogHistory())[0].text).eql('Could not rename deck: Error: rename failed');
+  await t
+    .expect(Selector('.deckEditorTreeDeckId').value).eql(deckID)
+    .expect(Selector('.deckEditorTreeDeckId').hasAttribute('disabled')).notOk();
+
+  await ClientFunction(() => { window.updateWidgetId = window.originalUpdateWidgetId; })();
+  await t
+    .click('.deckEditorTreeDeckId') // the tree was redrawn, so let the click settle before typing into it
+    .wait(300)
+    .typeText('.deckEditorTreeDeckId', 'workingRename', { replace: true })
+    .pressKey('enter')
+    .expect(ClientFunction(()=>widgets.has('workingRename'))()).ok({ timeout: 10000 });
+  // the server seeing it is what tells an open batch from a closed one - a leaked one keeps the delta local
+  await expectEventually(t, async _=>Object.keys(await getStateObject()).includes('workingRename'), true,
+    'the rename after the failed one reaches the server');
+  await t.pressKey('esc');
+});
+
 test('Dice faces have their own icon, image scale and CSS controls', async t => {
   // Keep this at the narrow layout from the review so the controls remain
   // useful in the smallest supported properties sidebar.
@@ -561,6 +778,60 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
 });
+
+for(const type of [ 'holder', 'line' ]) {
+  test(`A ${type} outside the board takes a drop only in the zoomed out edit view`, async t => {
+    await t.resizeWindow(1280, 800);
+    await setRoomState({
+      deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+      card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 700, y: 400 },
+      offBoard: {
+        id: 'offBoard', type, x: 1750, y: 340, width: 220, height: 120, dropTarget: { type: 'card' },
+        ...(type == 'line' ? { lineStart: { x: 0, y: 60 }, lineEnd: { x: 220, y: 60 }, lineWidth: 10 } : {})
+      }
+    });
+    await ClientFunction(prepareClient)();
+    await setEditorState(null);
+    await setName(t);
+
+    // Synthetic coordinates can reach the clipped target; edit mode uses right-drag to move widgets.
+    const drag = ClientFunction((button, highlight) => {
+      const card = document.getElementById('w_card'), target = document.getElementById('w_offBoard');
+      const from = card.getBoundingClientRect(), to = target.getBoundingClientRect();
+      const buttons = button == 2 ? 2 : 1;
+      const clientX = to.left + to.width/2, clientY = to.top + to.height/2;
+      card.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.left + from.width/2, clientY: from.top + from.height/2 }));
+      document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX, clientY }));
+      return new Promise(resolve => setTimeout(() => {
+        const highlighted = target.classList.contains(highlight);
+        document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX, clientY }));
+        setTimeout(() => resolve(highlighted), 300);
+      }, 300));
+    });
+    const dropState = async () => {
+      const state = await getStateObject();
+      return {
+        parent: state.card.parent || null,
+        moved: state.card.x != 700,
+        stops: (state.offBoard.stops || []).map(stop=>stop.widget)
+      };
+    };
+    const highlight = type == 'line' ? 'lineDropTarget' : 'droppable';
+    const refused = { parent: null, moved: true, stops: [] };
+
+    await t.expect(drag(0, highlight)).notOk('no off-board drop target during play');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editButton');
+    await t.expect(Selector('#editorSelection').exists).ok();
+    await t.expect(drag(2, highlight)).notOk('no off-board drop target in the clipped edit view');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editorToolbar [icon=zoom_out]');
+    await t.expect(drag(2, highlight)).ok('off-board drop target in the zoomed out edit view');
+    await expectEventually(t, dropState, { parent: 'offBoard', moved: true, stops: type == 'line' ? [ 'card' ] : [] });
+  });
+}
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
   await t.resizeWindow(1280, 800);
@@ -3517,7 +3788,7 @@ test('Line widget in edit mode', async t => {
     .click('#editorToolbar > div > [icon=delete_forever]');
   // the added stop's id is derived from the existing stops instead of being
   // random, so the compared state no longer depends on the seeded rand() stream
-  await compareState(t, '39dac10e30820bf231f3d4a10fc70572');
+  await compareState(t, '36ca86d9cfcb0719b790feb13c387f65');
 });
 
 // A stop does not have to be a child of the line, and one that is not gets
@@ -5295,4 +5566,332 @@ test('Send feedback', async t => {
     .expect(Selector('#statesOverlay').visible).ok({ timeout: 5000 })
     .expect(Selector('#feedbackOverlay').visible).notOk()
     .expect(Selector('#statesButton').hasClass('active')).ok();
+});
+
+// A parent that names no widget in the room is refused for a single widget, and
+// a selection of several of them is no different: writing it through would ask a
+// parent that does not exist to take the widgets in, and the next edit would ask
+// the same of the one they came from.
+const jsonError = ClientFunction(() => {
+  const error = document.querySelector('#jeCommands .error');
+  return error ? error.textContent.trim() : '';
+});
+const faceCountOf = ClientFunction(id => document.querySelectorAll(`#w_${id} .cardFace`).length);
+// the board coordinates of a band around the given widgets, wherever their holder put them
+const bandAround = ClientFunction(ids => {
+  const surface = document.querySelector('#topSurface').getBoundingClientRect();
+  const scale = surface.width/1600;
+  const boxes = ids.map(id => document.querySelector(`#w_${id}`).getBoundingClientRect());
+  return {
+    x1: (Math.min(...boxes.map(b=>b.left)) - surface.left)/scale - 10,
+    y1: (Math.min(...boxes.map(b=>b.top)) - surface.top)/scale - 10,
+    x2: (Math.max(...boxes.map(b=>b.right)) - surface.left)/scale + 10,
+    y2: (Math.max(...boxes.map(b=>b.bottom)) - surface.top)/scale + 10
+  };
+});
+
+test('A multi-widget selection is not given a parent that does not exist', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 400 },
+    target: { id: 'target', type: 'holder', x: 800, y: 100, width: 300, height: 300 },
+    one: { id: 'one', type: 'basic', parent: 'holder', x: 100, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', parent: 'holder', x: 350, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+  await ClientFunction(() => {
+    window.jsonEditErrors = [];
+    window.addEventListener('error', event => window.jsonEditErrors.push(String(event.error || event.message)));
+    // set() is not awaited anywhere in the editor, so a throw inside it arrives as a rejected promise
+    window.addEventListener('unhandledrejection', event => window.jsonEditErrors.push(String(event.reason)));
+  })();
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok();
+
+  const band = await bandAround([ 'one', 'two' ]);
+  await bandSelect(t, band.x1, band.y1, band.x2, band.y2);
+  await t
+    .expect(jsonEditorText()).contains('"widgets"');
+
+  const selection = JSON.parse(await jsonEditorText());
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: 'nope' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent nope does not exist.')
+    .expect(widgetProperty('one', 'parent')).eql('holder')
+    .expect(widgetProperty('two', 'parent')).eql('holder')
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    // with one parent per widget the message names the widget it belongs to
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'nope', two: 'holder' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent nope does not exist (widget "one").')
+    // a key that names no selected widget makes the whole object the parent, which
+    // is not an id either - naming a value as the missing one would be a guess
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'holder', twoo: 'holder' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent has to be a widget ID, or an object with one entry per selected widget.')
+    // one key per widget but a value that is not an id points at that widget
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: { one: 'holder', two: { holder: true } } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent has to be a widget ID (widget "two").')
+    // the commands that would fix it stay reachable while the message is up
+    .expect(Selector('#jeContextButtons button').withText('enter new parent ID').exists).ok()
+    // a parent that does exist still goes to every widget of the selection
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { parent: 'target' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('')
+    .expect(widgetProperty('one', 'parent')).eql('target')
+    .expect(widgetProperty('two', 'parent')).eql('target');
+  await setEditorState(null);
+});
+
+// The widgets array holds the search terms of the selection, so while it is
+// being edited the parent values still belong to the widgets selected before.
+const caretAfter = ClientFunction(needle => {
+  const root = document.querySelector('#jeText');
+  const index = root.textContent.indexOf(needle) + needle.length;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let seen = 0, node;
+  while(node = walker.nextNode()) {
+    if(seen + node.length >= index) {
+      const range = document.createRange();
+      range.setStart(node, index - seen);
+      range.collapse(true);
+      getSelection().removeAllRanges();
+      getSelection().addRange(range);
+      return true;
+    }
+    seen += node.length;
+  }
+  return false;
+});
+
+test('Editing the widgets array of a selection with different parents works', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    container: { id: 'container', type: 'basic', x: 0, y: 0, width: 40, height: 40 },
+    one: { id: 'one', type: 'basic', parent: 'container', x: 200, y: 300, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 500, y: 300, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok();
+
+  const band = await bandAround([ 'one', 'two' ]);
+  await bandSelect(t, band.x1, band.y1, band.x2, band.y2);
+  await t
+    .expect(jsonEditorText()).contains('"parent": {')
+    .click('#jeText');
+
+  await t.expect(caretAfter('"one')).ok();
+  await t
+    .pressKey('x')
+    .expect(jsonError()).eql('')
+    .expect(ClientFunction(() => JSON.parse(document.querySelector('#jeText').textContent))()).contains({ parent: null })
+    .expect(widgetProperty('one', 'parent')).eql('container');
+  await setEditorState(null);
+});
+
+// A parent that names no widget is refused by the editor, but a state that already
+// contains one has to arrive somewhere the creator can find and fix it.
+test('A widget whose parent does not exist is loaded into limbo', async t => {
+  await t.resizeWindow(1280, 800);
+  // the child comes before its parent so the load has to follow the chain instead of
+  // relying on the order the widgets happen to be stored in
+  await setRoomState({
+    box: { id: 'box', type: 'basic', x: 100, y: 100, width: 600, height: 400 },
+    child: { id: 'child', type: 'basic', parent: 'orphan', x: 10, y: 10, width: 50, height: 50 },
+    orphan: { id: 'orphan', type: 'basic', parent: 'ghost', x: 700, y: 300, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#w_orphan').hasClass('limbo')).ok()
+    // a widget below one in limbo comes along and keeps its own parent
+    .expect(Selector('#w_child').exists).ok()
+    .expect(Selector('#w_child').hasClass('limbo')).notOk()
+    .expect(widgetProperty('child', 'parent')).eql('orphan');
+
+  // giving it a real parent takes it out of limbo where it stands
+  await ClientFunction(() => widgets.get('orphan').set('parent', 'box'))();
+  await t
+    .expect(Selector('#w_orphan').hasClass('limbo')).notOk()
+    .expect(widgetProperty('orphan', 'parent')).eql('box')
+    .expect(ClientFunction(() => widgets.get('orphan').get('x'))()).eql(600);
+});
+
+// A widget a delta could not add waits for its parent for as long as the room stands.
+// The state that arrives on a reconnect or a load describes another room, in which it
+// may well be there - so what is left waiting has to go with the room it waited in.
+const widgetNodeCount = ClientFunction(id => document.querySelectorAll(`[id="w_${id}"]`).length);
+test('A widget a delta left waiting is not added a second time by a state', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    box: { id: 'box', type: 'basic', x: 100, y: 100, width: 600, height: 400 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorSidebar').exists).ok();
+
+  // the delta another client sends after deleting the parent this one still has
+  await ClientFunction(() => sendRawDelta({ s: { orphan: { id: 'orphan', type: 'basic', parent: 'ghost', x: 700, y: 300, width: 100, height: 100 } } }))();
+  await t.expect(widgetNodeCount('orphan')).eql(0);
+
+  await setRoomState({
+    box: { id: 'box', type: 'basic', x: 100, y: 100, width: 600, height: 400 },
+    orphan: { id: 'orphan', type: 'basic', parent: 'ghost', x: 700, y: 300, width: 100, height: 100 }
+  });
+  await t
+    .expect(Selector('#w_orphan').hasClass('limbo')).ok()
+    .expect(widgetNodeCount('orphan')).eql(1);
+
+  // and a state that healed the room leaves nothing of it behind
+  await setRoomState({
+    box: { id: 'box', type: 'basic', x: 100, y: 100, width: 600, height: 400 }
+  });
+  await t
+    .expect(widgetNodeCount('orphan')).eql(0)
+    .expect(Selector('#w_box').exists).ok();
+});
+
+// A deck that names no widget throws while the card builds its DOM, and unlike a bad
+// parent it is written out before that happens - so the card is gone on the next load.
+test('A multi-widget selection is not given a deck that does not exist', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    deck: { id: 'deck', type: 'deck', parent: 'holder', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 400 },
+    one: { id: 'one', type: 'card', deck: 'deck', cardType: 'a', parent: 'holder', x: 100, y: 200 },
+    two: { id: 'two', type: 'card', deck: 'deck', cardType: 'a', parent: 'holder', x: 350, y: 200 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+  await ClientFunction(() => {
+    window.jsonEditErrors = [];
+    window.addEventListener('error', event => window.jsonEditErrors.push(String(event.error || event.message)));
+    window.addEventListener('unhandledrejection', event => window.jsonEditErrors.push(String(event.reason)));
+  })();
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok();
+
+  const band = await bandAround([ 'one', 'two' ]);
+  await bandSelect(t, band.x1, band.y1, band.x2, band.y2);
+  await t
+    .expect(jsonEditorText()).contains('"widgets"');
+
+  const selection = JSON.parse(await jsonEditorText());
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { deck: 'nope' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Deck nope does not exist.')
+    .expect(widgetProperty('one', 'deck')).eql('deck')
+    .expect(widgetProperty('two', 'deck')).eql('deck')
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    // a widget that exists but is no deck cannot hold cards either
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { deck: 'holder' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql(`Given widget holder is not a deck or doesn't define cardTypes.`)
+    .expect(widgetProperty('one', 'deck')).eql('deck')
+    .expect(widgetProperty('two', 'deck')).eql('deck')
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([]);
+
+  // deleting the deck leaves the card without one, which the next load drops just the same
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { deck: null }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Deck null does not exist.')
+    .expect(widgetProperty('one', 'deck')).eql('deck')
+    .expect(widgetProperty('two', 'deck')).eql('deck');
+
+  // a command that applies its own change instead of leaving that to the editor does not
+  // get to hand the state over either
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, selection, { deck: 'nope', icon: { name: 'star' } }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Deck nope does not exist.');
+  await putCursorBehind('"star"');
+  await t
+    .click('#je_iconToString')
+    .expect(jsonEditorText()).contains('"icon": "star"')
+    .expect(jsonError()).eql('Deck nope does not exist.')
+    .expect(widgetProperty('one', 'deck')).eql('deck')
+    .expect(widgetProperty('two', 'deck')).eql('deck')
+    .expect(widgetProperty('one', 'icon')).notOk()
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([]);
+
+  // a routine reaches the same property without going through the editor, so the card
+  // has to survive it there too - without faces until it names a deck again
+  await ClientFunction(() => widgets.get('one').set('deck', 'nope'))();
+  await t
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    .expect(Selector('#w_one').exists).ok()
+    .expect(faceCountOf('one')).eql(0);
+  // a widget that is no deck cannot give the card faces either, and says so instead
+  // of throwing where the deck it came from is already gone
+  await ClientFunction(() => widgets.get('one').set('deck', 'holder'))();
+  await t
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    .expect(Selector('#w_one').exists).ok()
+    .expect(faceCountOf('one')).eql(0);
+  await ClientFunction(() => widgets.get('one').set('deck', 'deck'))();
+  await t
+    .expect(ClientFunction(() => window.jsonEditErrors)()).eql([])
+    .expect(faceCountOf('one')).eql(1);
+  await setEditorState(null);
+});
+
+// The message says the state cannot be handed to the room yet, not that the editor is
+// out of order - the commands that write the property the message asks for keep working.
+test('The context commands still insert while a semantic error is shown', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    holder: { id: 'holder', type: 'holder', x: 100, y: 100, width: 600, height: 400 },
+    one: { id: 'one', type: 'basic', parent: 'holder', x: 100, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one')
+    .expect(jsonEditorText()).contains('"id": "one"');
+
+  const state = JSON.parse(await jsonEditorText());
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, state, { parent: 'nope' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('Parent nope does not exist.')
+    .expect(Selector('#widget_basic_layer').exists).ok()
+    .click('#widget_basic_layer')
+    .expect(jsonEditorText()).contains('"layer"')
+    // the room only takes it once the parent names a widget again
+    .expect(widgetProperty('one', 'parent')).eql('holder')
+    .expect(widgetProperty('one', 'layer')).eql(1);
+
+  const inserted = JSON.parse(await jsonEditorText());
+  inserted.layer = 2;
+  await t
+    .typeText('#jeText', JSON.stringify(Object.assign({}, inserted, { parent: 'holder' }), null, '  '), { replace: true, paste: true })
+    .pressKey('end')
+    .expect(jsonError()).eql('')
+    .expect(widgetProperty('one', 'layer')).eql(2);
+  await setEditorState(null);
 });

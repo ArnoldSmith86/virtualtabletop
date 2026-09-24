@@ -1,35 +1,47 @@
-#connectionLostOverlay{
+#serverRestartOverlay{
   padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-#connectionLostOverlay h1{
+#serverRestartOverlay h1{
   text-align: center;
   margin: 0;
 }
-#connectionLostOverlay p{
+#serverRestartOverlay p{
   text-align: center;
   margin: 0.5rem 1rem;
 }
-#connectionLostOverlay .disconnected{
+#serverRestartOverlay .disconnected{
   display: flex;
+  --plugHeight: 15vw;
 }
 
-#connectionLostOverlay .disconnected .cable{
+/* the illustration is measured against the overlay, which is the board and not the window: a vw
+   height squashed it into a sliver next to a narrow board and blew it up into a banner on a wide
+   one, in both cases regardless of how much room the overlay actually has. Where the container
+   units are missing the vw height above stays - a custom property is parsed as it is written, so
+   the value has to be kept out of the cascade rather than be overridden and dropped later. */
+@supports (height: 1cqh) {
+  #serverRestartOverlay .disconnected{
+    --plugHeight: clamp(70px, min(15cqw, 20cqh), 200px);
+  }
+}
+
+#serverRestartOverlay .disconnected .cable{
   flex-grow: 1;
-  height: 15vw;
+  height: var(--plugHeight);
   background-position: center center;
   background-size: contain;
   background-repeat: repeat;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='300' viewBox='0 0 100 300'%3E%3Crect x='-0.03' y='129.852' width='100.03' height='2.544' fill='%23d8d8d8'/%3E%3Crect x='-0.03' y='139.317' width='100.03' height='2.544' fill='%23d8d8d8'/%3E%3Crect x='-0.03' y='132.395' width='100.03' height='6.922' fill='%23efefef'/%3E%3C/svg%3E%0A");
 
 }
-#connectionLostOverlay .disconnected .plug{
+#serverRestartOverlay .disconnected .plug{
   flex-grow: 0;
   flex-shrink: 0;
-  height: 15vw;
-  width: 25vw;
+  height: var(--plugHeight);
+  width: calc(var(--plugHeight) * 5 / 3);
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;

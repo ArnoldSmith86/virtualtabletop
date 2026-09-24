@@ -1,0 +1,258 @@
+// Walks a stylesheet and names every web feature it uses as a path into @mdn/browser-compat-data:
+// at-rules, media features, selectors, properties, keyword values, value functions and units.
+// It is a scanner, not a parser - it knows about braces, strings and comments and nothing else,
+// which is all it takes to find the constructs whose browser support we want to know about.
+//
+// A vendor prefixed name (-webkit-mask-image, ::-moz-range-thumb) is never reported: it is
+// already the fallback, and the browsers it is not meant for ignore it. Which browsers it does
+// reach is still looked up - an unprefixed property declared next to its prefixed spelling is
+// only covered where the prefixed one is actually understood.
+
+const vendorPrefix = /^-(webkit|moz|ms|o|epub|khtml)-/;
+
+// units bcd does not list one by one
+const unitGroups = {
+  dvh: 'viewport_percentage_units_dynamic', dvw: 'viewport_percentage_units_dynamic',
+  dvi: 'viewport_percentage_units_dynamic', dvb: 'viewport_percentage_units_dynamic',
+  dvmin: 'viewport_percentage_units_dynamic', dvmax: 'viewport_percentage_units_dynamic',
+  lvh: 'viewport_percentage_units_large', lvw: 'viewport_percentage_units_large',
+  lvi: 'viewport_percentage_units_large', lvb: 'viewport_percentage_units_large',
+  lvmin: 'viewport_percentage_units_large', lvmax: 'viewport_percentage_units_large',
+  svh: 'viewport_percentage_units_small', svw: 'viewport_percentage_units_small',
+  svi: 'viewport_percentage_units_small', svb: 'viewport_percentage_units_small',
+  svmin: 'viewport_percentage_units_small', svmax: 'viewport_percentage_units_small',
+  cqw: 'container_query_length_units', cqh: 'container_query_length_units',
+  cqi: 'container_query_length_units', cqb: 'container_query_length_units',
+  cqmin: 'container_query_length_units', cqmax: 'container_query_length_units'
+};
+
+// a value with its strings and url()s taken out, so that neither can be mistaken for syntax
+function bareValue(value) {
+  return value.replace(/"[^"]*"|'[^']*'|url\([^)]*\)/g, ' ');
+}
+
+// Every bcd path a declaration uses: the property, its keyword values, the functions and the
+// units in the value. The same list is built for a declaration and for the "property: value"
+// pair an @supports condition asks about, which is what makes the two comparable.
+function declarationFeatures(property, value) {
+  const paths = [ `css.properties.${property}` ];
+  for(const keyword of new Set(value.match(/[a-zA-Z][\w-]*/g) || []))
+    paths.push(`css.properties.${property}.${keyword.toLowerCase()}`);
+  for(const fn of new Set(value.match(/([\w-]+)\(/g) || [])) {
+    const name = fn.slice(0, -1).toLowerCase();
+    if(!vendorPrefix.test(name))
+      paths.push(`css.types.${name}`, `css.types.color.${name}`, `css.types.image.${name}`);
+  }
+  for(const unit of new Set(value.match(/\d\s*[a-z]+/g) || [])) {
+    const name = unit.replace(/^\d\s*/, '');
+    paths.push(`css.types.length.${unitGroups[name] || name}`);
+  }
+  return paths;
+}
+
+// The vendor prefixed spellings a declaration uses, each as the unprefixed bcd path plus the
+// prefix to ask for: bcd files prefixed support as a statement under the unprefixed path, so
+// that is the only way to find out which browsers a -webkit- declaration actually reaches -
+// and that is what decides whether it is a fallback for the unprefixed one next to it.
+function prefixedFeatures(property, value) {
+  const prefix = (property.match(vendorPrefix) || [])[0];
+  if(prefix)
+    return [ { path: `css.properties.${property.slice(prefix.length)}`, prefix } ];
+  return [ ...new Set(value.match(/(?:^|[\s,(])(-[a-z]+-[\w-]+)/g) || []) ]
+    .map(keyword => keyword.trim().replace(/^[,(]/, ''))
+    .filter(keyword => vendorPrefix.test(keyword))
+    .map(keyword => ({
+      path: `css.properties.${property}.${keyword.replace(vendorPrefix, '')}`,
+      prefix: keyword.match(vendorPrefix)[0]
+    }));
+}
+
+// What the @supports conditions around a declaration actually test - a condition only excuses
+// the very feature it asks about, so "@supports (width: 1px)" says nothing about fit-content.
+// Which of them it is guaranteed to have tested is what the boolean operators decide: "and"
+// adds up both sides, "or" keeps only what both sides ask for - a browser can be inside
+// "(display: grid) or (width: fit-content)" without having fit-content - and "not", or anything
+// this does not understand, guarantees nothing at all.
+function supportsFeatures(condition) {
+  let at = 0;
+  const skipSpace = () => {
+    while(at < condition.length && /\s/.test(condition[at]))
+      ++at;
+  };
+  // the ( ... ) starting here, with the parentheses inside it balanced
+  const group = () => {
+    const start = at;
+    for(let depth = 0; at < condition.length; ++at) {
+      if(condition[at] == '(')
+        ++depth;
+      else if(condition[at] == ')' && --depth == 0) {
+        ++at;
+        break;
+      }
+    }
+    return condition.slice(start+1, at-1);
+  };
+  const term = () => {
+    skipSpace();
+    if(/^not\b/i.test(condition.slice(at))) {
+      at += 3;
+      term();
+      return new Set();
+    }
+    if(condition[at] != '(') {
+      // selector(...), font-tech(...) and whatever else may still be added to the syntax
+      at += condition.slice(at).match(/^[^\s()]*/)[0].length;
+      if(condition[at] == '(')
+        group();
+      return new Set();
+    }
+    const inside = group();
+    const declaration = inside.match(/^\s*(-?[a-zA-Z][\w-]*)\s*:([\s\S]*)$/);
+    return declaration
+      ? new Set(declarationFeatures(declaration[1].toLowerCase(), bareValue(declaration[2])))
+      : supportsFeatures(inside);
+  };
+
+  let paths = term();
+  for(;;) {
+    skipSpace();
+    const operator = condition.slice(at).match(/^(and|or)\b/i);
+    if(!operator)
+      return paths;
+    at += operator[0].length;
+    const next = term();
+    paths = operator[1].toLowerCase() == 'and'
+      ? new Set([ ...paths, ...next ])
+      : new Set([ ...paths ].filter(path => next.has(path)));
+  }
+}
+
+export function scanCSS(text, { startLine = 1 } = {}) {
+  const found = [];
+  const stack = [];
+  let buffer = '', bufferLine = startLine, line = startLine, i = 0, blocks = 0;
+
+  const add = (feature, source, at, guardedBy) => found.push({ line: at, feature, source, guardedBy });
+
+  const openBlock = prelude => {
+    const at = prelude.match(/^@([\w-]+)/);
+    if(at) {
+      if(!vendorPrefix.test(at[1]))
+        add(`css.at-rules.${at[1]}`, prelude, bufferLine);
+      if(at[1] == 'media' || at[1] == 'container')
+        scanConditions(at[1], prelude, bufferLine, add);
+      stack.push({ id: ++blocks, atRule: at[1], prelude, declarations: [] });
+    } else {
+      for(const pseudo of new Set(prelude.match(/::?[\w-]+/g) || [])) {
+        const name = pseudo.replace(/^::?/, '');
+        if(!vendorPrefix.test(name))
+          add(`css.selectors.${name}`, prelude.replace(/\s+/g, ' ').trim(), bufferLine);
+      }
+      stack.push({ id: ++blocks, atRule: null, prelude, declarations: [] });
+    }
+  };
+
+  const declaration = declaration => {
+    const block = stack[stack.length-1];
+    if(!block || /^@/.test(declaration))
+      return;
+    const colon = declaration.indexOf(':');
+    if(colon < 0)
+      return;
+    const property = declaration.slice(0, colon).trim().toLowerCase();
+    if(!/^-?[a-z][\w-]*$/.test(property) || property.startsWith('--'))
+      return;
+    block.declarations.push({
+      property,
+      value: bareValue(declaration.slice(colon+1)).trim(),
+      line: bufferLine,
+      id: `${block.id}:${block.declarations.length}`,
+      // where in the rule it stands: the browser keeps the last declaration it understands
+      order: block.declarations.length,
+      // declaring the same property twice is the fallback the language has built in: the
+      // browser keeps the last declaration it understands. The vendor prefixed spelling of a
+      // property is the same thing under a different name, so it belongs to the same group.
+      group: `${block.id}:${property.replace(vendorPrefix, '')}`,
+      // and the other way of asking first - one condition per @supports the declaration is
+      // inside of, which are all true together, so what each one guarantees adds up
+      supports: stack.filter(open => open.atRule == 'supports').map(open => open.prelude.replace(/^@supports/i, ''))
+    });
+  };
+
+  const closeBlock = () => {
+    const block = stack.pop();
+    if(!block)
+      return;
+    for(const { property, value, line, id, order, group, supports } of block.declarations) {
+      const source = `${property}: ${value}`;
+      // A declaration is only ever excused by the others in its group, so every one of them has
+      // to be on record - even a vendor prefixed one, which is never reported itself.
+      found.push({ line, source, declaration: id, group, property, order,
+        prefixedValue: /(^|[\s,(])-[a-z]+-[a-z]/.test(value) });
+      // A prefixed spelling - of the property (-webkit-appearance) or of a keyword in the value
+      // (width: -moz-fit-content) - is looked up so that its own reach is on record, but it is
+      // the fallback, so it is never a finding itself.
+      for(const { path, prefix } of prefixedFeatures(property, value))
+        found.push({ line, source, feature: path, prefix, declaration: id, group, property, order });
+      if(vendorPrefix.test(property))
+        continue;
+      const guards = new Set(supports.flatMap(condition => [ ...supportsFeatures(condition) ]));
+      for(const path of declarationFeatures(property, value))
+        found.push({
+          line, source, feature: path, declaration: id, group, property, order,
+          guardedBy: guards.has(path) ? 'the @supports condition around it' : undefined
+        });
+    }
+  };
+
+  while(i < text.length) {
+    const c = text[i];
+    if(c == '/' && text[i+1] == '*') {
+      const end = text.indexOf('*/', i+2);
+      const comment = text.slice(i, end < 0 ? text.length : end+2);
+      line += (comment.match(/\n/g) || []).length;
+      i += comment.length;
+      continue;
+    }
+    if(c == '"' || c == "'") {
+      const string = text.slice(i).match(new RegExp(`^${c}(\\\\[\\s\\S]|[^\\\\${c}])*${c}?`))[0];
+      line += (string.match(/\n/g) || []).length;
+      buffer += string;
+      i += string.length;
+      continue;
+    }
+    if(!buffer.trim())
+      bufferLine = line;
+    if(c == '{') {
+      openBlock(buffer.trim());
+      buffer = '';
+    } else if(c == '}') {
+      declaration(buffer.trim());  // the last declaration of a rule may leave out its semicolon
+      closeBlock();
+      buffer = '';
+    } else if(c == ';') {
+      declaration(buffer.trim());
+      buffer = '';
+    } else {
+      buffer += c;
+    }
+    if(c == '\n')
+      line++;
+    i++;
+  }
+  return found;
+}
+
+// @media (min-width: 600px) and (hover: hover), @container roomArea (max-width: 600px)
+function scanConditions(atRule, prelude, line, add) {
+  for(const condition of new Set(prelude.match(/\(\s*(?:min-|max-)?[\w-]+\s*[:)]/g) || [])) {
+    const name = condition.replace(/^\(\s*|\s*[:)]$/g, '').replace(/^(min|max)-/, '');
+    if(vendorPrefix.test(name))
+      continue;
+    add(`css.at-rules.media.${name}`, prelude, line);
+    if(atRule == 'container')
+      add(`css.at-rules.container.${name}`, prelude, line);
+  }
+  if(/\(\s*[\w-]+\s*[<>]=?/.test(prelude) || /[<>]=?\s*[\w.]+\s*\)/.test(prelude))
+    add('css.at-rules.media.range_syntax', prelude, line);
+}

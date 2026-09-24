@@ -1,0 +1,33 @@
+name: Browser compatibility (checks the client against the browsers we say we support)
+
+# The browsers are the browserslist key in package.json. This fails when the client picks up a
+# feature that is newer than the oldest of them and nothing says why that is alright - see
+# tools/browsercompat/index.mjs for the two ways of saying so.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: browser-compat-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  browsercompat:
+    name: Browser compatibility
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Install Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+        cache: npm
+    - name: Install dependencies
+      run: npm ci
+    # writes what it finds to the job summary as well, and as annotations on the lines it found
+    # them on, so a review does not have to open the log to see them
+    - name: Check the client against the browserslist key
+      run: npm run browsercompat
