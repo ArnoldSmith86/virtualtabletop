@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="35 18 130 112"
+     width="200" height="150"
+     role="img"
+     aria-label="Die meisten Kreise besetzt mit Scheiben (tight cropped)">
+
+  <defs>
+    <style>
+      .slot {
+        fill: none;
+        stroke: #000;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .disk {
+        fill: none;
+        stroke: #000;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+
+    <!-- Maske: blendet Slot im Bereich der Scheibe aus -->
+    <mask id="mask-slot">
+      <rect x="-1000" y="-1000" width="3000" height="3000" fill="#fff"/>
+      <g fill="#000">
+        <ellipse cx="30" cy="22" rx="14" ry="6"/>
+        <rect x="16" y="22" width="28" height="8"/>
+        <ellipse cx="30" cy="30" rx="14" ry="6"/>
+      </g>
+    </mask>
+  </defs>
+
+  <!-- ===== OBEN ===== -->
+  <g transform="translate(70,28)">
+    <g mask="url(#mask-slot)">
+      <ellipse class="slot" cx="30" cy="26" rx="30" ry="12"/>
+    </g>
+
+    <ellipse class="disk" cx="30" cy="22" rx="14" ry="6"/>
+    <path class="disk" d="M16 22 L16 30"/>
+    <path class="disk" d="M44 22 L44 30"/>
+    <path class="disk" d="M16 30 C20 35, 40 35, 44 30"/>
+  </g>
+
+  <!-- ===== UNTEN LINKS ===== -->
+  <g transform="translate(35,70)">
+    <g mask="url(#mask-slot)">
+      <ellipse class="slot" cx="30" cy="26" rx="30" ry="12"/>
+    </g>
+
+    <ellipse class="disk" cx="30" cy="22" rx="14" ry="6"/>
+    <path class="disk" d="M16 22 L16 30"/>
+    <path class="disk" d="M44 22 L44 30"/>
+    <path class="disk" d="M16 30 C20 35, 40 35, 44 30"/>
+  </g>
+
+  <!-- ===== UNTEN RECHTS ===== -->
+  <g transform="translate(105,70)">
+    <g mask="url(#mask-slot)">
+      <ellipse class="slot" cx="30" cy="26" rx="30" ry="12"/>
+    </g>
+
+    <ellipse class="disk" cx="30" cy="22" rx="14" ry="6"/>
+    <path class="disk" d="M16 22 L16 30"/>
+    <path class="disk" d="M44 22 L44 30"/>
+    <path class="disk" d="M16 30 C20 35, 40 35, 44 30"/>
+  </g>
+
+</svg>

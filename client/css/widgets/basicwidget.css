@@ -5,5 +5,6 @@
 }
 
 .basic.widget.usesHTML {
+  white-space: normal;  /* the same thing before white-space became a shorthand */
   white-space: collapse;
 }

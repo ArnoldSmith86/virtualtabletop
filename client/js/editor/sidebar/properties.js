@@ -2015,6 +2015,8 @@ class PropertiesModule extends SidebarModule {
       // into (its routines are edited there)
       if(widget.get('type') != 'pile' && this.moduleDOM)
         this.renderEvents(widget);
+    } else if(this.renamingWidget) {
+      this.addRenameInProgress();
     } else {
       this.addDeck();
     }
@@ -2500,6 +2502,18 @@ class PropertiesModule extends SidebarModule {
     sidebarHint.className = 'noSelectionIntro';
     sidebarHint.innerText = 'The other editor tools are in the sidebar on the right.';
     this.moduleDOM.append(sidebarHint);
+  }
+
+  // Shown instead of the "nothing selected" module while a rename started from this panel is still running:
+  // the widget briefly leaves the room, which empties the selection, and the empty module with its two big
+  // call-to-action buttons reads as if the rename had thrown the selection away.
+  addRenameInProgress() {
+    this.addHeader('Edit widgets');
+
+    const status = document.createElement('p');
+    status.className = 'noSelectionIntro renameInProgress';
+    status.innerText = `Renaming ${this.renamingWidget.oldID} to ${this.renamingWidget.newID}…`;
+    this.moduleDOM.append(status);
   }
 
   async deckTraditional(target) {
@@ -5472,49 +5486,84 @@ class PropertiesModule extends SidebarModule {
     idInput.type = 'text';
     idInput.className = options.className || 'widgetHeaderIdInput';
     idInput.value = widget.id;
-    idInput.title = options.title || 'Rename widget';
+    // the two ways out of the field are worth spelling out: nothing on screen says that Enter applies the
+    // rename and that Escape puts the id back
+    idInput.title = `${options.title || 'Rename widget'} (Enter applies, Esc cancels)`;
     idInput.setAttribute('aria-label', options.ariaLabel || 'Widget id');
 
+    // the box is as wide as the id it holds instead of the browser's 20 character default, so a long id stays
+    // readable without scrolling through it (the CSS max-width caps how much of the panel it can take)
+    const fitToValue = _=>idInput.size = Math.max(12, idInput.value.length + 1);
+    fitToValue();
+    idInput.oninput = fitToValue;
+
+    // The id the input stands for. The Widget object it was created from keeps the id it had when it was
+    // renamed, so this is what tells a repeated change event - a browser fires one when the input is blurred
+    // after its value was already committed - from a second, real rename.
+    let currentID = widget.id;
+    let renaming = false;
+
     idInput.onchange = async () => {
-      const oldID = widget.id;
+      if(renaming) // a rename started by an earlier event of this input is still running
+        return;
+      const oldID = currentID;
       const newID = idInput.value.trim();
       if(newID == oldID) {
         idInput.value = oldID;
+        fitToValue();
         return;
       }
       if(!newID) {
         alert('Widget id cannot be empty.');
         idInput.value = oldID;
+        fitToValue();
         return;
       }
       if(widgets.has(newID)) {
-        alert(`A widget with the id "${newID}" already exists.`);
+        alert(`A widget with the id "${newID}" already exists. Please choose a different id.`);
         idInput.value = oldID;
+        fitToValue();
         return;
       }
 
+      renaming = true;
       idInput.disabled = true;
+      const state = JSON.parse(JSON.stringify((widgets.get(oldID) || widget).state));
+      state.id = newID;
+      // the new id already exists partway through the rename, so the input stands for it from here on rather
+      // than only once the rename has finished
+      currentID = newID;
+      // the widget is gone from the room between the remove and the add inside updateWidgetId, so without
+      // this the panel would drop to its "nothing selected" state for as long as the rename takes
+      this.renamingWidget = { oldID, newID };
       batchStart();
       try {
         setDeltaCause(`${getPlayerDetails().playerName} renamed widget ${oldID} to ${newID} in editor`);
-        const state = JSON.parse(JSON.stringify(widget.state));
-        state.id = newID;
         await updateWidgetId(state, oldID);
         const renamedWidget = widgets.get(newID);
         if(renamedWidget && options.onRenamed)
           options.onRenamed(renamedWidget);
       } catch(error) {
+        currentID = oldID;
         alert(`Could not rename widget: ${error}`);
         idInput.value = oldID;
+        fitToValue();
       } finally {
+        renaming = false;
         batchEnd();
         idInput.disabled = false;
+        this.renamingWidget = null;
+        // a rename that ended without a widget landing back in the selection - it threw, or the widget it put
+        // there is not one this panel shows - leaves the busy state above with nothing to replace it
+        if(this.moduleDOM && this.moduleDOM.querySelector('.renameInProgress'))
+          this.onSelectionChangedWhileActive([ ...selectedWidgets ]);
       }
     };
 
     idInput.onkeydown = event => {
       if(event.key == 'Escape') {
-        idInput.value = widget.id;
+        idInput.value = currentID;
+        fitToValue();
         idInput.blur();
       }
     };
@@ -10946,7 +10995,7 @@ class PropertiesModule extends SidebarModule {
     // speaks the sidebar's own toggle language
     new CheckboxInput(this, widget, 'Turn stops to follow the line', {
       listenTo: [ 'rotateStops', 'rotateAttachedWidgets' ],
-      hint: 'Landscape stops are rotated so they stay aligned with the line under them.',
+      hint: 'Every stop is turned to the direction of the line under it, whatever its shape - turn this off to keep the rotation each stop has.',
       getValue: _=>widget.shouldRotateStops(),
       setValue: checked=>lineEdit(`${checked ? 'enabled' : 'disabled'} automatic stop rotation on line ${widget.id}`, async _=>{
         // Remove the previous property when changing the setting in the tuner,
@@ -10956,9 +11005,18 @@ class PropertiesModule extends SidebarModule {
       })
     }).render(this.moduleDOM);
 
+    new NumberInput(this, widget, 'Rotation offset', {
+      property: 'rotationOffset',
+      min: -360,
+      max: 360,
+      step: 1,
+      unit: 'deg',
+      hint: 'Adds this angle to the direction of every automatically rotated stop.'
+    }).render(this.moduleDOM);
+
     new CheckboxInput(this, widget, 'Distribute evenly', {
       property: 'autoSpaceStops',
-      hint: 'Automatically distribute stops when line geometry changes.',
+      hint: 'The line keeps the same gap between its stops, measured along the path, and re-spaces them whenever it changes shape.',
       setValue: async checked=>{
         await lineEdit(`${checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', checked));
         renderStops();
@@ -11076,8 +11134,11 @@ class PropertiesModule extends SidebarModule {
         position.type = 'number';
         position.min = 0;
         position.max = 100;
+        position.step = 'any';
         position.className = 'lineStopPosition';
-        position.value = Math.round(widget.stopPosition(stop)*100);
+        // positions carry three decimals, so a whole-percent readout would show
+        // an evenly distributed line as an uneven list (0, 6, 11, 17, 22, ...)
+        position.value = Math.round(widget.stopPosition(stop)*1000)/10;
         // with even distribution on, the line owns the positions - a typed value
         // would be spaced away again right after, so don't offer the field
         position.disabled = !!widget.get('autoSpaceStops');
@@ -11388,7 +11449,7 @@ class PropertiesModule extends SidebarModule {
     this.renderOtherPropertiesSection(widget, [
       'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
       'lineColor', 'lineDash', 'lineWidth', 'stops',
-      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
+      'rotateStops', 'rotateAttachedWidgets', 'rotationOffset', 'autoSpaceStops',
       'connectStart', 'connectEnd', 'dropTarget'
     ]);
   }
@@ -11688,11 +11749,11 @@ class PropertiesModule extends SidebarModule {
       title: 'Add property',
       suggestions: Object.keys(widget.defaults || {}).filter(property=>
         [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1 &&
-        !/Routine$/.test(property) && !Object.hasOwn(widget.state, property)
+        !/Routine$/.test(property) && !this.isPropertyDeclaredOnWidget(widget, property)
       ).sort(),
       nativeSuggestionButtonOnly: true,
       onAdd: property=>{
-        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || Object.hasOwn(widget.state, property))
+        if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1 || this.isPropertyDeclaredOnWidget(widget, property))
           return false;
         this.inputValueUpdated(widget, property, '');
         this.onSelectionChangedWhileActive([ widget ]);

@@ -47,6 +47,9 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
       button.classList.remove('visualProgress');
       button.classList.add('green');
     } catch(e) {
+      // the button label is the only other place this error shows up, and it is reset again a
+      // few seconds later - so log it as well to leave a stack trace behind in the console
+      console.error(e);
       button.setAttribute('icon', 'error');
       button.innerText = e.toString();
       button.classList.remove('progress');
@@ -67,6 +70,7 @@ export function progressButton(button, clickHandler, disableWhenDone=true) {
 // returns how the URL was passed on so callers can tell the user what happened
 export async function shareURL(url) {
   try {
+    // compat-fallback api.Navigator.share: a browser without it throws here and the URL goes to the clipboard instead
     await navigator.share({ url });
   } catch(e) {
     try {
