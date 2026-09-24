@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:padding="@dimen/screen_padding">
+
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="@dimen/logo_margin_top"
+      android:layout_marginBottom="@dimen/logo_margin_bottom"
+      android:adjustViewBounds="true"
+      android:maxHeight="@dimen/logo_height"
+      android:src="@drawable/vtt_logo"
+      android:contentDescription="@string/logo_description"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:background="@drawable/card_background"
+      android:padding="16dp">
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:textSize="17sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:minLines="@integer/detail_lines"
+        android:textColor="@color/text_dim"
+        android:textSize="14sp"
+        android:lineSpacingExtra="3sp"/>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:indeterminate="true"
+        android:visibility="invisible"/>
+  </LinearLayout>
+
+  <ScrollView
+      android:id="@+id/logScroll"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:layout_marginTop="16dp"
+      android:background="@drawable/console_background"
+      android:scrollbars="vertical">
+
+    <TextView
+        android:id="@+id/log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:typeface="monospace"
+        android:textColor="@color/text_dim"
+        android:textSize="12sp"
+        android:lineSpacingExtra="3sp"
+        android:textIsSelectable="true"/>
+  </ScrollView>
+
+  <Button
+      android:id="@+id/primary"
+      style="@style/Button.VirtualTabletop.Primary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:textColor="@color/button_text"
+      android:text="@string/install"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/secondary"
+        style="@style/Button.VirtualTabletop.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/button_text"
+        android:text="@string/update"/>
+
+    <Button
+        android:id="@+id/quit"
+        style="@style/Button.VirtualTabletop.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/button_text"
+        android:text="@string/quit"/>
+  </LinearLayout>
+</LinearLayout>

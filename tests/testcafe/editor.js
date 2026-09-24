@@ -1,6 +1,6 @@
 import { ClientFunction, Selector } from 'testcafe';
 
-import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, expectEventually, getStateObject, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -464,6 +464,186 @@ test('A rename that the browser commits twice does not claim the new id is taken
   await t.expect(result).eql({ alerts: [], renamed: true, gone: true });
 });
 
+// Committing a widget id and then blurring the input can hand the same change event to the client twice -
+// Chrome does that once the rename has replaced the widget under the input. The second one must not be read
+// as an attempt to take the id that the first one just created, whether it arrives after the rename or while
+// it is still running. The waiter widget's id routine holds every rename open long enough for the latter.
+const idRenameDelay = 1500;
+const idRenameWaiter = { id: 'waiter', type: 'basic', x: 600, y: 200, idGlobalUpdateRoutine: [ { func: 'DELAY', milliseconds: idRenameDelay } ] };
+
+// Commit a new id through the input and hand the same change event over a second time while the rename is
+// still running, the way the browser does on the blur that follows the commit.
+const commitIdTwice = ClientFunction((selector, newID, delay) => {
+  const input = document.querySelector(selector);
+  input.value = newID;
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+  setTimeout(() => input.dispatchEvent(new Event('change', { bubbles: true })), delay);
+});
+
+test('The id input renaming a widget does not claim the id is taken when its change event repeats', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    old: { id: 'old', type: 'basic', x: 200, y: 200 },
+    other: { id: 'other', type: 'basic', x: 400, y: 200 },
+    waiter: idRenameWaiter
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_old')
+    .expect(Selector('[aria-label="Widget id"]').exists).ok();
+
+  // the input the rename is typed into: the panel draws a new one for the renamed widget, so a repeated
+  // change event is one this element sends after the widget it was drawn for is gone
+  await ClientFunction(() => { window.renamedIdInput = document.querySelector('[aria-label="Widget id"]'); })();
+
+  await t
+    .typeText('[aria-label="Widget id"]', 'new', { replace: true })
+    .pressKey('enter')
+    .expect(Selector('#w_new').exists).ok({ timeout: 10000 })
+    .expect(Selector('[aria-label="Widget id"]').value).eql('new');
+
+  await ClientFunction(() => window.renamedIdInput.dispatchEvent(new Event('change', { bubbles: true })))();
+  await t.wait(500);
+
+  const widgetIDs = ClientFunction(()=>Array.from(widgets.keys()).sort());
+  await t.expect(await t.getNativeDialogHistory()).eql([]);
+  await t.expect(await widgetIDs()).eql([ 'new', 'other', 'waiter' ]);
+
+  // Escape restores the id the input stands for now, not the one the widget carried when the panel was drawn.
+  // Dispatched without bubbling so the editor's own Escape handling doesn't drop the selection along with it.
+  const escapeIdInput = ClientFunction(() => {
+    const input = document.querySelector('[aria-label="Widget id"]');
+    input.value = 'discarded';
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    return input.value;
+  });
+  await t.expect(await escapeIdInput()).eql('new');
+
+  // an id that really is taken still says so and puts the input back
+  await t
+    .typeText('[aria-label="Widget id"]', 'other', { replace: true })
+    .pressKey('enter');
+  await t.expect((await t.getNativeDialogHistory())[0].text).eql('A widget with the id "other" already exists. Please choose a different id.');
+  await t
+    .expect(Selector('[aria-label="Widget id"]').value).eql('new')
+    .expect(await widgetIDs()).eql([ 'new', 'other', 'waiter' ]);
+
+  // the repeat arriving mid-rename: the new id exists at that point, so it is the one that used to alert
+  await commitIdTwice('[aria-label="Widget id"]', 'renamed', Math.round(idRenameDelay / 3));
+  // the widget is out of the room while the rename runs, so the panel says what it is waiting for instead of
+  // falling back to the module that offers to add a widget
+  await t
+    .expect(Selector('.renameInProgress').innerText).eql('Renaming new to renamed…')
+    .expect(Selector('.noSelectionButton').exists).notOk()
+    .expect(Selector('#w_renamed').exists).ok({ timeout: 10000 })
+    .wait(1000)
+    .expect((await t.getNativeDialogHistory()).length).eql(1) // still only the one the taken id put there
+    .expect(await widgetIDs()).eql([ 'other', 'renamed', 'waiter' ]);
+});
+
+// The deck editor's inline deck-id field commits the same way and renames through the same helper, so the
+// repeated change event reaches it too.
+test('The deck editor id field does not start a second rename when its change event repeats', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({ waiter: idRenameWaiter });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  const currentDeckID = ClientFunction(() => {
+    let id = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') id = w.get('id'); });
+    return id;
+  });
+  await t.expect(currentDeckID()).notEql(null, { timeout: 10000 }); // every widget added waits for the id routine
+  const deckID = await currentDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#propertiesOpenDeckEditor')
+    .expect(Selector('.deckEditorTreeDeckId').exists).ok()
+    .click('.deckEditorTreeDeckId') // also selects the deck node, which redraws the tree and the field
+    .wait(300);
+
+  await commitIdTwice('.deckEditorTreeDeckId', 'renamedDeck', Math.round(idRenameDelay / 3));
+  await t
+    .expect(ClientFunction(()=>widgets.has('renamedDeck'))()).ok({ timeout: 10000 })
+    .wait(1000)
+    .expect(await t.getNativeDialogHistory()).eql([])
+    .expect(ClientFunction(deckID=>widgets.has(deckID))(deckID)).notOk()
+    .expect(Selector('.deckEditorTreeDeckId').value).eql('renamedDeck');
+  await t.pressKey('esc');
+});
+
+// updateWidgetId runs game-authored id routines, so it can throw halfway through a rename. What it must not
+// leave behind is the state the rename put up for its own duration: the editor ignores every delta while a
+// rename of its deck runs, and the delta batch it opened swallows every later edit until it is closed.
+test('A deck rename that throws leaves neither the deck editor nor its deltas stuck', async t => {
+  await t.setNativeDialogHandler(() => true);
+  await t.resizeWindow(1280, 800);
+  await setRoomState({});
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .expect(Selector('#editorModuleTopLeft.tune').exists).ok();
+  const currentDeckID = ClientFunction(() => {
+    let id = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') id = w.get('id'); });
+    return id;
+  });
+  await t.expect(currentDeckID()).notEql(null, { timeout: 10000 });
+  const deckID = await currentDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#propertiesOpenDeckEditor')
+    .expect(Selector('.deckEditorTreeDeckId').exists).ok()
+    .click('.deckEditorTreeDeckId')
+    .wait(300);
+
+  // fail the rename where it hurts: after the batch was opened and with the deck already taken apart
+  await ClientFunction(() => {
+    window.originalUpdateWidgetId = window.updateWidgetId;
+    window.updateWidgetId = _=>Promise.reject(new Error('rename failed'));
+  })();
+  await t
+    .typeText('.deckEditorTreeDeckId', 'failedRename', { replace: true })
+    .pressKey('enter')
+    .wait(500);
+  await t.expect((await t.getNativeDialogHistory())[0].text).eql('Could not rename deck: Error: rename failed');
+  await t
+    .expect(Selector('.deckEditorTreeDeckId').value).eql(deckID)
+    .expect(Selector('.deckEditorTreeDeckId').hasAttribute('disabled')).notOk();
+
+  await ClientFunction(() => { window.updateWidgetId = window.originalUpdateWidgetId; })();
+  await t
+    .click('.deckEditorTreeDeckId') // the tree was redrawn, so let the click settle before typing into it
+    .wait(300)
+    .typeText('.deckEditorTreeDeckId', 'workingRename', { replace: true })
+    .pressKey('enter')
+    .expect(ClientFunction(()=>widgets.has('workingRename'))()).ok({ timeout: 10000 });
+  // the server seeing it is what tells an open batch from a closed one - a leaked one keeps the delta local
+  await expectEventually(t, async _=>Object.keys(await getStateObject()).includes('workingRename'), true,
+    'the rename after the failed one reaches the server');
+  await t.pressKey('esc');
+});
+
 test('Dice faces have their own icon, image scale and CSS controls', async t => {
   // Keep this at the narrow layout from the review so the controls remain
   // useful in the smallest supported properties sidebar.
@@ -598,6 +778,60 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
 
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
 });
+
+for(const type of [ 'holder', 'line' ]) {
+  test(`A ${type} outside the board takes a drop only in the zoomed out edit view`, async t => {
+    await t.resizeWindow(1280, 800);
+    await setRoomState({
+      deck: { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+      card: { id: 'card', type: 'card', deck: 'deck', cardType: 'a', x: 700, y: 400 },
+      offBoard: {
+        id: 'offBoard', type, x: 1750, y: 340, width: 220, height: 120, dropTarget: { type: 'card' },
+        ...(type == 'line' ? { lineStart: { x: 0, y: 60 }, lineEnd: { x: 220, y: 60 }, lineWidth: 10 } : {})
+      }
+    });
+    await ClientFunction(prepareClient)();
+    await setEditorState(null);
+    await setName(t);
+
+    // Synthetic coordinates can reach the clipped target; edit mode uses right-drag to move widgets.
+    const drag = ClientFunction((button, highlight) => {
+      const card = document.getElementById('w_card'), target = document.getElementById('w_offBoard');
+      const from = card.getBoundingClientRect(), to = target.getBoundingClientRect();
+      const buttons = button == 2 ? 2 : 1;
+      const clientX = to.left + to.width/2, clientY = to.top + to.height/2;
+      card.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button, buttons, clientX: from.left + from.width/2, clientY: from.top + from.height/2 }));
+      document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons, clientX, clientY }));
+      return new Promise(resolve => setTimeout(() => {
+        const highlighted = target.classList.contains(highlight);
+        document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button, clientX, clientY }));
+        setTimeout(() => resolve(highlighted), 300);
+      }, 300));
+    });
+    const dropState = async () => {
+      const state = await getStateObject();
+      return {
+        parent: state.card.parent || null,
+        moved: state.card.x != 700,
+        stops: (state.offBoard.stops || []).map(stop=>stop.widget)
+      };
+    };
+    const highlight = type == 'line' ? 'lineDropTarget' : 'droppable';
+    const refused = { parent: null, moved: true, stops: [] };
+
+    await t.expect(drag(0, highlight)).notOk('no off-board drop target during play');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editButton');
+    await t.expect(Selector('#editorSelection').exists).ok();
+    await t.expect(drag(2, highlight)).notOk('no off-board drop target in the clipped edit view');
+    await expectEventually(t, dropState, refused);
+
+    await t.click('#editorToolbar [icon=zoom_out]');
+    await t.expect(drag(2, highlight)).ok('off-board drop target in the zoomed out edit view');
+    await expectEventually(t, dropState, { parent: 'offBoard', moved: true, stops: type == 'line' ? [ 'card' ] : [] });
+  });
+}
 
 test('A holder picks what it accepts in the dropTarget editor', async t => {
   await t.resizeWindow(1280, 800);
