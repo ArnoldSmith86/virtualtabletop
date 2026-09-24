@@ -1989,24 +1989,28 @@ class PropertiesModule extends SidebarModule {
       this.renderForMulti(newSelection);
     } else if(newSelection.length == 1) {
       const widget = newSelection[0];
-      switch(widget.get('type')) {
-        case 'button':     this.renderForButton(widget);     break;
-        case 'canvas':     this.renderForCanvas(widget);     break;
-        case 'card':       this.renderForCard(widget);       break;
-        case 'deck':       this.renderForDeck(widget);       break;
-        case 'dice':       this.renderForDice(widget);       break;
-        case 'holder':     this.renderForHolder(widget);     break;
-        case 'label':      this.renderForLabel(widget);      break;
-        case 'line':       this.renderForLine(widget);       break;
-        case 'pile':       this.renderForPile(widget);       break;
-        case 'scoreboard': this.renderForScoreboard(widget); break;
-        case 'seat':       this.renderForSeat(widget);       break;
-        case 'spinner':    this.renderForSpinner(widget);    break;
-        case 'timer':      this.renderForTimer(widget);      break;
+      if(widget.get('editorSmartClone')) {
+        this.renderForSmartClone(widget);
+      } else {
+        switch(widget.get('type')) {
+          case 'button':     this.renderForButton(widget);     break;
+          case 'canvas':     this.renderForCanvas(widget);     break;
+          case 'card':       this.renderForCard(widget);       break;
+          case 'deck':       this.renderForDeck(widget);       break;
+          case 'dice':       this.renderForDice(widget);       break;
+          case 'holder':     this.renderForHolder(widget);     break;
+          case 'label':      this.renderForLabel(widget);      break;
+          case 'line':       this.renderForLine(widget);       break;
+          case 'pile':       this.renderForPile(widget);       break;
+          case 'scoreboard': this.renderForScoreboard(widget); break;
+          case 'seat':       this.renderForSeat(widget);       break;
+          case 'spinner':    this.renderForSpinner(widget);    break;
+          case 'timer':      this.renderForTimer(widget);      break;
 
-        default:
-          this.renderForBasic(widget);
-          break;
+          default:
+            this.renderForBasic(widget);
+            break;
+        }
       }
 
       // every widget can have routines, so the section is always there - piles
@@ -11521,6 +11525,25 @@ class PropertiesModule extends SidebarModule {
 
     this.renderAppearanceSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'options', 'angle', 'value' ]);
+  }
+
+  renderForSmartClone(widget) {
+    this.addHeader(`Smart Clone ${widget.id}`);
+    const cloneDiv = div(this.moduleDOM, '', `
+      <p>This widget was created using the smart clone tool. The editor will keep it and its children updated when you change the source.</p>
+      <p>Unlink this widget from its source to make changes to its children.</p>
+      <label><input type=checkbox class=flipX> Flip X</label><br>
+      <label><input type=checkbox class=flipY> Flip Y</label><br>
+      <label><input type=checkbox class=includeCards> Include cards without their deck</label><br>
+      <button icon=link_off>Unlink</button>
+    `);
+    $('.flipX', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipX: e.target.checked }));
+    $('.flipY', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { flipY: e.target.checked }));
+    $('.includeCards', cloneDiv).onchange = e=>widget.set('editorSmartClone', Object.assign({}, widget.get('editorSmartClone'), { includeCards: e.target.checked }));
+    $('.flipX', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipX;
+    $('.flipY', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipY;
+    $('.includeCards', cloneDiv).checked = (widget.get('editorSmartClone') || {}).includeCards;
+    $('[icon=link_off]', cloneDiv).onclick = _=>smartCloneUnlink(widget.id);
   }
 
   /**

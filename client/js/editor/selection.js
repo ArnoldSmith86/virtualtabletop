@@ -247,6 +247,7 @@ function selectionChanged(previousSelection, newSelection) {
 
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
+  newSelectedWidgets = smartCloneProcessSelection(newSelectedWidgets);
 
   // Whatever the editor has open belongs to the widget that was being edited, so
   // moving on to another one takes it along: the sound library is an overlay
@@ -335,6 +336,7 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
@@ -346,6 +348,7 @@ function receiveStateFromServer(state) {
   // The selection survives leaving edit mode, so this happens while playing too.
   deckEditorStateReplaced();
   endDrill();
+  smartCloneInit();
   setSelection([]);
   for(const module of sidebarModules)
     module.onStateReceived(state);
