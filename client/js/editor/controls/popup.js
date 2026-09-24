@@ -215,10 +215,19 @@ class Popup {
         list.classList.toggle('popup-property-list-complete', list.scrollHeight <= list.clientHeight);
   }
 
+  // How wide a popup may lay itself out, within the strip it is placed in. Half
+  // the window for the ones that edit a value of the routine below them: they
+  // are read next to what they belong to, and a popup covering the editor hides
+  // the sentence being edited. A popup that is written into rather than picked
+  // from overrides this - half a phone screen is not a box to write in.
+  maxPopupWidth() {
+    return window.innerWidth/2;
+  }
+
   moveIntoView() {
     const limits = this.limitsAroundSource(this.placementLimits());
     // shrink into the available strip instead of hanging out of it
-    this.domElement.style.maxWidth = `${Math.min(window.innerWidth/2, limits.right-limits.left-20)}px`;
+    this.domElement.style.maxWidth = `${Math.min(this.maxPopupWidth(), limits.right-limits.left-20)}px`;
     this.domElement.style.maxHeight = `${Math.min(window.innerHeight-20, limits.bottom-limits.top-20)}px`;
     const wanted = this.domElement.getBoundingClientRect(); // where it wants to be
     // How wide the popup lays itself out is limited by how far its left edge is
