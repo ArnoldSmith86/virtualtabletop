@@ -44,6 +44,16 @@ export function isNonFatalError(msg, error) {
   return !error && /^(ResizeObserver loop|Script error\.?$)/.test(`${msg}`);
 }
 
+// Wallet extensions can inject their own promises into the page; their account errors do not
+// indicate that the VTT client or its connection is broken.
+export function isNonFatalPromiseRejection(reason) {
+  try {
+    return !!reason && reason.message === 'wallet must has at least one account';
+  } catch(e) {
+    return false;
+  }
+}
+
 // a rejection reason is often a plain object like { status: 500 } - String() would turn that
 // into a useless [object Object], while JSON.stringify fails on cyclic values and BigInt
 function stringifyValue(value) {
@@ -364,6 +374,8 @@ onLoad(function() {
     errorHandler(err, `${msg}` + (url && line ? `\n    at ${url}:${line}:${col}` : ''));
   };
   window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
+    if(isNonFatalPromiseRejection(promiseRejectionEvent.reason))
+      return;
     errorHandler(promiseRejectionEvent.reason, 'Unhandled promise rejection');
   });
 });
