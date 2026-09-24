@@ -90,16 +90,24 @@ async function downloadState(res, roomID, stateID, variantID) {
 }
 
 function autosaveRooms() {
-  setInterval(function() {
-    for(const [ _, room ] of activeRooms) {
-      try {
-        room.updateTimeStatistics();
-        room.writeToFilesystem();
-      } catch(e) {
-        Logging.handleGenericException('autosaveRooms', e);
+  let saveInProgress = false;
+  setInterval(async function() {
+    if(saveInProgress)
+      return;
+    saveInProgress = true;
+    try {
+      for(const [ _, room ] of activeRooms) {
+        try {
+          room.updateTimeStatistics();
+          await room.writeToFilesystemAsync();
+        } catch(e) {
+          Logging.handleGenericException('autosaveRooms', e);
+        }
       }
+      Statistics.writeToFilesystem();
+    } finally {
+      saveInProgress = false;
     }
-    Statistics.writeToFilesystem();
   }, 60*1000);
 }
 

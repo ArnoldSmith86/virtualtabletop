@@ -1,0 +1,8 @@
+#!/bin/sh
+# stands in for node server.mjs: says a few things, takes the port, and waits for SIGTERM
+trap 'echo "shutting down"; exit 0' TERM
+echo "$(date -u +%FT%TZ) EXTERNALURL=$EXTERNALURL"
+echo "$(date -u +%FT%TZ) minifying $1"
+sleep 1
+echo "$(date -u +%FT%TZ) Listening on $PORT"
+while true; do sleep 0.2; done
