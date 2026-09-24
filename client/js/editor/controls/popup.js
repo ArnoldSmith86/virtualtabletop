@@ -2825,8 +2825,8 @@ function commonInfoTopic(topicName) {
 
       Parameters:
 
-      turn: integer, seat id, "first", or "last" - which seat becomes active, interpreted according to turnCycle.
-      turnCycle: forward/backward/random/position/seat - how the next player is chosen. forward/backward sort the active seats by index and move that many turn positions from the current seat; random picks a random active seat (turn is ignored); position uses turn "first"/"last" to pick the active seat with the smallest/largest index; seat uses turn as the id of the seat whose turn it becomes.
+      turn: integer, seat id, "first", or "last" - which seat becomes active, interpreted according to turnCycle. A negative value counts the other way round the cycle, so forward with turn -1 picks the same seat as backward with turn 1. Fractions are cut off.
+      turnCycle: forward/backward/random/position/seat - how the next player is chosen. forward/backward sort the active seats by index and move that many turn positions from the current seat; random picks a random active seat (turn is ignored); position takes turn as a position among the active seats, counting from the first one (1 is the first, and "first" says the same) or back from the last one for negative values (-1 is the last, and "last" says the same); seat uses turn as the id of the seat whose turn it becomes.
       source: all or collection - which seats are considered (defaults to all). Seats with skipTurn set to true are never chosen.
       collection: collection name - receives the seat whose turn it now is (defaults to "TURN"). Must be a named collection.
       </pre>
