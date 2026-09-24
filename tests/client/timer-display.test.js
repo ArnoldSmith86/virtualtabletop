@@ -46,3 +46,25 @@ test('revealing a paused timer fits hour text after hidden layout could not be m
     removeWidget(timer.id);
   }
 });
+
+test('clearing a paused timer owner fits hour text after foreign layout could not be measured', () => {
+  const timer = new Timer('foreign-hours-display');
+  Object.defineProperty(timer.domElement, 'clientWidth', { get: () => timer.domElement.classList.contains('foreign') ? 0 : 74 });
+  Object.defineProperty(timer.timeDisplay, 'scrollWidth', { get: () => timer.timeDisplay.textContent.length * (parseFloat(timer.timeDisplay.style.fontSize) || 23) * 0.6 });
+  const computedStyle = jest.spyOn(globalThis, 'getComputedStyle').mockImplementation(element => element === timer.timeDisplay ? { fontSize: '23px' } : { paddingLeft: '0px', paddingRight: '3px' });
+  try {
+    addWidget({ id: timer.id, type: 'timer', milliseconds: 3600000, owner: 'another-player' }, timer);
+
+    expect(timer.domElement.classList.contains('foreign')).toBe(true);
+    expect(timer.timeDisplay.style.fontSize).toBe('');
+
+    timer.applyDelta({ owner: null });
+    expect(timer.domElement.classList.contains('foreign')).toBe(false);
+    expect(timer.timeDisplay.textContent).toBe('1:00:00');
+    expect(parseFloat(timer.timeDisplay.style.fontSize)).toBeLessThan(23);
+    expect(timer.timeDisplay.scrollWidth).toBeLessThanOrEqual(71);
+  } finally {
+    computedStyle.mockRestore();
+    removeWidget(timer.id);
+  }
+});

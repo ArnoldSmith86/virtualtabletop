@@ -31,7 +31,7 @@ export class Timer extends Widget {
       const time = s < 3600 ? `${Math.floor(s/60)}:${pad(s%60)}` : `${Math.floor(s/3600)}:${pad(Math.floor(s/60)%60)}:${pad(s%60)}`;
       setText(this.timeDisplay, `${delta.milliseconds < 0 ? '-' : ''}${time}`);
     }
-    if(delta.milliseconds !== undefined || delta.width !== undefined || delta.css !== undefined || delta.display !== undefined) {
+    if(delta.milliseconds !== undefined || delta.width !== undefined || delta.css !== undefined || delta.display !== undefined || delta.owner !== undefined) {
       this.timeDisplay.style.fontSize = '';
       const style = getComputedStyle(this.domElement);
       const availableWidth = this.domElement.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
