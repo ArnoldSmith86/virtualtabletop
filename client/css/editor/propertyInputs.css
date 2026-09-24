@@ -138,6 +138,13 @@
 .editorModule .switchInput input.switchbox:checked + label.switchbox::before {
   margin-left: 18px;
 }
+/* an input the panel shows but does not let you change: the reason sits under it */
+.editorModule .propertyInput.disabledInput {
+  opacity: 0.5;
+}
+.editorModule .propertyInput.disabledInput label.switchbox {
+  cursor: default;
+}
 .editorModule .switchInput input.switchbox {
   /* keep the hidden checkbox at its DOM position: moving it far off-screen
      makes the browser scroll it into view when the label click focuses it */
