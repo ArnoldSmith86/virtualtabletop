@@ -1088,7 +1088,7 @@
       {
         "tag": "div",
         "id": "",
-        "classes": "hidden value",
+        "classes": "value",
         "box": [
           1280,
           50,
@@ -1103,7 +1103,7 @@
           "z-index": "auto",
           "background-color": "rgb(31, 92, 166)",
           "color": "rgb(255, 255, 255)",
-          "opacity": "0",
+          "opacity": "1",
           "background-image": "none",
           "font-style": "normal",
           "text-align": "center"
