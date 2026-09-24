@@ -1,4 +1,4 @@
-import { describeError, isNonFatalError } from '../../client/js/tracing.js';
+import { describeError, isNonFatalError, isNonFatalPromiseRejection } from '../../client/js/tracing.js';
 
 describe("Scenarios: Describing a client error for the error report", () => {
   describe("Given an Error object", () => {
@@ -63,6 +63,27 @@ describe("Scenarios: Deciding whether an error event should crash the client", (
       expect(isNonFatalError('Script error.', new Error('Script error.'))).toBe(false);
       expect(isNonFatalError('ResizeObserver loop completed', new Error('boom'))).toBe(false);
       expect(isNonFatalError(undefined)).toBe(false);
+    });
+  });
+});
+
+describe("Scenarios: Deciding whether an unhandled promise rejection should crash the client", () => {
+  describe("Given a rejection from an injected wallet extension", () => {
+    test("Then it is treated as non-fatal", () => {
+      expect(isNonFatalPromiseRejection({ message: 'wallet must has at least one account' })).toBe(true);
+    });
+  });
+
+  describe("Given an application rejection", () => {
+    test("Then it remains fatal", () => {
+      expect(isNonFatalPromiseRejection(new Error('something broke'))).toBe(false);
+      expect(isNonFatalPromiseRejection({ message: 'something broke' })).toBe(false);
+      expect(isNonFatalPromiseRejection(undefined)).toBe(false);
+    });
+
+    test("Then a hostile rejection reason remains fatal", () => {
+      const hostile = new Proxy({}, { get() { throw new Error('getter exploded'); } });
+      expect(isNonFatalPromiseRejection(hostile)).toBe(false);
     });
   });
 });
