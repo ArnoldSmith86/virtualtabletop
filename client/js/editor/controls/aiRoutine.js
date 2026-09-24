@@ -131,11 +131,9 @@ function aiWithoutInlineData(value) {
   return value;
 }
 
-// The card the validator is given a deck's card routine on. cardDefaults is the
-// one place it does not look inside ('any'), so a card routine checked on the
-// deck is not checked at all - it is checked on a card of that deck instead,
-// made up for the check, which is where it will really run. The suffix is on an
-// id that already has to be unique in the room.
+// The card the validator is given a deck's card routine on. The validator also
+// checks cardDefaults on the deck, but this card checks the routine in the
+// context where it runs. The suffix is on an id that is unique in the room.
 const AI_PROBE_CARD_SUFFIX = ' ai-routine-probe-card';
 
 // The room with a candidate routine in it: a routine of the widget is a property
@@ -197,7 +195,15 @@ function aiValidateRoutine(widgetID, property, routine, target) {
   try {
     const after = validateGameFile(aiRoomWithRoutine(room, widgetID, property, target, routine), false);
     const known = new Set(before.map(p=>JSON.stringify(p)));
-    return after.filter(p=>!known.has(JSON.stringify(p)));
+    const added = after.filter(p=>!known.has(JSON.stringify(p)));
+    if(target == 'cardDefaults') {
+      const probe = widgetID + AI_PROBE_CARD_SUFFIX;
+      // The deck's cardDefaults check reports the same routine under a path
+      // that cannot mark its operation card. Keep the probe card's reading and
+      // report it against the deck editor that owns this routine.
+      return added.filter(p=>p.widget == probe).map(p=>({ ...p, widget: widgetID }));
+    }
+    return added;
   } catch(e) {
     return [ { widget: widgetID, property: [ property ], message: `Validation error: ${e.message}` } ];
   }
