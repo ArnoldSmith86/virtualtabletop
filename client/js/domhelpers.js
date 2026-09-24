@@ -147,7 +147,9 @@ export function removeFromDOM(node) {
     for(const c of $a(node))
       removeFromDOM(c);
   } else {
-    node.parentNode.removeChild(node);
+    // remove() tolerates a node that already lost its place in the DOM, so
+    // tearing a room down never trips over one that was detached along the way
+    node.remove();
   }
 }
 

@@ -138,6 +138,40 @@ describe("Scenarios: Shifting widgets between containers", () => {
     });
   });
 
+  describe("Given a holder that arranges its cards in groups", () => {
+    let group;
+    beforeEach(async () => {
+      const holder = containers[0];
+      group = createWidget({ id: `${testName}-group`, type: 'widget' });
+      group.onChildAddAlign = async () => {};
+      await group.set('parent', holder.get('id'));
+      await createTokens(testName, group.get('id'), 2);
+      // what Holder does: children() reports the cards inside the groups,
+      // arrangedChildren() the groups themselves
+      holder.arrangesPiles = () => true;
+      holder.arrangedChildren = () => [ group ];
+      holder.children = () => group.children();
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "holders": containers.map(c => c.get('id')),
+          "widgets": "all",
+          "interval": 1
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the group arrives as one piece instead of dissolving into its cards", async () => {
+        const cards = group.children().map(w => w.get('id'));
+        await button.click();
+        expect(containers[1].children().map(w => w.get('id'))).toEqual([ group.get('id') ]);
+        expect(group.children().map(w => w.get('id'))).toEqual(cards);
+      });
+    });
+  });
+
   describe("Given three containers each with one token and a two-step SHIFT", () => {
     beforeEach(async () => {
       await createTokens(testName, containers[0].get('id'), 1);

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 
-import { Selector } from 'testcafe';
+import { ClientFunction, Selector } from 'testcafe';
 
 import { diffString, diff } from 'json-diff';
 
@@ -70,14 +70,34 @@ export async function setName(t, name, color) {
   const loadingIndicator = Selector('#loadingRoomIndicator');
   const playerOverlay = Selector('#playerOverlay');
   const playerColor = playerOverlay.find('.myPlayerEntry input[type=color]');
+  const playerNameField = playerOverlay.find('.myPlayerEntry .playerName');
+  const storedName = ClientFunction(() => localStorage.getItem('playerName'));
   await t
     .expect(loadingIndicator.exists).notOk()
     .click('#playersButton')
     .expect(playerOverlay.visible).ok()
     .click(playerColor)
-    .typeText(playerColor, color || '#7F007F', { replace: true })
-    .typeText('.myPlayerEntry .playerName', name || 'TestCafe', { replace: true })
-    .click('#activeGameButton');
+    .typeText(playerColor, color || '#7F007F', { replace: true });
+
+  // The color change round-trips through the server and the meta update it broadcasts
+  // re-renders the player list. A name typed into the input that re-render just replaced
+  // is lost without the change event that would have committed the rename, and the test
+  // then runs under the random Guest name the page loaded with - every state hash that
+  // embeds the player name (a card owned in a hand, a name a routine copies into a
+  // widget) drifts unrecognizably. Only the server's rename answer writes the name back
+  // to localStorage, so keep typing until that committed name is the requested one.
+  const wanted = name || 'TestCafe';
+  for(let attempt = 0; attempt < 5 && await storedName() != wanted; attempt++) {
+    // a previous attempt's rename can still be in flight - the change handler disables
+    // the field until the server answers
+    await t.expect(playerNameField.hasAttribute('disabled')).notOk();
+    await t.typeText(playerNameField, wanted, { replace: true }).pressKey('enter');
+    for(let wait = 50; wait < 1000 && await storedName() != wanted; wait *= 2)
+      await new Promise(resolve => setTimeout(resolve, wait));
+  }
+  await expectEventually(t, storedName, wanted, 'the player rename never took effect');
+
+  await t.click('#activeGameButton');
 }
 
 export async function setRoomState(state) {

@@ -1,74 +1,146 @@
 {
   "title": {
     "id": "title",
-    "x": 300,
+    "x": 100,
     "y": -2,
+    "width": 1400,
     "height": 60,
-    "z": 74,
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Holders: Offset Advanced",
-    "width": 1000
+    "layer": -3,
+    "text": "Holders: Layout - multiSpread"
   },
   "overview": {
     "id": "overview",
     "x": 108,
     "y": 80,
-    "width": 1400,
-    "height": 150,
+    "width": 1330,
+    "height": 290,
     "layer": -3,
-    "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 25px; ",
-    "html": "The offset properties were explained in the prior variant. This variant of the tutorial introduces the <b>overlap</b> property and provides an area to experiment with different values. Although <b>overlap</b> is a property that goes on a widget being dropped and <u>not</u> the holder it is being dropped it, the purpose of the property is to override the holder offsets for individual widgets. Enter values into the labels below to see their effect on the cards in the holder."
+    "css": "font-size: 25px",
+    "html": "<b>layout</b> &quotmultiSpread&quot holds several fanned groups of cards side by side in one holder. Each group is a pile that spreads its own cards using the holder's <b>stackOffsetX</b>/<b>stackOffsetY</b>. The groups sit a default 8 pixels apart until <b>pilesGapX</b> says otherwise. Drag a card onto a group and it is inserted at the exact spot of the fan you point at; drop it between the groups and it starts a new one. The grey drop shadow previews both: the slot in the fan, or the place the new group will get. <b>dropShadow</b> <i>false</i> turns the preview off. With <b>gridColumns</b> the groups wrap into rows; the next variant shows it.<br><br>Every click of <b>Deal a group of 3</b> adds one new group at the end. Drag a group by the handle at its top right corner to move it inside the holder or into another one. Dropped into a holder that spreads cards, a group deals itself out into the row; anywhere else it collapses back into an ordinary pile."
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 60,
+    "y": 455,
+    "width": 680,
+    "height": 200,
+    "layout": "multiSpread",
+    "stackOffsetX": 35,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "text1": {
+    "id": "text1",
+    "x": 62,
+    "y": 675,
+    "width": 640,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>layout</b> &quotmultiSpread&quot with <b>stackOffsetX</b> <i>25</i> and no spacing properties, so the groups sit the default 8 px apart."
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 800,
+    "y": 455,
+    "width": 680,
+    "height": 200,
+    "layout": "multiSpread",
+    "stackOffsetX": 25,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "pilesGapX": 60
+  },
+  "text2": {
+    "id": "text2",
+    "x": 802,
+    "y": 675,
+    "width": 640,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The same holder with <b>pilesGapX</b> <i>60</i>. Wider gaps make it much easier to see, and to hit, the slot where a new group will be inserted. To set each spread pile a fixed distance apart (measured from the left edge), no matter how many cards they hold, use <b>pilesOffsetX</b>/<b>pilesOffsetY.</b>"
+  },
+  "button1": {
+    "id": "button1",
+    "type": "button",
+    "x": 506,
+    "y": 378,
+    "width": 170,
+    "height": 50,
+    "text": "Deal a group of 3",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "holder1",
+          "holder2",
+          "holder3"
+        ],
+        "count": 3,
+        "face": 1
+      }
+    ]
+  },
+  "button2": {
+    "id": "button2",
+    "type": "button",
+    "x": 696,
+    "y": 378,
+    "width": 150,
+    "height": 50,
+    "text": "Deal one card",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": [
+          "holder1",
+          "holder2",
+          "holder3"
+        ],
+        "count": 1,
+        "face": 1
+      }
+    ]
   },
   "deckHolder": {
     "type": "holder",
     "id": "deckHolder",
-    "y": 463,
+    "x": 1470,
+    "y": 18,
     "dropTarget": {
       "type": "card"
     },
     "onLeave": {
       "activeFace": 1
-    },
-    "x": 215,
-    "z": 9733
+    }
   },
-  "recall_deckHolder": {
-    "id": "recall_deckHolder",
-    "parent": "deckHolder",
-    "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ]
-  },
-  "deck": {
-    "type": "deck",
-    "id": "deck",
-    "parent": "deckHolder",
-    "x": 12,
-    "y": 41,
+  "mainDeck": {
     "cardTypes": {
       "C 01": {
         "image": "/i/cards-default/AC.svg",
@@ -172,7 +244,7 @@
       "C 3Q": {
         "image": "/i/cards-default/QC.svg",
         "suit": "C",
-        "suitColor": "��",
+        "suitColor": "♣",
         "suitAlt": "1♣",
         "rank": "3Q",
         "rankA": "3Q",
@@ -572,697 +644,465 @@
           }
         ]
       }
-    ]
-  },
-  "A_C": {
-    "id": "A_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 01",
-    "z": 10621,
-    "parent": "vzp2"
-  },
-  "2_C": {
-    "id": "2_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 02",
-    "z": 10616,
-    "parent": "vzp2"
-  },
-  "3_C": {
-    "id": "3_C",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 03",
-    "z": 10612
-  },
-  "4_C": {
-    "id": "4_C",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 04",
-    "z": 10624
-  },
-  "5_C": {
-    "id": "5_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 05",
-    "z": 10615,
-    "parent": "vzp2"
-  },
-  "6_C": {
-    "id": "6_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 06",
-    "z": 10607,
-    "parent": "vzp2"
-  },
-  "7_C": {
-    "id": "7_C",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 07",
-    "z": 10592
-  },
-  "8_C": {
-    "id": "8_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 08",
-    "z": 10586,
-    "parent": "vzp2"
-  },
-  "9_C": {
-    "id": "9_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 09",
-    "z": 10609,
-    "parent": "vzp2"
-  },
-  "T_C": {
-    "id": "T_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 10",
-    "z": 10620,
-    "parent": "vzp2"
-  },
-  "J_C": {
-    "id": "J_C",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 2J",
-    "z": 10584
-  },
-  "Q_C": {
-    "id": "Q_C",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 3Q",
-    "z": 10589,
-    "parent": "vzp2"
-  },
-  "K_C": {
-    "id": "K_C",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "C 4K",
-    "z": 10588
-  },
-  "A_D": {
-    "id": "A_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 01",
-    "z": 10581,
-    "parent": "vzp2"
-  },
-  "2_D": {
-    "id": "2_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 02",
-    "z": 10595,
-    "parent": "vzp2"
-  },
-  "3_D": {
-    "id": "3_D",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 03",
-    "z": 10578
-  },
-  "4_D": {
-    "id": "4_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 04",
-    "z": 10619,
-    "parent": "vzp2"
-  },
-  "5_D": {
-    "id": "5_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 05",
-    "z": 10608,
-    "parent": "vzp2"
-  },
-  "6_D": {
-    "id": "6_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 06",
-    "z": 10606,
-    "parent": "vzp2"
-  },
-  "7_D": {
-    "id": "7_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 07",
-    "z": 10574,
-    "parent": "vzp2"
-  },
-  "8_D": {
-    "id": "8_D",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 08",
-    "z": 10614
-  },
-  "9_D": {
-    "id": "9_D",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 09",
-    "z": 10611
-  },
-  "T_D": {
-    "id": "T_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 10",
-    "z": 10583,
-    "parent": "vzp2"
-  },
-  "J_D": {
-    "id": "J_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 2J",
-    "z": 10597,
-    "parent": "vzp2"
-  },
-  "Q_D": {
-    "id": "Q_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 3Q",
-    "z": 10579,
-    "parent": "vzp2"
-  },
-  "K_D": {
-    "id": "K_D",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "D 4K",
-    "z": 10618,
-    "parent": "vzp2"
-  },
-  "A_H": {
-    "id": "A_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 01",
-    "z": 10591,
-    "parent": "vzp2"
-  },
-  "2_H": {
-    "id": "2_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 02",
-    "z": 10604,
-    "parent": "vzp2"
-  },
-  "3_H": {
-    "id": "3_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 03",
-    "z": 10617,
-    "parent": "vzp2"
-  },
-  "4_H": {
-    "id": "4_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 04",
-    "z": 10587,
-    "parent": "vzp2"
-  },
-  "5_H": {
-    "id": "5_H",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 05",
-    "z": 10596
-  },
-  "6_H": {
-    "id": "6_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 06",
-    "z": 10590,
-    "parent": "vzp2"
-  },
-  "7_H": {
-    "id": "7_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 07",
-    "z": 10601,
-    "parent": "vzp2"
-  },
-  "8_H": {
-    "id": "8_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 08",
-    "z": 10575,
-    "parent": "vzp2"
-  },
-  "9_H": {
-    "id": "9_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 09",
-    "z": 10582,
-    "parent": "vzp2"
-  },
-  "T_H": {
-    "id": "T_H",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 10",
-    "z": 10577
-  },
-  "J_H": {
-    "id": "J_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 2J",
-    "z": 10622,
-    "parent": "vzp2"
-  },
-  "Q_H": {
-    "id": "Q_H",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 3Q",
-    "z": 10585,
-    "parent": "vzp2"
-  },
-  "K_H": {
-    "id": "K_H",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "H 4K",
-    "z": 10594
-  },
-  "A_S": {
-    "id": "A_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 01",
-    "z": 10603,
-    "parent": "vzp2"
-  },
-  "2_S": {
-    "id": "2_S",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 02",
-    "z": 10580
-  },
-  "3_S": {
-    "id": "3_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 03",
-    "z": 10598,
-    "parent": "vzp2"
-  },
-  "4_S": {
-    "id": "4_S",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 04",
-    "z": 10610
-  },
-  "5_S": {
-    "id": "5_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 05",
-    "z": 10599,
-    "parent": "vzp2"
-  },
-  "6_S": {
-    "id": "6_S",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 06",
-    "z": 10593
-  },
-  "7_S": {
-    "id": "7_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 07",
-    "z": 10573,
-    "parent": "vzp2"
-  },
-  "8_S": {
-    "id": "8_S",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 08",
-    "z": 10623
-  },
-  "9_S": {
-    "id": "9_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 09",
-    "z": 10602,
-    "parent": "vzp2"
-  },
-  "T_S": {
-    "id": "T_S",
-    "parent": "vzp2",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 10",
-    "z": 10605
-  },
-  "J_S": {
-    "id": "J_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 2J",
-    "z": 10613,
-    "parent": "vzp2"
-  },
-  "Q_S": {
-    "id": "Q_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 3Q",
-    "z": 10576,
-    "parent": "vzp2"
-  },
-  "K_S": {
-    "id": "K_S",
-    "deck": "deck",
-    "type": "card",
-    "cardType": "S 4K",
-    "z": 10600,
-    "parent": "vzp2"
-  },
-  "doX": {
-    "type": "label",
-    "x": 562,
-    "y": 234,
-    "z": 39,
-    "id": "doX",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "text": 50
-  },
-  "Card Area": {
-    "type": "holder",
-    "x": 844,
-    "y": 209,
-    "z": 16,
-    "id": "Card Area",
-    "width": 600,
-    "height": 500,
-    "dropOffsetX": 50,
-    "dropOffsetY": 50,
-    "stackOffsetX": 20,
-    "stackOffsetY": 20
-  },
-  "doY": {
-    "type": "label",
-    "x": 562,
-    "y": 295,
-    "z": 22,
-    "id": "doY",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "text": 50
-  },
-  "soX": {
-    "type": "label",
-    "x": 562,
-    "y": 353,
-    "z": 35,
-    "id": "soX",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "text": 20
-  },
-  "soY": {
-    "type": "label",
-    "x": 562,
-    "y": 414,
-    "z": 26,
-    "id": "soY",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "text": 20
-  },
-  "ovlp": {
-    "x": 562,
-    "y": 473,
-    "z": 47,
-    "css": {
-      "background-color": "#CCCCCC",
-      "color": "black",
-      "text-align": "center"
-    },
-    "id": "ovlp",
-    "text": "True",
-    "height": 20,
-    "clickRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "True",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "False"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "True"
-          }
-        ]
-      }
     ],
-    "movable": false,
-    "layer": -2
-  },
-  "note1": {
-    "id": "note1",
-    "y": 700,
-    "height": 180,
-    "z": 88,
-    "html": "<b>When placing a card</b><br>1. If <b>overlap</b> is <i>true</i> for that card, then the values of <b>stackOffsetX</b> and <b>stackOffsetY</b> will govern placement of the card. This is the default behavior.<br><br>2. If <b>overlap</b> is <i>false</i> for a particular card, then the next card dropped into that holder will not overlap the card. The separation depends on the values of the stack offsets. If <b>stackOffsetX</b> is nonzero, the cards will be separated by four pixels in the X direction. The same is true for <b>stackOffsetY</b>.<br><br>3. If <b>overlap</b> is <i>false</i> and both <b>stackOffsetX</b> and <b>stackOffsetY</b> are 0 then the next card will stack directly on top of the previous card despite the <b>overlap</b> property value of <i>false</i>.",
-    "css": {
-      "font-size": "24px"
-    },
-    "x": 100,
-    "width": 1450,
-    "layer": -3
-  },
-  "vzp2": {
-    "type": "pile",
+    "type": "deck",
+    "id": "mainDeck",
     "parent": "deckHolder",
-    "x": 4,
-    "y": 4,
+    "x": 12,
+    "y": 41
+  },
+  "deckHolderP": {
+    "type": "pile",
+    "id": "deckHolderP",
+    "parent": "deckHolder",
     "width": 103,
     "height": 160,
-    "id": "vzp2"
+    "z": 1
   },
-  "label1": {
-    "type": "label",
-    "id": "label1",
-    "x": 354,
-    "y": 222,
-    "width": 200,
-    "height": 42,
-    "z": 19,
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "text": "dropOffsetX:"
-  },
-  "label2": {
-    "type": "label",
-    "id": "label2",
-    "x": 354,
-    "y": 281,
-    "width": 200,
-    "height": 42,
-    "z": 21,
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "text": "dropOffsetY:"
-  },
-  "label3": {
-    "type": "label",
-    "id": "label3",
-    "x": 354,
-    "y": 340,
-    "width": 200,
-    "height": 42,
-    "z": 23,
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "text": "stackOffsetX:"
-  },
-  "label4": {
-    "type": "label",
-    "id": "label4",
-    "x": 354,
-    "y": 400,
-    "width": 200,
-    "height": 42,
-    "z": 25,
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "text": "stackOffsetY:"
-  },
-  "label5": {
-    "type": "label",
-    "id": "label5",
-    "x": 354,
-    "y": 459,
-    "width": 200,
-    "height": 42,
-    "z": 30,
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "text": "overlap:"
-  },
-  "button1": {
+  "deckHolderB": {
+    "id": "deckHolderB",
     "type": "button",
-    "id": "button1",
-    "x": 697,
-    "y": 339,
-    "width": 100,
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
     "height": 40,
-    "z": 4946,
-    "text": "Set values",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
     "clickRoutine": [
       {
-        "func": "SET",
-        "collection": [
-          "Card Area"
-        ],
-        "property": "dropOffsetX",
-        "value": "${PROPERTY text OF doX}"
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
       },
       {
-        "func": "SET",
-        "collection": [
-          "Card Area"
-        ],
-        "property": "dropOffsetY",
-        "value": "${PROPERTY text OF doY}"
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
       },
       {
-        "func": "SET",
-        "collection": [
-          "Card Area"
-        ],
-        "property": "stackOffsetX",
-        "value": "${PROPERTY text OF soX}"
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "Card Area"
-        ],
-        "property": "stackOffsetY",
-        "value": "${PROPERTY text OF soY}"
-      },
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "id",
-        "relation": "!=",
-        "value": null
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY text OF ovlp}",
-        "operand2": "True",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "overlap",
-            "value": true
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "property": "overlap",
-            "value": false
-          }
-        ]
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
       }
     ]
   },
-  "button2": {
-    "type": "button",
-    "id": "button2",
-    "x": 697,
-    "y": 630,
-    "width": 100,
-    "height": 40,
-    "z": 4947,
-    "text": "Deal a card",
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": "Card Area",
-        "face": 1
-      }
-    ]
+  "cardC01": {
+    "id": "cardC01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 01",
+    "parent": "deckHolderP",
+    "z": 821
+  },
+  "cardC02": {
+    "id": "cardC02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 02",
+    "parent": "deckHolderP",
+    "z": 803
+  },
+  "cardC03": {
+    "id": "cardC03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 03",
+    "parent": "deckHolderP",
+    "z": 826
+  },
+  "cardC04": {
+    "id": "cardC04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 04",
+    "parent": "deckHolderP",
+    "z": 798
+  },
+  "cardC05": {
+    "id": "cardC05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 05",
+    "parent": "deckHolderP",
+    "z": 814
+  },
+  "cardC06": {
+    "id": "cardC06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 06",
+    "parent": "deckHolderP",
+    "z": 829
+  },
+  "cardC07": {
+    "id": "cardC07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 07",
+    "parent": "deckHolderP",
+    "z": 832
+  },
+  "cardC08": {
+    "id": "cardC08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 08",
+    "parent": "deckHolderP",
+    "z": 813
+  },
+  "cardC09": {
+    "id": "cardC09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 09",
+    "parent": "deckHolderP",
+    "z": 806
+  },
+  "cardC10": {
+    "id": "cardC10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 10",
+    "parent": "deckHolderP",
+    "z": 828
+  },
+  "cardC2J": {
+    "id": "cardC2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 2J",
+    "parent": "deckHolderP",
+    "z": 815
+  },
+  "cardC3Q": {
+    "id": "cardC3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 3Q",
+    "parent": "deckHolderP",
+    "z": 808
+  },
+  "cardC4K": {
+    "id": "cardC4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "C 4K",
+    "parent": "deckHolderP",
+    "z": 804
+  },
+  "cardD01": {
+    "id": "cardD01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 01",
+    "parent": "deckHolderP",
+    "z": 834
+  },
+  "cardD02": {
+    "id": "cardD02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 02",
+    "parent": "deckHolderP",
+    "z": 818
+  },
+  "cardD03": {
+    "id": "cardD03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 03",
+    "z": 825,
+    "parent": "deckHolderP"
+  },
+  "cardD04": {
+    "id": "cardD04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 04",
+    "parent": "deckHolderP",
+    "z": 833
+  },
+  "cardD05": {
+    "id": "cardD05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 05",
+    "parent": "deckHolderP",
+    "z": 790
+  },
+  "cardD06": {
+    "id": "cardD06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 06",
+    "parent": "deckHolderP",
+    "z": 819
+  },
+  "cardD07": {
+    "id": "cardD07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 07",
+    "parent": "deckHolderP",
+    "z": 809
+  },
+  "cardD08": {
+    "id": "cardD08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 08",
+    "parent": "deckHolderP",
+    "z": 797
+  },
+  "cardD09": {
+    "id": "cardD09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 09",
+    "parent": "deckHolderP",
+    "z": 800
+  },
+  "cardD10": {
+    "id": "cardD10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 10",
+    "parent": "deckHolderP",
+    "z": 810
+  },
+  "cardD2J": {
+    "id": "cardD2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 2J",
+    "parent": "deckHolderP",
+    "z": 830
+  },
+  "cardD3Q": {
+    "id": "cardD3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 3Q",
+    "parent": "deckHolderP",
+    "z": 823
+  },
+  "cardD4K": {
+    "id": "cardD4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "D 4K",
+    "parent": "deckHolderP",
+    "z": 817
+  },
+  "cardH01": {
+    "id": "cardH01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 01",
+    "parent": "deckHolderP",
+    "z": 794
+  },
+  "cardH02": {
+    "id": "cardH02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 02",
+    "parent": "deckHolderP",
+    "z": 816
+  },
+  "cardH03": {
+    "id": "cardH03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 03",
+    "parent": "deckHolderP",
+    "z": 796
+  },
+  "cardH04": {
+    "id": "cardH04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 04",
+    "parent": "deckHolderP",
+    "z": 822
+  },
+  "cardH05": {
+    "id": "cardH05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 05",
+    "parent": "deckHolderP",
+    "z": 793
+  },
+  "cardH06": {
+    "id": "cardH06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 06",
+    "parent": "deckHolderP",
+    "z": 835
+  },
+  "cardH07": {
+    "id": "cardH07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 07",
+    "z": 824,
+    "parent": "deckHolderP"
+  },
+  "cardH08": {
+    "id": "cardH08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 08",
+    "parent": "deckHolderP",
+    "z": 820
+  },
+  "cardH09": {
+    "id": "cardH09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 09",
+    "z": 792,
+    "parent": "deckHolderP"
+  },
+  "cardH10": {
+    "id": "cardH10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 10",
+    "parent": "deckHolderP",
+    "z": 827
+  },
+  "cardH2J": {
+    "id": "cardH2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 2J",
+    "parent": "deckHolderP",
+    "z": 812
+  },
+  "cardH3Q": {
+    "id": "cardH3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 3Q",
+    "parent": "deckHolderP",
+    "z": 831
+  },
+  "cardH4K": {
+    "id": "cardH4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "H 4K",
+    "parent": "deckHolderP",
+    "z": 838
+  },
+  "cardS01": {
+    "id": "cardS01",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 01",
+    "parent": "deckHolderP",
+    "z": 805
+  },
+  "cardS02": {
+    "id": "cardS02",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 02",
+    "parent": "deckHolderP",
+    "z": 811
+  },
+  "cardS03": {
+    "id": "cardS03",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 03",
+    "parent": "deckHolderP",
+    "z": 795
+  },
+  "cardS04": {
+    "id": "cardS04",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 04",
+    "parent": "deckHolderP",
+    "z": 801
+  },
+  "cardS05": {
+    "id": "cardS05",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 05",
+    "parent": "deckHolderP",
+    "z": 837
+  },
+  "cardS06": {
+    "id": "cardS06",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 06",
+    "z": 788,
+    "parent": "deckHolderP"
+  },
+  "cardS07": {
+    "id": "cardS07",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 07",
+    "parent": "deckHolderP",
+    "z": 802
+  },
+  "cardS08": {
+    "id": "cardS08",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 08",
+    "parent": "deckHolderP",
+    "z": 799
+  },
+  "cardS09": {
+    "id": "cardS09",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 09",
+    "parent": "deckHolderP",
+    "z": 839
+  },
+  "cardS10": {
+    "id": "cardS10",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 10",
+    "parent": "deckHolderP",
+    "z": 791
+  },
+  "cardS2J": {
+    "id": "cardS2J",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 2J",
+    "parent": "deckHolderP",
+    "z": 836
+  },
+  "cardS3Q": {
+    "id": "cardS3Q",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 3Q",
+    "parent": "deckHolderP",
+    "z": 789
+  },
+  "cardS4K": {
+    "id": "cardS4K",
+    "type": "card",
+    "deck": "mainDeck",
+    "cardType": "S 4K",
+    "parent": "deckHolderP",
+    "z": 807
   },
   "_meta": {
-    "version": 21,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -1276,7 +1116,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1770832868971,
+      "lastUpdate": 1788632516896,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1287,9 +1127,99 @@
       "similarDesigner": "",
       "usesAIImagery": false,
       "variantImage": "",
-      "variant": "Offset Advanced",
+      "variant": "layout: multiSpread",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAILayout": false
     }
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 60,
+    "y": 782,
+    "width": 680,
+    "height": 200,
+    "layout": "multiSpread",
+    "stackOffsetX": 35,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "spreadMin": 4
+  },
+  "text3": {
+    "id": "text3",
+    "x": 751,
+    "y": 862,
+    "width": 640,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Using <b>spreadMin</b> allows piles to squeeze together to save space while still fanning out the specified minimum of cards. The holder to the left is set at 4, so drag and drop cards to create a group larger than 4 to see the effect."
+  },
+  "shadowButton": {
+    "id": "shadowButton",
+    "type": "button",
+    "x": 886,
+    "y": 378,
+    "width": 170,
+    "height": 50,
+    "text": "dropShadow true",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY dropShadow OF holder1}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "holder1",
+              "holder2",
+              "holder3"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "dropShadow",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "dropShadow false"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "relation": "in",
+            "value": [
+              "holder1",
+              "holder2",
+              "holder3"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "dropShadow",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "dropShadow true"
+          }
+        ]
+      }
+    ]
   }
 }
