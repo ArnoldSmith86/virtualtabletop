@@ -464,16 +464,25 @@ export function applyValuesToDOM(parent, obj) {
     toggleClass(hideDom, 'hidden', !hideDom.dataset.showfor.split('|').filter(field=>obj[field]).length);
 }
 
+// enableEditing writes the placeholder into the element as real text, so the field is empty as
+// long as that text is still there and the user has not typed in it - a value that only looks
+// like the placeholder, or contains it, is what the user typed and has to survive as it is
+function isUntouchedPlaceholder(dom, value) {
+  return dom.classList.contains('showsPlaceholder') && value == (dom.dataset.placeholder || '<empty>');
+}
+
 export function getValuesFromDOM(parent) {
   const obj = {};
   for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
     images2emojis(dom);
     if(dom.dataset.target == 'checked')
       obj[dom.dataset.field] = dom.checked;
-    else if(dom.dataset.html && (dom.innerText.trim() || dom.innerHTML.match(/<img|<video/)) && dom.innerText != (dom.dataset.placeholder || '<empty>'))
+    else if(dom.dataset.html && (dom.innerText.trim() || dom.innerHTML.match(/<img|<video/)) && !isUntouchedPlaceholder(dom, dom.innerText.trim()))
       obj[dom.dataset.field] = unmapAssetURLs(DOMPurify.sanitize(dom.innerHTML, { USE_PROFILES: { html: true } }));
-    else
-      obj[dom.dataset.field] = dom[dom.dataset.target || 'innerText'].trim().replace(dom.dataset.placeholder || '<empty>', '');
+    else {
+      const value = dom[dom.dataset.target || 'innerText'].trim();
+      obj[dom.dataset.field] = isUntouchedPlaceholder(dom, value) ? '' : value;
+    }
     emojis2images(dom);
   }
   return obj;
@@ -491,6 +500,8 @@ export function enableEditing(parent, obj) {
     dom.classList.remove('hidden');
     if(!dom.innerText.trim() && !dom.innerHTML.match(/<img|<video/)) {
       dom.innerText = dom.dataset.placeholder || '<empty>';
+      dom.classList.add('showsPlaceholder');
+      dom.oninput = _=>dom.classList.remove('showsPlaceholder');
       dom.onclick = function(e) {
         if(dom.innerText == (dom.dataset.placeholder || '<empty>'))
           document.execCommand('selectAll', false, null);
@@ -510,6 +521,7 @@ export function disableEditing(parent, obj) {
   for(const dom of $a('[data-field]:not([data-target=href])', parent)) {
     if(dom.contentEditable != 'false' && !dom.classList.contains('uneditable')) {
       dom.contentEditable = false;
+      dom.classList.remove('showsPlaceholder');
       if(!obj[dom.dataset.field]) {
         dom[dom.dataset.target || 'innerText'] = '';
         if(!dom.dataset.forceshow)
