@@ -243,6 +243,15 @@ describe('operation rendering', () => {
     expect(dom.querySelector('[data-parameter="face"]')).not.toBeNull();
   });
 
+  test('CONTEXTMENU names the widget its popup opens on', () => {
+    // the chips carry their drop-down icon and the option button its label as text
+    const sentence = operation => renderOperation(operation).dom.querySelector('.routine-editor-sentence').textContent.replace(/arrow_drop_down|add option/g, '');
+    expect(sentence({ func: 'CONTEXTMENU', contextMenu: [] })).toContain('Show a popup on this widget with the menu');
+    expect(sentence({ func: 'CONTEXTMENU', collection: 'DEFAULT', contextMenu: [] })).toContain('on the first of the picked widgets');
+    expect(sentence({ func: 'CONTEXTMENU', collection: 'cards', property: 'contextMenu' })).toContain('on the first of cards with the menu in its property');
+    expect(sentence({ func: 'CONTEXTMENU', collection: [ 'dealer' ], contextMenu: [] })).toContain('on dealer with');
+  });
+
   test('an ignored parameter is neither in the sentence nor offered as an option', () => {
     const move = editorForOperation({ func: 'MOVE', fillTo: 3, count: 2 });
     move.setOperationDetails({ state: {} }, { func: 'MOVE', fillTo: 3, count: 2 }, [], []);

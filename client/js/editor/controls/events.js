@@ -10,6 +10,11 @@ const predefinedEvents = [
     description: 'Runs when a player clicks the widget twice within 350 milliseconds. If this is defined, a click routine on the same widget waits 350 milliseconds for a possible second click.'
   },
   {
+    property: 'rightClickRoutine',
+    label: 'right-click',
+    description: 'Runs when a player right-clicks the widget or touches it for half a second. The widget then shows no popup of its own on right-click - a CONTEXTMENU operation in this routine can open one.'
+  },
+  {
     property: 'changeRoutine',
     label: 'property changed',
     description: 'Runs whenever any property of this widget changes. The routine can use value - what the property is now - as well as oldValue and property. To react to one property only, name the routine after it, like fooChangeRoutine for the property foo.'

@@ -137,6 +137,7 @@ const CLIENT_JS = [
   'client/js/serverstate.js',
   'client/js/legacymoderegistry.js',
   'client/js/legacymodes.js',
+  'client/js/contextmenu.js',
   'client/js/geometry.js',
   'client/js/compute.js',
   'client/js/expression.js',
