@@ -1549,6 +1549,39 @@ test('The arrange bar arranges a selection inside another widget on the board ar
     .expect(placement()).eql(start);
 });
 
+test('Recursively duplicating a widget skips a card whose card type no longer exists', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    root: { type: 'holder', id: 'root', x: 100, y: 100, width: 300, height: 300 },
+    deck: { type: 'deck', id: 'deck', parent: 'root', x: 10, y: 10, cardTypes: { valid: {}, stale: {} } },
+    pile: { type: 'pile', id: 'pile', parent: 'root', x: 120, y: 120 },
+    card1: { type: 'card', id: 'card1', parent: 'pile', deck: 'deck', cardType: 'valid' },
+    card2: { type: 'card', id: 'card2', parent: 'pile', deck: 'deck', cardType: 'stale' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(Selector('body.edit').exists).ok()
+    .click('#editorSidebar [icon=data_object]');
+
+  const removeCardType = ClientFunction(() => {
+    widgets.get('deck').state.cardTypes = { valid: {} };
+  });
+  const selectRoot = ClientFunction(() => jeClick(widgets.get('root'), { ctrlKey: true, shiftKey: false, which: 1, button: 0 }));
+  await removeCardType();
+  await selectRoot();
+
+  await t
+    .click('#je_duplicateWidget')
+    .click('#jeCommandOptions button:nth-of-type(1)')
+    .expect(Selector('#w_root1').exists).ok()
+    .expect(Selector('#w_deck1').exists).ok()
+    .expect(Selector('#w_pile1').exists).ok()
+    .expect(Selector('#w_card3').exists).ok()
+    .expect(Selector('#w_card4').exists).notOk();
+});
+
 test('Create game using edit mode', async t => {
   console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);
