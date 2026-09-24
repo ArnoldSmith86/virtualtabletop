@@ -8,6 +8,7 @@ import FileWriter from './filewriter.mjs';
 // adminURL, the port, ...) stays on the server. A new "config.foo" in the client needs its key
 // listed here; tests/server/config.test.js checks that the two sides agree.
 const clientConfigKeys = [
+  'aiRoutineEndpoint',
   'allowPublicLibraryEdits',
   'betaServers',
   'customTab',
