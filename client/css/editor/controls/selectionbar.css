@@ -63,6 +63,14 @@
   color: yellow;
 }
 
+/* The stack can follow the pointer without its list being on screen - a bar
+   showing the tree keeps it - and then the button and the count in its corner
+   are all there is to say the key is doing anything. It is not the blue of an
+   open dropdown: nothing has opened. */
+.selectionBar > button.peeking {
+  color: yellow;
+}
+
 /* the count sits in the corner of the button, so it needs an edge of its own:
    the active button is the same blue and would otherwise swallow it whole */
 .selectionBarStackCount {
