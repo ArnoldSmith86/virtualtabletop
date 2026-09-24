@@ -1,6 +1,9 @@
 export class Timer extends Widget {
   constructor(id) {
     super(id);
+    this.timeDisplay = document.createElement('span');
+    this.timeDisplay.className = 'timer-display';
+    this.domElement.appendChild(this.timeDisplay);
 
     this.addDefaults({
       width: 74,
@@ -24,7 +27,17 @@ export class Timer extends Widget {
     super.applyDeltaToDOM(delta);
     if(delta.milliseconds !== undefined) {
       const s = Math.floor(Math.abs(delta.milliseconds)/1000);
-      setText(this.domElement, `${delta.milliseconds < 0 ? '-' : ''}${Math.floor(s/60)}:${Math.floor(s%60)}`.replace(/:(\d)$/, ':0$1'));
+      const pad = value => String(value).padStart(2, '0');
+      const time = s < 3600 ? `${Math.floor(s/60)}:${pad(s%60)}` : `${Math.floor(s/3600)}:${pad(Math.floor(s/60)%60)}:${pad(s%60)}`;
+      setText(this.timeDisplay, `${delta.milliseconds < 0 ? '-' : ''}${time}`);
+    }
+    if(delta.milliseconds !== undefined || delta.width !== undefined || delta.css !== undefined || delta.display !== undefined || delta.owner !== undefined) {
+      this.timeDisplay.style.fontSize = '';
+      const style = getComputedStyle(this.domElement);
+      const availableWidth = this.domElement.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const textWidth = this.timeDisplay.scrollWidth;
+      if(availableWidth > 0 && textWidth > availableWidth)
+        this.timeDisplay.style.fontSize = `${parseFloat(getComputedStyle(this.timeDisplay).fontSize) * availableWidth / textWidth}px`;
     }
 
     if(this.interval && (delta.paused !== undefined || delta.precision !== undefined)) {
