@@ -5260,6 +5260,23 @@ test('The keyboard walks an open dropdown and Escape closes it', async t => {
 const holdPeekKey = ClientFunction(down => {
   window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key: 'Control', ctrlKey: down, bubbles: true, cancelable: true }));
 });
+
+test('The selection bar tolerates a key event without modifier methods', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({ widget: { id: 'widget', type: 'basic', x: 200, y: 200 } });
+  await ClientFunction(prepareClient)();
+  await setEditorState(null);
+  await setName(t);
+  await t.click('#editButton').expect(propertiesModule.exists).ok();
+  await ClientFunction(() => {
+    const event = new Event('keydown');
+    event.key = 'a';
+    window.dispatchEvent(event);
+  })();
+  await t.expect(Selector('body.edit').exists).ok();
+  await setEditorState(null);
+});
+
 // A real browser carries the modifier state into the mouse events as well, which
 // is what opens the list when the key went down before the pointer ever reached
 // the room. The move is dispatched on the element it lands on, since testcafe

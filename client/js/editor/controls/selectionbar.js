@@ -37,7 +37,6 @@ let selectionBarPeekRestPoint = null; // the spot the peeked list stops on, see 
 let selectionBarScanFrame = null;
 
 const SELECTION_BAR_SCAN_DELAY = 120; // ms the pointer has to rest before the stack under it is taken
-const SELECTION_BAR_PEEK_KEY = 'Control'; // held down, the list opens and follows the pointer without that delay
 const SELECTION_BAR_PEEK_ARM_DELAY = 200; // ms the peek key has to be held before the list drops, see selectionBarPeekArm
 // what a peeked list answers to itself - any other key makes the keystroke a chord
 const SELECTION_BAR_PEEK_KEYS = [ 'Control', 'Shift', 'Alt', 'Meta', 'Escape', 'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight' ];
@@ -299,7 +298,7 @@ function selectionBarInstallListeners() {
     // list then goes on being taken where the pointer rests like any other: the
     // stack the count and the function keys are read off must not freeze for as
     // long as somebody keeps a finger on Ctrl.
-    if(!selectionBarPeekActive && e.getModifierState(SELECTION_BAR_PEEK_KEY))
+    if(!selectionBarPeekActive && e.ctrlKey)
       selectionBarPeekArm();
     if(selectionBarPeekActive) {
       selectionBarScanNextFrame();
@@ -369,7 +368,7 @@ function selectionBarInstallListeners() {
   window.addEventListener('wheel', function(e) {
     if(!selectionBarIsActive() || !selectionBarPeekActive)
       return;
-    if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+    if(!e.ctrlKey)
       return selectionBarPeekRelease();
     const bar = selectionBarPeekedListBar();
     if(!bar || !e.deltaY)
@@ -391,7 +390,7 @@ function selectionBarInstallListeners() {
   window.addEventListener('mousedown', function(e) {
     if(e.button != 1 || !selectionBarIsActive() || !selectionBarPeekActive)
       return;
-    if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+    if(!e.ctrlKey)
       return selectionBarPeekRelease();
     const bar = selectionBarPeekedListBar();
     const widget = bar && selectionBarStack[bar.stackKeyIndex];
@@ -603,7 +602,7 @@ function selectionBarPeekRelease() {
 // otherwise leave the list latched open and scanning every frame, and the next
 // keystroke that reports the key as up puts it away.
 function selectionBarSyncPeek(e) {
-  if(!e.getModifierState(SELECTION_BAR_PEEK_KEY))
+  if(!e.ctrlKey)
     return selectionBarPeekRelease();
   if(e.type == 'keydown' && SELECTION_BAR_PEEK_KEYS.indexOf(e.key) == -1 && !/^F\d+$/.test(e.key))
     return selectionBarPeekBlock();
@@ -743,7 +742,7 @@ function selectionBarHandleDropdownKey(e) {
     selectionBarCloseDropdown(dropdown);
     // a list Escape has just put away must not come straight back on the next
     // mouse move while the key that opened it is still held
-    if(e.getModifierState(SELECTION_BAR_PEEK_KEY))
+    if(e.ctrlKey)
       selectionBarPeekBlock();
     selectionBarSwallowEscapeUp = true;
     e.preventDefault();
