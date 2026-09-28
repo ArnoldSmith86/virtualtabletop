@@ -38,7 +38,8 @@ if [[ "$ready" != 1 ]]; then
 fi
 
 echo "VirtualTabletop: $url"
-echo 'Close this window or press Ctrl+C to stop the server.'
+echo "If your browser doesn't open, open $url in your browser."
+echo 'Keep this window open while playing; close it or press Ctrl+C to stop VirtualTabletop.'
 if command -v xdg-open >/dev/null 2>&1; then
   xdg-open "$url" >/dev/null 2>&1 &
 fi
