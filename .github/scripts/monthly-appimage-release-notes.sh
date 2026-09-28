@@ -18,6 +18,8 @@ COMMITS=$(git log "$PREV_REF"..HEAD --reverse --format='- %s')
 echo "Release notes range: ${PREV_REF}..HEAD ($(git rev-list --count "$PREV_REF"..HEAD) commits)" >&2
 
 {
+  echo "These AppImages are for running your own virtualtabletop server on Linux. If you just want to play, go to https://virtualtabletop.io instead."
+  echo ""
   echo "Changes since last month:"
   echo ""
   if [[ -z "$COMMITS" ]]; then
