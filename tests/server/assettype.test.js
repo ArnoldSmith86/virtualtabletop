@@ -36,6 +36,17 @@ describe('server/assettype.mjs', function() {
     expect(AssetType.contentType(asset('BM', [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 40, 0, 0, 0 ]))).toEqual('image/bmp');
   });
 
+  // a deck that imports a family from Google Fonts stores one font file per style as an asset, and those
+  // are served through the same route as every other one
+  test('names the font formats a deck can import', function() {
+    expect(AssetType.contentType(asset([ 0x00, 0x01, 0x00, 0x00 ], [ 0x00, 0x11, 0x01, 0x00 ]))).toEqual('font/ttf');
+    expect(AssetType.contentType(asset('true', [ 0, 0, 0, 0 ]))).toEqual('font/ttf');
+    expect(AssetType.contentType(asset('OTTO'))).toEqual('font/otf');
+    expect(AssetType.contentType(asset('ttcf'))).toEqual('font/collection');
+    expect(AssetType.contentType(asset('wOFF'))).toEqual('font/woff');
+    expect(AssetType.contentType(asset('wOF2'))).toEqual('font/woff2');
+  });
+
   // "BM" is two bytes that anything can begin with, so the DIB header size behind them decides
   test('does not call every asset that begins BM a bitmap', function() {
     expect(AssetType.contentType(asset('BMorewhateverthisis'))).toEqual(null);
