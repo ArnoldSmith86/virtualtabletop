@@ -61,6 +61,45 @@ function stringifyValue(value) {
   }
 }
 
+// the collected details contain the widget states, which can reference each other in a cycle
+// that JSON.stringify refuses to serialize
+function serializeReport(details) {
+  const ancestors = [];
+  return JSON.stringify(details, function(key, value) {
+    if(typeof value != 'object' || value === null)
+      return value;
+    while(ancestors.length && ancestors[ancestors.length-1] != this)
+      ancestors.pop();
+    if(ancestors.includes(value))
+      return '[cyclic]';
+    ancestors.push(value);
+    return value;
+  });
+}
+
+let silentErrorReported = false;
+
+// A failure the client carries on from - a widget that refuses to be torn down, say - reaches
+// nobody: window.onerror never sees it, so it exists only as a console line on the one machine
+// it happened on. Send it through the same channel a crash uses, without ending the session or
+// telling the user about something they cannot act on. Only the first one per page load is sent:
+// a crash report cannot repeat because it ends the session, while this can happen on every
+// operation that touches the broken object.
+export function reportErrorSilently(description) {
+  if(silentErrorReported)
+    return;
+  silentErrorReported = true;
+  try {
+    fetch('clientError', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: serializeReport({ type: 'nonFatal', error: description, message: description, ...collectClientDetails() })
+    }).catch(function() {});
+  } catch(e) {
+    // reporting a failure the client survived must never be the thing that breaks it
+  }
+}
+
 function collectClientDetails() {
   return {
     undoProtocol,
@@ -264,21 +303,10 @@ onLoad(function() {
       $('#clientErrorStatus').style.display = 'none';
       try {
         details.message = $('#clientErrorOverlay textarea').value;
-        const ancestors = [];
-        const body = JSON.stringify(details, function(key, value) {
-          if(typeof value != 'object' || value === null)
-            return value;
-          while(ancestors.length && ancestors[ancestors.length-1] != this)
-            ancestors.pop();
-          if(ancestors.includes(value))
-            return '[cyclic]';
-          ancestors.push(value);
-          return value;
-        });
         const res = await fetch('clientError', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body
+          body: serializeReport(details)
         });
         const text = await res.text();
         if(text.match(/^[a-z0-9]{8}$/))
