@@ -8,6 +8,8 @@ import { diffString, diff } from 'json-diff';
 
 import { fullLegacyCombination, legacyModeCombinations } from '../../client/js/legacymoderegistry.js';
 
+import { fetchTextWithRetry } from './fetch-retry.js';
+
 const referenceDir = path.resolve() + '/save/testcafe-references';
 fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
@@ -81,7 +83,7 @@ export async function setName(t, name, color) {
 }
 
 export async function setRoomState(state) {
-  await fetch(`${server}/state/testcafe-testing`, {
+  await fetchTextWithRetry(`${server}/state/testcafe-testing`, {
     method: 'PUT',
     headers: {
       'Content-Type':'application/json'
@@ -91,7 +93,7 @@ export async function setRoomState(state) {
 }
 
 export async function setLegacyMode(name, value) {
-  await fetch(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
+  await fetchTextWithRetry(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
     method: 'PUT'
   });
 }
@@ -111,8 +113,7 @@ export async function applyLegacy(combo) {
 }
 
 export async function getState() {
-  const response = await fetch(`${server}/state/testcafe-testing/false`);
-  return await response.text();
+  return await fetchTextWithRetry(`${server}/state/testcafe-testing/false`);
 }
 
 export async function getStateObject() {
@@ -135,8 +136,7 @@ export async function expectEventually(t, get, expected, message, timeout=1000) 
 
 // getState leaves _meta out - this is the version and the game settings the room is on
 export async function getMeta() {
-  const response = await fetch(`${server}/state/testcafe-testing`);
-  return JSON.parse(await response.text())._meta;
+  return JSON.parse(await fetchTextWithRetry(`${server}/state/testcafe-testing`))._meta;
 }
 
 // Wait until the room state stops changing, i.e. until every routine triggered by
