@@ -113,3 +113,11 @@
 .ai-notice > span {
   margin-left: 4px;
 }
+
+/* only shown when the editor bundle failed while a picked trace file was waiting for it */
+#editModeUnavailableTraceNote {
+  display: none;
+}
+#editModeUnavailableTraceNote.visible {
+  display: block;
+}
