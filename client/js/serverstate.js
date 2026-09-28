@@ -345,7 +345,7 @@ export function flushDelta() {
   batchDepth = currentBatchDepth;
 }
 
-function setDeltaCause(cause) {
+export function setDeltaCause(cause) {
   if(!delta.c)
     delta.c = cause;
 }
