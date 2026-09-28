@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build VirtualTabletop as an AppImage with Python tkinter launcher.
+# Build VirtualTabletop as an AppImage with Tk and shell launchers.
 
 set -e
 APPIMG="$(cd "$(dirname "$0")" && pwd)"
@@ -61,6 +61,8 @@ cd "$ROOT"
 
 cp "$APPIMG/launcher.py" "${APPDIR}/"
 chmod +x "${APPDIR}/launcher.py"
+cp "$APPIMG/launcher.sh" "${APPDIR}/"
+chmod +x "${APPDIR}/launcher.sh"
 
 ICON_SRC=""
 for p in client/i/branding/android-512.png assets/branding/android-512.png assets/branding/favicon.svg; do
@@ -97,7 +99,13 @@ export APPDIR="$HERE"
 export PATH="$HERE/usr/bin:$PATH"
 export XDG_DATA_DIRS="$HERE/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 cd "$HERE"
-exec python3 launcher.py
+if command -v python3 >/dev/null 2>&1 && python3 -c 'import tkinter' >/dev/null 2>&1; then
+  exec python3 launcher.py
+fi
+if [[ -n "${DISPLAY:-}" ]] && command -v xterm >/dev/null 2>&1; then
+  exec xterm -T VirtualTabletop -e "$HERE/launcher.sh"
+fi
+exec "$HERE/launcher.sh"
 APPRUN
 chmod +x "${APPDIR}/AppRun"
 
