@@ -35,6 +35,7 @@ function generateCardDeckWidgets(id, x, y, addCards) {
     parent: id,
     x: 12,
     y: 41,
+    cardDefaults: cardDefaultsWithTransition(),
     cardTypes: types,
     faceTemplates: [ {
       border: false, radius: false, objects: [ back  ]
@@ -119,6 +120,8 @@ function generateChipPileWidgets(id, x, y, type) {
       y: -2,
       scale: 0.5,
       cardDefaults: {
+        // The holder above accepts exactly this string of classes, so nothing cosmetic - the transition
+        // class the decks get, for instance - may be appended to it: the chips would stop fitting it.
         classes: type==2 ? 'pokerChip' : 'pokerChip3D',
         width: 73,
         height: 73,
@@ -1535,9 +1538,10 @@ async function addLibraryDeckToGame(entry) {
 
   const deckWidth  = details.deck.width  || 86;
   const deckHeight = details.deck.height || 86;
+  const cardDefaults = cardDefaultsWithTransition(details.deck.cardDefaults);
   // Without a holder the cards still go into a pile in the middle of the table, and the deck widget (which is
   // invisible outside edit mode) is placed next to it instead of below it.
-  await addWidgetLocal(Object.assign({}, details.deck, { id: id+'D' }, placement.holder ? {
+  await addWidgetLocal(Object.assign({}, details.deck, { id: id+'D', cardDefaults }, placement.holder ? {
     parent: id,
     x: Math.round((holderWidth -deckWidth )/2),
     y: Math.round((holderHeight-deckHeight)/2)
