@@ -108,6 +108,7 @@ export function openEditor() {
   // way in as well as on the way out
   selectionBarResetStack();
   endDrill();
+  smartCloneInit();
   for(const module of sidebarModules)
     module.onEditorOpen();
   for(const button of toolbarButtons)

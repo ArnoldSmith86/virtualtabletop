@@ -246,6 +246,11 @@ function selectionChanged(previousSelection, newSelection) {
 }
 
 function setSelection(newSelectedWidgets) {
+  // A room band belongs to the widget picker while it is active. Let the
+  // picker see the actual children it hit before it restores its own selection;
+  // ordinary editor selection still stops at the top smart clone.
+  if(!isWidgetPickerChangingSelection())
+    newSelectedWidgets = smartCloneProcessSelection(newSelectedWidgets);
   const previousSelectedWidgets = [...selectedWidgets];
 
   // Whatever the editor has open belongs to the widget that was being edited, so
@@ -335,9 +340,11 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
+  smartCloneInit();
   // A new state replaces every widget in the room, so anything still selected
   // points at a widget object that is gone by the time this runs. Clearing the
   // selection first is the same notification the modules got before - just
