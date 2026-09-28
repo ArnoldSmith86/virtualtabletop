@@ -14,12 +14,17 @@ class Deck extends Widget {
     });
 
     this.cards = {};
-    this.domElement.textContent = 0;
+    // the count lives in a text node of its own: widgets can sit inside the
+    // deck as children of its element, and assigning the whole element's
+    // textContent would throw their DOM away (and read their text into the
+    // count first)
+    this.countNode = document.createTextNode('0');
+    this.domElement.appendChild(this.countNode);
   }
 
   addCard(card) {
     this.cards[card.get('id')] = card;
-    ++this.domElement.textContent;
+    this.countNode.data = Object.keys(this.cards).length;
   }
 
   applyDeltaToDOM(delta) {
@@ -67,6 +72,6 @@ class Deck extends Widget {
 
   removeCard(card) {
     delete this.cards[card.get('id')];
-    --this.domElement.textContent;
+    this.countNode.data = Object.keys(this.cards).length;
   }
 }
