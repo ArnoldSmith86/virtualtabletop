@@ -23,3 +23,35 @@
   pointer-events: none;
 }
 
+.widget.label > textarea.invalid {
+  background-color: #fff5f5;
+}
+
+.widget.label .validation-error {
+  position: absolute;
+  background: #ff4444;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.widget.label > textarea.invalid:hover::after {
+  content: attr(title);
+  position: absolute;
+  background: #ff4444;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+}
+
