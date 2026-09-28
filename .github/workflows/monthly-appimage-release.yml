@@ -1,4 +1,4 @@
-name: Monthly AppImage release
+name: Monthly VirtualTabletop release
 
 on:
   schedule:
@@ -44,7 +44,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="monthly-$(date -u +%Y-%m)"
-          TITLE="Monthly AppImages $(date -u +%Y-%m)"
+          TITLE="Monthly VirtualTabletop $(date -u +%Y-%m)"
           shopt -s nullglob
           ASSETS=(.appimage/out/*.AppImage)
           if [[ ${#ASSETS[@]} -eq 0 ]]; then
@@ -55,4 +55,5 @@ jobs:
             --title "$TITLE" \
             --notes-file release_notes.md \
             --target "${{ github.sha }}" \
-            "${ASSETS[@]}"
+            "${ASSETS[@]}" \
+            .android/VirtualTabletop.apk
