@@ -18,7 +18,7 @@ COMMITS=$(git log "$PREV_REF"..HEAD --reverse --format='- %s')
 echo "Release notes range: ${PREV_REF}..HEAD ($(git rev-list --count "$PREV_REF"..HEAD) commits)" >&2
 
 {
-  echo "These AppImages are one way to run your own virtualtabletop server on Linux; you can also use Node.js or Docker. If you just want to play, go to https://virtualtabletop.io instead."
+  echo "Run your own virtualtabletop server with one of the attached Linux AppImages or the Android APK. You can also use Node.js or the [Docker image](https://hub.docker.com/r/arnoldsmith86/virtualtabletop). If you just want to play, go to https://virtualtabletop.io instead."
   echo ""
   echo "Changes since last month:"
   echo ""
