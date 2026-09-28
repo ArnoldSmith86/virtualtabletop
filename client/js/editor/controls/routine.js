@@ -2185,27 +2185,139 @@ class RoutineEditor {
       this.domElement.append(emptyHint);
     }
 
-    const addButton = button(this.domElement, 'add operation', async _=>{
+    this.renderRoutineRecording(this.domElement);
+
+    // the two ways to get an operation into the routine, side by side: naming
+    // the one wanted, and doing the thing in the room and picking from what that
+    // could mean
+    const buttonsDOM = div(this.domElement, 'routine-editor-buttons');
+
+    const addButton = button(buttonsDOM, 'add operation', async _=>{
       const popup = new RoutineOperationPopup();
       popup.setSource(addButton);
       popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections);
       const values = await newRoutineValues(popup);
-      if(values !== undefined) {
-        // right after the card that was worked on last, so a routine is built in
-        // the order it runs; at the end when that card is the last one anyway
-        const at = activeRoutineOperation && activeRoutineOperation.routine === this.routine ? Math.min(activeRoutineOperation.index+1, this.routine.length) : this.routine.length;
-        this.routine.splice(at, 0, typeof values == 'string' ? values : JSON.parse(JSON.stringify(values)));
-        this.setActiveOperation(at); // the new operation is where the next one follows
-        this.routineChanged();
-      }
+      if(values !== undefined)
+        this.addOperation(values);
     });
     addButton.className = 'routine-editor-add-operation';
+
+    this.renderRecordButton(buttonsDOM);
 
     // the cards are new ones, so what the AI assistant wrote into this routine
     // is marked again here: it is shown until dismissed, not until the next edit
     aiMarkChangedOperations(this);
 
     return this.domElement;
+  }
+
+  // where an added operation goes: right after the card that was worked on last,
+  // so a routine is built in the order it runs; at the end when that card is the
+  // last one anyway
+  insertionIndex() {
+    return activeRoutineOperation && activeRoutineOperation.routine === this.routine ? Math.min(activeRoutineOperation.index+1, this.routine.length) : this.routine.length;
+  }
+
+  addOperation(values) {
+    this.addOperations([ values ]);
+  }
+
+  // several operations added as one: they go in together, in the order given,
+  // and the last of them is where the next one follows
+  addOperations(list) {
+    const at = this.insertionIndex();
+    this.routine.splice(at, 0, ...list.map(values=>typeof values == 'string' ? values : JSON.parse(JSON.stringify(values))));
+    this.setActiveOperation(at + list.length - 1);
+    this.routineChanged();
+  }
+
+  // The record button, next to "add operation". Armed, only its fill changes:
+  // the label stays the word it was, so the button keeps the width it had and
+  // does not shove "add operation" onto a line of its own in a narrow sidebar.
+  // Pressing it in another routine moves the recording there rather than
+  // refusing: one room can only be recorded into one routine.
+  renderRecordButton(buttonsDOM) {
+    const recordingHere = isRoutineRecordingIn(this);
+    const recordButton = button(buttonsDOM, 'record', _=>{
+      if(recordingHere)
+        stopRoutineRecording();
+      else
+        startRoutineRecording(this);
+    });
+    recordButton.className = 'routine-editor-record-operation';
+    recordButton.classList.toggle('recording', recordingHere);
+    recordButton.title = recordingHere
+      ? 'Stop recording'
+      : 'Do something in the room and get the operations that would do the same thing';
+    recordButton.insertAdjacentHTML('afterbegin', '<span class="material-symbols">fiber_manual_record</span>');
+  }
+
+  // What the room has been doing since the record button was pressed: one card
+  // per press-drag-release, each offering the operations that would do the same
+  // thing. Nothing is added until one of them is clicked - a gesture nobody
+  // meant costs a card in the list and no operation in the routine.
+  renderRoutineRecording(dom) {
+    const recording = routineRecordingIn(this);
+    if(!recording)
+      return;
+
+    const panel = div(dom, 'routine-editor-recording');
+    const header = div(panel, 'routine-editor-recording-header');
+    header.insertAdjacentHTML('beforeend', '<span class="material-symbols">fiber_manual_record</span>');
+    div(header, 'routine-editor-recording-title').textContent = 'Recording';
+    const doneButton = button(header, 'done', _=>stopRoutineRecording());
+    doneButton.className = 'routine-editor-recording-done';
+    doneButton.title = 'Stop recording';
+
+    div(panel, 'routine-editor-recording-hint').textContent = recording.gestures.length
+      ? 'Click one of these to add it to the routine - that closes the card. Do the same thing again in the room to add another operation, or press done when the routine says what you meant.'
+      : 'Drag and click widgets in the room the way the routine should - clicking one records the click instead of selecting it. Each move becomes a short list of operations to pick from, because the room does not know which reading you meant. Press done when the routine says what you meant.';
+
+    for(const gesture of recording.gestures)
+      this.renderRecordedGesture(panel, gesture);
+  }
+
+  renderRecordedGesture(panel, gesture) {
+    const gestureDOM = div(panel, 'routine-editor-gesture');
+    div(gestureDOM, 'routine-editor-gesture-what').textContent = gesture.label;
+    // a gesture nobody meant is taken off the card rather than lived with: a
+    // slip on the wrong holder otherwise stays in the list until the whole
+    // recording is thrown away, good readings and all
+    const forget = button(gestureDOM, '×', _=>closeRoutineGesture(gesture));
+    forget.className = 'routine-editor-gesture-forget';
+    forget.title = 'Forget this gesture';
+
+    for(const suggestion of gesture.suggestions) {
+      const suggestionDOM = div(gestureDOM, 'routine-editor-suggestion');
+      const icon = document.createElement('span');
+      icon.className = 'material-symbols';
+      icon.textContent = 'add';
+      suggestionDOM.append(icon);
+      // what the reading is FOR leads, the operations it would add follow: the
+      // readings of one gesture nearly all start with the same words ("Move 1
+      // widget from deckHolder to ..."), so a card of them is only scannable
+      // by the thing that tells them apart
+      div(suggestionDOM, 'routine-editor-suggestion-why').textContent = suggestion.why;
+      // a reading that takes more than one operation to carry out is still one
+      // line to pick: every operation it would add is spelled out under it
+      for(const operation of suggestion.operations) {
+        const editor = editorForOperation(operation);
+        editor.setOperationDetails(this.widget, operation, this.variables, this.collections);
+        div(suggestionDOM, 'routine-editor-suggestion-sentence').textContent = editor.getSentenceText();
+      }
+      const funcs = suggestion.operations.map(operation=>operation.func).join(', ');
+      suggestionDOM.title = suggestion.operations.length > 1
+        ? `Add these operations to the routine (${funcs})`
+        : `Add this operation to the routine (${funcs})`;
+      focusable(suggestionDOM, _=>{
+        // one gesture is one reading: the card is answered and closes, and a
+        // second reading of the same gesture is had by doing it again in the
+        // room. A card that stays open after a pick invites reading the whole
+        // list a second time to see whether anything else applies too.
+        closeRoutineGesture(gesture);
+        this.addOperations(suggestion.operations);
+      });
+    }
   }
 
   // the operation cards that belong to THIS routine level (nested editors keep
@@ -2667,6 +2779,26 @@ class RoutineOperationEditor {
       })
       .replace(templatePlaceholder, (_, p)=>this.getDisplayedValue(p))
       .trim();
+  }
+
+  // the sentence the card would read, in plain words: the same parts
+  // renderSentenceView lays out as chips, with the options that are switched on
+  // included. What an operation nobody has added yet says (the recorder's
+  // suggestions) has to say what it does with the values it comes with, and
+  // those live in its options as often as in its variant.
+  getSentenceText() {
+    let text = '';
+    for(const part of this.sentenceParts()) {
+      if(part.clause) {
+        if(this.clauseIsActive(part.clause))
+          text += this.resolveTemplate(part.template);
+        else if(part.clause.whenOff)
+          text += this.resolveTemplate(part.clause.whenOff);
+        continue;
+      }
+      text += this.resolveTemplate(part.template);
+    }
+    return text.replace(templatePlaceholder, (_, p)=>this.getDisplayedValue(p)).replace(/\s+([,.])/g, '$1').replace(/\s+/g, ' ').trim();
   }
 
   // the whole sentence as one template string, optional parts in [brackets] -
