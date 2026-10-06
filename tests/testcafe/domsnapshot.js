@@ -121,14 +121,35 @@ function goldenFile(t, fixture, combo) {
   return `${snapshotDirectory}/${fixture.identicalAcrossTiers ? fixture.name : `${fixture.name}.${combo}`}.${browser}.json`;
 }
 
+// A box is rounded to whole board units, so a sub-unit change in font metrics between browser
+// releases can flip a value that sat near .5 - Chrome 154 made SVG text boxes 0.3 units taller
+// and moved the spinner's top label from 23.60 to 23.46. A box value within one unit of the
+// baseline is taken as the baseline's before diffing; anything a change to the code would do to
+// the layout moves a box further than that.
+const BOX_TOLERANCE = 1;
+
+function absorbBoxRounding(baseline, snapshot) {
+  if(!Array.isArray(baseline) || !Array.isArray(snapshot) || baseline.length != snapshot.length)
+    return snapshot;
+  return snapshot.map((node, index) => {
+    const recorded = baseline[index];
+    if(!recorded || !node || typeof node != 'object')
+      return node;
+    const box = Array.isArray(recorded.box) && Array.isArray(node.box) && recorded.box.length == node.box.length
+      ? node.box.map((value, position) => Math.abs(value - recorded.box[position]) <= BOX_TOLERANCE ? recorded.box[position] : value)
+      : node.box;
+    return { ...node, box, children: absorbBoxRounding(recorded.children, node.children) };
+  });
+}
+
 // Baselines are JSON and diffed with json-diff, so a failure reads as the node and property
 // that changed. Run with WRITE_DOM_SNAPSHOTS=1 to re-record them after an intended change.
-async function compareToBaseline(t, fixture, combo, snapshot) {
+async function compareToBaseline(t, fixture, combo, captured) {
   const file = goldenFile(t, fixture, combo);
   const name = fixture.name;
   if(process.env.WRITE_DOM_SNAPSHOTS) {
     fs.mkdirSync(snapshotDirectory, { recursive: true });
-    fs.writeFileSync(file, JSON.stringify(snapshot, null, 2) + '\n');
+    fs.writeFileSync(file, JSON.stringify(captured, null, 2) + '\n');
     console.log(`recorded DOM baseline ${path.relative(path.resolve(), file)}`);
   }
 
@@ -138,6 +159,7 @@ async function compareToBaseline(t, fixture, combo, snapshot) {
   await t.expect(fs.existsSync(file)).ok(`no DOM baseline for ${name} in combination ${combo} (${path.relative(path.resolve(), file)}) - re-record on ${t.browser.name} with WRITE_DOM_SNAPSHOTS=1`);
 
   const baseline = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const snapshot = absorbBoxRounding(baseline, captured);
   const difference = diff(baseline, snapshot);
   if(difference)
     console.log(diffString(baseline, snapshot));
