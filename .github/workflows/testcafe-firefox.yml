@@ -19,7 +19,7 @@ jobs:
       matrix:
         testfile:
           - publiclibrary-1.js
-        rep: [ a, b, c, d, e, f, g, h, i, j, k, l ]
+        rep: [ a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
