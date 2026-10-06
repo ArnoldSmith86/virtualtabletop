@@ -20,7 +20,7 @@ jobs:
         testfile:
           - publiclibrary-1.js
         library: [ main, pr3189 ]
-        rep: [ a, b ]
+        rep: [ a, b, c, d, e, f ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -31,13 +31,9 @@ jobs:
         cache: npm
     - name: Install dependencies
       run: npm ci
-    - name: TEMPORARY - upgrade Firefox from the Mozilla PPA
+    - name: TEMPORARY - environment
       run: |
-        sudo add-apt-repository ppa:mozillateam/ppa -y
-        sudo apt-get update
-        sudo apt-get install --target-release 'o=LP-PPA-mozillateam' -y --allow-downgrades firefox
-        firefox --version
-        cat /usr/lib/firefox/browser/defaults/preferences/syspref.js || true
+        firefox --version; uname -a; nproc; free -m; fc-list | wc -l; locale; echo "TZ=$TZ"; xdpyinfo 2>/dev/null | head -5 || true
     - name: TEMPORARY - use the Six Slimy Sailors file of PR 3189
       if: matrix.library == 'pr3189'
       run: |
