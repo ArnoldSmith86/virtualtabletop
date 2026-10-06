@@ -33,6 +33,7 @@ function selectionFor(widgets) {
     selectionBarDeltaReceived: record('barDelta'), deckEditorReceiveDelta: record('deckDelta'),
     deckEditorStateReplaced: record('deckState'), selectionBarStateReceived: record('barState'),
     aiRoutineDeltaReceived: record('aiDelta'), aiForgetAllResults: record('aiState'),
+    routineRecorderReceiveDelta: record('recorderDelta'),
     record
   };
   return Object.assign(new Function(...Object.keys(scope), `
@@ -59,7 +60,7 @@ test('clone children select their clone once, and reselecting another child keep
   expect(editor.events.map(([ name ]) => name)).not.toContain('closePopups');
 });
 
-test('deltas prune deleted selections and still notify toolbar, selection bar, deck editor, smart clones and AI routines', () => {
+test('deltas prune deleted selections and still notify toolbar, selection bar, deck editor, smart clones, AI routines and routine recording', () => {
   const selected = widget('selected');
   const widgets = new Map([[ selected.id, selected ]]);
   const editor = selectionFor(widgets);
@@ -69,7 +70,7 @@ test('deltas prune deleted selections and still notify toolbar, selection bar, d
   const delta = { s: { selected: null } };
   editor.editorReceiveDelta(delta);
   expect(editor.selection()).toEqual([]);
-  for(const name of [ 'delta', 'barDelta', 'deckDelta', 'smartDelta' ])
+  for(const name of [ 'delta', 'barDelta', 'deckDelta', 'smartDelta', 'recorderDelta' ])
     expect(editor.events).toContainEqual([ name, delta ]);
   expect(editor.events).toContainEqual([ 'aiDelta' ]);
 });
