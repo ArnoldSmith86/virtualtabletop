@@ -1,7 +1,7 @@
 import { Selector, ClientFunction } from 'testcafe';
 
 import { escapeID } from '../../client/js/domhelpers.js';
-import { compareState, prepareClient, setName, waitForStableState } from './test-util.js';
+import { compareState, getStateObject, prepareClient, setName, waitForStableState } from './test-util.js';
 
 const tabHasActive = ClientFunction((index) => {
   const btns = document.querySelectorAll('.libraryTypeTabs button');
@@ -32,18 +32,16 @@ function publicLibraryTest(game, variant, md5, tests) {
     if (!(await tabHasActive(tabIndex))) {
       await t.click(Selector('.libraryTypeTabs button').nth(tabIndex));
     }
-    const tile = Selector('.roomState h3').withExactText(game).parent().parent();
-    console.log('DIAG', game, 'tile', JSON.stringify(await tile.boundingClientRect), await tile.getAttribute('data-id'));
-    await t.click(tile);
-    await logDiag(game, 'afterTile');
-    await t.click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
-    await logDiag(game, 'afterVariant');
+    await t
+      .click(Selector('.roomState h3').withExactText(game).parent().parent())
+      .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
-    await logDiag(game, 'afterSetName');
     try {
       await tests(t);
     } catch(e) {
       await logDiag(game, 'failed');
+      const st = await getStateObject();
+      console.log('DIAG server state', Object.keys(st).length, Object.keys(st).slice(0,8).join(','), JSON.stringify(st._meta).slice(0,400));
       throw e;
     }
     await compareState(t, md5);

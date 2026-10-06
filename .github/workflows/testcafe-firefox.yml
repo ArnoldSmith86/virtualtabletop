@@ -20,7 +20,7 @@ jobs:
         testfile:
           - publiclibrary-1.js
         library: [ main, pr3189 ]
-        rep: [ a, b, c, d, e, f ]
+        rep: [ a, b, c, d, e, f, g, h ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
