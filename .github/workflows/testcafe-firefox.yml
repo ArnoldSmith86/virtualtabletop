@@ -53,6 +53,13 @@ jobs:
         cache: npm
     - name: Install dependencies
       run: npm ci
+    - name: TEMPORARY - upgrade Firefox from the Mozilla PPA
+      run: |
+        sudo add-apt-repository ppa:mozillateam/ppa -y
+        sudo apt-get update
+        sudo apt-get install --target-release 'o=LP-PPA-mozillateam' -y --allow-downgrades firefox
+        firefox --version
+        cat /usr/lib/firefox/browser/defaults/preferences/syspref.js || true
     - name: Start virtualtabletop server
       run: |
         npm start &
