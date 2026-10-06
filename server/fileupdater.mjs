@@ -1,6 +1,6 @@
 import { LEGACY_MODES } from '../client/js/legacymoderegistry.js';
 
-export const VERSION = 24;
+export const VERSION = 25;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -136,6 +136,7 @@ function updateProperties(properties, v, globalProperties) {
   v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
   v<22 && v22DragLimitNullSides(properties);
   v<24 && v24ScoreboardEntryPane(properties);
+  v<25 && v25HolderLayoutCustom(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -666,4 +667,13 @@ function v22DragLimitNullSides(properties) {
 function v24ScoreboardEntryPane(properties) {
   if(properties.type == 'scoreboard' && properties.scoreEntry === undefined)
     properties.scoreEntry = 'pane';
+}
+
+// A holder without a layout property stacked everything at its drop offset, its
+// classic arrangement properties deciding the rest. Now that the default is
+// layout 'auto' - which centers, spreads and wraps on its own - a holder from
+// before the property existed spells out the behavior it always had.
+function v25HolderLayoutCustom(properties) {
+  if(properties.type == 'holder' && properties.layout === undefined)
+    properties.layout = 'custom';
 }
