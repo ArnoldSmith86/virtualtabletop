@@ -47,6 +47,7 @@ jobs:
           - scoreboard.js
           - canvas.js
           - inheritfrom.js
+          - contextmenu.js
           # the DOM baselines record computed styles and rounded boxes, which are browser
           # specific, so they are recorded and checked in Chrome only
           - domsnapshot.js
