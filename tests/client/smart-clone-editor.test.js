@@ -32,6 +32,7 @@ function selectionFor(widgets) {
     jeWidgetHighlightingEnabled: () => false, updateSelectionBars: noop,
     selectionBarDeltaReceived: record('barDelta'), deckEditorReceiveDelta: record('deckDelta'),
     deckEditorStateReplaced: record('deckState'), selectionBarStateReceived: record('barState'),
+    aiRoutineDeltaReceived: record('aiDelta'), aiForgetAllResults: record('aiState'),
     record
   };
   return Object.assign(new Function(...Object.keys(scope), `
@@ -58,7 +59,7 @@ test('clone children select their clone once, and reselecting another child keep
   expect(editor.events.map(([ name ]) => name)).not.toContain('closePopups');
 });
 
-test('deltas prune deleted selections and still notify toolbar, selection bar, deck editor and smart clones', () => {
+test('deltas prune deleted selections and still notify toolbar, selection bar, deck editor, smart clones and AI routines', () => {
   const selected = widget('selected');
   const widgets = new Map([[ selected.id, selected ]]);
   const editor = selectionFor(widgets);
@@ -70,6 +71,7 @@ test('deltas prune deleted selections and still notify toolbar, selection bar, d
   expect(editor.selection()).toEqual([]);
   for(const name of [ 'delta', 'barDelta', 'deckDelta', 'smartDelta' ])
     expect(editor.events).toContainEqual([ name, delta ]);
+  expect(editor.events).toContainEqual([ 'aiDelta' ]);
 });
 
 test('state replacement clears stale selections and rebuilds smart clone tracking from new widget objects', () => {
@@ -87,7 +89,7 @@ test('state replacement clears stale selections and rebuilds smart clone trackin
   expect(editor.selection()).toEqual([]);
   expect(Object.keys(editor.sourceMap)).toEqual([ 'newClone' ]);
   expect(editor.sourceMap.newClone.newClone).toBe(replacement);
-  expect(editor.events.map(([ name ]) => name)).toEqual(expect.arrayContaining([ 'deckState', 'state', 'barState' ]));
+  expect(editor.events.map(([ name ]) => name)).toEqual(expect.arrayContaining([ 'deckState', 'aiState', 'state', 'barState' ]));
 });
 
 function propertiesFor(selection) {
