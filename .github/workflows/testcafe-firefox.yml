@@ -18,8 +18,31 @@ jobs:
       fail-fast: false
       matrix:
         testfile:
+          - card.js
+          - editor.js
+          - connection.js
+          - gameshelf.js
+          - gamelink.js
+          - toolbar.js
+          - boardsize.js
+          - draglimit.js
+          - compute-1.js
+          - compute-2.js
+          - compute-3.js
+          - compute-4.js
           - publiclibrary-1.js
-        rep: [ a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p ]
+          - publiclibrary-2.js
+          - publiclibrary-3.js
+          - publiclibrary-4.js
+          - routines.js
+          - legacymatrix.js
+          - interactions.js
+          - inheritfrom.js
+          # domsnapshot.js needs a checked-in baseline per browser and only Chrome's is
+          # recorded so far, so it runs in Chrome only - see testcafe-chrome.yml.
+          # pixelsnapshot.js compares two captures from the same run and needs no baseline,
+          # so it is the half of Layer F that can run anywhere.
+          - pixelsnapshot.js
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -32,23 +55,10 @@ jobs:
       run: npm ci
     - name: Start virtualtabletop server
       run: |
-        npm start > server.log 2>&1 &
+        npm start &
         timeout 30 bash -c 'until curl -sf http://localhost:8272 -o /dev/null; do sleep 0.5; done'
     - name: Run TestCafe tests
-      run: |
-        firefox --version
-        fails=0
-        for i in $(seq 10); do
-          echo "=== iteration $i"
-          npx testcafe firefox:headless tests/testcafe/${{ matrix.testfile }} -s path=screenshots/$i,takeOnFails=true || fails=$((fails+1))
-        done
-        echo "FAILED ITERATIONS: $fails"
-        test $fails = 0
-    - name: Upload screenshots and server log
-      if: failure()
-      uses: actions/upload-artifact@v4
+      uses: DevExpress/testcafe-action@latest
       with:
-        name: diag-${{ matrix.testfile }}-${{ matrix.rep }}
-        path: |
-          screenshots
-          server.log
+        version: "3.7.3"
+        args: "firefox:headless tests/testcafe/${{ matrix.testfile }}"
