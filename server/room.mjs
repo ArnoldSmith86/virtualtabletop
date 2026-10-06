@@ -1362,6 +1362,7 @@ export default class Room {
   }
 
   setState(state, player, delayForGameStartRoutine) {
+    console.log(new Date().toISOString(), 'DIAG setState', Object.keys(state).length, 'players', this.players.map(p=>p.name).join());
     delete this.state._meta.activeState;
 
     this.trace('setState', { state });

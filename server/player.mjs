@@ -145,6 +145,8 @@ export default class Player {
   }
 
   send(func, args) {
+    if(func != 'mouse')
+      console.log(new Date().toISOString(), 'DIAG send', this.name, func, func == 'state' ? Object.keys(args).length : '');
     if(func == 'delta') {
       this.possiblyConflictingDeltas.push(args);
       this.latestDeltaIDbyDifferentPlayer = args.id;

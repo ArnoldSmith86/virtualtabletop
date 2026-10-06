@@ -21,7 +21,9 @@ const diag = ClientFunction(() => ({
 async function dumpFailure(t, game) {
   try {
     console.log('DIAG', new Date().toISOString(), game, JSON.stringify(await diag()));
-    console.log('DIAG console', JSON.stringify(await t.getBrowserConsoleMessages()).slice(0, 6000));
+    const msgs = await t.getBrowserConsoleMessages();
+    for(const type of [ 'log', 'info', 'warn', 'error' ])
+      console.log('DIAG console', type, JSON.stringify(msgs[type].filter(m=>!String(m).includes('in limbo'))).slice(0, 8000), msgs[type].filter(m=>String(m).includes('in limbo')).length);
     const st = await getStateObject();
     console.log('DIAG server state widgets', Object.keys(st).length, Object.keys(st).slice(0,4).join(','));
   } catch(e) {

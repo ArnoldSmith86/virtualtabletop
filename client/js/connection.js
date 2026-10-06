@@ -56,6 +56,8 @@ export function startWebSocket() {
       return;
     }
 
+    if(func != 'mouse')
+      console.log('DIAG ws', Math.round(performance.now()), func, func == 'state' ? Object.keys(args).length : '');
     if(func == 'serverStart') {
       // the first thing the server sends, so a connection that gets this far is one that works: the
       // backoff is about how long the server stays away, not about the tab's age, and resetting it
@@ -74,8 +76,16 @@ export function startWebSocket() {
       serverStart = args;
     }
 
-    for(const callback of (messageCallbacks[func] || []))
-      callback(args);
+    for(const callback of (messageCallbacks[func] || [])) {
+      try {
+        callback(args);
+      } catch(e) {
+        console.error('DIAG callback threw', func, String(e), e && e.stack);
+        throw e;
+      }
+    }
+    if(func == 'state')
+      console.log('DIAG state applied', Math.round(performance.now()), document.querySelectorAll('.widget').length);
   };
 }
 
