@@ -20,7 +20,7 @@ jobs:
         testfile:
           - publiclibrary-1.js
         library: [ main ]
-        rep: [ a, b, c, d, e, f, g, h, i, j ]
+        rep: [ a, b, c, d, e, f, g, h, i, j, k, l ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
         git status --short
     - name: Start virtualtabletop server
       run: |
-        npm start &
+        npm start > server.log 2>&1 &
         timeout 30 bash -c 'until curl -sf http://localhost:8272 -o /dev/null; do sleep 0.5; done'
     - name: Run TestCafe tests
       run: |
@@ -53,9 +53,14 @@ jobs:
         done
         echo "FAILED ITERATIONS: $fails"
         test $fails = 0
+    - name: Server log
+      if: always()
+      run: grep -v "^\s*$" server.log | tail -60
     - name: Upload screenshots
       if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: screenshots-${{ matrix.testfile }}-${{ matrix.library }}-${{ matrix.rep }}
-        path: screenshots
+        path: |
+          screenshots
+          server.log

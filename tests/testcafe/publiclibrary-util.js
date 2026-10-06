@@ -19,12 +19,18 @@ const diag = ClientFunction(() => ({
   widgetIds: [...document.querySelectorAll('.widget')].slice(0,6).map(w=>w.id),
   loading: !!document.querySelector('#loadingRoomIndicator'),
   scroll: [...document.querySelectorAll('#statesOverlay, #statesOverlay *')].filter(e=>e.scrollTop).map(e=>(e.id||e.className)+':'+e.scrollTop),
-  active: document.activeElement && (document.activeElement.id || document.activeElement.className)
+  active: document.activeElement && (document.activeElement.id || document.activeElement.className),
+  nav: performance.getEntriesByType('navigation').map(n=>n.type+' '+Math.round(n.domContentLoadedEventEnd)+' '+Math.round(n.loadEventEnd)).join(),
+  pageAge: Math.round(Date.now() - performance.timeOrigin),
+  readyState: document.readyState,
+  connStatus: document.querySelector('#connectionStatus') ? document.querySelector('#connectionStatus').className : null,
+  bodyClass: document.body.className
 }));
-async function logDiag(game, step) { console.log('DIAG', game, step, JSON.stringify(await diag())); }
+async function logDiag(game, step) { console.log('DIAG', new Date().toISOString(), game, step, JSON.stringify(await diag())); }
 
 function publicLibraryTest(game, variant, md5, tests) {
   test(`Public library: ${game} (variant ${variant})`, async t => {
+    try {
     await ClientFunction(prepareClient)();
     await ClientFunction(_=>++window.customRandomSeed)(); // game library overhaul removed the Math.random call for generating a new state ID
     const tabIndex = +(game.includes(' - '));
@@ -36,16 +42,25 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click(Selector('.roomState h3').withExactText(game).parent().parent())
       .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
+    } catch(e) {
+      await dumpFailure(t, game);
+      throw e;
+    }
     try {
       await tests(t);
     } catch(e) {
-      await logDiag(game, 'failed');
-      const st = await getStateObject();
-      console.log('DIAG server state', Object.keys(st).length, Object.keys(st).slice(0,8).join(','), JSON.stringify(st._meta).slice(0,400));
+      await dumpFailure(t, game);
       throw e;
     }
     await compareState(t, md5);
   });
+}
+async function dumpFailure(t, game) {
+      await logDiag(game, 'failed');
+      const msgs = await t.getBrowserConsoleMessages();
+      console.log('DIAG console', JSON.stringify(msgs).slice(0, 6000));
+      const st = await getStateObject();
+      console.log('DIAG server state', Object.keys(st).length, Object.keys(st).slice(0,8).join(','), JSON.stringify(st._meta).slice(0,400));
 }
 
 export function publicLibraryButtons(game, variant, md5, tests) {
