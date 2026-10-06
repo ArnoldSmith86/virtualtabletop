@@ -18,8 +18,10 @@ export function addLabel(id) {
 
 //start: copied from serverstate.js due to circular imports
 export function removeWidget(widgetID) {
-  widgets.get(widgetID).applyRemove();
+  const widget = widgets.get(widgetID);
+  widget.applyRemove();
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+  widget.revertInheritedValues();
 }
 //end: copied from serverstate.js
