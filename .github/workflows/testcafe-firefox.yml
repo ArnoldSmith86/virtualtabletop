@@ -61,4 +61,10 @@ jobs:
       uses: DevExpress/testcafe-action@latest
       with:
         version: "3.7.3"
-        args: "firefox:headless tests/testcafe/${{ matrix.testfile }}"
+        args: "firefox:headless tests/testcafe/${{ matrix.testfile }} -s path=screenshots,takeOnFails=true"
+    - name: Upload screenshots
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: screenshots-${{ matrix.testfile }}
+        path: screenshots

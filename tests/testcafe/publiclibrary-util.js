@@ -8,6 +8,21 @@ const tabHasActive = ClientFunction((index) => {
   return btns[index] ? btns[index].classList.contains('active') : false;
 });
 
+const diag = ClientFunction(() => ({
+  win: [innerWidth, innerHeight, devicePixelRatio],
+  ua: navigator.userAgent,
+  overlay: document.querySelector('#statesButton').dataset.overlay,
+  visibleOverlays: [...document.querySelectorAll('.overlay')].filter(o=>getComputedStyle(o).display!='none').map(o=>o.id),
+  detailsId: document.querySelector('#stateDetailsOverlay').dataset.id,
+  detailsTitle: document.querySelector('#mainDetails h1') && document.querySelector('#mainDetails h1').innerText,
+  widgets: document.querySelectorAll('.widget').length,
+  widgetIds: [...document.querySelectorAll('.widget')].slice(0,6).map(w=>w.id),
+  loading: !!document.querySelector('#loadingRoomIndicator'),
+  scroll: [...document.querySelectorAll('#statesOverlay, #statesOverlay *')].filter(e=>e.scrollTop).map(e=>(e.id||e.className)+':'+e.scrollTop),
+  active: document.activeElement && (document.activeElement.id || document.activeElement.className)
+}));
+async function logDiag(game, step) { console.log('DIAG', game, step, JSON.stringify(await diag())); }
+
 function publicLibraryTest(game, variant, md5, tests) {
   test(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
@@ -17,11 +32,20 @@ function publicLibraryTest(game, variant, md5, tests) {
     if (!(await tabHasActive(tabIndex))) {
       await t.click(Selector('.libraryTypeTabs button').nth(tabIndex));
     }
-    await t
-      .click(Selector('.roomState h3').withExactText(game).parent().parent())
-      .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
+    const tile = Selector('.roomState h3').withExactText(game).parent().parent();
+    console.log('DIAG', game, 'tile', JSON.stringify(await tile.boundingClientRect), await tile.getAttribute('data-id'));
+    await t.click(tile);
+    await logDiag(game, 'afterTile');
+    await t.click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
+    await logDiag(game, 'afterVariant');
     await setName(t);
-    await tests(t);
+    await logDiag(game, 'afterSetName');
+    try {
+      await tests(t);
+    } catch(e) {
+      await logDiag(game, 'failed');
+      throw e;
+    }
     await compareState(t, md5);
   });
 }
