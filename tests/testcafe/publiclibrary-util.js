@@ -9,26 +9,39 @@ const tabHasActive = ClientFunction((index) => {
 });
 
 const diag = ClientFunction(() => ({
-  win: [innerWidth, innerHeight, devicePixelRatio],
-  ua: navigator.userAgent,
-  overlay: document.querySelector('#statesButton').dataset.overlay,
   visibleOverlays: [...document.querySelectorAll('.overlay')].filter(o=>getComputedStyle(o).display!='none').map(o=>o.id),
-  detailsId: document.querySelector('#stateDetailsOverlay').dataset.id,
-  detailsTitle: document.querySelector('#mainDetails h1') && document.querySelector('#mainDetails h1').innerText,
+  activeTab: [...document.querySelectorAll('.toolbarTab.active')].map(b=>b.id).join(),
   widgets: document.querySelectorAll('.widget').length,
-  widgetIds: [...document.querySelectorAll('.widget')].slice(0,6).map(w=>w.id),
+  widgetIds: [...document.querySelectorAll('.widget')].slice(0,4).map(w=>w.id),
   loading: !!document.querySelector('#loadingRoomIndicator'),
-  scroll: [...document.querySelectorAll('#statesOverlay, #statesOverlay *')].filter(e=>e.scrollTop).map(e=>(e.id||e.className)+':'+e.scrollTop),
-  active: document.activeElement && (document.activeElement.id || document.activeElement.className)
+  nav: performance.getEntriesByType('navigation').map(n=>n.type).join(),
+  pageAge: Math.round(Date.now() - performance.timeOrigin),
+  bodyClass: document.body.className
 }));
-async function logDiag(game, step) { console.log('DIAG', game, step, JSON.stringify(await diag())); }
+async function dumpFailure(t, game) {
+  try {
+    console.log('DIAG', new Date().toISOString(), game, JSON.stringify(await diag()));
+    console.log('DIAG console', JSON.stringify(await t.getBrowserConsoleMessages()).slice(0, 6000));
+    const st = await getStateObject();
+    console.log('DIAG server state widgets', Object.keys(st).length, Object.keys(st).slice(0,4).join(','));
+  } catch(e) {
+    console.log('DIAG failed', e);
+  }
+}
 
 function publicLibraryTest(game, variant, md5, tests) {
   test(`Public library: ${game} (variant ${variant})`, async t => {
+    try {
     await ClientFunction(prepareClient)();
     await ClientFunction(_=>++window.customRandomSeed)(); // game library overhaul removed the Math.random call for generating a new state ID
     const tabIndex = +(game.includes(' - '));
-    await t.pressKey('esc').click('#statesButton');
+    // The initial state activates the game tab, and the empty reset can open the shelf.
+    // Let both arrive before opening it ourselves or either can toggle it closed.
+    await t
+      .expect(Selector('#loadingRoomIndicator').exists).notOk()
+      .expect(Selector('.widget').count).eql(0)
+      .pressKey('esc')
+      .click('#statesButton');
     if (!(await tabHasActive(tabIndex))) {
       await t.click(Selector('.libraryTypeTabs button').nth(tabIndex));
     }
@@ -36,15 +49,12 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click(Selector('.roomState h3').withExactText(game).parent().parent())
       .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
-    try {
-      await tests(t);
+    await tests(t);
+    await compareState(t, md5);
     } catch(e) {
-      await logDiag(game, 'failed');
-      const st = await getStateObject();
-      console.log('DIAG server state', Object.keys(st).length, Object.keys(st).slice(0,8).join(','), JSON.stringify(st._meta).slice(0,400));
+      await dumpFailure(t, game);
       throw e;
     }
-    await compareState(t, md5);
   });
 }
 
