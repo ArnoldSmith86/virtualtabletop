@@ -1,40 +1,25 @@
 import { Selector, ClientFunction } from 'testcafe';
 
 import { escapeID } from '../../client/js/domhelpers.js';
-import { compareState, getStateObject, prepareClient, setName, waitForStableState } from './test-util.js';
+import { compareState, prepareClient, setName, waitForStableState } from './test-util.js';
 
 const tabHasActive = ClientFunction((index) => {
   const btns = document.querySelectorAll('.libraryTypeTabs button');
   return btns[index] ? btns[index].classList.contains('active') : false;
 });
 
-const diag = ClientFunction(() => ({
-  win: [innerWidth, innerHeight, devicePixelRatio],
-  ua: navigator.userAgent,
-  overlay: document.querySelector('#statesButton').dataset.overlay,
-  visibleOverlays: [...document.querySelectorAll('.overlay')].filter(o=>getComputedStyle(o).display!='none').map(o=>o.id),
-  detailsId: document.querySelector('#stateDetailsOverlay').dataset.id,
-  detailsTitle: document.querySelector('#mainDetails h1') && document.querySelector('#mainDetails h1').innerText,
-  widgets: document.querySelectorAll('.widget').length,
-  widgetIds: [...document.querySelectorAll('.widget')].slice(0,6).map(w=>w.id),
-  loading: !!document.querySelector('#loadingRoomIndicator'),
-  scroll: [...document.querySelectorAll('#statesOverlay, #statesOverlay *')].filter(e=>e.scrollTop).map(e=>(e.id||e.className)+':'+e.scrollTop),
-  active: document.activeElement && (document.activeElement.id || document.activeElement.className),
-  nav: performance.getEntriesByType('navigation').map(n=>n.type+' '+Math.round(n.domContentLoadedEventEnd)+' '+Math.round(n.loadEventEnd)).join(),
-  pageAge: Math.round(Date.now() - performance.timeOrigin),
-  readyState: document.readyState,
-  connStatus: document.querySelector('#connectionStatus') ? document.querySelector('#connectionStatus').className : null,
-  bodyClass: document.body.className
-}));
-async function logDiag(game, step) { console.log('DIAG', new Date().toISOString(), game, step, JSON.stringify(await diag())); }
-
 function publicLibraryTest(game, variant, md5, tests) {
   test(`Public library: ${game} (variant ${variant})`, async t => {
-    try {
     await ClientFunction(prepareClient)();
     await ClientFunction(_=>++window.customRandomSeed)(); // game library overhaul removed the Math.random call for generating a new state ID
     const tabIndex = +(game.includes(' - '));
-    await t.pressKey('esc').click('#statesButton');
+    // The initial state activates the game tab, and the empty reset can open the shelf.
+    // Let both arrive before opening it ourselves or either can toggle it closed.
+    await t
+      .expect(Selector('#loadingRoomIndicator').exists).notOk()
+      .expect(Selector('.widget').count).eql(0)
+      .pressKey('esc')
+      .click('#statesButton');
     if (!(await tabHasActive(tabIndex))) {
       await t.click(Selector('.libraryTypeTabs button').nth(tabIndex));
     }
@@ -42,25 +27,9 @@ function publicLibraryTest(game, variant, md5, tests) {
       .click(Selector('.roomState h3').withExactText(game).parent().parent())
       .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);
-    } catch(e) {
-      await dumpFailure(t, game);
-      throw e;
-    }
-    try {
-      await tests(t);
-    } catch(e) {
-      await dumpFailure(t, game);
-      throw e;
-    }
+    await tests(t);
     await compareState(t, md5);
   });
-}
-async function dumpFailure(t, game) {
-      await logDiag(game, 'failed');
-      const msgs = await t.getBrowserConsoleMessages();
-      console.log('DIAG console', JSON.stringify(msgs).slice(0, 6000));
-      const st = await getStateObject();
-      console.log('DIAG server state', Object.keys(st).length, Object.keys(st).slice(0,8).join(','), JSON.stringify(st._meta).slice(0,400));
 }
 
 export function publicLibraryButtons(game, variant, md5, tests) {
