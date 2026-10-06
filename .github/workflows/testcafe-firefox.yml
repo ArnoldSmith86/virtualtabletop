@@ -18,31 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         testfile:
-          - card.js
-          - editor.js
-          - connection.js
-          - gameshelf.js
-          - gamelink.js
-          - toolbar.js
-          - boardsize.js
-          - draglimit.js
-          - compute-1.js
-          - compute-2.js
-          - compute-3.js
-          - compute-4.js
           - publiclibrary-1.js
-          - publiclibrary-2.js
-          - publiclibrary-3.js
-          - publiclibrary-4.js
-          - routines.js
-          - legacymatrix.js
-          - interactions.js
-          - inheritfrom.js
-          # domsnapshot.js needs a checked-in baseline per browser and only Chrome's is
-          # recorded so far, so it runs in Chrome only - see testcafe-chrome.yml.
-          # pixelsnapshot.js compares two captures from the same run and needs no baseline,
-          # so it is the half of Layer F that can run anywhere.
-          - pixelsnapshot.js
+        library: [ main ]
+        rep: [ a, b, c, d, e, f, g, h, i, j ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -53,12 +31,31 @@ jobs:
         cache: npm
     - name: Install dependencies
       run: npm ci
+    - name: TEMPORARY - environment
+      run: |
+        firefox --version; uname -a; nproc; free -m; fc-list | wc -l; locale; echo "TZ=$TZ"; xdpyinfo 2>/dev/null | head -5 || true
+    - name: TEMPORARY - use the Six Slimy Sailors file of PR 3189
+      if: matrix.library == 'pr3189'
+      run: |
+        git fetch --depth=1 origin 1b5645b6f255d2e5f50621aeb496fb71e561f5df
+        git show 1b5645b6f255d2e5f50621aeb496fb71e561f5df:"library/games/Six Slimy Sailors/0.json" > "library/games/Six Slimy Sailors/0.json"
+        git status --short
     - name: Start virtualtabletop server
       run: |
         npm start &
         timeout 30 bash -c 'until curl -sf http://localhost:8272 -o /dev/null; do sleep 0.5; done'
     - name: Run TestCafe tests
-      uses: DevExpress/testcafe-action@latest
+      run: |
+        fails=0
+        for i in $(seq 10); do
+          echo "=== iteration $i"
+          npx testcafe firefox:headless tests/testcafe/${{ matrix.testfile }} -s path=screenshots/$i,takeOnFails=true || fails=$((fails+1))
+        done
+        echo "FAILED ITERATIONS: $fails"
+        test $fails = 0
+    - name: Upload screenshots
+      if: failure()
+      uses: actions/upload-artifact@v4
       with:
-        version: "3.7.3"
-        args: "firefox:headless tests/testcafe/${{ matrix.testfile }}"
+        name: screenshots-${{ matrix.testfile }}-${{ matrix.library }}-${{ matrix.rep }}
+        path: screenshots
