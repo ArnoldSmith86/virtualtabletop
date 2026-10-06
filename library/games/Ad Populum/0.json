@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 24,
     "info": {
       "name": "Ad Populum",
       "image": "/assets/-884620048_5504",
@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "40-60",
       "attribution": "Implementation, assets and scripting are by Mitchell Stolycia and are released via CC BY 4.0.",
-      "lastUpdate": 1776274437478,
+      "lastUpdate": 1790971899241,
       "showName": true,
       "skill": "",
       "description": "Eight contestants enter the house. Over the course of five weeks, the least popular are publicly voted out until only three remain.\n\nThis... is Ad Populum.",
@@ -19,10 +19,13 @@
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "<div>Players (you!) will always be referred to as \"players\".</div><div><br></div><div>Cards representing the contestants in the house and the ghost which \nhaunts it are referred to as \"people\" or a \"person\".</div><div><br></div><div><b>Setup</b></div><div><ol><li>Take your seats.</li><li>Press the <i>Setup</i> button.</li><li>Choose the type of setup you would like.</li><ul><li>If a custom setup of person cards is desired, drag the cards you would like to the eight red-bordered holders before clicking setup. Any of these holders left empty will be filled with a random person.</li></ul><li>Any cards not used will still be present and visible, in case you want to setup again.</li></ol></div><div><b>Your turn</b></div><blockquote><div>To play, drag cards from your hand (bottom right) to the board.</div><div><br></div><div>Bets are placed by dragging the five betting chips from next to your seat to the play area.</div><div><br></div><div>To make a secret bet, drag a card onto the table and place a betting chip on top of it.</div></blockquote><div><b>End turn</b></div><blockquote><div>End your turn by clicking&nbsp;<i>End turn</i>. This will refill your hand to eight cards automatically.</div></blockquote><div><b>Scoring</b></div><blockquote><div>Scoring only occurs at the end of the game. Do this manually by using the counters by your seats.</div></blockquote><div><b>Red X cards</b></div><blockquote><div>The red X cards are used to represent a person who has been voted off the show (has the least popularity at the end of a round).</div></blockquote><div><b>Complex person abilities</b></div><blockquote><div>Some of the person abilities are complicated to&nbsp;manually perform in VTT.&nbsp;For this reason, an <i>Ability </i>button will appear when playing with any of the following three people: <b>cyan; grey; and pale yellow.</b></div><div><br></div><div>Only click the&nbsp;<i>Ability&nbsp;</i>button on your turn.</div><div>An input menu will pop up. Follow the instructions accordingly.</div><div><br></div><div>The <b>pale yellow person</b> has a designated holder. When used, half of the selected player's hand will be randomly dealt to this holder. The player who lost these cards should manually draw them before ending their turn.</div><div>Should this ability be used again before the player can retrieve their cards, remove the existing pile from the holder to free up space.</div></blockquote>",
+      "helpText": "<div>Players (you!) will always be referred to as \"players\".</div><div><br></div><div>Cards representing the contestants in the house and the ghost which \nhaunts it are referred to as \"people\" or a \"person\".</div><div><br></div><div><b>Setup</b></div><div><ol><li>Take your seats.</li><li>Press the <i>Setup</i> button.</li><li>Choose the type of setup you would like.</li><ul><li>If a custom setup of person cards is desired, drag the cards you would like to the eight red-bordered holders before clicking setup. Any of these holders left empty will be filled with a random person.</li></ul><li>Any cards not used will still be present and visible, in case you want to setup again.</li></ol></div><div><b>Your turn</b></div><blockquote><div>To play, drag cards from your hand (bottom right) to the board.</div><div><br></div><div>Bets are placed by dragging the five betting chips from next to your seat to the play area.</div><div><br></div><div>To make a secret bet, drag a card onto the table and place a betting chip on top of it.</div></blockquote><div><b>End turn</b></div><blockquote><div>End your turn by clicking&nbsp;<i>End turn</i>. This will refill your hand to eight cards automatically.</div></blockquote><div><b>Scoring</b></div><blockquote><div>Scoring only occurs at the end of the game. Do this manually by using the counters by your seats.</div></blockquote><div><b>Red X cards</b></div><blockquote><div>The red X cards are used to represent a person who has been voted off the show (has the least popularity at the end of a round).</div></blockquote><div><b>Complex person abilities</b></div><blockquote><div>Some of the person abilities are complicated to&nbsp;manually perform in VTT.&nbsp;For this reason, an <i>Ability </i>button will appear when playing with any of the following four people: <b>cyan; grey; pale yellow; and red.</b></div><div><br></div><div>Only click the&nbsp;<i>Ability&nbsp;</i>button on your turn.</div><div>An input menu will pop up. Follow the instructions accordingly.</div><div><br></div><div>The <b>pale yellow person</b> has a designated holder. When used, half of the selected player's hand will be randomly dealt to this holder. The player who lost these cards should manually draw them before ending their turn.</div><div>Should this ability be used again before the player can retrieve their cards, remove the existing pile from the holder to free up space.</div></blockquote>",
+      "usesAIImagery": false,
+      "usesAILayout": false,
       "players": "2-5",
       "language": "en-GB",
-      "variant": "Ad Populum"
+      "variant": "Ad Populum",
+      "variantImage": "/assets/-884620048_5504"
     },
     "gameSettings": {
       "legacyModes": {
@@ -787,7 +790,7 @@
     "id": "mmfy dead.jpg 1",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5932,
+    "z": 11004,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -796,7 +799,7 @@
     "id": "mmfy dead.jpg 2",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5933,
+    "z": 11005,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -805,7 +808,7 @@
     "id": "mmfy dead.jpg 3",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5934,
+    "z": 11006,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -814,7 +817,7 @@
     "id": "mmfy dead.jpg 4",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5935,
+    "z": 11007,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -823,7 +826,7 @@
     "id": "mmfy dead.jpg 5",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5936,
+    "z": 11008,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -832,7 +835,7 @@
     "id": "mmfy dead.jpg 6",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5937,
+    "z": 11009,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -841,7 +844,7 @@
     "id": "mmfy dead.jpg 7",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5938,
+    "z": 11010,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -850,7 +853,7 @@
     "id": "mmfy dead.jpg 8",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5939,
+    "z": 11011,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -859,7 +862,7 @@
     "id": "mmfy dead.jpg 9",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5940,
+    "z": 11012,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -868,7 +871,7 @@
     "id": "mmfy dead.jpg 10",
     "deck": "deadDeck",
     "cardType": "dead.jpg",
-    "z": 5941,
+    "z": 11013,
     "activeFace": 1,
     "parent": "mpq3"
   },
@@ -953,7 +956,7 @@
     "type": "card",
     "cardType": "dead.jpg",
     "id": "6hq1",
-    "z": 5942,
+    "z": 11014,
     "parent": "mpq3",
     "activeFace": 1
   },
@@ -1195,7 +1198,7 @@
     "id": "p7xd champion.jpg 0,0",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,0",
-    "z": 6626,
+    "z": 11568,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1204,7 +1207,7 @@
     "id": "p7xd champion.jpg 0,1",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,1",
-    "z": 6627,
+    "z": 11600,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1213,7 +1216,7 @@
     "id": "p7xd champion.jpg 0,2",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,2",
-    "z": 6637,
+    "z": 11630,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1222,7 +1225,7 @@
     "id": "p7xd champion.jpg 0,3",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,3",
-    "z": 6634,
+    "z": 11626,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1231,7 +1234,7 @@
     "id": "p7xd champion.jpg 0,4",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,4",
-    "z": 6628,
+    "z": 11604,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1240,7 +1243,7 @@
     "id": "p7xd champion.jpg 0,5",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,5",
-    "z": 6625,
+    "z": 11616,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1249,7 +1252,7 @@
     "id": "p7xd champion.jpg 0,6",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,6",
-    "z": 6633,
+    "z": 11624,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1258,7 +1261,7 @@
     "id": "p7xd champion.jpg 0,7",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,7",
-    "z": 6629,
+    "z": 11618,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1267,7 +1270,7 @@
     "id": "p7xd champion.jpg 0,8",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,8",
-    "z": 6632,
+    "z": 11606,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1276,7 +1279,7 @@
     "id": "p7xd champion.jpg 0,9",
     "deck": "p7xd",
     "cardType": "champion.jpg 0,9",
-    "z": 6624,
+    "z": 11602,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1285,7 +1288,7 @@
     "id": "p7xd champion.jpg 1,0",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,0",
-    "z": 6636,
+    "z": 11620,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1294,7 +1297,7 @@
     "id": "p7xd champion.jpg 1,1",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,1",
-    "z": 6630,
+    "z": 11570,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1303,7 +1306,7 @@
     "id": "p7xd champion.jpg 1,2",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,2",
-    "z": 6635,
+    "z": 11628,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -1312,7 +1315,7 @@
     "id": "p7xd champion.jpg 1,3",
     "deck": "p7xd",
     "cardType": "champion.jpg 1,3",
-    "z": 6631,
+    "z": 11622,
     "activeFace": 1,
     "parent": "grid0"
   },
@@ -2589,7 +2592,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "4ane",
-    "z": 5966,
+    "z": 11271,
     "parent": "txqv"
   },
   "tkk9": {
@@ -2597,7 +2600,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "tkk9",
-    "z": 5968,
+    "z": 11272,
     "parent": "txqv"
   },
   "e265": {
@@ -2605,7 +2608,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "e265",
-    "z": 5970,
+    "z": 11273,
     "parent": "txqv"
   },
   "3rk1": {
@@ -2613,7 +2616,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "3rk1",
-    "z": 5971,
+    "z": 11274,
     "parent": "txqv"
   },
   "uggi": {
@@ -2621,7 +2624,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "uggi",
-    "z": 5973,
+    "z": 11275,
     "parent": "txqv"
   },
   "oiwl": {
@@ -2629,7 +2632,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "oiwl",
-    "z": 5974,
+    "z": 11276,
     "parent": "txqv"
   },
   "0c5u": {
@@ -2637,7 +2640,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "0c5u",
-    "z": 5976,
+    "z": 11277,
     "parent": "txqv"
   },
   "k0c5": {
@@ -2645,7 +2648,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "k0c5",
-    "z": 5978,
+    "z": 11278,
     "parent": "txqv"
   },
   "lzd8": {
@@ -2653,7 +2656,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "lzd8",
-    "z": 5979,
+    "z": 11279,
     "parent": "txqv"
   },
   "f7k9": {
@@ -2661,7 +2664,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "f7k9",
-    "z": 5980,
+    "z": 11280,
     "parent": "txqv"
   },
   "qg1b": {
@@ -2669,7 +2672,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "qg1b",
-    "z": 5982,
+    "z": 11281,
     "parent": "txqv"
   },
   "vya5": {
@@ -2677,7 +2680,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "vya5",
-    "z": 5983,
+    "z": 11282,
     "parent": "txqv"
   },
   "e3ec": {
@@ -2685,7 +2688,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "e3ec",
-    "z": 5985,
+    "z": 11283,
     "parent": "txqv"
   },
   "2th0": {
@@ -2693,7 +2696,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "2th0",
-    "z": 5986,
+    "z": 11284,
     "parent": "txqv"
   },
   "2deck": {
@@ -5318,7 +5321,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "0lnt",
-    "z": 5944,
+    "z": 11257,
     "parent": "1iex"
   },
   "ws91": {
@@ -5326,7 +5329,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "ws91",
-    "z": 5946,
+    "z": 11258,
     "parent": "1iex"
   },
   "tg7r": {
@@ -5334,7 +5337,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "tg7r",
-    "z": 5948,
+    "z": 11259,
     "parent": "1iex"
   },
   "emqk": {
@@ -5342,7 +5345,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "emqk",
-    "z": 5949,
+    "z": 11260,
     "parent": "1iex"
   },
   "fdbo": {
@@ -5350,7 +5353,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "fdbo",
-    "z": 5951,
+    "z": 11261,
     "parent": "1iex"
   },
   "42xo": {
@@ -5358,7 +5361,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "42xo",
-    "z": 5952,
+    "z": 11262,
     "parent": "1iex"
   },
   "wwzs": {
@@ -5366,7 +5369,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "wwzs",
-    "z": 5954,
+    "z": 11263,
     "parent": "1iex"
   },
   "kmad": {
@@ -5374,7 +5377,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "kmad",
-    "z": 5956,
+    "z": 11264,
     "parent": "1iex"
   },
   "2fdt": {
@@ -5382,7 +5385,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "2fdt",
-    "z": 5957,
+    "z": 11265,
     "parent": "1iex"
   },
   "7rvc": {
@@ -5390,7 +5393,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "7rvc",
-    "z": 5958,
+    "z": 11266,
     "parent": "1iex"
   },
   "4fxr": {
@@ -5398,7 +5401,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "4fxr",
-    "z": 5960,
+    "z": 11267,
     "parent": "1iex"
   },
   "zwto": {
@@ -5406,7 +5409,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "zwto",
-    "z": 5961,
+    "z": 11268,
     "parent": "1iex"
   },
   "jtub": {
@@ -5414,7 +5417,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "jtub",
-    "z": 5963,
+    "z": 11269,
     "parent": "1iex"
   },
   "j3bb": {
@@ -5422,7 +5425,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "j3bb",
-    "z": 5964,
+    "z": 11270,
     "parent": "1iex"
   },
   "6zvx": {
@@ -5430,7 +5433,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "6zvx",
-    "z": 5988,
+    "z": 11285,
     "parent": "x048"
   },
   "3zgx": {
@@ -5438,7 +5441,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "3zgx",
-    "z": 5990,
+    "z": 11286,
     "parent": "x048"
   },
   "07s8": {
@@ -5446,7 +5449,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "07s8",
-    "z": 5992,
+    "z": 11287,
     "parent": "x048"
   },
   "98si": {
@@ -5454,7 +5457,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "98si",
-    "z": 5993,
+    "z": 11288,
     "parent": "x048"
   },
   "l562": {
@@ -5462,7 +5465,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "l562",
-    "z": 5995,
+    "z": 11289,
     "parent": "x048"
   },
   "qw6y": {
@@ -5470,7 +5473,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "qw6y",
-    "z": 5996,
+    "z": 11290,
     "parent": "x048"
   },
   "ytgo": {
@@ -5478,7 +5481,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "ytgo",
-    "z": 5998,
+    "z": 11291,
     "parent": "x048"
   },
   "i39a": {
@@ -5486,7 +5489,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "i39a",
-    "z": 6000,
+    "z": 11292,
     "parent": "x048"
   },
   "wsr2": {
@@ -5494,7 +5497,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "wsr2",
-    "z": 6001,
+    "z": 11293,
     "parent": "x048"
   },
   "r7by": {
@@ -5502,7 +5505,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "r7by",
-    "z": 6002,
+    "z": 11294,
     "parent": "x048"
   },
   "rcpd": {
@@ -5510,7 +5513,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "rcpd",
-    "z": 6004,
+    "z": 11295,
     "parent": "x048"
   },
   "l75n": {
@@ -5518,7 +5521,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "l75n",
-    "z": 6005,
+    "z": 11296,
     "parent": "x048"
   },
   "umxk": {
@@ -5526,7 +5529,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "umxk",
-    "z": 6007,
+    "z": 11297,
     "parent": "x048"
   },
   "eobu": {
@@ -5534,7 +5537,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "eobu",
-    "z": 6008,
+    "z": 11298,
     "parent": "x048"
   },
   "wewg": {
@@ -5542,7 +5545,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "wewg",
-    "z": 6010,
+    "z": 11299,
     "parent": "6beh"
   },
   "6hum": {
@@ -5550,7 +5553,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "6hum",
-    "z": 6012,
+    "z": 11300,
     "parent": "6beh"
   },
   "7brl": {
@@ -5558,7 +5561,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "7brl",
-    "z": 6014,
+    "z": 11301,
     "parent": "6beh"
   },
   "xe00": {
@@ -5566,7 +5569,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "xe00",
-    "z": 6015,
+    "z": 11302,
     "parent": "6beh"
   },
   "99k0": {
@@ -5574,7 +5577,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "99k0",
-    "z": 6017,
+    "z": 11303,
     "parent": "6beh"
   },
   "djzu": {
@@ -5582,7 +5585,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "djzu",
-    "z": 6018,
+    "z": 11304,
     "parent": "6beh"
   },
   "gk97": {
@@ -5590,7 +5593,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "gk97",
-    "z": 6020,
+    "z": 11305,
     "parent": "6beh"
   },
   "4nr6": {
@@ -5598,7 +5601,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "4nr6",
-    "z": 6022,
+    "z": 11306,
     "parent": "6beh"
   },
   "dcwy": {
@@ -5606,7 +5609,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "dcwy",
-    "z": 6023,
+    "z": 11307,
     "parent": "6beh"
   },
   "ia2w": {
@@ -5614,7 +5617,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "ia2w",
-    "z": 6024,
+    "z": 11308,
     "parent": "6beh"
   },
   "h1lw": {
@@ -5622,7 +5625,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "h1lw",
-    "z": 6026,
+    "z": 11309,
     "parent": "6beh"
   },
   "dubm": {
@@ -5630,7 +5633,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "dubm",
-    "z": 6027,
+    "z": 11310,
     "parent": "6beh"
   },
   "zzh5": {
@@ -5638,7 +5641,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "zzh5",
-    "z": 6029,
+    "z": 11311,
     "parent": "6beh"
   },
   "65su": {
@@ -5646,7 +5649,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "65su",
-    "z": 6030,
+    "z": 11312,
     "parent": "6beh"
   },
   "5jdf": {
@@ -5654,7 +5657,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "5jdf",
-    "z": 6032,
+    "z": 11313,
     "parent": "lgim"
   },
   "k9fa": {
@@ -5662,7 +5665,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "k9fa",
-    "z": 6034,
+    "z": 11314,
     "parent": "lgim"
   },
   "6j1w": {
@@ -5670,7 +5673,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "6j1w",
-    "z": 6036,
+    "z": 11315,
     "parent": "lgim"
   },
   "4q1i": {
@@ -5678,7 +5681,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "4q1i",
-    "z": 6037,
+    "z": 11316,
     "parent": "lgim"
   },
   "9lpl": {
@@ -5686,7 +5689,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "9lpl",
-    "z": 6039,
+    "z": 11317,
     "parent": "lgim"
   },
   "9db1": {
@@ -5694,7 +5697,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "9db1",
-    "z": 6040,
+    "z": 11318,
     "parent": "lgim"
   },
   "qra6": {
@@ -5702,7 +5705,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "qra6",
-    "z": 6042,
+    "z": 11319,
     "parent": "lgim"
   },
   "gafc": {
@@ -5710,7 +5713,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "gafc",
-    "z": 6044,
+    "z": 11320,
     "parent": "lgim"
   },
   "w7z0": {
@@ -5718,7 +5721,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "w7z0",
-    "z": 6045,
+    "z": 11321,
     "parent": "lgim"
   },
   "j88y": {
@@ -5726,7 +5729,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "j88y",
-    "z": 6046,
+    "z": 11322,
     "parent": "lgim"
   },
   "hely": {
@@ -5734,7 +5737,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "hely",
-    "z": 6048,
+    "z": 11323,
     "parent": "lgim"
   },
   "5cl4": {
@@ -5742,7 +5745,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "5cl4",
-    "z": 6049,
+    "z": 11324,
     "parent": "lgim"
   },
   "rhp3": {
@@ -5750,7 +5753,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "rhp3",
-    "z": 6051,
+    "z": 11325,
     "parent": "lgim"
   },
   "15fj": {
@@ -5758,7 +5761,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "15fj",
-    "z": 6052,
+    "z": 11326,
     "parent": "lgim"
   },
   "sjuk": {
@@ -5766,7 +5769,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "sjuk",
-    "z": 6054,
+    "z": 11327,
     "parent": "53r5"
   },
   "r7oe": {
@@ -5774,7 +5777,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "r7oe",
-    "z": 6056,
+    "z": 11328,
     "parent": "53r5"
   },
   "4ezh": {
@@ -5782,7 +5785,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "4ezh",
-    "z": 6058,
+    "z": 11329,
     "parent": "53r5"
   },
   "gv47": {
@@ -5790,7 +5793,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "gv47",
-    "z": 6059,
+    "z": 11330,
     "parent": "53r5"
   },
   "z2tq": {
@@ -5798,7 +5801,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "z2tq",
-    "z": 6061,
+    "z": 11331,
     "parent": "53r5"
   },
   "msd5": {
@@ -5806,7 +5809,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "msd5",
-    "z": 6062,
+    "z": 11332,
     "parent": "53r5"
   },
   "hu8e": {
@@ -5814,7 +5817,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "hu8e",
-    "z": 6064,
+    "z": 11333,
     "parent": "53r5"
   },
   "obiv": {
@@ -5822,7 +5825,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "obiv",
-    "z": 6066,
+    "z": 11334,
     "parent": "53r5"
   },
   "ldyu": {
@@ -5830,7 +5833,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "ldyu",
-    "z": 6067,
+    "z": 11335,
     "parent": "53r5"
   },
   "mnlj": {
@@ -5838,7 +5841,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "mnlj",
-    "z": 6068,
+    "z": 11336,
     "parent": "53r5"
   },
   "545y": {
@@ -5846,7 +5849,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "545y",
-    "z": 6070,
+    "z": 11337,
     "parent": "53r5"
   },
   "wvul": {
@@ -5854,7 +5857,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "wvul",
-    "z": 6071,
+    "z": 11338,
     "parent": "53r5"
   },
   "ua6v": {
@@ -5862,7 +5865,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "ua6v",
-    "z": 6073,
+    "z": 11339,
     "parent": "53r5"
   },
   "esj8": {
@@ -5870,7 +5873,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "esj8",
-    "z": 6074,
+    "z": 11340,
     "parent": "53r5"
   },
   "i07i": {
@@ -5878,7 +5881,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "i07i",
-    "z": 6076,
+    "z": 11341,
     "parent": "nba1"
   },
   "819n": {
@@ -5886,7 +5889,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "819n",
-    "z": 6078,
+    "z": 11342,
     "parent": "nba1"
   },
   "2ian": {
@@ -5894,7 +5897,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "2ian",
-    "z": 6080,
+    "z": 11343,
     "parent": "nba1"
   },
   "8vta": {
@@ -5902,7 +5905,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "8vta",
-    "z": 6081,
+    "z": 11344,
     "parent": "nba1"
   },
   "evay": {
@@ -5910,7 +5913,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "evay",
-    "z": 6083,
+    "z": 11345,
     "parent": "nba1"
   },
   "mva1": {
@@ -5918,7 +5921,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "mva1",
-    "z": 6084,
+    "z": 11346,
     "parent": "nba1"
   },
   "vi89": {
@@ -5926,7 +5929,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "vi89",
-    "z": 6086,
+    "z": 11347,
     "parent": "nba1"
   },
   "r3x8": {
@@ -5934,7 +5937,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "r3x8",
-    "z": 6088,
+    "z": 11348,
     "parent": "nba1"
   },
   "wedi": {
@@ -5942,7 +5945,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "wedi",
-    "z": 6089,
+    "z": 11349,
     "parent": "nba1"
   },
   "z0db": {
@@ -5950,7 +5953,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "z0db",
-    "z": 6090,
+    "z": 11350,
     "parent": "nba1"
   },
   "50pd": {
@@ -5958,7 +5961,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "50pd",
-    "z": 6092,
+    "z": 11351,
     "parent": "nba1"
   },
   "780v": {
@@ -5966,7 +5969,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "780v",
-    "z": 6093,
+    "z": 11352,
     "parent": "nba1"
   },
   "hhb0": {
@@ -5974,7 +5977,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "hhb0",
-    "z": 6095,
+    "z": 11353,
     "parent": "nba1"
   },
   "lwq0": {
@@ -5982,7 +5985,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "lwq0",
-    "z": 6096,
+    "z": 11354,
     "parent": "nba1"
   },
   "fz26": {
@@ -5990,7 +5993,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "fz26",
-    "z": 6098,
+    "z": 11355,
     "parent": "hloj"
   },
   "rw2b": {
@@ -5998,7 +6001,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "rw2b",
-    "z": 6100,
+    "z": 11356,
     "parent": "hloj"
   },
   "c3i7": {
@@ -6006,7 +6009,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "c3i7",
-    "z": 6102,
+    "z": 11357,
     "parent": "hloj"
   },
   "tdcc": {
@@ -6014,7 +6017,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "tdcc",
-    "z": 6103,
+    "z": 11358,
     "parent": "hloj"
   },
   "sln8": {
@@ -6022,7 +6025,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "sln8",
-    "z": 6105,
+    "z": 11359,
     "parent": "hloj"
   },
   "rqic": {
@@ -6030,7 +6033,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "rqic",
-    "z": 6106,
+    "z": 11360,
     "parent": "hloj"
   },
   "dk4f": {
@@ -6038,7 +6041,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "dk4f",
-    "z": 6108,
+    "z": 11361,
     "parent": "hloj"
   },
   "gdm6": {
@@ -6046,7 +6049,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "gdm6",
-    "z": 6110,
+    "z": 11362,
     "parent": "hloj"
   },
   "lrhh": {
@@ -6054,7 +6057,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "lrhh",
-    "z": 6111,
+    "z": 11363,
     "parent": "hloj"
   },
   "tb2x": {
@@ -6062,7 +6065,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "tb2x",
-    "z": 6112,
+    "z": 11364,
     "parent": "hloj"
   },
   "9hg0": {
@@ -6070,7 +6073,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "9hg0",
-    "z": 6114,
+    "z": 11365,
     "parent": "hloj"
   },
   "zwqw": {
@@ -6078,7 +6081,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "zwqw",
-    "z": 6115,
+    "z": 11366,
     "parent": "hloj"
   },
   "wjcb": {
@@ -6086,7 +6089,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "wjcb",
-    "z": 6117,
+    "z": 11367,
     "parent": "hloj"
   },
   "dapw": {
@@ -6094,7 +6097,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "dapw",
-    "z": 6118,
+    "z": 11368,
     "parent": "hloj"
   },
   "oeti": {
@@ -6102,7 +6105,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "oeti",
-    "z": 6120,
+    "z": 11369,
     "parent": "76br"
   },
   "fltf": {
@@ -6110,7 +6113,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "fltf",
-    "z": 6122,
+    "z": 11370,
     "parent": "76br"
   },
   "ndf9": {
@@ -6118,7 +6121,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "ndf9",
-    "z": 6124,
+    "z": 11371,
     "parent": "76br"
   },
   "hp3n": {
@@ -6126,7 +6129,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "hp3n",
-    "z": 6125,
+    "z": 11372,
     "parent": "76br"
   },
   "06pf": {
@@ -6134,7 +6137,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "06pf",
-    "z": 6127,
+    "z": 11373,
     "parent": "76br"
   },
   "xp7h": {
@@ -6142,7 +6145,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "xp7h",
-    "z": 6128,
+    "z": 11374,
     "parent": "76br"
   },
   "l6d9": {
@@ -6150,7 +6153,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "l6d9",
-    "z": 6130,
+    "z": 11375,
     "parent": "76br"
   },
   "l56g": {
@@ -6158,7 +6161,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "l56g",
-    "z": 6132,
+    "z": 11376,
     "parent": "76br"
   },
   "cbhs": {
@@ -6166,7 +6169,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "cbhs",
-    "z": 6133,
+    "z": 11377,
     "parent": "76br"
   },
   "aih9": {
@@ -6174,7 +6177,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "aih9",
-    "z": 6134,
+    "z": 11378,
     "parent": "76br"
   },
   "sofa": {
@@ -6182,7 +6185,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "sofa",
-    "z": 6136,
+    "z": 11379,
     "parent": "76br"
   },
   "sr3u": {
@@ -6190,7 +6193,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "sr3u",
-    "z": 6137,
+    "z": 11380,
     "parent": "76br"
   },
   "p30o": {
@@ -6198,7 +6201,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "p30o",
-    "z": 6139,
+    "z": 11381,
     "parent": "76br"
   },
   "19w0": {
@@ -6206,7 +6209,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "19w0",
-    "z": 6140,
+    "z": 11382,
     "parent": "76br"
   },
   "pb6o": {
@@ -6214,7 +6217,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "pb6o",
-    "z": 6142,
+    "z": 11383,
     "parent": "t0en"
   },
   "y2xs": {
@@ -6222,7 +6225,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "y2xs",
-    "z": 6144,
+    "z": 11384,
     "parent": "t0en"
   },
   "jvtg": {
@@ -6230,7 +6233,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "jvtg",
-    "z": 6146,
+    "z": 11385,
     "parent": "t0en"
   },
   "jooa": {
@@ -6238,7 +6241,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "jooa",
-    "z": 6147,
+    "z": 11386,
     "parent": "t0en"
   },
   "i09k": {
@@ -6246,7 +6249,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "i09k",
-    "z": 6149,
+    "z": 11387,
     "parent": "t0en"
   },
   "gluo": {
@@ -6254,7 +6257,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "gluo",
-    "z": 6150,
+    "z": 11388,
     "parent": "t0en"
   },
   "1kb6": {
@@ -6262,7 +6265,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "1kb6",
-    "z": 6152,
+    "z": 11389,
     "parent": "t0en"
   },
   "hoir": {
@@ -6270,7 +6273,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "hoir",
-    "z": 6154,
+    "z": 11390,
     "parent": "t0en"
   },
   "poyy": {
@@ -6278,7 +6281,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "poyy",
-    "z": 6155,
+    "z": 11391,
     "parent": "t0en"
   },
   "mff2": {
@@ -6286,7 +6289,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "mff2",
-    "z": 6156,
+    "z": 11392,
     "parent": "t0en"
   },
   "gag2": {
@@ -6294,7 +6297,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "gag2",
-    "z": 6158,
+    "z": 11393,
     "parent": "t0en"
   },
   "ymp6": {
@@ -6302,7 +6305,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "ymp6",
-    "z": 6159,
+    "z": 11394,
     "parent": "t0en"
   },
   "ukc9": {
@@ -6310,7 +6313,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "ukc9",
-    "z": 6161,
+    "z": 11395,
     "parent": "t0en"
   },
   "0891": {
@@ -6318,7 +6321,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "0891",
-    "z": 6162,
+    "z": 11396,
     "parent": "t0en"
   },
   "3w5z": {
@@ -6326,7 +6329,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,0",
     "id": "3w5z",
-    "z": 6164,
+    "z": 11397,
     "parent": "q6lf"
   },
   "6x4d": {
@@ -6334,7 +6337,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,1",
     "id": "6x4d",
-    "z": 6166,
+    "z": 11398,
     "parent": "q6lf"
   },
   "iu64": {
@@ -6342,7 +6345,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,2",
     "id": "iu64",
-    "z": 6168,
+    "z": 11399,
     "parent": "q6lf"
   },
   "ggzl": {
@@ -6350,7 +6353,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,3",
     "id": "ggzl",
-    "z": 6169,
+    "z": 11400,
     "parent": "q6lf"
   },
   "oplk": {
@@ -6358,7 +6361,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,4",
     "id": "oplk",
-    "z": 6171,
+    "z": 11401,
     "parent": "q6lf"
   },
   "ay8a": {
@@ -6366,7 +6369,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,5",
     "id": "ay8a",
-    "z": 6172,
+    "z": 11402,
     "parent": "q6lf"
   },
   "o4af": {
@@ -6374,7 +6377,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,6",
     "id": "o4af",
-    "z": 6174,
+    "z": 11403,
     "parent": "q6lf"
   },
   "pu16": {
@@ -6382,7 +6385,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,7",
     "id": "pu16",
-    "z": 6176,
+    "z": 11404,
     "parent": "q6lf"
   },
   "f2s9": {
@@ -6390,7 +6393,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,8",
     "id": "f2s9",
-    "z": 6177,
+    "z": 11405,
     "parent": "q6lf"
   },
   "ecpv": {
@@ -6398,7 +6401,7 @@
     "type": "card",
     "cardType": "champion.jpg 0,9",
     "id": "ecpv",
-    "z": 6178,
+    "z": 11406,
     "parent": "q6lf"
   },
   "jya6": {
@@ -6406,7 +6409,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,0",
     "id": "jya6",
-    "z": 6180,
+    "z": 11407,
     "parent": "q6lf"
   },
   "3epd": {
@@ -6414,7 +6417,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,1",
     "id": "3epd",
-    "z": 6181,
+    "z": 11408,
     "parent": "q6lf"
   },
   "yzg0": {
@@ -6422,7 +6425,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,2",
     "id": "yzg0",
-    "z": 6183,
+    "z": 11409,
     "parent": "q6lf"
   },
   "ql6m": {
@@ -6430,7 +6433,7 @@
     "type": "card",
     "cardType": "champion.jpg 1,3",
     "id": "ql6m",
-    "z": 6184,
+    "z": 11410,
     "parent": "q6lf"
   },
   "v3xk": {
@@ -6804,8 +6807,8 @@
     "type": "card",
     "cardType": "g0",
     "id": "z8xs",
-    "z": 6214,
-    "parent": "w0wj",
+    "z": 11472,
+    "parent": "slr5",
     "activeFace": 1
   },
   "gvbk": {
@@ -6813,17 +6816,17 @@
     "type": "card",
     "cardType": "g1",
     "id": "gvbk",
-    "z": 6211,
-    "activeFace": 1,
-    "parent": "w0wj"
+    "z": 11470,
+    "parent": "slr5",
+    "activeFace": 1
   },
   "9epf": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g2",
     "id": "9epf",
-    "z": 6215,
-    "parent": "w0wj",
+    "z": 11464,
+    "parent": "slr5",
     "activeFace": 1
   },
   "7pij": {
@@ -6831,8 +6834,8 @@
     "type": "card",
     "cardType": "g3",
     "id": "7pij",
-    "z": 6213,
-    "parent": "w0wj",
+    "z": 11467,
+    "parent": "slr5",
     "activeFace": 1
   },
   "2wxu": {
@@ -6840,8 +6843,8 @@
     "type": "card",
     "cardType": "g4",
     "id": "2wxu",
-    "z": 6212,
-    "parent": "w0wj",
+    "z": 11468,
+    "parent": "slr5",
     "activeFace": 1
   },
   "21y3": {
@@ -6849,17 +6852,17 @@
     "type": "card",
     "cardType": "g5",
     "id": "21y3",
-    "z": 6210,
-    "activeFace": 1,
-    "parent": "w0wj"
+    "z": 11469,
+    "parent": "slr5",
+    "activeFace": 1
   },
   "4w6t": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g6",
     "id": "4w6t",
-    "z": 6216,
-    "parent": "w0wj",
+    "z": 11471,
+    "parent": "slr5",
     "activeFace": 1
   },
   "d4kl": {
@@ -6867,35 +6870,35 @@
     "type": "card",
     "cardType": "g7",
     "id": "d4kl",
-    "z": 6206,
-    "activeFace": 1,
-    "parent": "w0wj"
+    "z": 11462,
+    "parent": "slr5",
+    "activeFace": 1
   },
   "wn7a": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g8",
     "id": "wn7a",
-    "z": 6209,
-    "activeFace": 1,
-    "parent": "w0wj"
+    "z": 11463,
+    "parent": "slr5",
+    "activeFace": 1
   },
   "ep1p": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g9",
     "id": "ep1p",
-    "z": 6208,
-    "activeFace": 1,
-    "parent": "w0wj"
+    "z": 11466,
+    "parent": "slr5",
+    "activeFace": 1
   },
   "shkq": {
     "deck": "11deck",
     "type": "card",
     "cardType": "g10",
     "id": "shkq",
-    "z": 6207,
-    "parent": "w0wj",
+    "z": 11465,
+    "parent": "slr5",
     "activeFace": 1
   },
   "glpz": {
@@ -7077,24 +7080,24 @@
     "type": "card",
     "cardType": "dog",
     "id": "5x0f",
-    "z": 6224,
-    "parent": "5zvf"
+    "z": 11417,
+    "parent": "l7kz"
   },
   "w4w3": {
     "deck": "dogDeck",
     "type": "card",
     "cardType": "dog",
     "id": "w4w3",
-    "z": 6223,
-    "parent": "5zvf"
+    "z": 11416,
+    "parent": "l7kz"
   },
   "bneu": {
     "deck": "dogDeck",
     "type": "card",
     "cardType": "spade",
     "id": "bneu",
-    "z": 6222,
-    "parent": "5zvf"
+    "z": 11418,
+    "parent": "l7kz"
   },
   "setup": {
     "type": "button",
@@ -7873,12 +7876,18 @@
         "collection": "thisButton"
       },
       {
+        "func": "GET",
+        "property": "newCard4",
+        "collection": "thisButton"
+      },
+      {
         "func": "SELECT",
         "property": "id",
         "value": [
           "p7xd ${newCard1}",
           "p7xd ${newCard2}",
-          "p7xd ${newCard3}"
+          "p7xd ${newCard3}",
+          "p7xd ${newCard4}"
         ],
         "relation": "in",
         "sortBy": {
@@ -7977,7 +7986,8 @@
               {
                 "type": "choose",
                 "holder": "lesHolder",
-                "variable": "keep"
+                "variable": "keep",
+                "max": 1
               }
             ]
           },
@@ -7989,6 +7999,44 @@
           {
             "func": "MOVE",
             "to": "hand"
+          },
+          {
+            "func": "GET",
+            "property": "player",
+            "collection": [
+              "${playerEnact}"
+            ],
+            "variable": "playerEnactName"
+          },
+          {
+            "func": "INPUT",
+            "player": "${playerEnactName}",
+            "header": "",
+            "fields": [
+              {
+                "type": "subtitle",
+                "text": "${playerName} saw these two cards"
+              },
+              {
+                "type": "choose",
+                "holder": "lesHolder",
+                "max": 0
+              },
+              {
+                "type": "subtitle",
+                "text": "and stole this card"
+              },
+              {
+                "type": "choose",
+                "collection": [
+                  "${keep}"
+                ],
+                "max": 0
+              }
+            ],
+            "cancelButtonIcon": null,
+            "cancelButtonText": null,
+            "confirmButtonText": "OK"
           },
           {
             "func": "MOVE",
@@ -8049,8 +8097,113 @@
             "count": "${og}"
           }
         ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${chosenCard}",
+        "relation": "==",
+        "operand2": "p7xd champion.jpg 0,5",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Red card ability",
+            "fields": [
+              {
+                "type": "subtitle",
+                "text": "Ask the player if they have a specific person (excluding ghosts). If they have one, they give you one and you select 'Yes' below. Otherwise, select 'No' and their hand will be revealed."
+              },
+              {
+                "type": "subtitle",
+                "text": "Do they have one of those cards?"
+              },
+              {
+                "type": "select",
+                "value": "yes",
+                "variable": "select",
+                "options": [
+                  {
+                    "value": "yes",
+                    "text": "Yes (they gave me a card)"
+                  },
+                  {
+                    "value": "no",
+                    "text": "No (reveal their hand)"
+                  }
+                ]
+              }
+            ],
+            "confirmButtonText": "Continue"
+          },
+          {
+            "func": "IF",
+            "operand1": "${select}",
+            "operand2": "no",
+            "relation": "==",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Choose the player you enacted the ability on.",
+                "fields": [
+                  {
+                    "type": "choose",
+                    "source": "nonActivePlayers",
+                    "variable": "playerEnact"
+                  }
+                ]
+              },
+              {
+                "func": "GET",
+                "property": "player",
+                "collection": [
+                  "${playerEnact}"
+                ],
+                "variable": "playerEnactName"
+              },
+              {
+                "func": "SELECT",
+                "property": "owner",
+                "value": "${PROPERTY player OF $playerEnact}",
+                "collection": "handCards",
+                "sortBy": {
+                  "key": "z",
+                  "reverse": false
+                }
+              },
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Cards in ${playerEnactName}'s hand"
+                  },
+                  {
+                    "type": "choose",
+                    "collection": "thisCollection",
+                    "source": "handCards",
+                    "variable": "thisVariable",
+                    "max": 0
+                  }
+                ],
+                "cancelButtonIcon": null,
+                "cancelButtonText": null,
+                "confirmButtonText": "Finished",
+                "player": "${playerName}"
+              }
+            ]
+          }
+        ]
       }
     ],
+    "card1": "champion.jpg 1,2",
+    "card2": "champion.jpg 0,1",
+    "card3": "champion.jpg 0,4",
+    "card4": "champion.jpg 0,3",
+    "card5": "champion.jpg 0,0",
+    "card6": "champion.jpg 1,3",
+    "card7": "champion.jpg 0,8",
+    "card8": "champion.jpg 1,0",
+    "newCard1": "champion.jpg 0,4",
+    "newCard2": "champion.jpg 1,0",
     "display": false
   },
   "arrayB": {
@@ -8145,6 +8298,24 @@
           }
         ]
       },
+      "var str = 'champion.jpg 0,5'",
+      "var cardCheck = ${cardArray} includes ${str}",
+      {
+        "func": "IF",
+        "operand1": "${cardCheck}",
+        "operand2": true,
+        "relation": "==",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "property": "display",
+            "value": true,
+            "collection": [
+              "ability"
+            ]
+          }
+        ]
+      },
       "var x = 0",
       {
         "func": "FOREACH",
@@ -8165,10 +8336,10 @@
           "var x = ${x} + 1"
         ]
       },
-      "var x = 5",
+      "var x = 6",
       {
         "func": "FOREACH",
-        "range": 5,
+        "range": 4,
         "loopRoutine": [
           "var str = 'champion.jpg 0,' + ${x}",
           "var cardCheck = ${cardArray} includes ${str}",
@@ -8226,7 +8397,16 @@
                 "relation": ">",
                 "operand2": 2,
                 "thenRoutine": [
-                  "var newCard3 = ${cardArray} shift"
+                  "var newCard3 = ${cardArray} shift",
+                  {
+                    "func": "IF",
+                    "operand1": "${length}",
+                    "relation": ">",
+                    "operand2": 3,
+                    "thenRoutine": [
+                      "var newCard4 = ${cardArray} shift"
+                    ]
+                  }
                 ]
               }
             ]
@@ -8259,9 +8439,20 @@
           "ability"
         ],
         "value": "${newCard3}"
+      },
+      {
+        "func": "SET",
+        "property": "newCard4",
+        "collection": [
+          "arrayB",
+          "ability"
+        ],
+        "value": "${newCard4}"
       }
     ],
-    "y": -164
+    "y": -164,
+    "newCard1": "champion.jpg 0,4",
+    "newCard2": "champion.jpg 1,0"
   },
   "lesHolder": {
     "type": "holder",
@@ -8552,24 +8743,6 @@
       }
     ]
   },
-  "w0wj": {
-    "type": "pile",
-    "parent": "ghostHolder",
-    "x": 4,
-    "y": 4,
-    "width": 87,
-    "height": 150,
-    "id": "w0wj"
-  },
-  "5zvf": {
-    "type": "pile",
-    "parent": "glpz",
-    "x": 4,
-    "y": 4,
-    "width": 87,
-    "height": 150,
-    "id": "5zvf"
-  },
   "t1": {
     "type": "label",
     "id": "t1",
@@ -8699,5 +8872,23 @@
       }
     },
     "text": "H"
+  },
+  "l7kz": {
+    "type": "pile",
+    "parent": "glpz",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "l7kz"
+  },
+  "slr5": {
+    "type": "pile",
+    "parent": "ghostHolder",
+    "x": 4,
+    "y": 4,
+    "width": 87,
+    "height": 150,
+    "id": "slr5"
   }
 }
