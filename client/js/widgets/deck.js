@@ -24,7 +24,7 @@ class Deck extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined) {
+    if(delta.cardDefaults !== undefined || delta.cardTypes !== undefined || delta.faceTemplates !== undefined || delta.fonts !== undefined) {
       for(const cardID in this.cards) {
         const card = this.cards[cardID];
 
@@ -47,6 +47,16 @@ class Deck extends Widget {
       this.previousCardDefaults = this.get('cardDefaults');
       this.previousCardTypes = this.get('cardTypes');
     }
+  }
+
+  applyFonts() {
+    super.applyFonts();
+
+    // A frame of an html face object is a document of its own and carries a copy of the deck's @font-face
+    // rules rather than reading them from the page (see Card.createFaces), so the cards that are already on
+    // the table are built again instead of keeping the fonts the deck had when they were created.
+    for(const cardID in this.cards)
+      this.cards[cardID].refreshEmbeddedFonts();
   }
 
   cardPropertyGet(cardType, face, property) {
