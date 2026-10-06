@@ -150,12 +150,20 @@ const jeCommands = [
         try {
           const macro = new Function(`"use strict";return (function(w, v) {${jeGetEditorContent()}})`)();
           const variableState = {};
+          const macroProblems = [];
           for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
             const s = JSON.stringify(w.state);
             const newState = JSON.parse(s);
             macro(newState, variableState);
-            await updateWidget(JSON.stringify(newState), s);
+            // updateWidget would show one modal alert per widget, so collect the problems instead
+            const problem = widgetParentProblem(newState, JSON.parse(s));
+            if(problem)
+              macroProblems.push(`${w.id}: ${problem}`);
+            else
+              await updateWidget(JSON.stringify(newState), s);
           }
+          if(macroProblems.length)
+            jeJSONerror = `${macroProblems.length} widget(s) were not updated:\n${macroProblems.join('\n')}`;
         } catch(e) {
           jeJSONerror = e;
         }
@@ -2039,9 +2047,17 @@ async function jeApplyChanges() {
 }
 
 async function jeApplyChangesMulti() {
+  const parentCycles = [];
   const setValueIfNeeded = async function(widget, key, value) {
-    if(widget.get(key) !== value)
-      await widget.set(key, value);
+    if(widget.get(key) === value)
+      return;
+    // putting a widget inside itself breaks it beyond repair, so refuse it here just like the
+    // single widget editor does
+    if(key == 'parent' && widget.wouldCreateParentCycle(value)) {
+      parentCycles.push(widget.get('id'));
+      return;
+    }
+    await widget.set(key, value);
   };
 
   const currentState = JSON.parse(jeGetEditorContent());
@@ -2071,6 +2087,8 @@ async function jeApplyChangesMulti() {
     }
     batchEnd();
     jeDeltaIsOurs = false;
+    if(parentCycles.length)
+      alert(`The parent of ${parentCycles.join(', ')} was not changed: the given parent is inside the widget itself, so using it would create a loop.`);
   }
 }
 
@@ -2451,6 +2469,18 @@ function jeMultiWidgetReferenceError(state) {
         return `${label} ${value} does not exist${forWidget}.`;
       if(property == 'deck' && !widgets.get(value).get('cardTypes'))
         return `Given widget ${value} is not a deck or doesn't define cardTypes${forWidget}.`;
+      // a widget that ends up inside itself cannot be rendered and sends every walk up its
+      // parent chain into infinite recursion
+      if(property == 'parent') {
+        for(const w of widgetID === null ? jeMultiSelectedWidgets() : [ widgets.get(widgetID) ]) {
+          if(w.get('parent') === value)
+            continue;
+          if(value == w.get('id'))
+            return `A widget cannot be its own parent${forWidget}.`;
+          if(w.wouldCreateParentCycle(value))
+            return `Widget ${value} is inside ${w.get('id')}, so using it as the parent would create a loop.`;
+        }
+      }
     }
   }
   return null;
@@ -2955,14 +2985,17 @@ function jeGetContext() {
   try {
     jeStateNow = JSON.parse(jePostProcessText(v));
 
+    let parentProblem;
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
     else if(typeof jeStateNow.id != 'string')
       jeJSONerror = 'ID has to be a string.';
     else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
-    else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))
-      jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
+    // the same check that the editor runs when the JSON is applied, so that a parent that would
+    // create a loop is reported while typing instead of only in the alert afterwards
+    else if(parentProblem = widgetParentProblem(jeStateNow, JSON.parse(jeStateBefore)))
+      jeJSONerror = parentProblem;
     else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
     else if(jeStateNow.type == 'card' && !widgets.get(jeStateNow.deck).get('cardTypes'))
@@ -3321,7 +3354,7 @@ function jeLoggingClear() {
 }
 
 function jeLoggingJSON(obj) {
-  return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
+  return html(stringifyForDisplay(obj, '  ').split('\n').slice(1, -1).join('\n'));
 }
 
 // The built-in variables of the routines that are currently running, one entry per routine on the
@@ -3401,19 +3434,25 @@ export function jeLoggingRoutineEnd(variables, collections) {
 function jeLoggingRenderLog(logHTML) {
   $('#jeLog').innerHTML = logHTML;
 
-  // Make it so clicking on the arrows expands the subtree
+  // Make it so clicking on the arrows expands the subtree. A routine that calls itself hundreds of
+  // levels deep nests deeper than the HTML parser keeps - past its depth limit it appends what
+  // follows as siblings instead - so an entry down there can end up without the expander and the
+  // nested block it was built with. Everything here works on what actually made it into the DOM.
   const expanders = document.getElementsByClassName('jeExpander');
   let i;
   for (i=0; i < expanders.length; i++) {
     expanders[i].addEventListener('click', function() {
+      const nested = this.parentNode.querySelector('.jeLogNested');
+      if(!nested)
+        return;
       this.classList.toggle('jeExpander-down');
-      this.parentNode.querySelector('.jeLogNested').classList.toggle('active');
+      nested.classList.toggle('active');
       if(this.classList.contains('jeExpander-down')) {
         this.classList.add('manuallyExpanded');
-        this.parentNode.querySelector('.jeLogNested').classList.add('manuallyExpanded');
+        nested.classList.add('manuallyExpanded');
       } else {
         this.classList.remove('manuallyExpanded');
-        this.parentNode.querySelector('.jeLogNested').classList.remove('manuallyExpanded');
+        nested.classList.remove('manuallyExpanded');
       }
     });
   }
@@ -3422,7 +3461,7 @@ function jeLoggingRenderLog(logHTML) {
   for (i=0; i<problems.length; i++) {
     let node = problems[i];
     while (node && node.id != 'jeLog') {
-      if(node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) {
+      if((node.classList.contains('jeLogOperation') || node.classList.contains('jeLog')) && node.firstElementChild) {
         node.firstElementChild.classList.remove('jeExpander');
         node.firstElementChild.classList.add('jeRedExpander')
       }
@@ -3488,13 +3527,15 @@ export function jeLoggingRoutineOperationEnd(problems, variables, collections, s
   const opFunction = savedHTML[3];
   const startTime = savedHTML[4];
 
+  // Problems start expanded - the red arrow is the only hint that something is wrong, so hiding the
+  // explanation behind another click is how it gets missed.
   const opProblems = problems.length ?
        `<div class="jeLogDetails">
-          <div class="jeExpander">
+          <div class="jeExpander jeExpander-down">
             <span class="jeLogName">Problems</span>
           </div>
-          <div class="jeLogNested">
-            <div class="jeLogProblems">${problems.map(p=>html(typeof p == 'string' ? p : JSON.stringify(p))).join('\n')}</div>
+          <div class="jeLogNested active">
+            <div class="jeLogProblems">${problems.map(p=>html(typeof p == 'string' ? p : stringifyForDisplay(p))).join('\n')}</div>
           </div>
         </div>` : '';
   const originalOp = originalText.length ?

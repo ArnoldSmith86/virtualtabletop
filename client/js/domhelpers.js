@@ -130,6 +130,31 @@ export function regexEscape(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, m=>'\\'+m[0]);
 }
 
+// Displaying a value that contains itself must never throw - showing what the value looks like is
+// what makes the situation debuggable at all. Only the part that closes the loop is replaced, so
+// everything around it stays readable. (#1415)
+export function stringifyForDisplay(value, indent) {
+  try {
+    return JSON.stringify(value, null, indent);
+  } catch(e) {
+    try {
+      const ancestors = [];
+      return JSON.stringify(value, function(key, v) {
+        if(typeof v != 'object' || v === null)
+          return v;
+        while(ancestors.length && ancestors[ancestors.length-1] != this)
+          ancestors.pop();
+        if(ancestors.includes(v))
+          return '<contains itself>';
+        ancestors.push(v);
+        return v;
+      }, indent);
+    } catch(e2) {
+      return JSON.stringify({ error: e.toString() }, null, indent);
+    }
+  }
+}
+
 export function setText(node, text) {
   if(node.classList.contains('emoji-monochrome'))
     text = toNotoMonochrome(text);
