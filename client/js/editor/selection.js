@@ -260,6 +260,7 @@ function setSelection(newSelectedWidgets) {
   // click in the room does not make the JSON editor's tree or an "Edit line ..."
   // link something else than the editor moving on, so it ends with its popup.
   endWidgetPickerWithoutTarget();
+  newSelectedWidgets = smartCloneProcessSelection(newSelectedWidgets);
   const editorMovedOn = !isWidgetPickerChangingSelection() && !isWidgetPickerRestoringSelection()
                         && selectionChanged(previousSelectedWidgets, newSelectedWidgets);
   if(editorMovedOn)
@@ -335,6 +336,7 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
@@ -350,6 +352,7 @@ function receiveStateFromServer(state) {
   for(const module of sidebarModules)
     module.onStateReceived(state);
   selectionBarStateReceived();
+  smartCloneInit();
 }
 
 function registerSelectionEventHandlers() {
