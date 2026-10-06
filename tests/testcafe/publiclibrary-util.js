@@ -1,15 +1,37 @@
 import { Selector, ClientFunction } from 'testcafe';
 
 import { escapeID } from '../../client/js/domhelpers.js';
-import { compareState, prepareClient, setName, waitForStableState } from './test-util.js';
+import { compareState, getStateObject, prepareClient, setName, waitForStableState } from './test-util.js';
 
 const tabHasActive = ClientFunction((index) => {
   const btns = document.querySelectorAll('.libraryTypeTabs button');
   return btns[index] ? btns[index].classList.contains('active') : false;
 });
 
+const diag = ClientFunction(() => ({
+  visibleOverlays: [...document.querySelectorAll('.overlay')].filter(o=>getComputedStyle(o).display!='none').map(o=>o.id),
+  activeTab: [...document.querySelectorAll('.toolbarTab.active')].map(b=>b.id).join(),
+  widgets: document.querySelectorAll('.widget').length,
+  widgetIds: [...document.querySelectorAll('.widget')].slice(0,4).map(w=>w.id),
+  loading: !!document.querySelector('#loadingRoomIndicator'),
+  nav: performance.getEntriesByType('navigation').map(n=>n.type).join(),
+  pageAge: Math.round(Date.now() - performance.timeOrigin),
+  bodyClass: document.body.className
+}));
+async function dumpFailure(t, game) {
+  try {
+    console.log('DIAG', new Date().toISOString(), game, JSON.stringify(await diag()));
+    console.log('DIAG console', JSON.stringify(await t.getBrowserConsoleMessages()).slice(0, 6000));
+    const st = await getStateObject();
+    console.log('DIAG server state widgets', Object.keys(st).length, Object.keys(st).slice(0,4).join(','));
+  } catch(e) {
+    console.log('DIAG failed', e);
+  }
+}
+
 function publicLibraryTest(game, variant, md5, tests) {
   test(`Public library: ${game} (variant ${variant})`, async t => {
+    try {
     await ClientFunction(prepareClient)();
     await ClientFunction(_=>++window.customRandomSeed)(); // game library overhaul removed the Math.random call for generating a new state ID
     const tabIndex = +(game.includes(' - '));
@@ -29,6 +51,10 @@ function publicLibraryTest(game, variant, md5, tests) {
     await setName(t);
     await tests(t);
     await compareState(t, md5);
+    } catch(e) {
+      await dumpFailure(t, game);
+      throw e;
+    }
   });
 }
 
