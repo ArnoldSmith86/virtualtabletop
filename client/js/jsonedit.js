@@ -1604,6 +1604,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(SHIFT\\) ↦ keepOrder', [ true, false ]);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ mode', [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset']);
   jeAddEnumCommands('^.*\\(TIMER\\) ↦ value', [ 0, 'start', 'end', 'milliseconds']);
+  jeAddEnumCommands('^.*\\(TURN\\) ↦ turn( ↦|$)', [ 1, -1, 'first', 'last']);
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
