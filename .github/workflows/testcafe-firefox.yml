@@ -19,8 +19,8 @@ jobs:
       matrix:
         testfile:
           - publiclibrary-1.js
-        library: [ main, pr3189 ]
-        rep: [ a, b, c, d, e, f, g, h ]
+        library: [ main ]
+        rep: [ a, b, c, d, e, f, g, h, i, j ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -45,10 +45,14 @@ jobs:
         npm start &
         timeout 30 bash -c 'until curl -sf http://localhost:8272 -o /dev/null; do sleep 0.5; done'
     - name: Run TestCafe tests
-      uses: DevExpress/testcafe-action@latest
-      with:
-        version: "3.7.3"
-        args: "firefox:headless tests/testcafe/${{ matrix.testfile }} -s path=screenshots,takeOnFails=true"
+      run: |
+        fails=0
+        for i in $(seq 10); do
+          echo "=== iteration $i"
+          npx testcafe firefox:headless tests/testcafe/${{ matrix.testfile }} -s path=screenshots/$i,takeOnFails=true || fails=$((fails+1))
+        done
+        echo "FAILED ITERATIONS: $fails"
+        test $fails = 0
     - name: Upload screenshots
       if: failure()
       uses: actions/upload-artifact@v4
