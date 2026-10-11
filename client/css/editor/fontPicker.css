@@ -1,0 +1,227 @@
+/* The Google Fonts dialog (see client/js/editor/fontPicker.js): opened from the deck editor's font row and
+   from the font inputs of the widget sidebar, so it is styled here rather than with either of them.
+   It floats over the editor with just a dim backdrop instead of the .overlay class's solid white, and
+   leaves the sidebar next to it visible so the text being styled stays in view. */
+#fontPickerOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* The dialog itself: what the game already carries, the searchable catalog, and a preview of the font
+   currently being looked at. The title bar and the actions row are fixed and only the middle scrolls, so
+   the add button and the status next to it stay on screen at any window height. */
+#fontPickerDialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(640px, 100%);
+  max-height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#fontPickerDialog h1 {
+  flex: none;
+}
+
+#fontPickerBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+#fontPickerClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* The dialog's two halves - the fonts that are already imported and the Google catalog - as separate blocks,
+   treatment the Add a new deck dialog gives its groups. */
+.fontPickerSection {
+  margin-bottom: 12px;
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+}
+
+.fontPickerSectionHeader {
+  padding: 8px 12px;
+  border-radius: 5px 5px 0 0;
+  background: #8080801a;
+  font-weight: bold;
+}
+
+.fontPickerSectionBody {
+  padding: 12px;
+}
+
+/* Bounded so a dozen imported families do not push the catalog below them out of the dialog. */
+#fontPickerOwned {
+  max-height: 25vh;
+  overflow-y: auto;
+}
+
+#fontPickerSearch {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 8px;
+  padding: 6px 8px;
+}
+
+/* Says how many more families the search still matches. Above the list, because at the bottom of 200
+   entries it only reaches those who already know to narrow the search down. */
+#fontPickerHint {
+  margin-bottom: 8px;
+  font-size: 12px;
+  opacity: .7;
+}
+
+#fontPickerList {
+  min-height: 120px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+}
+
+.fontPickerEntry {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* Mid grey at low alpha: lightens a dark room's modal and darkens a light one, so the hovered row is
+   visible whichever way the game themes --modalBackgroundColor. */
+.fontPickerEntry:hover {
+  background: #8080804d;
+}
+
+.fontPickerEntry.selected {
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.fontPickerName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fontPickerCategory {
+  flex: none;
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* Marks a catalog entry that is already imported, so the list above and the list below line up. */
+.fontPickerInGame {
+  flex: none;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--VTTblue);
+  color: #fff;
+  font-size: 11px;
+}
+
+.fontPickerEntry.selected .fontPickerInGame {
+  background: #fff;
+  color: var(--VTTblue);
+}
+
+.fontPickerEmpty {
+  padding: 10px;
+  opacity: .7;
+}
+
+.fontPickerSubHeader {
+  margin: 12px 0 6px;
+  font-weight: bold;
+}
+
+.fontPickerOwnedEntry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+/* Dropping a font is destructive, so it wears the red of the property rows' trash rather than the blue of
+   the dialog's own "Add to deck". */
+.fontPickerOwnedEntry button {
+  background: var(--VTTred, #c0392b);
+  color: #fff;
+}
+
+.fontPickerOwnedName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 18px;
+}
+
+.fontPickerOwnedStyles {
+  flex: none;
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* Only shown once a font is being looked at - an empty preview box would just be a gap in the dialog. */
+#fontPickerPreview {
+  display: none;
+  margin-top: 12px;
+  padding: 10px;
+  font-size: 22px;
+  line-height: 1.3;
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+}
+
+#fontPickerPreview.active {
+  display: block;
+}
+
+#fontPickerStyles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+#fontPickerStyles .fontPickerSubHeader {
+  flex-basis: 100%;
+}
+
+#fontPickerStyles label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fontPickerActions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+#fontPickerStatus {
+  flex: 1;
+  min-width: 0;
+  opacity: .8;
+}
