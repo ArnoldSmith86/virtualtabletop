@@ -1334,18 +1334,18 @@ const routineOperationMetadata = {
         template: 'Give the turn to a random seat' },
       { id: 'position', label: 'Give the turn to a seat by its position', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'position',
         apply: operation=>{ operation.turnCycle = 'position'; },
-        template: 'Give the turn to the seat at position {turn}' },
+        template: turnPositionWords },
       { id: 'seat', label: 'Give the turn to a specific seat', fixed: [ 'turnCycle' ], match: v=>v('turnCycle') == 'seat',
         apply: operation=>{ operation.turnCycle = 'seat'; },
         template: 'Give the turn to the seat {turn}' }
     ],
     clauses: [
-      { id: 'turn', label: 'n seats along', variants: [ 'forward', 'backward' ], template: v=>` by ${v('turn') == 1 ? '{turn} seat' : '{turn} seats'}` },
+      { id: 'turn', label: 'n seats along', variants: [ 'forward', 'backward' ], template: turnStepWords },
       { id: 'source', label: 'among some of the seats', template: ', among {source}' },
       { id: 'collection', label: 'remember the seat', template: ' and remember the seat as {collection}' }
     ],
     parameters: {
-      turn: { type: 'number', default: 1, special: [ 'first', 'last' ], textHint: 'id of a seat (used with turnCycle seat)', widgetType: 'seat' },
+      turn: { type: 'number', default: 1, special: turnSpecialValues, textHint: 'id of a seat (used with turnCycle seat)', widgetType: 'seat' },
       turnCycle: { type: 'enum', values: [ 'forward', 'backward', 'random', 'position', 'seat' ], default: 'forward' },
       source: { type: 'collection', default: 'all', display: { 'all': 'all seats', 'DEFAULT': 'the picked seats' }, widgetType: 'seat' },
       collection: { type: 'collection', default: 'TURN' }
@@ -1859,6 +1859,27 @@ function timerTime(v) {
   const parameter = v('seconds') ? 'seconds' : 'value';
   const seconds = parameter == 'seconds' ? v('seconds') : (typeof v('value') == 'number' ? v('value')/millisecondsPerSecond : null);
   return `{${parameter}} second${seconds == 1 ? '' : 's'}`;
+}
+
+// a negative turn steps the other way round the cycle, so the number of seats it
+// moves is what the sentence counts either way - only its sign says the direction
+function turnStepWords(v) {
+  return ` by ${widgetsCounted(v, 'turn', 'seat')}`;
+}
+
+// a position is counted from the first active seat, and a negative one back from
+// the last - which is what makes -1 the last seat rather than one before the first
+function turnPositionWords(v) {
+  return `Give the turn to the seat at position {turn}${Number(v('turn')) < 0 ? ', counting back from the last' : ''}`;
+}
+
+// first and last name a position, so they are only offered where turn means one;
+// a seat cycle takes a seat id, and everywhere turn counts seats a step back is
+// worth reaching for
+function turnSpecialValues(variant) {
+  if(variant == 'position')
+    return [ 'first', 'last', -1 ];
+  return variant == 'seat' ? [] : [ -1 ];
 }
 
 // the words a sentence starts with: everything before its first parameter. They
@@ -2526,7 +2547,7 @@ class RoutineOperationEditor {
       // a scaled parameter's own display words the stored value, while everything
       // in the popup is already in the unit it shows - so the numbers it offers
       // say what they are without being converted a second time
-      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, specialOnly: spec.specialOnly, scale: spec.scale, display: spec.scale ? null : spec.display, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
+      case 'number':     return new RoutineNumberPopup({ specialValues: this.parameterSpecialValues(parameterNames[parameterNames.length-1]), specialOnly: spec.specialOnly, scale: spec.scale, display: spec.scale ? null : spec.display, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values, display: spec.display });
       case 'property':   return new RoutinePropertyNamePopup();
       case 'widgets':    return new RoutineWidgetIDPopup(pickerOptions);
@@ -2769,7 +2790,8 @@ class RoutineOperationEditor {
   // "is there one" into a guess.
   dynamicProbeValues(name) {
     const spec = this.parameterSpec(name) || {};
-    const declared = [ ...(Array.isArray(spec.values) ? spec.values : []), ...(Array.isArray(spec.special) ? spec.special : []) ];
+    const special = this.parameterSpecialValues(name);
+    const declared = [ ...(Array.isArray(spec.values) ? spec.values : []), ...(Array.isArray(special) ? special : []) ];
     return declared.length ? declared : [ 0, 1, 'text', true, false, [] ];
   }
 
@@ -2964,6 +2986,14 @@ class RoutineOperationEditor {
 
   parameterSpec(name) {
     return this.metadata.parameters[name] || (name == 'skip' ? skipParameter : undefined);
+  }
+
+  // the ready-made values a parameter offers can depend on what the operation does:
+  // a TURN step counts seats where the cycle steps, while first and last name a
+  // position and only make sense there
+  parameterSpecialValues(name) {
+    const spec = this.parameterSpec(name) || {};
+    return typeof spec.special == 'function' ? spec.special(this.currentVariant().id) : spec.special;
   }
 
   registerChangeListener(listener) {
