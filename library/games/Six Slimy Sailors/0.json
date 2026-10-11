@@ -1237,6 +1237,11 @@
         "collection": [
           "pawn"
         ]
+      },
+      {
+        "func": "CALL",
+        "widget": "drawpile",
+        "routine": "enterRoutine"
       }
     ],
     "x": 928,
@@ -2442,6 +2447,11 @@
         "from": "discard",
         "to": "drawpile",
         "count": 1
+      },
+      {
+        "func": "CALL",
+        "widget": "drawpile",
+        "routine": "enterRoutine"
       }
     ]
   },
@@ -3435,7 +3445,7 @@
     "inheritFrom": "hp1"
   },
   "l1": {
-    "type": "label",
+    "type": "basic",
     "id": "l1",
     "x": 42,
     "y": 50,
@@ -3445,13 +3455,14 @@
       "font-size": "30px",
       "color": "black"
     },
-    "editable": true,
+    "editable": false,
     "parent": "seat1",
     "scoreLabel": "seat1",
-    "text": 0
+    "text": 0,
+    "movable": false
   },
   "l2": {
-    "type": "label",
+    "type": "basic",
     "id": "l2",
     "parent": "seat2",
     "x": 42,
@@ -3462,12 +3473,12 @@
       "font-size": "30px",
       "color": "black"
     },
-    "editable": true,
     "text": 0,
-    "scoreLabel": "seat2"
+    "scoreLabel": "seat2",
+    "movable": false
   },
   "l3": {
-    "type": "label",
+    "type": "basic",
     "id": "l3",
     "parent": "seat3",
     "x": 42,
@@ -3478,12 +3489,12 @@
       "font-size": "30px",
       "color": "black"
     },
-    "editable": true,
     "scoreLabel": "seat3",
-    "text": 0
+    "text": 0,
+    "movable": false
   },
   "l4": {
-    "type": "label",
+    "type": "basic",
     "id": "l4",
     "parent": "seat4",
     "x": 40,
@@ -3494,13 +3505,13 @@
       "font-size": "30px",
       "color": "black"
     },
-    "editable": true,
     "scoreLabel": "seat4",
     "z": 9532,
-    "text": 0
+    "text": 0,
+    "movable": false
   },
   "l5": {
-    "type": "label",
+    "type": "basic",
     "id": "l5",
     "parent": "seat5",
     "x": 42,
@@ -3511,12 +3522,12 @@
       "font-size": "30px",
       "color": "black"
     },
-    "editable": true,
     "text": 0,
-    "scoreLabel": "seat5"
+    "scoreLabel": "seat5",
+    "movable": false
   },
   "l6": {
-    "type": "label",
+    "type": "basic",
     "id": "l6",
     "parent": "seat6",
     "x": 42,
@@ -3527,9 +3538,9 @@
       "font-size": "30px",
       "color": "black"
     },
-    "editable": true,
     "text": 0,
-    "scoreLabel": "seat6"
+    "scoreLabel": "seat6",
+    "movable": false
   },
   "label2": {
     "type": "label",
@@ -5117,13 +5128,7 @@
     "id": "0lf6"
   },
   "_meta": {
-    "version": 21,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
+    "version": 24,
     "info": {
       "name": "Six Slimy Sailors Suspiciously Swinging their Stashes of Silver to Splash their Splosh on the Slickest Ships and Set Sail the Seven Seas",
       "image": "/assets/502181324_201760",
@@ -5133,7 +5138,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Implementation and library cover by Mitchell Stolycia. Released for use under CCBY 4.0.<div>\nTracks artwork by Dennis Laumen. Available under CC0.\n\nArt used in the library image of this implementation:\nPool table from 8 ballin' by Mitchell Stolycia. Available under&nbsp;CCBY 4.0.\n<div>Out of Pocket library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>No Monkey library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>Card Constructor library image&nbsp;by Mitchell Stolycia. Available under CC0.</div><div>A character card from Ad Populum&nbsp;by Mitchell Stolycia. Available under CCBY 4.0.</div></div>",
-      "lastUpdate": 1773678686596,
+      "lastUpdate": 1790971389810,
       "skill": "",
       "description": "Become one of six slimy sailors and swing your stash of silver supsiciously to set sail the seven seas on the slickest ships by splashing your splosh.",
       "similarImage": "",
@@ -5144,10 +5149,15 @@
       "helpText": "<div><b>Setup</b></div><blockquote><div>Take your seats and hit the <i>Setup </i>button.<br>Throughout the game, the pawn is to be passed to the active player, to the right of their seat. A first player will be chosen at random at setup.</div></blockquote><div><b>Auctions</b><br><ul><li>To bid call your bid out loud (I know you've been missing some human connection recently).</li><li>To pay for and claim your winnings, click the <i>Claim lot</i> button.</li><li>After a player has won and claimed a lot, their marker will automatically change position on the appropriate tracks on the right hand-side of the play area.</li></ul><b>End of round scoring</b><br><ul><li><b>Score the ship totals manually </b>according to the reference aid.</li><li>The tracks can be scored automatically by pressing the <i><b>Score tracks</b></i> button.</li><ul><li>The first pop-up appears to prevent accidental clicks, but this can be disabled if you wish.</li><li>You can then choose how fast you want the track scoring to be. 2.0 seconds is recommended as the default between scoring sections, but feel free to change it as you please. Your previous selection will be remembered between rounds.</li></ul></ul></div>",
       "usesAIImagery": false,
       "showName": "only similar",
-      "variantImage": "",
-      "variant": "Six Slimy Sailors...",
+      "players": "3-6",
       "language": "en-GB",
-      "players": "3-6"
+      "variant": "Six Slimy Sailors..."
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
     }
   }
 }
