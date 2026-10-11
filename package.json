@@ -61,6 +61,7 @@
     "crc-32": "^1.2.2",
     "dompurify": "^3.3.0",
     "express": "^5.1.0",
+    "express-rate-limit": "^7.4.1",
     "fflate": "^0.8.2",
     "html-minifier-terser": "^7.2.0",
     "terser": "^5.49.0",
