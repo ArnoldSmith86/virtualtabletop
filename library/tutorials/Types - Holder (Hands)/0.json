@@ -14,7 +14,8 @@
     "id": "jacoP",
     "parent": "jaco",
     "width": 103,
-    "height": 160
+    "height": 160,
+    "z": 1
   },
   "jacoB": {
     "id": "jacoB",
@@ -558,7 +559,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 01",
-    "z": 1337
+    "z": 10038
   },
   "jaco_2_C": {
     "id": "jaco_2_C",
@@ -566,7 +567,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 02",
-    "z": 3195
+    "z": 10045
   },
   "jaco_3_C": {
     "id": "jaco_3_C",
@@ -574,7 +575,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 03",
-    "z": 310
+    "z": 10067
   },
   "jaco_4_C": {
     "id": "jaco_4_C",
@@ -582,7 +583,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 04",
-    "z": 7111
+    "z": 10052
   },
   "jaco_5_C": {
     "id": "jaco_5_C",
@@ -590,7 +591,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 05",
-    "z": 3050
+    "z": 10022
   },
   "jaco_6_C": {
     "id": "jaco_6_C",
@@ -598,7 +599,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 06",
-    "z": 9078
+    "z": 10040
   },
   "jaco_7_C": {
     "id": "jaco_7_C",
@@ -606,7 +607,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 07",
-    "z": 6130
+    "z": 10025
   },
   "jaco_8_C": {
     "id": "jaco_8_C",
@@ -614,7 +615,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 08",
-    "z": 1390
+    "z": 10035
   },
   "jaco_9_C": {
     "id": "jaco_9_C",
@@ -622,7 +623,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 09",
-    "z": 3616
+    "z": 10062
   },
   "jaco_T_C": {
     "id": "jaco_T_C",
@@ -630,7 +631,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 10",
-    "z": 7239
+    "z": 10016
   },
   "jaco_J_C": {
     "id": "jaco_J_C",
@@ -638,7 +639,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 6720
+    "z": 10049
   },
   "jaco_Q_C": {
     "id": "jaco_Q_C",
@@ -646,7 +647,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 9274
+    "z": 10064
   },
   "jaco_K_C": {
     "id": "jaco_K_C",
@@ -654,7 +655,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 2764
+    "z": 10046
   },
   "jaco_A_D": {
     "id": "jaco_A_D",
@@ -662,7 +663,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 01",
-    "z": 9246
+    "z": 10034
   },
   "jaco_2_D": {
     "id": "jaco_2_D",
@@ -670,14 +671,14 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 02",
-    "z": 7260
+    "z": 10028
   },
   "jaco_3_D": {
     "id": "jaco_3_D",
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 03",
-    "z": 2286,
+    "z": 10036,
     "parent": "jacoP"
   },
   "jaco_4_D": {
@@ -686,7 +687,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 04",
-    "z": 4630
+    "z": 10044
   },
   "jaco_5_D": {
     "id": "jaco_5_D",
@@ -694,7 +695,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 05",
-    "z": 7085
+    "z": 10039
   },
   "jaco_6_D": {
     "id": "jaco_6_D",
@@ -702,7 +703,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 06",
-    "z": 1298
+    "z": 10030
   },
   "jaco_7_D": {
     "id": "jaco_7_D",
@@ -710,7 +711,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 07",
-    "z": 1221
+    "z": 10024
   },
   "jaco_8_D": {
     "id": "jaco_8_D",
@@ -718,7 +719,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 08",
-    "z": 3358
+    "z": 10059
   },
   "jaco_9_D": {
     "id": "jaco_9_D",
@@ -726,7 +727,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 09",
-    "z": 9629
+    "z": 10018
   },
   "jaco_T_D": {
     "id": "jaco_T_D",
@@ -734,7 +735,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 10",
-    "z": 7360
+    "z": 10027
   },
   "jaco_J_D": {
     "id": "jaco_J_D",
@@ -742,7 +743,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 9442
+    "z": 10017
   },
   "jaco_Q_D": {
     "id": "jaco_Q_D",
@@ -750,7 +751,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 1019
+    "z": 10060
   },
   "jaco_K_D": {
     "id": "jaco_K_D",
@@ -758,7 +759,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 9434
+    "z": 10065
   },
   "jaco_A_H": {
     "id": "jaco_A_H",
@@ -766,7 +767,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 01",
-    "z": 1359
+    "z": 10031
   },
   "jaco_2_H": {
     "id": "jaco_2_H",
@@ -774,7 +775,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 02",
-    "z": 4702
+    "z": 10063
   },
   "jaco_3_H": {
     "id": "jaco_3_H",
@@ -782,7 +783,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 03",
-    "z": 131
+    "z": 10032
   },
   "jaco_4_H": {
     "id": "jaco_4_H",
@@ -790,14 +791,14 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 04",
-    "z": 7886
+    "z": 10055
   },
   "jaco_5_H": {
     "id": "jaco_5_H",
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 05",
-    "z": 6214,
+    "z": 10048,
     "parent": "jacoP"
   },
   "jaco_6_H": {
@@ -806,7 +807,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 06",
-    "z": 7725
+    "z": 10043
   },
   "jaco_7_H": {
     "id": "jaco_7_H",
@@ -814,7 +815,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 07",
-    "z": 2642
+    "z": 10057
   },
   "jaco_8_H": {
     "id": "jaco_8_H",
@@ -822,7 +823,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 08",
-    "z": 7949
+    "z": 10058
   },
   "jaco_9_H": {
     "id": "jaco_9_H",
@@ -830,7 +831,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 09",
-    "z": 2483
+    "z": 10020
   },
   "jaco_T_H": {
     "id": "jaco_T_H",
@@ -838,7 +839,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 10",
-    "z": 3276
+    "z": 10047
   },
   "jaco_J_H": {
     "id": "jaco_J_H",
@@ -846,7 +847,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 2J",
-    "z": 8660
+    "z": 10041
   },
   "jaco_Q_H": {
     "id": "jaco_Q_H",
@@ -854,7 +855,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 6265
+    "z": 10061
   },
   "jaco_K_H": {
     "id": "jaco_K_H",
@@ -862,7 +863,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "H 4K",
-    "z": 2039
+    "z": 10054
   },
   "jaco_A_S": {
     "id": "jaco_A_S",
@@ -870,7 +871,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 01",
-    "z": 4167
+    "z": 10021
   },
   "jaco_2_S": {
     "id": "jaco_2_S",
@@ -878,7 +879,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 02",
-    "z": 9957
+    "z": 10066
   },
   "jaco_3_S": {
     "id": "jaco_3_S",
@@ -886,7 +887,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 03",
-    "z": 6585
+    "z": 10033
   },
   "jaco_4_S": {
     "id": "jaco_4_S",
@@ -894,7 +895,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 04",
-    "z": 1764
+    "z": 10023
   },
   "jaco_5_S": {
     "id": "jaco_5_S",
@@ -902,7 +903,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 05",
-    "z": 7944
+    "z": 10042
   },
   "jaco_6_S": {
     "id": "jaco_6_S",
@@ -910,7 +911,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 06",
-    "z": 9301
+    "z": 10026
   },
   "jaco_7_S": {
     "id": "jaco_7_S",
@@ -918,7 +919,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 07",
-    "z": 7855
+    "z": 10056
   },
   "jaco_8_S": {
     "id": "jaco_8_S",
@@ -926,7 +927,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 08",
-    "z": 4711
+    "z": 10050
   },
   "jaco_9_S": {
     "id": "jaco_9_S",
@@ -934,7 +935,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 09",
-    "z": 8722
+    "z": 10051
   },
   "jaco_T_S": {
     "id": "jaco_T_S",
@@ -942,7 +943,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 10",
-    "z": 5414
+    "z": 10037
   },
   "jaco_J_S": {
     "id": "jaco_J_S",
@@ -950,7 +951,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 3768
+    "z": 10053
   },
   "jaco_Q_S": {
     "id": "jaco_Q_S",
@@ -958,7 +959,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 9502
+    "z": 10019
   },
   "jaco_K_S": {
     "id": "jaco_K_S",
@@ -966,7 +967,7 @@
     "deck": "jacoD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 5798
+    "z": 10029
   },
   "8fr3": {
     "type": "label",
@@ -983,7 +984,7 @@
     "type": "label",
     "text": "Hands are just a type of holder with the 'childrenPerOwner':true property set.  You can have multiple hands in a room.",
     "css": "font-size: 20px",
-    "height": 200,
+    "height": 100,
     "width": 400,
     "x": 575,
     "y": 117,
@@ -1001,9 +1002,6 @@
     "onLeave": {
       "activeFace": 0
     },
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "stackOffsetX": 40,
     "inheritChildZ": true,
     "childrenPerOwner": true,
     "width": 600,
@@ -1024,9 +1022,6 @@
     "onLeave": {
       "activeFace": 0
     },
-    "dropOffsetX": 10,
-    "dropOffsetY": 14,
-    "stackOffsetX": 40,
     "inheritChildZ": true,
     "childrenPerOwner": true,
     "width": 600,
@@ -1050,7 +1045,7 @@
     "id": "xtj0"
   },
   "_meta": {
-    "version": 20,
+    "version": 25,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -1064,7 +1059,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1768189137681,
+      "lastUpdate": 1788033453849,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1076,7 +1071,8 @@
       "variantImage": "",
       "variant": "Direct Deal",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "52zg": {
