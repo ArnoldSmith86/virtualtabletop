@@ -41,11 +41,11 @@ export class Timer extends Widget {
   }
 
   applyRemove() {
-    super.applyRemove();
-    if(this.interval) {
-      console.log('remove clear');
+    // stop the interval before the base teardown: if that throws, the widget is gone from
+    // the room but a running tick would keep writing to an id that no longer exists
+    if(this.interval)
       this.stopTimer();
-    }
+    super.applyRemove();
   }
 
   classes(includeTemporary=true) {
