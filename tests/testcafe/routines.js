@@ -299,3 +299,36 @@ test('releasing a dragged widget while an overlay is open still ends the drag', 
   await t.click('#buttonInputGo');
   await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ]);
 });
+
+test('INPUT reads variable names containing spaces without treating them as selectors', async t => {
+  await setRoomState({
+    ask: { id: 'ask', type: 'button', text: 'Ask', x: 100, y: 100, clickRoutine: [
+      { func: 'INPUT', fields: [
+        { type: 'number', variable: 'number answer', value: 3 },
+        { type: 'string', variable: 'string answer', value: 'hello' },
+        { type: 'checkbox', variable: 'checked answer', value: true }
+      ] },
+      { func: 'SET', collection: 'thisButton', property: 'answers', value: [ '${number\\u0020answer}', '${string\\u0020answer}', '${checked\\u0020answer}' ] }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_ask').expect(Selector('#buttonInputFields input').count).eql(3).click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).ask.answers, [ '3', 'hello', true ]);
+});
+
+test('INPUT validates fields whose variable names contain spaces', async t => {
+  await setRoomState({
+    ask: { id: 'ask', type: 'button', text: 'Ask', x: 100, y: 100, clickRoutine: [
+      { func: 'INPUT', fields: [ { type: 'number', variable: 'number answer', min: 2, max: 5, value: 3 } ] },
+      { func: 'SET', collection: 'thisButton', property: 'answer', value: '${number\\u0020answer}' }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  const input = Selector('#buttonInputFields input');
+  await t.click('#w_ask').typeText(input, '1', { replace: true }).click('#buttonInputGo');
+  await t.expect(Selector('#buttonInputOverlay .inputError').innerText).eql('Please enter a number above 2.');
+  await t.typeText(input, '4', { replace: true }).click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).ask.answer, '4');
+});

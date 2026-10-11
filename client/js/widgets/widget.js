@@ -1113,7 +1113,7 @@ export class Widget extends StateManaged {
     const collections = {};
     if(go) {
       for(const field of o.fields || []) {
-        const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+        const dom = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         const isSingleWidget = field.source && Array.isArray(field.source) && field.source.length == 1;
         if(field.type == 'checkbox') {
           variables[field.variable] = dom.checked;
@@ -1161,7 +1161,7 @@ export class Widget extends StateManaged {
     let isValid = true;
 
     const displayError = (field, error) => {
-      const dom = $('#INPUT_' + escapeID(this.get('id')) + '\\;' + field.variable);
+      const dom = document.getElementById('INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
       // the message carries what the field defines (regexHint, min, max, regex),
       // so it goes into the DOM as text and not as HTML
       div(dom.parentElement, 'inputError').textContent = error;
