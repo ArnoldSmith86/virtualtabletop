@@ -25,7 +25,13 @@ const knownHashDrifts = {
 // after it - within the file and, because the whole suite shares one room, across files too.
 export function setupTestEnvironment() {
   server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
-  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(resetRoom).after(resetRoom);
+  fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(async t => {
+    // The page connects while the fixture starts. Wait for its initial state before
+    // resetting the room, then for the reset to reach the browser before the test.
+    await t.expect(Selector('#loadingRoomIndicator').exists).notOk({ timeout: 10000 });
+    await resetRoom();
+    await t.expect(Selector('.widget').count).eql(0, { timeout: 10000 });
+  }).after(resetRoom);
 }
 
 // Empty the room and clear its game settings in one request: setState() takes the gameSettings
