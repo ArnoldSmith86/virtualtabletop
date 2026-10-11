@@ -1,4 +1,4 @@
-class Seat extends Widget {
+export class Seat extends Widget {
   constructor(id) {
     super(id);
 
@@ -30,8 +30,8 @@ class Seat extends Widget {
     if(delta.index !== undefined || delta.player !== undefined || delta.display !== undefined || delta.displayEmpty !== undefined) {
       const display = this.get('player') != '' ? this.get('display') : this.get('displayEmpty');
       let displayedText = String(display || '')
-      displayedText = displayedText.replaceAll('seatIndex',this.get('index'))
-      displayedText = displayedText.replaceAll('playerName',this.get('player'))
+      displayedText = displayedText.split('seatIndex').join(this.get('index'))
+      displayedText = displayedText.split('playerName').join(this.get('player'))
       setText(this.domElement, displayedText);
     }
 
