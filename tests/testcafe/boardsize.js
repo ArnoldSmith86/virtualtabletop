@@ -153,10 +153,15 @@ test('The game shelf sizes its tiles from the board, not from the window', async
   await t.resizeWindow(1280, 800);
   await loadGameWithBoardSize(null);
   await ClientFunction(prepareClient)();
-  await t.click('#statesButton');
+  await t
+    .click('#statesButton')
+    .expect(boardLayout()).eql(defaultBoard);
   const onDefaultBoard = await shelfTiles();
 
+  // setRoomState() returns before the client has applied the new board size, and shelfTiles()
+  // measures only once - wait for the re-layout or this can still see the default board
   await loadGameWithBoardSize({ width: 1000, height: 1600 });
+  await t.expect(boardLayout()).eql(portraitBoard);
   const onPortraitBoard = await shelfTiles();
 
   await t
