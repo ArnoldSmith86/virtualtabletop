@@ -427,6 +427,44 @@ test('Renaming a widget keeps its color controls clear and it movable', async t 
   await t.expect(result.y).notEql(200);
 });
 
+test('Renaming a widget only changes the widget id in PROPERTY references', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    loadstagebutton: { id: 'loadstagebutton', type: 'button', x: 200, y: 200, crocstage: 7 },
+    reader: { id: 'reader', type: 'button', x: 400, y: 200, clickRoutine: [
+      'var crocstage = ${PROPERTY crocstage OF loadstagebutton}',
+      'var both = ${PROPERTY loadstagebutton OF loadstagebutton} + ${PROPERTY crocstage OF loadstagebutton}',
+      { func: 'IF', condition: true, thenRoutine: [ 'var nested = ${PROPERTY crocstage OF loadstagebutton}' ] },
+      'var other = ${PROPERTY crocstage OF anotherloadstagebutton}',
+      'var local = ${PROPERTY loadstagebutton}',
+      'var literal = "loadstagebutton"'
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState(propertiesModuleOpen);
+  await setName(t);
+  await t
+    .click('#editButton')
+    .expect(propertiesModule.exists).ok()
+    .click('#w_loadstagebutton');
+
+  for(const id of [ 'st', 'stage', 'OF', 'target' ]) {
+    await t
+      .typeText('[aria-label="Widget id"]', id, { replace: true })
+      .pressKey('enter')
+      .expect(Selector(`#w_${id}`).exists).ok();
+    await expectEventually(t, async () => (await getStateObject()).reader.clickRoutine, [
+      `var crocstage = \${PROPERTY crocstage OF ${id}}`,
+      `var both = \${PROPERTY loadstagebutton OF ${id}} + \${PROPERTY crocstage OF ${id}}`,
+      { func: 'IF', condition: true, thenRoutine: [ `var nested = \${PROPERTY crocstage OF ${id}}` ] },
+      'var other = ${PROPERTY crocstage OF anotherloadstagebutton}',
+      'var local = ${PROPERTY loadstagebutton}',
+      'var literal = "loadstagebutton"'
+    ]);
+  }
+  await setEditorState(null);
+});
+
 test('A rename that the browser commits twice does not claim the new id is taken', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({
