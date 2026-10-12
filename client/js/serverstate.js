@@ -280,9 +280,9 @@ async function updateWidgetId(widget, oldID) {
           }
         }
 
-        let newJSON = JSON.stringify(copy).replace(/\$\{PROPERTY [^}]+ OF ([^}]+)\}/g, (match, p1) => {
-          if(p1 == oldID)
-            return match.replace(regexEscape(p1), id);
+        let newJSON = JSON.stringify(copy).replace(/(\$\{PROPERTY [^}]+ OF )([^}]+)\}/g, (match, prefix, widgetID) => {
+          if(widgetID == oldID)
+            return `${prefix}${id}}`;
           return match;
         });
 
