@@ -6,214 +6,214 @@
     "type": "deck",
     "cardTypes": {
       "Circle1": {
-        "image": "/assets/-1339016030_4616",
+        "image": "/i/tiles-mahjong/circle-1.svg",
         "tileNum": 1,
         "rank": 1
       },
       "Circle2": {
-        "image": "/assets/1136467358_3083",
+        "image": "/i/tiles-mahjong/circle-2.svg",
         "tileNum": 2,
         "rank": 2
       },
       "Circle3": {
-        "image": "/assets/-1532421072_3520",
+        "image": "/i/tiles-mahjong/circle-3.svg",
         "tileNum": 3,
         "rank": 3
       },
       "Circle4": {
-        "image": "/assets/133475317_4420",
+        "image": "/i/tiles-mahjong/circle-4.svg",
         "tileNum": 4,
         "rank": 4
       },
       "Circle5": {
-        "image": "/assets/1137488059_5603",
+        "image": "/i/tiles-mahjong/circle-5.svg",
         "tileNum": 5,
         "rank": 5
       },
       "Circle6": {
-        "image": "/assets/-2135528845_6064",
+        "image": "/i/tiles-mahjong/circle-6.svg",
         "tileNum": 6,
         "rank": 6
       },
       "Circle7": {
-        "image": "/assets/-1706428169_6941",
+        "image": "/i/tiles-mahjong/circle-7.svg",
         "tileNum": 7,
         "rank": 7
       },
       "Circle8": {
-        "image": "/assets/-1074382683_7722",
+        "image": "/i/tiles-mahjong/circle-8.svg",
         "tileNum": 8,
         "rank": 8
       },
       "Circle9": {
-        "image": "/assets/-1540116520_9700",
+        "image": "/i/tiles-mahjong/circle-9.svg",
         "tileNum": 9,
         "rank": 9
       },
       "Bamboo1": {
-        "image": "/assets/539657358_11999",
+        "image": "/i/tiles-mahjong/bamboo-1.svg",
         "tileNum": 1,
         "rank": 10
       },
       "Bamboo2": {
-        "image": "/assets/-2084632949_1227",
+        "image": "/i/tiles-mahjong/bamboo-2.svg",
         "tileNum": 2,
         "rank": 11
       },
       "Bamboo3": {
-        "image": "/assets/-325975543_1705",
+        "image": "/i/tiles-mahjong/bamboo-3.svg",
         "tileNum": 3,
         "rank": 12
       },
       "Bamboo4": {
-        "image": "/assets/-1729922331_2223",
+        "image": "/i/tiles-mahjong/bamboo-4.svg",
         "tileNum": 4,
         "rank": 13
       },
       "Bamboo5": {
-        "image": "/assets/1007546639_2785",
+        "image": "/i/tiles-mahjong/bamboo-5.svg",
         "tileNum": 5,
         "rank": 14
       },
       "Bamboo6": {
-        "image": "/assets/773320592_3156",
+        "image": "/i/tiles-mahjong/bamboo-6.svg",
         "tileNum": 6,
         "rank": 15
       },
       "Bamboo7": {
-        "image": "/assets/54550778_3591",
+        "image": "/i/tiles-mahjong/bamboo-7.svg",
         "tileNum": 7,
         "rank": 16
       },
       "Bamboo8": {
-        "image": "/assets/1732477204_3721",
+        "image": "/i/tiles-mahjong/bamboo-8.svg",
         "tileNum": 8,
         "rank": 17
       },
       "Bamboo9": {
-        "image": "/assets/-975954993_4571",
+        "image": "/i/tiles-mahjong/bamboo-9.svg",
         "tileNum": 9,
         "rank": 18
       },
       "Character1": {
-        "image": "/assets/-514147078_2701",
+        "image": "/i/tiles-mahjong/character-1.svg",
         "tileNum": 1,
         "rank": 19
       },
       "Character2": {
-        "image": "/assets/-2074161958_2906",
+        "image": "/i/tiles-mahjong/character-2.svg",
         "tileNum": 2,
         "rank": 20
       },
       "Character3": {
-        "image": "/assets/755134343_3230",
+        "image": "/i/tiles-mahjong/character-3.svg",
         "tileNum": 3,
         "rank": 21
       },
       "Character4": {
-        "image": "/assets/-2036596958_3393",
+        "image": "/i/tiles-mahjong/character-4.svg",
         "tileNum": 4,
         "rank": 22
       },
       "Character5": {
-        "image": "/assets/396998050_3683",
+        "image": "/i/tiles-mahjong/character-5.svg",
         "tileNum": 5,
         "rank": 23
       },
       "Character6": {
-        "image": "/assets/733238342_3524",
+        "image": "/i/tiles-mahjong/character-6.svg",
         "tileNum": 6,
         "rank": 24
       },
       "Character7": {
-        "image": "/assets/-632255122_2958",
+        "image": "/i/tiles-mahjong/character-7.svg",
         "tileNum": 7,
         "rank": 25
       },
       "Character8": {
-        "image": "/assets/-1080627014_2924",
+        "image": "/i/tiles-mahjong/character-8.svg",
         "tileNum": 8,
         "rank": 26
       },
       "Character9": {
-        "image": "/assets/1883354284_3171",
+        "image": "/i/tiles-mahjong/character-9.svg",
         "tileNum": 9,
         "rank": 27
       },
       "WindEast": {
-        "image": "/assets/2076338660_1877",
+        "image": "/i/tiles-mahjong/wind-east.svg",
         "tileNum": "E",
         "rank": 28
       },
       "WindSouth": {
-        "image": "/assets/114170744_2138",
+        "image": "/i/tiles-mahjong/wind-south.svg",
         "tileNum": "S",
         "rank": 29
       },
       "WindWest": {
-        "image": "/assets/454033274_1573",
+        "image": "/i/tiles-mahjong/wind-west.svg",
         "tileNum": "W",
         "rank": 30
       },
       "WindNorth": {
-        "image": "/assets/-2112967810_1540",
+        "image": "/i/tiles-mahjong/wind-north.svg",
         "tileNum": "N",
         "rank": 31
       },
       "DragonRed": {
-        "image": "/assets/2128461418_1352",
+        "image": "/i/tiles-mahjong/dragon-red.svg",
         "rank": 32
       },
       "DragonGreen": {
-        "image": "/assets/987530906_2416",
+        "image": "/i/tiles-mahjong/dragon-green.svg",
         "rank": 33
       },
       "DragonWhite": {
-        "image": "/assets/143502043_2260",
+        "image": "/i/tiles-mahjong/dragon-white.svg",
         "rank": 34
       },
       "Spring": {
-        "image": "/assets/1343024375_9182",
+        "image": "/i/tiles-mahjong/season-spring.svg",
         "tileNum": "1     Spr",
         "rank": 35
       },
       "Summer": {
-        "image": "/assets/1777414827_7686",
+        "image": "/i/tiles-mahjong/season-summer.svg",
         "tileNum": "2    Sum",
         "rank": 36
       },
       "Autumn": {
-        "image": "/assets/685124225_8743",
+        "image": "/i/tiles-mahjong/season-autumn.svg",
         "tileNum": "3     Aut",
         "rank": 37
       },
       "Winter": {
-        "image": "/assets/-205388515_8642",
+        "image": "/i/tiles-mahjong/season-winter.svg",
         "tileNum": "4    Win",
         "rank": 38
       },
       "Plum": {
-        "image": "/assets/-931410288_7127",
+        "image": "/i/tiles-mahjong/flower-plum.svg",
         "tileNum": 1,
         "rank": 39
       },
       "Orchid": {
-        "image": "/assets/165858226_6580",
+        "image": "/i/tiles-mahjong/flower-orchid.svg",
         "tileNum": 2,
         "rank": 40
       },
       "Chrysanthemum": {
-        "image": "/assets/1018203540_11633",
+        "image": "/i/tiles-mahjong/flower-chrysanthemum.svg",
         "tileNum": 3,
         "rank": 41
       },
       "Bamboo": {
-        "image": "/assets/720691094_5319",
+        "image": "/i/tiles-mahjong/flower-bamboo.svg",
         "tileNum": 4,
         "rank": 42
       },
       "Joker": {
-        "image": "/assets/-2068045230_13962",
+        "image": "/i/tiles-mahjong/joker.svg",
         "rank": 43
       }
     },
