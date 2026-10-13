@@ -1904,7 +1904,8 @@ export class Widget extends StateManaged {
           const overlay = { ...a, ...evaluateVariablesRecursively(dialog, context) };
           return [ p, cloneInputOverlayForPlayer(overlay, p, i) ];
         }));
-        a = overlaysByPlayer[players[0]];
+        // Routine logging retains a reference to the applied operation.
+        Object.assign(a, overlaysByPlayer[players[0]]);
         // Only the initiator can show its own overlay locally (it has the live
         // variables/collections); everyone else is asked over the network.
         const showLocal = players.indexOf(playerName) != -1 ? registerAbort=>{
@@ -1917,15 +1918,17 @@ export class Widget extends StateManaged {
           const results = await runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal });
           if(isMulti) {
             // Return each field's value keyed by the player who entered it.
-            for(const field of a.fields || []) {
-              if(!field.variable)
-                continue;
-              const keyed = {};
-              for(const p of players)
+            const keyed = Object.create(null);
+            for(const p of players) {
+              for(const field of overlaysByPlayer[p].fields || []) {
+                if(!field.variable)
+                  continue;
+                keyed[field.variable] = keyed[field.variable] || {};
                 if(results[p])
-                  keyed[p] = results[p].variables[field.variable];
-              variables[field.variable] = keyed;
+                  keyed[field.variable][p] = results[p].variables[field.variable];
+              }
             }
+            Object.assign(variables, keyed);
             // Collections (e.g. from 'choose' fields) are unioned across players.
             for(const p of players) {
               if(!results[p])
@@ -1947,8 +1950,8 @@ export class Widget extends StateManaged {
           if(routineLogging) {
             let varList = [];
             let valueList = [];
-            a.fields.forEach(f=>{
-              if(f.variable) {
+            Object.values(overlaysByPlayer).flatMap(o=>o.fields || []).forEach(f=>{
+              if(f.variable && !varList.includes(f.variable)) {
                 varList.push(f.variable);
                 valueList.push(JSON.stringify(variables[f.variable]));
               }

@@ -218,6 +218,33 @@ test('INPUT resolves inputSeatID separately for each active player and keeps the
   await t.closeWindow(second);
 });
 
+test('INPUT preserves answers with recipient-dependent variable names', async t => {
+  await openClient(t, 'Alice');
+  await openRoom(t, 'modern', twoPlayerState({
+    seatA: { player: 'Alice' }, seatB: { player: 'Bob' },
+    ask: { type: 'button', x: 1000, y: 500, width: 120, height: 60, text: 'ask', clickRoutine: [
+      { func: 'INPUT', player: '${activePlayers}', fields: [
+        { type: 'string', variable: 'answer_${inputSeatID}', value: '${inputSeatID}' }
+      ] },
+      { func: 'SET', collection: 'thisButton', property: 'answerA', value: '${answer_seatA}' },
+      { func: 'SET', collection: 'thisButton', property: 'answerB', value: '${answer_seatB}' }
+    ] }
+  }));
+  const first = await t.getCurrentWindow();
+  const second = await openSecondClient(t, 'Bob');
+  await t.switchToWindow(first);
+  await t.click('#w_ask');
+  await t.expect(Selector('#buttonInputFields input').value).eql('seatA');
+  await t.click('#buttonInputGo');
+  await t.switchToWindow(second);
+  await t.expect(Selector('#buttonInputFields input').value).eql('seatB');
+  await t.click('#buttonInputGo');
+  const state = await stateWhen(s=>(s.ask||{}).answerA);
+  await t.expect(state.ask.answerA).eql({ Alice: 'seatA' });
+  await t.expect(state.ask.answerB).eql({ Bob: 'seatB' });
+  await t.closeWindow(second);
+});
+
 test('INPUT can address one remote unseated player without changing the invoking seat', async t => {
   await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState({

@@ -175,4 +175,29 @@ describe('INPUT recipient seat variables', () => {
       removeWidget(button.id);
     }
   });
+
+  test('the applied operation keeps the resolved dialog values for routine logging', async () => {
+    const button = createWidget({ id: 'input-logged', type: 'button', clickRoutine: [
+      { func: 'INPUT', header: 'Hello ${playerName}', fields: [
+        { type: 'string', variable: 'answer', value: '${inputSeatID}' }
+      ] }
+    ] });
+    const functions = [ 'jeLoggingRoutineStart', 'jeLoggingRoutineEnd', 'jeLoggingRoutineOperationStart', 'jeLoggingRoutineOperationEnd', 'jeLoggingRoutineOperationSummary' ];
+    const saved = Object.fromEntries(functions.map(name=>[ name, window[name] ]));
+    for(const name of functions)
+      window[name] = ()=>{};
+    let applied;
+    window.jeLoggingRoutineOperationStart = (original, operation)=>{ applied = operation; };
+    window.jeRoutineLogging = true;
+    button.showInputOverlay = async o=>({ variables: { answer: o.fields[0].value }, collections: {} });
+    try {
+      await button.evaluateRoutine('clickRoutine', {}, {});
+      expect(applied.header).toBe(`Hello ${playerName}`);
+      expect(applied.fields[0].value).toBeNull();
+    } finally {
+      window.jeRoutineLogging = false;
+      Object.assign(window, saved);
+      removeWidget(button.id);
+    }
+  });
 });
