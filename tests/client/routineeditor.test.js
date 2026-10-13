@@ -1971,6 +1971,24 @@ describe('the values a parameter popup offers', () => {
     popup.hide();
   });
 
+  test('INPUT dialogs and their fields offer the recipient seat variable', () => {
+    for(const operation of [ { func: 'INPUT' }, { type: 'string' } ]) {
+      const popup = showPopup(RoutineStringPopup, operation, [ 'value' ]);
+      let value;
+      popup.registerChangeListener(v => value = v);
+      const entry = [...popup.domElement.querySelectorAll('.popup-entry button')].find(b => b.textContent == 'inputSeatID');
+      expect(entry.title).toBe('seat id of the player shown this dialog (null without a seat)');
+      entry.dispatchEvent(new Event('click'));
+      expect(value).toEqual({ value: '${inputSeatID}' });
+      popup.hide();
+    }
+    for(const [ func, parameter ] of [ [ 'LABEL', 'value' ], [ 'INPUT', 'player' ] ]) {
+      const popup = showPopup(RoutineStringPopup, { func }, [ parameter ]);
+      expect([...popup.domElement.querySelectorAll('.popup-entry button')].some(b => b.textContent == 'inputSeatID')).toBe(false);
+      popup.hide();
+    }
+  });
+
   test('a value of the routine is used as a variable, a collection as a collection', () => {
     const popup = showPopup(RoutineHoldersOrCollectionSourcePopup, { func: 'FLIP' }, [ 'holder', 'collection' ], [ 'cards' ], [ 'aces' ]);
     let value = null;

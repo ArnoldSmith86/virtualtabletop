@@ -186,3 +186,56 @@ test('An INPUT overlay opens on the client that triggered it and nowhere else', 
 
   await t.closeWindow(second);
 });
+
+test('INPUT resolves inputSeatID separately for each active player and keeps the invoking seat', async t => {
+  await openClient(t, 'Alice');
+  await openRoom(t, 'modern', twoPlayerState({
+    seatA: { player: 'Alice', hand: 'handA' }, seatB: { player: 'Bob', hand: 'handB' },
+    ask: { type: 'button', x: 1000, y: 500, width: 120, height: 60, text: 'ask', clickRoutine: [
+      { func: 'INPUT', player: '${activePlayers}', header: 'Your seat: ${inputSeatID}', fields: [
+        { type: 'string', variable: 'answer', value: '${PROPERTY hand OF $inputSeatID}' },
+        { type: 'text', text: 'Invoking seat: ${seatID}' }
+      ] },
+      { func: 'SET', collection: 'thisButton', property: 'answers', value: '${answer}' },
+      { func: 'SET', collection: 'thisButton', property: 'invokingSeat', value: '${seatID}' }
+    ] }
+  }));
+  const first = await t.getCurrentWindow();
+  const second = await openSecondClient(t, 'Bob');
+  await t.switchToWindow(first);
+  await t.click('#w_ask');
+  await t.expect(Selector('#buttonInputFields').innerText).contains('Your seat: seatA');
+  await t.expect(Selector('#buttonInputFields input').value).eql('handA');
+  await t.click('#buttonInputGo');
+  await t.switchToWindow(second);
+  await t.expect(Selector('#buttonInputFields').innerText).contains('Your seat: seatB');
+  await t.expect(Selector('#buttonInputFields').innerText).contains('Invoking seat: seatA');
+  await t.expect(Selector('#buttonInputFields input').value).eql('handB');
+  await t.click('#buttonInputGo');
+  const state = await stateWhen(s=>(s.ask||{}).answers);
+  await t.expect(state.ask.answers).eql({ Alice: 'handA', Bob: 'handB' });
+  await t.expect(state.ask.invokingSeat).eql('seatA');
+  await t.closeWindow(second);
+});
+
+test('INPUT can address one remote unseated player without changing the invoking seat', async t => {
+  await openClient(t, 'Alice');
+  await openRoom(t, 'modern', twoPlayerState({
+    seatA: { player: 'Alice' },
+    ask: { type: 'button', x: 1000, y: 500, width: 120, height: 60, text: 'ask', clickRoutine: [
+      { func: 'INPUT', player: 'Bob', fields: [ { type: 'string', variable: 'answer', value: 'Seat: ${inputSeatID}' } ] },
+      { func: 'SET', collection: 'thisButton', property: 'text', value: '${seatID}; ${answer}' }
+    ] }
+  }));
+  const first = await t.getCurrentWindow();
+  const second = await openSecondClient(t, 'Bob');
+  await t.switchToWindow(first);
+  await t.click('#w_ask');
+  await t.expect(visibleOverlays()).eql('');
+  await t.switchToWindow(second);
+  await t.expect(Selector('#buttonInputFields input').value).eql('Seat: null');
+  await t.click('#buttonInputGo');
+  const state = await stateWhen(s=>(s.ask||{}).text != 'ask');
+  await t.expect(state.ask.text).eql('seatA; Seat: null');
+  await t.closeWindow(second);
+});

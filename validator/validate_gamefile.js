@@ -372,7 +372,7 @@ function isReservedCardProperty(property) {
 }
 
 const SUPER_GLOBALS = {
-    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
+    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, inputSeatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
     collections: { playerSeats: 1, activeSeats: 1, thisButton: 1 }
 };
 

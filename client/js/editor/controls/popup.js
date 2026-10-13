@@ -870,6 +870,9 @@ class RoutinePopup extends Popup {
   // for it - and only one of them is open at a time. Where an entry comes from
   // is a plain line inside the section rather than a heading of its own color.
   renderRoutineValueSection(showVariables, showCollections) {
+    const inInputDialog = this.operation && (this.operation.func == 'INPUT'
+      ? !this.parameterNames.some(name=>[ 'player', 'block', 'skip' ].includes(name))
+      : !this.operation.func && this.operation.type);
     if(showVariables)
       this.renderRoutineValueKindSection('Values the routine has', 'variable', `
         <pre>
@@ -887,7 +890,11 @@ class RoutinePopup extends Popup {
         { title: 'In every routine', list: Object.keys(predefinedVariableDescriptions).map(variable=>({
           label: variable, description: predefinedVariableDescriptions[variable],
           onClick: _=>this.setNewValue(`\$\{${variable}\}`)
-        })) }
+        })) },
+        ...(inInputDialog ? [ { title: 'In this INPUT dialog', list: [ {
+          label: 'inputSeatID', description: 'seat id of the player shown this dialog (null without a seat)',
+          onClick: _=>this.setNewValue('${inputSeatID}')
+        } ] } ] : [])
       ]);
 
     if(showCollections)
@@ -2641,6 +2648,7 @@ function commonInfoTopic(topicName) {
       fields: array of field definitions - what to display, in order (checkbox, choose, color, number, palette, select, slider, string, subtitle, switch, text, and title types are supported, each with their own parameters - see the wiki for the full list).
       header: text - text displayed above everything else (mostly kept for backwards compatibility).
       player: playerName (or an array) - who is shown the overlay (defaults to null, the player whose action started the routine). With an array, everybody named is asked at once and each field comes back keyed by player name.
+      In the dialog, \${inputSeatID} is the recipient's seat id (null without a seat). Use \${PROPERTY hand OF $inputSeatID} to read their hand. \${seatID} still refers to the player who started the routine.
       block: boolean - while true, everybody else is shown a message naming who is being asked and cannot interact with widgets until every overlay is answered (defaults to false).
       css: css - modifies the css of field areas other than the header/title/subtitle.
       randomRotation: number - rotates the whole dialog by a random angle of up to half this many degrees in each direction (defaults to 0, no rotation).

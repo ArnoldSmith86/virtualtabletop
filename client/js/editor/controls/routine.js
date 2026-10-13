@@ -1880,6 +1880,7 @@ const predefinedVariableLabels = {
   '${playerName}': 'player clicking the widget',
   '${playerColor}': "clicking player's color",
   '${seatID}': "clicking player's seat",
+  '${inputSeatID}': "dialog recipient's seat",
   '${seatIndex}': "clicking player's seat index",
   '${thisID}': 'this widget',
   '${mouseCoords}': 'mouse position',

@@ -1,4 +1,7 @@
 import Room from '../../server/room.mjs';
+import { playerName } from '../../client/js/overlays/players.js';
+import { legacyMode } from '../../client/js/legacymodes.js';
+import { createWidget, removeWidget } from './client-util.js';
 
 // Unit tests for the remote-INPUT server routing (Room.requestInput / inputResult /
 // abortInput / cancelInput). We build a bare Room via the prototype and mock the
@@ -122,5 +125,54 @@ describe('Room remote INPUT routing', () => {
     // Echoed back under the name the initiator originally used, session completes.
     expect(sentTo(init, 'inputResult')[0].args.player).toBe('A');
     expect(room.inputRequests['s6']).toBeFalsy();
+  });
+});
+
+describe('INPUT recipient seat variables', () => {
+  beforeAll(() => {
+    window.jeRoutineLogging = false;
+    window.legacyMode = legacyMode;
+  });
+
+  test('reads the recipient seat and its properties without overwriting routine variables', async () => {
+    const seat = createWidget({ id: 'input-seat', type: 'seat', player: playerName, hand: 'input-hand' });
+    const button = createWidget({ id: 'input-button', type: 'button', clickRoutine: [
+      { func: 'INPUT', fields: [
+        { type: 'string', variable: 'answer', value: '${inputSeatID}' },
+        { type: 'text', text: 'Your hand: ${PROPERTY hand OF $inputSeatID}; caller: ${seatID}' }
+      ] },
+      'var result = ${seatID}'
+    ] });
+    let overlay;
+    button.showInputOverlay = async o=>{
+      overlay = o;
+      return { variables: { answer: o.fields[0].value }, collections: {} };
+    };
+    try {
+      const result = await button.evaluateRoutine('clickRoutine', { seatID: 'caller-seat' }, {});
+      expect(overlay.fields[0].value).toBe('input-seat');
+      expect(overlay.fields[1].text).toBe('Your hand: input-hand; caller: caller-seat');
+      expect(result.variable).toBe('caller-seat');
+    } finally {
+      removeWidget(button.id);
+      removeWidget(seat.id);
+    }
+  });
+
+  test('a recipient without a seat receives null', async () => {
+    const button = createWidget({ id: 'input-unseated', type: 'button', clickRoutine: [
+      { func: 'INPUT', player: [], fields: [ { type: 'string', variable: 'answer', value: '${inputSeatID}' } ] }
+    ] });
+    let overlay;
+    button.showInputOverlay = async o=>{
+      overlay = o;
+      return { variables: {}, collections: {} };
+    };
+    try {
+      await button.evaluateRoutine('clickRoutine', {}, {});
+      expect(overlay.fields[0].value).toBeNull();
+    } finally {
+      removeWidget(button.id);
+    }
   });
 });
