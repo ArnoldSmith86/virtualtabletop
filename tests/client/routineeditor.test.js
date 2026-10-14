@@ -605,6 +605,10 @@ describe('operation rendering', () => {
     // a dialog with nothing to fill in is a question, and the sentence says so
     [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", canceling with "No"' ],
     [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask the players red and blue at once to fill in 1 field, holding everybody else up until it is answered' ],
+    [ { func: 'INPUT', block: false }, 'Ask the player, letting everybody else carry on' ],
+    [ { func: 'INPUT', block: 'Please wait.' }, 'Ask the player, holding everybody else up with message "Please wait."' ],
+    [ { func: 'INPUT', block: '' }, 'Ask the player, holding everybody else up with message ""' ],
+    [ { func: 'INPUT', block: '${waitingMessage}' }, 'Ask the player, holding everybody else up with message waitingMessage' ],
     [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
     [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number in the range 1 to 10, do the operations below' ],
     [ { func: 'FOREACH' }, 'For each of the picked widgets, do the operations below' ],
@@ -1132,6 +1136,36 @@ describe('picking how an operation works and which options it uses', () => {
     expect(document.querySelector('.inline-popup h1').textContent).toContain('CLICK');
     for (const popup of document.querySelectorAll('.inline-popup'))
       popup.remove();
+  });
+
+  test('INPUT waiting guidance edits literal text and can return to either boolean setting', async () => {
+    const { editor, dom } = renderOperation({ func: 'INPUT', block: true });
+    dom.querySelector('[data-parameter="block"]').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const menu = document.querySelector('.inline-popup.popup-menu');
+    expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toEqual([
+      'holding everybody else up until it is answered', 'letting everybody else carry on', 'custom waiting message…'
+    ]);
+    menu.querySelector('.popup-menu-entry-other').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const input = document.querySelector('.inline-popup .popup-value-input');
+    input.value = 'false';
+    input.dispatchEvent(new Event('change'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(editor.operation.block).toBe('false');
+    expect(editor.createPopup([ 'block' ])).toBeInstanceOf(RoutineStringPopup);
+    for(const value of [ true, false ]) {
+      editor.operation.block = 'Please wait.';
+      const popup = editor.createPopup([ 'block' ]);
+      popup.setSource(dom.querySelector('[data-parameter="block"]'));
+      popup.setOperationDetails(editor.operation, [ 'block' ], { state: {} }, [], []);
+      popup.registerChangeListener(values => editor.onNewValue(values));
+      popup.show();
+      const label = value ? 'holding everybody else up until it is answered' : 'letting everybody else carry on';
+      [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == label).dispatchEvent(new Event('click'));
+      expect(editor.operation.block).toBe(value);
+      popup.hide();
+    }
   });
 
   // the same wording SET got: the widgets an operation works on are words in the
@@ -3296,7 +3330,6 @@ describe('the words and the units of an operation', () => {
       'CALL return': 'and do not finish this routine',
       'CLONE recursive': 'including the widgets on them',
       'GET skipMissing': 'ignoring widgets without it',
-      'INPUT block': 'holding everybody else up',
       'MOVEXY snapToGrid': 'ignoring the grid',
       'MOVEXY resetOwner': 'keeping their current owner',
       'RECALL owned': 'except the cards players hold',

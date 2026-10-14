@@ -1309,8 +1309,9 @@ class RoutineEnumMenu extends RoutinePopup {
 }
 
 class RoutineStringPopup extends RoutinePopup {
-  constructor() {
+  constructor(options={}) {
     super();
+    this.options = options;
   }
 
   parameterQuestion() {
@@ -1332,6 +1333,12 @@ class RoutineStringPopup extends RoutinePopup {
   }
 
   show() {
+    if(this.options.specialValues) {
+      const [ valueTitle, valueContent ] = this.addAccordionSection('Value', '', 'value');
+      infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
+      for(const value of this.options.specialValues)
+        button(valueContent, routineValueWords(value, this.options.display), _=>this.setNewValue(value));
+    }
     super.show(true, false);
     if(this.valueInput)
       this.valueInput.focus();

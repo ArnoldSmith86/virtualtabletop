@@ -850,7 +850,7 @@ const routineOperationMetadata = {
         active: (v, isSet)=>isSet('cancelButtonText') && !inputCannotBeCanceled(v, isSet) },
       { id: 'cancelButtonIcon', label: 'the cancel icon', template: ' and the icon {cancelButtonIcon}', add: { cancelButtonIcon: 'close' },
         active: (v, isSet)=>isSet('cancelButtonIcon') && !inputCannotBeCanceled(v, isSet) },
-      { id: 'block', label: 'holding everybody else up', template: ', {block}', add: { block: true } },
+      { id: 'block', label: 'holding everybody else up', template: v=>typeof v('block') == 'string' ? ', holding everybody else up with message {block}' : ', {block}', add: { block: true } },
       { id: 'css', label: 'a style of its own', template: ', styled {css}' },
       // the engine rotates by it, but no game in the library does and the wiki
       // never mentions it: a game that has one still reads what it does
@@ -869,7 +869,8 @@ const routineOperationMetadata = {
       cancelButtonText: { type: 'string', default: 'Cancel', display: quotedText },
       cancelButtonIcon: { type: 'icon', default: null },
       header: { type: 'string', default: '', hint: 'title', display: quotedText },
-      block: { type: 'enum', values: [ true, false ], default: false, display: yesNo('holding everybody else up until it is answered', 'letting everybody else carry on') },
+      block: { type: 'string', special: [ true, false ], menu: true, otherLabel: 'custom waiting message…', default: false, hint: 'waiting message',
+        display: value=>typeof value == 'boolean' ? yesNo('holding everybody else up until it is answered', 'letting everybody else carry on')[value] : value === '' ? '""' : quotedText(value) },
       css: { type: 'string', default: '' },
       randomRotation: { type: 'number', default: 0 }
     },
@@ -2539,6 +2540,7 @@ class RoutineOperationEditor {
       // say what they are without being converted a second time
       case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, specialOnly: spec.specialOnly, scale: spec.scale, display: spec.scale ? null : spec.display, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values, display: spec.display });
+      case 'string':     return new RoutineStringPopup({ specialValues: spec.special, display: spec.display });
       case 'property':   return new RoutinePropertyNamePopup();
       case 'widgets':    return new RoutineWidgetIDPopup(pickerOptions);
       case 'collection': return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
