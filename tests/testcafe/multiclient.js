@@ -218,6 +218,56 @@ test('INPUT resolves inputSeatID separately for each active player and keeps the
   await t.closeWindow(second);
 });
 
+for(const seat of [ 'seatB', 2 ]) {
+  test(`INPUT addresses a remote player by seat ${JSON.stringify(seat)}`, async t => {
+    await openClient(t, 'Alice');
+    await openRoom(t, 'modern', twoPlayerState({
+      seatA: { player: 'Alice' }, seatB: { player: 'Bob' },
+      ask: { type: 'button', x: 1000, y: 500, width: 120, height: 60, text: 'ask', clickRoutine: [
+        { func: 'INPUT', seat, fields: [ { type: 'string', variable: 'answer', value: '${inputSeatID}' } ] },
+        { func: 'SET', collection: 'thisButton', property: 'answer', value: '${answer}' }
+      ] }
+    }));
+    const first = await t.getCurrentWindow();
+    const second = await openSecondClient(t, 'Bob');
+    await t.switchToWindow(first);
+    await t.click('#w_ask');
+    await t.expect(visibleOverlays()).eql('');
+    await t.switchToWindow(second);
+    await t.expect(Selector('#buttonInputFields input').value).eql('seatB');
+    await t.click('#buttonInputGo');
+    const state = await stateWhen(s=>(s.ask||{}).answer);
+    await t.expect(state.ask.answer).eql('seatB');
+    await t.closeWindow(second);
+  });
+}
+
+for(const seat of [ [ 'seatA', 2, 'seatB' ], '${activeSeats}' ]) {
+  test(`INPUT addresses occupied seats using ${JSON.stringify(seat)}`, async t => {
+    await openClient(t, 'Alice');
+    await openRoom(t, 'modern', twoPlayerState({
+      seatA: { player: 'Alice' }, seatB: { player: 'Bob' },
+      ask: { type: 'button', x: 1000, y: 500, width: 120, height: 60, text: 'ask', clickRoutine: [
+        { func: 'INPUT', seat, fields: [ { type: 'string', variable: 'answer', value: '${inputSeatID}' } ] },
+        { func: 'SET', collection: 'thisButton', property: 'answers', value: '${answer}' }
+      ] }
+    }));
+    const first = await t.getCurrentWindow();
+    const second = await openSecondClient(t, 'Bob');
+    await t.switchToWindow(first);
+    await t.click('#w_ask');
+    await t.expect(Selector('#buttonInputFields input').value).eql('seatA');
+    await t.click('#buttonInputGo');
+    await t.switchToWindow(second);
+    await t.expect(Selector('#buttonInputFields input').value).eql('seatB');
+    await t.click('#buttonInputGo');
+    const state = await stateWhen(s=>(s.ask||{}).answers);
+    await t.expect(state.ask.answers).eql({ Alice: 'seatA', Bob: 'seatB' });
+    await t.expect(visibleOverlays()).eql('');
+    await t.closeWindow(second);
+  });
+}
+
 test('INPUT preserves answers with recipient-dependent variable names', async t => {
   await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState({

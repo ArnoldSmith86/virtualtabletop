@@ -1322,7 +1322,7 @@ export class Widget extends StateManaged {
       if(typeof a == 'object') {
         // Routing is resolved before the dialog's recipient-specific values.
         if(a.func == 'INPUT') {
-          for(const key of [ 'player', 'block', 'skip' ])
+          for(const key of [ 'player', 'seat', 'block', 'skip' ])
             if(a[key] !== undefined)
               a[key] = evaluateVariablesRecursively({ [key]: a[key] })[key];
         } else
@@ -1889,18 +1889,36 @@ export class Widget extends StateManaged {
         // created from the editor template (which sets `player: null`) still
         // shows locally instead of silently doing nothing.
         let players = [ ...new Set(asArray(a.player).filter(Boolean)) ];
-        const isMulti = Array.isArray(a.player) && players.length > 0;
+        const useSeats = a.seat !== undefined && a.seat !== null;
+        const seatsByPlayer = new Map();
+        const isMulti = useSeats ? Array.isArray(a.seat) : Array.isArray(a.player) && players.length > 0;
         if(!players.length)
           players = [ playerName ];
+        if(useSeats) {
+          const seats = widgetFilter(w=>w.get('type') == 'seat');
+          for(const target of asArray(a.seat)) {
+            const seat = seats.find(w=>typeof target == 'number' ? w.get('index') === target : w.get('id') === target);
+            if(!seat)
+              problems.push(`INPUT: ${JSON.stringify(target)} is not a valid seat ID or index.`);
+            else if(!seat.get('player'))
+              problems.push(`INPUT: seat '${seat.get('id')}' has no player.`);
+            else if(!seatsByPlayer.has(seat.get('player')))
+              seatsByPlayer.set(seat.get('player'), seat);
+          }
+          players = [ ...seatsByPlayer.keys() ];
+          if(!players.length)
+            problems.push(`INPUT: no occupied seats matched 'seat'.`);
+        }
         // Warn about names that aren't active players so a typo is not silently
         // indistinguishable from that player cancelling the input.
         for(const p of players)
           if(p !== playerName && activePlayers.indexOf(p) == -1)
             problems.push(`INPUT: '${p}' is not an active player; the overlay cannot be shown to them.`);
-        const { player, block, skip, ...dialog } = original;
+        const { player, seat, block, skip, ...dialog } = original;
         const overlaysByPlayer = Object.fromEntries(players.map((p, i)=>{
           const playerSeats = widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == p);
-          const context = { ...variables, inputSeatID: playerSeats.length ? playerSeats[0].get('id') : null };
+          const inputSeat = seatsByPlayer.get(p) || playerSeats[0];
+          const context = { ...variables, inputSeatID: inputSeat ? inputSeat.get('id') : null };
           const overlay = { ...a, ...evaluateVariablesRecursively(dialog, context) };
           return [ p, cloneInputOverlayForPlayer(overlay, p, i) ];
         }));
@@ -1915,6 +1933,8 @@ export class Widget extends StateManaged {
           return promise;
         } : null;
         try {
+          if(!players.length)
+            throw new Error('INPUT has no recipients.');
           const results = await runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal });
           if(isMulti) {
             // Return each field's value keyed by the player who entered it.

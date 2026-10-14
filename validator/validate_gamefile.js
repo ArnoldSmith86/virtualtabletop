@@ -840,6 +840,7 @@ const operationProps = {
         'fields': v=>Array.isArray(v) || 'fields must be an array',
         'css': v=>typeof v === 'string',
         'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
+        'seat':      v => v === null || typeof v === 'string' || typeof v === 'number' || (Array.isArray(v) && v.every(x => typeof x === 'string' || typeof x === 'number')),
         'block':     'boolean',
         'randomRotation': 'number',
     },

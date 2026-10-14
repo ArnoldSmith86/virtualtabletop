@@ -176,6 +176,50 @@ describe('INPUT recipient seat variables', () => {
     }
   });
 
+  test.each([ 'second-seat', 0, '${targetSeat}', [ 'second-seat', 0 ], '${activeSeats}' ])('seat %j resolves IDs, indexes and variables before dialog interpolation', async target => {
+    const first = createWidget({ id: 'first-seat', type: 'seat', index: 1, player: playerName });
+    const second = createWidget({ id: 'second-seat', type: 'seat', index: 0, player: playerName });
+    const button = createWidget({ id: 'input-seat-target', type: 'button', clickRoutine: [
+      { func: 'INPUT', player: 'Ignored player', seat: target, fields: [ { type: 'string', variable: 'answer', value: '${inputSeatID}' } ] },
+      'var result = ${answer}'
+    ] });
+    let shown = 0;
+    button.showInputOverlay = async o=>{
+      shown++;
+      return { variables: { answer: o.fields[0].value }, collections: {} };
+    };
+    try {
+      const result = await button.evaluateRoutine('clickRoutine', { targetSeat: 0 }, {});
+      expect(shown).toBe(1);
+      const seatID = target == '${activeSeats}' ? 'first-seat' : 'second-seat';
+      expect(result.variable).toEqual(Array.isArray(target) || target == '${activeSeats}' ? { [playerName]: seatID } : seatID);
+    } finally {
+      for(const widget of [ button, first, second ])
+        removeWidget(widget.id);
+    }
+  });
+
+  test.each([ [], 'missing-seat', 'empty-seat', '1', false ])('seat %j does not ask the invoking player when no occupied seat matches', async target => {
+    const seat = createWidget({ id: 'empty-seat', type: 'seat', index: 1, player: '' });
+    const button = createWidget({ id: 'input-no-seat', type: 'button', clickRoutine: [
+      { func: 'INPUT', seat: target },
+      'var result = true'
+    ] });
+    let shown = false;
+    button.showInputOverlay = async ()=>{
+      shown = true;
+      return { variables: {}, collections: {} };
+    };
+    try {
+      const result = await button.evaluateRoutine('clickRoutine', {}, {});
+      expect(shown).toBe(false);
+      expect(result.variable).toBeNull();
+    } finally {
+      removeWidget(button.id);
+      removeWidget(seat.id);
+    }
+  });
+
   test('the applied operation keeps the resolved dialog values for routine logging', async () => {
     const button = createWidget({ id: 'input-logged', type: 'button', clickRoutine: [
       { func: 'INPUT', header: 'Hello ${playerName}', fields: [
