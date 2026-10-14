@@ -841,7 +841,7 @@ const operationProps = {
         'css': v=>typeof v === 'string',
         'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
         'seat':      v => v === null || typeof v === 'string' || typeof v === 'number' || (Array.isArray(v) && v.every(x => typeof x === 'string' || typeof x === 'number')),
-        'block':     'boolean',
+        'block':     v=>typeof v === 'boolean' || typeof v === 'string',
         'randomRotation': 'number',
     },
     'LABEL': {

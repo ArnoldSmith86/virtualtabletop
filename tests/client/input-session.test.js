@@ -78,17 +78,19 @@ describe('Room remote INPUT routing', () => {
     const init = mockPlayer('Init'), a = mockPlayer('A'), b = mockPlayer('B'), spectator = mockPlayer('S');
     const room = makeRoom([ init, a, b, spectator ]);
     // Client starts the block (waiting on A and B) then requests input from them.
-    room.inputBlock(init, { blockID: 's7', show: true, waitingFor: [ 'A', 'B' ], header: 'Pass' });
+    room.inputBlock(init, { blockID: 's7', show: true, waitingFor: [ 'A', 'B' ], header: 'Pass', text: 'Wait for the other choices.' });
     room.requestInput(init, { sessionID: 's7', targets: [ 'A', 'B' ], widgetID: 'w', overlay: {}, variables: {}, collections: {} });
     // Initially only non-participants (Init, spectator) see the wait overlay.
     expect(sentTo(a, 'inputBlock').filter(m => m.args.show).length).toBe(0);
     expect(sentTo(spectator, 'inputBlock').some(m => m.args.show)).toBe(true);
+    expect(sentTo(spectator, 'inputBlock')[0].args.text).toBe('Wait for the other choices.');
 
     // A answers -> A now sees the wait overlay, listing only B.
     room.inputResult(a, { sessionID: 's7', cancelled: false, variables: {}, collections: {} });
     const aShow = sentTo(a, 'inputBlock').filter(m => m.args.show);
     expect(aShow.length).toBe(1);
     expect(aShow[0].args.waitingFor).toEqual([ 'B' ]);
+    expect(aShow[0].args.text).toBe('Wait for the other choices.');
     // B is still answering, so B is never shown the wait overlay.
     expect(sentTo(b, 'inputBlock').some(m => m.args.show)).toBe(false);
   });

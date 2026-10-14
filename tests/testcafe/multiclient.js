@@ -295,6 +295,52 @@ test('INPUT preserves answers with recipient-dependent variable names', async t 
   await t.closeWindow(second);
 });
 
+test('INPUT block strings replace guidance, reset for true and keep cancellation behavior', async t => {
+  const custom = "Please wait for ${seatID}.\n<b>Cancel ends everyone's choices.</b>";
+  const state = twoPlayerState({ seatA: { player: 'Alice' } });
+  for(const [i, block] of [ custom, true, '', false ].entries())
+    state[`ask${i}`] = { id: `ask${i}`, type: 'button', x: 850 + i*150, y: 500, width: 120, height: 60, text: 'ask', clickRoutine: [
+      { func: 'INPUT', player: 'Bob', block, fields: [ { type: 'string', variable: 'answer', value: 'yes' } ] },
+      { func: 'SET', collection: 'thisButton', property: 'answered', value: '${answer}' }
+    ] };
+  await openClient(t, 'Alice');
+  await openRoom(t, 'modern', state);
+  const first = await t.getCurrentWindow();
+  const second = await openSecondClient(t, 'Bob');
+  const expected = [ "Please wait for seatA.\n<b>Cancel ends everyone's choices.</b>",
+    'No action required. Pressing the Cancel button will force close the input for everyone and all choices will be lost.', '' ];
+  for(let i=0; i<4; i++) {
+    await t.switchToWindow(first);
+    await t.click(`#w_ask${i}`);
+    if(i<3) {
+      await t.expect(visibleOverlays()).contains('inputBlockOverlay');
+      await t.expect(Selector('#inputBlockGuidance').textContent).eql(expected[i]);
+      await t.expect(Selector('#inputBlockGuidance b').exists).notOk();
+    } else
+      await t.expect(visibleOverlays()).eql('');
+    await t.switchToWindow(second);
+    await t.expect(visibleOverlays()).contains('buttonInputOverlay');
+    if(i<3) {
+      await t.switchToWindow(first);
+      await t.click('#inputBlockCancel');
+      await t.switchToWindow(second);
+      await t.expect(visibleOverlays()).eql('');
+    } else
+      await t.click('#buttonInputCancel');
+    await t.switchToWindow(first);
+    await t.expect(visibleOverlays()).eql('');
+  }
+  await t.click('#w_ask0');
+  await t.switchToWindow(second);
+  await t.expect(visibleOverlays()).contains('buttonInputOverlay');
+  await t.click('#buttonInputGo');
+  const answered = await stateWhen(s=>(s.ask0||{}).answered);
+  await t.expect(answered.ask0.answered).eql('yes');
+  await t.switchToWindow(first);
+  await t.expect(visibleOverlays()).eql('');
+  await t.closeWindow(second);
+});
+
 test('INPUT can address one remote unseated player without changing the invoking seat', async t => {
   await openClient(t, 'Alice');
   await openRoom(t, 'modern', twoPlayerState({
