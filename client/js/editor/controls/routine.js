@@ -803,19 +803,27 @@ const routineOperationMetadata = {
     // object keyed by player name instead of as a plain value, so everything
     // reading those variables afterwards has to be written differently
     variants: [
-      { id: 'player', label: 'Ask the player', fixed: [ 'player' ],
-        apply: operation=>{ delete operation.player; },
+      { id: 'player', label: 'Ask the player', fixed: [ 'player', 'seat' ],
+        apply: operation=>{ delete operation.player; delete operation.seat; },
         template: 'Ask the player{{header}}{{fields}}' },
-      { id: 'named', label: 'Ask one particular player', fixed: [ 'player' ],
-        match: (v, isSet)=>isSet('player') && v('player') !== null && !Array.isArray(v('player')),
-        apply: operation=>{ operation.player = ''; },
+      { id: 'named', label: 'Ask one particular player', fixed: [ 'player', 'seat' ],
+        match: (v, isSet)=>v('seat') == null && isSet('player') && v('player') !== null && !Array.isArray(v('player')),
+        apply: operation=>{ delete operation.seat; operation.player = ''; },
         template: 'Ask the player called {player}{{header}}{{fields}}' },
       // what the list of players changes is not who answers but what an answer
       // is, so the entry that offers it says so
-      { id: 'several', label: 'Ask several players at once - every answer becomes a list, one entry per player', fixed: [ 'player' ],
-        match: v=>Array.isArray(v('player')),
-        apply: operation=>{ operation.player = []; },
-        template: 'Ask the players {player} at once{{header}}{{fields}}' }
+      { id: 'several', label: 'Ask several players at once - every answer becomes a list, one entry per player', fixed: [ 'player', 'seat' ],
+        match: v=>v('seat') == null && Array.isArray(v('player')),
+        apply: operation=>{ delete operation.seat; operation.player = []; },
+        template: 'Ask the players {player} at once{{header}}{{fields}}' },
+      { id: 'seat', label: 'Ask the player in a seat', fixed: [ 'player', 'seat' ],
+        match: v=>v('seat') != null && !Array.isArray(v('seat')) && v('seat') != '${activeSeats}',
+        apply: operation=>{ delete operation.player; operation.seat = ''; },
+        template: 'Ask the player in seat {seat}{{header}}{{fields}}' },
+      { id: 'seats', label: 'Ask players in several seats - answers keyed by player name', fixed: [ 'player', 'seat' ],
+        match: v=>Array.isArray(v('seat')) || v('seat') == '${activeSeats}',
+        apply: operation=>{ delete operation.player; operation.seat = []; },
+        template: 'Ask the players in seats {seat} at once{{header}}{{fields}}' }
     ],
     clauses: [
       { id: 'header', label: 'a title', template: ' {header}' },
@@ -854,6 +862,7 @@ const routineOperationMetadata = {
       // a name, or a list of them to ask several players at once - so the value
       // is worded rather than typed over: a list is a list, not a line of text
       player: { type: 'json', default: null, hint: 'player name', display: value=>Array.isArray(value) && value.length ? wordList(value) : null },
+      seat: { type: 'json', default: null, hint: 'Seat ID or index', display: value=>Array.isArray(value) && value.length ? wordList(value) : null },
       fields: { type: 'json', default: [], hint: 'fields', display: value=>Array.isArray(value) && value.length ? `${value.length} field${value.length == 1 ? '' : 's'}` : null },
       confirmButtonText: { type: 'string', default: 'Go', display: quotedText },
       confirmButtonIcon: { type: 'icon', default: null },
@@ -864,6 +873,7 @@ const routineOperationMetadata = {
       css: { type: 'string', default: '' },
       randomRotation: { type: 'number', default: 0 }
     },
+    ignored: v=>v('seat') != null ? { player: 'ignored because seat is set' } : {},
     // what an INPUT hands on to the operations after it: every field writes what
     // was entered into the variable it names, and a field the player picks
     // widgets in also fills a collection (the same fields validate_gamefile.js reads)

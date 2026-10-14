@@ -871,7 +871,7 @@ class RoutinePopup extends Popup {
   // is a plain line inside the section rather than a heading of its own color.
   renderRoutineValueSection(showVariables, showCollections) {
     const inInputDialog = this.operation && (this.operation.func == 'INPUT'
-      ? !this.parameterNames.some(name=>[ 'player', 'block', 'skip' ].includes(name))
+      ? !this.parameterNames.some(name=>[ 'player', 'seat', 'block', 'skip' ].includes(name))
       : !this.operation.func && this.operation.type);
     if(showVariables)
       this.renderRoutineValueKindSection('Values the routine has', 'variable', `
@@ -2648,6 +2648,7 @@ function commonInfoTopic(topicName) {
       fields: array of field definitions - what to display, in order (checkbox, choose, color, number, palette, select, slider, string, subtitle, switch, text, and title types are supported, each with their own parameters - see the wiki for the full list).
       header: text - text displayed above everything else (mostly kept for backwards compatibility).
       player: playerName (or an array) - who is shown the overlay (defaults to null, the player whose action started the routine). With an array, everybody named is asked at once and each field comes back keyed by player name.
+      seat: seat ID (string), seat index (number), or an array of either - asks the occupants of those seats instead of player when non-null. Use \${activeSeats} to ask all occupied seats. A scalar returns one answer; an array returns answers keyed by player name, even with one recipient. Missing or empty seats are skipped with a diagnostic; with no occupied matches, INPUT stops the routine. Each occupant gets one popup, with inputSeatID identifying the first requested seat belonging to them.
       In the dialog, \${inputSeatID} is the recipient's seat id (null without a seat). Use \${PROPERTY hand OF $inputSeatID} to read their hand. \${seatID} still refers to the player who started the routine.
       block: boolean - while true, everybody else is shown a message naming who is being asked and cannot interact with widgets until every overlay is answered (defaults to false).
       css: css - modifies the css of field areas other than the header/title/subtitle.

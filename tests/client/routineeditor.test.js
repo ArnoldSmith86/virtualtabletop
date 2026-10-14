@@ -1982,7 +1982,7 @@ describe('the values a parameter popup offers', () => {
       expect(value).toEqual({ value: '${inputSeatID}' });
       popup.hide();
     }
-    for(const [ func, parameter ] of [ [ 'LABEL', 'value' ], [ 'INPUT', 'player' ] ]) {
+    for(const [ func, parameter ] of [ [ 'LABEL', 'value' ], [ 'INPUT', 'player' ], [ 'INPUT', 'seat' ] ]) {
       const popup = showPopup(RoutineStringPopup, { func }, [ parameter ]);
       expect([...popup.domElement.querySelectorAll('.popup-entry button')].some(b => b.textContent == 'inputSeatID')).toBe(false);
       popup.hide();
@@ -3764,12 +3764,40 @@ describe('the lines of an INPUT dialog', () => {
 
   // a list of players changes what an answer is, not only who is asked
   test('who is asked is a way of working, and the list of players says what it does', () => {
-    expect(routineOperationVariantChoices({ func: 'INPUT' }).map(c => c.id)).toEqual([ 'player', 'named', 'several' ]);
+    expect(routineOperationVariantChoices({ func: 'INPUT' }).map(c => c.id)).toEqual([ 'player', 'named', 'several', 'seat', 'seats' ]);
     expect(routineOperationMetadata.INPUT.variants[2].label).toContain('every answer becomes a list');
     const operation = { func: 'INPUT', player: [ 'red' ] };
     expect(inputEditorFor(operation).currentVariant().id).toBe('several');
     expect(inputEditorFor({ func: 'INPUT', player: 'red' }).currentVariant().id).toBe('named');
     expect(inputEditorFor({ func: 'INPUT' }).currentVariant().id).toBe('player');
+  });
+
+  test('seat targeting takes precedence, round-trips its values and clears when switching back to players', () => {
+    for(const seat of [ 'seat-p1', 0, [ 'seat-p1', 2 ], '${activeSeats}' ]) {
+      const operation = { func: 'INPUT', seat, player: [ 'ignored' ] };
+      const editor = inputEditorFor(operation);
+      expect(editor.currentVariant().id).toBe(Array.isArray(seat) || seat == '${activeSeats}' ? 'seats' : 'seat');
+      expect(editor.unsupportedProperties()).not.toContain('seat');
+      expect(editor.createPopup([ 'seat' ])).toBeInstanceOf(RoutineJSONPopup);
+      editor.render();
+      expect(operation.seat).toEqual(seat);
+      for(const variant of routineOperationMetadata.INPUT.variants.slice(0, 3)) {
+        const restored = { ...operation };
+        variant.apply(restored);
+        expect('seat' in restored).toBe(false);
+        expect(inputEditorFor(restored).currentVariant().id).toBe(variant.id);
+      }
+    }
+    for(const variant of routineOperationMetadata.INPUT.variants.slice(3)) {
+      const operation = { func: 'INPUT', player: '${activePlayers}' };
+      variant.apply(operation);
+      expect('player' in operation).toBe(false);
+      expect(inputEditorFor(operation).currentVariant().id).toBe(variant.id);
+    }
+    expect(inputEditorFor({ func: 'INPUT', seat: null, player: 'Alice' }).currentVariant().id).toBe('named');
+    const info = parameterInfoLine(commonInfoTopic('INPUT').info, 'seat');
+    expect(info).toContain('array returns answers keyed by player name');
+    expect(info).toContain('${activeSeats}');
   });
 
   // the engine rotates by it and no game in the library ever asked it to
