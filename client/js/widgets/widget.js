@@ -2608,7 +2608,7 @@ export class Widget extends StateManaged {
           }
         };
         if(['set', 'dec', 'inc', 'reset' ].indexOf(a.mode) != -1){
-          // a "minutes:seconds" string in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
+          // a colon-formatted time in seconds is already milliseconds after conversion, so only plain numbers are multiplied by 1000
           const seconds = timeToMS(a.seconds);
           const milliseconds = seconds !== a.seconds ? seconds : a.seconds*1000 || a.value;
           if(a.timer !== undefined) {

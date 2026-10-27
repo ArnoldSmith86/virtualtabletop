@@ -13,8 +13,15 @@ describe("Scenarios: Converting time strings to milliseconds", () => {
     expect(timeToMS("0:59.9996")).toBe(60000);
   });
 
+  test("converts hours:minutes:seconds strings to milliseconds", () => {
+    expect(timeToMS("1:00:00")).toBe(3600000);
+    expect(timeToMS("0:01:30")).toBe(90000);
+    expect(timeToMS("3:13:07.5")).toBe(11587500);
+  });
+
   test("converts negative times", () => {
     expect(timeToMS("-1:30")).toBe(-90000);
+    expect(timeToMS("-1:00:00")).toBe(-3600000);
   });
 
   test("leaves other values unchanged", () => {
@@ -22,6 +29,6 @@ describe("Scenarios: Converting time strings to milliseconds", () => {
     expect(timeToMS("start")).toBe("start");
     expect(timeToMS(null)).toBe(null);
     expect(timeToMS(undefined)).toBe(undefined);
-    expect(timeToMS("1:30:00")).toBe("1:30:00");
+    expect(timeToMS("1:00:00:00")).toBe("1:00:00:00");
   });
 });
