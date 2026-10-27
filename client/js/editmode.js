@@ -1609,7 +1609,7 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   if(widget.id !== previousState.id) {
     await updateWidgetId(widget, previousState.id);
   } else if (widget.type !== previousState.type) {
-    await removeWidgetLocal(previousState.id, true);
+    await removeWidgetLocal(previousState.id, true, true);
     const id = await addWidgetLocal(widget);
 
     // Handle special case where type is removed
