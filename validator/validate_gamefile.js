@@ -372,7 +372,7 @@ function isReservedCardProperty(property) {
 }
 
 const SUPER_GLOBALS = {
-    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
+    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, inputSeatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
     collections: { playerSeats: 1, activeSeats: 1, thisButton: 1 }
 };
 
@@ -840,7 +840,8 @@ const operationProps = {
         'fields': v=>Array.isArray(v) || 'fields must be an array',
         'css': v=>typeof v === 'string',
         'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
-        'block':     'boolean',
+        'seat':      v => v === null || typeof v === 'string' || typeof v === 'number' || (Array.isArray(v) && v.every(x => typeof x === 'string' || typeof x === 'number')),
+        'block':     v=>typeof v === 'boolean' || typeof v === 'string',
         'randomRotation': 'number',
     },
     'LABEL': {

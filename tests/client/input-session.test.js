@@ -1,4 +1,7 @@
 import Room from '../../server/room.mjs';
+import { playerName } from '../../client/js/overlays/players.js';
+import { legacyMode } from '../../client/js/legacymodes.js';
+import { createWidget, removeWidget } from './client-util.js';
 
 // Unit tests for the remote-INPUT server routing (Room.requestInput / inputResult /
 // abortInput / cancelInput). We build a bare Room via the prototype and mock the
@@ -75,17 +78,19 @@ describe('Room remote INPUT routing', () => {
     const init = mockPlayer('Init'), a = mockPlayer('A'), b = mockPlayer('B'), spectator = mockPlayer('S');
     const room = makeRoom([ init, a, b, spectator ]);
     // Client starts the block (waiting on A and B) then requests input from them.
-    room.inputBlock(init, { blockID: 's7', show: true, waitingFor: [ 'A', 'B' ], header: 'Pass' });
+    room.inputBlock(init, { blockID: 's7', show: true, waitingFor: [ 'A', 'B' ], header: 'Pass', text: 'Wait for the other choices.' });
     room.requestInput(init, { sessionID: 's7', targets: [ 'A', 'B' ], widgetID: 'w', overlay: {}, variables: {}, collections: {} });
     // Initially only non-participants (Init, spectator) see the wait overlay.
     expect(sentTo(a, 'inputBlock').filter(m => m.args.show).length).toBe(0);
     expect(sentTo(spectator, 'inputBlock').some(m => m.args.show)).toBe(true);
+    expect(sentTo(spectator, 'inputBlock')[0].args.text).toBe('Wait for the other choices.');
 
     // A answers -> A now sees the wait overlay, listing only B.
     room.inputResult(a, { sessionID: 's7', cancelled: false, variables: {}, collections: {} });
     const aShow = sentTo(a, 'inputBlock').filter(m => m.args.show);
     expect(aShow.length).toBe(1);
     expect(aShow[0].args.waitingFor).toEqual([ 'B' ]);
+    expect(aShow[0].args.text).toBe('Wait for the other choices.');
     // B is still answering, so B is never shown the wait overlay.
     expect(sentTo(b, 'inputBlock').some(m => m.args.show)).toBe(false);
   });
@@ -122,5 +127,123 @@ describe('Room remote INPUT routing', () => {
     // Echoed back under the name the initiator originally used, session completes.
     expect(sentTo(init, 'inputResult')[0].args.player).toBe('A');
     expect(room.inputRequests['s6']).toBeFalsy();
+  });
+});
+
+describe('INPUT recipient seat variables', () => {
+  beforeAll(() => {
+    window.jeRoutineLogging = false;
+    window.legacyMode = legacyMode;
+  });
+
+  test('reads the recipient seat and its properties without overwriting routine variables', async () => {
+    const seat = createWidget({ id: 'input-seat', type: 'seat', player: playerName, hand: 'input-hand' });
+    const button = createWidget({ id: 'input-button', type: 'button', clickRoutine: [
+      { func: 'INPUT', fields: [
+        { type: 'string', variable: 'answer', value: '${inputSeatID}' },
+        { type: 'text', text: 'Your hand: ${PROPERTY hand OF $inputSeatID}; caller: ${seatID}' }
+      ] },
+      'var result = ${seatID}'
+    ] });
+    let overlay;
+    button.showInputOverlay = async o=>{
+      overlay = o;
+      return { variables: { answer: o.fields[0].value }, collections: {} };
+    };
+    try {
+      const result = await button.evaluateRoutine('clickRoutine', { seatID: 'caller-seat' }, {});
+      expect(overlay.fields[0].value).toBe('input-seat');
+      expect(overlay.fields[1].text).toBe('Your hand: input-hand; caller: caller-seat');
+      expect(result.variable).toBe('caller-seat');
+    } finally {
+      removeWidget(button.id);
+      removeWidget(seat.id);
+    }
+  });
+
+  test('a recipient without a seat receives null', async () => {
+    const button = createWidget({ id: 'input-unseated', type: 'button', clickRoutine: [
+      { func: 'INPUT', player: [], fields: [ { type: 'string', variable: 'answer', value: '${inputSeatID}' } ] }
+    ] });
+    let overlay;
+    button.showInputOverlay = async o=>{
+      overlay = o;
+      return { variables: {}, collections: {} };
+    };
+    try {
+      await button.evaluateRoutine('clickRoutine', {}, {});
+      expect(overlay.fields[0].value).toBeNull();
+    } finally {
+      removeWidget(button.id);
+    }
+  });
+
+  test.each([ 'second-seat', 0, '${targetSeat}', [ 'second-seat', 0 ], '${activeSeats}' ])('seat %j resolves IDs, indexes and variables before dialog interpolation', async target => {
+    const first = createWidget({ id: 'first-seat', type: 'seat', index: 1, player: playerName });
+    const second = createWidget({ id: 'second-seat', type: 'seat', index: 0, player: playerName });
+    const button = createWidget({ id: 'input-seat-target', type: 'button', clickRoutine: [
+      { func: 'INPUT', player: 'Ignored player', seat: target, fields: [ { type: 'string', variable: 'answer', value: '${inputSeatID}' } ] },
+      'var result = ${answer}'
+    ] });
+    let shown = 0;
+    button.showInputOverlay = async o=>{
+      shown++;
+      return { variables: { answer: o.fields[0].value }, collections: {} };
+    };
+    try {
+      const result = await button.evaluateRoutine('clickRoutine', { targetSeat: 0 }, {});
+      expect(shown).toBe(1);
+      const seatID = target == '${activeSeats}' ? 'first-seat' : 'second-seat';
+      expect(result.variable).toEqual(Array.isArray(target) || target == '${activeSeats}' ? { [playerName]: seatID } : seatID);
+    } finally {
+      for(const widget of [ button, first, second ])
+        removeWidget(widget.id);
+    }
+  });
+
+  test.each([ [], 'missing-seat', 'empty-seat', '1', false ])('seat %j does not ask the invoking player when no occupied seat matches', async target => {
+    const seat = createWidget({ id: 'empty-seat', type: 'seat', index: 1, player: '' });
+    const button = createWidget({ id: 'input-no-seat', type: 'button', clickRoutine: [
+      { func: 'INPUT', seat: target },
+      'var result = true'
+    ] });
+    let shown = false;
+    button.showInputOverlay = async ()=>{
+      shown = true;
+      return { variables: {}, collections: {} };
+    };
+    try {
+      const result = await button.evaluateRoutine('clickRoutine', {}, {});
+      expect(shown).toBe(false);
+      expect(result.variable).toBeNull();
+    } finally {
+      removeWidget(button.id);
+      removeWidget(seat.id);
+    }
+  });
+
+  test('the applied operation keeps the resolved dialog values for routine logging', async () => {
+    const button = createWidget({ id: 'input-logged', type: 'button', clickRoutine: [
+      { func: 'INPUT', header: 'Hello ${playerName}', fields: [
+        { type: 'string', variable: 'answer', value: '${inputSeatID}' }
+      ] }
+    ] });
+    const functions = [ 'jeLoggingRoutineStart', 'jeLoggingRoutineEnd', 'jeLoggingRoutineOperationStart', 'jeLoggingRoutineOperationEnd', 'jeLoggingRoutineOperationSummary' ];
+    const saved = Object.fromEntries(functions.map(name=>[ name, window[name] ]));
+    for(const name of functions)
+      window[name] = ()=>{};
+    let applied;
+    window.jeLoggingRoutineOperationStart = (original, operation)=>{ applied = operation; };
+    window.jeRoutineLogging = true;
+    button.showInputOverlay = async o=>({ variables: { answer: o.fields[0].value }, collections: {} });
+    try {
+      await button.evaluateRoutine('clickRoutine', {}, {});
+      expect(applied.header).toBe(`Hello ${playerName}`);
+      expect(applied.fields[0].value).toBeNull();
+    } finally {
+      window.jeRoutineLogging = false;
+      Object.assign(window, saved);
+      removeWidget(button.id);
+    }
   });
 });

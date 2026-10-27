@@ -605,6 +605,10 @@ describe('operation rendering', () => {
     // a dialog with nothing to fill in is a question, and the sentence says so
     [ { func: 'INPUT', header: 'Are you sure?', cancelButtonText: 'No' }, 'Ask the player "Are you sure?", canceling with "No"' ],
     [ { func: 'INPUT', player: [ 'red', 'blue' ], fields: [ {} ], block: true }, 'Ask the players red and blue at once to fill in 1 field, holding everybody else up until it is answered' ],
+    [ { func: 'INPUT', block: false }, 'Ask the player, letting everybody else carry on' ],
+    [ { func: 'INPUT', block: 'Please wait.' }, 'Ask the player, holding everybody else up with message "Please wait."' ],
+    [ { func: 'INPUT', block: '' }, 'Ask the player, holding everybody else up with message ""' ],
+    [ { func: 'INPUT', block: '${waitingMessage}' }, 'Ask the player, holding everybody else up with message waitingMessage' ],
     [ { func: 'UPLOAD' }, 'Ask the player for a file' ],
     [ { func: 'FOREACH', range: [ 1, 10 ] }, 'For each number in the range 1 to 10, do the operations below' ],
     [ { func: 'FOREACH' }, 'For each of the picked widgets, do the operations below' ],
@@ -1132,6 +1136,36 @@ describe('picking how an operation works and which options it uses', () => {
     expect(document.querySelector('.inline-popup h1').textContent).toContain('CLICK');
     for (const popup of document.querySelectorAll('.inline-popup'))
       popup.remove();
+  });
+
+  test('INPUT waiting guidance edits literal text and can return to either boolean setting', async () => {
+    const { editor, dom } = renderOperation({ func: 'INPUT', block: true });
+    dom.querySelector('[data-parameter="block"]').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const menu = document.querySelector('.inline-popup.popup-menu');
+    expect([...menu.querySelectorAll('.popup-menu-entry-label')].map(e => e.textContent)).toEqual([
+      'holding everybody else up until it is answered', 'letting everybody else carry on', 'custom waiting message…'
+    ]);
+    menu.querySelector('.popup-menu-entry-other').dispatchEvent(new Event('click'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    const input = document.querySelector('.inline-popup .popup-value-input');
+    input.value = 'false';
+    input.dispatchEvent(new Event('change'));
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(editor.operation.block).toBe('false');
+    expect(editor.createPopup([ 'block' ])).toBeInstanceOf(RoutineStringPopup);
+    for(const value of [ true, false ]) {
+      editor.operation.block = 'Please wait.';
+      const popup = editor.createPopup([ 'block' ]);
+      popup.setSource(dom.querySelector('[data-parameter="block"]'));
+      popup.setOperationDetails(editor.operation, [ 'block' ], { state: {} }, [], []);
+      popup.registerChangeListener(values => editor.onNewValue(values));
+      popup.show();
+      const label = value ? 'holding everybody else up until it is answered' : 'letting everybody else carry on';
+      [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == label).dispatchEvent(new Event('click'));
+      expect(editor.operation.block).toBe(value);
+      popup.hide();
+    }
   });
 
   // the same wording SET got: the widgets an operation works on are words in the
@@ -1969,6 +2003,24 @@ describe('the values a parameter popup offers', () => {
     const playerName = [...popup.domElement.querySelectorAll('.popup-entry button')].find(b => b.textContent == 'playerName');
     expect(playerName.title).toBe('name of the player who started the routine');
     popup.hide();
+  });
+
+  test('INPUT dialogs and their fields offer the recipient seat variable', () => {
+    for(const operation of [ { func: 'INPUT' }, { type: 'string' } ]) {
+      const popup = showPopup(RoutineStringPopup, operation, [ 'value' ]);
+      let value;
+      popup.registerChangeListener(v => value = v);
+      const entry = [...popup.domElement.querySelectorAll('.popup-entry button')].find(b => b.textContent == 'inputSeatID');
+      expect(entry.title).toBe('seat id of the player shown this dialog (null without a seat)');
+      entry.dispatchEvent(new Event('click'));
+      expect(value).toEqual({ value: '${inputSeatID}' });
+      popup.hide();
+    }
+    for(const [ func, parameter ] of [ [ 'LABEL', 'value' ], [ 'INPUT', 'player' ], [ 'INPUT', 'seat' ] ]) {
+      const popup = showPopup(RoutineStringPopup, { func }, [ parameter ]);
+      expect([...popup.domElement.querySelectorAll('.popup-entry button')].some(b => b.textContent == 'inputSeatID')).toBe(false);
+      popup.hide();
+    }
   });
 
   test('a value of the routine is used as a variable, a collection as a collection', () => {
@@ -3278,7 +3330,6 @@ describe('the words and the units of an operation', () => {
       'CALL return': 'and do not finish this routine',
       'CLONE recursive': 'including the widgets on them',
       'GET skipMissing': 'ignoring widgets without it',
-      'INPUT block': 'holding everybody else up',
       'MOVEXY snapToGrid': 'ignoring the grid',
       'MOVEXY resetOwner': 'keeping their current owner',
       'RECALL owned': 'except the cards players hold',
@@ -3746,12 +3797,40 @@ describe('the lines of an INPUT dialog', () => {
 
   // a list of players changes what an answer is, not only who is asked
   test('who is asked is a way of working, and the list of players says what it does', () => {
-    expect(routineOperationVariantChoices({ func: 'INPUT' }).map(c => c.id)).toEqual([ 'player', 'named', 'several' ]);
+    expect(routineOperationVariantChoices({ func: 'INPUT' }).map(c => c.id)).toEqual([ 'player', 'named', 'several', 'seat', 'seats' ]);
     expect(routineOperationMetadata.INPUT.variants[2].label).toContain('every answer becomes a list');
     const operation = { func: 'INPUT', player: [ 'red' ] };
     expect(inputEditorFor(operation).currentVariant().id).toBe('several');
     expect(inputEditorFor({ func: 'INPUT', player: 'red' }).currentVariant().id).toBe('named');
     expect(inputEditorFor({ func: 'INPUT' }).currentVariant().id).toBe('player');
+  });
+
+  test('seat targeting takes precedence, round-trips its values and clears when switching back to players', () => {
+    for(const seat of [ 'seat-p1', 0, [ 'seat-p1', 2 ], '${activeSeats}' ]) {
+      const operation = { func: 'INPUT', seat, player: [ 'ignored' ] };
+      const editor = inputEditorFor(operation);
+      expect(editor.currentVariant().id).toBe(Array.isArray(seat) || seat == '${activeSeats}' ? 'seats' : 'seat');
+      expect(editor.unsupportedProperties()).not.toContain('seat');
+      expect(editor.createPopup([ 'seat' ])).toBeInstanceOf(RoutineJSONPopup);
+      editor.render();
+      expect(operation.seat).toEqual(seat);
+      for(const variant of routineOperationMetadata.INPUT.variants.slice(0, 3)) {
+        const restored = { ...operation };
+        variant.apply(restored);
+        expect('seat' in restored).toBe(false);
+        expect(inputEditorFor(restored).currentVariant().id).toBe(variant.id);
+      }
+    }
+    for(const variant of routineOperationMetadata.INPUT.variants.slice(3)) {
+      const operation = { func: 'INPUT', player: '${activePlayers}' };
+      variant.apply(operation);
+      expect('player' in operation).toBe(false);
+      expect(inputEditorFor(operation).currentVariant().id).toBe(variant.id);
+    }
+    expect(inputEditorFor({ func: 'INPUT', seat: null, player: 'Alice' }).currentVariant().id).toBe('named');
+    const info = parameterInfoLine(commonInfoTopic('INPUT').info, 'seat');
+    expect(info).toContain('array returns answers keyed by player name');
+    expect(info).toContain('${activeSeats}');
   });
 
   // the engine rotates by it and no game in the library ever asked it to
