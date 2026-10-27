@@ -1008,8 +1008,10 @@ export default async function convertPCIO(content) {
         w.cardDefaults.width = widget.cardWidth;
       if(widget.cardHeight && widget.cardHeight != 160)
         w.cardDefaults.height = widget.cardHeight;
+      // PCIO enlarges a card while the right mouse button (or a finger) is held on it,
+      // which is what the right-click popup does - not the hover enlarge of VTT
       if(widget.enlarge)
-        w.cardDefaults.enlarge = 3;
+        w.cardDefaults.contextMenuOptions = { factor: 3 };
       if(widget.cardOverlapH === 0 && !widget.cardOverlapV)
         w.cardDefaults.overlap = false;
       if(widget.onRemoveFromHand === null)
@@ -1018,8 +1020,10 @@ export default async function convertPCIO(content) {
         w.cardDefaults.movable = false;
       if(widget.allowPlayerClick === false)
         w.cardDefaults.clickable = false;
+      // "Rotation Snapping" lists the angles the objects may be turned to - with a
+      // single angle there is nothing to turn to
       if(Array.isArray(widget.snapAngles) && widget.snapAngles.length > 1)
-        warnAbout('snapAngles', widget, (names, count)=>`The "Rotation Snapping" of the collection${count > 1 ? 's' : ''} ${names} has no VirtualTabletop equivalent - those objects rotate freely.`);
+        w.cardDefaults.rotationSteps = widget.snapAngles.filter(angle=>typeof angle == 'number');
       if(widget.showUnflipped)
         warnAbout('showUnflipped', widget, (names, count)=>`"Show Unflipped Side To Owner" of the collection${count > 1 ? 's' : ''} ${names} has no VirtualTabletop equivalent.`);
 

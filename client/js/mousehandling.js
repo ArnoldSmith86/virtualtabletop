@@ -147,6 +147,10 @@ async function handleInput(name, e, dragTarget) {
 
   const coords = eventCoords(name, e);
   mouseCoords = [Math.round(coords.x), Math.round(coords.y)];
+  // right-click popups and long-touch handling; an event they consume is not a
+  // click or a drag of the widget under it
+  if(!edit && !jeEnabled && handleContextMenuInput(name, e))
+    target = null;
   if(name == 'mousedown')
     mouseTarget = target;
   else if(name == 'mousemove' || name == 'mouseup')
