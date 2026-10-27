@@ -4,12 +4,12 @@
     "info": {
       "name": "Outrun the Drones",
       "lastUpdate": 1789663000835,
-      "image": "/assets/305470950_53114",
+      "image": "/assets/1062197717_8380",
       "time": "40",
       "mode": "vs",
       "skill": "",
       "description": "Race your fellow expedition members and an envoy of drones to reach the temple, picking up valuable goods on the way.",
-      "variantImage": "/assets/305470950_53114",
+      "variantImage": "/assets/1062197717_8380",
       "variant": "",
       "language": "en-US",
       "players": "2-4",
@@ -22,7 +22,7 @@
       "rules": "https://boardgamegeek.com/filepage/324961/trail-to-the-temple-rules",
       "ruleText": "(see rules overview link)",
       "helpText": "",
-      "attribution": "<div><div>Game layout, library image, coin icons, and scripting by Robin Harn, released to the Public Domain under CC0.</div><br></div><div>Drone custom-shaped game pieces by Nicolas Weiss / PaladinOfCats, released to the Public Domain under CC0.<div><br></div></div><div>The following graphics were source from Magnific:</div><div>* https://www.magnific.com/icon/mayan-pyramid_1861310</div><div>* https://www.magnific.com/icon/medical-symbol_15374540</div><div>* https://www.magnific.com/free-vector/mint-background-design_40476100.htm</div>",
+      "attribution": "<div><div>Game layout, library image, coin icons, and scripting by Robin Harn, released to the Public Domain under CC0.</div><br></div><div>Drone custom-shaped game pieces by Nicolas Weiss / PaladinOfCats, released to the Public Domain under CC0.<div><br></div></div><div>The following graphics were sourced from Magnific:</div><div>* https://www.magnific.com/icon/mayan-pyramid_1861310</div><div>* https://www.magnific.com/icon/medical-symbol_15374540</div><div>* https://www.magnific.com/free-vector/mint-background-design_40476100.htm</div>",
       "usesAIImagery": false,
       "usesAILayout": false,
       "showName": true
