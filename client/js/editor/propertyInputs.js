@@ -448,7 +448,9 @@ function propertyInfoButton(appendTo, infoHTML) {
     }
     if(activePropertyInfoPopup)
       activePropertyInfoPopup();
-    const popup = div($('#editor'), 'inline-popup', '<div class=content></div>');
+    // property-info-popup keeps line breaks: a hint that explains one choice
+    // per line (e.g. the holder layouts) stays readable as that list
+    const popup = div($('#editor'), 'inline-popup property-info-popup', '<div class=content></div>');
     let outsideClickTimer = null;
     $('.content', popup).innerHTML = infoHTML;
 
@@ -691,13 +693,20 @@ class NumberInput extends PropertyInput {
     return 'numberInput';
   }
 
+  // the placeholder option may be a function: a value that is inherited from
+  // somewhere else (a pile's stack offset from its holder) changes with the
+  // widget, so it is re-read on every update
+  placeholder() {
+    return typeof this.options.placeholder == 'function' ? this.options.placeholder() : this.options.placeholder;
+  }
+
   renderControl(target) {
     this.input = document.createElement('input');
     this.input.type = 'number';
     this.input.step = this.options.step !== undefined ? this.options.step : 'any';
     if(this.options.min !== undefined) this.input.min = this.options.min;
     if(this.options.max !== undefined) this.input.max = this.options.max;
-    if(this.options.placeholder !== undefined) this.input.placeholder = this.options.placeholder;
+    if(this.placeholder() !== undefined) this.input.placeholder = this.placeholder();
     this.input.oninput = _=>this.applyInput(this.input.value);
     target.appendChild(this.input);
 
@@ -740,14 +749,14 @@ class NumberInput extends PropertyInput {
   update(value) {
     const multi = propertyInputIsMulti(value);
     this.dom.classList.toggle('multiDiffers', multi);
-    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder !== undefined ? this.options.placeholder : '');
+    this.input.placeholder = multi ? '— multiple —' : (this.placeholder() !== undefined ? this.placeholder() : '');
     const numeric = typeof value == 'number' ? value : +value || 0;
     if(document.activeElement !== this.input)
       this.input.value = (value === null || multi) ? '' : numeric;
     if(this.slider && document.activeElement !== this.slider) {
       // when unset, rest the slider at the numeric placeholder (the shown
       // default) instead of dropping it to its minimum
-      const placeholder = this.options.placeholder !== undefined && this.options.placeholder !== '' ? +this.options.placeholder : NaN;
+      const placeholder = this.placeholder() !== undefined && this.placeholder() !== '' ? +this.placeholder() : NaN;
       this.slider.value = (value === null || multi) && Number.isFinite(placeholder) ? placeholder : numeric;
     }
   }
