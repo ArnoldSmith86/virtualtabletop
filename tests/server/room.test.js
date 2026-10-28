@@ -152,6 +152,48 @@ describe('server/room.mjs', function() {
     expect(room.state._meta.states.filled).toBeDefined();
   });
 
+  test('load repairs the shelf and waits for source-room sync before finishing', async function() {
+    const room = roomLoadingStates({ empty: { name: 'Empty', variants: [] } });
+    const saved = JSON.parse(fs.readFileSync(room.roomFilename(), 'utf8'));
+    saved._meta.linkSourceRoom = 'source-room';
+    fs.writeFileSync(room.roomFilename(), JSON.stringify(saved));
+    let finishSync;
+    room.syncLinkSourceRoom = jest.fn(()=>new Promise(resolve=>{ finishSync = resolve; }));
+
+    const loading = room.load();
+    await Promise.resolve();
+    expect(room.syncLinkSourceRoom).toHaveBeenCalledTimes(1);
+    expect(room.state._meta.states.empty).toBeUndefined();
+    expect(room.isLoading).toBe(true);
+    finishSync();
+    await loading;
+    expect(room.isLoading).toBe(false);
+  });
+
+  test('a registered room waits to unload until loading finishes, then leaves the registry', function() {
+    jest.useFakeTimers();
+    const room = new Room('registered-room', jest.fn(), ()=>{});
+    try {
+      room.state = { _meta: { states: {}, starred: {}, roomName: 'Keep this room' } };
+      room.writeToFilesystem = jest.fn();
+      room.isLoading = true;
+      expect(Room.loaded.get(room.id)).toBe(room);
+      jest.advanceTimersByTime(10000);
+      expect(room.unloadCallback).not.toHaveBeenCalled();
+      expect(Room.loaded.get(room.id)).toBe(room);
+
+      room.isLoading = false;
+      jest.advanceTimersByTime(5000);
+      expect(room.writeToFilesystem).toHaveBeenCalledTimes(1);
+      expect(room.unloadCallback).toHaveBeenCalledTimes(1);
+      expect(Room.loaded.has(room.id)).toBe(false);
+    } finally {
+      clearTimeout(room.unloadTimeout);
+      Room.loaded.delete(room.id);
+      jest.useRealTimers();
+    }
+  });
+
   test('removeStatesWithoutVariants removes games that have no variant left', function() {
     const states = {
       empty:            { name: 'Empty', variants: [] },
@@ -230,6 +272,23 @@ describe('server/room.mjs', function() {
     const autosave = room.writeToFilesystemAsync();
 
     room.unload();
+    await autosave;
+
+    expect(fs.existsSync(room.roomFilename())).toBe(false);
+    expect(fs.readdirSync(directory)).toEqual([ '0.json' ]);
+  });
+
+  test('deleting a room cancels its pending autosave', async function() {
+    const room = roomWithStates({});
+    room.id = 'room';
+    room.players = [];
+    room.roomFilename = ()=>path.join(directory, 'autosave.json');
+    room.getPublicLibraryGames = ()=>({});
+    room.broadcast = ()=>{};
+    fs.writeFileSync(room.roomFilename(), 'old');
+    const autosave = room.writeToFilesystemAsync();
+
+    await room.deleteRoom();
     await autosave;
 
     expect(fs.existsSync(room.roomFilename())).toBe(false);

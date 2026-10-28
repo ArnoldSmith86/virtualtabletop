@@ -100,9 +100,9 @@ describe('the client bundle cache key', function() {
     expect(cacheKeyIn(checkoutWith({}))).toBe(cacheKey());
   });
 
-  test('changes when an input file changes', function() {
-    const customCSS = fs.readFileSync(path.resolve() + '/client/css/custom.css', 'utf8');
-    expect(cacheKeyIn(checkoutWith({ 'client/css/custom.css': customCSS + '\nbody { --cache-key-test: 1; }\n' }))).not.toBe(cacheKey());
+  test.each([ 'client/css/custom.css', 'client/css/overlays/rooms.css', 'client/js/overlays/rooms.js' ])('changes when input file %s changes', function(file) {
+    const content = fs.readFileSync(path.resolve() + '/' + file, 'utf8');
+    expect(cacheKeyIn(checkoutWith({ [file]: content + '\n/* cache-key-test */\n' }))).not.toBe(cacheKey());
   });
 
   test('changes when a client config value changes', function() {

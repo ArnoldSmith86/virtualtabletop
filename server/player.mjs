@@ -4,10 +4,11 @@ import Logging from './logging.mjs';
 export default class Player {
   static nextSessionID = 1;
 
-  constructor(connection, name, room) {
+  constructor(connection, name, room, collection) {
     this.connection = connection;
     this.name = name;
     this.room = room;
+    this.collection = collection;
     this.sessionID = Player.nextSessionID++;
 
     this.latestDeltaIDbyDifferentPlayer = this.room.deltaID;
@@ -22,11 +23,22 @@ export default class Player {
     this.room.removePlayer(this);
   }
 
+  // stop receiving events from the connection so it can be attached to another room
+  detach() {
+    this.connection.removeMessageHandler(this.messageReceived);
+    this.connection.removeCloseHandler(this.connectionClosed);
+  }
+
   messageReceived = async (func, args) => {
     if([ 'delta', 'mouse', 'trace' ].indexOf(func) == -1)
       this.trace('messageReceived', { func, args });
 
+    const disabledWhileLocked = [ 'addStateToPublicLibrary', 'editState', 'loadState', 'moveStateWithinPublicLibrary', 'removeState', 'saveState', 'setGameSettings', 'setRedirect', 'toggleStateStar', 'unlinkState' ];
+
     try {
+      if(disabledWhileLocked.indexOf(func) != -1 && this.room.state._meta.locked && !await this.room.isAdmin(this.collection))
+        return this.send('error', 'This room is locked. Only the room admin can do this.');
+
       if(func == 'addLocalPlayer')
         this.room.addLocalPlayer(this, args.player);
       if(func == 'addStateToPublicLibrary')
@@ -149,6 +161,11 @@ export default class Player {
       this.possiblyConflictingDeltas.push(args);
       this.latestDeltaIDbyDifferentPlayer = args.id;
     }
+    // never send collection and password hashes to clients
+    if(func == 'state' && args && args._meta && args._meta.security)
+      args = Object.assign({}, args, { _meta: this.room.publicMeta(args._meta) });
+    if(func == 'meta' && args && args.meta && args.meta.security)
+      args = Object.assign({}, args, { meta: this.room.publicMeta(args.meta) });
     if(Config.get('simulateServerLag'))
       setTimeout(_=>this.connection.toClient(func, args), Config.get('simulateServerLag'));
     else

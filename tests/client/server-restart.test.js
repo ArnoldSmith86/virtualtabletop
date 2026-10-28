@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 // error inside a Function body), and every global it touches is a parameter below - a missing one
 // shows up as a ReferenceError from whichever handler was exercised.
 const connectionSource = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../../client/js/connection.js'), 'utf8');
-const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$', '$a', 'rand', 'urlProperties', 'playerName', 'roomID',
+const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$', '$a', 'rand', 'urlProperties', 'playerName', 'roomID', 'getCollectionID', 'getRoomPassword',
   connectionSource.replace(/^export /gm, '') + `;
   return { startWebSocket, clientIsOutdated, checkForServerRestart, editModeURL, editModeLoadFailed, showServerRestartOverlay };
 `);
@@ -58,7 +58,7 @@ function startedClient(onReload, serving) {
   }
 
   const client = loadConnection(fakeLocation(onReload), (callback, delay)=>timers.push({ callback, delay }), FakeWebSocket, fakeFetch,
-    id=>overlays.push(id), _=>null, _=>[], _=>0, {}, 'tester', 'testroom');
+    id=>overlays.push(id), _=>null, _=>[], _=>0, {}, 'tester', 'testroom', _=>'test-collection', _=>undefined);
   client.startWebSocket();
 
   return {
