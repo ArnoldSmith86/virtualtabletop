@@ -1737,6 +1737,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
 
       return clonedWidgets;
     }
+    return [];
   };
 
   const gridX = xCopies + 1;
