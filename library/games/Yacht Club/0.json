@@ -1,0 +1,3722 @@
+{
+  "4629": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "ghostship",
+    "id": "4629",
+    "z": 46798,
+    "parent": "holder-compass-4",
+    "x": -4,
+    "y": -4
+  },
+  "_meta": {
+    "version": 24,
+    "info": {
+      "name": "Yacht Club",
+      "lastUpdate": 1787084905316,
+      "image": "/assets/-832841747_11184",
+      "time": "40",
+      "mode": "vs",
+      "skill": "",
+      "description": "Bribe, backstab, and race against enemy yachtsmen in an effort to raid as many islands as possible.",
+      "variantImage": "/assets/-832841747_11184",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-4",
+      "similarImage": "",
+      "similarName": "Batam",
+      "year": "2025",
+      "similarDesigner": "Stefan Dorra",
+      "similarAwards": "",
+      "bgg": "https://boardgamegeek.com/boardgame/448136/batam",
+      "rules": "https://boardgamegeek.com/filepage/309796/english-rules",
+      "ruleText": "",
+      "helpText": "(see rules overview link)",
+      "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from http://www.magnific.com and are used under the Magnific License:</div><div>* https://www.magnific.com/free-vector/abstract-top-view-biodiversity_417426590.htm</div><div><br></div><div>The following icons are from https://game-icons.net/ and https://thenounproject.com/ and are used under the CC BY 3.0 license:</div><div>* https://game-icons.net/1x1/delapouite/pirate-captain.html</div><div>* https://game-icons.net/1x1/delapouite/canoe.html</div><div>* https://game-icons.net/1x1/delapouite/trireme.html</div><div><br></div><div>Umer Younas\n* Bank Note https://thenounproject.com/icon/bank-note-3947508</div>",
+      "usesAIImagery": false,
+      "showName": true,
+      "usesAILayout": false
+    },
+    "gameSettings": {
+      "legacyModes": {}
+    }
+  },
+  "box-seat-p1": {
+    "id": "box-seat-p1",
+    "width": 350,
+    "height": 230,
+    "z": 62128,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightgray",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "x": 23,
+    "movable": false,
+    "y": 12,
+    "layer": -5
+  },
+  "board-batam": {
+    "id": "board-batam",
+    "x": 390,
+    "width": 1200,
+    "height": 750,
+    "layer": -4,
+    "z": 7,
+    "movable": false,
+    "image": "/assets/1369601891_129246",
+    "y": -10,
+    "movableInEdit": false
+  },
+  "holder-captain-seat-p1": {
+    "type": "holder",
+    "id": "holder-captain-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 12,
+    "y": 164,
+    "z": 61784,
+    "height": 60,
+    "width": 60,
+    "icon": "delapouite/pirate-captain",
+    "dropTarget": {
+      "type": "dice"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5
+  },
+  "holder-sailor-seat-p1": {
+    "type": "holder",
+    "id": "holder-sailor-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 79,
+    "icon": "rowing",
+    "inheritFrom": "holder-captain-seat-p1",
+    "y": 164,
+    "z": 62093
+  },
+  "holder-ship-seat-p1": {
+    "type": "holder",
+    "id": "holder-ship-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 147,
+    "icon": "delapouite/trireme",
+    "inheritFrom": "holder-captain-seat-p1",
+    "z": 62092,
+    "y": 164
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "parent": "box-seat-p1",
+    "x": 10,
+    "width": 190,
+    "z": 62057,
+    "css": {
+      "default": {
+        "background": "firebrick",
+        "border": "5px solid #000000",
+        "color": "white",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "26px",
+        "line-height": "22px",
+        "text-shadow": "2px 2px 2px black"
+      },
+      ".seated": {
+        "background": "firebrick",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "firebrick",
+        "border": "2px solid black",
+        "background-size": "200% auto",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-12px",
+        "top": "3px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "y": 4,
+    "height": 45
+  },
+  "board-background": {
+    "id": "board-background",
+    "x": -100,
+    "y": -75,
+    "width": 2000,
+    "height": 1200,
+    "layer": -7,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "opacity": 0.15
+    },
+    "image": "/assets/-1577183454_79598"
+  },
+  "bid-sailor-seat-p1": {
+    "id": "bid-sailor-seat-p1",
+    "parent": "seat-p1",
+    "x": 63,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 61947,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p1",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ]
+  },
+  "dice-a-p1": {
+    "type": "dice",
+    "id": "dice-a-p1",
+    "z": 62347,
+    "movable": true,
+    "color": "firebrick",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 70,
+    "activeFace": 4,
+    "parent": "holder-tray-seat-p1",
+    "x": 16,
+    "y": 4
+  },
+  "dice-b-p1": {
+    "type": "dice",
+    "id": "dice-b-p1",
+    "z": 62400,
+    "movable": true,
+    "color": "firebrick",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 69,
+    "x": 10,
+    "activeFace": 3,
+    "parent": "holder-tray-seat-p1",
+    "y": 32
+  },
+  "dice-c-p1": {
+    "type": "dice",
+    "id": "dice-c-p1",
+    "z": 62345,
+    "movable": true,
+    "color": "firebrick",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 67,
+    "activeFace": 3,
+    "x": 58,
+    "y": 5,
+    "parent": "holder-tray-seat-p1"
+  },
+  "bid-ship-seat-p1": {
+    "id": "bid-ship-seat-p1",
+    "parent": "seat-p1",
+    "x": 130,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 62046,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "color": "black",
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center",
+        "text-shadow": "2px 3px 3px silver"
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p1",
+    "readyMarker": "ready-p1",
+    "clickRoutine": [],
+    "text": "0"
+  },
+  "button-score-inc-p1": {
+    "type": "button",
+    "id": "button-score-inc-p1",
+    "parent": "label-money-seat-p1",
+    "fixedParent": true,
+    "x": 65,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "image-money-seat-p1": {
+    "id": "image-money-seat-p1",
+    "parent": "seat-p1",
+    "x": 41,
+    "y": 53,
+    "height": 60,
+    "z": 4,
+    "movable": false,
+    "image": "/assets/-408480321_3830",
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "layer": -6
+  },
+  "button-score-dec-p1": {
+    "type": "button",
+    "id": "button-score-dec-p1",
+    "parent": "label-money-seat-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "text": "remove",
+    "classes": "symbols",
+    "z": 62052
+  },
+  "holder-compass-template": {
+    "type": "holder",
+    "id": "holder-compass-template",
+    "x": 1573,
+    "y": 766,
+    "width": 63,
+    "height": 63,
+    "z": 62124,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "0px dashed black"
+    },
+    "dropTarget": {
+      "class": "tile-compass"
+    },
+    "onEnter": {
+      "activeFace": 0
+    },
+    "preventPiles": true,
+    "dropOffsetX": -4,
+    "dropOffsetY": -4
+  },
+  "holder-tiles-seat-p1": {
+    "type": "holder",
+    "id": "holder-tiles-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 274,
+    "z": 62156,
+    "icon": "[hexagon_vertical]",
+    "dropTarget": {
+      "class": "tile-compass"
+    },
+    "scale": 0.75,
+    "width": 80,
+    "height": 80,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "y": -7,
+    "preventPiles": true
+  },
+  "label-money-seat-p1": {
+    "type": "label",
+    "id": "label-money-seat-p1",
+    "width": 60,
+    "height": 42,
+    "layer": 0,
+    "z": 17,
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "editable": true,
+    "text": 20,
+    "parent": "seat-p1",
+    "x": 62,
+    "y": 65
+  },
+  "holder-tray-seat-p1": {
+    "type": "holder",
+    "id": "holder-tray-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 218,
+    "y": 118,
+    "width": 125,
+    "height": 105,
+    "z": 62172,
+    "alignChildren": false,
+    "css": {
+      "background": "white"
+    },
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "button-roll-seat-p1": {
+    "type": "button",
+    "id": "button-roll-seat-p1",
+    "parent": "seat-p1",
+    "x": 205,
+    "y": 60,
+    "width": 125,
+    "height": 45,
+    "z": 62078,
+    "css": "background-color:firebrick;font-size:18px;font-weight:bold;border-radius:7px",
+    "text": "Roll Dice",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder-tray-seat-p1",
+        "relation": "=="
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "button-score-inc-x-p1": {
+    "type": "button",
+    "id": "button-score-inc-x-p1",
+    "parent": "label-money-seat-p1",
+    "fixedParent": true,
+    "x": 96,
+    "y": 3,
+    "width": 33,
+    "height": 33,
+    "z": 62055,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "18px"
+    },
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this much money:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a four-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 10000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -10000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "dz6nB": {
+    "id": "dz6nB",
+    "parent": "holder-tiles-temp",
+    "fixedParent": true,
+    "y": 90,
+    "width": 90,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "holder-tiles-temp": {
+    "type": "holder",
+    "id": "holder-tiles-temp",
+    "x": 1677,
+    "y": 863,
+    "z": 62177,
+    "height": 90,
+    "width": 90
+  },
+  "deck-tiles": {
+    "type": "deck",
+    "id": "deck-tiles",
+    "x": 4,
+    "y": 4,
+    "width": 80,
+    "height": 80,
+    "z": 46039,
+    "cardDefaults": {
+      "class": "tile-compass",
+      "classes": "transition",
+      "width": 72,
+      "height": 72,
+      "itemWidth": 30,
+      "itemHeight": 30,
+      "itemX": 11,
+      "itemY": 37,
+      "text-back": "?",
+      "cssText-front": "text-align:center; color:black;font-weight:bold; font-size:18px; line-height:16px",
+      "cssText-back": "text-align:center; color:black;font-weight:bold; font-size:18px; line-height:16px",
+      "onPileCreation": {
+        "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "css": {
+        "clip-path": "polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%)"
+      }
+    },
+    "cardTypes": {
+      "money-a": {
+        "text-front": "A\n+$15",
+        "image": "/assets/1366337035_2004"
+      },
+      "money-b": {
+        "text-front": "D\n+$12",
+        "image": "/assets/1366337035_2004"
+      },
+      "money-10": {
+        "text-front": "Free\n$10",
+        "image": "/assets/1366337035_2004"
+      },
+      "money-8": {
+        "text-front": "Free\n$8",
+        "image": "/assets/1366337035_2004"
+      },
+      "move-3": {
+        "text-front": "Move\n+3",
+        "image": "/assets/1366337035_2004"
+      },
+      "move-4": {
+        "text-front": "Move\n+4",
+        "image": "/assets/1366337035_2004"
+      },
+      "move-5": {
+        "text-front": "Move\n+5",
+        "image": "/assets/1366337035_2004"
+      },
+      "ghostship": {
+        "text-front": "-$3\nper die",
+        "image": "/assets/1366337035_2004"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 72,
+            "height": 72,
+            "color": "transparent",
+            "value": "/assets/1366337035_2004"
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 27,
+            "width": 72,
+            "fontSize": "30",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text-back",
+              "css": "cssText-back"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 72,
+            "height": 72,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 5,
+            "y": 17,
+            "width": 62,
+            "fontSize": "15",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text-front",
+              "css": "cssText-front"
+            }
+          }
+        ]
+      }
+    ],
+    "activeFace": "1",
+    "hoverParent": "holder-tiles-temp",
+    "parent": "holder-tiles-temp"
+  },
+  "qicr": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "money-a",
+    "id": "qicr",
+    "z": 46799,
+    "x": -4,
+    "y": -4,
+    "parent": "holder-compass-1"
+  },
+  "holder-meeples-seat-p1": {
+    "type": "holder",
+    "id": "holder-meeples-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 220,
+    "y": 3,
+    "z": 61784,
+    "icon": "[meeple]",
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 9,
+    "dropOffsetY": 9,
+    "dropTarget": {
+      "class": "meeple"
+    },
+    "layer": -2
+  },
+  "deck-meeples-p1": {
+    "type": "deck",
+    "id": "deck-meeples-p1",
+    "parent": "holder-meeples-seat-p1",
+    "x": 4,
+    "y": 4,
+    "width": 46,
+    "height": 46,
+    "z": 45178,
+    "cardDefaults": {
+      "class": "meeple",
+      "width": 42,
+      "height": 42,
+      "cssText": "font-weight:bold; color:white",
+      "layer": 3,
+      "borderColor": "white",
+      "borderWidth": 4,
+      "onPileCreation": {
+        "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeples-seat-p1"
+      }
+    },
+    "cardTypes": {
+      "p1": {
+        "image": "i/game-pieces/2D/Meeple-2D.svg",
+        "color": "firebrick",
+        "label": "",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 42,
+            "height": 42,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 42,
+            "height": 42,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 18,
+            "y": 9,
+            "fontSize": "24",
+            "textAlign": "left",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "label",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "a21h": {
+    "deck": "deck-meeples-p1",
+    "type": "card",
+    "cardType": "p1",
+    "id": "a21h",
+    "z": 806,
+    "parent": "6stw"
+  },
+  "holder-compass-2": {
+    "type": "holder",
+    "id": "holder-compass-2",
+    "parent": "board-batam",
+    "x": 299,
+    "y": 238,
+    "z": 62128,
+    "inheritFrom": "holder-compass-template"
+  },
+  "holder-compass-1": {
+    "type": "holder",
+    "id": "holder-compass-1",
+    "parent": "board-batam",
+    "x": 29,
+    "y": 395,
+    "z": 62148,
+    "inheritFrom": "holder-compass-template"
+  },
+  "holder-compass-3": {
+    "type": "holder",
+    "id": "holder-compass-3",
+    "parent": "board-batam",
+    "x": 328,
+    "y": 603,
+    "z": 62149,
+    "inheritFrom": "holder-compass-template"
+  },
+  "holder-compass-4": {
+    "type": "holder",
+    "id": "holder-compass-4",
+    "parent": "board-batam",
+    "x": 718,
+    "y": 551,
+    "z": 62150,
+    "inheritFrom": "holder-compass-template"
+  },
+  "holder-compass-5": {
+    "type": "holder",
+    "id": "holder-compass-5",
+    "parent": "board-batam",
+    "x": 838,
+    "y": 239,
+    "z": 62151,
+    "inheritFrom": "holder-compass-template"
+  },
+  "holder-compass-6": {
+    "type": "holder",
+    "id": "holder-compass-6",
+    "parent": "board-batam",
+    "x": 1017,
+    "y": 32,
+    "z": 62152,
+    "inheritFrom": "holder-compass-template"
+  },
+  "holder-compass-7": {
+    "type": "holder",
+    "id": "holder-compass-7",
+    "parent": "board-batam",
+    "x": 1108,
+    "y": 499,
+    "z": 62153,
+    "inheritFrom": "holder-compass-template"
+  },
+  "text-island-home": {
+    "id": "text-island-home",
+    "x": 599,
+    "y": 257,
+    "height": 50,
+    "z": 62161,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "24px",
+        "font-weight": "bold",
+        "line-height": "34px",
+        "text-align": "center",
+        "text-shadow": "1px 1px 1px black"
+      }
+    },
+    "text": "Home",
+    "movable": false,
+    "parent": "board-batam"
+  },
+  "text-island-a": {
+    "id": "text-island-a",
+    "x": 106,
+    "y": 478,
+    "height": 50,
+    "z": 62160,
+    "css": {
+      "default": {
+        "color": "white",
+        "font-size": "28px",
+        "font-weight": "bold",
+        "line-height": "32px",
+        "text-align": "center",
+        "text-shadow": "1px 1px 1px black"
+      }
+    },
+    "text": "A",
+    "width": 50,
+    "movable": false,
+    "parent": "board-batam"
+  },
+  "text-island-b": {
+    "id": "text-island-b",
+    "parent": "board-batam",
+    "x": 222,
+    "y": 261,
+    "text": "B",
+    "inheritFrom": "text-island-a"
+  },
+  "text-island-c": {
+    "id": "text-island-c",
+    "parent": "board-batam",
+    "x": 527,
+    "y": 488,
+    "text": "C",
+    "inheritFrom": "text-island-a"
+  },
+  "text-island-d": {
+    "id": "text-island-d",
+    "parent": "board-batam",
+    "x": 914,
+    "y": 447,
+    "text": "D",
+    "inheritFrom": "text-island-a"
+  },
+  "text-island-e": {
+    "id": "text-island-e",
+    "parent": "board-batam",
+    "x": 1023,
+    "y": 152,
+    "text": "E",
+    "inheritFrom": "text-island-a"
+  },
+  "fw1e": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "money-b",
+    "id": "fw1e",
+    "z": 46794,
+    "x": -4,
+    "y": -4,
+    "parent": "holder-compass-2"
+  },
+  "xwft": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "money-10",
+    "id": "xwft",
+    "z": 46785,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-tiles-temp"
+  },
+  "y3wv": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "money-8",
+    "id": "y3wv",
+    "z": 46793,
+    "x": -4,
+    "y": -4,
+    "parent": "holder-compass-6"
+  },
+  "ww34": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "move-3",
+    "id": "ww34",
+    "z": 46795,
+    "x": -4,
+    "y": -4,
+    "parent": "holder-compass-3"
+  },
+  "ew40": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "move-4",
+    "id": "ew40",
+    "z": 46796,
+    "x": -4,
+    "y": -4,
+    "parent": "holder-compass-7"
+  },
+  "5n5l": {
+    "deck": "deck-tiles",
+    "type": "card",
+    "cardType": "move-5",
+    "id": "5n5l",
+    "z": 46797,
+    "x": -4,
+    "y": -4,
+    "parent": "holder-compass-5"
+  },
+  "button-reset": {
+    "type": "button",
+    "id": "button-reset",
+    "x": 1430,
+    "y": 808,
+    "z": 62077,
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetDiceRoutine",
+        "widget": "button-nextround"
+      }
+    ],
+    "width": 90,
+    "height": 60,
+    "gameStartRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder-meeples-seat-p1",
+          "holder-meeples-seat-p2",
+          "holder-meeples-seat-p3",
+          "holder-meeples-seat-p4",
+          "holder-ships",
+          "holder-tiles-temp"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "holder-tiles-temp"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "holder-tiles-temp"
+        ]
+      },
+      {
+        "note": "Randomly populate the compass tiles",
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-compass-1",
+          "holder-compass-2",
+          "holder-compass-3",
+          "holder-compass-4",
+          "holder-compass-5",
+          "holder-compass-6",
+          "holder-compass-7"
+        ],
+        "max": 7,
+        "random": true,
+        "collection": "compassTileLocations"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "compassTileLocations",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-tiles-temp",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Set all players' starting money to 20",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-money-seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 20
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "bid-captain-seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "bid-sailor-seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "css": "font-size:40px;font-weight:bold;border-radius:7px",
+    "classes": "symbols"
+  },
+  "button-nextround": {
+    "type": "button",
+    "id": "button-nextround",
+    "x": 1306,
+    "y": 808,
+    "width": 90,
+    "height": 60,
+    "z": 62076,
+    "text": "Next Round",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Next Round",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to go to the next round. Are you sure?"
+          }
+        ]
+      },
+      {
+        "note": "Set all players' starting bids to 0",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "bid-captain-seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "bid-sailor-seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "resetDiceRoutine"
+      }
+    ],
+    "resetDiceRoutine": [
+      {
+        "note": "Select all players' dice a",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "note": "// set random x,y to each dice",
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "dice-a-p${value}"
+          },
+          {
+            "func": "FOREACH",
+            "loopRoutine": [
+              "var maxX = ${PROPERTY width OF holder-tray-seat-p1} - ${PROPERTY width OF dice-a-p1}",
+              "var maxY = ${PROPERTY height OF holder-tray-seat-p1} - ${PROPERTY height OF dice-a-p1}",
+              "var x = randInt 0 ${maxX}",
+              "var y = randInt 0 ${maxY}",
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "holder-tray-seat-p${value}"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${x}"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${y}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Select all players' dice b",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "note": "// set random x,y to each dice",
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "dice-b-p${value}"
+          },
+          {
+            "func": "FOREACH",
+            "loopRoutine": [
+              "var maxX = ${PROPERTY width OF holder-tray-seat-p1} - ${PROPERTY width OF dice-a-p1}",
+              "var maxY = ${PROPERTY height OF holder-tray-seat-p1} - ${PROPERTY height OF dice-a-p1}",
+              "var x = randInt 0 ${maxX}",
+              "var y = randInt 0 ${maxY}",
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "holder-tray-seat-p${value}"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${x}"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${y}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Select all players' dice c",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "note": "// set random x,y to each dice",
+            "func": "SELECT",
+            "property": "id",
+            "relation": "==",
+            "value": "dice-c-p${value}"
+          },
+          {
+            "func": "FOREACH",
+            "loopRoutine": [
+              "var maxX = ${PROPERTY width OF holder-tray-seat-p1} - ${PROPERTY width OF dice-a-p1}",
+              "var maxY = ${PROPERTY height OF holder-tray-seat-p1} - ${PROPERTY height OF dice-a-p1}",
+              "var x = randInt 0 ${maxX}",
+              "var y = randInt 0 ${maxY}",
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "holder-tray-seat-p${value}"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${x}"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${y}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "TURN"
+      }
+    ],
+    "css": "font-size:18px;font-weight:bold;border-radius:7px"
+  },
+  "box-seat-p2": {
+    "id": "box-seat-p2",
+    "width": 350,
+    "height": 230,
+    "z": 62128,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightgray",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "x": 23,
+    "movable": false,
+    "y": 257,
+    "layer": -5
+  },
+  "holder-captain-seat-p2": {
+    "type": "holder",
+    "id": "holder-captain-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 12,
+    "y": 164,
+    "z": 61784,
+    "height": 60,
+    "width": 60,
+    "icon": "delapouite/pirate-captain",
+    "dropTarget": {
+      "type": "dice"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5
+  },
+  "holder-sailor-seat-p2": {
+    "type": "holder",
+    "id": "holder-sailor-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 79,
+    "icon": "rowing",
+    "inheritFrom": "holder-captain-seat-p2",
+    "y": 164,
+    "z": 62093
+  },
+  "holder-ship-seat-p2": {
+    "type": "holder",
+    "id": "holder-ship-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 147,
+    "icon": "delapouite/trireme",
+    "inheritFrom": "holder-captain-seat-p2",
+    "z": 62092,
+    "y": 164
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "parent": "box-seat-p2",
+    "x": 10,
+    "width": 190,
+    "z": 62057,
+    "css": {
+      "default": {
+        "background": "royalblue",
+        "border": "5px solid #000000",
+        "color": "white",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "26px",
+        "line-height": "22px",
+        "text-shadow": "2px 2px 2px black"
+      },
+      ".seated": {
+        "background": "royalblue",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "royalblue",
+        "border": "2px solid black",
+        "background-size": "200% auto",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-12px",
+        "top": "3px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "y": 4,
+    "height": 45,
+    "index": 2,
+    "turn": true
+  },
+  "bid-sailor-seat-p2": {
+    "id": "bid-sailor-seat-p2",
+    "parent": "seat-p2",
+    "x": 63,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 61947,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p2",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ]
+  },
+  "bid-captain-seat-p2": {
+    "id": "bid-captain-seat-p2",
+    "parent": "seat-p2",
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 61907,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p2",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      }
+    ],
+    "x": -4
+  },
+  "bid-ship-seat-p2": {
+    "id": "bid-ship-seat-p2",
+    "parent": "seat-p2",
+    "x": 130,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 62046,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "color": "black",
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center",
+        "text-shadow": "2px 3px 3px silver"
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p2",
+    "readyMarker": "ready-p1",
+    "clickRoutine": [],
+    "text": "0"
+  },
+  "image-money-seat-p2": {
+    "id": "image-money-seat-p2",
+    "parent": "seat-p2",
+    "x": 41,
+    "y": 53,
+    "height": 60,
+    "z": 4,
+    "movable": false,
+    "image": "/assets/-408480321_3830",
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "layer": -6
+  },
+  "label-money-seat-p2": {
+    "type": "label",
+    "id": "label-money-seat-p2",
+    "width": 60,
+    "height": 42,
+    "layer": 0,
+    "z": 17,
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "editable": true,
+    "text": 20,
+    "parent": "seat-p2",
+    "x": 62,
+    "y": 65
+  },
+  "button-score-inc-p2": {
+    "type": "button",
+    "id": "button-score-inc-p2",
+    "parent": "label-money-seat-p2",
+    "fixedParent": true,
+    "x": 65,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p2": {
+    "type": "button",
+    "id": "button-score-dec-p2",
+    "parent": "label-money-seat-p2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "text": "remove",
+    "classes": "symbols",
+    "z": 62052
+  },
+  "button-score-inc-x-p2": {
+    "type": "button",
+    "id": "button-score-inc-x-p2",
+    "parent": "label-money-seat-p2",
+    "fixedParent": true,
+    "x": 96,
+    "y": 3,
+    "width": 33,
+    "height": 33,
+    "z": 62055,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "18px"
+    },
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this much money:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a four-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 10000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -10000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-roll-seat-p2": {
+    "type": "button",
+    "id": "button-roll-seat-p2",
+    "parent": "seat-p2",
+    "x": 205,
+    "y": 60,
+    "width": 125,
+    "height": 45,
+    "z": 62061,
+    "css": "background-color:royalblue;font-size:18px;font-weight:bold;border-radius:7px",
+    "text": "Roll Dice",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder-tray-seat-p2",
+        "relation": "=="
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "holder-tiles-seat-p2": {
+    "type": "holder",
+    "id": "holder-tiles-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 274,
+    "z": 62156,
+    "icon": "[hexagon_vertical]",
+    "dropTarget": {
+      "class": "tile-compass"
+    },
+    "scale": 0.75,
+    "width": 80,
+    "height": 80,
+    "y": -7,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "holder-tray-seat-p2": {
+    "type": "holder",
+    "id": "holder-tray-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 218,
+    "y": 118,
+    "width": 125,
+    "height": 105,
+    "z": 62137,
+    "alignChildren": false,
+    "css": {
+      "background": "white"
+    },
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice-a-p2": {
+    "type": "dice",
+    "id": "dice-a-p2",
+    "z": 62407,
+    "movable": true,
+    "color": "royalblue",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 73,
+    "activeFace": 4,
+    "x": 18,
+    "y": 44,
+    "hoverParent": "holder-tray-seat-p2",
+    "parent": "holder-tray-seat-p2"
+  },
+  "dice-b-p2": {
+    "type": "dice",
+    "id": "dice-b-p2",
+    "z": 62405,
+    "movable": true,
+    "color": "royalblue",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 73,
+    "x": 55,
+    "y": 7,
+    "activeFace": 5,
+    "hoverParent": "holder-tray-seat-p2",
+    "parent": "holder-tray-seat-p2"
+  },
+  "dice-c-p2": {
+    "type": "dice",
+    "id": "dice-c-p2",
+    "z": 62351,
+    "movable": true,
+    "color": "royalblue",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 70,
+    "y": 16,
+    "hoverParent": "holder-tray-seat-p2",
+    "parent": "holder-tray-seat-p2",
+    "activeFace": 5,
+    "x": 14
+  },
+  "holder-meeples-seat-p2": {
+    "type": "holder",
+    "id": "holder-meeples-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 220,
+    "y": 3,
+    "z": 61784,
+    "icon": "[meeple]",
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 9,
+    "dropOffsetY": 9,
+    "dropTarget": {
+      "class": "meeple"
+    },
+    "layer": -2
+  },
+  "deck-meeples-p2": {
+    "type": "deck",
+    "id": "deck-meeples-p2",
+    "parent": "holder-meeples-seat-p2",
+    "x": 4,
+    "y": 4,
+    "width": 46,
+    "height": 46,
+    "z": 45178,
+    "cardDefaults": {
+      "class": "meeple",
+      "width": 42,
+      "height": 42,
+      "cssText": "font-weight:bold; color:white",
+      "layer": 3,
+      "borderColor": "white",
+      "borderWidth": 4,
+      "onPileCreation": {
+        "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeples-seat-p2"
+      }
+    },
+    "cardTypes": {
+      "p1": {
+        "image": "i/game-pieces/2D/Meeple-2D.svg",
+        "color": "royalblue",
+        "label": "",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 42,
+            "height": 42,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 42,
+            "height": 42,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 18,
+            "y": 9,
+            "fontSize": "24",
+            "textAlign": "left",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "label",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "box-seat-p3": {
+    "id": "box-seat-p3",
+    "width": 350,
+    "height": 230,
+    "z": 62128,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightgray",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "x": 23,
+    "movable": false,
+    "y": 503,
+    "layer": -5
+  },
+  "holder-captain-seat-p3": {
+    "type": "holder",
+    "id": "holder-captain-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 12,
+    "y": 164,
+    "z": 61784,
+    "height": 60,
+    "width": 60,
+    "icon": "delapouite/pirate-captain",
+    "dropTarget": {
+      "type": "dice"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5
+  },
+  "holder-sailor-seat-p3": {
+    "type": "holder",
+    "id": "holder-sailor-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 79,
+    "icon": "rowing",
+    "inheritFrom": "holder-captain-seat-p3",
+    "y": 164,
+    "z": 62093
+  },
+  "holder-ship-seat-p3": {
+    "type": "holder",
+    "id": "holder-ship-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 147,
+    "icon": "delapouite/trireme",
+    "inheritFrom": "holder-captain-seat-p3",
+    "z": 62092,
+    "y": 164
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "parent": "box-seat-p3",
+    "x": 10,
+    "width": 190,
+    "z": 62057,
+    "css": {
+      "default": {
+        "background": "black",
+        "border": "5px solid #000000",
+        "color": "white",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "26px",
+        "line-height": "22px",
+        "text-shadow": "2px 2px 2px black"
+      },
+      ".seated": {
+        "background": "black",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "black",
+        "border": "2px solid black",
+        "background-size": "200% auto",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-12px",
+        "top": "3px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "y": 4,
+    "height": 45,
+    "index": 3
+  },
+  "bid-sailor-seat-p3": {
+    "id": "bid-sailor-seat-p3",
+    "parent": "seat-p3",
+    "x": 63,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 61947,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p3",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ]
+  },
+  "bid-captain-seat-p3": {
+    "id": "bid-captain-seat-p3",
+    "parent": "seat-p3",
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 61907,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p3",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      }
+    ],
+    "x": -4
+  },
+  "bid-ship-seat-p3": {
+    "id": "bid-ship-seat-p3",
+    "parent": "seat-p3",
+    "x": 130,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 62046,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "color": "black",
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center",
+        "text-shadow": "2px 3px 3px silver"
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p3",
+    "readyMarker": "ready-p1",
+    "clickRoutine": [],
+    "text": "0"
+  },
+  "image-money-seat-p3": {
+    "id": "image-money-seat-p3",
+    "parent": "seat-p3",
+    "x": 41,
+    "y": 53,
+    "height": 60,
+    "z": 4,
+    "movable": false,
+    "image": "/assets/-408480321_3830",
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "layer": -6
+  },
+  "label-money-seat-p3": {
+    "type": "label",
+    "id": "label-money-seat-p3",
+    "width": 60,
+    "height": 42,
+    "layer": 0,
+    "z": 17,
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "editable": true,
+    "text": 20,
+    "parent": "seat-p3",
+    "x": 62,
+    "y": 65
+  },
+  "button-score-inc-p3": {
+    "type": "button",
+    "id": "button-score-inc-p3",
+    "parent": "label-money-seat-p3",
+    "fixedParent": true,
+    "x": 65,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p3": {
+    "type": "button",
+    "id": "button-score-dec-p3",
+    "parent": "label-money-seat-p3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "text": "remove",
+    "classes": "symbols",
+    "z": 62052
+  },
+  "button-score-inc-x-p3": {
+    "type": "button",
+    "id": "button-score-inc-x-p3",
+    "parent": "label-money-seat-p3",
+    "fixedParent": true,
+    "x": 96,
+    "y": 3,
+    "width": 33,
+    "height": 33,
+    "z": 62055,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "18px"
+    },
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this much money:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a four-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 10000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -10000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-roll-seat-p3": {
+    "type": "button",
+    "id": "button-roll-seat-p3",
+    "parent": "seat-p3",
+    "x": 205,
+    "y": 60,
+    "width": 125,
+    "height": 45,
+    "z": 62061,
+    "css": "background-color:black;font-size:18px;font-weight:bold;border-radius:7px",
+    "text": "Roll Dice",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder-tray-seat-p3",
+        "relation": "=="
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "holder-tiles-seat-p3": {
+    "type": "holder",
+    "id": "holder-tiles-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 274,
+    "z": 62156,
+    "icon": "[hexagon_vertical]",
+    "dropTarget": {
+      "class": "tile-compass"
+    },
+    "scale": 0.75,
+    "width": 80,
+    "height": 80,
+    "y": -7,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "holder-tray-seat-p3": {
+    "type": "holder",
+    "id": "holder-tray-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 218,
+    "y": 118,
+    "width": 125,
+    "height": 105,
+    "z": 62137,
+    "alignChildren": false,
+    "css": {
+      "background": "white"
+    },
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice-a-p3": {
+    "type": "dice",
+    "id": "dice-a-p3",
+    "z": 62338,
+    "movable": true,
+    "color": "black",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 71,
+    "parent": "holder-tray-seat-p3",
+    "x": 38,
+    "y": 51,
+    "activeFace": 1
+  },
+  "dice-b-p3": {
+    "type": "dice",
+    "id": "dice-b-p3",
+    "z": 62337,
+    "movable": true,
+    "color": "black",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 69,
+    "x": 45,
+    "parent": "holder-tray-seat-p3",
+    "y": 11
+  },
+  "dice-c-p3": {
+    "type": "dice",
+    "id": "dice-c-p3",
+    "z": 62401,
+    "movable": true,
+    "color": "black",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 69,
+    "activeFace": 4,
+    "x": 49,
+    "y": 52,
+    "hoverParent": "holder-tray-seat-p3",
+    "parent": "holder-tray-seat-p3"
+  },
+  "holder-meeples-seat-p3": {
+    "type": "holder",
+    "id": "holder-meeples-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 220,
+    "y": 3,
+    "z": 61784,
+    "icon": "[meeple]",
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 9,
+    "dropOffsetY": 9,
+    "dropTarget": {
+      "class": "meeple"
+    },
+    "layer": -2
+  },
+  "deck-meeples-p3": {
+    "type": "deck",
+    "id": "deck-meeples-p3",
+    "parent": "holder-meeples-seat-p3",
+    "x": 4,
+    "y": 4,
+    "width": 46,
+    "height": 46,
+    "z": 45178,
+    "cardDefaults": {
+      "class": "meeple",
+      "width": 42,
+      "height": 42,
+      "cssText": "font-weight:bold; color:white",
+      "layer": 3,
+      "borderColor": "white",
+      "borderWidth": 4,
+      "onPileCreation": {
+        "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeples-seat-p3"
+      }
+    },
+    "cardTypes": {
+      "p1": {
+        "image": "i/game-pieces/2D/Meeple-2D.svg",
+        "color": "black",
+        "label": "",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 42,
+            "height": 42,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 42,
+            "height": 42,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 18,
+            "y": 9,
+            "fontSize": "24",
+            "textAlign": "left",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "label",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "box-seat-p4": {
+    "id": "box-seat-p4",
+    "width": 350,
+    "height": 230,
+    "z": 62128,
+    "css": {
+      "border": "1px solid black",
+      "background": "lightgray",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "x": 23,
+    "movable": false,
+    "y": 748,
+    "layer": -5
+  },
+  "holder-captain-seat-p4": {
+    "type": "holder",
+    "id": "holder-captain-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 12,
+    "y": 164,
+    "z": 61784,
+    "height": 60,
+    "width": 60,
+    "icon": "delapouite/pirate-captain",
+    "dropTarget": {
+      "type": "dice"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5
+  },
+  "holder-sailor-seat-p4": {
+    "type": "holder",
+    "id": "holder-sailor-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 79,
+    "icon": "rowing",
+    "inheritFrom": "holder-captain-seat-p4",
+    "y": 164,
+    "z": 62093
+  },
+  "holder-ship-seat-p4": {
+    "type": "holder",
+    "id": "holder-ship-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 147,
+    "icon": "delapouite/trireme",
+    "inheritFrom": "holder-captain-seat-p4",
+    "z": 62092,
+    "y": 164
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "parent": "box-seat-p4",
+    "x": 10,
+    "width": 190,
+    "z": 62057,
+    "css": {
+      "default": {
+        "background": "rebeccapurple",
+        "border": "5px solid #000000",
+        "color": "white",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "26px",
+        "line-height": "22px",
+        "text-shadow": "2px 2px 2px black"
+      },
+      ".seated": {
+        "background": "rebeccapurple",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "rebeccapurple",
+        "border": "2px solid black",
+        "background-size": "200% auto",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-12px",
+        "top": "3px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "y": 4,
+    "height": 45,
+    "index": 4
+  },
+  "bid-sailor-seat-p4": {
+    "id": "bid-sailor-seat-p4",
+    "parent": "seat-p4",
+    "x": 63,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 61947,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p4",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY readyMarker}"
+        ],
+        "property": "activeFace",
+        "value": 1
+      }
+    ]
+  },
+  "bid-captain-seat-p4": {
+    "id": "bid-captain-seat-p4",
+    "parent": "seat-p4",
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 61907,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p4",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      }
+    ],
+    "x": -4
+  },
+  "bid-ship-seat-p4": {
+    "id": "bid-ship-seat-p4",
+    "parent": "seat-p4",
+    "x": 130,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 62046,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "color": "black",
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center",
+        "text-shadow": "2px 3px 3px silver"
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p4",
+    "readyMarker": "ready-p1",
+    "clickRoutine": [],
+    "text": "0"
+  },
+  "image-money-seat-p4": {
+    "id": "image-money-seat-p4",
+    "parent": "seat-p4",
+    "x": 41,
+    "y": 53,
+    "height": 60,
+    "z": 4,
+    "movable": false,
+    "image": "/assets/-408480321_3830",
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "layer": -6
+  },
+  "label-money-seat-p4": {
+    "type": "label",
+    "id": "label-money-seat-p4",
+    "width": 60,
+    "height": 42,
+    "layer": 0,
+    "z": 17,
+    "css": {
+      "color": "white",
+      "font-size": "38px",
+      "line-height": "38px",
+      "text-align": "center",
+      "text-shadow": "2px 2px 3px black"
+    },
+    "editable": true,
+    "text": 20,
+    "parent": "seat-p4",
+    "x": 62,
+    "y": 65
+  },
+  "button-score-inc-p4": {
+    "type": "button",
+    "id": "button-score-inc-p4",
+    "parent": "label-money-seat-p4",
+    "fixedParent": true,
+    "x": 65,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p4": {
+    "type": "button",
+    "id": "button-score-dec-p4",
+    "parent": "label-money-seat-p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 3,
+    "width": 32,
+    "height": 32,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "22px"
+    },
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "text": "remove",
+    "classes": "symbols",
+    "z": 62052
+  },
+  "button-score-inc-x-p4": {
+    "type": "button",
+    "id": "button-score-inc-x-p4",
+    "parent": "label-money-seat-p4",
+    "fixedParent": true,
+    "x": 96,
+    "y": 3,
+    "width": 33,
+    "height": 33,
+    "z": 62055,
+    "css": {
+      "color": "white",
+      "background-color": "forestgreen",
+      "font-size": "18px"
+    },
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this much money:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a four-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 10000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -10000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-roll-seat-p4": {
+    "type": "button",
+    "id": "button-roll-seat-p4",
+    "parent": "seat-p4",
+    "x": 205,
+    "y": 60,
+    "width": 125,
+    "height": 45,
+    "z": 62061,
+    "css": "background-color:rebeccapurple;font-size:18px;font-weight:bold;border-radius:7px",
+    "text": "Roll Dice",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder-tray-seat-p4",
+        "relation": "=="
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "holder-tiles-seat-p4": {
+    "type": "holder",
+    "id": "holder-tiles-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 274,
+    "z": 62156,
+    "icon": "[hexagon_vertical]",
+    "dropTarget": {
+      "class": "tile-compass"
+    },
+    "scale": 0.75,
+    "width": 80,
+    "height": 80,
+    "y": -7,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true
+  },
+  "holder-tray-seat-p4": {
+    "type": "holder",
+    "id": "holder-tray-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 218,
+    "y": 118,
+    "width": 125,
+    "height": 105,
+    "z": 62137,
+    "alignChildren": false,
+    "css": {
+      "background": "white"
+    },
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "dice-a-p4": {
+    "type": "dice",
+    "id": "dice-a-p4",
+    "z": 62411,
+    "movable": true,
+    "color": "rebeccapurple",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 71,
+    "activeFace": 1,
+    "x": 32,
+    "y": 41,
+    "hoverParent": "holder-tray-seat-p4",
+    "parent": "holder-tray-seat-p4"
+  },
+  "dice-b-p4": {
+    "type": "dice",
+    "id": "dice-b-p4",
+    "z": 62413,
+    "movable": true,
+    "color": "rebeccapurple",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 70,
+    "x": 69,
+    "activeFace": 2,
+    "hoverParent": "holder-tray-seat-p4",
+    "y": 42,
+    "parent": "holder-tray-seat-p4"
+  },
+  "dice-c-p4": {
+    "type": "dice",
+    "id": "dice-c-p4",
+    "z": 62409,
+    "movable": true,
+    "color": "rebeccapurple",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      "X"
+    ],
+    "rollCount": 68,
+    "activeFace": 3,
+    "y": 23,
+    "x": 27,
+    "hoverParent": "holder-tray-seat-p4",
+    "parent": "holder-tray-seat-p4"
+  },
+  "holder-meeples-seat-p4": {
+    "type": "holder",
+    "id": "holder-meeples-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 220,
+    "y": 3,
+    "z": 61784,
+    "icon": "[meeple]",
+    "width": 60,
+    "height": 60,
+    "dropOffsetX": 9,
+    "dropOffsetY": 9,
+    "dropTarget": {
+      "class": "meeple"
+    },
+    "layer": -2
+  },
+  "deck-meeples-p4": {
+    "type": "deck",
+    "id": "deck-meeples-p4",
+    "parent": "holder-meeples-seat-p4",
+    "x": 4,
+    "y": 4,
+    "width": 46,
+    "height": 46,
+    "z": 45178,
+    "cardDefaults": {
+      "class": "meeple",
+      "width": 42,
+      "height": 42,
+      "cssText": "font-weight:bold; color:white",
+      "layer": 3,
+      "borderColor": "white",
+      "borderWidth": 4,
+      "onPileCreation": {
+        "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeples-seat-p4"
+      }
+    },
+    "cardTypes": {
+      "p1": {
+        "image": "i/game-pieces/2D/Meeple-2D.svg",
+        "color": "rebeccapurple",
+        "label": "",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 42,
+            "height": 42,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 42,
+            "height": 42,
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 18,
+            "y": 9,
+            "fontSize": "24",
+            "textAlign": "left",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "label",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "ofg6": {
+    "deck": "deck-meeples-p1",
+    "type": "card",
+    "cardType": "p1",
+    "id": "ofg6",
+    "z": 807,
+    "parent": "6stw"
+  },
+  "58mz": {
+    "deck": "deck-meeples-p1",
+    "type": "card",
+    "cardType": "p1",
+    "id": "58mz",
+    "z": 808,
+    "parent": "6stw"
+  },
+  "jby1": {
+    "deck": "deck-meeples-p1",
+    "type": "card",
+    "cardType": "p1",
+    "id": "jby1",
+    "z": 809,
+    "parent": "6stw"
+  },
+  "i8ji": {
+    "deck": "deck-meeples-p1",
+    "type": "card",
+    "cardType": "p1",
+    "id": "i8ji",
+    "z": 810,
+    "parent": "6stw"
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "x": 842,
+    "y": 800,
+    "width": 300,
+    "height": 80,
+    "z": 62162,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "stackOffsetX": 70,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "usra": {
+    "deck": "deck-meeples-p2",
+    "type": "card",
+    "cardType": "p1",
+    "id": "usra",
+    "z": 811,
+    "parent": "xdrl"
+  },
+  "n9d7": {
+    "deck": "deck-meeples-p2",
+    "type": "card",
+    "cardType": "p1",
+    "id": "n9d7",
+    "z": 812,
+    "parent": "xdrl"
+  },
+  "1q9r": {
+    "deck": "deck-meeples-p2",
+    "type": "card",
+    "cardType": "p1",
+    "id": "1q9r",
+    "z": 813,
+    "parent": "xdrl"
+  },
+  "yhth": {
+    "deck": "deck-meeples-p2",
+    "type": "card",
+    "cardType": "p1",
+    "id": "yhth",
+    "z": 814,
+    "parent": "xdrl"
+  },
+  "su46": {
+    "deck": "deck-meeples-p2",
+    "type": "card",
+    "cardType": "p1",
+    "id": "su46",
+    "z": 815,
+    "parent": "xdrl"
+  },
+  "d6xe": {
+    "deck": "deck-meeples-p4",
+    "type": "card",
+    "cardType": "p1",
+    "id": "d6xe",
+    "z": 821,
+    "parent": "67q0"
+  },
+  "spq1": {
+    "deck": "deck-meeples-p4",
+    "type": "card",
+    "cardType": "p1",
+    "id": "spq1",
+    "z": 822,
+    "parent": "67q0",
+    "x": null,
+    "y": null
+  },
+  "67q0": {
+    "type": "pile",
+    "parent": "holder-meeples-seat-p4",
+    "x": 9,
+    "y": 9,
+    "width": 42,
+    "height": 42,
+    "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem",
+    "id": "67q0"
+  },
+  "0l7d": {
+    "deck": "deck-meeples-p4",
+    "type": "card",
+    "cardType": "p1",
+    "id": "0l7d",
+    "z": 823,
+    "parent": "67q0",
+    "x": null,
+    "y": null
+  },
+  "2agi": {
+    "deck": "deck-meeples-p4",
+    "type": "card",
+    "cardType": "p1",
+    "id": "2agi",
+    "z": 824,
+    "parent": "67q0",
+    "x": null,
+    "y": null
+  },
+  "af4q": {
+    "deck": "deck-meeples-p4",
+    "type": "card",
+    "cardType": "p1",
+    "id": "af4q",
+    "z": 825,
+    "parent": "67q0"
+  },
+  "hlhn": {
+    "deck": "deck-meeples-p3",
+    "type": "card",
+    "cardType": "p1",
+    "id": "hlhn",
+    "z": 816,
+    "parent": "nqob"
+  },
+  "n52g": {
+    "deck": "deck-meeples-p3",
+    "type": "card",
+    "cardType": "p1",
+    "id": "n52g",
+    "z": 817,
+    "parent": "nqob",
+    "x": null,
+    "y": null
+  },
+  "nqob": {
+    "type": "pile",
+    "parent": "holder-meeples-seat-p3",
+    "x": 9,
+    "y": 9,
+    "width": 42,
+    "height": 42,
+    "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem",
+    "id": "nqob"
+  },
+  "1e8u": {
+    "deck": "deck-meeples-p3",
+    "type": "card",
+    "cardType": "p1",
+    "id": "1e8u",
+    "z": 818,
+    "parent": "nqob",
+    "x": null,
+    "y": null
+  },
+  "4cvi": {
+    "deck": "deck-meeples-p3",
+    "type": "card",
+    "cardType": "p1",
+    "id": "4cvi",
+    "z": 819,
+    "parent": "nqob"
+  },
+  "zf7z": {
+    "deck": "deck-meeples-p3",
+    "type": "card",
+    "cardType": "p1",
+    "id": "zf7z",
+    "z": 820,
+    "parent": "nqob"
+  },
+  "xdrl": {
+    "type": "pile",
+    "x": 9,
+    "y": 9,
+    "width": 42,
+    "height": 42,
+    "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem",
+    "id": "xdrl",
+    "z": 46497,
+    "parent": "holder-meeples-seat-p2"
+  },
+  "holder-ships": {
+    "type": "holder",
+    "id": "holder-ships",
+    "x": 578,
+    "y": 86,
+    "z": 62171,
+    "width": 163,
+    "height": 63,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "0px dashed black"
+    },
+    "dropOffsetX": -4,
+    "dropOffsetY": -4,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "preventPiles": true,
+    "parent": "board-batam",
+    "stackOffsetX": 40
+  },
+  "deck-ships": {
+    "type": "deck",
+    "id": "deck-ships",
+    "x": 18,
+    "y": 68,
+    "width": 46,
+    "height": 46,
+    "z": 45598,
+    "movable": false,
+    "cardTypes": {
+      "ship-p1": {
+        "color": "firebrick",
+        "image": "/assets/1197315170_2269"
+      },
+      "ship-p2": {
+        "color": "royalblue",
+        "image": "/assets/1197315170_2269"
+      },
+      "ship-p3": {
+        "color": "black",
+        "image": "/assets/1197315170_2269"
+      },
+      "ship-p4": {
+        "color": "rebeccapurple",
+        "image": "/assets/1197315170_2269"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-ships"
+      }
+    },
+    "parent": "holder-ships",
+    "movableInEdit": false
+  },
+  "9sps": {
+    "deck": "deck-ships",
+    "type": "card",
+    "cardType": "ship-p1",
+    "id": "9sps",
+    "z": 46766,
+    "x": -4,
+    "y": -4,
+    "parent": "holder-ships"
+  },
+  "m7fm": {
+    "deck": "deck-ships",
+    "type": "card",
+    "cardType": "ship-p2",
+    "id": "m7fm",
+    "x": 116,
+    "y": -4,
+    "z": 46767,
+    "parent": "holder-ships"
+  },
+  "51vn": {
+    "deck": "deck-ships",
+    "type": "card",
+    "cardType": "ship-p3",
+    "id": "51vn",
+    "z": 46768,
+    "x": 76,
+    "y": -4,
+    "parent": "holder-ships"
+  },
+  "br0k": {
+    "deck": "deck-ships",
+    "type": "card",
+    "cardType": "ship-p4",
+    "id": "br0k",
+    "z": 46769,
+    "x": 36,
+    "y": -4,
+    "parent": "holder-ships"
+  },
+  "bid-captain-seat-p1": {
+    "id": "bid-captain-seat-p1",
+    "parent": "seat-p1",
+    "x": -4,
+    "y": 121,
+    "width": 60,
+    "height": 30,
+    "z": 62358,
+    "movable": false,
+    "css": {
+      "default": {
+        "opacity": 0.7,
+        "font-size": "26px",
+        "line-height": "30px",
+        "text-align": "center"
+      },
+      ":hover": {
+        "opacity": 1
+      }
+    },
+    "image": "/assets/-408480321_3830",
+    "linkedToSeat": "seat-p1",
+    "svgReplaces": {
+      "#000": "captainColor"
+    },
+    "text": 0,
+    "clickRoutine": [
+      "var header = 'Enter bid amount'",
+      {
+        "func": "INPUT",
+        "header": "${header}",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "value": "${PROPERTY text}",
+            "variable": "newValue"
+          }
+        ]
+      },
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY id}",
+        "value": "${newValue}"
+      }
+    ]
+  },
+  "6stw": {
+    "type": "pile",
+    "parent": "holder-meeples-seat-p1",
+    "x": 9,
+    "y": 9,
+    "width": 42,
+    "height": 42,
+    "handleCSS": "position:fixed; width:18px; height:18px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem",
+    "id": "6stw"
+  },
+  "button-code": {
+    "type": "button",
+    "id": "button-code",
+    "x": 1681,
+    "width": 90,
+    "height": 50,
+    "z": 62079,
+    "css": {
+      "_, .transition": {
+        "transition": "transform 400ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "text": "Code",
+    "y": 680
+  }
+}
