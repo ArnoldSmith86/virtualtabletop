@@ -261,7 +261,8 @@ export function getAvailableRoomRectangle() {
     top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? $('#editorToolbar').getBoundingClientRect().bottom : window.innerHeight/2,
     right: (window.innerWidth/window.innerHeight > 1 && ($('#editor.moduleActive') || $('body.draggingEditorSidebarModule')) ? $('#editorModules') : $('#editorSidebar')).offsetLeft,
     left: 0,
-    bottom: window.innerHeight
+    // the trace viewer's transport bar spans the bottom edge of the window while it is open
+    bottom: window.innerHeight - $('#traceUI').offsetHeight
   };
 }
 

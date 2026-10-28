@@ -165,6 +165,14 @@ function preventReconnect() {
   userNavigatedAway = true;
 }
 
+// Ends the session for good instead of just dropping the socket: whatever takes the place of the
+// live room afterwards - the crash reporter, the trace viewer - must not have a reconnect put the
+// real room back underneath it.
+export function closeConnection() {
+  preventReconnect();
+  connection.close();
+}
+
 function log(str) {
   toServer('trace', str);
 }

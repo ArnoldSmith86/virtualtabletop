@@ -356,7 +356,7 @@ export function editorReceiveDelta(delta) {
   aiRoutineDeltaReceived();
 }
 
-function receiveStateFromServer(state) {
+function editorReceiveState(state) {
   smartCloneInit();
   // A new state replaces every widget in the room, so anything still selected
   // points at a widget object that is gone by the time this runs. Clearing the
@@ -376,5 +376,5 @@ function receiveStateFromServer(state) {
 }
 
 function registerSelectionEventHandlers() {
-  onMessage('state', receiveStateFromServer);
+  onMessage('state', editorReceiveState);
 }

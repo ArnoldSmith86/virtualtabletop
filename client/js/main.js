@@ -10,6 +10,7 @@ let overlayActive = false;
 let optionsHidden = true;
 
 let edit = null;
+let editModeLoad = null;
 export let jeEnabled = null;
 let zoom = 1;
 let offset = [ 0, 0 ];
@@ -829,6 +830,9 @@ async function editModeUnavailable(error) {
     return false;
   }
   if(!serverAnswered) {
+    // the extra line about a picked trace file belongs on the overlay only while one is waiting for
+    // the bundle - openTraceFile() puts it back when that is the case
+    $('#editModeUnavailableTraceNote').classList.remove('visible');
     // while the connection is down its own overlay is up and forced, so it stays and this one does
     // not appear - which is the right way round: it already says the server is away, and unlike
     // this one it goes when the server comes back
@@ -841,7 +845,15 @@ async function editModeUnavailable(error) {
 
 // Resolves to whether edit mode is available: false means the editor could not be fetched, which
 // the user has been told about and can retry - the callers must not go on to use it.
-async function loadEditMode() {
+//
+// Everybody waits for the same fetch. What marks edit mode as loaded is set before the import
+// that loads it, so a second caller arriving in between would otherwise be told it is ready and
+// use names the editor has not defined yet.
+function loadEditMode() {
+  return editModeLoad || (editModeLoad = fetchEditMode());
+}
+
+async function fetchEditMode() {
   if(edit === null) {
     $('body').classList.add('loadingEditMode');
     let editmode;
@@ -850,14 +862,14 @@ async function loadEditMode() {
       Object.assign(window, {
         $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, confirmOverlay, sleep, rand, shuffleArray,
         setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
-        toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
+        toServer, closeConnection, batchStart, batchEnd, receiveStateFromServer, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
         addWidgetLocal, updateWidgetId, removeWidgetLocal,
         loadZipLibrary, waitForZipLibrary, zipBlob,
         generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
         uploadAsset, _uploadAsset, mapAssetURLs, fetchSVG, pickSymbol, pickAudio, cancelAudioPicker, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
         iconSearchEntry, iconSearchScores, iconSearchTagText, iconSearchPlaceholder, iconSearchNoResultsHint,
         enableEmojiVariantFlyouts, closeEmojiVariantFlyout, expandEmojiVariants, loadEmojiVariants,
-        config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
+        config, getPlayerDetails, setPlayerName, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
         viewportConfig, DEFAULT_VIEWPORT, MIN_BOARD_SIZE, MAX_BOARD_SIZE, addOverlayPosition, calculateEditModuleClasses, isOrientationMismatch,
         html, formField,
         Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Line, Pile, Scoreboard, Seat, Spinner, Timer,
@@ -873,6 +885,7 @@ async function loadEditMode() {
       editmode = await import(editModeURL());
     } catch(e) {
       edit = null;
+      editModeLoad = null; // a failed fetch is forgotten, so the next click tries again
       return await editModeUnavailable(e);
     } finally {
       $('body').classList.remove('loadingEditMode');

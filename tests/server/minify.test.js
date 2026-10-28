@@ -29,6 +29,20 @@ function windowAPINames() {
   return assign.split(',').map(name => name.trim()).filter(name => /^[\w$]+$/.test(name));
 }
 
+// Files are concatenated as they are, so everything a bundle declares for itself starts at the
+// beginning of a line - anything indented belongs to a scope inside one of them. Only the name a
+// declaration starts with is read, so a second one in the same `let a, b` and a destructured
+// binding are not covered: this catches the shape the bundles are written in, it is not a proof.
+function topLevelDeclarationNames(js) {
+  return [ ...new Set([ ...js.matchAll(/^(?:export\s+)?(?:async\s+)?(?:function|class|let|const|var)\s+([\w$]+)/gm) ].map(match => match[1])) ];
+}
+
+// validator/validate_gamefile.js also runs outside the browser (validate_gamefile_node.js), so it
+// declares the helpers it needs itself rather than relying on the handover. Its asArray is not the
+// same function as the handed over one - it turns null and undefined into an empty array where
+// domhelpers.js wraps them - and being a declaration, it is the one the whole editor bundle uses.
+const SHADOWED_ON_PURPOSE = [ 'asArray' ];
+
 function topLevelFunctionNames(js) {
   return [ ...new Set([ ...js.matchAll(/^(?:async\s+)?function\s+([\w$]+)/gm) ].map(match => match[1])) ];
 }
@@ -65,6 +79,28 @@ describe('minifyHTML with minifyJavascript disabled', () => {
   test('keeps the editor JS readable', () => {
     expect(build.editorJSmin).toMatch(readableJS);
     expect(build.editorJSmin).toContain('\n\n');
+  });
+
+  // Edit mode reads its half of the API off the window, which is a plain global lookup - so a top
+  // level declaration of the same name anywhere in the editor bundle wins over it, silently and
+  // for the whole bundle at once. A name that is handed over therefore must not be declared on the
+  // other side of the boundary.
+  test('does not shadow a handed over name in the editor bundle', () => {
+    const names = windowAPINames();
+    expect(names.length).toBeGreaterThan(50);  // the block was found, not an empty match
+    const declared = topLevelDeclarationNames(build.editorJSmin);
+    expect(declared.length).toBeGreaterThan(100);  // same for the bundle
+    expect(names.filter(name => declared.includes(name) && !SHADOWED_ON_PURPOSE.includes(name))).toEqual([]);
+  });
+
+  // The way back is the same lookup: what edit mode exports ends up on the window as well, and the
+  // client bundle reads those names as globals - loadTraceFile, which the F9 handler calls, is one
+  // of them.
+  test('does not shadow a name edit mode hands back in the client bundle', () => {
+    const names = exportedNames(build.editorJSmin);
+    expect(names.length).toBeGreaterThan(20);  // the exports were found, not an empty match
+    const declared = topLevelDeclarationNames(inlineClientJS(build));
+    expect(names.filter(name => declared.includes(name))).toEqual([]);
   });
 
   // Nothing imports the client bundle, so its exports only stop terser from dropping code that
