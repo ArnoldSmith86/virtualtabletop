@@ -253,6 +253,28 @@ describe('Validator custom properties', () => {
 
     expect(problems.some(undefinedProperty('alignX'))).toBe(true);
   });
+
+  test.each([
+    ['an undefined property', [], true],
+    ['a defined property', [{ func: 'SET', property: 'customProperty', value: 1 }], false],
+    ['a dynamically defined property', [{ func: 'SET', property: 'customProperty${index}', value: 1 }], false]
+  ])('an uncalled custom routine accepts caller while checking %s', (description, writes, missing) => {
+    const property = writes.length && writes[0].property.includes('${') ? 'customProperty3' : 'customProperty';
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        clickRoutine: writes,
+        customRoutine: [{ func: 'GET', collection: 'caller', property }]
+      }
+    }, false);
+
+    expect(problems).toContainEqual({
+      widget: 'widget', property: ['customRoutine'], message: 'Routine is not being called'
+    });
+    const routineProblems = problems.filter(problem => problem.property[0] === 'customRoutine');
+    expect(routineProblems.some(undefinedProperty(property))).toBe(missing);
+    expect(routineProblems.some(problem => problem.message.includes("Collection 'caller'"))).toBe(false);
+  });
 });
 
 describe('Validator input handling', () => {
