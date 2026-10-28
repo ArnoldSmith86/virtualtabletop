@@ -474,8 +474,10 @@ function sortStatesCallback(stateA, stateB) {
     return (stateB.saveDate || stateB.lastUpdate || 0) - (stateA.saveDate || stateA.lastUpdate || 0);
   if(sortBy == 'stars' && stateB.stars != stateA.stars)
     return stateB.stars - stateA.stars;
-  if(sortBy == 'timePlayed' && stateB.timePlayed != stateA.timePlayed)
-    return stateB.timePlayed - stateA.timePlayed;
+  if(sortBy == 'timePlayed')
+    return (Number(stateB.timePlayed) || 0) - (Number(stateA.timePlayed) || 0)
+        || String(stateA.name).localeCompare(String(stateB.name))
+        || String(stateA.id).localeCompare(String(stateB.id));
   if(sortBy == 'similarName' && stateB.similarName != stateA.similarName)
     return String(stateA.similarName||stateA.name).localeCompare(String(stateB.similarName||stateB.name));
   return String(stateA.name).localeCompare(String(stateB.name));
@@ -523,7 +525,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const modeOptions = {};
 
   const publicLibraryLinksFound = {};
-  for(const state of Object.values(states)) {
+  for(const [ id, state ] of Object.entries(states)) {
+    state.id = id;
     state.starred = starred && starred[state.publicLibrary];
     state.stars = state.stars || 0;
     for(const variant of state.variants)
@@ -539,8 +542,6 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
   for(const kvp of Object.entries(states).sort((a, b) => sortStatesCallback(a[1], b[1])).sort((a, b) => (!!a[1].publicLibrary && !a[1].starred) - (!!b[1].publicLibrary && !b[1].starred))) {
     const state = kvp[1];
-    state.id = kvp[0];
-
     let target = 'Game Shelf';
     if(state.savePlayers)
       target = 'In-Progress Games';

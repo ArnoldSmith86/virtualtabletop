@@ -99,3 +99,55 @@ test('Deleting one of several variants keeps the game', async t => {
     .click('#confirmOverlay [data-field=confirmButton]')
     .expect(shelfGames.count).eql(0);
 });
+
+test('Popularity sorts a mixed shelf independently of the previous sort', async t => {
+  await ClientFunction(prepareClient)();
+  await t
+    .pressKey('esc')
+    .click('#statesButton')
+    .click('#librarySort')
+    .click(Selector('#librarySort option').withAttribute('value', 'timePlayed'));
+
+  // Popularity is supplied for public games; local games can have no play statistics.
+  await ClientFunction(() => {
+    const category = document.querySelector('#statesList > div:nth-of-type(2)');
+    const list = category.querySelector('.list');
+    list.innerHTML = '';
+    category.classList.remove('empty');
+    const games = [
+      { id: 'popular', name: 'Zulu', timePlayed: 100 },
+      { id: 'local', name: 'Local' },
+      { id: 'less-popular', name: 'Alpha', timePlayed: 2 },
+      { id: 'equal-b', name: 'Equal', timePlayed: 2 },
+      { id: 'equal-a', name: 'Equal', timePlayed: 2 },
+      { id: 'unplayed', name: 'Unplayed', timePlayed: 0 },
+      { id: 'undefined', name: 'Missing', timePlayed: undefined },
+      { id: 'null', name: 'Null', timePlayed: null }
+    ];
+    for(const [ index, game ] of games.entries()) {
+      const tile = document.createElement('div');
+      tile.appendChild(document.querySelector('#template-stateslist-entry').content.cloneNode(true));
+      tile.classList.add('roomState', 'visible');
+      if(game.timePlayed !== undefined && game.timePlayed !== null)
+        tile.classList.add('publicLibraryGame');
+      Object.assign(tile.dataset, {
+        text: game.name.toLowerCase(), type: 'Games', players: '', duration: '0', languages: '', modes: '',
+        similarName: String(games.length - index), stars: index, year: 2000 + index, lastUpdate: index
+      }, game);
+      tile.querySelector('h3').textContent = game.name;
+      list.appendChild(tile);
+    }
+  })();
+
+  const shelfOrder = ClientFunction(() => Array.from(
+    document.querySelectorAll('#statesList > div:nth-of-type(2) .list .roomState'), tile => tile.dataset.id
+  ));
+  for(const sort of [ 'name', 'similarName', 'stars', 'lastUpdate', 'year' ]) {
+    await t
+      .click('#librarySort')
+      .click(Selector('#librarySort option').withAttribute('value', sort))
+      .click('#librarySort')
+      .click(Selector('#librarySort option').withAttribute('value', 'timePlayed'))
+      .expect(shelfOrder()).eql([ 'popular', 'less-popular', 'equal-a', 'equal-b', 'local', 'undefined', 'null', 'unplayed' ], `after sorting by ${sort}`);
+  }
+});
