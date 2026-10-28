@@ -247,6 +247,7 @@ function selectionChanged(previousSelection, newSelection) {
 
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
+  newSelectedWidgets = smartCloneProcessSelection(newSelectedWidgets);
 
   // Whatever the editor has open belongs to the widget that was being edited, so
   // moving on to another one takes it along: the sound library is an overlay
@@ -335,9 +336,11 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
+  smartCloneInit();
   // A new state replaces every widget in the room, so anything still selected
   // points at a widget object that is gone by the time this runs. Clearing the
   // selection first is the same notification the modules got before - just
