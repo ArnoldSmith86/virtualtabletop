@@ -3147,9 +3147,15 @@ export class Widget extends StateManaged {
     // there can put it back: x and y are the numbers it had inside that holder, and left on the
     // top level they are read as the room's and draw the widget somewhere else entirely.
     const parentBefore = this.get('parent');
+    const xBefore = this.get('x');
+    const yBefore = this.get('y');
     const putBack = async ()=> {
-      if(this.get('parent') !== parentBefore && liveWidget(this.id) === this && liveWidget(parentBefore))
+      if(this.get('parent') !== parentBefore && liveWidget(this.id) === this && liveWidget(parentBefore)) {
         await this.set('parent', parentBefore);
+        // Reattachment converts global coordinates to local ones or aligns to the drop offsets.
+        if(liveWidget(this.id) === this && this.get('parent') === parentBefore)
+          await this.setPosition(xBefore, yBefore, this.get('z'));
+      }
       return false;
     };
 

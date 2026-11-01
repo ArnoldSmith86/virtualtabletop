@@ -859,35 +859,39 @@ test('a card deleted while its pile is being created leaves no pile behind', asy
 // holder it is on its way to can disappear while the widget is already detached. Its x and y are
 // the numbers it had inside its old holder, so leaving it on the top level would draw it somewhere
 // else entirely - it goes back where it came from instead. (#1504)
-test('a holder that disappears while the widget leaves its old one puts the widget back', async t => {
-  await setRoomState({
-    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
-    source: { id: 'source', type: 'holder', x: 50, y: 100, width: 700, height: 180, leaveRoutine: [
-      { func: 'SELECT', property: 'id', value: 'target' },
-      { func: 'DELETE' }
-    ] },
-    target: { id: 'target', type: 'holder', x: 50, y: 600, width: 700, height: 180 },
-    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source', x: 100, y: 20 },
-    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source', x: 300, y: 20 },
-    move: { id: 'move', type: 'button', text: 'move', x: 800, y: 400, clickRoutine: [
-      { func: 'MOVE', from: 'source', to: 'target', count: 2 }
-    ] }
+for(const alignChildren of [ false, true ]) {
+  test(`a holder that disappears while the widget leaves its old one puts the widget back (alignChildren: ${alignChildren})`, async t => {
+    await setRoomState({
+      deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+      source: { id: 'source', type: 'holder', alignChildren, x: 50, y: 100, width: 700, height: 180, leaveRoutine: [
+        { func: 'SELECT', property: 'id', value: 'target' },
+        { func: 'DELETE' }
+      ] },
+      target: { id: 'target', type: 'holder', x: 50, y: 600, width: 700, height: 180 },
+      card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source', x: 100, y: 20 },
+      card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'source', x: 300, y: 20 },
+      move: { id: 'move', type: 'button', text: 'move', x: 800, y: 400, clickRoutine: [
+        { func: 'MOVE', from: 'source', to: 'target', count: 2 }
+      ] }
+    });
+    await ClientFunction(prepareClient)();
+    await setName(t);
+    await t
+      .click('#editButton')
+      .click('#editorSidebar [icon=pest_control]')
+      .expect(Selector('#jeLog').exists).ok();
+
+    await ClientFunction(() => widgets.get('move').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
+
+    await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('because that holder no longer exists');
+    // both cards are in the holder they started in - the one whose turn never came and the one that
+    // was already taken out of it when the target disappeared
+    await expectEventually(t, ()=>widgetProperty('card1', 'parent'), 'source');
+    await expectEventually(t, ()=>widgetProperty('card2', 'parent'), 'source');
+    await t.expect(await widgetPosition('card1')).eql([ 100, 20 ]);
+    await t.expect(await widgetPosition('card2')).eql([ 300, 20 ]);
   });
-  await ClientFunction(prepareClient)();
-  await setName(t);
-  await t
-    .click('#editButton')
-    .click('#editorSidebar [icon=pest_control]')
-    .expect(Selector('#jeLog').exists).ok();
-
-  await ClientFunction(() => widgets.get('move').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
-
-  await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('because that holder no longer exists');
-  // both cards are in the holder they started in - the one whose turn never came and the one that
-  // was already taken out of it when the target disappeared
-  await expectEventually(t, ()=>widgetProperty('card1', 'parent'), 'source');
-  await expectEventually(t, ()=>widgetProperty('card2', 'parent'), 'source');
-});
+}
 
 // The guards in receiveDelta() are the last resort for a delta that names a widget this client
 // does not have: reading its state to build the undo entry, or moving it out of the way of a
