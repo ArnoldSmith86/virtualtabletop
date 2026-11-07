@@ -332,3 +332,48 @@ test('INPUT validates fields whose variable names contain spaces', async t => {
   await t.typeText(input, '4', { replace: true }).click('#buttonInputGo');
   await expectEventually(t, async ()=>JSON.parse(await getState()).ask.answer, '4');
 });
+
+for(const mode of [ 'widgets', 'faces' ]) {
+  test(`INPUT choose returns only selected ${mode} when child widgets are visible`, async t => {
+    const field = { type: 'choose', source: [ 'option1', 'option2' ], mode, visibleChildWidgets: true, collection: 'chosen', min: 1 };
+    const state = {
+      ask: { id: 'ask', type: 'button', text: 'Ask', x: 100, y: 100, clickRoutine: [
+        { func: 'INPUT', fields: [ { ...field, variable: 'single', max: 1 } ] },
+        { func: 'SET', collection: 'thisButton', property: 'single', value: '${single}' },
+        { func: 'INPUT', fields: [ { ...field, variable: 'multiple', max: 100 } ] },
+        { func: 'SET', collection: 'thisButton', property: 'multiple', value: '${multiple}' },
+        { func: 'GET', collection: 'chosen', property: 'id', aggregation: 'array', variable: 'ids' },
+        { func: 'SET', collection: 'thisButton', property: 'chosenIDs', value: '${ids}' }
+      ] }
+    };
+    for(const index of [ 1, 2 ]) {
+      const id = `option${index}`;
+      state[id] = { id, type: mode == 'widgets' ? 'seat' : 'basic', x: 400*index, y: 300, width: 180, height: 100 };
+      if(mode == 'faces')
+        state[id].faces = [ { text: 'Front' }, { text: 'Back' } ];
+      state[`${id}child`] = { id: `${id}child`, type: 'label', parent: id, text: 'Child', width: 80, height: 30 };
+      state[`${id}grandchild`] = { id: `${id}grandchild`, type: 'label', parent: `${id}child`, y: 30, text: 'Grandchild', width: 80, height: 30 };
+    }
+    await setRoomState(state);
+    await ClientFunction(prepareClient)();
+    await setName(t);
+    await t.click('#w_option1');
+    await t.click('#editButton').click('#editorSidebar [icon=pest_control]');
+    await ClientFunction(() => { widgets.get('ask').evaluateRoutine('clickRoutine', {}, {}); })();
+
+    const choices = Selector('#buttonInputFields .inputchooseWidgetWrapper');
+    await t.expect(choices.count).eql(mode == 'faces' ? 4 : 2);
+    await t.expect(choices.nth(0).find('.widget').count).eql(3);
+    await t.click(choices.nth(0)).click('#buttonInputGo');
+    await t.expect(Selector('[id="INPUT_ask;multiple"]').exists).ok();
+    await t.expect(await ClientFunction(() => widgets.get('ask').get('single'))()).eql(
+      mode == 'faces' ? { widget: 'option1', face: '0' } : 'option1');
+
+    await t.click(choices.nth(0)).click(choices.nth(mode == 'faces' ? 3 : 1)).click('#buttonInputGo');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).ask.multiple,
+      mode == 'faces' ? [ { widget: 'option1', face: '0' }, { widget: 'option2', face: '1' } ] : [ 'option1', 'option2' ]);
+    await expectEventually(t, async ()=>JSON.parse(await getState()).ask.chosenIDs, [ 'option1', 'option2' ]);
+    await t.expect(Selector('#buttonInputOverlay .inputError').exists).notOk();
+    await t.expect(Selector('#jeLog').innerText).notContains('TypeError');
+  });
+}
