@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1787512070700,
+      "lastUpdate": 1788709781987,
       "showName": false,
       "skill": "",
       "description": "",
@@ -27,7 +27,8 @@
       "variantImage": "",
       "variant": "X, Y, and Parent",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAILayout": false
     }
   },
   "title": {

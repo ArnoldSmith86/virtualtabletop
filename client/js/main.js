@@ -902,10 +902,13 @@ window.addEventListener('keydown', async function(e) {
 async function toggleEditMode() {
   if(!await loadEditMode())
     return false;
-  if(edit)
+  if(edit) {
     $('body').classList.remove('edit');
-  else
+    // a selected widget's enlarged copy stays on screen while editing, not while playing on
+    $('#enlarged').classList.add('hidden');
+  } else {
     $('body').classList.add('edit');
+  }
   edit = !edit;
   resetZoomAndPan();
   if(edit)

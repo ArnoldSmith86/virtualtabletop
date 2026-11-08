@@ -1178,6 +1178,21 @@ describe('PCIO importer', () => {
     expect(state.holder2.text).toBe('Private');
   });
 
+  it('turns rotation snapping into rotation steps and enlarging into the right-click preview', async () => {
+    const state = await importWidgets([
+      { id: 'holder', type: 'holder', x: 0, y: 0 },
+      Object.assign({}, deck, { snapAngles: [ 0, 90, 180, 270 ], enlarge: true }),
+      { id: 'plain', type: 'cardDeck', parent: 'holder', x: 0, y: 0, cardTypes: { a: { label: 'A' } }, snapAngles: [ 0 ] }
+    ], 8);
+
+    expect(state.deck1.cardDefaults.rotationSteps).toEqual([ 0, 90, 180, 270 ]);
+    expect(state.deck1.cardDefaults.contextMenuOptions).toEqual({ factor: 3 });
+    expect(state.deck1.cardDefaults.enlarge).toBeUndefined();
+    expect(state.deck2.cardDefaults.rotationSteps).toBeUndefined();
+    expect(state.deck2.cardDefaults.contextMenuOptions).toBeUndefined();
+    expect(state._meta.info.importerWarnings).toBeUndefined();
+  });
+
   it('writes the file at the current version so that no legacy mode is turned on for it', async () => {
     // importWidgets checks the version and the round trip through FileUpdater for every
     // import of this suite - this one holds the widgets the legacy modes look for

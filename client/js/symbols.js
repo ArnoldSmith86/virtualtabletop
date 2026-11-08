@@ -1,4 +1,4 @@
-import { $, asArray } from "./domhelpers";
+import { $, $a, asArray, div, domByTemplate, mapAssetURLs, removeFromDOM, toggleClass } from "./domhelpers";
 import { enableEmojiVariantFlyouts, closeEmojiVariantFlyout, collapseEmojiVariants, expandEmojiVariants, loadEmojiVariants } from "./emojivariants";
 
 export function emojiToFilename(emoji) {
@@ -732,7 +732,7 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight, initialFon
   element.style.setProperty('--maxHeight', `${maxHeight}px`);
 }
 
-function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1) {
+export function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1) {
   const outerWrapper = div(target, 'symbolOuterWrapper', `
     <div class="symbolWrapper"></div>
     <div class="symbolText"></div>
