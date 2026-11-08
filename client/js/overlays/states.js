@@ -96,6 +96,24 @@ function zipIndex(buffer) {
   return entries;
 }
 
+// The JSON files a game archive holds as its variants: the ones at its root, minus the asset map
+// that gets added when an upload leaves out assets the server already has. server/fileloader.mjs
+// reads the same set - a TTS export keeps its save in a subdirectory, so it is deliberately not one.
+function isVariantFile(filename) {
+  return !!filename.match(/^[^\/]+\.json$/) && filename != 'asset-map.json';
+}
+
+// The game metadata a VTT file carries, or null for an archive that has none: a PCIO or TTS export
+// is a valid upload as well and only becomes a game once the server has converted it.
+function gameFileInfo(json) {
+  if(!json || typeof json != 'object' || Array.isArray(json))
+    return null;
+  const meta = json._meta;
+  if(!meta || typeof meta != 'object' || !meta.info || typeof meta.info != 'object')
+    return null;
+  return meta.info;
+}
+
 function toBase64(data) {
   let binary = '';
   for(let i=0; i<data.length; i+=32768)
@@ -169,42 +187,44 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
   let jsonFiles = null;
   try {
     entries = zipIndex(buffer);
-    jsonFiles = await unzipBuffer(buffer, name=>name.match(/json$/));
+    jsonFiles = await unzipBuffer(buffer, isVariantFile);
   } catch(e) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
   }
 
-  let json = null;
+  let info = null;
   const assets = {};
   for(const [ filename, entry ] of Object.entries(entries)) {
     if(jsonFiles[filename]) {
-      const content = JSON.parse(fflate.strFromU8(jsonFiles[filename]));
-      if(!json) {
-        json = content;
-        if(json._meta)
-          json._meta.info.variants = [];
+      const variantInfo = gameFileInfo(JSON.parse(fflate.strFromU8(jsonFiles[filename])));
+      if(variantInfo) {
+        // the first variant is the one whose metadata describes the whole file, and it lists
+        // every variant in the file including itself
+        if(!info)
+          (info = variantInfo).variants = [];
+        info.variants.push(variantInfo);
       }
-      if(json._meta)
-        json._meta.info.variants.push(content._meta.info);
     }
     if(filename.match(/^\/?(user)?assets/) && entry.size)
       assets[entry.crc + '_' + entry.size] = filename;
   }
 
-  if(json === null) {
+  if(!Object.keys(entries).some(filename=>filename.match(/\.json$/))) {
     alert(`${sourceFile.name} is not a valid VTT, VTTC, VTTS or PCIO file.`);
     return;
-  } else if(Array.isArray(json)) {
+  } else if(!info) {
+    // a PCIO or TTS export, which the server turns into a game on arrival: until then the file
+    // name is everything there is to show for it
     metaCallback(sourceFile.name.replace(/\.[^.]+$/, ''), '', null, [{}], null, null);
   } else {
     let imageURL = null;
 
-    if(json._meta.info.image) {
-      if(json._meta.info.image.match(/^http/)) {
-        imageURL = json._meta.info.image;
-      } else if(entries[json._meta.info.image.substr(1)]) {
-        const imageFile = json._meta.info.image.substr(1);
+    if(typeof info.image == 'string') {
+      if(info.image.match(/^http/)) {
+        imageURL = info.image;
+      } else if(entries[info.image.substr(1)]) {
+        const imageFile = info.image.substr(1);
         const image = toBase64((await unzipBuffer(buffer, name=>name == imageFile))[imageFile]);
         for(const [ type, pattern ] of Object.entries({ jpeg: '^\\/9j\\/', png: '^iVBO', 'svg+xml': '^PHN2', gif: '^R0lG', webp: '^UklG' }))
           if(image.match(pattern))
@@ -212,7 +232,7 @@ async function uploadStateFile(sourceFile, targetURL, metaCallback, progressCall
       }
     }
 
-    metaCallback(json._meta.info.name, json._meta.info.similarName, imageURL, json._meta.info.variants, json._meta.info.savePlayers, json._meta.info.saveDate);
+    metaCallback(info.name, info.similarName, imageURL, info.variants, info.savePlayers, info.saveDate);
   }
 
   const result = await fetch('assetcheck', {
