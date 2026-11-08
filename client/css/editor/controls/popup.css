@@ -490,17 +490,62 @@ body.edit.darkMode .inline-popup button.primary:hover {
   color: var(--VTTblue);
 }
 
+/* a name is a name: one that came from somewhere else (an argument a CALL in
+   another widget hands over) can be longer than the popup is wide, and wrapping
+   it is the only way it does not run out of the popup on a phone */
 .inline-popup .popup-entry {
   display: inline-block;
+  max-width: 100%;
+}
+
+.inline-popup .popup-entry button {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+/* one the routine only has when a particular operation is what ran it */
+.inline-popup .popup-entry button.popup-entry-partial {
+  opacity: 0.65;
+  border-style: dashed;
 }
 
 /* where the values of a section come from: a quiet line rather than a heading
    in a color of its own - the section around it already says what kind of value
-   its entries are, and they carry that color the way the sentence does */
+   its entries are, and they carry that color the way the sentence does. Which
+   group a name is in is what the section is about once there are three or four
+   of them, so each one is separated from the run of chips above it by a rule */
 .inline-popup .popup-value-group {
   font-size: 11px;
-  opacity: 0.7;
+  opacity: 0.85;
   margin: 8px 2px 2px 2px;
+}
+
+.inline-popup .popup-entry + .popup-value-group {
+  border-top: 1px solid var(--backgroundHighlightColor1);
+  padding-top: 6px;
+}
+
+/* what the name the pointer or the keyboard is on holds - see
+   renderRoutineValueKindSection. Two lines are kept free whether one is shown or
+   not, so the list above it does not move while the pointer travels along it.
+   It sticks to the foot of the popup while its section is on screen: a section
+   with four or five groups in it is taller than a short window, so the line
+   would sit below the fold exactly while the pointer is on a name near the top -
+   and the keyboard scrolls the focused button into view, pushing it further out
+   still. The background is the popup's own so the chips do not show through. */
+.inline-popup .popup-entry-description {
+  position: sticky;
+  bottom: 0;
+  background: var(--backgroundColor);
+  margin: 8px 2px 0 2px;
+  padding-bottom: 2px;
+  font-size: 12px;
+  /* quiet through the text color rather than the opacity of the whole line: a
+     line at 0.8 lets the chips scrolling under it show through its background */
+  color: color-mix(in srgb, var(--textColor) 80%, transparent);
+  min-height: 2.8em;
+  overflow-wrap: anywhere;
 }
 
 .inline-popup button[data-kind=variable] {
