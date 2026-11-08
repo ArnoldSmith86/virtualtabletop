@@ -3,6 +3,7 @@ import path from 'path';
 import v8 from 'v8';
 
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import http from 'http';
 import CRC32 from 'crc-32';
 
@@ -37,6 +38,7 @@ const emojiVariants = readEmojiVariants();
 
 const serverStart = +new Date();
 
+router.use(rateLimit({ windowMs: 60 * 1000, max: 300, standardHeaders: true, legacyHeaders: false }));
 app.use(Config.get('urlPrefix'), router);
 
 fs.mkdirSync(assetsdir, { recursive: true });
