@@ -433,7 +433,10 @@ test('the routine log shows a value that contains itself instead of crashing', a
       'var list = []',
       'var list = ${list} push ${list}',
       { func: 'SELECT', property: 'id', value: 'build' },
-      { func: 'SET', property: 'result', value: '${list}' }
+      { func: 'SET', property: 'result', value: '${list}' },
+      'var activeColors = []',
+      'var activeColors = ${activeColors} push ${activeColors}',
+      { func: 'SET', collection: 'thisButton', property: 'marked', value: true }
     ] }
   });
   await ClientFunction(prepareClient)();
@@ -445,8 +448,10 @@ test('the routine log shows a value that contains itself instead of crashing', a
 
   await ClientFunction(() => widgets.get('build').evaluateRoutine('clickRoutine', {}, {}).then(_=>true))();
 
+  await expectEventually(t, markedWidgets, [ 'build' ]);
   await t.expect(Selector('#clientErrorOverlay').visible).notOk();
   await t.expect(Selector('#jeLog').innerText).contains('<contains itself>');
+  await t.expect(Selector('#jeLog .jeLogVariables').withText(/"activeColors": \[\s+"<contains itself>"/).exists).ok();
   await t.expect(Selector('#jeLog .jeLogProblems').innerText).contains('the value contains itself and can not be stored');
 });
 

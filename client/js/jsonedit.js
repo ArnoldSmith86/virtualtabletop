@@ -3378,7 +3378,12 @@ function jeLoggingVariables(variables) {
   const own = {};
   const engine = {};
   for(const name in variables) {
-    const untouched = name in fromEngine && JSON.stringify(variables[name]) === JSON.stringify(fromEngine[name]);
+    let untouched;
+    try {
+      untouched = name in fromEngine && JSON.stringify(variables[name]) === JSON.stringify(fromEngine[name]);
+    } catch(e) {
+      untouched = false;
+    }
     (untouched ? engine : own)[name] = variables[name];
   }
   const ownBlock = Object.keys(own).length ?
