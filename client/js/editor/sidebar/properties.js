@@ -132,12 +132,12 @@ async function setCardCount(deck, cardType, count) {
         // If the desired count is greater than the current count, add cards
         for (let i = 0; i < count - currentCount; i++) {
             const card = { deck: deck.id, type: 'card', cardType: cardType };
-            await addWidgetLocal(card);
-
-            if (deck.get('parent')) {
-                await widgets.get(card.id).moveToHolder(widgets.get(deck.get('parent')));
-            } else {
-                await widgets.get(card.id).updatePiles();
+            if (await addWidgetLocal(card)) {
+                if (deck.get('parent')) {
+                    await widgets.get(card.id).moveToHolder(widgets.get(deck.get('parent')));
+                } else {
+                    await widgets.get(card.id).updatePiles();
+                }
             }
         }
     }

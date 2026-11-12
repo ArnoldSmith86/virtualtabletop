@@ -5660,3 +5660,34 @@ test('The JSON editor reports a parent that would create a loop while typing', a
     .expect(Selector('#jeCommands .error').exists).notOk();
   await t.expect(await ClientFunction(() => widgets.get('outer').get('x'))()).eql(123);
 });
+
+// A changed type is a remove of the widget followed by an add of the new one under the same id,
+// so a type the client cannot build - a card that names no deck - took the widget out and put
+// nothing back, on the server as well as here. The macro command runs over every widget in the
+// room, which is where one bad type would empty it.
+test('A macro giving every widget a type the client cannot build changes none of them', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    one: { id: 'one', type: 'basic', x: 200, y: 200, width: 100, height: 100 },
+    two: { id: 'two', type: 'basic', x: 400, y: 200, width: 100, height: 100 }
+  });
+  await ClientFunction(prepareClient)();
+  await setEditorState({ modules: { JSON: 'editorModuleTopLeft' } });
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .expect(Selector('#editorModuleTopLeft.data_object').exists).ok()
+    .click('#w_one', { modifiers: { ctrl: true } })
+    .click('#je_callMacro')
+    .typeText('#jeText', `w.type = 'card';`, { replace: true, paste: true })
+    .click('#je_callMacro');
+
+  await t
+    .expect(jsonError()).contains('it names no deck')
+    .expect(widgetProperty('one', 'type')).eql('basic')
+    .expect(widgetProperty('two', 'type')).eql('basic')
+    .expect(Selector('#w_one').exists).ok()
+    .expect(Selector('#w_two').exists).ok();
+  await setEditorState(null);
+});

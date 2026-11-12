@@ -140,41 +140,80 @@ export function addWidget(widget, instance, allowMissingParent) {
   delete deferredChildren[widget.id];
 }
 
+// Why the room cannot be given this widget as it stands, or null when it can. These are the
+// refusals that only look at the state and at what the room already holds, so a caller that has to
+// tear something down before it can add - the editor changing a widget's type is a remove followed
+// by a re-add of the same ID - can ask before rather than after, when there is nothing left to
+// put back.
+export function widgetAdditionProblem(widget) {
+  if(widget.parent && !widgets.has(widget.parent))
+    return `Refusing to add widget '${widget.id}': there is no widget '${widget.parent}' to use as its parent.`;
+
+  // A card is only a card together with its deck: addWidget() holds one whose deck is missing back
+  // until that deck arrives, which for a widget created here never happens - it would wait forever.
+  if(widget.type == 'card' && !widget.deck)
+    return `Refusing to add card '${widget.id}': it names no deck to take its cardTypes from.`;
+
+  if(widget.type == 'card' && (!widgets.has(widget.deck) || widgets.get(widget.deck).get('type') != 'deck'))
+    return `Refusing to add card '${widget.id}': '${widget.deck}' is not a deck in this room.`;
+
+  if(widget.type == 'card' && !widgets.get(widget.deck).get('cardTypes')[widget.cardType])
+    return `Refusing to add card '${widget.id}': deck '${widget.deck}' has no cardType '${widget.cardType}'.`;
+
+  return null;
+}
+
 // useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
 // creation) so live gameplay keeps random IDs - type-based IDs are an
 // authoring/edit-mode convenience and give no benefit during play, while
 // sequential IDs would raise the collision risk between concurrent clients.
-async function addWidgetLocal(widget, useTypeBasedID = true) {
+// A caller that reports a refusal itself hands in a problems array to collect the reason in;
+// without one it goes wherever reportProblem() puts a problem found outside a routine.
+async function addWidgetLocal(widget, useTypeBasedID = true, problems = null) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID(useTypeBasedID ? widget.type : undefined);
   else
     widget.id = String(widget.id);
 
-  if(widget.parent && !widgets.has(widget.parent)) {
-    console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
-    return null;
-  }
-
-  if(widget.type == 'card' && widget.deck && !widgets.has(widget.deck)) {
-    console.error(`Refusing to add widget ${widget.id} with invalid deck ${widget.deck}.`);
-    return null;
-  }
-
-  if(widget.type == 'card' && widget.deck && !widgets.get(widget.deck).get('cardTypes')[widget.cardType]) {
-    console.error(`Refusing to add widget ${widget.id} with invalid cardType ${widget.cardType}.`);
+  const additionProblem = widgetAdditionProblem(widget);
+  if(additionProblem) {
+    reportProblem(additionProblem, problems);
     return null;
   }
 
   const isNewWidget = !widgets.has(widget.id);
-  if(isNewWidget)
+  if(isNewWidget) {
     addWidget(widget);
+    // Only an ID the room actually has is of any use to the caller: one that names nothing ends up
+    // in a parent property, where it puts the child in limbo instead of into a widget.
+    if(!widgets.has(widget.id)) {
+      reportProblem(`Refusing to add widget '${widget.id}': it could not be created - check its type and properties.`, problems);
+      return null;
+    }
+  }
   sendPropertyUpdate(widget.id, widget);
   sendDelta();
   batchStart();
-  if(isNewWidget)
-    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || [])
-      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ widgets.get(widget.id) ] });
+  if(isNewWidget) {
+    for(const [ w, routine ] of StateManaged.globalUpdateListeners['id'] || []) {
+      // Any of these routines is free to select the new widget and delete it again. The ones after
+      // it would be told about a creation that no longer stands, so they get nothing rather than a
+      // collection holding an entry the room does not have.
+      const newWidget = liveWidget(widget.id);
+      if(!newWidget)
+        break;
+      await w.evaluateRoutine(routine, { widgetID: widget.id, oldValue: null, value: widget.id }, { widget: [ newWidget ] });
+    }
+  }
   batchEnd();
+
+  // A widget that did not survive its own creation is as useless to the caller as one that was
+  // never created: its ID keeps naming something until the removal is sent, so handing it back is
+  // exactly what puts the caller's children in limbo once it is.
+  if(isNewWidget && !liveWidget(widget.id)) {
+    reportProblem(`Refusing to add widget '${widget.id}': it was removed again while it was being created.`, problems);
+    return null;
+  }
   return widget.id;
 }
 
@@ -193,6 +232,14 @@ async function updateWidgetId(widget, oldID) {
   await removeWidgetLocal(oldID, true);
 
   const id = await addWidgetLocal(widget);
+
+  // A rename is a remove followed by a re-add, so a refused re-add leaves nothing to rename to.
+  // The children and cards keep the top level removeWidgetLocal() put them on rather than being
+  // pointed at an ID that names no widget.
+  if(id === null) {
+    alert(`Renaming '${oldID}' to '${widget.id}' failed: the widget could not be added back under its new id and is gone. Its children and cards are on the top level now.`);
+    return;
+  }
 
   // Restore children
   for(const child of children)
@@ -359,7 +406,7 @@ function receiveDelta(delta) {
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined)
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined && widgets.has(widgetID))
       widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
@@ -414,7 +461,11 @@ function addDeltaEntryToUndoProtocol(delta) {
         undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
     } else if(delta.s[widgetID].id) {
       undoDelta[widgetID] = null;
-    } else {
+    } else if(widgets.has(widgetID)) {
+      // a property update can name a widget the room no longer has, when something kept writing to
+      // it after it was removed - there is no state left to undo back to, so it gets no entry.
+      // A card still parked in deferredCards because its deck has not arrived is the one widget
+      // this also skips while it is perfectly legitimate; it gets its entries once the deck lands
       undoDelta[widgetID] = {};
       for(const property in delta.s[widgetID]) {
         undoDelta[widgetID][property] = widgets.get(widgetID).unalteredState[property];
@@ -631,6 +682,15 @@ function removeWidget(widgetID) {
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+}
+
+// The widget an ID names, if it is still a part of the room. removeWidgetLocal() only marks a
+// widget and records its null delta - it stays in `widgets` until the batch around it is sent - so
+// asking whether the room has an ID also finds widgets that are already on their way out. Anything
+// parented into one of those lands in limbo the moment that batch ends.
+export function liveWidget(widgetID) {
+  const widget = widgets.get(widgetID);
+  return widget && !widget.isBeingRemoved && !widget.inRemovalQueue ? widget : null;
 }
 
 async function removeWidgetLocal(widgetID, keepChildren) {

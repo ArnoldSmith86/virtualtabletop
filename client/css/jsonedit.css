@@ -432,6 +432,11 @@ body.jsonEdit #toolbar {
   margin: 10px 0 10px 20px;
   font-family: Arial, sans-serif;
 }
+/* a note about a problem rather than about the log itself, so it carries the problem color */
+.jeLogProblemNote {
+  color: var(--textHighlightColor3);
+  border-left-color: var(--textHighlightColor3);
+}
 .jeLogNote .jeLogWidget,
 .jeLogNote .jeLogProperty {
   font-family: monospace;
