@@ -113,7 +113,7 @@ test('A change to the source reaches the bottom of the chain', async t => {
   await t.expect((await observed(t)).text).eql('changed', 'and so does what a routine reads');
 });
 
-test('Removing the source leaves the inherited value behind', async t => {
+test('Deleting the source drops the value it handed down', async t => {
   await openRoom(t, 'modern', chain({
     leaf: { inheritFrom: { base: [ 'text' ] } },
     remove: { type: 'button', x: 700, y: 500, width: 100, height: 60, text: 'remove', clickRoutine: [
@@ -124,13 +124,11 @@ test('Removing the source leaves the inherited value behind', async t => {
   await t.click('#w_remove');
   await t.expect(Selector('#w_base').exists).notOk('the source is gone');
 
-  // #2854, and worse than the issue says: the two halves of the widget disagree. The DOM keeps
-  // whatever applyInheritedDeltaToDOM() last wrote, because nothing tells the inheriting widget
-  // that its source is gone - while get() resolves through widgets.has(id) and so returns the
-  // widget's own default from the moment of the deletion. So the player reads 'from base' off
-  // the table and a routine reading the same property gets ''.
-  await t.expect(Selector('#w_leaf textarea').value).contains('from base', 'the leaf still renders it');
-  await t.expect((await observed(t)).text).eql('', 'while a routine already sees it gone');
+  // get() resolves inheritance through widgets.has(id), so the leaf falls back to its own
+  // default the moment the source is deleted - and what it is drawn with has to say the same,
+  // or the player reads one value off the table while a routine reading it gets another.
+  await t.expect(Selector('#w_leaf textarea').value).eql('', 'the leaf stops rendering it');
+  await t.expect((await observed(t)).text).eql('', 'and a routine reads the same');
 });
 
 test('An inherited property is not part of the widget\'s own state', async t => {

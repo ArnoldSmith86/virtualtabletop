@@ -233,6 +233,58 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('removing the widget a stop inherits its size from places it by the size it falls back to', async () => {
+    const line = createLine({ id: 'orphan-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
+      stops: [ { widget: 'orphaned-stop', position: 0.25 } ] });
+    const source = new Widget('orphan-source');
+    addWidget({ id: 'orphan-source', type: 'basic', width: 20, height: 20 }, source);
+    const stop = new Widget('orphaned-stop');
+    addWidget({ id: 'orphaned-stop', type: 'basic', parent: line.id, inheritFrom: source.id }, stop);
+
+    await line.setStopPosition(stop.id, 0.5);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    // the stop is now a different size than the one it was placed by
+    removeWidget(source.id);
+    await stop.updateLinesForStopLayout();
+
+    expect(stop.get('width')).toBe(stop.defaults.width);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
+  test('a stop that inherits its size through another widget is collected for re-layout', async () => {
+    const line = createLine({ id: 'chain-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
+      stops: [ { widget: 'chained-stop', position: 0.25 } ] });
+    const source = new Widget('chain-source');
+    addWidget({ id: 'chain-source', type: 'basic', width: 20, height: 20 }, source);
+    const middle = new Widget('chain-middle');
+    addWidget({ id: 'chain-middle', type: 'basic', inheritFrom: source.id }, middle);
+    const stop = new Widget('chained-stop');
+    addWidget({ id: 'chained-stop', type: 'basic', parent: line.id, inheritFrom: middle.id }, stop);
+
+    await line.setStopPosition(stop.id, 0.5);
+    expect(stop.get('width')).toBe(20);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    // what the removal collects beforehand to place again once the widget is gone
+    const inheritors = [ ...source.lineLayoutInheritors(widgetFilter(w=>w.get('type') == 'line')) ];
+    expect(inheritors).toContain(stop);
+
+    removeWidget(source.id);
+    for(const w of inheritors)
+      await w.updateLinesForStopLayout();
+
+    expect(stop.get('width')).toBe(stop.defaults.width);
+    expect(stop.get('x') + stop.get('width')/2).toBe(50);
+
+    removeWidget(middle.id);
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   test('renaming a stop keeps a single entry in place, at its own position', async () => {
     const line = createLine({ id: 'rename-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, autoSpaceStops: true,
       stops: [ 'rename-a', 'rename-b', 'rename-c' ].map((widget, i) => ({ widget, position: i / 2 })) });
@@ -699,6 +751,34 @@ describe('Line widget connections', () => {
     const depEndGlobal = { x: dep.get('x') + dep.pointProperty('lineEnd').x, y: dep.get('y') + dep.pointProperty('lineEnd').y };
     const targetStartGlobal = { x: target.get('x') + target.pointProperty('lineStart').x, y: target.get('y') + target.pointProperty('lineStart').y };
     expect(depEndGlobal).toEqual(targetStartGlobal);
+  });
+
+  test('an end point follows a target whose inherited geometry is gone', async () => {
+    const source = new Widget('connect-source');
+    addWidget({ id: 'connect-source', type: 'basic', x: 400, y: 300, width: 100, height: 40 }, source);
+    const target = new Widget('connect-target');
+    addWidget({ id: 'connect-target', type: 'basic', inheritFrom: source.id }, target);
+    target.coordGlobalFromCoordLocal = coord => ({ x: target.get('x') + coord.x, y: target.get('y') + coord.y });
+    const dep = createLine({ id: 'dep', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 },
+      connectStart: { line: target.id, position: 0.5 } });
+
+    const startGlobal = () => dep.coordGlobalFromCoordLocal(dep.pointProperty('lineStart'));
+    const targetCenter = () => target.coordGlobalFromCoordLocal({ x: target.get('width')/2, y: target.get('height')/2 });
+    await dep.applyConnections();
+    expect(startGlobal()).toEqual(targetCenter());
+
+    // what the removal collects beforehand to update once the widget is gone
+    const inheritors = [ ...source.lineLayoutInheritors(widgetFilter(w=>w.get('type') == 'line')) ];
+    expect(inheritors).toContain(target);
+
+    removeWidget(source.id);
+    for(const w of inheritors)
+      await w.updateConnectedLineEndpoints();
+
+    expect(target.get('x')).toBe(target.defaults.x);
+    expect(startGlobal()).toEqual(targetCenter());
+
+    removeWidget(target.id);
   });
 
   test('a curved connected line keeps its shape (control points follow the ends) when the target moves', async () => {

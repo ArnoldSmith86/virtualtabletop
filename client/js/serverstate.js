@@ -190,7 +190,7 @@ async function updateWidgetId(widget, oldID) {
     sendPropertyUpdate(child.get('id'), 'parent', null);
   for(const card of cards)
     sendPropertyUpdate(card.get('id'), 'deck', null);
-  await removeWidgetLocal(oldID, true);
+  await removeWidgetLocal(oldID, true, true);
 
   const id = await addWidgetLocal(widget);
 
@@ -624,16 +624,25 @@ function cancelInputOverlay() {
 }
 
 function removeWidget(widgetID) {
+  const widget = widgets.get(widgetID);
   try {
-    widgets.get(widgetID).applyRemove();
+    widget.applyRemove();
   } catch(e) {
     console.error(`Could not remove widget!`, widgetID, e);
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
+  // only with the widget out of the room does re-reading an inherited property give
+  // the value the inheritor falls back to instead of the one that is going away
+  try {
+    if(widget)
+      widget.revertInheritedValues();
+  } catch(e) {
+    console.error(`Could not revert inherited values!`, widgetID, e);
+  }
 }
 
-async function removeWidgetLocal(widgetID, keepChildren) {
+async function removeWidgetLocal(widgetID, keepChildren, isBeingReplaced) {
   function getWidgetsToRemove(widgetID) {
     const children = [];
     if(!keepChildren)
@@ -648,13 +657,37 @@ async function removeWidgetLocal(widgetID, keepChildren) {
   if(widgets.get(widgetID).inRemovalQueue)
     return;
 
-  for(const w of getWidgetsToRemove(widgetID)) {
+  const removing = getWidgetsToRemove(widgetID);
+  // A widget that inherits from one of these falls back to its own defaults once it is
+  // gone, so it can end up somewhere else or a different size than a line placed it by
+  // and glued its end points to. A rename or a type change takes the widget out only to
+  // add it straight back, which hands the same values down again - there is nothing to
+  // lay out for those. Only collected for the games that have a line at all, since the
+  // flush below is not worth it otherwise.
+  const lines = widgetFilter(w=>w.get('type') == 'line');
+  const inheritors = new Set();
+  if(!isBeingReplaced && lines.length)
+    for(const w of removing)
+      w.lineLayoutInheritors(lines, inheritors);
+  const inheriting = [ ...inheritors ].filter(w=>!removing.includes(w));
+
+  for(const w of removing) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
     if(!w.isLimbo)
       await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(w.id, null);
+  }
+
+  // the removal only takes effect once the delta is applied, so the values that are
+  // fallen back to are only there to lay out by after it has been
+  if(inheriting.length) {
+    flushDelta();
+    for(const w of inheriting) {
+      await w.updateConnectedLineEndpoints();
+      await w.updateLinesForStopLayout();
+    }
   }
 }
 
