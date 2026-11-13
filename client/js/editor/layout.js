@@ -61,8 +61,12 @@ function initializeEditor(currentMetaData) {
 
     new ToolbarDivider(),
 
-    new CloneDragButton(),
+    new CloneDragButton(false),
+    new CloneDragButton(true),
     new SpacingDragButton(),
+
+    new ToolbarDivider(),
+
     new RotateDragButton(),
     new ResizeDragButton(false),
     new ResizeDragButton(true),
@@ -103,6 +107,7 @@ function metaReceived(data) {
 }
 
 export function openEditor() {
+  smartCloneInit();
   // edit mode can also be left by opening another toolbar tab, which does not go
   // through closeEditor() - so the widgets under the pointer are dropped on the
   // way in as well as on the way out
