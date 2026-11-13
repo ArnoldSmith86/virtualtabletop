@@ -221,6 +221,49 @@ test('Undoing from the toolbar keeps the History module in sync', async t => {
   await setEditorState(null);
 });
 
+for(const withHistory of [ false, true ]) {
+  test(`Undoing a deal does not restore temporary piles${withHistory ? ' with History open' : ''}`, async t => {
+    await t.resizeWindow(1280, 800);
+    const state = {
+      source: { id: 'source', type: 'holder', x: 100, y: 300 },
+      intermediate: { id: 'intermediate', type: 'holder', x: 400, y: 300 },
+      target: { id: 'target', type: 'holder', x: 700, y: 300 },
+      deck: { id: 'deck', type: 'deck', cardTypes: { test: {} } },
+      pile: { id: 'pile', type: 'pile', parent: 'source', width: 103, height: 160 },
+      deal: { id: 'deal', type: 'button', x: 400, y: 100, text: 'DEAL', clickRoutine: [
+        { func: 'MOVE', from: 'source', to: 'intermediate', count: 3 },
+        { func: 'MOVE', from: 'intermediate', to: 'target', count: 'all' }
+      ] }
+    };
+    // Four cards dissolve the original pile; five leave it in place.
+    for(let i=0; i<(withHistory ? 5 : 4); ++i)
+      state[`card${i}`] = { id: `card${i}`, type: 'card', deck: 'deck', cardType: 'test', parent: 'pile', z: i+1 };
+    await setRoomState(state);
+    await ClientFunction(prepareClient)();
+    await setEditorState({ modules: withHistory ? { History: 'editorModuleTopLeft' } : {}, defaultModuleOpened: true });
+    await setName(t);
+
+    const clientState = ClientFunction(() => Object.fromEntries([...widgets].map(([id, w])=>[id, w.unalteredState])));
+    const before = await getStateObject();
+    await t.click('#w_deal');
+    await expectEventually(t, async () => Object.values(await getStateObject()).filter(w=>w.type == 'card' && w.parent != 'pile' && w.parent != 'source').length, 3);
+    const after = await getStateObject();
+    await t.expect(after).notEql(before).click('#editButton');
+    if(withHistory)
+      await t.expect(Selector('#editorModuleTopLeft.undo').exists).ok();
+    await t.click('#editorToolbar [icon=undo]').expect(clientState()).eql(before);
+    await expectEventually(t, getStateObject, before);
+
+    if(withHistory) {
+      await t.click(Selector('.undoEntry').nth(0)).expect(clientState()).eql(after);
+      await expectEventually(t, getStateObject, after);
+      await t.click('#editorToolbar [icon=undo]').expect(clientState()).eql(before);
+      await expectEventually(t, getStateObject, before);
+    }
+    await setEditorState(null);
+  });
+}
+
 // A row click cuts the protocol short as well, but keeps the rows above it in the DOM so the user
 // can return to that future state - so those rows have to survive until the next change makes them
 // unreachable, and go when it arrives.
