@@ -1,3 +1,6 @@
+import { jest } from '@jest/globals'; // the ES module build has no globals of its own
+
+import { $, $a, unescapeID } from '../../client/js/domhelpers.js';
 import { describeError, isNonFatalError } from '../../client/js/tracing.js';
 
 describe("Scenarios: Describing a client error for the error report", () => {
@@ -63,6 +66,96 @@ describe("Scenarios: Deciding whether an error event should crash the client", (
       expect(isNonFatalError('Script error.', new Error('Script error.'))).toBe(false);
       expect(isNonFatalError('ResizeObserver loop completed', new Error('boom'))).toBe(false);
       expect(isNonFatalError(undefined)).toBe(false);
+    });
+  });
+});
+
+// A failure the client carries on from is only reported through this one path, so what it sends
+// and, more importantly, that it can never become the crash it was reporting are worth pinning.
+describe("Scenarios: Reporting a failure the client survived", () => {
+  let fetchCalls;
+
+  // tracing.js reads the details it collects from the concatenated global scope of the shipped
+  // bundle rather than through imports, so expose them before the module is loaded
+  beforeEach(() => {
+    globalThis.$ = $;
+    globalThis.$a = $a;
+    globalThis.unescapeID = unescapeID;
+    globalThis.widgets = new Map();
+    globalThis.undoProtocol = [];
+    globalThis.delta = {};
+    globalThis.mouseStatus = {};
+    globalThis.mouseTarget = null;
+    globalThis.lastExecutedOperation = null;
+    globalThis.playerName = 'tester';
+    fetchCalls = [];
+    globalThis.fetch = function(url, options) {
+      fetchCalls.push({ url, options });
+      return Promise.resolve();
+    };
+    jest.resetModules(); // the "only once" flag lives in the module, so every test needs a fresh one
+  });
+
+  async function reportErrorSilently(description) {
+    (await import('../../client/js/tracing.js')).reportErrorSilently(description);
+  }
+
+  describe("Given a widget that could not be torn down", () => {
+    test("Then the report is sent as a non-fatal one with the client details", async () => {
+      await reportErrorSilently('Could not remove widget aWidget\n    at applyRemove');
+
+      expect(fetchCalls.length).toBe(1);
+      expect(fetchCalls[0].url).toBe('clientError');
+      expect(fetchCalls[0].options.method).toBe('PUT');
+      const report = JSON.parse(fetchCalls[0].options.body);
+      expect(report.type).toBe('nonFatal');
+      expect(report.message).toBe('Could not remove widget aWidget\n    at applyRemove');
+      expect(report.url).toBe(location.href);
+      expect(report.html).toContain('topSurface');
+    });
+
+    test("Then only the first one of a page load is sent", async () => {
+      await reportErrorSilently('the first widget');
+      await reportErrorSilently('the second widget');
+
+      expect(fetchCalls.length).toBe(1);
+      expect(JSON.parse(fetchCalls[0].options.body).message).toBe('the first widget');
+    });
+
+    test("Then widget states that reference each other are still serialized", async () => {
+      const state = { id: 'aWidget' };
+      state.itself = state;
+      globalThis.widgets = new Map([ [ 'aWidget', { state } ] ]);
+
+      await reportErrorSilently('Could not remove widget aWidget');
+
+      expect(JSON.parse(fetchCalls[0].options.body).widgetsState).toEqual([ { id: 'aWidget', itself: '[cyclic]' } ]);
+    });
+  });
+
+  describe("Given that the report itself fails", () => {
+    test("Then collecting details that throws does not break the client", async () => {
+      delete globalThis.widgets;
+
+      await expect(reportErrorSilently('Could not remove widget aWidget')).resolves.toBeUndefined();
+      expect(fetchCalls).toEqual([]);
+    });
+
+    test("Then a request that throws does not break the client", async () => {
+      globalThis.fetch = function() {
+        throw new Error('no network');
+      };
+
+      await expect(reportErrorSilently('Could not remove widget aWidget')).resolves.toBeUndefined();
+    });
+
+    test("Then a request that is rejected is not left unhandled", async () => {
+      globalThis.fetch = function() {
+        return Promise.reject(new Error('no network'));
+      };
+
+      await expect(reportErrorSilently('Could not remove widget aWidget')).resolves.toBeUndefined();
+      await new Promise(resolve=>setTimeout(resolve, 0));
     });
   });
 });
