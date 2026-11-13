@@ -59,6 +59,7 @@ function generateUniqueWidgetID(type, derivedIDs) {
 }
 
 export function addWidget(widget, instance, allowMissingParent) {
+  ++arrangementVersion;
   if(widget.parent && !widgets.has(widget.parent) && !allowMissingParent) {
     if(!deferredChildren[widget.parent])
       deferredChildren[widget.parent] = [];
@@ -355,6 +356,7 @@ function getDeltaID() {
 }
 
 function receiveDelta(delta) {
+  ++arrangementVersion;
   addDeltaEntryToUndoProtocol(delta);
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
@@ -624,6 +626,7 @@ function cancelInputOverlay() {
 }
 
 function removeWidget(widgetID) {
+  ++arrangementVersion;
   try {
     widgets.get(widgetID).applyRemove();
   } catch(e) {
@@ -667,7 +670,22 @@ function sendDelta() {
   }
 }
 
+// Every state change that could alter what a holder layout derives moves this
+// version - everything except the position writes an arrangement pass itself
+// produces in bulk. The holders cache their derivation against it.
+let arrangementVersion = 0;
+
+export function arrangementStateVersion() {
+  return arrangementVersion;
+}
+
+export function invalidateArrangementCaches() {
+  ++arrangementVersion;
+}
+
 export function sendPropertyUpdate(widgetID, property, value) {
+  if(property !== 'x' && property !== 'y' && property !== 'z')
+    ++arrangementVersion;
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
   } else {

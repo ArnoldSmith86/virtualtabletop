@@ -48,6 +48,9 @@ function traceRoutine(tag, fields, id = CARD) {
 function holder(id, properties = {}, { enterFields = DEFAULT_FIELDS, leaveFields = DEFAULT_FIELDS } = {}) {
   return Object.assign({
     id, type: 'holder', width: 350, height: 250,
+    // this suite pins the ORDER of the holder events, so the holders stay on
+    // the classic layout - the auto default would center the observed drops
+    layout: 'custom',
     onEnter: { mark: `enter-${id}` },
     onLeave: { mark: `leave-${id}` },
     enterRoutine: traceRoutine(`enter ${id}`, enterFields),

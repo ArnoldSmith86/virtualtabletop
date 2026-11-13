@@ -301,6 +301,25 @@ async function handleInput(name, e, dragTarget) {
   }
 }
 
+// A widget can change size while it is being dragged: a pile that was spread out collects its
+// cards and shrinks to a single one when it is picked out of the holder that spread it. The
+// anchor was taken from the box the widget had at the time, so keeping it would hold the
+// pointer that far from the corner of a box that no longer exists and leave the widget hanging
+// off the pointer - a fan grabbed by a handle at its far end would jump right out from under
+// it. The anchor keeps its place in the box instead, so the pointer still holds what it took
+// hold of.
+export function rescaleDragAnchor(widget, oldWidth, oldHeight) {
+  for(const id in mouseStatus) {
+    const ms = mouseStatus[id];
+    if(ms.moveTarget != widget || !ms.localAnchor)
+      continue;
+    ms.localAnchor = new DOMPoint(
+      oldWidth  ? ms.localAnchor.x * widget.get('width' )/oldWidth  : ms.localAnchor.x,
+      oldHeight ? ms.localAnchor.y * widget.get('height')/oldHeight : ms.localAnchor.y
+    );
+  }
+}
+
 async function keyHandler(e) {
   if(isLoading || overlayActive || $('body').classList.contains('edit') || e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')
     return;

@@ -1,5 +1,5 @@
 import { dropTargets } from './main.js';
-import { sendPropertyUpdate } from './serverstate.js';
+import { sendPropertyUpdate, invalidateArrangementCaches } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
 export class StateManaged {
@@ -24,6 +24,7 @@ export class StateManaged {
         deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
+    invalidateArrangementCaches();
 
     this.applyDeltaToDOM(deltaForDOM);
 
