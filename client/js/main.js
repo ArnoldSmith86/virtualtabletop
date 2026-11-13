@@ -52,7 +52,7 @@ export function exceedsDropLimit(target, count = 1, currentCount = null) {
   return (currentCount === null ? target.children().length : currentCount) + count > limit;
 }
 
-function getValidDropTargets(widget, dragged = widget) {
+export function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
@@ -65,18 +65,8 @@ function getValidDropTargets(widget, dragged = widget) {
 
     let isValid = compareDropTarget(widget, t);
 
-    let tt = t;
-    while(isValid) {
-      if(widget == tt || dragged == tt) {
-        isValid = false;
-        break;
-      }
-
-      if(tt.get('parent'))
-        tt = widgets.get(tt.get('parent'));
-      else
-        break;
-    }
+    if(isValid && t.ancestors().some(w=>w == widget || w == dragged))
+      isValid = false;
 
     if (jeEnabled && getComputedStyle(t.domElement).getPropertyValue('--foreign') == 'true')
       continue;
