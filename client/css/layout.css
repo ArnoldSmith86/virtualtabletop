@@ -1470,6 +1470,7 @@ button[icon]:disabled:hover {
   color: #666;
   padding: 8px 16px 16px;
   text-align: center;
+  white-space: pre-line;
 }
 .modal{
   color: var(--modalTextColor);
