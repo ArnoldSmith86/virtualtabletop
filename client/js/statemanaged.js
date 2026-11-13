@@ -1,5 +1,5 @@
 import { dropTargets } from './main.js';
-import { sendPropertyUpdate } from './serverstate.js';
+import { dispatchChangeRoutines, sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
 export class StateManaged {
@@ -44,6 +44,16 @@ export class StateManaged {
     this.applyDeltaToDOM(this.defaults);
     this.applyDelta(delta);
   }
+
+  // The whole state is in the room now - the hook for everything that needs the
+  // other widgets of a state, which do not exist yet while it is being added.
+  // The room already presents itself as loaded when this runs, so an
+  // implementation has to finish without an observable delay: anything that
+  // waits for a network round trip or for something to be rendered would
+  // rearrange the board under the player's cursor after it looked ready.
+  // What it writes is persisted and rendered like any other change, but it
+  // dispatches no change or global-update routine of the game (see set()).
+  async onStateLoaded() {}
 
   getDefaultValue(key) {
     if(this.inheritedProperties)
@@ -127,6 +137,11 @@ export class StateManaged {
       this.state[property] = JSON.parse(JSONvalue);
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
+
+    // a write the engine does while a state is loading is not a change the game
+    // made, so it does not dispatch what the game listens for
+    if(!dispatchChangeRoutines)
+      return;
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
       await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
