@@ -4,6 +4,8 @@ import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { validateGameFile } from '../../validator/validate_gamefile.js';
+
 // The library check on a pull request tells findings and a broken validator apart by
 // looking at stderr: everything it can say about a game file goes to stdout, so anything
 // on stderr means the validator stopped without a verdict. A file it cannot read or
@@ -53,5 +55,57 @@ describe('validator/validate_gamefile_node.js', function() {
     expect(result.stdout).toBe('[_meta]: Missing required _meta object');
     expect(result.stderr).toBe('');
     expect(result.status).toBe(1);
+  });
+});
+
+describe.each([
+  ['cardDefaults', properties => ({ cardDefaults: properties }), ['cardDefaults']],
+  ['cardTypes', properties => ({ cardTypes: { token: properties } }), ['cardTypes', 'token']]
+])('validator routines in deck %s', function(name, deckProperties, propertyPath) {
+  function game(properties, claimSuitRoutine = []) {
+    return {
+      code: { id: 'code', type: 'button', claimSuitRoutine },
+      deck: { id: 'deck', type: 'deck', cardTypes: { token: {} }, faceTemplates: [], ...deckProperties(properties) },
+      token: { id: 'token', type: 'card', deck: 'deck', cardType: 'token' }
+    };
+  }
+
+  test('follows calls from a drag handler with its arguments', function() {
+    const state = game({
+      draggingChangeRoutine: [{
+        func: 'IF', operand1: '${value}', relation: '!=', operand2: null,
+        thenRoutine: [{ func: 'CALL', widget: 'code', routine: 'claimSuitRoutine', arguments: { card: '${thisID}' } }]
+      }]
+    }, [{ func: 'SET', collection: ['${card}'], property: 'color', value: 'red' }]);
+    const original = JSON.stringify(state);
+    expect(validateGameFile(state, false)).toEqual([]);
+    expect(JSON.stringify(state)).toBe(original);
+  });
+
+  test('reports invalid handler operations at their deck property path', function() {
+    expect(validateGameFile(game({ clickRoutine: [{ func: 'INVALID' }] }), false)).toContainEqual({
+      widget: 'deck', property: [...propertyPath, 'clickRoutine', 0],
+      message: expect.stringContaining('INVALID is not a valid function')
+    });
+  });
+
+  test('follows calls to a custom card routine and validates its body', function() {
+    const state = game({
+      clickRoutine: [{ func: 'CALL', routine: 'cardRoutine', arguments: { card: '${thisID}' } }],
+      cardRoutine: [
+        { func: 'SET', collection: ['${card}'], property: 'color', value: 'red' },
+        { func: 'INVALID' }
+      ]
+    });
+    expect(validateGameFile(state, false).filter(problem => problem.widget === 'deck')).toEqual([{
+      widget: 'deck', property: [...propertyPath, 'cardRoutine', 1],
+      message: expect.stringContaining('INVALID is not a valid function')
+    }]);
+  });
+
+  test('still reports a custom card routine with no caller', function() {
+    expect(validateGameFile(game({ unusedRoutine: [] }), false)).toContainEqual({
+      widget: 'deck', property: [...propertyPath, 'unusedRoutine'], message: 'Routine is not being called'
+    });
   });
 });
