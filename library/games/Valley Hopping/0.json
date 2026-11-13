@@ -1,0 +1,7651 @@
+{
+  "7832": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "7832",
+    "z": 23916,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "_meta": {
+    "version": 24,
+    "info": {
+      "name": "Valley Hopping",
+      "image": "/assets/-544761048_37916",
+      "rules": "https://www.dropbox.com/scl/fi/xbmnwqh4qs0rdrf4s089g/TTM_rulebook_v2-kickstarter.pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/475595/through-the-mountains",
+      "year": "2027",
+      "mode": "vs",
+      "time": "50",
+      "attribution": "<div>Game layout, library image, map images, player token image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>\"1\", \"2\", and \"3\" tokens by Mark W (https://boardgamegeek.com/boardgamedesigner/114937/mark-a-wilson), released to the Public Domain under CC0.</div>\nThe following graphics are from https://game-icons.net and are used under CC BY 3.0:<div>* Spades: https://game-icons.net/1x1/skoll/spades.html</div><div>* Hearts: https://game-icons.net/1x1/skoll/hearts.html</div><div>* Diamonds: https://game-icons.net/1x1/skoll/diamonds.html</div><div>* Clubs: https://game-icons.net/1x1/skoll/clubs.html</div>",
+      "lastUpdate": 1793716610286,
+      "showName": true,
+      "skill": "",
+      "description": "Lead your caravan of yaks in and out of valleys and mountain ranges!",
+      "similarImage": "",
+      "similarName": "Through the Mountains",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "(see rules overview link)",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4",
+      "usesAIImagery": false,
+      "usesAILayout": false
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true,
+        "disableHolderImageWidget": true
+      }
+    }
+  },
+  "label-seat-p1": {
+    "type": "label",
+    "id": "label-seat-p1",
+    "x": 67,
+    "y": 67,
+    "width": 60,
+    "height": 40,
+    "z": 31,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p1",
+    "onlyVisibleForSeat": "seat-p1"
+  },
+  "47a7B": {
+    "id": "47a7B",
+    "parent": "holder-wateringholes",
+    "fixedParent": true,
+    "y": 170,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 1
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "qhhd": {
+    "deck": "deck-leaders-p1",
+    "type": "card",
+    "cardType": "leader-blue",
+    "id": "qhhd",
+    "x": 109,
+    "y": 7,
+    "z": 24145,
+    "parent": "holder-leaders-seat-p1"
+  },
+  "e2f8": {
+    "deck": "deck-leaders-p1",
+    "type": "card",
+    "cardType": "leader-green",
+    "id": "e2f8",
+    "z": 24146,
+    "x": 39,
+    "y": 7,
+    "hoverParent": "holder-leaders-seat-p1",
+    "parent": "holder-leaders-seat-p1"
+  },
+  "s17o": {
+    "deck": "deck-leaders-p1",
+    "type": "card",
+    "cardType": "leader-purple",
+    "id": "s17o",
+    "z": 24147,
+    "x": 4,
+    "y": 7,
+    "parent": "holder-leaders-seat-p1"
+  },
+  "47a10B": {
+    "id": "47a10B",
+    "parent": "holder-camels-red",
+    "fixedParent": true,
+    "y": 167,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "holder-camels-red": {
+    "type": "holder",
+    "id": "holder-camels-red",
+    "x": 408,
+    "y": 882,
+    "width": 65,
+    "height": 65,
+    "z": 61963,
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6
+  },
+  "deck-camels-red": {
+    "type": "deck",
+    "id": "deck-camels-red",
+    "parent": "holder-camels-red",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "peachpuff",
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "css": {
+        "border": "2px solid black"
+      },
+      "iconColor": "transparent",
+      "suitIcon": "/i/game-icons.net/skoll/spades.svg",
+      "clickRoutine": [
+        {
+          "func": "CALL",
+          "widget": "button-code",
+          "routine": "claimSuitRoutine",
+          "arguments": {
+            "card": "${thisID}"
+          }
+        }
+      ],
+      "draggingChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY dragging OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "CALL",
+              "widget": "button-code",
+              "routine": "claimSuitRoutine",
+              "arguments": {
+                "card": "${thisID}"
+              }
+            }
+          ]
+        }
+      ],
+      "parentChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY parent OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "${thisID}"
+              ],
+              "property": "iconColor",
+              "relation": "=",
+              "value": "transparent"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "camel-red": {
+        "bgColor": "#D55E00"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 32,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "suitIcon"
+            },
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "5fyl": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "5fyl",
+    "z": 23866,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "62mt": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "62mt",
+    "z": 23867,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "573x": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "573x",
+    "z": 23868,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "v4oe": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "v4oe",
+    "z": 23869,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "button-endturn-seat-p1": {
+    "type": "button",
+    "id": "button-endturn-seat-p1",
+    "parent": "seat-p1",
+    "x": -101,
+    "y": -5,
+    "height": 50,
+    "z": 18,
+    "css": {
+      "font-size": "16px",
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "black"
+    },
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "width": 90
+  },
+  "holder-leaders-seat-p1": {
+    "type": "holder",
+    "id": "holder-leaders-seat-p1",
+    "parent": "seat-p1",
+    "y": 52,
+    "width": 165,
+    "height": 65,
+    "z": 62044,
+    "preventPiles": true,
+    "stackOffsetX": 35,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "95%",
+        "width": "95%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "20%",
+        "opacity": 0.25,
+        "padding": "0px 5px 0px 5px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border": "none",
+        "background": "${PROPERTY background}"
+      }
+    },
+    "image": "/i/game-icons.net/skoll/spades.svg",
+    "dropOffsetY": 7,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-leaders-seat-p1",
+          "holder-leaders-seat-p2",
+          "holder-leaders-seat-p3",
+          "holder-leaders-seat-p4"
+        ],
+        "key": "sortingOrder"
+      }
+    ],
+    "dropTarget": {
+      "deck": "deck-leaders-p1"
+    },
+    "x": -107,
+    "scale": 0.9,
+    "icon": "skoll/spades"
+  },
+  "holder-tokens-seat-p1": {
+    "type": "holder",
+    "id": "holder-tokens-seat-p1",
+    "parent": "seat-p1",
+    "x": -116,
+    "y": 117,
+    "width": 345,
+    "height": 65,
+    "z": 62047,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ],
+    "preventPiles": true,
+    "scale": 0.9,
+    "stackOffsetX": 15,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "18%",
+        "opacity": 0.2,
+        "padding": "0px 15px 7px 15px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border": "none",
+        "background": "${PROPERTY background}"
+      }
+    },
+    "image": "/assets/97794359_3070"
+  },
+  "calculateScore": {
+    "type": "button",
+    "id": "calculateScore",
+    "x": 1468,
+    "y": 1027,
+    "width": 90,
+    "height": 50,
+    "z": 43703,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "10px"
+    },
+    "text": "Calculate Score",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Count tokens",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to calculate all players tokens. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "holder-tokens-${widgetID}"
+          },
+          {
+            "func": "GET",
+            "property": "points",
+            "aggregation": "sum"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "label-${widgetID}"
+            ],
+            "property": "text",
+            "value": "${points}"
+          }
+        ]
+      }
+    ]
+  },
+  "button-reset": {
+    "type": "button",
+    "id": "button-reset",
+    "x": 1468,
+    "z": 43699,
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine"
+      }
+    ],
+    "gameStartRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Set up a new game",
+        "confirmButtonText": "OK",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Select options below."
+          },
+          {
+            "label": "Map",
+            "type": "select",
+            "options": [
+              {
+                "value": "lowlands",
+                "text": "Lowlands",
+                "selected": true
+              },
+              {
+                "value": "highlands",
+                "text": "Highlands"
+              }
+            ],
+            "variable": "gameMap"
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder-camels-red",
+          "holder-camels-green",
+          "holder-camels-blue",
+          "holder-camels-purple",
+          "holder-wateringholes",
+          "holder-bonuses",
+          "holder-leaders-seat-p1",
+          "holder-leaders-seat-p2",
+          "holder-leaders-seat-p3",
+          "holder-leaders-seat-p4",
+          "holder-generic-points-neg-5s",
+          "holder-generic-points-10s",
+          "holder-generic-points-5s"
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "holder-wateringholes"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-bonuses",
+        "to": "holder-bonuses-display",
+        "count": "all"
+      },
+      {
+        "note": "Select all editable labels in the room",
+        "func": "SELECT",
+        "type": "label",
+        "property": "editable",
+        "value": true
+      },
+      {
+        "note": "Set each player's score to 0",
+        "func": "SET",
+        "property": "text",
+        "relation": "=",
+        "value": 0
+      },
+      "var playerCount = length ${activeSeats}",
+      "var 5p = ${playerCount} == 5",
+      "var 4p = ${playerCount} == 4",
+      "var 3p = ${playerCount} == 3",
+      "var 2p = ${playerCount} < 3",
+      {
+        "func": "IF",
+        "operand1": "${gameMap}",
+        "operand2": "lowlands",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "condition": "${5p}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "mountain-A-Routine",
+                "return": true,
+                "widget": "button-code"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "condition": "${4p}",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "mountain-A-Routine",
+                    "return": true,
+                    "widget": "button-code"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${3p}",
+                    "thenRoutine": [
+                      {
+                        "func": "CALL",
+                        "routine": "mountain-B-Routine",
+                        "return": true,
+                        "widget": "button-code"
+                      },
+                      {
+                        "notes": "In a 3p game, remove 8 camels of each color",
+                        "func": "MOVE",
+                        "from": [
+                          "holder-camels-red",
+                          "holder-camels-green",
+                          "holder-camels-blue",
+                          "holder-camels-purple"
+                        ],
+                        "to": "holder-temp",
+                        "count": 8
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "condition": "${2p}",
+                        "thenRoutine": [
+                          {
+                            "notes": "In a 2p game, remove 12 camels of each color",
+                            "func": "MOVE",
+                            "from": [
+                              "holder-camels-red",
+                              "holder-camels-green",
+                              "holder-camels-blue",
+                              "holder-camels-purple"
+                            ],
+                            "to": "holder-temp",
+                            "count": 12
+                          },
+                          {
+                            "func": "CALL",
+                            "routine": "mountain-B-Routine",
+                            "return": true,
+                            "widget": "button-code"
+                          }
+                        ],
+                        "elseRoutine": [
+                          "// Placeholder"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${gameMap}",
+        "operand2": "highlands",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "condition": "${5p}",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "river-A-Routine",
+                "return": true,
+                "widget": "button-code"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "condition": "${4p}",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "routine": "river-A-Routine",
+                    "return": true,
+                    "widget": "button-code"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "IF",
+                    "condition": "${3p}",
+                    "thenRoutine": [
+                      {
+                        "func": "CALL",
+                        "routine": "river-B-Routine",
+                        "return": true,
+                        "widget": "button-code"
+                      },
+                      {
+                        "notes": "In a 3p game, remove 8 camels of each color",
+                        "func": "MOVE",
+                        "from": [
+                          "holder-camels-red",
+                          "holder-camels-green",
+                          "holder-camels-blue",
+                          "holder-camels-purple"
+                        ],
+                        "to": "holder-temp",
+                        "count": 8
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "condition": "${2p}",
+                        "thenRoutine": [
+                          {
+                            "notes": "In a 2p game, remove 12 camels of each color",
+                            "func": "MOVE",
+                            "from": [
+                              "holder-camels-red",
+                              "holder-camels-green",
+                              "holder-camels-blue",
+                              "holder-camels-purple"
+                            ],
+                            "to": "holder-temp",
+                            "count": 12
+                          },
+                          {
+                            "func": "CALL",
+                            "routine": "river-B-Routine",
+                            "return": true,
+                            "widget": "button-code"
+                          }
+                        ],
+                        "elseRoutine": [
+                          "// Placeholder"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "css": "font-size:40px;font-weight:bold;border-radius:7px",
+    "width": 90,
+    "height": 50,
+    "y": 895,
+    "classes": "symbols"
+  },
+  "button-code": {
+    "type": "button",
+    "id": "button-code",
+    "x": 1368,
+    "z": 43704,
+    "text": "Code",
+    "calculateRoutine": [
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "parent",
+            "value": "holder-tokens-${widgetID}"
+          },
+          {
+            "func": "GET",
+            "property": "points",
+            "aggregation": "sum"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "label-${widgetID}"
+            ],
+            "property": "text",
+            "value": "${points}"
+          }
+        ]
+      }
+    ],
+    "width": 90,
+    "height": 50,
+    "css": {
+      "_, .transition": {
+        "transition": "transform 500ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "river-B-Routine": [
+      {
+        "func": "SET",
+        "collection": [
+          "image-river-b"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "image-river-a",
+          "image-mountain-a",
+          "image-mountain-b"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-river-w-44",
+          "holder-river-w-45",
+          "holder-river-w-46",
+          "holder-river-w-47",
+          "holder-river-w-48",
+          "holder-river-w-49",
+          "holder-river-w-50",
+          "holder-river-w-51",
+          "holder-river-w-52",
+          "holder-river-w-53",
+          "holder-river-w-54",
+          "holder-river-w-55",
+          "holder-river-w-56",
+          "holder-river-w-57",
+          "holder-river-w-58",
+          "holder-river-w-59",
+          "holder-river-w-60",
+          "holder-river-w-61",
+          "holder-river-w-62",
+          "holder-river-w-63",
+          "holder-river-w-64",
+          "holder-river-w-65",
+          "holder-river-w-66",
+          "holder-river-w-67",
+          "holder-river-w-68"
+        ],
+        "max": 5,
+        "random": true,
+        "collection": "river-B-allWateringHoles"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "river-B-allWateringHoles",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-wateringholes",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-river-w-44",
+          "holder-river-w-45",
+          "holder-river-w-46",
+          "holder-river-w-47",
+          "holder-river-w-48",
+          "holder-river-w-49",
+          "holder-river-w-50",
+          "holder-river-w-51",
+          "holder-river-w-52",
+          "holder-river-w-53",
+          "holder-river-w-54",
+          "holder-river-w-55",
+          "holder-river-w-56",
+          "holder-river-w-57",
+          "holder-river-w-58",
+          "holder-river-w-59",
+          "holder-river-w-60",
+          "holder-river-w-61",
+          "holder-river-w-62",
+          "holder-river-w-63",
+          "holder-river-w-64",
+          "holder-river-w-65",
+          "holder-river-w-66",
+          "holder-river-w-67",
+          "holder-river-w-68"
+        ],
+        "collection": "river-B-allPointTokenSpaces"
+      },
+      {
+        "notes": "Loop through each point token space; if it's empty then populate it with the remaining watering hole tokens",
+        "func": "FOREACH",
+        "collection": "river-B-allPointTokenSpaces",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-wateringholes",
+                "to": "${widgetID}",
+                "count": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "river-A-Routine": [
+      {
+        "func": "SET",
+        "collection": [
+          "image-river-a"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "image-river-b",
+          "image-mountain-a",
+          "image-mountain-b"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-river-w-1",
+          "holder-river-w-2",
+          "holder-river-w-3",
+          "holder-river-w-4",
+          "holder-river-w-5",
+          "holder-river-w-6",
+          "holder-river-w-7",
+          "holder-river-w-8",
+          "holder-river-w-9",
+          "holder-river-w-10",
+          "holder-river-w-11",
+          "holder-river-w-12",
+          "holder-river-w-13",
+          "holder-river-w-14",
+          "holder-river-w-15",
+          "holder-river-w-16",
+          "holder-river-w-17",
+          "holder-river-w-18",
+          "holder-river-w-19",
+          "holder-river-w-20",
+          "holder-river-w-21",
+          "holder-river-w-22",
+          "holder-river-w-23",
+          "holder-river-w-24",
+          "holder-river-w-25",
+          "holder-river-w-26",
+          "holder-river-w-27",
+          "holder-river-w-28",
+          "holder-river-w-29",
+          "holder-river-w-30",
+          "holder-river-w-31",
+          "holder-river-w-32",
+          "holder-river-w-33",
+          "holder-river-w-34",
+          "holder-river-w-35",
+          "holder-river-w-36",
+          "holder-river-w-37",
+          "holder-river-w-38",
+          "holder-river-w-39",
+          "holder-river-w-40",
+          "holder-river-w-41",
+          "holder-river-w-42",
+          "holder-river-w-43"
+        ],
+        "collection": "river-A-allWateringHoles"
+      },
+      {
+        "notes": "Loop through each watering hole space and deal 1 watering hole token to it",
+        "func": "FOREACH",
+        "collection": "river-A-allWateringHoles",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-wateringholes",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-river-w-1",
+          "holder-river-w-2",
+          "holder-river-w-3",
+          "holder-river-w-4",
+          "holder-river-w-5",
+          "holder-river-w-6",
+          "holder-river-w-7",
+          "holder-river-w-8",
+          "holder-river-w-9",
+          "holder-river-w-10",
+          "holder-river-w-11",
+          "holder-river-w-12",
+          "holder-river-w-13",
+          "holder-river-w-14",
+          "holder-river-w-15",
+          "holder-river-w-16",
+          "holder-river-w-17",
+          "holder-river-w-18",
+          "holder-river-w-19",
+          "holder-river-w-20",
+          "holder-river-w-21",
+          "holder-river-w-22",
+          "holder-river-w-23",
+          "holder-river-w-24",
+          "holder-river-w-25",
+          "holder-river-w-26",
+          "holder-river-w-27",
+          "holder-river-w-28",
+          "holder-river-w-29",
+          "holder-river-w-30",
+          "holder-river-w-31",
+          "holder-river-w-32",
+          "holder-river-w-33",
+          "holder-river-w-34",
+          "holder-river-w-35",
+          "holder-river-w-36",
+          "holder-river-w-37",
+          "holder-river-w-38",
+          "holder-river-w-39",
+          "holder-river-w-40",
+          "holder-river-w-41",
+          "holder-river-w-42",
+          "holder-river-w-43"
+        ],
+        "collection": "river-A-allPointTokenSpaces"
+      },
+      {
+        "notes": "Loop through each point token space; if it's empty then populate it with the remaining watering hole tokens",
+        "func": "FOREACH",
+        "collection": "river-A-allPointTokenSpaces",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-wateringholes",
+                "to": "${widgetID}",
+                "count": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "mountain-B-Routine": [
+      {
+        "func": "SET",
+        "collection": [
+          "image-mountain-b"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "image-mountain-a",
+          "image-river-a",
+          "image-river-b"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-mountain-w-52",
+          "holder-mountain-w-53",
+          "holder-mountain-w-54",
+          "holder-mountain-w-55",
+          "holder-mountain-w-56",
+          "holder-mountain-w-57",
+          "holder-mountain-w-58",
+          "holder-mountain-w-59",
+          "holder-mountain-w-60",
+          "holder-mountain-w-61",
+          "holder-mountain-w-62",
+          "holder-mountain-w-63",
+          "holder-mountain-w-64",
+          "holder-mountain-w-65",
+          "holder-mountain-w-66",
+          "holder-mountain-w-67",
+          "holder-mountain-w-68",
+          "holder-mountain-w-69",
+          "holder-mountain-w-70",
+          "holder-mountain-w-71",
+          "holder-mountain-w-72",
+          "holder-mountain-w-73",
+          "holder-mountain-w-74",
+          "holder-mountain-w-75",
+          "holder-mountain-w-76",
+          "holder-mountain-w-77"
+        ],
+        "max": 5,
+        "random": true,
+        "collection": "mountain-B-allWateringHoles"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "mountain-B-allWateringHoles",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-wateringholes",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-mountain-w-52",
+          "holder-mountain-w-53",
+          "holder-mountain-w-54",
+          "holder-mountain-w-55",
+          "holder-mountain-w-56",
+          "holder-mountain-w-57",
+          "holder-mountain-w-58",
+          "holder-mountain-w-59",
+          "holder-mountain-w-60",
+          "holder-mountain-w-61",
+          "holder-mountain-w-62",
+          "holder-mountain-w-63",
+          "holder-mountain-w-64",
+          "holder-mountain-w-65",
+          "holder-mountain-w-66",
+          "holder-mountain-w-67",
+          "holder-mountain-w-68",
+          "holder-mountain-w-69",
+          "holder-mountain-w-70",
+          "holder-mountain-w-71",
+          "holder-mountain-w-72",
+          "holder-mountain-w-73",
+          "holder-mountain-w-74",
+          "holder-mountain-w-75",
+          "holder-mountain-w-76",
+          "holder-mountain-w-77"
+        ],
+        "collection": "mountain-B-allPointTokenSpaces"
+      },
+      {
+        "notes": "Loop through each point token space; if it's empty then populate it with the remaining watering hole tokens",
+        "func": "FOREACH",
+        "collection": "mountain-B-allPointTokenSpaces",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-wateringholes",
+                "to": "${widgetID}",
+                "count": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "mountain-A-Routine": [
+      {
+        "func": "SET",
+        "collection": [
+          "image-mountain-a"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "image-mountain-b",
+          "image-river-a",
+          "image-river-b"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-mountain-w-1",
+          "holder-mountain-w-2",
+          "holder-mountain-w-3",
+          "holder-mountain-w-4",
+          "holder-mountain-w-5",
+          "holder-mountain-w-6",
+          "holder-mountain-w-7",
+          "holder-mountain-w-8",
+          "holder-mountain-w-9",
+          "holder-mountain-w-10",
+          "holder-mountain-w-11",
+          "holder-mountain-w-12",
+          "holder-mountain-w-13",
+          "holder-mountain-w-14",
+          "holder-mountain-w-15",
+          "holder-mountain-w-16",
+          "holder-mountain-w-17",
+          "holder-mountain-w-18",
+          "holder-mountain-w-19",
+          "holder-mountain-w-20",
+          "holder-mountain-w-21",
+          "holder-mountain-w-22",
+          "holder-mountain-w-23",
+          "holder-mountain-w-24",
+          "holder-mountain-w-25",
+          "holder-mountain-w-26",
+          "holder-mountain-w-27",
+          "holder-mountain-w-28",
+          "holder-mountain-w-29",
+          "holder-mountain-w-30",
+          "holder-mountain-w-31",
+          "holder-mountain-w-32",
+          "holder-mountain-w-33",
+          "holder-mountain-w-34"
+        ],
+        "collection": "mountain-A-allWateringHoles"
+      },
+      {
+        "notes": "Loop through each watering hole space and deal 1 watering hole token to it",
+        "func": "FOREACH",
+        "collection": "mountain-A-allWateringHoles",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-wateringholes",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "holder-mountain-w-1",
+          "holder-mountain-w-2",
+          "holder-mountain-w-3",
+          "holder-mountain-w-4",
+          "holder-mountain-w-5",
+          "holder-mountain-w-6",
+          "holder-mountain-w-7",
+          "holder-mountain-w-8",
+          "holder-mountain-w-9",
+          "holder-mountain-w-10",
+          "holder-mountain-w-11",
+          "holder-mountain-w-12",
+          "holder-mountain-w-13",
+          "holder-mountain-w-14",
+          "holder-mountain-w-15",
+          "holder-mountain-w-16",
+          "holder-mountain-w-17",
+          "holder-mountain-w-18",
+          "holder-mountain-w-19",
+          "holder-mountain-w-20",
+          "holder-mountain-w-21",
+          "holder-mountain-w-22",
+          "holder-mountain-w-23",
+          "holder-mountain-w-24",
+          "holder-mountain-w-25",
+          "holder-mountain-w-26",
+          "holder-mountain-w-27",
+          "holder-mountain-w-28",
+          "holder-mountain-w-29",
+          "holder-mountain-w-30",
+          "holder-mountain-w-31",
+          "holder-mountain-w-32",
+          "holder-mountain-w-33",
+          "holder-mountain-w-34"
+        ],
+        "collection": "mountain-A-allPointTokenSpaces"
+      },
+      {
+        "notes": "Loop through each point token space; if it's empty then populate it with the remaining watering hole tokens",
+        "func": "FOREACH",
+        "collection": "mountain-A-allPointTokenSpaces",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${widgetID}"
+          },
+          {
+            "func": "COUNT"
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-wateringholes",
+                "to": "${widgetID}",
+                "count": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "y": 1026,
+    "claimSuitRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY iconColor OF $card}",
+        "relation": "==",
+        "operand2": "transparent",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "player",
+            "value": "${playerName}",
+            "collection": "mySeat"
+          },
+          {
+            "func": "GET",
+            "collection": "mySeat",
+            "property": "index",
+            "variable": "seatNum"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "image-icon-p${seatNum}"
+            ],
+            "property": "image",
+            "variable": "player_suit"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "image-icon-p${seatNum}"
+            ],
+            "property": "color",
+            "variable": "player_suit_color"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${card}"
+            ],
+            "property": "suitIcon",
+            "relation": "=",
+            "value": "${player_suit}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "${card}"
+            ],
+            "property": "iconColor",
+            "relation": "=",
+            "value": "${player_suit_color}"
+          }
+        ]
+      }
+    ]
+  },
+  "button-toggle": {
+    "type": "button",
+    "id": "button-toggle",
+    "x": 1368,
+    "y": 895,
+    "width": 90,
+    "height": 50,
+    "z": 43688,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "7px"
+    },
+    "text": "Reveal Scores",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Reveal Scores",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Reveal Scores",
+            "fields": [
+              {
+                "type": "text",
+                "text": "You're about to reveal scores. Are you sure?"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-toggle"
+            ],
+            "property": "text",
+            "value": "Hide Scores"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "playerIndex",
+                "value": "${value}"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "label-seat-p${value}"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "relation": "=",
+                "value": null
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Hide Scores",
+            "fields": [
+              {
+                "type": "text",
+                "text": "You're about to hide scores. Are you sure?"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-toggle"
+            ],
+            "property": "text",
+            "value": "Reveal Scores"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "playerIndex",
+                "value": "${value}"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "label-seat-p${value}"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "relation": "=",
+                "value": "seat-p${value}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "47a12B": {
+    "id": "47a12B",
+    "parent": "holder-camels-blue",
+    "fixedParent": true,
+    "y": 167,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "deck-camels-blue": {
+    "type": "deck",
+    "id": "deck-camels-blue",
+    "parent": "holder-camels-blue",
+    "x": 4,
+    "y": 4,
+    "z": 41,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "lightcyan",
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "css": {
+        "border": "2px solid black"
+      },
+      "iconColor": "transparent",
+      "suitIcon": "/i/game-icons.net/skoll/spades.svg",
+      "clickRoutine": [
+        {
+          "func": "CALL",
+          "widget": "button-code",
+          "routine": "claimSuitRoutine",
+          "arguments": {
+            "card": "${thisID}"
+          }
+        }
+      ],
+      "draggingChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY dragging OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "CALL",
+              "widget": "button-code",
+              "routine": "claimSuitRoutine",
+              "arguments": {
+                "card": "${thisID}"
+              }
+            }
+          ]
+        }
+      ],
+      "parentChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY parent OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "${thisID}"
+              ],
+              "property": "iconColor",
+              "relation": "=",
+              "value": "transparent"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "camel-blue": {
+        "bgColor": "#56B4E9"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 32,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "suitIcon"
+            },
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder-camels-blue": {
+    "type": "holder",
+    "id": "holder-camels-blue",
+    "x": 554,
+    "y": 883,
+    "width": 65,
+    "height": 65,
+    "z": 150,
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6
+  },
+  "azt6": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "azt6",
+    "z": 23966,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "wy3i": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "wy3i",
+    "z": 23967,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "k2e0": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "k2e0",
+    "z": 23968,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "9nfi": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "9nfi",
+    "z": 23969,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "p08p": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "p08p",
+    "z": 23970,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "d3r2": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "d3r2",
+    "z": 23870,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "47a13B": {
+    "id": "47a13B",
+    "parent": "holder-camels-green",
+    "fixedParent": true,
+    "y": 167,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "holder-camels-green": {
+    "type": "holder",
+    "id": "holder-camels-green",
+    "x": 482,
+    "y": 883,
+    "width": 65,
+    "height": 65,
+    "z": 130,
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6
+  },
+  "deck-camels-green": {
+    "type": "deck",
+    "id": "deck-camels-green",
+    "parent": "holder-camels-green",
+    "x": 4,
+    "y": 4,
+    "z": 42,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "honeydew",
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "css": {
+        "border": "2px solid black"
+      },
+      "iconColor": "transparent",
+      "suitIcon": "/i/game-icons.net/skoll/spades.svg",
+      "clickRoutine": [
+        {
+          "func": "CALL",
+          "widget": "button-code",
+          "routine": "claimSuitRoutine",
+          "arguments": {
+            "card": "${thisID}"
+          }
+        }
+      ],
+      "draggingChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY dragging OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "CALL",
+              "widget": "button-code",
+              "routine": "claimSuitRoutine",
+              "arguments": {
+                "card": "${thisID}"
+              }
+            }
+          ]
+        }
+      ],
+      "parentChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY parent OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "${thisID}"
+              ],
+              "property": "iconColor",
+              "relation": "=",
+              "value": "transparent"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "camel-green": {
+        "bgColor": "#009E73"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 32,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "suitIcon"
+            },
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "47a14B": {
+    "id": "47a14B",
+    "parent": "holder-camels-purple",
+    "fixedParent": true,
+    "y": 167,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70,
+    "x": 1
+  },
+  "holder-camels-purple": {
+    "type": "holder",
+    "id": "holder-camels-purple",
+    "x": 626,
+    "y": 883,
+    "width": 65,
+    "height": 65,
+    "z": 152,
+    "dropTarget": {
+      "type": "card"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6
+  },
+  "deck-camels-purple": {
+    "type": "deck",
+    "id": "deck-camels-purple",
+    "parent": "holder-camels-purple",
+    "x": 4,
+    "y": 4,
+    "z": 43,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "lavenderblush",
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "css": {
+        "border": "2px solid black"
+      },
+      "iconColor": "transparent",
+      "suitIcon": "/i/game-icons.net/skoll/spades.svg",
+      "clickRoutine": [
+        {
+          "func": "CALL",
+          "widget": "button-code",
+          "routine": "claimSuitRoutine",
+          "arguments": {
+            "card": "${thisID}"
+          }
+        }
+      ],
+      "draggingChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY dragging OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "CALL",
+              "widget": "button-code",
+              "routine": "claimSuitRoutine",
+              "arguments": {
+                "card": "${thisID}"
+              }
+            }
+          ]
+        }
+      ],
+      "parentChangeRoutine": [
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY parent OF $thisID}",
+          "relation": "!=",
+          "operand2": null,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "${thisID}"
+              ],
+              "property": "iconColor",
+              "relation": "=",
+              "value": "transparent"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "camel-purple": {
+        "bgColor": "#BD59A7"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 32,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "suitIcon"
+            },
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "jm1h": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "jm1h",
+    "z": 23971,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "1n50": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "1n50",
+    "z": 23871,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "deck-leaders-p1": {
+    "type": "deck",
+    "id": "deck-leaders-p1",
+    "x": 4,
+    "y": 7,
+    "z": 52,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "white",
+      "iconColor": "black",
+      "css": {
+        "border": "2px solid black",
+        "border-radius": "100%"
+      }
+    },
+    "cardTypes": {
+      "leader-red": {
+        "bgColor": "#D55E00",
+        "camelColor": "peachpuff",
+        "sortingOrder": 1
+      },
+      "leader-green": {
+        "bgColor": "#009E73",
+        "camelColor": "honeydew",
+        "sortingOrder": 3
+      },
+      "leader-blue": {
+        "bgColor": "#56B4E9",
+        "camelColor": "lightcyan",
+        "sortingOrder": 4
+      },
+      "leader-purple": {
+        "bgColor": "#CC79A7",
+        "camelColor": "lavenderblush",
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 20,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/spades.svg",
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-leaders-seat-p1",
+    "parent": "holder-leaders-seat-p1"
+  },
+  "box-seat-p1": {
+    "id": "box-seat-p1",
+    "x": 1251,
+    "width": 320,
+    "height": 190,
+    "layer": -3,
+    "z": 61718,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "silver",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "y": 21
+  },
+  "box-seat-p2": {
+    "id": "box-seat-p2",
+    "x": 1251,
+    "css": {
+      "border": "1px solid black",
+      "background": "silver",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "y": 230,
+    "inheritFrom": "box-seat-p1",
+    "z": 61719
+  },
+  "label-seat-p2": {
+    "type": "label",
+    "id": "label-seat-p2",
+    "x": 67,
+    "y": 67,
+    "width": 60,
+    "height": 40,
+    "z": 23,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p2",
+    "onlyVisibleForSeat": "seat-p2"
+  },
+  "button-endturn-seat-p2": {
+    "type": "button",
+    "id": "button-endturn-seat-p2",
+    "parent": "seat-p2",
+    "x": -101,
+    "y": -5,
+    "height": 50,
+    "z": 18,
+    "css": {
+      "font-size": "16px",
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "maroon"
+    },
+    "text": "End Turn",
+    "width": 90,
+    "inheritFrom": "button-endturn-seat-p1"
+  },
+  "holder-leaders-seat-p2": {
+    "type": "holder",
+    "id": "holder-leaders-seat-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-leaders-seat-p1",
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "dropTarget": {
+      "deck": "deck-leaders-p2"
+    },
+    "icon": "skoll/hearts"
+  },
+  "deck-leaders-p2": {
+    "type": "deck",
+    "id": "deck-leaders-p2",
+    "x": 4,
+    "y": 7,
+    "z": 51,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "white",
+      "iconColor": "maroon",
+      "css": {
+        "border": "2px solid black",
+        "border-radius": "100%"
+      }
+    },
+    "cardTypes": {
+      "leader-red": {
+        "bgColor": "#D55E00",
+        "camelColor": "peachpuff",
+        "sortingOrder": 1
+      },
+      "leader-green": {
+        "bgColor": "#009E73",
+        "camelColor": "honeydew",
+        "sortingOrder": 3
+      },
+      "leader-blue": {
+        "bgColor": "#56B4E9",
+        "camelColor": "lightcyan",
+        "sortingOrder": 4
+      },
+      "leader-purple": {
+        "bgColor": "#CC79A7",
+        "camelColor": "lavenderblush",
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 22,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/hearts.svg",
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-leaders-seat-p2",
+    "parent": "holder-leaders-seat-p2"
+  },
+  "holder-tokens-seat-p2": {
+    "type": "holder",
+    "id": "holder-tokens-seat-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-tokens-seat-p1",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ]
+  },
+  "5gi4": {
+    "deck": "deck-leaders-p2",
+    "type": "card",
+    "cardType": "leader-blue",
+    "id": "5gi4",
+    "z": 24149,
+    "x": 4,
+    "y": 7,
+    "parent": "holder-leaders-seat-p2"
+  },
+  "v341": {
+    "deck": "deck-leaders-p2",
+    "type": "card",
+    "cardType": "leader-red",
+    "id": "v341",
+    "z": 24150,
+    "activeFace": 1,
+    "x": 109,
+    "y": 7,
+    "hoverParent": "holder-leaders-seat-p2",
+    "parent": "holder-leaders-seat-p2"
+  },
+  "m6eq": {
+    "deck": "deck-leaders-p2",
+    "type": "card",
+    "cardType": "leader-green",
+    "id": "m6eq",
+    "z": 24151,
+    "parent": "holder-leaders-seat-p2",
+    "x": 39,
+    "y": 7
+  },
+  "617b": {
+    "deck": "deck-leaders-p2",
+    "type": "card",
+    "cardType": "leader-purple",
+    "id": "617b",
+    "z": 24152,
+    "x": 74,
+    "y": 7,
+    "activeFace": 1,
+    "parent": "holder-leaders-seat-p2"
+  },
+  "box-seat-p3": {
+    "id": "box-seat-p3",
+    "x": 1251,
+    "css": {
+      "border": "1px solid black",
+      "background": "silver",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "y": 440,
+    "inheritFrom": "box-seat-p1",
+    "z": 61720
+  },
+  "label-seat-p3": {
+    "type": "label",
+    "id": "label-seat-p3",
+    "x": 67,
+    "y": 67,
+    "width": 60,
+    "height": 40,
+    "z": 23,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p3",
+    "onlyVisibleForSeat": "seat-p3"
+  },
+  "button-endturn-seat-p3": {
+    "type": "button",
+    "id": "button-endturn-seat-p3",
+    "parent": "seat-p3",
+    "x": -101,
+    "y": -5,
+    "height": 50,
+    "z": 18,
+    "css": {
+      "font-size": "16px",
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "royalblue"
+    },
+    "text": "End Turn",
+    "width": 90,
+    "inheritFrom": "button-endturn-seat-p1"
+  },
+  "holder-leaders-seat-p3": {
+    "type": "holder",
+    "id": "holder-leaders-seat-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-leaders-seat-p1",
+    "image": "/i/game-icons.net/skoll/diamonds.svg",
+    "dropTarget": {
+      "deck": "deck-leaders-p3"
+    },
+    "icon": "skoll/diamonds"
+  },
+  "deck-leaders-p3": {
+    "type": "deck",
+    "id": "deck-leaders-p3",
+    "x": 4,
+    "y": 7,
+    "z": 50,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "white",
+      "iconColor": "royalblue",
+      "css": {
+        "border": "2px solid black",
+        "border-radius": "100%"
+      }
+    },
+    "cardTypes": {
+      "leader-red": {
+        "bgColor": "#D55E00",
+        "camelColor": "peachpuff",
+        "sortingOrder": 1
+      },
+      "leader-green": {
+        "bgColor": "#009E73",
+        "camelColor": "honeydew",
+        "sortingOrder": 3
+      },
+      "leader-blue": {
+        "bgColor": "#56B4E9",
+        "camelColor": "lightcyan",
+        "sortingOrder": 4
+      },
+      "leader-purple": {
+        "bgColor": "#CC79A7",
+        "camelColor": "lavenderblush",
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 20,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/diamonds.svg",
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-leaders-seat-p3",
+    "parent": "holder-leaders-seat-p3"
+  },
+  "holder-tokens-seat-p3": {
+    "type": "holder",
+    "id": "holder-tokens-seat-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-tokens-seat-p1",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ]
+  },
+  "v76l": {
+    "deck": "deck-leaders-p3",
+    "type": "card",
+    "cardType": "leader-blue",
+    "id": "v76l",
+    "z": 24153,
+    "x": 109,
+    "y": 7,
+    "parent": "holder-leaders-seat-p3"
+  },
+  "e6w9": {
+    "deck": "deck-leaders-p3",
+    "type": "card",
+    "cardType": "leader-red",
+    "id": "e6w9",
+    "z": 24154,
+    "x": 4,
+    "y": 7,
+    "hoverParent": "holder-leaders-seat-p3",
+    "parent": "holder-leaders-seat-p3"
+  },
+  "6zr2": {
+    "deck": "deck-leaders-p3",
+    "type": "card",
+    "cardType": "leader-green",
+    "id": "6zr2",
+    "z": 24155,
+    "x": 74,
+    "y": 7,
+    "hoverParent": "holder-leaders-seat-p3",
+    "parent": "holder-leaders-seat-p3"
+  },
+  "88aw": {
+    "deck": "deck-leaders-p3",
+    "type": "card",
+    "cardType": "leader-purple",
+    "id": "88aw",
+    "z": 24156,
+    "x": 39,
+    "y": 7,
+    "parent": "holder-leaders-seat-p3"
+  },
+  "box-seat-p4": {
+    "id": "box-seat-p4",
+    "x": 1251,
+    "css": {
+      "border": "1px solid black",
+      "background": "silver",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "y": 649,
+    "inheritFrom": "box-seat-p1",
+    "z": 62049
+  },
+  "label-seat-p4": {
+    "type": "label",
+    "id": "label-seat-p4",
+    "x": 67,
+    "y": 67,
+    "width": 60,
+    "height": 40,
+    "z": 23,
+    "css": "font-size: 30px;",
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p4",
+    "onlyVisibleForSeat": "seat-p4"
+  },
+  "button-endturn-seat-p4": {
+    "type": "button",
+    "id": "button-endturn-seat-p4",
+    "parent": "seat-p4",
+    "x": -101,
+    "y": -5,
+    "height": 50,
+    "z": 18,
+    "css": {
+      "font-size": "16px",
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "darkgreen"
+    },
+    "text": "End Turn",
+    "width": 90,
+    "inheritFrom": "button-endturn-seat-p1"
+  },
+  "holder-leaders-seat-p4": {
+    "type": "holder",
+    "id": "holder-leaders-seat-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-leaders-seat-p1",
+    "image": "/i/game-icons.net/skoll/clubs.svg",
+    "dropTarget": {
+      "deck": "deck-leaders-p4"
+    },
+    "icon": "skoll/clubs"
+  },
+  "deck-leaders-p4": {
+    "type": "deck",
+    "id": "deck-leaders-p4",
+    "x": 4,
+    "y": 7,
+    "z": 49,
+    "cardDefaults": {
+      "width": 50,
+      "height": 50,
+      "borderRadius": 100,
+      "image": "/assets/-992896662_743",
+      "camelColor": "white",
+      "iconColor": "darkgreen",
+      "css": {
+        "border": "2px solid black",
+        "border-radius": "100%"
+      }
+    },
+    "cardTypes": {
+      "leader-red": {
+        "bgColor": "#D55E00",
+        "camelColor": "peachpuff",
+        "sortingOrder": 1
+      },
+      "leader-green": {
+        "bgColor": "#009E73",
+        "camelColor": "honeydew",
+        "sortingOrder": 3
+      },
+      "leader-blue": {
+        "bgColor": "#56B4E9",
+        "camelColor": "lightcyan",
+        "sortingOrder": 4
+      },
+      "leader-purple": {
+        "bgColor": "#CC79A7",
+        "camelColor": "lavenderblush",
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "width": 60,
+            "height": 60,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#333333": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 8,
+            "y": 3,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "value": "/assets/-771599596_3808",
+            "svgReplaces": {
+              "#000": "camelColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 20,
+            "width": 32,
+            "height": 32,
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/clubs.svg",
+            "svgReplaces": {
+              "#000": "iconColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "18",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-leaders-seat-p4",
+    "parent": "holder-leaders-seat-p4"
+  },
+  "holder-tokens-seat-p4": {
+    "type": "holder",
+    "id": "holder-tokens-seat-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-tokens-seat-p1",
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "calculateRoutine",
+        "widget": "button-code",
+        "return": true
+      }
+    ]
+  },
+  "72jw": {
+    "deck": "deck-leaders-p4",
+    "type": "card",
+    "cardType": "leader-blue",
+    "id": "72jw",
+    "z": 24157,
+    "x": 109,
+    "y": 7,
+    "parent": "holder-leaders-seat-p4"
+  },
+  "1nxg": {
+    "deck": "deck-leaders-p4",
+    "type": "card",
+    "cardType": "leader-red",
+    "id": "1nxg",
+    "z": 24158,
+    "parent": "holder-leaders-seat-p4",
+    "x": 74,
+    "y": 7
+  },
+  "776u": {
+    "deck": "deck-leaders-p4",
+    "type": "card",
+    "cardType": "leader-green",
+    "id": "776u",
+    "z": 24159,
+    "parent": "holder-leaders-seat-p4",
+    "x": 39,
+    "y": 7
+  },
+  "m2o5": {
+    "deck": "deck-leaders-p4",
+    "type": "card",
+    "cardType": "leader-purple",
+    "id": "m2o5",
+    "z": 24160,
+    "x": 4,
+    "y": 7,
+    "activeFace": 1,
+    "parent": "holder-leaders-seat-p4"
+  },
+  "47a8B": {
+    "id": "47a8B",
+    "parent": "holder-bonuses",
+    "fixedParent": true,
+    "y": 170,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "holder-bonuses": {
+    "type": "holder",
+    "id": "holder-bonuses",
+    "x": 162,
+    "y": 1036,
+    "width": 65,
+    "height": 65,
+    "z": 62209,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "5dfu": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "5dfu",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-73",
+    "x": 4,
+    "y": 4
+  },
+  "219a": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "219a",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-57",
+    "x": 4,
+    "y": 4
+  },
+  "ctfk": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "ctfk",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-55",
+    "x": 4,
+    "y": 4
+  },
+  "deck-bonuses": {
+    "type": "deck",
+    "id": "deck-bonuses",
+    "x": 4,
+    "y": 4,
+    "z": 44,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 55,
+      "height": 55,
+      "borderRadius": 100,
+      "cssText": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "2px 2px 2px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "largest-red": {
+        "image": "/i/noto-emoji/emoji_u26ab.svg",
+        "bgColor1": "#D55E00",
+        "bgColor2": "indianred",
+        "bgColor3": "peachpuff",
+        "textFront": "10",
+        "points": 10,
+        "sortingOrder": 1
+      },
+      "largest-green": {
+        "image": "/i/noto-emoji/emoji_u26ab.svg",
+        "bgColor1": "#009E73",
+        "bgColor2": "mediumseagreen",
+        "bgColor3": "honeydew",
+        "textFront": "10",
+        "points": 10,
+        "sortingOrder": 3
+      },
+      "largest-blue": {
+        "image": "/i/noto-emoji/emoji_u26ab.svg",
+        "bgColor1": "#56B4E9",
+        "bgColor2": "dodgerblue",
+        "bgColor3": "lightcyan",
+        "textFront": "10",
+        "points": 10,
+        "sortingOrder": 4
+      },
+      "largest-purple": {
+        "image": "/i/noto-emoji/emoji_u26ab.svg",
+        "bgColor1": "#BD59A7",
+        "bgColor2": "mediumpurple",
+        "bgColor3": "lavenderblush",
+        "textFront": "10",
+        "points": 10,
+        "sortingOrder": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "value": "/i/noto-emoji/emoji_u26ab.svg"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textBack",
+              "css": "cssText"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#424242": "bgColor1",
+              "#575757": "bgColor2",
+              "#787878": "bgColor3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 12,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-bonuses",
+    "parent": "holder-bonuses"
+  },
+  "kaqt": {
+    "deck": "deck-bonuses",
+    "type": "card",
+    "cardType": "largest-red",
+    "id": "kaqt",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "holder-bonuses-display"
+  },
+  "sahm": {
+    "deck": "deck-bonuses",
+    "type": "card",
+    "cardType": "largest-green",
+    "id": "sahm",
+    "z": 2,
+    "parent": "holder-bonuses-display",
+    "x": 56,
+    "y": 4,
+    "activeFace": 1
+  },
+  "zfsb": {
+    "deck": "deck-bonuses",
+    "type": "card",
+    "cardType": "largest-purple",
+    "id": "zfsb",
+    "z": 4,
+    "x": 160,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "holder-bonuses-display"
+  },
+  "dnqv": {
+    "deck": "deck-bonuses",
+    "type": "card",
+    "cardType": "largest-blue",
+    "id": "dnqv",
+    "z": 3,
+    "x": 108,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "holder-bonuses-display"
+  },
+  "holder-bonuses-display": {
+    "type": "holder",
+    "id": "holder-bonuses-display",
+    "x": 93,
+    "y": 882,
+    "z": 62023,
+    "width": 220,
+    "height": 65,
+    "preventPiles": true,
+    "stackOffsetX": 52,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-bonuses-display"
+        ],
+        "key": "sortingOrder"
+      }
+    ]
+  },
+  "8tjm": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "8tjm",
+    "z": 24240,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "6ypv": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "6ypv",
+    "z": 24242,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "n11y": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "n11y",
+    "z": 24227,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "8gno": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "8gno",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-60",
+    "x": 4,
+    "y": 4
+  },
+  "k30c": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "k30c",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-72",
+    "x": 4,
+    "y": 4
+  },
+  "xwvd": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "xwvd",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-75",
+    "x": 4,
+    "y": 4
+  },
+  "aizq": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "aizq",
+    "z": 2,
+    "parent": "holder-mountain-w-74",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "doum": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "doum",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-53",
+    "x": 4,
+    "y": 4
+  },
+  "9zsc": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "9zsc",
+    "z": 24233,
+    "parent": "ke03",
+    "activeFace": 1
+  },
+  "uf8d": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "uf8d",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-52",
+    "x": 4,
+    "y": 4
+  },
+  "orfn": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "orfn",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-58",
+    "x": 4,
+    "y": 4
+  },
+  "pr78": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "pr78",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-71",
+    "x": 4,
+    "y": 4
+  },
+  "31mg": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "31mg",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-64",
+    "x": 4,
+    "y": 4
+  },
+  "ht4t": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-1",
+    "id": "ht4t",
+    "z": 24226,
+    "parent": "ke03",
+    "activeFace": 1
+  },
+  "si4p": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "si4p",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-77",
+    "x": 4,
+    "y": 4
+  },
+  "34ej": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "34ej",
+    "z": 24229,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "jr2u": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "jr2u",
+    "z": 2,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-mountain-w-61"
+  },
+  "mv5z": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "mv5z",
+    "z": 24235,
+    "parent": "ke03",
+    "activeFace": 1
+  },
+  "dh2b": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "dh2b",
+    "z": 24228,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "lg1w": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "lg1w",
+    "z": 24236,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "4qkm": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "4qkm",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-63",
+    "x": 4,
+    "y": 4
+  },
+  "vsuh": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "vsuh",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-62",
+    "x": 4,
+    "y": 4
+  },
+  "7bdx": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "7bdx",
+    "z": 24243,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "zst9": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "zst9",
+    "z": 24234,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "a245": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "a245",
+    "z": 2,
+    "parent": "holder-mountain-w-66",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "knkk": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "knkk",
+    "z": 2,
+    "parent": "holder-mountain-w-56",
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
+  },
+  "10p1": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "10p1",
+    "z": 24238,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "7auj": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-2",
+    "id": "7auj",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-67",
+    "x": 4,
+    "y": 4
+  },
+  "euzo": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "euzo",
+    "z": 24231,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "w4ci": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "w4ci",
+    "z": 24232,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "zu4t": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "zu4t",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-59",
+    "x": 4,
+    "y": 4
+  },
+  "rume": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "rume",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-68",
+    "x": 4,
+    "y": 4
+  },
+  "f01v": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "f01v",
+    "z": 24244,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "ojdb": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "ojdb",
+    "z": 24241,
+    "parent": "ke03",
+    "activeFace": 1
+  },
+  "6erk": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "6erk",
+    "z": 24230,
+    "parent": "ke03",
+    "activeFace": 1
+  },
+  "062s": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "062s",
+    "z": 24237,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "618s": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "618s",
+    "z": 24239,
+    "activeFace": 1,
+    "parent": "ke03"
+  },
+  "devw": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "devw",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-54",
+    "x": 4,
+    "y": 4
+  },
+  "3qd1": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "3qd1",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-69",
+    "x": 4,
+    "y": 4
+  },
+  "37gq": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "37gq",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-70",
+    "x": 4,
+    "y": 4
+  },
+  "nnk3": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "nnk3",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-76",
+    "x": 4,
+    "y": 4
+  },
+  "0g0g": {
+    "deck": "deck-wateringholes",
+    "type": "card",
+    "cardType": "token-3",
+    "id": "0g0g",
+    "z": 2,
+    "activeFace": 1,
+    "parent": "holder-mountain-w-65",
+    "x": 4,
+    "y": 4
+  },
+  "deck-wateringholes": {
+    "type": "deck",
+    "id": "deck-wateringholes",
+    "x": 4,
+    "y": 4,
+    "z": 17367,
+    "cardDefaults": {
+      "class": "point-token",
+      "classes": "transition",
+      "alwaysOnTop": true,
+      "width": 55,
+      "height": 55,
+      "borderRadius": 100,
+      "cssText": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "2px 2px 2px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "token-1": {
+        "image": "/assets/-1815321902_2784",
+        "points": 1
+      },
+      "token-2": {
+        "image": "/assets/-641845689_3132",
+        "points": 2
+      },
+      "token-3": {
+        "image": "/assets/97794359_3070",
+        "points": 3
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "value": "/i/noto-emoji/emoji_u26ab.svg"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textBack",
+              "css": "cssText"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 12,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-wateringholes",
+    "parent": "holder-wateringholes"
+  },
+  "holder-wateringholes": {
+    "type": "holder",
+    "id": "holder-wateringholes",
+    "x": 1111,
+    "y": 881,
+    "width": 65,
+    "height": 65,
+    "z": 62206,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "9bfi": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "9bfi",
+    "z": 23872,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "vegi": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "vegi",
+    "z": 23873,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "3xyk": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "3xyk",
+    "z": 23874,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "rqs0": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "rqs0",
+    "z": 23875,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "2ubh": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "2ubh",
+    "z": 23876,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "yaqs": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "yaqs",
+    "z": 23877,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "egmi": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "egmi",
+    "z": 23972,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "fs3a": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "fs3a",
+    "z": 23973,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "bev1": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "bev1",
+    "z": 23974,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "sxwn": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "sxwn",
+    "z": 23975,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "679h": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "679h",
+    "z": 23976,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "f4fm": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "f4fm",
+    "z": 23977,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "7f7b": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "7f7b",
+    "z": 23878,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "qp75": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "qp75",
+    "z": 23879,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "62j4": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "62j4",
+    "z": 23880,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "f7c7": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "f7c7",
+    "z": 23881,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "znyi": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "znyi",
+    "z": 23882,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "7tmi": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "7tmi",
+    "z": 23883,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "c6b6": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "c6b6",
+    "z": 23884,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "5j6a": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "5j6a",
+    "z": 23885,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "tev2": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "tev2",
+    "z": 23886,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "9vc8": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "9vc8",
+    "z": 23887,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "5ulf": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "5ulf",
+    "z": 23888,
+    "parent": "vibb",
+    "activeFace": 1
+  },
+  "jrfl": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "jrfl",
+    "z": 23889,
+    "activeFace": 1,
+    "parent": "vibb"
+  },
+  "tnbr": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "tnbr",
+    "z": 23890,
+    "activeFace": 1,
+    "parent": "vibb"
+  },
+  "pktk": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "pktk",
+    "z": 23891,
+    "activeFace": 1,
+    "parent": "vibb"
+  },
+  "5on6": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "5on6",
+    "z": 24275,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "bq0d": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "bq0d",
+    "z": 24277,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "axx9": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "axx9",
+    "z": 24279,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "v5lu": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "v5lu",
+    "z": 24281,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "j10g": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "j10g",
+    "z": 23978,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "77v9": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "77v9",
+    "z": 23979,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "abjb": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "abjb",
+    "z": 23980,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "qyj2": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "qyj2",
+    "z": 23981,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "vmul": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "vmul",
+    "z": 23982,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "oo3j": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "oo3j",
+    "z": 23983,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "ug30": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "ug30",
+    "z": 23984,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "g9ce": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "g9ce",
+    "z": 23985,
+    "parent": "coh3",
+    "activeFace": 1
+  },
+  "q6dp": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "q6dp",
+    "z": 23986,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "coh3"
+  },
+  "0e0w": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "0e0w",
+    "z": 23987,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "coh3"
+  },
+  "ntem": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "ntem",
+    "z": 23988,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "coh3"
+  },
+  "lni9": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "lni9",
+    "z": 23989,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "coh3"
+  },
+  "0jq4": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "0jq4",
+    "z": 23990,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "coh3"
+  },
+  "cuen": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "cuen",
+    "z": 23992,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "coh3"
+  },
+  "lpjw": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "lpjw",
+    "z": 24299,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "ylqo": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "ylqo",
+    "z": 24301,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "e9nq": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "e9nq",
+    "z": 24303,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "ux9i": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "ux9i",
+    "z": 24305,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "image-icon-p1": {
+    "id": "image-icon-p1",
+    "parent": "seat-p1",
+    "x": 148,
+    "y": 68,
+    "width": 32,
+    "height": 32,
+    "z": 36,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/spades.svg",
+    "svgReplaces": {
+      "#000": "color"
+    },
+    "color": "#000000"
+  },
+  "image-icon-p2": {
+    "id": "image-icon-p2",
+    "parent": "seat-p2",
+    "color": "maroon",
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "inheritFrom": "image-icon-p1",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "image-icon-p3": {
+    "id": "image-icon-p3",
+    "parent": "seat-p3",
+    "color": "royalblue",
+    "image": "/i/game-icons.net/skoll/diamonds.svg",
+    "inheritFrom": "image-icon-p1",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "image-icon-p4": {
+    "id": "image-icon-p4",
+    "parent": "seat-p4",
+    "color": "darkgreen",
+    "image": "/i/game-icons.net/skoll/clubs.svg",
+    "inheritFrom": "image-icon-p1",
+    "svgReplaces": {
+      "#000": "color"
+    }
+  },
+  "47a9B": {
+    "id": "47a9B",
+    "parent": "holder-generic-points-5s",
+    "fixedParent": true,
+    "y": 170,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "47a15B": {
+    "id": "47a15B",
+    "parent": "holder-temp",
+    "fixedParent": true,
+    "y": 170,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "holder-temp": {
+    "type": "holder",
+    "id": "holder-temp",
+    "x": 523,
+    "y": 1154,
+    "width": 65,
+    "height": 65,
+    "z": 62208,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "uj7b": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "uj7b",
+    "z": 24181,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "nedh": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "nedh",
+    "z": 24182,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "dtwt": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "dtwt",
+    "z": 24183,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "ts7v": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "ts7v",
+    "z": 24184,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "p1za": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "p1za",
+    "z": 24185,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "d11q": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "d11q",
+    "z": 24186,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "euw3": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "euw3",
+    "z": 24187,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "lmau": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "lmau",
+    "z": 24188,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "rb2p": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "rb2p",
+    "z": 24189,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "unt9": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "unt9",
+    "z": 24190,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "sut5": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "sut5",
+    "z": 24191,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "vsdp": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "vsdp",
+    "z": 24192,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "xswm": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "xswm",
+    "z": 24193,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "g73d": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "g73d",
+    "z": 24194,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "jtrr": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "jtrr",
+    "z": 24195,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "54pc": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "54pc",
+    "z": 24196,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "o62z": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "o62z",
+    "z": 24197,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "5dk4": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "5dk4",
+    "z": 24198,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "jm4g": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "jm4g",
+    "z": 24199,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "dpmc": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "dpmc",
+    "z": 24200,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "v9m0": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "v9m0",
+    "z": 24201,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "ta5r": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "ta5r",
+    "z": 24202,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "sy4h": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "sy4h",
+    "z": 24203,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "0adi": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "0adi",
+    "z": 24204,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "820j": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "820j",
+    "z": 24205,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "k0tf": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "k0tf",
+    "z": 24206,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "w029": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "w029",
+    "z": 24207,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "5ygx": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "5ygx",
+    "z": 24208,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "8w2m": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "8w2m",
+    "z": 24209,
+    "activeFace": 1,
+    "hoverParent": "holder-generic-points-5s",
+    "parent": "n56v"
+  },
+  "ji3w": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "ji3w",
+    "z": 24210,
+    "activeFace": 1,
+    "parent": "n56v"
+  },
+  "47a16B": {
+    "id": "47a16B",
+    "parent": "holder-generic-points-10s",
+    "fixedParent": true,
+    "y": 170,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "4jnb": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "4jnb",
+    "z": 24171,
+    "parent": "862r",
+    "activeFace": 1
+  },
+  "n924": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "n924",
+    "z": 24172,
+    "parent": "862r",
+    "activeFace": 1
+  },
+  "1efr": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "1efr",
+    "z": 24173,
+    "activeFace": 1,
+    "parent": "862r"
+  },
+  "47a17B": {
+    "id": "47a17B",
+    "parent": "holder-generic-points-neg-5s",
+    "fixedParent": true,
+    "y": 170,
+    "height": 30,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "width": 70
+  },
+  "holder-generic-points-5s": {
+    "type": "holder",
+    "id": "holder-generic-points-5s",
+    "x": 781,
+    "y": 882,
+    "width": 65,
+    "height": 65,
+    "z": 61749,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "deck-generic-points-5s": {
+    "type": "deck",
+    "id": "deck-generic-points-5s",
+    "parent": "holder-generic-points-5s",
+    "x": 4,
+    "y": 4,
+    "z": 45,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 55,
+      "height": 55,
+      "borderRadius": 100,
+      "cssText": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "2px 2px 2px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "generic-points": {
+        "image": "/i/noto-emoji/emoji_u26ab.svg",
+        "bgColor1": "gray",
+        "bgColor2": "dimgray",
+        "bgColor3": "silver",
+        "textFront": "5",
+        "points": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "value": "/i/noto-emoji/emoji_u26ab.svg"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textBack",
+              "css": "cssText"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#424242": "bgColor1",
+              "#575757": "bgColor2",
+              "#787878": "bgColor3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 12,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-bonuses"
+  },
+  "cnaj": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "cnaj",
+    "z": 24161,
+    "parent": "ar8x",
+    "activeFace": 1
+  },
+  "66f4": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "66f4",
+    "z": 24162,
+    "parent": "ar8x",
+    "activeFace": 1
+  },
+  "uzhk": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "uzhk",
+    "z": 24163,
+    "parent": "ar8x",
+    "activeFace": 1
+  },
+  "wck2": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "wck2",
+    "z": 24164,
+    "parent": "ar8x",
+    "activeFace": 1
+  },
+  "60sq": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "60sq",
+    "z": 24165,
+    "parent": "ar8x",
+    "activeFace": 1
+  },
+  "c26y": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "c26y",
+    "z": 24166,
+    "parent": "ar8x",
+    "activeFace": 1
+  },
+  "maks": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "maks",
+    "z": 24167,
+    "parent": "ar8x",
+    "activeFace": 1
+  },
+  "35fz": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "35fz",
+    "z": 24168,
+    "activeFace": 1,
+    "parent": "ar8x"
+  },
+  "omrt": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "omrt",
+    "z": 24169,
+    "activeFace": 1,
+    "parent": "ar8x"
+  },
+  "zbim": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "zbim",
+    "z": 23917,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "8xyw": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "8xyw",
+    "z": 23918,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "eovb": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "eovb",
+    "z": 23919,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "0kxk": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "0kxk",
+    "z": 23920,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "o68r": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "o68r",
+    "z": 23921,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "hwio": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "hwio",
+    "z": 23922,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "ctnm": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "ctnm",
+    "z": 23923,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "og4s": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "og4s",
+    "z": 23924,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "ej9x": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "ej9x",
+    "z": 23925,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "iok4": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "iok4",
+    "z": 23926,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "tngu": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "tngu",
+    "z": 23927,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "epvm": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "epvm",
+    "z": 23928,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "jnp2": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "jnp2",
+    "z": 23929,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "c6b7": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "c6b7",
+    "z": 23930,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "himz": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "himz",
+    "z": 23931,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "2fum": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "2fum",
+    "z": 23932,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "28zg": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "28zg",
+    "z": 23933,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "0guw": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "0guw",
+    "z": 23934,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "l5og": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "l5og",
+    "z": 23935,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "i3r4": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "i3r4",
+    "z": 23936,
+    "parent": "1k0i",
+    "activeFace": 1
+  },
+  "pa0n": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "pa0n",
+    "z": 23937,
+    "activeFace": 1,
+    "parent": "1k0i"
+  },
+  "ba2e": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "ba2e",
+    "z": 23938,
+    "activeFace": 1,
+    "parent": "1k0i"
+  },
+  "kevu": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "kevu",
+    "z": 23939,
+    "activeFace": 1,
+    "parent": "1k0i"
+  },
+  "xe46": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "xe46",
+    "z": 23940,
+    "activeFace": 1,
+    "parent": "1k0i"
+  },
+  "7c90": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "7c90",
+    "z": 23941,
+    "activeFace": 1,
+    "parent": "1k0i"
+  },
+  "0d9f": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "0d9f",
+    "z": 24323,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "lxwr": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "lxwr",
+    "z": 24325,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "48ey": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "48ey",
+    "z": 24327,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "cvi5": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "cvi5",
+    "z": 24329,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "3qao": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "3qao",
+    "z": 24017,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "j4n2": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "j4n2",
+    "z": 24018,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "z2vt": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "z2vt",
+    "z": 24019,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "mij9": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "mij9",
+    "z": 24020,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "86x9": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "86x9",
+    "z": 24021,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "xoyb": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "xoyb",
+    "z": 24022,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "xjgd": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "xjgd",
+    "z": 24023,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "y6qt": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "y6qt",
+    "z": 24024,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "tsd1": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "tsd1",
+    "z": 24025,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "ermj": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "ermj",
+    "z": 24026,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "4rxk": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "4rxk",
+    "z": 24027,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "jho6": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "jho6",
+    "z": 24028,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "amq5": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "amq5",
+    "z": 24029,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "9gi0": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "9gi0",
+    "z": 24030,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "i2ye": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "i2ye",
+    "z": 24031,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "eied": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "eied",
+    "z": 24032,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "1kzx": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "1kzx",
+    "z": 24033,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "fefw": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "fefw",
+    "z": 24034,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "l6kv": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "l6kv",
+    "z": 24035,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "aksc": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "aksc",
+    "z": 24036,
+    "parent": "32l1",
+    "activeFace": 1
+  },
+  "gr24": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "gr24",
+    "z": 24037,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "32l1"
+  },
+  "n2ab": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "n2ab",
+    "z": 24038,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "32l1"
+  },
+  "zpma": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "zpma",
+    "z": 24039,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "32l1"
+  },
+  "wowv": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "wowv",
+    "z": 24040,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "32l1"
+  },
+  "lvkz": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "lvkz",
+    "z": 24041,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "32l1"
+  },
+  "s6qy": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "s6qy",
+    "z": 24042,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "32l1"
+  },
+  "aeg0": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "aeg0",
+    "z": 24347,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "oyq9": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "oyq9",
+    "z": 24349,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "56jj": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "56jj",
+    "z": 24351,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "zcsq": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "zcsq",
+    "z": 24353,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "a80g": {
+    "deck": "deck-leaders-p1",
+    "type": "card",
+    "cardType": "leader-red",
+    "id": "a80g",
+    "z": 24148,
+    "x": 74,
+    "y": 7,
+    "parent": "holder-leaders-seat-p1"
+  },
+  "image-river-a": {
+    "id": "image-river-a",
+    "width": 1220,
+    "height": 920,
+    "layer": -4,
+    "z": 8,
+    "movable": false,
+    "image": "/assets/-760045871_117298",
+    "x": 10,
+    "y": -20,
+    "display": false
+  },
+  "image-mountain-a": {
+    "id": "image-mountain-a",
+    "width": 1220,
+    "height": 920,
+    "layer": -4,
+    "z": 6,
+    "movable": false,
+    "image": "/assets/1815095200_118554",
+    "y": -20,
+    "display": false
+  },
+  "image-mountain-b": {
+    "id": "image-mountain-b",
+    "width": 1220,
+    "height": 920,
+    "layer": -4,
+    "z": 6,
+    "movable": false,
+    "image": "/assets/1815095200_118554",
+    "y": -20
+  },
+  "holder-mountain-w-template": {
+    "type": "holder",
+    "id": "holder-mountain-w-template",
+    "x": 1517,
+    "y": 978,
+    "width": 63,
+    "height": 63,
+    "z": 61756,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "0px dashed red"
+    },
+    "dropTarget": {
+      "class": "point-token"
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": [
+          "alwaysOnTop",
+          "z"
+        ]
+      }
+    ]
+  },
+  "holder-mountain-w-1": {
+    "type": "holder",
+    "id": "holder-mountain-w-1",
+    "parent": "image-mountain-a",
+    "x": 10,
+    "y": 263,
+    "z": 61964,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-2": {
+    "type": "holder",
+    "id": "holder-mountain-w-2",
+    "parent": "image-mountain-a",
+    "x": 63,
+    "y": 293,
+    "z": 61966,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-3": {
+    "type": "holder",
+    "id": "holder-mountain-w-3",
+    "parent": "image-mountain-a",
+    "x": 63,
+    "y": 475,
+    "z": 61968,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-4": {
+    "type": "holder",
+    "id": "holder-mountain-w-4",
+    "parent": "image-mountain-a",
+    "x": 118,
+    "y": 508,
+    "z": 61970,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-5": {
+    "type": "holder",
+    "id": "holder-mountain-w-5",
+    "parent": "image-mountain-a",
+    "x": 172,
+    "y": 231,
+    "z": 61972,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-6": {
+    "type": "holder",
+    "id": "holder-mountain-w-6",
+    "parent": "image-mountain-a",
+    "x": 171,
+    "y": 537,
+    "z": 61973,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-7": {
+    "type": "holder",
+    "id": "holder-mountain-w-7",
+    "parent": "image-mountain-a",
+    "x": 172,
+    "y": 661,
+    "z": 61974,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-8": {
+    "type": "holder",
+    "id": "holder-mountain-w-8",
+    "parent": "image-mountain-a",
+    "x": 226,
+    "y": 688,
+    "z": 62096,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-9": {
+    "type": "holder",
+    "id": "holder-mountain-w-9",
+    "parent": "image-mountain-a",
+    "x": 282,
+    "y": 475,
+    "z": 62097,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-10": {
+    "type": "holder",
+    "id": "holder-mountain-w-10",
+    "parent": "image-mountain-a",
+    "x": 388,
+    "y": 171,
+    "z": 62098,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-11": {
+    "type": "holder",
+    "id": "holder-mountain-w-11",
+    "parent": "image-mountain-a",
+    "x": 443,
+    "y": 79,
+    "z": 62099,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-12": {
+    "type": "holder",
+    "id": "holder-mountain-w-12",
+    "parent": "image-mountain-a",
+    "x": 442,
+    "y": 199,
+    "z": 62100,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-13": {
+    "type": "holder",
+    "id": "holder-mountain-w-13",
+    "parent": "image-mountain-a",
+    "x": 496,
+    "y": 108,
+    "z": 62101,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-14": {
+    "type": "holder",
+    "id": "holder-mountain-w-14",
+    "parent": "image-mountain-a",
+    "x": 496,
+    "y": 228,
+    "z": 62102,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-15": {
+    "type": "holder",
+    "id": "holder-mountain-w-15",
+    "parent": "image-mountain-a",
+    "x": 498,
+    "y": 413,
+    "z": 62103,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-16": {
+    "type": "holder",
+    "id": "holder-mountain-w-16",
+    "parent": "image-mountain-a",
+    "x": 498,
+    "y": 475,
+    "z": 62104,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-17": {
+    "type": "holder",
+    "id": "holder-mountain-w-17",
+    "parent": "image-mountain-a",
+    "x": 498,
+    "y": 720,
+    "z": 62105,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-18": {
+    "type": "holder",
+    "id": "holder-mountain-w-18",
+    "parent": "image-mountain-a",
+    "x": 606,
+    "y": 474,
+    "z": 62106,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-19": {
+    "type": "holder",
+    "id": "holder-mountain-w-19",
+    "parent": "image-mountain-a",
+    "x": 713,
+    "y": 169,
+    "z": 62107,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-20": {
+    "type": "holder",
+    "id": "holder-mountain-w-20",
+    "parent": "image-mountain-a",
+    "x": 713,
+    "y": 475,
+    "z": 62108,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-21": {
+    "type": "holder",
+    "id": "holder-mountain-w-21",
+    "parent": "image-mountain-a",
+    "x": 767,
+    "y": 261,
+    "z": 62109,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-22": {
+    "type": "holder",
+    "id": "holder-mountain-w-22",
+    "parent": "image-mountain-a",
+    "x": 768,
+    "y": 447,
+    "z": 62110,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-23": {
+    "type": "holder",
+    "id": "holder-mountain-w-23",
+    "parent": "image-mountain-a",
+    "x": 769,
+    "y": 689,
+    "z": 62111,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-24": {
+    "type": "holder",
+    "id": "holder-mountain-w-24",
+    "parent": "image-mountain-a",
+    "x": 821,
+    "y": 169,
+    "z": 62112,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-44": {
+    "type": "holder",
+    "id": "holder-mountain-w-44",
+    "parent": "image-mountain-b",
+    "x": 10,
+    "y": 260,
+    "z": 61899,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-45": {
+    "type": "holder",
+    "id": "holder-mountain-w-45",
+    "parent": "image-mountain-b",
+    "x": 66,
+    "y": 291,
+    "z": 61900,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-46": {
+    "type": "holder",
+    "id": "holder-mountain-w-46",
+    "parent": "image-mountain-b",
+    "x": 63,
+    "y": 475,
+    "z": 61903,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-47": {
+    "type": "holder",
+    "id": "holder-mountain-w-47",
+    "parent": "image-mountain-b",
+    "x": 118,
+    "y": 506,
+    "z": 61904,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-48": {
+    "type": "holder",
+    "id": "holder-mountain-w-48",
+    "parent": "image-mountain-b",
+    "x": 173,
+    "y": 230,
+    "z": 61905,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-49": {
+    "type": "holder",
+    "id": "holder-mountain-w-49",
+    "parent": "image-mountain-b",
+    "x": 174,
+    "y": 535,
+    "z": 61906,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-50": {
+    "type": "holder",
+    "id": "holder-mountain-w-50",
+    "parent": "image-mountain-b",
+    "x": 173,
+    "y": 659,
+    "z": 61907,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-51": {
+    "type": "holder",
+    "id": "holder-mountain-w-51",
+    "parent": "image-mountain-b",
+    "x": 226,
+    "y": 690,
+    "z": 62123,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-52": {
+    "type": "holder",
+    "id": "holder-mountain-w-52",
+    "parent": "image-mountain-b",
+    "x": 281,
+    "y": 476,
+    "z": 62124,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-53": {
+    "type": "holder",
+    "id": "holder-mountain-w-53",
+    "parent": "image-mountain-b",
+    "x": 388,
+    "y": 169,
+    "z": 62125,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-54": {
+    "type": "holder",
+    "id": "holder-mountain-w-54",
+    "parent": "image-mountain-b",
+    "x": 443,
+    "y": 78,
+    "z": 62126,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-55": {
+    "type": "holder",
+    "id": "holder-mountain-w-55",
+    "parent": "image-mountain-b",
+    "x": 443,
+    "y": 201,
+    "z": 62127,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-56": {
+    "type": "holder",
+    "id": "holder-mountain-w-56",
+    "parent": "image-mountain-b",
+    "x": 498,
+    "y": 108,
+    "z": 62128,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-57": {
+    "type": "holder",
+    "id": "holder-mountain-w-57",
+    "parent": "image-mountain-b",
+    "x": 498,
+    "y": 230,
+    "z": 62129,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-58": {
+    "type": "holder",
+    "id": "holder-mountain-w-58",
+    "parent": "image-mountain-b",
+    "x": 498,
+    "y": 413,
+    "z": 62130,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-59": {
+    "type": "holder",
+    "id": "holder-mountain-w-59",
+    "parent": "image-mountain-b",
+    "x": 497,
+    "y": 475,
+    "z": 62131,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-60": {
+    "type": "holder",
+    "id": "holder-mountain-w-60",
+    "parent": "image-mountain-b",
+    "x": 497,
+    "y": 720,
+    "z": 62132,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-61": {
+    "type": "holder",
+    "id": "holder-mountain-w-61",
+    "parent": "image-mountain-b",
+    "x": 606,
+    "y": 476,
+    "z": 62133,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-62": {
+    "type": "holder",
+    "id": "holder-mountain-w-62",
+    "parent": "image-mountain-b",
+    "x": 713,
+    "y": 170,
+    "z": 62134,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-63": {
+    "type": "holder",
+    "id": "holder-mountain-w-63",
+    "parent": "image-mountain-b",
+    "x": 714,
+    "y": 476,
+    "z": 62135,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-64": {
+    "type": "holder",
+    "id": "holder-mountain-w-64",
+    "parent": "image-mountain-b",
+    "x": 768,
+    "y": 262,
+    "z": 62136,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-65": {
+    "type": "holder",
+    "id": "holder-mountain-w-65",
+    "parent": "image-mountain-b",
+    "x": 768,
+    "y": 443,
+    "z": 62137,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-river-w-template": {
+    "type": "holder",
+    "id": "holder-river-w-template",
+    "x": 1427,
+    "y": 978,
+    "width": 63,
+    "height": 63,
+    "z": 62197,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "0px dashed black"
+    },
+    "dropTarget": {
+      "class": "point-token"
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": [
+          "alwaysOnTop",
+          "z"
+        ]
+      }
+    ]
+  },
+  "holder-river-w-1": {
+    "type": "holder",
+    "id": "holder-river-w-1",
+    "x": 11,
+    "y": 566,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62054,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-2": {
+    "type": "holder",
+    "id": "holder-river-w-2",
+    "x": 10,
+    "y": 627,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62055,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-3": {
+    "type": "holder",
+    "id": "holder-river-w-3",
+    "x": 118,
+    "y": 260,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62056,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-4": {
+    "type": "holder",
+    "id": "holder-river-w-4",
+    "x": 117,
+    "y": 445,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62057,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-5": {
+    "type": "holder",
+    "id": "holder-river-w-5",
+    "x": 227,
+    "y": 503,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62058,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-6": {
+    "type": "holder",
+    "id": "holder-river-w-6",
+    "x": 281,
+    "y": 168,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62059,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-7": {
+    "type": "holder",
+    "id": "holder-river-w-7",
+    "x": 280,
+    "y": 229,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62060,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-8": {
+    "type": "holder",
+    "id": "holder-river-w-8",
+    "x": 335,
+    "y": 200,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62061,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-9": {
+    "type": "holder",
+    "id": "holder-river-w-9",
+    "x": 389,
+    "y": 719,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62063,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-10": {
+    "type": "holder",
+    "id": "holder-river-w-10",
+    "x": 445,
+    "y": 77,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62064,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-11": {
+    "type": "holder",
+    "id": "holder-river-w-11",
+    "x": 498,
+    "y": 720,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62065,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-12": {
+    "type": "holder",
+    "id": "holder-river-w-12",
+    "x": 553,
+    "y": 260,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62066,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-13": {
+    "type": "holder",
+    "id": "holder-river-w-13",
+    "x": 551,
+    "y": 445,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62067,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-14": {
+    "type": "holder",
+    "id": "holder-river-w-14",
+    "x": 552,
+    "y": 690,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62068,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-15": {
+    "type": "holder",
+    "id": "holder-river-w-15",
+    "x": 552,
+    "y": 810,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62069,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-16": {
+    "type": "holder",
+    "id": "holder-river-w-16",
+    "x": 606,
+    "y": 292,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62070,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-17": {
+    "type": "holder",
+    "id": "holder-river-w-17",
+    "x": 607,
+    "y": 475,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62072,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-18": {
+    "type": "holder",
+    "id": "holder-river-w-18",
+    "x": 714,
+    "y": 108,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62073,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-19": {
+    "type": "holder",
+    "id": "holder-river-w-19",
+    "x": 713,
+    "y": 292,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62074,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-20": {
+    "type": "holder",
+    "id": "holder-river-w-20",
+    "x": 715,
+    "y": 474,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62075,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-21": {
+    "type": "holder",
+    "id": "holder-river-w-21",
+    "x": 714,
+    "y": 534,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62076,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-22": {
+    "type": "holder",
+    "id": "holder-river-w-22",
+    "x": 767,
+    "y": 137,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62077,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-23": {
+    "type": "holder",
+    "id": "holder-river-w-23",
+    "x": 769,
+    "y": 322,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62078,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-24": {
+    "type": "holder",
+    "id": "holder-river-w-24",
+    "x": 769,
+    "y": 505,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62079,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-25": {
+    "type": "holder",
+    "id": "holder-river-w-25",
+    "x": 932,
+    "y": 779,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62080,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-26": {
+    "type": "holder",
+    "id": "holder-river-w-26",
+    "x": 986,
+    "y": 138,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62081,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-27": {
+    "type": "holder",
+    "id": "holder-river-w-27",
+    "x": 986,
+    "y": 383,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62082,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-28": {
+    "type": "holder",
+    "id": "holder-river-w-28",
+    "x": 986,
+    "y": 566,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62084,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-29": {
+    "type": "holder",
+    "id": "holder-river-w-29",
+    "x": 986,
+    "y": 749,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62088,
+    "parent": "image-river-a"
+  },
+  "image-river-b": {
+    "id": "image-river-b",
+    "width": 1220,
+    "height": 920,
+    "layer": -4,
+    "movable": false,
+    "x": 10,
+    "image": "/assets/-760045871_117298",
+    "y": -20,
+    "display": false
+  },
+  "holder-river-w-44": {
+    "type": "holder",
+    "id": "holder-river-w-44",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62154,
+    "x": 11,
+    "y": 566
+  },
+  "holder-river-w-45": {
+    "type": "holder",
+    "id": "holder-river-w-45",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62155,
+    "x": 10,
+    "y": 626
+  },
+  "holder-river-w-46": {
+    "type": "holder",
+    "id": "holder-river-w-46",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62156,
+    "x": 118,
+    "y": 262
+  },
+  "holder-river-w-47": {
+    "type": "holder",
+    "id": "holder-river-w-47",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62157,
+    "x": 117,
+    "y": 444
+  },
+  "holder-river-w-48": {
+    "type": "holder",
+    "id": "holder-river-w-48",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62160,
+    "x": 227,
+    "y": 504
+  },
+  "holder-river-w-49": {
+    "type": "holder",
+    "id": "holder-river-w-49",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62161,
+    "x": 281,
+    "y": 169
+  },
+  "holder-river-w-50": {
+    "type": "holder",
+    "id": "holder-river-w-50",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62162,
+    "x": 281,
+    "y": 230
+  },
+  "holder-river-w-51": {
+    "type": "holder",
+    "id": "holder-river-w-51",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62163,
+    "x": 334,
+    "y": 199
+  },
+  "holder-river-w-52": {
+    "type": "holder",
+    "id": "holder-river-w-52",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62164,
+    "x": 390,
+    "y": 719
+  },
+  "holder-river-w-53": {
+    "type": "holder",
+    "id": "holder-river-w-53",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62165,
+    "x": 443,
+    "y": 76
+  },
+  "holder-river-w-54": {
+    "type": "holder",
+    "id": "holder-river-w-54",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62166,
+    "x": 497,
+    "y": 720
+  },
+  "holder-river-w-55": {
+    "type": "holder",
+    "id": "holder-river-w-55",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62167,
+    "x": 552,
+    "y": 261
+  },
+  "holder-river-w-56": {
+    "type": "holder",
+    "id": "holder-river-w-56",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62168,
+    "x": 551,
+    "y": 444
+  },
+  "holder-river-w-57": {
+    "type": "holder",
+    "id": "holder-river-w-57",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62169,
+    "x": 552,
+    "y": 688
+  },
+  "holder-river-w-58": {
+    "type": "holder",
+    "id": "holder-river-w-58",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62170,
+    "x": 552,
+    "y": 811
+  },
+  "holder-river-w-59": {
+    "type": "holder",
+    "id": "holder-river-w-59",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62171,
+    "x": 605,
+    "y": 290
+  },
+  "holder-river-w-60": {
+    "type": "holder",
+    "id": "holder-river-w-60",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62173,
+    "x": 606,
+    "y": 474
+  },
+  "holder-river-w-61": {
+    "type": "holder",
+    "id": "holder-river-w-61",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62174,
+    "x": 715,
+    "y": 108
+  },
+  "holder-river-w-62": {
+    "type": "holder",
+    "id": "holder-river-w-62",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62175,
+    "x": 715,
+    "y": 290
+  },
+  "holder-river-w-63": {
+    "type": "holder",
+    "id": "holder-river-w-63",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62176,
+    "x": 714,
+    "y": 474
+  },
+  "holder-river-w-64": {
+    "type": "holder",
+    "id": "holder-river-w-64",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62177,
+    "x": 714,
+    "y": 535
+  },
+  "holder-river-w-65": {
+    "type": "holder",
+    "id": "holder-river-w-65",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62178,
+    "x": 769,
+    "y": 137
+  },
+  "holder-river-w-66": {
+    "type": "holder",
+    "id": "holder-river-w-66",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62179,
+    "x": 769,
+    "y": 321
+  },
+  "holder-river-w-67": {
+    "type": "holder",
+    "id": "holder-river-w-67",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62180,
+    "x": 768,
+    "y": 506
+  },
+  "holder-river-w-68": {
+    "type": "holder",
+    "id": "holder-river-w-68",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62184,
+    "x": 932,
+    "y": 780
+  },
+  "holder-river-w-69": {
+    "type": "holder",
+    "id": "holder-river-w-69",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62185,
+    "x": 986,
+    "y": 138
+  },
+  "holder-river-w-70": {
+    "type": "holder",
+    "id": "holder-river-w-70",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62186,
+    "x": 986,
+    "y": 383
+  },
+  "holder-river-w-71": {
+    "type": "holder",
+    "id": "holder-river-w-71",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62188,
+    "x": 986,
+    "y": 565
+  },
+  "holder-river-w-72": {
+    "type": "holder",
+    "id": "holder-river-w-72",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62189,
+    "x": 986,
+    "y": 749
+  },
+  "deck-generic-points-10s": {
+    "type": "deck",
+    "id": "deck-generic-points-10s",
+    "parent": "holder-generic-points-10s",
+    "x": 4,
+    "y": 4,
+    "z": 46,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 55,
+      "height": 55,
+      "borderRadius": 100,
+      "cssText": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "2px 2px 2px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "generic-points": {
+        "image": "/i/noto-emoji/emoji_u26ab.svg",
+        "bgColor1": "gray",
+        "bgColor2": "dimgray",
+        "bgColor3": "silver",
+        "textFront": "10",
+        "points": 10
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "value": "/i/noto-emoji/emoji_u26ab.svg"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textBack",
+              "css": "cssText"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#424242": "bgColor1",
+              "#575757": "bgColor2",
+              "#787878": "bgColor3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 12,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-bonuses"
+  },
+  "holder-generic-points-10s": {
+    "type": "holder",
+    "id": "holder-generic-points-10s",
+    "x": 944,
+    "y": 881,
+    "width": 65,
+    "height": 65,
+    "z": 62053,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "card1": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card1",
+    "z": 24211,
+    "parent": "n56v",
+    "activeFace": 1
+  },
+  "card2": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card2",
+    "z": 24212,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "n56v": {
+    "type": "pile",
+    "width": 55,
+    "height": 55,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "n56v",
+    "z": 53,
+    "hoverParent": "holder-generic-points-5s",
+    "parent": "holder-generic-points-5s"
+  },
+  "card3": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card3",
+    "z": 24213,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card4": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card4",
+    "z": 24214,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card5": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card5",
+    "z": 24215,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card6": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card6",
+    "z": 24216,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card7": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card7",
+    "z": 24217,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card8": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card8",
+    "z": 24218,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card9": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card9",
+    "z": 24219,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card10": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card10",
+    "z": 24220,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card11": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card11",
+    "z": 24221,
+    "parent": "n56v",
+    "x": null,
+    "y": null,
+    "activeFace": 1
+  },
+  "card12": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card12",
+    "z": 24222,
+    "activeFace": 1,
+    "parent": "n56v"
+  },
+  "card13": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card13",
+    "z": 24223,
+    "activeFace": 1,
+    "parent": "n56v"
+  },
+  "card14": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card14",
+    "z": 24224,
+    "activeFace": 1,
+    "parent": "n56v"
+  },
+  "card15": {
+    "deck": "deck-generic-points-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card15",
+    "z": 24225,
+    "activeFace": 1,
+    "parent": "n56v"
+  },
+  "holder-generic-points-neg-5s": {
+    "type": "holder",
+    "id": "holder-generic-points-neg-5s",
+    "x": 860,
+    "y": 882,
+    "width": 65,
+    "height": 65,
+    "z": 62052,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "deck-generic-points-neg-5s": {
+    "type": "deck",
+    "id": "deck-generic-points-neg-5s",
+    "parent": "holder-generic-points-neg-5s",
+    "x": 4,
+    "y": 4,
+    "z": 47,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 55,
+      "height": 55,
+      "borderRadius": 100,
+      "cssText": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "2px 2px 2px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      }
+    },
+    "cardTypes": {
+      "generic-points": {
+        "image": "/i/noto-emoji/emoji_u26ab.svg",
+        "bgColor1": "maroon",
+        "bgColor2": "firebrick",
+        "bgColor3": "silver",
+        "textFront": "-5",
+        "points": -5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "value": "/i/noto-emoji/emoji_u26ab.svg"
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 15,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textBack",
+              "css": "cssText"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#424242": "bgColor1",
+              "#575757": "bgColor2",
+              "#787878": "bgColor3"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 12,
+            "width": 55,
+            "fontSize": "24",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textFront",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "holder-bonuses"
+  },
+  "holder-mountain-w-66": {
+    "type": "holder",
+    "id": "holder-mountain-w-66",
+    "parent": "image-mountain-b",
+    "x": 769,
+    "y": 690,
+    "z": 62138,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-67": {
+    "type": "holder",
+    "id": "holder-mountain-w-67",
+    "parent": "image-mountain-b",
+    "x": 822,
+    "y": 169,
+    "z": 62139,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-68": {
+    "type": "holder",
+    "id": "holder-mountain-w-68",
+    "parent": "image-mountain-b",
+    "x": 822,
+    "y": 660,
+    "z": 62140,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-69": {
+    "type": "holder",
+    "id": "holder-mountain-w-69",
+    "parent": "image-mountain-b",
+    "x": 822,
+    "y": 782,
+    "z": 62141,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-25": {
+    "type": "holder",
+    "id": "holder-mountain-w-25",
+    "parent": "image-mountain-a",
+    "x": 823,
+    "y": 659,
+    "z": 62113,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-26": {
+    "type": "holder",
+    "id": "holder-mountain-w-26",
+    "parent": "image-mountain-a",
+    "x": 823,
+    "y": 780,
+    "z": 62114,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "card16": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card16",
+    "z": 24283,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card17": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card17",
+    "z": 24285,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card18": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card18",
+    "z": 24287,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card19": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card19",
+    "z": 24289,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card20": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card20",
+    "z": 24291,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card21": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card21",
+    "z": 24293,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card22": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card22",
+    "z": 24295,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card23": {
+    "deck": "deck-camels-red",
+    "type": "card",
+    "cardType": "camel-red",
+    "id": "card23",
+    "z": 24297,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/diamonds.svg",
+    "parent": "2kva"
+  },
+  "card24": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card24",
+    "z": 24331,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "card25": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card25",
+    "z": 24333,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "card26": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card26",
+    "z": 24335,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "card27": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card27",
+    "z": 24337,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "card28": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card28",
+    "z": 24339,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "card29": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card29",
+    "z": 24341,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "card30": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card30",
+    "z": 24343,
+    "parent": "2kva",
+    "activeFace": 1
+  },
+  "card31": {
+    "deck": "deck-camels-green",
+    "type": "card",
+    "cardType": "camel-green",
+    "id": "card31",
+    "z": 24345,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card32": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card32",
+    "z": 24307,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card33": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card33",
+    "z": 24309,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card34": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card34",
+    "z": 24311,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card35": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card35",
+    "z": 24313,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card36": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card36",
+    "z": 24315,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card37": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card37",
+    "z": 24317,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card38": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card38",
+    "z": 24319,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card39": {
+    "deck": "deck-camels-blue",
+    "type": "card",
+    "cardType": "camel-blue",
+    "id": "card39",
+    "z": 24321,
+    "activeFace": 1,
+    "suitIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "parent": "2kva"
+  },
+  "card40": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card40",
+    "z": 24355,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card41": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card41",
+    "z": 24357,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card42": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card42",
+    "z": 24359,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card43": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card43",
+    "z": 24361,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card44": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card44",
+    "z": 24363,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card45": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card45",
+    "z": 24365,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card46": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card46",
+    "z": 24367,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "card47": {
+    "deck": "deck-camels-purple",
+    "type": "card",
+    "cardType": "camel-purple",
+    "id": "card47",
+    "z": 24369,
+    "activeFace": 1,
+    "parent": "2kva"
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "parent": "box-seat-p1",
+    "x": 100,
+    "y": 1,
+    "width": 205,
+    "z": 43676,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "black",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    },
+    "turn": true
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "parent": "box-seat-p2",
+    "index": 2,
+    "x": 100,
+    "y": 1,
+    "width": 205,
+    "z": 43662,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "maroon",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    }
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "parent": "box-seat-p3",
+    "index": 3,
+    "x": 100,
+    "y": 1,
+    "width": 205,
+    "z": 43662,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "royalblue",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    }
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "parent": "box-seat-p4",
+    "index": 4,
+    "x": 100,
+    "y": 1,
+    "width": 205,
+    "z": 43662,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "darkgreen",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    }
+  },
+  "card48": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card48",
+    "z": 24174,
+    "parent": "862r",
+    "activeFace": 1
+  },
+  "card49": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card49",
+    "z": 24175,
+    "parent": "862r",
+    "activeFace": 1
+  },
+  "card50": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card50",
+    "z": 24176,
+    "parent": "862r",
+    "activeFace": 1
+  },
+  "card51": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card51",
+    "z": 24177,
+    "parent": "862r",
+    "activeFace": 1
+  },
+  "card52": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card52",
+    "z": 24178,
+    "parent": "862r",
+    "activeFace": 1
+  },
+  "card53": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card53",
+    "z": 24179,
+    "activeFace": 1,
+    "parent": "862r"
+  },
+  "card54": {
+    "deck": "deck-generic-points-10s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card54",
+    "z": 24180,
+    "activeFace": 1,
+    "parent": "862r"
+  },
+  "ar8x": {
+    "type": "pile",
+    "parent": "holder-generic-points-neg-5s",
+    "x": 4,
+    "y": 4,
+    "width": 55,
+    "height": 55,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "ar8x"
+  },
+  "card55": {
+    "deck": "deck-generic-points-neg-5s",
+    "type": "card",
+    "cardType": "generic-points",
+    "id": "card55",
+    "z": 24170,
+    "activeFace": 1,
+    "parent": "ar8x"
+  },
+  "holder-river-w-30": {
+    "type": "holder",
+    "id": "holder-river-w-30",
+    "x": 1040,
+    "y": 108,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62195,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-31": {
+    "type": "holder",
+    "id": "holder-river-w-31",
+    "x": 1040,
+    "y": 352,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62091,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-32": {
+    "type": "holder",
+    "id": "holder-river-w-32",
+    "x": 1040,
+    "y": 536,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62092,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-33": {
+    "type": "holder",
+    "id": "holder-river-w-33",
+    "x": 1040,
+    "y": 598,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62093,
+    "parent": "image-river-a"
+  },
+  "holder-river-w-34": {
+    "type": "holder",
+    "id": "holder-river-w-34",
+    "x": 1148,
+    "y": 537,
+    "inheritFrom": "holder-river-w-template",
+    "z": 62196,
+    "parent": "image-river-a"
+  },
+  "holder-mountain-w-27": {
+    "type": "holder",
+    "id": "holder-mountain-w-27",
+    "parent": "image-mountain-a",
+    "x": 878,
+    "y": 691,
+    "z": 62115,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-28": {
+    "type": "holder",
+    "id": "holder-mountain-w-28",
+    "parent": "image-mountain-a",
+    "x": 930,
+    "y": 230,
+    "z": 62116,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-29": {
+    "type": "holder",
+    "id": "holder-mountain-w-29",
+    "parent": "image-mountain-a",
+    "x": 985,
+    "y": 261,
+    "z": 62117,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-30": {
+    "type": "holder",
+    "id": "holder-mountain-w-30",
+    "parent": "image-mountain-a",
+    "x": 984,
+    "y": 568,
+    "z": 62118,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-31": {
+    "type": "holder",
+    "id": "holder-mountain-w-31",
+    "parent": "image-mountain-a",
+    "x": 1039,
+    "y": 537,
+    "z": 62119,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-32": {
+    "type": "holder",
+    "id": "holder-mountain-w-32",
+    "parent": "image-mountain-a",
+    "x": 1092,
+    "y": 260,
+    "z": 62120,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-33": {
+    "type": "holder",
+    "id": "holder-mountain-w-33",
+    "parent": "image-mountain-a",
+    "x": 1094,
+    "y": 567,
+    "z": 62121,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-34": {
+    "type": "holder",
+    "id": "holder-mountain-w-34",
+    "parent": "image-mountain-a",
+    "x": 1147,
+    "y": 351,
+    "z": 62122,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-70": {
+    "type": "holder",
+    "id": "holder-mountain-w-70",
+    "parent": "image-mountain-b",
+    "x": 875,
+    "y": 689,
+    "z": 62142,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-71": {
+    "type": "holder",
+    "id": "holder-mountain-w-71",
+    "parent": "image-mountain-b",
+    "x": 931,
+    "y": 229,
+    "z": 62145,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-72": {
+    "type": "holder",
+    "id": "holder-mountain-w-72",
+    "parent": "image-mountain-b",
+    "x": 985,
+    "y": 260,
+    "z": 62144,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-73": {
+    "type": "holder",
+    "id": "holder-mountain-w-73",
+    "parent": "image-mountain-b",
+    "x": 986,
+    "y": 567,
+    "z": 62146,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-74": {
+    "type": "holder",
+    "id": "holder-mountain-w-74",
+    "parent": "image-mountain-b",
+    "x": 1039,
+    "y": 537,
+    "z": 62147,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-75": {
+    "type": "holder",
+    "id": "holder-mountain-w-75",
+    "parent": "image-mountain-b",
+    "x": 1093,
+    "y": 261,
+    "z": 62148,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-76": {
+    "type": "holder",
+    "id": "holder-mountain-w-76",
+    "parent": "image-mountain-b",
+    "x": 1093,
+    "y": 566,
+    "z": 62150,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-mountain-w-77": {
+    "type": "holder",
+    "id": "holder-mountain-w-77",
+    "parent": "image-mountain-b",
+    "x": 1148,
+    "y": 351,
+    "z": 62151,
+    "inheritFrom": "holder-mountain-w-template"
+  },
+  "holder-river-w-73": {
+    "type": "holder",
+    "id": "holder-river-w-73",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62190,
+    "x": 1039,
+    "y": 107
+  },
+  "holder-river-w-74": {
+    "type": "holder",
+    "id": "holder-river-w-74",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62191,
+    "x": 1040,
+    "y": 352
+  },
+  "holder-river-w-75": {
+    "type": "holder",
+    "id": "holder-river-w-75",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62192,
+    "x": 1039,
+    "y": 536
+  },
+  "holder-river-w-76": {
+    "type": "holder",
+    "id": "holder-river-w-76",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62193,
+    "x": 1040,
+    "y": 598
+  },
+  "holder-river-w-77": {
+    "type": "holder",
+    "id": "holder-river-w-77",
+    "parent": "image-river-b",
+    "inheritFrom": "holder-river-w-template",
+    "z": 62194,
+    "x": 1148,
+    "y": 536
+  },
+  "holder-river-f-template": {
+    "type": "holder",
+    "id": "holder-river-f-template",
+    "x": 1340,
+    "y": 978,
+    "width": 63,
+    "height": 63,
+    "z": 62198,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "0px dashed purple"
+    },
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": [
+          "alwaysOnTop",
+          "z"
+        ]
+      }
+    ]
+  },
+  "862r": {
+    "type": "pile",
+    "parent": "holder-generic-points-10s",
+    "x": 4,
+    "y": 4,
+    "width": 55,
+    "height": 55,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "862r"
+  },
+  "vibb": {
+    "type": "pile",
+    "parent": "holder-camels-red",
+    "x": 6,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "vibb"
+  },
+  "1k0i": {
+    "type": "pile",
+    "parent": "holder-camels-green",
+    "x": 6,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "1k0i"
+  },
+  "coh3": {
+    "type": "pile",
+    "parent": "holder-camels-blue",
+    "x": 6,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "coh3"
+  },
+  "32l1": {
+    "type": "pile",
+    "parent": "holder-camels-purple",
+    "x": 6,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "32l1"
+  },
+  "ke03": {
+    "type": "pile",
+    "parent": "holder-wateringholes",
+    "x": 4,
+    "y": 4,
+    "width": 55,
+    "height": 55,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "ke03"
+  },
+  "2kva": {
+    "type": "pile",
+    "parent": "holder-temp",
+    "x": 4,
+    "y": 4,
+    "width": 50,
+    "height": 50,
+    "handleCSS": "width:18px; height:18px; background-color:dimgray;color:white;font-size:18px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "2kva"
+  }
+}
