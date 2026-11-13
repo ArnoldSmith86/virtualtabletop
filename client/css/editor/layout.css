@@ -44,6 +44,22 @@ body {
      the 4.5:1 the rest of this file budgets for. Dark mode is fine as it is. */
   --routineBlankColor: #d32f2f;
 
+  /* Something went wrong, and something is worth a second look: the same two
+     meanings --textHighlightColor3/2 carry in the JSON editor, but readable as
+     running text as well. Pure red is the 4.0:1 above; orange (#ffa500) is
+     2.0:1 on white and 1.2:1 on --backgroundHighlightColor1, where a note in
+     the routine editor is read. Dark mode is fine as it is. */
+  --textErrorColor: #d32f2f;
+  --textWarningColor: #8a4500;
+
+  /* The operations the AI assistant just wrote, and the flash saying the answer
+     has landed. A tint over the card background rather than a border, so the
+     operation's own left border keeps saying what kind of operation it is - and
+     a color of its own, because --VTTblue IS that border's color in light mode
+     and reads as "dimmed" against it in dark mode. */
+  --aiRoutineChangedColor: #cfe0f5;
+  --aiRoutineFlashColor: #8ec2fa;
+
   /* The card of the routine editor that was worked on last: a clear step lighter
      than the other cards (--backgroundHighlightColor1) so it is spotted without
      reading, while the chrome on it (see --routineChromeOpacity) still clears
@@ -97,6 +113,12 @@ body.edit.darkMode {
   --routineNumberColor: #40e0d0;
   --routineBlankColor: red;
   --routineActiveCardColor: #626262;
+
+  --textErrorColor: #ff8a80;
+  --textWarningColor: orange;
+
+  --aiRoutineChangedColor: #2e4a6b;
+  --aiRoutineFlashColor: #4d7db3;
 
   color-scheme: dark;
 }

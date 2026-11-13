@@ -1,0 +1,295 @@
+/* The "write this routine for me" button on a routine card, the popup it opens,
+   and what the result looks like once it has been written: the operations that
+   changed are marked in the routine itself, with a note above it. The button
+   sits with the other card controls and is dimmed like them until the card is
+   hovered; the same offer is made in words next to "add routine", where an
+   author who has no routine yet is looking. */
+
+.events-editor-ai {
+  font-size: 15px;
+  color: var(--textColor);
+  opacity: var(--routineChromeOpacity);
+  cursor: pointer;
+}
+
+.events-editor-ai:hover,
+.events-editor-ai:focus-visible {
+  color: var(--VTTblue);
+  opacity: 1;
+}
+
+/* the second way in, said in words: a button in the row that adds a routine */
+button.events-editor-add-ai {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+button.events-editor-add-ai .material-symbols {
+  font-size: 15px;
+}
+
+.ai-routine-intro {
+  font-size: 12px;
+  color: var(--textHelpColor);
+  margin-bottom: 6px;
+}
+
+textarea.ai-routine-prompt {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+/* What to type, offered rather than described: the placeholder holds one of
+   these and it is gone with the first keystroke, so all of them are here to be
+   pressed - which is also what teaches how much detail the assistant wants. */
+.ai-routine-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.ai-routine-example {
+  padding: 1px 6px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--textHelpColor);
+  cursor: pointer;
+}
+
+.ai-routine-example:hover,
+.ai-routine-example:focus-visible {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
+/* where the request goes, in the normal text color: it is the one line where
+   the reader learns their room is uploaded, so it is not help text */
+.ai-routine-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.ai-routine-privacy .material-symbols {
+  font-size: 15px;
+  color: var(--VTTblue);
+}
+
+.ai-routine-quality {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--textHelpColor);
+}
+
+.ai-routine-quality-end {
+  white-space: nowrap;
+}
+
+/* narrower than the popup: a setting, next to a filled button that is the point
+   of the popup */
+input.ai-routine-quality-slider {
+  flex: 0 1 150px;
+  min-width: 0;
+  accent-color: var(--VTTblue);
+}
+
+/* left-aligned rather than centered under the track, so the caption and the
+   thumb agree about where the slider is */
+.ai-routine-quality-label {
+  font-size: 12px;
+  color: var(--textHelpColor);
+  margin-top: 2px;
+}
+
+.ai-routine-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* the filled button carries on looking pressable while the job runs, and the
+   job is the reason it cannot be pressed */
+.ai-routine-buttons button:disabled {
+  opacity: 0.4;
+  cursor: default;
+  filter: none;
+}
+
+.ai-routine-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--textHelpColor);
+  min-height: 1.2em;
+}
+
+.ai-routine-status.ai-routine-error {
+  color: var(--textErrorColor);
+}
+
+.ai-routine-status.ai-routine-warning,
+.ai-routine-warning {
+  color: var(--textWarningColor);
+}
+
+/* Writing a routine takes up to a minute, and a line of text that changes every
+   other second reads as a stalled popup rather than as a working one. */
+.ai-routine-spinner {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--backgroundHighlightColor1);
+  border-top-color: var(--VTTblue);
+  border-radius: 50%;
+  animation: aiRoutineSpin 0.9s linear infinite;
+}
+
+@keyframes aiRoutineSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* What was just written, above the routine it was written into: a shade off the
+   operation cards, because it talks about them rather than being one of them. */
+.ai-routine-note {
+  position: relative;
+  margin: 0 0 6px 0;
+  padding: 6px 28px 6px 8px;
+  border-left: 3px solid var(--VTTblue);
+  border-radius: 0 4px 4px 0;
+  background: var(--backgroundHighlightColor2);
+  font-size: 12px;
+}
+
+.ai-routine-note-head {
+  font-weight: bold;
+}
+
+/* the note sits on the highlight background rather than on a panel, where the
+   dim text colors are the same shade as the background it would be read on -
+   so what is secondary here is said with opacity, not with another color */
+.ai-routine-note-text {
+  margin-top: 2px;
+  opacity: .8;
+}
+
+.ai-routine-note-warning {
+  margin-top: 4px;
+  color: var(--textWarningColor);
+}
+
+.ai-routine-note-warning .material-symbols {
+  font-size: 14px;
+  vertical-align: -2px;
+}
+
+/* one problem per line: three validator errors joined into a sentence wrap into
+   a block nobody reads, and a routine can come back with six */
+.ai-routine-note-problems {
+  margin: 2px 0 0 0;
+  padding-left: 18px;
+}
+
+.ai-routine-note-actions {
+  margin-top: 6px;
+}
+
+/* the note says undo puts it back, so the note is where undo is offered */
+button.ai-routine-note-undo {
+  font-size: 12px;
+  padding: 1px 8px;
+  border: 1px solid var(--textColor);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  cursor: pointer;
+}
+
+button.ai-routine-note-undo:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
+/* the ask is real, but it is not what the reader opened the panel for: a step
+   smaller and dimmer than the explanation of what the routine now does */
+.ai-routine-note-donate {
+  margin-top: 6px;
+  font-size: 11px;
+  opacity: .7;
+}
+
+.ai-routine-note-donate a {
+  color: var(--VTTblue);
+}
+
+body.edit.darkMode .ai-routine-note-donate a {
+  color: var(--routineOperationColor);
+}
+
+/* the only way to clear a note that otherwise stays: a padded hit area rather
+   than the 14px glyph itself */
+.ai-routine-note-close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: var(--routineChromeOpacity);
+}
+
+.ai-routine-note-close:hover,
+.ai-routine-note-close:focus-visible {
+  opacity: 1;
+}
+
+/* The operations the assistant added or changed: a flash to catch the eye when
+   the answer lands, then a lasting mark, so it still reads as "this is what it
+   touched" a minute and a few edits later. Both are put back on every re-render
+   and go away only with the note's dismiss button - hence two classes, the
+   flash being for the first render alone. The mark is a tinted card and a badge
+   rather than a border, because the card's left border is the color that says
+   what kind of operation it is (the 🎨 button on the card header explains it)
+   and overwriting that would cost more than the mark is worth. */
+.routine-editor-operation.routine-editor-operation-ai-changed {
+  background: var(--aiRoutineChangedColor);
+}
+
+.routine-editor-operation-ai-badge {
+  font-size: 13px;
+  color: var(--VTTblue);
+}
+
+body.edit.darkMode .routine-editor-operation-ai-badge {
+  color: var(--routineOperationColor);
+}
+
+/* the operation a validator problem in the note is about, so the warning and
+   the thing it is warning about are not read apart */
+.routine-editor-operation-ai-problem {
+  font-size: 13px;
+  color: var(--textWarningColor);
+}
+
+.routine-editor-operation.routine-editor-operation-ai-flash {
+  animation: aiRoutineChanged 2.5s ease-out;
+}
+
+@keyframes aiRoutineChanged {
+  0% { background-color: var(--aiRoutineFlashColor); }
+  60% { background-color: var(--aiRoutineChangedColor); }
+  100% { background-color: var(--aiRoutineChangedColor); }
+}
