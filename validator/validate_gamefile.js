@@ -453,6 +453,25 @@ function validateGetProperty(value, context, propertyPath = []) {
     }];
 }
 
+function* getValidationPropertyEntries(widget) {
+    for(const [prop, value] of Object.entries(widget))
+        yield [prop, value, [prop]];
+
+    if(widget.type !== 'deck')
+        return;
+
+    // Card routines can be declared on the deck instead of on individual cards.
+    const cardProperties = [[widget.cardDefaults, ['cardDefaults']]];
+    if(widget.cardTypes && typeof widget.cardTypes === 'object')
+        for(const [cardType, properties] of Object.entries(widget.cardTypes))
+            cardProperties.push([properties, ['cardTypes', cardType]]);
+    for(const [properties, path] of cardProperties)
+        if(properties && typeof properties === 'object' && !Array.isArray(properties))
+            for(const [prop, value] of Object.entries(properties))
+                if(prop.endsWith('Routine'))
+                    yield [prop, value, [...path, prop]];
+}
+
 function validateRoutine(routine, context, propertyPath = []) {
     const problems = [];
 
@@ -645,8 +664,9 @@ function validateRoutine(routine, context, propertyPath = []) {
                     newContext.validVariables[key] = 1;
             newContext.validCollections['caller'] = 1;
             for(const widget of Object.values(context.widgets))
-                if(Array.isArray(widget[operation.routine]))
-                    problems.push(...validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]));
+                for(const [prop, value, path] of getValidationPropertyEntries(widget))
+                    if(prop === operation.routine && Array.isArray(value))
+                        problems.push(...validateRoutine(value, Object.assign(newContext, {widgetId: widget.id}), path));
         }
         if(func === 'CALL')
             context.validVariables[operation.variable || 'result'] = 1;
@@ -1318,7 +1338,7 @@ function validateGameFile(data, checkMeta) {
         const known = WIDGET_PROPERTIES[wtype];
         
         // Check for unrecognized properties
-        for (const prop of Object.keys(widget)) {
+        for (const [prop, value, propertyPath] of getValidationPropertyEntries(widget)) {
             if(wtype == 'Canvas' && prop.match(/^c[0-9]+$/))
                 continue;
 
@@ -1327,7 +1347,7 @@ function validateGameFile(data, checkMeta) {
                 if (!customProperties.includes(prop)) {
                     problems.push({
                         widget: key,
-                        property: [prop],
+                        property: propertyPath,
                         message: 'unrecognized (and seemingly unused) property'
                     });
                 }
@@ -1347,20 +1367,20 @@ function validateGameFile(data, checkMeta) {
                     validator = getRoutineValidator({widgetID: 1, property: 1, oldValue: 1, value: 1}, {widget: 1}, false);
 
                 if (typeof validator === 'function') {
-                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties, calledCustomRoutines}, [prop]);
+                    const result = validator(value, {widgetId: key, widgets: data, customProperties, calledCustomRoutines}, propertyPath);
                     if (Array.isArray(result)) {
                         // Validator returned an array of problems
                         problems.push(...result);
                     } else if (typeof result === 'string') {
                         problems.push({
                             widget: key,
-                            property: [prop],
+                            property: propertyPath,
                             message: result
                         });
                     } else if (!result) {
                         problems.push({
                             widget: key,
-                            property: [prop],
+                            property: propertyPath,
                             message: `Property is invalid ${JSON.stringify(result)}`
                         });
                     }
@@ -1373,13 +1393,13 @@ function validateGameFile(data, checkMeta) {
         const wtype = getWidgetType(widget);
         const known = WIDGET_PROPERTIES[wtype];
         // Routine validation for properties ending with 'Routine'
-        for (const [propName, propValue] of Object.entries(widget)) {
+        for (const [propName, propValue, propertyPath] of getValidationPropertyEntries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue) && !calledCustomRoutines.includes(propName) && !propName.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
                 const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
-                const routineProblems = validateRoutine(propValue, context, [propName]);
+                const routineProblems = validateRoutine(propValue, context, propertyPath);
                 problems.push({
                     widget: key,
-                    property: [propName],
+                    property: propertyPath,
                     message: 'Routine is not being called'
                 });
                 problems.push(...routineProblems);
