@@ -1690,8 +1690,7 @@
       }
     ],
     "x": 360,
-    "y": 10,
-    "movable": false
+    "y": 10
   },
   "wvbm  A2 of plain-circle": {
     "type": "card",
@@ -1701,7 +1700,6 @@
     "z": 2995,
     "x": 4,
     "y": 4,
-    "hoverParent": "thdl1",
     "parent": "a2",
     "activeFace": 1,
     "movable": false
@@ -1712,7 +1710,6 @@
     "deck": "wvbm",
     "cardType": " A3 of plain-circle",
     "z": 2965,
-    "hoverParent": "thdl2",
     "activeFace": 1,
     "parent": "a3",
     "x": 4,
@@ -1763,7 +1760,6 @@
     "x": 4,
     "y": 4,
     "z": 2886,
-    "hoverParent": "thdl5",
     "parent": "c1",
     "activeFace": 1,
     "movable": false
@@ -1776,7 +1772,6 @@
     "x": 4,
     "y": 4,
     "z": 2902,
-    "hoverParent": "thdl14",
     "parent": "c4",
     "activeFace": 1,
     "movable": false
@@ -1789,7 +1784,6 @@
     "x": 4,
     "y": 4,
     "z": 2892,
-    "hoverParent": "thdl6",
     "parent": "d1",
     "activeFace": 1,
     "movable": false
@@ -1802,7 +1796,6 @@
     "x": 4,
     "y": 4,
     "z": 2894,
-    "hoverParent": "thdl9",
     "parent": "d2",
     "activeFace": 1,
     "movable": false
@@ -1815,7 +1808,6 @@
     "x": 4,
     "y": 4,
     "z": 2898,
-    "hoverParent": "thdl12",
     "parent": "d3",
     "activeFace": 1,
     "movable": false
@@ -1828,7 +1820,6 @@
     "x": 4,
     "y": 4,
     "z": 2900,
-    "hoverParent": "thdl15",
     "parent": "d4",
     "activeFace": 1,
     "movable": false
@@ -1839,7 +1830,6 @@
     "deck": "wvbm",
     "cardType": "A1 of plain-circle",
     "z": 2985,
-    "hoverParent": "thdl",
     "parent": "a1",
     "x": 4,
     "y": 4,
@@ -1922,8 +1912,7 @@
       }
     ],
     "x": 447,
-    "y": 10,
-    "movable": false
+    "y": 10
   },
   "u3qh B2 of flower-emblem": {
     "type": "card",
@@ -1933,7 +1922,6 @@
     "z": 2967,
     "x": 4,
     "y": 4,
-    "hoverParent": "thdl7",
     "activeFace": 1,
     "parent": "b2",
     "movable": false
