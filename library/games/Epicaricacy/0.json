@@ -1616,7 +1616,7 @@
       {
         "func": "LABEL",
         "label": "${PROPERTY parent}",
-        "mode": "inc",
+        "mode": "dec",
         "value": 1
       }
     ],
