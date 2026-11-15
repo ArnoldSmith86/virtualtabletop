@@ -913,8 +913,7 @@
     "inheritFrom": {
       "seat1": "clickRoutine"
     },
-    "hideWhenUnused": true,
-    "player": "Dex"
+    "hideWhenUnused": true
   },
   "bid-p4": {
     "id": "bid-p4",
