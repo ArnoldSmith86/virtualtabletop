@@ -23,10 +23,15 @@ function selectionEditor(widgets) {
   const globals = {
     widgets,
     $: selector => document.querySelector(selector),
+    div: parent => parent.appendChild(document.createElement('div')),
     toolbarButtons: [], dragToolbarButtons: [], sidebarModules: [ notifications ],
     smartCloneProcessSelection: processSelection,
     smartCloneDeltaReceived: jest.fn(), smartCloneInit: jest.fn(),
     aiRoutineDeltaReceived: jest.fn(), aiForgetAllResults: jest.fn(),
+    routineRecorderReceiveDelta: jest.fn(), isRoutineRecording: jest.fn(() => false),
+    handleRoutineRecorderClick: jest.fn(() => false), handleWidgetPickerClick: jest.fn(() => false),
+    widgetStackAtSorted: jest.fn(() => []),
+    selectionBarAdoptStack: jest.fn(),
     selectionBarSelectionChanged: jest.fn(), selectionBarDeltaReceived: jest.fn(),
     selectionBarStateReceived: jest.fn(), deckEditorReceiveDelta: jest.fn(),
     deckEditorStateReplaced: jest.fn(), endWidgetPickerWithoutTarget: jest.fn(),
@@ -37,7 +42,7 @@ function selectionEditor(widgets) {
   };
   const source = read('selection.js').replace(/^export /gm, '');
   const editor = new Function(...Object.keys(globals), source + `
-    return { setSelection, editorReceiveDelta, receiveStateFromServer,
+    return { setSelection, editClick, editorReceiveDelta, receiveStateFromServer,
       selection: () => selectedWidgets };
   `)(...Object.values(globals));
   return { ...editor, globals, notifications };
@@ -95,6 +100,7 @@ test('deleted selections and replacement states clear stale widgets while notify
   expect(editor.globals.deckEditorReceiveDelta).toHaveBeenCalledWith(delta);
   expect(editor.globals.smartCloneDeltaReceived).toHaveBeenCalledWith(delta);
   expect(editor.globals.aiRoutineDeltaReceived).toHaveBeenCalledTimes(1);
+  expect(editor.globals.routineRecorderReceiveDelta).toHaveBeenCalledWith(delta);
 
   const state = { s: {} };
   editor.receiveStateFromServer(state);
@@ -104,6 +110,26 @@ test('deleted selections and replacement states clear stale widgets while notify
   expect(editor.notifications.onStateReceived).toHaveBeenCalledTimes(1);
   expect(editor.notifications.onStateReceived).toHaveBeenCalledWith(state);
   expect(editor.globals.selectionBarStateReceived).toHaveBeenCalledTimes(1);
+});
+
+test('Alt-click belongs to a recording and resumes selection drilling when recording stops', async () => {
+  const target = widget('target');
+  const beneath = widget('beneath');
+  const editor = selectionEditor(new Map([ ['target', target], ['beneath', beneath] ]));
+  editor.globals.widgetStackAtSorted.mockReturnValue([target, beneath]);
+  const event = { altKey: true, clientX: 10, clientY: 20 };
+  editor.globals.isRoutineRecording.mockReturnValue(true);
+  editor.globals.handleRoutineRecorderClick.mockReturnValue(true);
+
+  expect(await editor.editClick(target, 0, event)).toBe(true);
+  expect(editor.selection()).toEqual([]);
+  expect(editor.globals.widgetStackAtSorted).not.toHaveBeenCalled();
+
+  editor.globals.isRoutineRecording.mockReturnValue(false);
+  editor.globals.handleRoutineRecorderClick.mockReturnValue(false);
+  await editor.editClick(target, 0, event);
+  expect(editor.globals.widgetStackAtSorted).toHaveBeenCalledWith(10, 20);
+  expect(editor.selection()).toEqual([beneath]);
 });
 
 function propertiesEditor() {
