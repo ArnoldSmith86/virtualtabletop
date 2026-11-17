@@ -203,3 +203,17 @@
   line-height: 1;
   text-align:center;
 }
+
+/* Widgets carrying this class glide to wherever they end up instead of jumping there. The duration
+   can be changed per widget by setting --transitionDuration, or the whole rule can be replaced from
+   the room's custom CSS - a rule defined there wins because it is added after this stylesheet.
+   A widget being dragged is excluded on every client, not only on the one holding it: a drag writes a
+   new position per mouse event, so the animation would restart before finishing and trail the pointer
+   for everyone. On the dragging client it also has to be off because the drop target is read from where
+   the widget is drawn, which mid-animation is not where the drag put it. */
+.transition {
+  transition: transform var(--transitionDuration, 300ms);
+}
+.transition.dragging {
+  transition: none;
+}
