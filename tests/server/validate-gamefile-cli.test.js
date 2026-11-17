@@ -83,10 +83,10 @@ describe.each([
   });
 
   test('reports invalid handler operations at their deck property path', function() {
-    expect(validateGameFile(game({ clickRoutine: [{ func: 'INVALID' }] }), false)).toContainEqual({
+    expect(validateGameFile(game({ clickRoutine: [{ func: 'INVALID' }] }), false).filter(problem => problem.widget === 'deck')).toEqual([{
       widget: 'deck', property: [...propertyPath, 'clickRoutine', 0],
       message: expect.stringContaining('INVALID is not a valid function')
-    });
+    }]);
   });
 
   test('follows calls to a custom card routine and validates its body', function() {
@@ -98,6 +98,22 @@ describe.each([
       ]
     });
     expect(validateGameFile(state, false).filter(problem => problem.widget === 'deck')).toEqual([{
+      widget: 'deck', property: [...propertyPath, 'cardRoutine', 1],
+      message: expect.stringContaining('INVALID is not a valid function')
+    }]);
+  });
+
+  test('checks a shared card routine once with CALL arguments and caller collection', function() {
+    const state = game({
+      cardRoutine: [
+        { func: 'SET', collection: 'caller', property: 'color', value: '${color}' },
+        { func: 'INVALID' }
+      ]
+    });
+    delete state.code.claimSuitRoutine;
+    state.code.clickRoutine = [{ func: 'CALL', widget: ['token', 'secondToken'], routine: 'cardRoutine', arguments: { color: 'red' } }];
+    state.secondToken = { ...state.token, id: 'secondToken' };
+    expect(validateGameFile(state, false)).toEqual([{
       widget: 'deck', property: [...propertyPath, 'cardRoutine', 1],
       message: expect.stringContaining('INVALID is not a valid function')
     }]);

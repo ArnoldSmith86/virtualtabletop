@@ -666,6 +666,7 @@ function validateRoutine(routine, context, propertyPath = []) {
                 for(const key of Object.keys(operation.arguments))
                     newContext.validVariables[key] = 1;
             newContext.validCollections['caller'] = 1;
+            // Scan stored deck definitions once, even when many cards inherit them.
             for(const widget of Object.values(context.widgets))
                 for(const [prop, value, path] of getValidationPropertyEntries(widget))
                     if(prop === operation.routine && Array.isArray(value))
