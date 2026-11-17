@@ -14,15 +14,98 @@
     "text": "Sort by cardType",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "cardType",
         "reverse": false
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 470,
-    "y": 790,
-    "z": 11137,
+    "x": 505,
+    "y": 892,
+    "z": 11131,
     "id": "ingw"
   },
   "grid001-1-1": {
@@ -516,15 +599,98 @@
     "text": "Sort by Suit",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "suit",
         "reverse": false
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 725,
-    "y": 790,
-    "z": 11140,
+    "x": 600,
+    "y": 892,
+    "z": 4,
     "id": "k131"
   },
   "cnfu": {
@@ -532,15 +698,98 @@
     "text": "Sort by rank",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "rank",
         "reverse": false
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 555,
-    "y": 790,
-    "z": 11138,
+    "x": 600,
+    "y": 796,
+    "z": 11132,
     "id": "cnfu"
   },
   "i6yz": {
@@ -548,15 +797,98 @@
     "text": "Sort by suitColor",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "suitColor",
         "reverse": false
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 810,
-    "y": 790,
-    "z": 11141,
+    "x": 695,
+    "y": 892,
+    "z": 11134,
     "id": "i6yz"
   },
   "z394": {
@@ -564,15 +896,98 @@
     "text": "Sort by rankA",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "rankA",
         "reverse": false
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 640,
-    "y": 790,
-    "z": 11139,
+    "x": 695,
+    "y": 796,
+    "z": 11133,
     "id": "z394"
   },
   "0v3h": {
@@ -580,26 +995,109 @@
     "text": "Sort by suitAlt",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "suitAlt",
         "reverse": false
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 895,
-    "y": 790,
-    "z": 11142,
+    "x": 790,
+    "y": 892,
+    "z": 11135,
     "id": "0v3h"
   },
   "lpuv": {
     "type": "label",
-    "text": "Use a mix of these buttons to create new sortings",
+    "text": "Use these buttons to see how the deck is sorted using the default keys",
     "css": "font-size: 20px",
-    "height": 40,
+    "height": 60,
     "width": 500,
-    "x": 432,
-    "y": 741,
-    "z": 11135,
+    "x": 446,
+    "y": 735,
+    "z": 11102,
     "id": "lpuv"
   },
   "ingw-copy001": {
@@ -607,107 +1105,611 @@
     "text": "Sort by cardType in reverse",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "cardType",
         "reverse": true
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 470,
-    "y": 875,
+    "x": 1132,
+    "y": 892,
     "id": "ingw-copy001",
-    "z": 11144
+    "z": 11119,
+    "width": 100
   },
   "k131-copy001": {
     "type": "button",
     "text": "Sort by Suit in reverse",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "suit",
         "reverse": true
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 725,
-    "y": 875,
+    "x": 1247,
+    "y": 892,
     "id": "k131-copy001",
-    "z": 11147
+    "z": 11110,
+    "width": 100
   },
   "cnfu-copy001": {
     "type": "button",
     "text": "Sort by rank in reverse",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "rank",
         "reverse": true
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 555,
-    "y": 875,
+    "x": 1247,
+    "y": 796,
     "id": "cnfu-copy001",
-    "z": 11145
+    "z": 11127,
+    "width": 100
   },
   "i6yz-copy001": {
     "type": "button",
     "text": "Sort by suitColor in reverse",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "suitColor",
         "reverse": true
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 810,
-    "y": 875,
+    "x": 1362,
+    "y": 892,
     "id": "i6yz-copy001",
-    "z": 11148
+    "z": 11111,
+    "width": 100
   },
   "z394-copy001": {
     "type": "button",
     "text": "Sort by rankA in reverse",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "rankA",
         "reverse": true
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 640,
-    "y": 875,
+    "x": 1362,
+    "y": 796,
     "id": "z394-copy001",
-    "z": 11146
+    "z": 11129,
+    "width": 100
   },
   "0v3h-copy001": {
     "type": "button",
     "text": "Sort by suitAlt in reverse",
     "clickRoutine": [
       {
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
+        "holder": "melu",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
+      },
+      {
         "func": "SORT",
         "holder": "melu",
         "key": "suitAlt",
         "reverse": true
+      },
+      {
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 895,
-    "y": 875,
+    "x": 1476,
+    "y": 892,
     "id": "0v3h-copy001",
-    "z": 11149
+    "z": 11109,
+    "width": 100
   },
   "lpuv-copy001": {
     "type": "label",
-    "text": "Using the various different buttons (which reflect default keys) on the left, try to recreate the cardType and rankFixed sorting using two other sort keys.",
+    "text": "Use these buttons to see how the deck is sorted using the default keys with 'reverse' set to true",
     "css": "font-size: 20px",
-    "height": 100,
-    "width": 440,
-    "x": 1135,
-    "y": 729,
+    "height": 60,
+    "width": 500,
+    "x": 1072,
+    "y": 735,
     "id": "lpuv-copy001",
-    "z": 11131
+    "z": 11109
   },
   "95s5D": {
     "type": "deck",
@@ -1244,485 +2246,445 @@
     "type": "card",
     "cardType": "T 1J",
     "id": "0u6e",
-    "z": 4474,
-    "parent": "45qw"
+    "z": 16104,
+    "parent": "ubsg"
   },
   "1soc": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "T 2J",
     "id": "1soc",
-    "z": 5549,
-    "parent": "45qw"
+    "z": 16105,
+    "parent": "ubsg"
+  },
+  "ubsg": {
+    "type": "pile",
+    "parent": "melu",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "ubsg"
   },
   "db5c": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 01",
     "id": "db5c",
-    "z": 4277,
-    "parent": "45qw"
+    "z": 16107,
+    "parent": "ubsg"
   },
   "iior": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 02",
     "id": "iior",
-    "z": 1436,
-    "parent": "45qw"
+    "z": 16109,
+    "parent": "ubsg"
   },
   "zehr": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 03",
     "id": "zehr",
-    "z": 9286,
-    "parent": "45qw"
+    "z": 16111,
+    "parent": "ubsg"
   },
   "w76c": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 04",
     "id": "w76c",
-    "z": 2452,
-    "parent": "45qw"
+    "z": 16113,
+    "parent": "ubsg"
   },
   "o7ch": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 05",
     "id": "o7ch",
-    "z": 8082,
-    "parent": "45qw"
+    "z": 16115,
+    "parent": "ubsg"
   },
   "y2u6": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 06",
     "id": "y2u6",
-    "z": 4230,
-    "parent": "45qw"
+    "z": 16117,
+    "parent": "ubsg"
   },
   "kym8": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 07",
     "id": "kym8",
-    "z": 6149,
-    "parent": "45qw"
+    "z": 16119,
+    "parent": "ubsg"
   },
   "ybz0": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 08",
     "id": "ybz0",
-    "z": 6839,
-    "parent": "45qw"
+    "z": 16121,
+    "parent": "ubsg"
   },
   "8w9x": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 09",
     "id": "8w9x",
-    "z": 1025,
-    "parent": "45qw"
+    "z": 16123,
+    "parent": "ubsg"
   },
   "o07v": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 10",
     "id": "o07v",
-    "z": 3095,
-    "parent": "45qw"
+    "z": 16125,
+    "parent": "ubsg"
   },
   "tdgq": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 2J",
     "id": "tdgq",
-    "z": 6677,
-    "parent": "45qw"
+    "z": 16127,
+    "parent": "ubsg"
   },
   "2su0": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 3Q",
     "id": "2su0",
-    "z": 5476,
-    "parent": "45qw"
+    "z": 16129,
+    "parent": "ubsg"
   },
   "yeb8": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "C 4K",
     "id": "yeb8",
-    "z": 6274,
-    "parent": "45qw"
+    "z": 16131,
+    "parent": "ubsg"
   },
   "kejn": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 01",
     "id": "kejn",
-    "z": 9233,
-    "parent": "45qw"
+    "z": 16133,
+    "parent": "ubsg"
   },
   "mt5p": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 02",
     "id": "mt5p",
-    "z": 7946,
-    "parent": "45qw"
+    "z": 16135,
+    "parent": "ubsg"
   },
   "3dek": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 03",
     "id": "3dek",
-    "z": 4106,
-    "parent": "45qw"
+    "z": 16137,
+    "parent": "ubsg"
   },
   "jko5": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 04",
     "id": "jko5",
-    "z": 9702,
-    "parent": "45qw"
+    "z": 16139,
+    "parent": "ubsg"
   },
   "m406": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 05",
     "id": "m406",
-    "z": 4602,
-    "parent": "45qw"
+    "z": 16141,
+    "parent": "ubsg"
   },
   "hg96": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 06",
     "id": "hg96",
-    "z": 4496,
-    "parent": "45qw"
+    "z": 16143,
+    "parent": "ubsg"
   },
   "ku42": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 07",
     "id": "ku42",
-    "z": 6630,
-    "parent": "45qw"
+    "z": 16145,
+    "parent": "ubsg"
   },
   "0xc9": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 08",
     "id": "0xc9",
-    "z": 619,
-    "parent": "45qw"
+    "z": 16147,
+    "parent": "ubsg"
   },
   "exme": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 09",
     "id": "exme",
-    "z": 4922,
-    "parent": "45qw"
+    "z": 16149,
+    "parent": "ubsg"
   },
   "wemm": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 10",
     "id": "wemm",
-    "z": 9538,
-    "parent": "45qw"
+    "z": 16151,
+    "parent": "ubsg"
   },
   "arvo": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 2J",
     "id": "arvo",
-    "z": 565,
-    "parent": "45qw"
+    "z": 16153,
+    "parent": "ubsg"
   },
   "yo8k": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 3Q",
     "id": "yo8k",
-    "z": 5707,
-    "parent": "45qw"
+    "z": 16155,
+    "parent": "ubsg"
   },
   "lz1t": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "D 4K",
     "id": "lz1t",
-    "z": 3449,
-    "parent": "45qw"
+    "z": 16157,
+    "parent": "ubsg"
   },
   "4zox": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 01",
     "id": "4zox",
-    "z": 4216,
-    "parent": "45qw"
+    "z": 16159,
+    "parent": "ubsg"
   },
   "bfe0": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 02",
     "id": "bfe0",
-    "z": 7993,
-    "parent": "45qw"
+    "z": 16161,
+    "parent": "ubsg"
   },
   "kpef": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 03",
     "id": "kpef",
-    "z": 9175,
-    "parent": "45qw"
+    "z": 16163,
+    "parent": "ubsg"
   },
   "gvgj": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 04",
     "id": "gvgj",
-    "z": 7195,
-    "parent": "45qw"
+    "z": 16165,
+    "parent": "ubsg"
   },
   "3s7b": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 05",
     "id": "3s7b",
-    "z": 6305,
-    "parent": "45qw"
+    "z": 16167,
+    "parent": "ubsg"
   },
   "un78": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 06",
     "id": "un78",
-    "z": 5423,
-    "parent": "45qw"
+    "z": 16169,
+    "parent": "ubsg"
   },
   "ekg3": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 07",
     "id": "ekg3",
-    "z": 4955,
-    "parent": "45qw"
+    "z": 16171,
+    "parent": "ubsg"
   },
   "ay07": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 08",
     "id": "ay07",
-    "z": 1289,
-    "parent": "45qw"
+    "z": 16173,
+    "parent": "ubsg"
   },
   "bgjj": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 09",
     "id": "bgjj",
-    "z": 1318,
-    "parent": "45qw"
+    "z": 16175,
+    "parent": "ubsg"
   },
   "td0j": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 10",
     "id": "td0j",
-    "z": 827,
-    "parent": "45qw"
+    "z": 16177,
+    "parent": "ubsg"
   },
   "2hpx": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 2J",
     "id": "2hpx",
-    "z": 1064,
-    "parent": "45qw"
+    "z": 16179,
+    "parent": "ubsg"
   },
   "ae8e": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 3Q",
     "id": "ae8e",
-    "z": 471,
-    "parent": "45qw"
+    "z": 16181,
+    "parent": "ubsg"
   },
   "fta0": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "H 4K",
     "id": "fta0",
-    "z": 4022,
-    "parent": "45qw"
+    "z": 16183,
+    "parent": "ubsg"
   },
   "w5qe": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 01",
     "id": "w5qe",
-    "z": 5343,
-    "parent": "45qw"
+    "z": 16185,
+    "parent": "ubsg"
   },
   "u21r": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 02",
     "id": "u21r",
-    "z": 2514,
-    "parent": "45qw"
+    "z": 16187,
+    "parent": "ubsg"
   },
   "vi7k": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 03",
     "id": "vi7k",
-    "z": 1257,
-    "parent": "45qw"
+    "z": 16189,
+    "parent": "ubsg"
   },
   "o2el": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 04",
     "id": "o2el",
-    "z": 6558,
-    "parent": "45qw"
+    "z": 16191,
+    "parent": "ubsg"
   },
   "f8lw": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 05",
     "id": "f8lw",
-    "z": 9650,
-    "parent": "45qw"
+    "z": 16193,
+    "parent": "ubsg"
   },
   "kmib": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 06",
     "id": "kmib",
-    "z": 7270,
-    "parent": "45qw"
+    "z": 16195,
+    "parent": "ubsg"
   },
   "oxgl": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 07",
     "id": "oxgl",
-    "z": 9106,
-    "parent": "45qw"
+    "z": 16197,
+    "parent": "ubsg"
   },
   "146o": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 08",
     "id": "146o",
-    "z": 4370,
-    "parent": "45qw"
+    "z": 16199,
+    "parent": "ubsg"
   },
   "j4nd": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 09",
     "id": "j4nd",
-    "z": 5066,
-    "parent": "45qw"
+    "z": 16201,
+    "parent": "ubsg"
   },
   "vh86": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 10",
     "id": "vh86",
-    "z": 8984,
-    "parent": "45qw"
+    "z": 16203,
+    "parent": "ubsg"
   },
   "f78c": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 2J",
     "id": "f78c",
-    "z": 9793,
-    "parent": "45qw"
+    "z": 16205,
+    "parent": "ubsg"
   },
   "4hel": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 3Q",
     "id": "4hel",
-    "z": 5204,
-    "parent": "45qw"
+    "z": 16207,
+    "parent": "ubsg"
   },
   "d6wl": {
     "deck": "95s5D",
     "type": "card",
     "cardType": "S 4K",
     "id": "d6wl",
-    "z": 1842,
-    "parent": "45qw"
+    "z": 16209,
+    "parent": "ubsg"
   },
   "1h8o": {
     "type": "button",
     "text": "Sort by rankFixed",
-    "clickRoutine": [
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rankFixed",
-        "reverse": false
-      }
-    ],
-    "x": 385,
-    "y": 790,
-    "z": 11136,
-    "id": "1h8o"
-  },
-  "v5ra": {
-    "type": "button",
-    "text": "Sort by rankFixed in reverse",
-    "clickRoutine": [
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rankFixed",
-        "reverse": true
-      }
-    ],
-    "x": 386,
-    "y": 876,
-    "z": 11143,
-    "id": "v5ra"
-  },
-  "bwe0": {
-    "type": "label",
-    "text": "Highest",
-    "x": 25,
-    "y": 5,
-    "z": 11120,
-    "id": "bwe0"
-  },
-  "5qpt": {
-    "type": "label",
-    "text": "Lowest",
-    "x": 140,
-    "y": 873,
-    "z": 11123,
-    "id": "5qpt",
-    "width": 110
-  },
-  "ndyy": {
-    "type": "button",
-    "text": "1) Recall & Shuffle",
     "clickRoutine": [
       {
         "func": "RECALL",
@@ -1736,17 +2698,13 @@
       {
         "func": "SHUFFLE",
         "holder": "melu"
-      }
-    ],
-    "x": 266,
-    "y": 833.5,
-    "z": 11152,
-    "id": "ndyy"
-  },
-  "ntv8": {
-    "type": "button",
-    "text": "3) See result in the grid",
-    "clickRoutine": [
+      },
+      {
+        "func": "SORT",
+        "holder": "melu",
+        "key": "rankFixed",
+        "reverse": false
+      },
       {
         "func": "FLIP",
         "count": "all",
@@ -1818,100 +2776,132 @@
         "count": 1
       }
     ],
-    "x": 1015,
-    "y": 833.5,
-    "z": 11154,
-    "id": "ntv8"
+    "x": 506,
+    "y": 796,
+    "z": 11130,
+    "id": "1h8o"
   },
-  "b3jn": {
-    "type": "label",
-    "text": "------------------------",
-    "css": "font-size: 20px",
-    "height": 40,
-    "width": 200,
-    "x": 265,
-    "y": 853,
-    "z": 11126,
-    "id": "b3jn",
-    "rotation": 90
-  },
-  "d6pp": {
-    "type": "label",
-    "text": "------------------------",
-    "css": "font-size: 20px",
-    "height": 40,
-    "width": 200,
-    "x": 896,
-    "y": 853,
-    "z": 11127,
-    "rotation": -90,
-    "id": "d6pp"
-  },
-  "ied6": {
-    "type": "label",
-    "text": "Look at these buttons' JSON for the anwser",
-    "css": "font-size: 20px",
-    "height": 100,
-    "width": 400,
-    "x": 1151,
-    "y": 832,
-    "z": 11134,
-    "id": "ied6"
-  },
-  "jlwx": {
+  "v5ra": {
     "type": "button",
-    "text": "Answer for cardType",
+    "text": "Sort by rankFixed in reverse",
     "clickRoutine": [
       {
-        "func": "SORT",
+        "func": "RECALL",
+        "holder": "melu"
+      },
+      {
+        "func": "FLIP",
         "holder": "melu",
-        "key": "rank",
-        "reverse": false
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "melu"
       },
       {
         "func": "SORT",
         "holder": "melu",
-        "key": "suit",
-        "reverse": false
-      }
-    ],
-    "x": 1230,
-    "y": 880,
-    "z": 11161,
-    "id": "jlwx",
-    "width": 100
-  },
-  "2sjn": {
-    "type": "button",
-    "text": "Answer for rankFixed",
-    "clickRoutine": [
-      {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "suit",
-        "reverse": false
+        "key": "rankFixed",
+        "reverse": true
       },
       {
-        "func": "SORT",
-        "holder": "melu",
-        "key": "rank",
-        "reverse": false
+        "func": "FLIP",
+        "count": "all",
+        "holder": [
+          "melu"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": [
+          "melu"
+        ],
+        "to": [
+          "grid001-1-1",
+          "grid001-1-2",
+          "grid001-1-3",
+          "grid001-1-4",
+          "grid001-1-5",
+          "grid001-1-6",
+          "grid001-1-7",
+          "grid001-1-8",
+          "grid001-1-9",
+          "grid001-1-10",
+          "grid001-1-11",
+          "grid001-1-12",
+          "grid001-1-13",
+          "grid001-2-1",
+          "grid001-2-2",
+          "grid001-2-3",
+          "grid001-2-4",
+          "grid001-2-5",
+          "grid001-2-6",
+          "grid001-2-7",
+          "grid001-2-8",
+          "grid001-2-9",
+          "grid001-2-10",
+          "grid001-2-11",
+          "grid001-2-12",
+          "grid001-2-13",
+          "grid001-3-1",
+          "grid001-3-2",
+          "grid001-3-3",
+          "grid001-3-4",
+          "grid001-3-5",
+          "grid001-3-6",
+          "grid001-3-7",
+          "grid001-3-8",
+          "grid001-3-9",
+          "grid001-3-10",
+          "grid001-3-11",
+          "grid001-3-12",
+          "grid001-3-13",
+          "grid001-4-1",
+          "grid001-4-2",
+          "grid001-4-3",
+          "grid001-4-4",
+          "grid001-4-5",
+          "grid001-4-6",
+          "grid001-4-7",
+          "grid001-4-8",
+          "grid001-4-9",
+          "grid001-4-10",
+          "grid001-4-11",
+          "grid001-4-12",
+          "grid001-4-13",
+          "grid001-5-1",
+          "grid001-5-2"
+        ],
+        "count": 1
       }
     ],
-    "x": 1380,
-    "y": 880,
-    "z": 11158,
-    "id": "2sjn",
+    "x": 1132,
+    "y": 796,
+    "z": 11128,
+    "id": "v5ra",
     "width": 100
   },
-  "45qw": {
-    "type": "pile",
-    "parent": "melu",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "45qw"
+  "jvmw": {
+    "type": "label",
+    "text": "rankedFixed and cardTypes always return the cards in the same order.\n\nThe other keys are more generic and the output will depend on the original order of the cards",
+    "x": 271,
+    "y": 794,
+    "z": 11124,
+    "id": "jvmw",
+    "width": 200,
+    "height": 200,
+    "css": "font-size: 17px; text-align:left"
+  },
+  "pv58": {
+    "type": "label",
+    "text": "When reverse is set to true, the sorting start as normal but in the end, all cards a reversed from top to bottom",
+    "x": 922,
+    "y": 820,
+    "z": 11117,
+    "width": 200,
+    "height": 200,
+    "id": "pv58",
+    "css": "font-size: 17px; text-align:left"
   },
   "_meta": {
     "version": 20,
@@ -1923,9 +2913,9 @@
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
-      "attribution": "In this tutorial, you will learn:\n- How to use a key to sort cards\n- How to set more keys for each desired sorting\n\n\n--\n\nIn this tutorial, you will learn:\n- Which keys are included in the default deck\n- How each key sorts the default deck\n\n--\n\nIn this tutorial, you will learn:\n- How to combine keys in sequential sorting to get many sorting configurations you may need.\n- This tutorial includes an exercise with anwser\n\n--\n\nIn this tutorial, you will learn:\n- How to reverse the sorting in a pile\n- How to use that to deal from and to the bottom of a pile\n\n--\n\nIn this tutorial, you will learn:\n- How to sort 5-card poker hands by rank",
+      "attribution": "",
       "showName": false,
-      "lastUpdate": 1768674027874,
+      "lastUpdate": 1788041231921,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1936,11 +2926,28 @@
       "helpText": "",
       "players": "1",
       "language": "en-US",
-      "variant": "3) Sequential sorting",
-      "variantImage": ""
+      "variant": "Default deck's inbuilt keys",
+      "variantImage": "",
+      "usesAIImagery": false
     },
     "gameSettings": {
       "legacyModes": {}
     }
+  },
+  "bwe0": {
+    "type": "label",
+    "text": "Highest",
+    "x": 25,
+    "y": 5,
+    "z": 11120,
+    "id": "bwe0"
+  },
+  "5qpt": {
+    "type": "label",
+    "text": "Lowest",
+    "x": 140,
+    "y": 873,
+    "z": 11123,
+    "id": "5qpt"
   }
 }

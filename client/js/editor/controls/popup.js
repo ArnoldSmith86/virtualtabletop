@@ -2427,6 +2427,7 @@ function commonInfoTopic(topicName) {
       count: number - limits the amount of moved widgets (defaults to 1). Can be 0 to move none, "all" to move every selected widget, a positive number to move that many of the selected widgets, or a negative number to leave that many of the selected widgets not moved.
       fillTo: number - fills the target holders/seats up to this number (defaults to null). If specified, then count is ignored.
       face: number - optionally sets the face of the moved widgets to the given value (see FLIP). If omitted, the widgets will be left as they are.
+      position: pileBottom / pileTop / groupStart / groupEnd - where the moved widgets end up inside the target holder (defaults to null, which leaves them on top the way MOVE always placed them). pileBottom and pileTop put them below or above the widgets that are already there; in a holder that arranges piles (layout multiSpread) they join the first or the last group, while groupStart and groupEnd put them into a new group before or after the existing ones.
       Note that both count and fillTo will move an entire group to one of the to widgets. If there are enough widgets remaining in the from source, then it will move to the next destination. The order that the function picks targets for moving to is not well understood, so if there are less widgets in the from source than are required, game designers may want to account for that in the JSON in some other way.
 
       If the dropTarget property (when moving to a holder) does not match the widgets being moved, the widgets will become children of the holder, but will keep the original x,y coordinates. In other words, they will not follow the stackOffset rules for aligning child widgets.
@@ -2794,6 +2795,7 @@ function commonInfoTopic(topicName) {
       holder: holderID (or an array) - the holder containing the widgets to sort (optional).
       collection: collection - the collection of widgets to sort if holder is not given (defaults to DEFAULT collection).
       key: property name, key object ({key, order, reverse}), or an array of either - what to sort by; an array is applied left to right until values differ.
+      groupBy: property name - only used for widgets in a holder that arranges piles (layout multiSpread): the sorted widgets are partitioned into one group per distinct value of this property, e.g. one group per suit (defaults to null, which sorts the widgets within the existing groups instead). With a collection, only the collected widgets regroup - each within its own holder and owner lane - so a button can SELECT one player's cards and group just those.
       reverse: true/false - reverses the order after sorting by key (defaults to false).
       rearrange: true/false - if false, only the order within the collection changes, without moving widgets in the room (only applies to collections, defaults to true).
       locales: locale string (or an array of them) - the locale used when comparing text values, e.g. "de" (defaults to the locale of the player's browser).
