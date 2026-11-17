@@ -5,6 +5,7 @@ import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { setViewportSize } from './calculateLayout.js';
 import { playerName } from './overlays/players.js';
+import { describeError, reportErrorSilently } from './tracing.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
@@ -494,6 +495,29 @@ function receiveDeltaFromServer(delta) {
   receiveDelta(delta);
 }
 
+// Take the current room apart so that nothing of it can mix into the state that is loaded
+// next: neither a widget that throws while being torn down, nor one whose removal is still in
+// flight, nor one that is only reachable through a broken parent chain. A widget with a live
+// parent is reached through that parent so a holder sees its children go before itself; the
+// second pass takes what the first cannot reach, like a parent/child cycle.
+export function tearDownRoom() {
+  const removedWidgets = new Set();
+  for(const widget of Array.from(widgets.values()))
+    if(!widgets.has(widget.get('parent')))
+      widget.applyRemoveRecursive(removedWidgets);
+  for(const widget of Array.from(widgets.values()))
+    widget.applyRemoveRecursive(removedWidgets);
+  widgets.clear();
+  // whatever an earlier delta deferred waits for a room that does not exist anymore:
+  // keeping it would add a second copy of a widget this state contains
+  deferredChildren = {};
+  deferredCards = {};
+  dropTargets.clear();
+  maxZ = {};
+  StateManaged.globalUpdateListeners = {};
+  StateManaged.inheritFromMapping = {};
+}
+
 function receiveStateFromServer(args) {
   addStateEntryToUndoProtocol(args);
 
@@ -505,18 +529,7 @@ function receiveStateFromServer(args) {
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  const topSurface = $('#topSurface');
-  for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
-    widget.applyRemoveRecursive();
-  widgets.clear();
-  // whatever an earlier delta deferred waits for a room that does not exist anymore:
-  // keeping it would add a second copy of a widget this state contains
-  deferredChildren = {};
-  deferredCards = {};
-  dropTargets.clear();
-  maxZ = {};
-  StateManaged.globalUpdateListeners = {};
-  StateManaged.inheritFromMapping = {};
+  tearDownRoom();
   let isEmpty = true;
   for(const widgetID in args) {
     if(widgetID != '_meta') {
@@ -628,6 +641,7 @@ function removeWidget(widgetID) {
     widgets.get(widgetID).applyRemove();
   } catch(e) {
     console.error(`Could not remove widget!`, widgetID, e);
+    reportErrorSilently(`Could not remove widget ${widgetID}\n${describeError(e, 'Unknown error')}`);
   }
   widgets.delete(widgetID);
   dropTargets.delete(widgetID);
