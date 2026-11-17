@@ -26,6 +26,7 @@ function selectionEditor(widgets) {
     toolbarButtons: [], dragToolbarButtons: [], sidebarModules: [ notifications ],
     smartCloneProcessSelection: processSelection,
     smartCloneDeltaReceived: jest.fn(), smartCloneInit: jest.fn(),
+    aiRoutineDeltaReceived: jest.fn(), aiForgetAllResults: jest.fn(),
     selectionBarSelectionChanged: jest.fn(), selectionBarDeltaReceived: jest.fn(),
     selectionBarStateReceived: jest.fn(), deckEditorReceiveDelta: jest.fn(),
     deckEditorStateReplaced: jest.fn(), endWidgetPickerWithoutTarget: jest.fn(),
@@ -93,10 +94,12 @@ test('deleted selections and replacement states clear stale widgets while notify
   expect(editor.globals.selectionBarDeltaReceived).toHaveBeenCalledWith(delta);
   expect(editor.globals.deckEditorReceiveDelta).toHaveBeenCalledWith(delta);
   expect(editor.globals.smartCloneDeltaReceived).toHaveBeenCalledWith(delta);
+  expect(editor.globals.aiRoutineDeltaReceived).toHaveBeenCalledTimes(1);
 
   const state = { s: {} };
   editor.receiveStateFromServer(state);
   expect(editor.globals.smartCloneInit).toHaveBeenCalledTimes(1);
+  expect(editor.globals.aiForgetAllResults).toHaveBeenCalledTimes(1);
   expect(editor.globals.deckEditorStateReplaced).toHaveBeenCalledTimes(1);
   expect(editor.notifications.onStateReceived).toHaveBeenCalledTimes(1);
   expect(editor.notifications.onStateReceived).toHaveBeenCalledWith(state);
