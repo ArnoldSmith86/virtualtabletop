@@ -243,6 +243,43 @@ describe('server/room.mjs', function() {
     expect(()=>room.roomFilename()).toThrow('Invalid room ID');
   });
 
+  test('deleting a room cancels an autosave of its old content', async function() {
+    const room = roomWithStates({});
+    room.id = 'room';
+    room.players = [];
+    room.broadcast = ()=>{};
+    room.getPublicLibraryGames = ()=>({});
+    room.state.widget = { text: 'x'.repeat(8 * 1024 * 1024) };
+    room.roomFilename = ()=>path.join(directory, 'autosave.json');
+    fs.writeFileSync(room.roomFilename(), 'old');
+    const autosave = room.writeToFilesystemAsync();
+
+    await room.deleteRoom();
+    await autosave;
+
+    expect(fs.existsSync(room.roomFilename())).toBe(false);
+    expect(room.state.widget).toBeUndefined();
+    expect(fs.readdirSync(directory)).toEqual([ '0.json' ]);
+  });
+
+  test('loading an auto-linked room repairs its shelf before syncing the source', async function() {
+    const room = roomLoadingStates({ empty: { name: 'Empty', variants: [] } });
+    const saved = JSON.parse(fs.readFileSync(room.roomFilename()));
+    saved._meta.linkSourceRoom = 'source';
+    fs.writeFileSync(room.roomFilename(), JSON.stringify(saved));
+    room.syncLinkSourceRoom = jest.fn(async ()=>{
+      expect(room.isLoading).toBe(true);
+      expect(room.state._meta.states.empty).toBeUndefined();
+      room.state._meta.states.linked = { name: 'Linked', variants: [ {} ] };
+    });
+
+    await room.load();
+
+    expect(room.syncLinkSourceRoom).toHaveBeenCalledTimes(1);
+    expect(room.state._meta.states.linked).toBeDefined();
+    expect(room.isLoading).toBe(false);
+  });
+
   test('trace opens a trace file for a room that was loaded with tracing already enabled', function() {
     const room = tracingRoom({ tracingEnabled: true });
 

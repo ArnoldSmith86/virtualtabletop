@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 // error inside a Function body), and every global it touches is a parameter below - a missing one
 // shows up as a ReferenceError from whichever handler was exercised.
 const connectionSource = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../../client/js/connection.js'), 'utf8');
-const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$', '$a', 'rand', 'urlProperties', 'playerName', 'roomID',
+const loadConnection = new Function('location', 'setTimeout', 'WebSocket', 'fetch', 'showOverlay', '$', '$a', 'rand', 'urlProperties', 'playerName', 'roomID', 'getCollectionID', 'getRoomPassword',
   connectionSource.replace(/^export /gm, '') + `;
   return { startWebSocket, clientIsOutdated, checkForServerRestart, editModeURL, editModeLoadFailed, showServerRestartOverlay };
 `);
@@ -34,11 +34,12 @@ function startedClient(onReload, serving) {
   const sockets = [];
   const requests = [];
   const overlays = [];
+  const messages = [];
 
   function FakeWebSocket(url) {
     this.url = url;
     this.readyState = 1;
-    this.send = _=>{};
+    this.send = message=>messages.push(JSON.parse(message));
     this.close = _=>this.closed = true;
     sockets.push(this);
   }
@@ -58,7 +59,7 @@ function startedClient(onReload, serving) {
   }
 
   const client = loadConnection(fakeLocation(onReload), (callback, delay)=>timers.push({ callback, delay }), FakeWebSocket, fakeFetch,
-    id=>overlays.push(id), _=>null, _=>[], _=>0, {}, 'tester', 'testroom');
+    id=>overlays.push(id), _=>null, _=>[], _=>0, {}, 'tester', 'testroom', ()=> 'test-collection', id=>id == 'testroom' ? 'test-password' : undefined);
   client.startWebSocket();
 
   return {
@@ -69,6 +70,7 @@ function startedClient(onReload, serving) {
     showServerRestartOverlay: client.showServerRestartOverlay,
     requests,
     overlays,
+    messages,
     connect: _=>sockets[sockets.length-1].onopen(),
     disconnect: _=>sockets[sockets.length-1].onclose(),
     reconnectDelays: _=>timers.map(timer=>timer.delay),
@@ -204,6 +206,19 @@ describe('Scenarios: the server the page is talking to restarts', () => {
   });
 
   describe('Given a connection that was lost and came back', () => {
+    test('Then reconnecting rejoins the room with its collection and password', () => {
+      const client = startedClient(_=>{}, 1000);
+      client.connect();
+      client.disconnect();
+      client.runTimers();
+      client.connect();
+
+      expect(client.messages).toEqual(Array(2).fill({
+        func: 'room',
+        args: { playerName: 'tester', roomID: 'testroom', collection: 'test-collection', password: 'test-password' }
+      }));
+    });
+
     test('Then the next disconnect is retried as quickly as the first one was', () => {
       const client = startedClient(_=>{}, 1000);
       client.connect();
