@@ -506,8 +506,9 @@ function receiveStateFromServer(args) {
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   const topSurface = $('#topSurface');
+  const removed = new Set();
   for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
-    widget.applyRemoveRecursive();
+    widget.applyRemoveRecursive(removed);
   widgets.clear();
   // whatever an earlier delta deferred waits for a room that does not exist anymore:
   // keeping it would add a second copy of a widget this state contains
@@ -633,14 +634,14 @@ function removeWidget(widgetID) {
   dropTargets.delete(widgetID);
 }
 
-async function removeWidgetLocal(widgetID, keepChildren) {
+export async function removeWidgetLocal(widgetID, keepChildren) {
   function getWidgetsToRemove(widgetID) {
+    widgets.get(widgetID).inRemovalQueue = true;
     const children = [];
     if(!keepChildren)
       for(const [ childWidgetID, childWidget ] of widgets)
         if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
           children.push(...getWidgetsToRemove(childWidgetID));
-    widgets.get(widgetID).inRemovalQueue = true;
     children.push(widgets.get(widgetID));
     return children;
   }

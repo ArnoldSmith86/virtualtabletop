@@ -103,6 +103,8 @@ export function getElementTransformRelativeTo(elem, parent) {
   let transform = getElementTransform(elem);
   while (elem.offsetParent != ancestor) {
     elem = elem.offsetParent;
+    if (!elem)
+      return null; // parent is a descendant of elem so there is no path up to it
     transform.preMultiplySelf(getElementTransform(elem));
   }
   let destTransform = new DOMMatrix();
