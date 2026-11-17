@@ -8176,14 +8176,14 @@
     "inheritFrom": "holder-trash-seat-p1",
     "linkedToSeat": "seat-p5"
   },
-  "button-choose-discards": {
+  "button-choose-cards": {
     "type": "button",
-    "id": "button-choose-discards",
+    "id": "button-choose-cards",
     "x": 1041,
     "y": 857,
     "height": 100,
     "z": 43907,
-    "text": "Choose Discards",
+    "text": "Choose Cards",
     "css": {
       "font-size": "16px",
       "font-weight": "bold",
@@ -8216,7 +8216,7 @@
             "fields": [
               {
                 "type": "text",
-                "text": "Click an empty seat to join the game, then press Choose Discards again."
+                "text": "Click an empty seat to join the game, then press Choose Cards again."
               }
             ]
           }
@@ -8248,16 +8248,15 @@
             "collection": "myHand",
             "variable": "inHand"
           },
-          "var toDiscard = ${inHand} - 4",
           {
             "func": "IF",
-            "operand1": "${toDiscard}",
+            "operand1": "${inHand}",
             "relation": "<=",
-            "operand2": 0,
+            "operand2": 4,
             "thenRoutine": [
               {
                 "func": "INPUT",
-                "header": "Nothing to discard",
+                "header": "Already chosen",
                 "confirmButtonText": "OK",
                 "fields": [
                   {
@@ -8270,31 +8269,41 @@
             "elseRoutine": [
               {
                 "func": "INPUT",
-                "header": "Choose ${toDiscard} cards to discard",
-                "note": "Dialog sized to fit 5 cards per row (card width 100 x picker scale 1.3, at the player's zoom)",
-                "css": "max-width: 96vw; width: calc(5 * (130px * var(--scale) + 6px) + 26px);",
-                "confirmButtonText": "Discard",
+                "header": "Choose 4 cards",
+                "note": "Narrow, tall dialog: 2 cards per row (card width 100 x picker scale 1.0, at the player's zoom), so the seat panels stay visible",
+                "css": "min-width: 0; max-width: 96vw; max-height: 98%; width: calc(2 * (100px * var(--scale) + 6px) + 26px);",
+                "confirmButtonText": "Keep these",
                 "cancelButtonText": "Cancel",
                 "fields": [
                   {
                     "type": "text",
-                    "text": "Click ${toDiscard} cards to discard. Your other 4 cards stay in your hand. Click a card again to unselect it."
+                    "text": "Pick 4 cards to keep. The other cards are discarded."
                   },
                   {
                     "type": "choose",
                     "source": "myHand",
-                    "collection": "discards",
+                    "collection": "keepers",
                     "variable": "picked",
-                    "min": "${toDiscard}",
-                    "max": "${toDiscard}",
-                    "scale": 1.3
+                    "min": 4,
+                    "max": 4,
+                    "scale": 1
                   }
                 ]
               },
               {
-                "note": "Discards go face down into this player's own role-card stash (New Round gathers them back)",
+                "note": "Everything in my hand except the chosen cards",
+                "func": "SELECT",
+                "source": "keepers",
+                "type": "card",
+                "property": "type",
+                "value": "card",
+                "collection": "myHand",
+                "mode": "remove"
+              },
+              {
+                "note": "Unchosen cards go face down into this player's trash",
                 "func": "MOVE",
-                "collection": "discards",
+                "collection": "myHand",
                 "to": "holder-trash-seat-p${seatIndex}",
                 "face": 0
               }
@@ -8303,7 +8312,7 @@
         ]
       }
     ],
-    "width": 75
+    "width": 70
   },
   "6a50": {
     "type": "pile",
