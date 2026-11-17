@@ -752,7 +752,7 @@ export function runInput({ widgetID, overlay, overlaysByPlayer, players, variabl
     const session = {
       remaining: new Set([ ...remoteTargets, ...(includeSelf ? [ playerName ] : []) ]),
       results: {},
-      block: !!overlay.block,
+      block: typeof overlay.block == 'string' || !!overlay.block,
       hasRemote: remoteTargets.length > 0,
       localAbort: null,
       done: false
@@ -786,7 +786,7 @@ export function runInput({ widgetID, overlay, overlaysByPlayer, players, variabl
     };
 
     if(session.block)
-      startInputBlock(sessionID, players, overlay.header);
+      startInputBlock(sessionID, players, overlay.header, typeof overlay.block == 'string' ? overlay.block : undefined);
 
     if(includeSelf && showLocal) {
       showLocal(abort=>{ session.localAbort = abort; })
@@ -886,9 +886,10 @@ function receiveInputCancelled(args) {
 
 // --- INPUT block overlay --------------------------------------------------
 const activeInputBlocks = new Map();
+let defaultInputBlockGuidance;
 
-function startInputBlock(sessionID, waitingFor, header) {
-  toServer('inputBlock', { blockID: sessionID, show: true, waitingFor, header });
+function startInputBlock(sessionID, waitingFor, header, text) {
+  toServer('inputBlock', { blockID: sessionID, show: true, waitingFor, header, text });
 }
 
 function endInputBlock(sessionID) {
@@ -911,11 +912,19 @@ function updateInputBlockOverlay() {
     return;
   }
   const lines = [];
+  const guidance = $('#inputBlockGuidance');
+  if(defaultInputBlockGuidance === undefined)
+    defaultInputBlockGuidance = guidance.textContent;
+  const messages = [];
   for(const block of activeInputBlocks.values()) {
     const names = (block.waitingFor || []).join(', ');
     lines.push((block.header ? block.header + ' — ' : '') + `Waiting for input from ${names}…`);
+    const text = typeof block.text == 'string' ? block.text : defaultInputBlockGuidance;
+    if(!messages.includes(text))
+      messages.push(text);
   }
   $('#inputBlockText').textContent = lines.join('\n');
+  guidance.textContent = messages.join('\n\n');
   // Don't steal the screen from a player who is filling in their own input
   // overlay, and only toggle showOverlay when actually transitioning to shown
   // (showOverlay flips visibility if the overlay is already open).

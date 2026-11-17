@@ -1131,7 +1131,7 @@ export default class Room {
   inputBlock(player, args) {
     this.inputBlocks = this.inputBlocks || Object.create(null);
     if(args.show) {
-      this.inputBlocks[args.blockID] = { from: player, header: args.header, waitingFor: args.waitingFor || [] };
+      this.inputBlocks[args.blockID] = { from: player, header: args.header, text: args.text, waitingFor: args.waitingFor || [] };
       this.sendInputBlock(args.blockID);
     } else {
       delete this.inputBlocks[args.blockID];
@@ -1150,7 +1150,7 @@ export default class Room {
       return;
     for(const p of this.players)
       if(!block.waitingFor.includes(p.name))
-        p.send('inputBlock', { blockID, show: true, waitingFor: block.waitingFor, header: block.header });
+        p.send('inputBlock', { blockID, show: true, waitingFor: block.waitingFor, header: block.header, text: block.text });
   }
 
   // Drop a player who has answered from a block's waitingFor list and refresh

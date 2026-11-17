@@ -59,15 +59,6 @@ function cloneInputOverlayForPlayer(overlay, player, playerIndex) {
   return clone;
 }
 
-function hasPlayerSpecificChooseField(overlay) {
-  return (overlay.fields || []).some(field=>
-    field.type == 'choose' &&
-    [ 'source', 'holder', 'collection', 'value' ].some(property=>
-      field[property] && typeof field[property] == 'object' && !Array.isArray(field[property])
-    )
-  );
-}
-
 let lastExecutedOperation = null;
 
 // Counts the widgets that were created without an id so each of them still gets a css scope of its own - see
@@ -1196,11 +1187,11 @@ export class Widget extends StateManaged {
       });
     }
 
-    function evaluateIdentifier(dollarMatch, stringMatch) {
-      return unescape(dollarMatch ? variables[stringMatch] : stringMatch);
+    function evaluateIdentifier(dollarMatch, stringMatch, context = variables) {
+      return unescape(dollarMatch ? context[stringMatch] : stringMatch);
     }
 
-    const evaluateVariables = string=>{
+    const evaluateVariables = (string, context = variables)=>{
       const identifierWithSpace = '(?:[a-zA-Z0-9 _-]|\\\\u[0-9a-fA-F]{4})+';
       const identifier          = identifierWithSpace.replace(/ /, '');
       const variable            = `(\\$)?(${identifier})(?:\\.(\\$)?(${identifier}))?`;
@@ -1210,18 +1201,18 @@ export class Widget extends StateManaged {
       // not a match across the whole string; replace any variables inside it
       if(!match) {
         return string.replace(/\$\{([^}]+)\}/g, function(v) {
-          const e = evaluateVariables(v);
+          const e = evaluateVariables(v, context);
           return e === undefined ? '' : e;
         });
       }
 
       // variable
       if(match[2]) {
-        const varContent = variables[evaluateIdentifier(match[1], match[2])];
+        const varContent = context[evaluateIdentifier(match[1], match[2], context)];
         if(varContent === undefined)
           return match[9] ? false : undefined;
 
-        let indexName = evaluateIdentifier(match[3], match[4]);
+        let indexName = evaluateIdentifier(match[3], match[4], context);
         if(varContent === null && indexName !== undefined)
           problems.push(`Cannot index a variable that evaluates to 'null'.`);
         return varContent !== null && indexName !== undefined ? varContent[indexName] : varContent;
@@ -1231,26 +1222,26 @@ export class Widget extends StateManaged {
       if(match[6]) {
         let widget = this;
         if(match[8]) {
-          const id = evaluateIdentifier(match[7], match[8]);
+          const id = evaluateIdentifier(match[7], match[8], context);
           if(Array.isArray(id) || !this.isValidID(id, problems))
             return null;
           widget = widgets.get(id);
         }
-        return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
+        return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6], context))));
       }
 
       return null;
     };
 
-    const evaluateVariablesRecursively = obj=>{
+    const evaluateVariablesRecursively = (obj, context = variables)=>{
       const newObject = Array.isArray(obj) ? [] : {};
       for(const i in obj) {
         let newValue = obj[i];
         if(typeof obj[i] == 'string')
-          newValue = evaluateVariables(obj[i]);
+          newValue = evaluateVariables(obj[i], context);
         else if(typeof obj[i] == 'object' && obj[i] !== null && !i.match(/Routine$/))
-          newValue = evaluateVariablesRecursively(obj[i]);
-        newObject[String(evaluateVariables(i))] = newValue;
+          newValue = evaluateVariablesRecursively(obj[i], context);
+        newObject[String(evaluateVariables(i, context))] = newValue;
       }
       return newObject;
     };
@@ -1328,9 +1319,15 @@ export class Widget extends StateManaged {
     for(const original of routine) {
       var problems = [];
       let a = JSON.parse(JSON.stringify(original));
-      if(typeof a == 'object')
-        a = evaluateVariablesRecursively(a)
-      else
+      if(typeof a == 'object') {
+        // Routing is resolved before the dialog's recipient-specific values.
+        if(a.func == 'INPUT') {
+          for(const key of [ 'player', 'seat', 'block', 'skip' ])
+            if(a[key] !== undefined)
+              a[key] = evaluateVariablesRecursively({ [key]: a[key] })[key];
+        } else
+          a = evaluateVariablesRecursively(a);
+      } else
         a = original.trim();
 
       lastExecutedOperation = {
@@ -1892,37 +1889,66 @@ export class Widget extends StateManaged {
         // created from the editor template (which sets `player: null`) still
         // shows locally instead of silently doing nothing.
         let players = [ ...new Set(asArray(a.player).filter(Boolean)) ];
-        const isMulti = Array.isArray(a.player) && players.length > 0;
+        const useSeats = a.seat !== undefined && a.seat !== null;
+        const seatsByPlayer = new Map();
+        const isMulti = useSeats ? Array.isArray(a.seat) : Array.isArray(a.player) && players.length > 0;
         if(!players.length)
           players = [ playerName ];
+        if(useSeats) {
+          const seats = widgetFilter(w=>w.get('type') == 'seat');
+          for(const target of asArray(a.seat)) {
+            const seat = seats.find(w=>typeof target == 'number' ? w.get('index') === target : w.get('id') === target);
+            if(!seat)
+              problems.push(`INPUT: ${JSON.stringify(target)} is not a valid seat ID or index.`);
+            else if(!seat.get('player'))
+              problems.push(`INPUT: seat '${seat.get('id')}' has no player.`);
+            else if(!seatsByPlayer.has(seat.get('player')))
+              seatsByPlayer.set(seat.get('player'), seat);
+          }
+          players = [ ...seatsByPlayer.keys() ];
+          if(!players.length)
+            problems.push(`INPUT: no occupied seats matched 'seat'.`);
+        }
         // Warn about names that aren't active players so a typo is not silently
         // indistinguishable from that player cancelling the input.
         for(const p of players)
           if(p !== playerName && activePlayers.indexOf(p) == -1)
             problems.push(`INPUT: '${p}' is not an active player; the overlay cannot be shown to them.`);
+        const { player, seat, block, skip, ...dialog } = original;
+        const overlaysByPlayer = Object.fromEntries(players.map((p, i)=>{
+          const playerSeats = widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == p);
+          const inputSeat = seatsByPlayer.get(p) || playerSeats[0];
+          const context = { ...variables, inputSeatID: inputSeat ? inputSeat.get('id') : null };
+          const overlay = { ...a, ...evaluateVariablesRecursively(dialog, context) };
+          return [ p, cloneInputOverlayForPlayer(overlay, p, i) ];
+        }));
+        // Routine logging retains a reference to the applied operation.
+        Object.assign(a, overlaysByPlayer[players[0]]);
         // Only the initiator can show its own overlay locally (it has the live
         // variables/collections); everyone else is asked over the network.
         const showLocal = players.indexOf(playerName) != -1 ? registerAbort=>{
           const handle = {};
-          const promise = this.showInputOverlay(cloneInputOverlayForPlayer(a, playerName, players.indexOf(playerName)), widgets, variables, collections, getCollection, problems, handle);
+          const promise = this.showInputOverlay(overlaysByPlayer[playerName], widgets, variables, collections, getCollection, problems, handle);
           registerAbort(()=>{ if(handle.abort) handle.abort(); });
           return promise;
         } : null;
         try {
-          const usePlayerSpecificOverlay = hasPlayerSpecificChooseField(a);
-          const overlaysByPlayer = usePlayerSpecificOverlay ? Object.fromEntries(players.map((p, i)=>[ p, cloneInputOverlayForPlayer(a, p, i) ])) : null;
+          if(!players.length)
+            throw new Error('INPUT has no recipients.');
           const results = await runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal });
           if(isMulti) {
             // Return each field's value keyed by the player who entered it.
-            for(const field of a.fields || []) {
-              if(!field.variable)
-                continue;
-              const keyed = {};
-              for(const p of players)
+            const keyed = Object.create(null);
+            for(const p of players) {
+              for(const field of overlaysByPlayer[p].fields || []) {
+                if(!field.variable)
+                  continue;
+                keyed[field.variable] = keyed[field.variable] || {};
                 if(results[p])
-                  keyed[p] = results[p].variables[field.variable];
-              variables[field.variable] = keyed;
+                  keyed[field.variable][p] = results[p].variables[field.variable];
+              }
             }
+            Object.assign(variables, keyed);
             // Collections (e.g. from 'choose' fields) are unioned across players.
             for(const p of players) {
               if(!results[p])
@@ -1944,8 +1970,8 @@ export class Widget extends StateManaged {
           if(routineLogging) {
             let varList = [];
             let valueList = [];
-            a.fields.forEach(f=>{
-              if(f.variable) {
+            Object.values(overlaysByPlayer).flatMap(o=>o.fields || []).forEach(f=>{
+              if(f.variable && !varList.includes(f.variable)) {
                 varList.push(f.variable);
                 valueList.push(JSON.stringify(variables[f.variable]));
               }
