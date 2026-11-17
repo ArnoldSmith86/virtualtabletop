@@ -588,7 +588,12 @@ describe('operation rendering', () => {
     [ { func: 'SORT', holder: 'deck1' }, 'Sort deck1' ],
     [ { func: 'SORT', holder: 'deck1', key: 'value', reverse: true }, 'Sort deck1 by value, biggest first' ],
     [ { func: 'TURN' }, 'Pass the turn on' ],
+    [ { func: 'TURN', turn: -1 }, 'Pass the turn on by -1 seat' ],
     [ { func: 'TURN', turnCycle: 'random' }, 'Give the turn to a random seat' ],
+    [ { func: 'TURN', turnCycle: 'position', turn: 2 }, 'Give the turn to the seat at position 2' ],
+    // a position counted from the last seat is what a negative one means, and the
+    // sentence says so rather than leaving a minus sign to explain itself
+    [ { func: 'TURN', turnCycle: 'position', turn: -2 }, 'Give the turn to the seat at position -2, counting back from the last' ],
     [ { func: 'DELETE' }, 'Delete the picked widgets' ],
     [ { func: 'CLONE', count: 3, properties: { owner: 'red' }, collection: 'newCards' },
       'Make 3 copies of the picked widgets, and set owner: red on them — call the copies newCards' ],
@@ -2525,7 +2530,12 @@ describe('number popups with text values', () => {
     for(const func in routineOperationMetadata)
       for(const name in routineOperationMetadata[func].parameters) {
         const spec = routineOperationMetadata[func].parameters[name];
-        if((spec.special || []).indexOf(null) == -1)
+        // a parameter whose ready-made values depend on the variant offers the ones
+        // of every variant somewhere, so the rule has to hold for all of them
+        const special = typeof spec.special == 'function'
+          ? routineOperationMetadata[func].variants.flatMap(variant=>spec.special(variant.id))
+          : (spec.special || []);
+        if(special.indexOf(null) == -1)
           continue;
         // a SCORE without a round adds a new one, which is a choice like naming
         // a round rather than an empty value - so it is one entry of the
@@ -2856,6 +2866,23 @@ describe('widget type presets', () => {
     const label = showPopup({ func: 'LABEL' }, [ 'label' ]);
     expect(pickedTypes(label).sort()).toEqual([ 'button', 'label', 'timer' ]);
     label.hide();
+  });
+
+  // first and last name a position, so the cycles that count seats along must not
+  // offer them with one click - they mean turn 1 there, and the validator says so
+  test('the values TURN offers for its turn parameter follow the cycle it uses', () => {
+    room([ 'target', 'button' ]);
+    const offered = operation=>{
+      const popup = showPopup(operation, [ 'turn' ]);
+      const values = [...popup.domElement.querySelectorAll('[data-kind=value] button')].map(b=>b.textContent);
+      popup.hide();
+      return values;
+    };
+    expect(offered({ func: 'TURN' })).toContain('-1');
+    expect(offered({ func: 'TURN' })).not.toContain('first');
+    expect(offered({ func: 'TURN', turnCycle: 'position' })).toEqual(expect.arrayContaining([ 'first', 'last', '-1' ]));
+    // a seat cycle takes the id of a seat, which the picker below the values is for
+    expect(offered({ func: 'TURN', turnCycle: 'seat' })).not.toContain('last');
   });
 
   test('TURN offers the seats for its turn parameter', () => {
