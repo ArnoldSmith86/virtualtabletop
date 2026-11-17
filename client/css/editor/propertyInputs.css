@@ -89,6 +89,19 @@
   min-width: 60px;
 }
 
+/* The font row: the family dropdown takes what is left of the row, and the button that fetches another
+   family from Google Fonts sits at its end - the same place the pickers of the other appearance inputs sit.
+   Every option is drawn in the family it names, so the list can be read as a preview. */
+.editorModule .propertyInput.fontInput select {
+  flex: 1 1 120px;
+  min-width: 80px;
+  max-width: 100%;
+}
+
+.editorModule .propertyInput.fontInput .fontPickerButton {
+  flex: 0 0 auto;
+}
+
 .editorModule .propertyInputUnit {
   color: var(--textDimColor1, #777);
 }

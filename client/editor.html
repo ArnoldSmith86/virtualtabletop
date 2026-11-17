@@ -171,7 +171,7 @@
     <div id="libraryDecksList"></div>
   </div>
   <div id="deckEditorExportOverlay" class="overlay" style="display: none">
-    <div id="deckEditorExportDialog" class="deckEditorModal">
+    <div id="deckEditorExportDialog" class="editorModal">
       <button id="deckEditorExportClose" icon="close" title="Close"></button>
       <h1>Print or save deck as PDF</h1>
       <p>Cards are arranged to use as much of each sheet as possible. Print to a printer or choose “Save as PDF” in the browser print dialog. Front/back output alternates mirrored pages; enable two-sided printing with the matching duplex flip setting.</p>
@@ -223,7 +223,7 @@
     </div>
   </div>
   <div id="deckEditorImportOverlay" class="overlay" style="display: none">
-    <div id="deckEditorImportDialog" class="deckEditorModal">
+    <div id="deckEditorImportDialog" class="editorModal">
       <button id="deckEditorImportClose" icon="close" title="Close"></button>
       <h1>Import card types from CSV</h1>
       <p>Choose a CSV file to import from. This will not import other deck data such as face objects. This makes each row in the CSV a card type; the id::INTERNAL column sets its name and cardCount::INTERNAL sets how many cards of it are in the game. To generate a CSV file with the appropriate data, use the save icon in the upper left.</p>
@@ -236,8 +236,39 @@
       </div>
     </div>
   </div>
+  <div id="fontPickerOverlay" class="overlay" style="display: none">
+    <div id="fontPickerDialog" class="editorModal">
+      <button id="fontPickerClose" icon="close" title="Close"></button>
+      <h1 id="fontPickerTitle"></h1>
+      <div id="fontPickerBody">
+        <p id="fontPickerIntro"></p>
+        <div class="fontPickerSection">
+          <div class="fontPickerSectionHeader">Imported fonts</div>
+          <div class="fontPickerSectionBody">
+            <div id="fontPickerOwned"></div>
+          </div>
+        </div>
+        <div class="fontPickerSection">
+          <div class="fontPickerSectionHeader">Add from Google Fonts</div>
+          <div class="fontPickerSectionBody">
+            <input id="fontPickerSearch" type="search" placeholder="Search Google Fonts by name" autocomplete="off">
+            <div id="fontPickerHint"></div>
+            <div id="fontPickerList"></div>
+            <div id="fontPickerDetails">
+              <div id="fontPickerPreview">The quick brown fox jumps over the lazy dog 0123456789</div>
+              <div id="fontPickerStyles"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fontPickerActions">
+        <div id="fontPickerStatus"></div>
+        <button id="fontPickerAdd" icon="font_download" disabled></button>
+      </div>
+    </div>
+  </div>
   <div id="deckEditorNewDeckOverlay" class="overlay" style="display: none">
-    <div id="deckEditorNewDeckDialog" class="deckEditorModal">
+    <div id="deckEditorNewDeckDialog" class="editorModal">
       <button id="deckEditorNewDeckClose" icon="close" title="Close"></button>
       <h1>Add a new deck</h1>
       <p>Where should the cards come from? Open one of the three sections.</p>
