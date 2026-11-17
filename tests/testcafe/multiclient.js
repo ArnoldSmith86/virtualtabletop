@@ -46,6 +46,10 @@ async function openClient(t, name) {
   await storePlayerName(name);
   await t.navigateTo(roomURL());
   await ClientFunction(prepareClient)();
+  // the first state the client receives is what opens the game list over an empty room, so a
+  // click before it arrives closes an overlay that is not open yet - and leaves the one that
+  // opens right afterwards covering the board
+  await t.expect(Selector('#loadingRoomIndicator').exists).notOk('the room finished loading', { timeout: 30000 });
   await t.click('#activeGameButton');
 }
 
