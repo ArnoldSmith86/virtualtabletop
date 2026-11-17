@@ -166,8 +166,12 @@ async function addWidgetLocal(widget, useTypeBasedID = true) {
   }
 
   const isNewWidget = !widgets.has(widget.id);
-  if(isNewWidget)
+  if(isNewWidget) {
     addWidget(widget);
+    // Until the creation delta is sent, there is no previous state to restore on undo.
+    if(widgets.has(widget.id))
+      widgets.get(widget.id).unalteredState = {};
+  }
   sendPropertyUpdate(widget.id, widget);
   sendDelta();
   batchStart();
@@ -410,7 +414,7 @@ function addDeltaEntryToUndoProtocol(delta) {
 
   for(const widgetID in delta.s) {
     if(delta.s[widgetID] === null) {
-      if(widgets.has(widgetID))
+      if(widgets.has(widgetID) && widgets.get(widgetID).unalteredState.id)
         undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
     } else if(delta.s[widgetID].id) {
       undoDelta[widgetID] = null;
