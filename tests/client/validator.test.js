@@ -285,6 +285,39 @@ describe.each([
   });
 });
 
+describe('Validator custom routine caller collection', () => {
+  test.each([
+    ['widget', properties => properties, []],
+    ['cardDefaults', properties => ({ type: 'deck', cardDefaults: properties }), ['cardDefaults']],
+    ['cardTypes', properties => ({ type: 'deck', cardTypes: { token: properties } }), ['cardTypes', 'token']]
+  ])('accepts caller in an uncalled routine on %s and still checks property reads', (source, properties, path) => {
+    const problems = validateGameFile({
+      widget: {
+        id: 'widget',
+        ...properties({
+          unusedRoutine: [
+            { func: 'SET', collection: 'caller', property: 'customProperty${index}', value: 1 },
+            { func: 'GET', collection: 'caller', property: 'customProperty3' },
+            { func: 'GET', collection: 'caller', property: 'misspelledProperty' }
+          ]
+        })
+      }
+    }, false);
+
+    expect(problems.some(problem => problem.message.includes("Collection 'caller'"))).toBe(false);
+    expect(problems).toContainEqual({
+      widget: 'widget', property: [...path, 'unusedRoutine'], message: 'Routine is not being called'
+    });
+    expect(problems.filter(problem => problem.message.includes('is read but nothing ever sets it'))).toEqual([
+      {
+        widget: 'widget',
+        property: [...path, 'unusedRoutine', 2, 'property'],
+        message: "'misspelledProperty' is read but nothing ever sets it - check for a typo"
+      }
+    ]);
+  });
+});
+
 describe('Validator input handling', () => {
   test.each([null, 'not an object', 42])('reports a non-object game file (%p) instead of throwing', data => {
     expect(validateGameFile(data, false)).toEqual([
