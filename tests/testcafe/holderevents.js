@@ -184,6 +184,79 @@ test('A card dragged onto a full holder is refused and stays on the table', asyn
   await t.expect(String((after.log||{}).trace||'')).eql('', 'no holder event fired');
 });
 
+test('A dragging-only drop target excludes a deck holder\'s structural children from COUNT', async t => {
+  const state = fixtureState({
+    handB: { dropTarget: { dragging: 'TestCafe' }, enterRoutine: [
+      { func: 'COUNT', holder: 'handB', variable: 'count' },
+      { func: 'SELECT', property: 'id', value: 'log', collection: 'log' },
+      { func: 'SET', collection: 'log', property: 'count', value: '${count}' }
+    ] }
+  });
+  state.deck.parent = 'handB';
+  state.recall = { id: 'recall', type: 'button', parent: 'handB', fixedParent: true, text: 'Recall & Shuffle' };
+  await openRoom(t, 'modern', state);
+  await setName(t, 'TestCafe');
+
+  await dragPath(t, CARD, [ { onto: 'handB' } ]);
+  const counted = await stateWhen(s=>s.log && s.log.count !== undefined);
+  await t.expect(counted.card1.parent).eql('handB', 'the card was accepted');
+  await t.expect(counted.log.count).eql(1, 'enterRoutine counts the card but not the deck definition or fixed control');
+});
+
+test('A dragging-based drop target applies its drop limit', async t => {
+  const state = fixtureState({ handB: { dropTarget: { dragging: 'TestCafe' }, dropLimit: 1 } });
+  state.deck.parent = 'handB';
+  state.recall = { id: 'recall', type: 'button', parent: 'handB', fixedParent: true, text: 'Recall & Shuffle' };
+  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', x: 900, y: 60 };
+  await openRoom(t, 'modern', state);
+  await setName(t, 'TestCafe');
+
+  await dragPath(t, CARD, [ { onto: 'handB' } ]);
+  const accepted = await stateWhen(s=>s.card1 && s.card1.parent == 'handB');
+  await t.expect(accepted.card1.parent).eql('handB', 'structural children do not make the holder full');
+
+  await dragPath(t, 'card2', [ { onto: 'handB' } ]);
+  await t.wait(500);
+  const after = await getStateObject();
+  await t.expect(after.card2.parent).eql(undefined, 'the second card stayed on the table');
+});
+
+test('A dragging-based drop target accepts an incoming pile that exactly fits its drop limit', async t => {
+  const state = fixtureState({ handB: { dropTarget: { dragging: 'TestCafe' }, dropLimit: 4 } });
+  state.card1.parent = 'pile1';
+  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'pile1' };
+  state.card3 = { id: 'card3', type: 'card', deck: 'deck', cardType: 'plain', parent: 'pile1' };
+  state.pile1 = { id: 'pile1', type: 'pile', x: 700, y: 60 };
+  state.held = { id: 'held', type: 'card', deck: 'deck', cardType: 'plain', parent: 'handB', x: 4, y: 4 };
+  await openRoom(t, 'modern', state);
+  await setName(t, 'TestCafe');
+
+  await dragPath(t, 'pile1', [ { onto: 'handB' } ]);
+  await t.wait(500);
+  const after = await getStateObject();
+  await t.expect(after.pile1.parent).eql('handB', 'the three-card pile was accepted into the holder with one card');
+});
+
+test('A dragging-based drop target counts every card in an incoming pile against its drop limit', async t => {
+  const state = fixtureState({ handB: { dropTarget: { dragging: 'TestCafe' }, dropLimit: 4 } });
+  state.card1.parent = 'pile1';
+  state.card2 = { id: 'card2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'pile1' };
+  state.card3 = { id: 'card3', type: 'card', deck: 'deck', cardType: 'plain', parent: 'pile1' };
+  state.pile1 = { id: 'pile1', type: 'pile', x: 700, y: 60 };
+  state.held1 = { id: 'held1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'handB', x: 4, y: 4 };
+  state.held2 = { id: 'held2', type: 'card', deck: 'deck', cardType: 'plain', parent: 'handB', x: 4, y: 4 };
+  await openRoom(t, 'modern', state);
+  await setName(t, 'TestCafe');
+
+  await dragPath(t, 'pile1', [ { onto: 'handB' } ]);
+  await t.wait(500);
+  const after = await getStateObject();
+  await t.expect(after.pile1.parent).eql(undefined, 'the three-card pile stayed on the table because only two slots were free');
+  await t.expect(after.card1.parent).eql('pile1', 'the refused pile kept its cards');
+  await t.expect(after.card2.parent).eql('pile1', 'the refused pile kept its cards');
+  await t.expect(after.card3.parent).eql('pile1', 'the refused pile kept its cards');
+});
+
 // ---------------------------------------------------------------------------------------------
 // The properties that change what an event does
 // ---------------------------------------------------------------------------------------------
