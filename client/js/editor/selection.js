@@ -246,6 +246,7 @@ function selectionChanged(previousSelection, newSelection) {
 }
 
 function setSelection(newSelectedWidgets) {
+  newSelectedWidgets = smartCloneProcessSelection(newSelectedWidgets);
   const previousSelectedWidgets = [...selectedWidgets];
 
   // Whatever the editor has open belongs to the widget that was being edited, so
@@ -335,6 +336,7 @@ export function editorReceiveDelta(delta) {
     button.onDeltaReceived(delta);
   selectionBarDeltaReceived(delta);
   deckEditorReceiveDelta(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
@@ -344,6 +346,7 @@ function receiveStateFromServer(state) {
   // with the dead widgets already dropped, so nothing re-renders an editor for
   // one of them and follows its dangling links (a card looks up its deck).
   // The selection survives leaving edit mode, so this happens while playing too.
+  smartCloneInit();
   deckEditorStateReplaced();
   endDrill();
   setSelection([]);
