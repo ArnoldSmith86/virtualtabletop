@@ -56,7 +56,19 @@ export function getPointOnPlane(transform, x, y) {
 }
 
 export function getTransformOrigin(elem) {
-  const lengths = parseLengths(getComputedStyle(elem).transformOrigin);
+  const style = getComputedStyle(elem);
+  const lengths = style.transformOrigin.split(' ').map((length, axis) => {
+    let value = parseFloat(length);
+    // Without a layout box the browser leaves percentage origins unresolved.
+    if(length.endsWith('%')) {
+      let size = parseFloat(axis == 0 ? style.width : style.height);
+      if(style.boxSizing != 'border-box')
+        for(const side of axis == 0 ? [ 'Left', 'Right' ] : [ 'Top', 'Bottom' ])
+          size += (parseFloat(style['padding' + side]) || 0) + (parseFloat(style['border' + side + 'Width']) || 0);
+      value *= size/100;
+    }
+    return value;
+  });
   return {x: lengths[0], y: lengths[1]};
 }
 
@@ -72,12 +84,14 @@ export function getElementTransform(elem) {
     transform.multiplySelf(new DOMMatrix([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -1/perspective, 0, 0, 0, 1]));
     transform.translateSelf(-perspectiveOrigin[0], -perspectiveOrigin[1]);
   }
-  const computedTransform = computedStyle.transform;
+  // display:none (including on an ancestor) suppresses the computed transform.
+  // Widgets keep their transform inline even while they have no layout box.
+  const computedTransform = computedStyle.transform == 'none' && !elem.getClientRects().length ? elem.style.transform || 'none' : computedStyle.transform;
   if (computedTransform !='none') {
-    const transformOrigin = parseLengths(computedStyle.transformOrigin);
-    transform.translateSelf(transformOrigin[0], transformOrigin[1]);
-    transform.multiplySelf(new DOMMatrix(computedStyle.transform));
-    transform.translateSelf(-transformOrigin[0], -transformOrigin[1]);
+    const transformOrigin = getTransformOrigin(elem);
+    transform.translateSelf(transformOrigin.x, transformOrigin.y);
+    transform.multiplySelf(new DOMMatrix(computedTransform));
+    transform.translateSelf(-transformOrigin.x, -transformOrigin.y);
   }
   transform.translateSelf(elem.offsetLeft, elem.offsetTop);
   return transform;

@@ -3945,6 +3945,58 @@ test('Line stops that are not children of the line', async t => {
   await t.expect(stopsOffPath()).eql(0);
 });
 
+for(const [ hidden, rotation, scale ] of [ [ 'route', 0, 1 ], [ 'cityA', 0, 1 ], [ 'board', 0, 1 ], [ 'route', 20, 0.8 ] ]) {
+  test(`Connected lines update while ${hidden} is hidden (rotation ${rotation})`, async t => {
+    await setRoomState({
+      board: { id: 'board', x: 80, y: 40, width: 900, height: 600, rotation: 15, scale: 0.9 },
+      cityA: { id: 'cityA', parent: 'board', x: 100, y: 200, width: 40, height: 40, rotation: 30, scale: 1.2 },
+      cityB: { id: 'cityB', parent: 'board', x: 600, y: 300, width: 40, height: 40 },
+      car: { id: 'car', x: 0, y: 0, width: 30, height: 20, movable: false },
+      route: {
+        id: 'route', type: 'line', parent: 'board', x: 100, y: 200, rotation, scale,
+        connectStart: { line: 'cityA', position: 0.5 },
+        connectEnd: { line: 'cityB', position: 0.5 },
+        autoSpaceStops: false, stops: rotation ? [] : [ { widget: 'car', position: 0.5 } ]
+      }
+    });
+    await ClientFunction(prepareClient)();
+    await setName(t);
+    await t.click('#editButton').expect(Selector('#editorSidebar').visible).ok();
+    // The editor exposes widgets for the checks, but play mode uses display:none.
+    await t.click('#editorToolbar [icon=close]');
+    await ClientFunction(() => widgets.get('route').applyConnections())();
+
+    await ClientFunction(id => widgets.get(id).set('display', false))(hidden);
+    await t.expect(Selector(`#w_${hidden}`).getStyleProperty('display')).eql('none');
+    const moveWhileHidden = ClientFunction(() => {
+      batchStart();
+      return widgets.get('cityA').set('x', 200)
+        .then(_=>widgets.get('cityB').set('y', 400))
+        .then(_=>batchEnd());
+    });
+    await moveWhileHidden();
+    await ClientFunction(id => widgets.get(id).set('display', true))(hidden);
+
+    const geometryError = ClientFunction(() => {
+      const line = widgets.get('route');
+      const error = (a, b) => Math.hypot(a.x-b.x, a.y-b.y);
+      const center = widget => widget.coordGlobalFromCoordLocal({ x: widget.get('width')/2, y: widget.get('height')/2 });
+      const errors = [
+        error(line.coordGlobalFromCoordLocal(line.pointProperty('lineStart')), center(widgets.get('cityA'))),
+        error(line.coordGlobalFromCoordLocal(line.pointProperty('lineEnd')), center(widgets.get('cityB')))
+      ];
+      if(line.stopList().length)
+        errors.push(error(line.coordGlobalFromCoordLocal(line.pointAtPosition(0.5)), center(widgets.get('car'))));
+      return Math.max(...errors);
+    });
+    await t.expect(geometryError()).lte(2);
+    await t.eval(() => location.reload());
+    await t.expect(Selector('#loadingRoomIndicator').exists).notOk();
+    await t.click('#editButton').expect(Selector('#editorSidebar').visible).ok();
+    await t.expect(geometryError()).lte(2);
+  });
+}
+
 test('Enabling the Debug module while a routine waits for INPUT does not abort the routine', async t => {
   await setRoomState({
     button: {
