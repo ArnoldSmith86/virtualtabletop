@@ -5,11 +5,13 @@ import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { setViewportSize } from './calculateLayout.js';
 import { playerName } from './overlays/players.js';
+import { cancelPendingInputOverlay } from './widgets/widget.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
 
 export const widgets = new Map();
+export let roomStateGeneration = 0;
 
 let deferredCards = {};
 let deferredChildren = {};
@@ -495,6 +497,7 @@ function receiveDeltaFromServer(delta) {
 }
 
 function receiveStateFromServer(args) {
+  ++roomStateGeneration;
   addStateEntryToUndoProtocol(args);
 
   // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
@@ -613,13 +616,13 @@ function receiveStateFromServer(args) {
 
 function cancelInputOverlay() {
   if($('#activeGameButton[data-overlay=buttonInputOverlay]')) {
+    cancelPendingInputOverlay();
     delete $('#activeGameButton').dataset.overlay;
     if($('#buttonInputOverlay').style.display == 'flex')
       showOverlay();
 
     delta = { s: {} };
     deltaChanged = false;
-    batchDepth = 0;
   }
 }
 

@@ -1,5 +1,5 @@
 import { dropTargets } from './main.js';
-import { sendPropertyUpdate } from './serverstate.js';
+import { sendPropertyUpdate, roomStateGeneration } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
 
 export class StateManaged {
@@ -105,6 +105,8 @@ export class StateManaged {
   }
 
   async set(property, value) {
+    const stateGeneration = roomStateGeneration;
+
     if(tracingEnabled && property == 'activeFace')
       sendTraceEvent('set activeFace', { w: this.get('id'), property, value, stack: new Error().stack });
 
@@ -129,16 +131,16 @@ export class StateManaged {
     await this.onPropertyChange(property, oldValue, value);
 
     if(Array.isArray(this.get(`${property}ChangeRoutine`)))
-      await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {});
+      await this.evaluateRoutine(`${property}ChangeRoutine`, { oldValue, value }, {}, undefined, false, stateGeneration);
     if(Array.isArray(this.get('changeRoutine')))
-      await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {});
+      await this.evaluateRoutine('changeRoutine', { property, oldValue, value }, {}, undefined, false, stateGeneration);
 
     if(!StateManaged.isInGlobalUpdateRoutine) {
       StateManaged.isInGlobalUpdateRoutine = true;
       for(const [ widget, routine ] of StateManaged.globalUpdateListeners[property] || [])
-        await widget.evaluateRoutine(routine, { widgetID: this.id, oldValue, value }, { widget: [ this ] });
+        await widget.evaluateRoutine(routine, { widgetID: this.id, oldValue, value }, { widget: [ this ] }, undefined, false, stateGeneration);
       for(const [ widget, routine ] of StateManaged.globalUpdateListeners['*'] || [])
-        await widget.evaluateRoutine(routine, { widgetID: this.id, property, oldValue, value }, { widget: [ this ] });
+        await widget.evaluateRoutine(routine, { widgetID: this.id, property, oldValue, value }, { widget: [ this ] }, undefined, false, stateGeneration);
       StateManaged.isInGlobalUpdateRoutine = false;
     }
   }

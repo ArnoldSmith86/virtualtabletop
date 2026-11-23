@@ -300,6 +300,159 @@ test('releasing a dragged widget while an overlay is open still ends the drag', 
   await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ]);
 });
 
+test('overlapping INPUT routines cannot share a confirmation', async t => {
+  await setRoomState({
+    ask: { id: 'ask', type: 'button', x: 100, y: 100, confirmed: 0, clickRoutine: [
+      'var next = 1 + 1',
+      { func: 'INPUT', header: 'Next round?', fields: [] },
+      { func: 'SET', collection: 'thisButton', property: 'confirmed', relation: '+', value: 1 }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  // Both releases reach the routine before its first asynchronous operation finishes.
+  await ClientFunction(()=>{
+    const target = document.getElementById('w_ask');
+    const box = target.getBoundingClientRect();
+    for(let i=0; i<2; i++)
+      for(const type of [ 'mousedown', 'mouseup' ])
+        target.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true,
+          clientX: box.left + box.width/2, clientY: box.top + box.height/2,
+          button: 0, buttons: type == 'mousedown' ? 1 : 0 }));
+  })();
+  await t.expect(Selector('#buttonInputOverlay').visible).ok();
+  await t.click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).ask.confirmed, 1);
+  await t.click('#w_ask').click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).ask.confirmed, 2);
+});
+
+for(const [ name, wrap ] of [
+  [ 'top-level', input=>input ],
+  [ 'IF', input=>({ func: 'IF', condition: true, thenRoutine: [ input ] }) ],
+  [ 'CALL', ()=>({ func: 'CALL', routine: 'confirmRoutine' }) ],
+  [ 'FOREACH in', input=>({ func: 'FOREACH', in: { first: 1, second: 2 }, loopRoutine: [ input ] }) ],
+  [ 'FOREACH range', input=>({ func: 'FOREACH', range: [ 1, 2 ], loopRoutine: [ input ] }) ],
+  [ 'FOREACH collection', input=>({ func: 'FOREACH', collection: [ 'ask', 'counter' ], loopRoutine: [ input ] }) ]
+]) {
+  test(`a fresh room state cancels the previous ${name} INPUT confirmation`, async t => {
+    const input = { func: 'INPUT', header: 'Next round?', fields: [] };
+    const state = {
+      ask: { id: 'ask', type: 'button', x: 100, y: 100, confirmRoutine: [ input ], clickRoutine: [
+        wrap(input),
+        { func: 'SET', collection: [ 'counter' ], property: 'value', relation: '+', value: 1 }
+      ] },
+      counter: { id: 'counter', type: 'basic', x: 300, y: 100, value: 0 }
+    };
+    await setRoomState(state);
+    await ClientFunction(prepareClient)();
+    await setName(t);
+    await t.click('#w_ask').expect(Selector('#buttonInputOverlay').visible).ok();
+    await setRoomState(state);
+    await t.expect(Selector('#buttonInputOverlay').visible).notOk();
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 0);
+    const confirmations = name.startsWith('FOREACH') ? 2 : 1;
+    await t.click('#w_ask');
+    for(let i=0; i<confirmations; i++)
+      await t.click('#buttonInputGo');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 1);
+    await t.click('#w_ask');
+    for(let i=0; i<confirmations; i++)
+      await t.click('#buttonInputGo');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 2);
+  });
+}
+
+for(const [ name, collection, count ] of [
+  [ 'collection', [ 'ask', 'modify' ], 1 ],
+  [ 'count', [ 'modify', 'ask' ], 2 ]
+]) {
+  test(`a fresh room state stops the pending CLICK ${name} loop`, async t => {
+    const state = {
+      start: { id: 'start', type: 'button', x: 100, y: 100, clickRoutine: [
+        { func: 'CLICK', collection, count }
+      ] },
+      ask: { id: 'ask', type: 'button', x: 300, y: 100, clickRoutine: [
+        { func: 'INPUT', header: 'Continue?', fields: [] }
+      ] },
+      modify: { id: 'modify', type: 'button', x: 500, y: 100, clickRoutine: [
+        { func: 'SET', collection: [ 'counter' ], property: 'value', relation: '+', value: 1 }
+      ] },
+      counter: { id: 'counter', type: 'basic', x: 700, y: 100, value: 0 }
+    };
+    await setRoomState(state);
+    await ClientFunction(prepareClient)();
+    await setName(t);
+    await t.click('#w_start').expect(Selector('#buttonInputOverlay').visible).ok();
+    await setRoomState(state);
+    await t.expect(Selector('#buttonInputOverlay').visible).notOk();
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 0);
+    await t.click('#w_start');
+    for(let i=0; i<count; i++)
+      await t.click('#buttonInputGo');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, count);
+    await t.click('#w_start');
+    for(let i=0; i<count; i++)
+      await t.click('#buttonInputCancel');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 2*count);
+  });
+}
+
+for(const [ name, inputWidget, inputProperty, nextWidget, nextProperty ] of [
+  [ 'property-specific', 'trigger', 'valueChangeRoutine', 'trigger', 'changeRoutine' ],
+  [ 'generic', 'trigger', 'changeRoutine', 'modify', 'valueGlobalUpdateRoutine' ],
+  [ 'property-global', 'ask', 'valueGlobalUpdateRoutine', 'modify', 'valueGlobalUpdateRoutine' ],
+  [ 'wildcard-global', 'ask', 'globalUpdateRoutine', 'modify', 'globalUpdateRoutine' ]
+]) {
+  test(`a fresh room state stops pending ${name} property-change callbacks`, async t => {
+    const state = {
+      start: { id: 'start', type: 'button', x: 100, y: 100, clickRoutine: [
+        { func: 'SET', collection: [ 'trigger' ], property: 'value', relation: '+', value: 1 }
+      ] },
+      trigger: { id: 'trigger', type: 'basic', x: 300, y: 100, value: 0 },
+      ask: { id: 'ask', type: 'basic', x: 500, y: 100 },
+      modify: { id: 'modify', type: 'basic', x: 700, y: 100 },
+      counter: { id: 'counter', type: 'basic', x: 900, y: 100, value: 0 }
+    };
+    const onTrigger = routine => [ { func: 'IF', operand1: '${widgetID}', relation: '==', operand2: 'trigger', thenRoutine: routine } ];
+    const input = [ { func: 'INPUT', header: 'Continue?', fields: [] } ];
+    const next = [ { func: 'SET', collection: [ 'counter' ], property: 'value', relation: '+', value: 1 } ];
+    state[inputWidget][inputProperty] = /[gG]lobalUpdateRoutine$/.test(inputProperty) ? onTrigger(input) : input;
+    state[nextWidget][nextProperty] = /[gG]lobalUpdateRoutine$/.test(nextProperty) ? onTrigger(next) : next;
+
+    await setRoomState(state);
+    await ClientFunction(prepareClient)();
+    await setName(t);
+    await t.click('#w_start').expect(Selector('#buttonInputOverlay').visible).ok();
+    await setRoomState(state);
+    await t.expect(Selector('#buttonInputOverlay').visible).notOk();
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 0);
+    await t.click('#w_start').click('#buttonInputGo');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 1);
+    await t.click('#w_start').click('#buttonInputCancel');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 2);
+  });
+}
+
+test('cancelling a nested INPUT still lets its caller continue in the same room', async t => {
+  await setRoomState({
+    ask: { id: 'ask', type: 'button', x: 100, y: 100, clickRoutine: [
+      { func: 'IF', condition: true, thenRoutine: [
+        { func: 'INPUT', header: 'Next round?', fields: [] },
+        { func: 'SET', collection: [ 'counter' ], property: 'value', value: 100 }
+      ] },
+      { func: 'SET', collection: [ 'counter' ], property: 'value', relation: '+', value: 1 }
+    ] },
+    counter: { id: 'counter', type: 'basic', x: 300, y: 100, value: 0 }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_ask').click('#buttonInputCancel');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 1);
+  await t.click('#w_ask').click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 101);
+});
+
 test('INPUT reads variable names containing spaces without treating them as selectors', async t => {
   await setRoomState({
     ask: { id: 'ask', type: 'button', text: 'Ask', x: 100, y: 100, clickRoutine: [
