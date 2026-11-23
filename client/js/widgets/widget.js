@@ -1608,9 +1608,13 @@ export class Widget extends StateManaged {
           a.mode = 'respect'
         };
         if(collection) {
-          for(let i=0; i<a.count; ++i)
-            for(const w of collections[collection])
+          for(let i=0; i<a.count && stateGeneration === roomStateGeneration; ++i) {
+            for(const w of collections[collection]) {
+              if(stateGeneration !== roomStateGeneration)
+                break;
               await w.click(a.mode);
+            }
+          }
           if(routineLogging) {
             const theCount = a.count ? `${a.count} times` : '';
             jeLoggingRoutineOperationSummary( `'${a.collection}' ${theCount}`)

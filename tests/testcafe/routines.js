@@ -363,6 +363,41 @@ for(const [ name, wrap ] of [
   });
 }
 
+for(const [ name, collection, count ] of [
+  [ 'collection', [ 'ask', 'modify' ], 1 ],
+  [ 'count', [ 'modify', 'ask' ], 2 ]
+]) {
+  test(`a fresh room state stops the pending CLICK ${name} loop`, async t => {
+    const state = {
+      start: { id: 'start', type: 'button', x: 100, y: 100, clickRoutine: [
+        { func: 'CLICK', collection, count }
+      ] },
+      ask: { id: 'ask', type: 'button', x: 300, y: 100, clickRoutine: [
+        { func: 'INPUT', header: 'Continue?', fields: [] }
+      ] },
+      modify: { id: 'modify', type: 'button', x: 500, y: 100, clickRoutine: [
+        { func: 'SET', collection: [ 'counter' ], property: 'value', relation: '+', value: 1 }
+      ] },
+      counter: { id: 'counter', type: 'basic', x: 700, y: 100, value: 0 }
+    };
+    await setRoomState(state);
+    await ClientFunction(prepareClient)();
+    await setName(t);
+    await t.click('#w_start').expect(Selector('#buttonInputOverlay').visible).ok();
+    await setRoomState(state);
+    await t.expect(Selector('#buttonInputOverlay').visible).notOk();
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 0);
+    await t.click('#w_start');
+    for(let i=0; i<count; i++)
+      await t.click('#buttonInputGo');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, count);
+    await t.click('#w_start');
+    for(let i=0; i<count; i++)
+      await t.click('#buttonInputCancel');
+    await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 2*count);
+  });
+}
+
 test('cancelling a nested INPUT still lets its caller continue in the same room', async t => {
   await setRoomState({
     ask: { id: 'ask', type: 'button', x: 100, y: 100, clickRoutine: [
