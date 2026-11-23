@@ -2,7 +2,7 @@ import { $, removeFromDOM, asArray, escapeID, mapAssetURLs, mod, timeToMS } from
 import { expressionCondition, expressionNames, expressionNumber } from '../expression.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput, roomStateGeneration } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets, exceedsDropLimit } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -1194,7 +1194,7 @@ export class Widget extends StateManaged {
     return isValid;
   }
 
-  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference) {
+  async evaluateRoutine(property, initialVariables, initialCollections, depth, byReference, stateGeneration = roomStateGeneration) {
     function unescape(str) {
       if(typeof str != 'string')
         return str;
@@ -1288,6 +1288,9 @@ export class Widget extends StateManaged {
     if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
       return;
 
+    if(stateGeneration !== roomStateGeneration)
+      return { variable: null, collection: [] };
+
     batchStart();
 
     let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
@@ -1333,6 +1336,10 @@ export class Widget extends StateManaged {
     const routine = this.get(property) !== null ? this.get(property) : property;
 
     for(const original of routine) {
+      // A routine and its nested calls belong to the room state that started them.
+      if(stateGeneration !== roomStateGeneration)
+        break;
+
       var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
@@ -1505,7 +1512,7 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1, false, stateGeneration);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
@@ -1745,7 +1752,7 @@ export class Widget extends StateManaged {
           }
           if(routineLogging)
             jeLoggingRoutineOperationStart( "loopRoutine", "loopRoutine" );
-          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true);
+          await this.evaluateRoutine(a.loopRoutine, variables, collections, (depth || 0) + 1, true, stateGeneration);
           if(routineLogging)
             jeLoggingRoutineOperationEnd([], variables, collections, false);
           for(const add in addVariables) {
@@ -1760,10 +1767,12 @@ export class Widget extends StateManaged {
             else
               delete collections[add];
           }
+          return stateGeneration === roomStateGeneration;
         }
         if(a.in) {
           for(const key in a.in)
-            await callWithAdditionalValues({ key, value: a.in[key] }, {});
+            if(!await callWithAdditionalValues({ key, value: a.in[key] }, {}))
+              break;
           if(routineLogging)
             jeLoggingRoutineOperationSummary( `elements in '${JSON.stringify(a.in)}'`);
         } else if(a.range) {
@@ -1801,12 +1810,14 @@ export class Widget extends StateManaged {
           }
 
           for (let index=start; (step > 0) ? index <= end : index >= end; index += step)
-            await callWithAdditionalValues({ value: index });
+            if(!await callWithAdditionalValues({ value: index }))
+              break;
           if(routineLogging)
             jeLoggingRoutineOperationSummary( `values in range '${JSON.stringify(a.range)}'`);
         } else if(collection = getCollection(a.collection)) {
           for(const widget of collections[collection])
-            await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] });
+            if(!await callWithAdditionalValues({ widgetID: widget.get('id') }, { DEFAULT: [ widget ] }))
+              break;
           if(routineLogging)
             jeLoggingRoutineOperationSummary( `widgets in '${a.collection}'`);
         }
@@ -1879,7 +1890,7 @@ export class Widget extends StateManaged {
             condition = await compute(a.relation, null, a.operand1, a.operand2);
           const branch = condition ? 'thenRoutine' : 'elseRoutine';
           if(Array.isArray(a[branch]))
-            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true);
+            await this.evaluateRoutine(a[branch], variables, collections, (depth || 0) + 1, true, stateGeneration);
           if(routineLogging) {
             if (a.condition === undefined)
               jeLoggingRoutineOperationSummary(`'${original.operand1}' ${a.relation} '${original.operand2}'`, `${JSON.stringify(condition)}`)
@@ -2506,7 +2517,7 @@ export class Widget extends StateManaged {
                 ? move.contents.filter(w=>!w.isBeingRemoved)
                 : widgetFilter(w=>move.contents.indexOf(w) != -1);
               try {
-                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true, stateGeneration);
               } finally {
                 if(shadowed === undefined)
                   delete collections[collection];
@@ -2769,6 +2780,9 @@ export class Widget extends StateManaged {
       jeLoggingRoutineNotLogged(this, property); // logging was enabled while this routine was running
 
     batchEnd();
+
+    if(stateGeneration !== roomStateGeneration)
+      return { variable: null, collection: [] };
 
     if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
       const hexColor = toHex(variables.playerColor);

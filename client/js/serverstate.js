@@ -11,6 +11,7 @@ let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
 
 export const widgets = new Map();
+export let roomStateGeneration = 0;
 
 let deferredCards = {};
 let deferredChildren = {};
@@ -496,6 +497,7 @@ function receiveDeltaFromServer(delta) {
 }
 
 function receiveStateFromServer(args) {
+  ++roomStateGeneration;
   addStateEntryToUndoProtocol(args);
 
   // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
