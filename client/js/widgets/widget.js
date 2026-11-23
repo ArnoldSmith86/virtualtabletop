@@ -8,6 +8,13 @@ import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
+let abortPendingInputOverlay = null;
+
+export function cancelPendingInputOverlay() {
+  if(abortPendingInputOverlay)
+    abortPendingInputOverlay();
+}
+
 // A stop is listed in the line's stops property, so it can be any widget in the
 // room - being a child of the line is the common shape, not a requirement. This
 // reads the raw property instead of stopList() because it runs for every line
@@ -3494,6 +3501,14 @@ export class Widget extends StateManaged {
   }
 
   async showInputOverlay(o, widgets, variables, collections, getCollection, problems, handle) {
+    // A hidden INPUT still owns the shared form and its confirmation handlers.
+    // Reopen it rather than letting another routine bind to the same buttons.
+    if(abortPendingInputOverlay) {
+      if($('#buttonInputOverlay').style.display == 'none')
+        showOverlay('buttonInputOverlay');
+      throw new Error('An input overlay is already pending.');
+    }
+
     this.showInputOverlayWorkingState(false);
 
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
@@ -3551,6 +3566,7 @@ export class Widget extends StateManaged {
           $('#buttonInputGo').removeEventListener('click', goHandler);
           $('#buttonInputCancel').removeEventListener('click', cancelHandler);
           delete $('#activeGameButton').dataset.overlay;
+          abortPendingInputOverlay = null;
         }
       };
       const cancelHandler = e=>{
@@ -3558,21 +3574,26 @@ export class Widget extends StateManaged {
           $('#buttonInputGo').removeEventListener('click', goHandler);
           $('#buttonInputCancel').removeEventListener('click', cancelHandler);
           delete $('#activeGameButton').dataset.overlay;
+          abortPendingInputOverlay = null;
         }
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
       // Allow the overlay to be closed remotely (e.g. the input was cancelled
       // for everyone via the block overlay, or the initiator disconnected).
-      if(handle) {
-        handle.abort = ()=>{
-          $('#buttonInputGo').removeEventListener('click', goHandler);
-          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
-          delete $('#activeGameButton').dataset.overlay;
-          showOverlay(null);
-          reject({ variables: {}, collections: {} });
-        };
-      }
+      const abort = ()=>{
+        if(abortPendingInputOverlay !== abort)
+          return;
+        $('#buttonInputGo').removeEventListener('click', goHandler);
+        $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+        delete $('#activeGameButton').dataset.overlay;
+        abortPendingInputOverlay = null;
+        showOverlay(null);
+        reject({ variables: {}, collections: {} });
+      };
+      abortPendingInputOverlay = abort;
+      if(handle)
+        handle.abort = abort;
       showOverlay('buttonInputOverlay');
       const inputs = $a('#buttonInputFields input, #buttonInputFields select');
       if(inputs.length) {

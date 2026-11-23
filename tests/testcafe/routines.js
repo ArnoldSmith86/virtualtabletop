@@ -300,6 +300,53 @@ test('releasing a dragged widget while an overlay is open still ends the drag', 
   await expectEventually(t, ()=>widgetDragState('card'), [ 'holder', null ]);
 });
 
+test('overlapping INPUT routines cannot share a confirmation', async t => {
+  await setRoomState({
+    ask: { id: 'ask', type: 'button', x: 100, y: 100, confirmed: 0, clickRoutine: [
+      'var next = 1 + 1',
+      { func: 'INPUT', header: 'Next round?', fields: [] },
+      { func: 'SET', collection: 'thisButton', property: 'confirmed', relation: '+', value: 1 }
+    ] }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  // Both releases reach the routine before its first asynchronous operation finishes.
+  await ClientFunction(()=>{
+    const target = document.getElementById('w_ask');
+    const box = target.getBoundingClientRect();
+    for(let i=0; i<2; i++)
+      for(const type of [ 'mousedown', 'mouseup' ])
+        target.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true,
+          clientX: box.left + box.width/2, clientY: box.top + box.height/2,
+          button: 0, buttons: type == 'mousedown' ? 1 : 0 }));
+  })();
+  await t.expect(Selector('#buttonInputOverlay').visible).ok();
+  await t.click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).ask.confirmed, 1);
+  await t.click('#w_ask').click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).ask.confirmed, 2);
+});
+
+test('a fresh room state cancels the previous INPUT confirmation', async t => {
+  const state = {
+    ask: { id: 'ask', type: 'button', x: 100, y: 100, clickRoutine: [
+      { func: 'INPUT', header: 'Next round?', fields: [] },
+      { func: 'SET', collection: [ 'counter' ], property: 'value', relation: '+', value: 1 }
+    ] },
+    counter: { id: 'counter', type: 'basic', x: 300, y: 100, value: 0 }
+  };
+  await setRoomState(state);
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#w_ask').expect(Selector('#buttonInputOverlay').visible).ok();
+  await setRoomState(state);
+  await t.expect(Selector('#buttonInputOverlay').visible).notOk();
+  await t.click('#w_ask').click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 1);
+  await t.click('#w_ask').click('#buttonInputGo');
+  await expectEventually(t, async ()=>JSON.parse(await getState()).counter.value, 2);
+});
+
 test('INPUT reads variable names containing spaces without treating them as selectors', async t => {
   await setRoomState({
     ask: { id: 'ask', type: 'button', text: 'Ask', x: 100, y: 100, clickRoutine: [
